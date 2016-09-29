@@ -1,0 +1,94 @@
+<!-- 录入发票信息-->
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>发票管理
+        </li>
+        <li>
+            <a href="#">销项票管理</a>
+        </li>
+        <li>
+            <a href="#">待录入</a>
+        </li>
+        <li class="active">录入销项发票</li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+    #parse("layout/topbtn.vm")
+    <!-- /.nav-search -->
+</div>
+
+<div class="page-content">
+    <div class="settlement-info row bg-yellow-style">
+        <div class="clearfix col-xs-12 text-left">
+                    <span><em class="bolder">买家全称：</em>
+                        $!{invoice.buyerName}
+                    </span>
+
+                    <span><em class="bolder">开票重量（吨）：</em>
+                        <em class="orange bolder" id="totalWeight">$NumberTool.format(
+                            "#0.0000",$!{invoice.totalWeight})</em>
+                    </span>
+                   <span><em class="bolder">开票金额（元）：</em>
+                        <em class="orange bolder">$NumberTool.toThousandth($!{invoice.totalAmount})</em>
+                   </span>
+        </div>
+    </div>
+    <div class="row">
+        <form id="invoiceForm">
+            <div class="table-bar">
+                <h5 class="h5 bolder">录入发票信息</h5>
+                <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>发票号</th>
+                        <th>发票金额（元）</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>01</td>
+                        <td><input type="text" name="code" value="" class="c-text" must="1" verify='numeric'/></td>
+                        <td><input type="text" name="amount" value="" class="c-text" must="1" verify='numeric'/></td>
+                        <td><a href="javascript:;" title="添加" id="addForwarder"><i
+                                class="ace-icon glyphicon glyphicon-plus"></i></a></td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="2" class="text-right">一共&nbsp;<span id="totalInvoice"
+                                                                         class="orange bolder">1</span>&nbsp;张发票总金额合计:
+                        </td>
+                        <td colspan="2"><span id="totalInvoiceAmount" class="orange bolder"></span></td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class=" recordbar col-xs-12">
+                <span><i class=" fa fa-info-circle orange"></i>发票金额合计与开票金额合计<em class=" bolder orange">相等</em></span>
+                <button type="button" class="btn btn-info btn-sm" id="submit-btn">提交</button>
+                <a href="javascript:history.go(-1);" class="btn btn-default btn-sm">返回</a>
+            </div>
+
+        </form>
+    </div>
+    <!-- /.row -->
+</div>
+<input type="hidden" id="buyerName" value="$!{invoice.buyerName}">
+<input type="hidden" id="buyerId" value="$!{invoice.buyerId}">
+<input type="hidden" id="orgId" value="$!{orgId}">
+<input type="hidden" id="orgName" value="$!{orgName}">
+<input type="hidden" id="ids" value="$!{ids}">
+<input type="hidden" id="totalAmount" value="$!{invoice.totalAmount}"/>
+<script src="$link.getContextPath()/js/views/invoice/inputinvoiceinfo.js"></script>
+
+

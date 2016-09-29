@@ -1,0 +1,431 @@
+<style>
+    .m-s label{margin-right:5px;display:inline;width:95px;margin-bottom:10px;m}
+    .m-s input[type='text']{width:107px}
+    .spec input[type='text']{width:63px!important;}
+    .m-s .form-item{width:109px}
+    .spec .form-item{width:63px}
+    .font-dai, .font-lin {border-radius: 5px;color: white;font-family: "黑体";font-weight: bold;}
+    .font-dai {background: #c81623;}
+    .font-lin {background: #ff8f16;}
+    .attrs {margin-left: 8.5px}
+    .input-group .ipt-text{margin-right: 40px;height:25px;width: 180px;}
+    span#purchasePlace{display:inline !important;}
+    .input-group label{width: 300px;}
+    #sorganization[readonly] {background-color: white!important;}
+    #traderName[readonly] {background-color: white!important;}
+    .page-content .m-search[index=odd] {background: #f7f9fd;}
+    .page-content .m-search[index=even] {background: #ffffff;}
+</style>
+<div class="breadcrumbs" id="breadcrumbs" xmlns="http://www.w3.org/1999/html">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="#">智能找货</a>
+        </li>
+
+        <li class="active">新增采购单</li>
+    </ul>
+    <!-- /.breadcrumb -->
+</div>
+
+<div class="page-content">
+    <div class="guide none" style='background-image: url("$link.getContextPath()/img/process.jpg"); width: 1070px; height: 70px; margin-bottom: 20px'>
+        <a title="本次不再显示此引导图片" class="glyphicon glyphicon-remove pull-right hideGuide" style="font-size: 30px; background-color: white"></a>
+    </div>
+    <form class="form-inline find-goods-search" id="search">
+        <!--筛选规则 S-->
+        <div class="input-group">
+            <label><em class="red">*</em>服务中心：
+                <span class="pos-rel">
+                    <input id="sorganization" type="text" class="ipt-text" must="1" readonly value="#if($!org)$!org.name#end" onclick="showMenu(this);">
+                    <input type='hidden' id='sorganizationHidden' value='#if($!org)$!org.id#{else}-1#end'/>
+
+				</span>
+
+            </label>
+            <label>&nbsp;&nbsp;　<em class="red">*</em>交易员：
+                <input id="traderName" search="userorg" class="ipt-text" type="text" value="#if($!user)$!user.name#end" userid="#if($!user)$!user.id#{else}0#end"  must="1" readonly="true"/>
+            </label>
+            <label>&nbsp;&nbsp;采购单号：<span id="poid"></span><input type="hidden" id="id"/></label><br/>
+            <label><em class="red">*</em>买家电话：
+                <input type="text" id="tel" class="ipt-dynamic" must="1" verify="tel" dropdown="dropdown"/>
+            </label>
+            <label>　　联系人：
+                <input type="text" id="contact" class="ipt-dynamic" dropdown="dropdown"/>
+            </label>
+            <label>&nbsp;&nbsp;公司名称：
+                <input type="text" id="buyer" class="ipt-dynamic" dropdown="dropdown"/>
+            </label><br/>
+            <label><em class="red">*</em>交货　地：
+                <input type="text" id="deliveryGoods" func="getRefCitys" must="1" search='city' citynum="c_delivery_1" val="#if($!org)$!org.cityId#end">
+            </label>
+            <span id="purchasePlace" style="width:auto;">　<em class="red">*</em>采购地：
+            	<span></span>
+            </span>
+            <div class="sevCenter f-clrfix">
+                <span class="pull-left">其他：</span>
+				<div class="form-item">
+					<div class="border-style">
+						<div class="item-text">
+							<div class="item-text-wrap">
+								<input style="color: rgb(153, 153, 153);" type="text" value="" class="f-text inputspec1" id="restcity" placeholder="可多选">
+							</div>
+							<span class="icon down-arr-icon"></span>
+						</div>
+					</div>
+					<div id="showLayer_restcity" class="show-layer extent-bar textures-bar standard-bar none" style="display: none;">
+						<div type="specDetail" class="textures-con clearfix" style="display: block;">
+							<div class="textures-con-bar-list bder-b-dashed">
+							</div>
+							<div class="f-clr-l"></div>
+						</div>
+						<div class="btn-bar t-l">
+							<label class="pos-rel  pull-left">
+								<input type="checkbox" id="restCheck" name="" class="ace">
+								<span class="lbl"></span> <span class="s-gray">其他：</span></label>
+							<input type="text" id="restcity_spec" value="" search='city' class="c-text pull-left range-ipt">
+							<button class="clear-btn" value="">
+								清除
+							</button>
+							<button class="confirm-btn" value="">
+								确认
+							</button>
+						</div>
+
+					</div>
+				</div>
+			</div>
+        </div>
+
+            <div class="m-s">
+                <div id="m-search" class="m-search m-search-bar clearfix" style="width: 1070px">
+                    <div class="product-ipt">
+                        <span class="in-block f-fl"><em class="red">*</em>品名：</span>
+
+                        <div class="form-item">
+                            <input type="text" id="nsortName" search='nsort' must="1" placeholder='输入首字母查询'/>
+##                            <span class="icon down-arr-icon"></span>
+                            <input type="hidden" id="nsortId" class="f-text" value="">
+                            <input type="hidden" id="sortName" class="f-text" value="">
+                            <input type="hidden" id="sortId" class="f-text" value="">
+                        </div>
+                    </div>
+                    <div class="product-ipt">
+                        <span class="in-block f-fl"><em class="red">*</em>材质：</span>
+
+                        <div class="form-item material">
+                            <input type="text" id="material" class="f-text" value="" must="1" autocomplete="off" placeholder='多选'
+                                   search='material' readonly>
+##                            <span class="icon down-arr-icon"></span>
+                            <!--材质数据层  S-->
+                            <div class="show-layer textures-bar none" id="showLayer_material">
+                                <div class="textures-t">
+                                    <a class="layer-del"></a>
+                                </div>
+                                <div class="textures-con">
+                                </div>
+                                <div class="btn-bar f-clrfix">
+                                    <button class="clear-btn">清除</button>
+                                    <button class="confirm-btn">确认</button>
+                                </div>
+                            </div>
+                            <!--材质数据层  E-->
+                        </div>
+                    </div>
+                    <div class="spec">
+
+                        <div id="spec1" type="spec" class="product-ipt guige" rel="1">
+                            <span class="in-block f-fl"><em class="red">*</em>规格：</span>
+                            <div class="form-item">
+##                                <div class="border-style">
+##                                    <div class="item-text">
+##                                        <div class="item-text-wrap">
+                                            <label style="color: rgb(153, 153, 153);" class="f-label spec"></label>
+                                            <input type="text" value="" class="f-text spec inputspec1" id="inputspec1" readonly>
+##                                        </div>
+##                                    </div>
+##                                </div><!--规格数据层  S-->
+
+                            </div>&nbsp;&nbsp;*
+                        </div>
+                        <div id="spec2" type="spec" class="product-ipt guige" rel="2">
+                            <div class="form-item">
+##                                <div class="border-style">
+##                                    <div class="item-text">
+##                                        <div class="item-text-wrap">
+                                            <label style="color: rgb(169, 169, 169);" class="f-label spec"></label>
+                                            <input type="text" value="" class="f-text spec inputspec2" id="inputspec2" readonly>
+##                                        </div>
+##                                    </div>
+##                                </div>
+
+                            </div>&nbsp;&nbsp;*
+                        </div>
+                        <div id="spec3" type="spec" class="product-ipt guige" rel="3">
+                            <div class="form-item">
+##                                <div class="border-style">
+##                                    <div class="item-text">
+##                                        <div class="item-text-wrap">
+                                            <label style="color: rgb(169, 169, 169);" class="f-label spec"></label>
+                                            <input type="text" value="" class="f-text spec inputspec3" id="inputspec3" readonly>
+##                                        </div>
+##                                    </div>
+##                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-ipt" type="factory">
+                        <span class="in-block f-fl">厂家：</span>
+
+                        <div class="form-item factory">
+                            <input type="text" id="factory" class="f-text" value="" autocomplete="off" placeholder='多选' readonly>
+##                            <span class="icon down-arr-icon"></span>
+                            <!--材质数据层  S-->
+                            <div class="show-layer breadth-bar extent-bar factory_layer none" id="showLayer_factory">
+                                <div class="textures-con">
+                                </div>
+                                <div class="btn-bar f-clrfix">
+                                    <div>
+                                        <span style="position: static">其他：</span>
+                                        <input name="otherFactoryIds" style="position: relative; width: 150px"/>
+                                    </div>
+                                    <button class="clear-btn">清除</button>
+                                    <button class="confirm-btn">确认</button>
+                                </div>
+                            </div>
+                            <!--材质数据层  E-->
+                        </div>
+                    </div>
+                    <div class="f-fl weight-bar">
+                        <label><em class="red">*</em>重量：
+                            <input type="text" name="weight" class="sd-text" must="1" verify="weight"/>&nbsp;吨
+                        </label>
+                    </div>
+                    <div class="f-fl num-bar">
+                        <label>数量：
+                            <input type="text" name="quantity" class="sd-text" verify="number"/>&nbsp;件
+                        </label>
+                    </div>
+
+                    <a name="delBtn" title="删除" class="del-btn fa fa-minus-square pull-right" href="javascript:;" value=""></a>
+                    <a value="" class="clone-btn fa fa-plus-square pull-right" title="复制" id="" href="javascript:;"  ></a>
+
+                    <p class="clearfix"></p>
+                    <!--选择S-->
+                    <div class="text-left clearfix attrs">
+                    </div>
+                </div>
+			</div>
+        <div class="remark">
+            <p class="clearfix"></p>
+
+            <div class="pull-left clearfix ">
+                <lable>备注：
+                    <input id="remark" style="width:391px" class="form-control input-xxlarge" type="text">
+                </lable>
+            </div>
+        </div>
+    <p class="clearfix"></p>
+	<div class="text-center">
+    <button type="button" id="btnSave" class="ok-btn btn btn-info pull-centen"> 保存</button>
+    <button type="button" id="btnSaveAndMatch" class="ok-btn btn btn-info pull-centen">保存并匹配卖家</button>
+	<button type="button" id="reset" class="ok-btn btn btn-info pull-centen none"> 重置</button>
+	</div>
+	<p class="clearfix"></p>
+	<div class="assign-bar text-left" style='display: none;'>
+    	<label class='pos-rel'>指定卖家:</label>
+        <input type='text' id='specificSeller' />
+		<button class="btn btn-xs btn-info" id="specificSearch">确定</button>
+	</div>
+	</form>
+	<p class="clearfix"></p>
+    <!--匹配卖家 S-->
+    <div class="inquiryOrders">
+
+    </div>
+    <!--匹配卖家 E-->
+	<div class="list_return">
+    	<a class="link"></a>
+    </div>
+	<div id="purchaseFooter" style='display: none;'>
+    	<div class="purchase-footer">
+    		<div class="footer-btn-bar f-clrfix">
+    			<span id="saveNum" class="f-fl">已保存<span id='saveSellerNum'>0</span>家报价，覆盖<span id='fractionOfCoverage'>0</span>%资源</span>
+    			<button id="quotation" type="button" class="f-fr btn btn-info btn-sm">填写报价单</button>
+    		</div>
+    	</div>
+	</div>
+
+</div>
+
+<div id="menuContent" class="menuContent" style="display:none; position: absolute;">
+    <ul id="orgTree" class="ztree" style="margin-top:0; width:160px;"></ul>
+</div>
+<div class="base_m_search none">
+    <div id="base_m_search" class="m-search m-search-bar clearfix" style="width: 1070px">
+        <div class="product-ipt">
+            <span class="in-block f-fl"><em class="red">*</em>品名：</span>
+
+            <div class="form-item">
+                <input type="text" id="nsortName" search='nsort' must="1" placeholder='输入首字母查询'/>
+##                <span class="icon down-arr-icon"></span>
+                <input type="hidden" id="nsortId" class="f-text" value="">
+                <input type="hidden" id="sortName" class="f-text" value="">
+                <input type="hidden" id="sortId" class="f-text" value="">
+            </div>
+        </div>
+        <div class="product-ipt">
+            <span class="in-block f-fl"><em class="red">*</em>材质：</span>
+
+            <div class="form-item material">
+                <input type="text" id="material" class="f-text" value="" must="1" autocomplete="off" placeholder='多选'
+                       search='material' readonly>
+##                <span class="icon down-arr-icon"></span>
+                <!--材质数据层  S-->
+                <div class="show-layer textures-bar none" id="showLayer_material">
+                    <div class="textures-t">
+                        <a class="layer-del"></a>
+                    </div>
+                    <div class="textures-con">
+                    </div>
+                    <div class="btn-bar f-clrfix">
+                        <button class="clear-btn">清除</button>
+                        <button class="confirm-btn">确认</button>
+                    </div>
+                </div>
+                <!--材质数据层  E-->
+            </div>
+        </div>
+        <div class="spec">
+            <div id="spec1" type="spec" class="product-ipt guige" rel="1">
+                <span class="in-block f-fl">规格：</span>
+                <div class="form-item">
+##                    <div class="border-style">
+##                        <div class="item-text">
+##                            <div class="item-text-wrap">
+                                <label style="color: rgb(153, 153, 153);" class="f-label spec"></label>
+                                <input type="text" value="" class="f-text spec inputspec1" id="inputspec1" readonly>
+##                            </div>
+##                            <span class="icon down-arr-icon"></span>
+##                        </div>
+##                    </div><!--规格数据层  S-->
+
+                </div><em class="red">*</em>
+            </div>
+            <div id="spec2" type="spec" class="product-ipt guige" rel="2">
+                <div class="form-item">
+##                    <div class="border-style">
+##                        <div class="item-text">
+##                            <div class="item-text-wrap">
+                                <label style="color: rgb(169, 169, 169);" class="f-label spec"></label>
+                                <input type="text" value="" class="f-text spec inputspec2" id="inputspec2" readonly>
+##                            </div>
+##                            <span class="icon down-arr-icon"></span>
+##                        </div>
+##                    </div>
+
+                </div><em class="red">*</em>
+            </div>
+            <div id="spec3" type="spec" class="product-ipt guige" rel="3">
+                <div class="form-item">
+##                    <div class="border-style">
+##                        <div class="item-text">
+##                            <div class="item-text-wrap">
+                                <label style="color: rgb(169, 169, 169);" class="f-label spec"></label>
+                                <input type="text" value="" class="f-text spec inputspec3" id="inputspec3" readonly>
+##                            </div>
+##                            <span class="icon down-arr-icon"></span>
+##                        </div>
+##                    </div>
+
+                </div><em class="red">*</em>
+            </div>
+        </div>
+        <div class="product-ipt" type="factory">
+            <span class="in-block f-fl">厂家：</span>
+
+            <div class="form-item factory">
+                <input type="text" id="factory" class="f-text" value="" autocomplete="off" placeholder='多选' readonly>
+##                <span class="icon down-arr-icon"></span>
+                <!--材质数据层  S-->
+                <div class="show-layer breadth-bar extent-bar factory_layer none" id="showLayer_factory">
+                    <div class="textures-con">
+                    </div>
+                    <div class="btn-bar f-clrfix">
+                        <div>
+                            <span style="position: static">其他：</span>
+                            <input name="otherFactoryIds" style="position: relative; width: 150px"/>
+                        </div>
+                        <button class="clear-btn">清除</button>
+                        <button class="confirm-btn">确认</button>
+                    </div>
+                </div>
+                <!--材质数据层  E-->
+            </div>
+        </div>
+        <div class="f-fl weight-bar">
+            <label><em class="red">*</em>重量：
+                <input type="text" name="weight" class="sd-text" must="1" verify="weight"/>&nbsp;吨
+            </label>
+        </div>
+        <div class="f-fl num-bar">
+            <label>数量：
+                <input type="text" name="quantity" class="sd-text" verify="number"/>&nbsp;件
+            </label>
+        </div>
+
+        <a name="delBtn" title="删除" class="del-btn fa fa-minus-square pull-right" href="javascript:;" value=""></a>
+        <a value="" class="clone-btn fa fa-plus-square pull-right" title="复制" id="" href="javascript:;"  ></a>
+
+        <p class="clearfix"></p>
+        <!--选择S-->
+        <div class="text-left clearfix attrs">
+        </div>
+    </div>
+
+</div>
+<div id="menuContent" class="menuContent" style="display:none; position: absolute;">
+    <ul id="tree" class="ztree" style="margin-top:0; width:160px;"></ul>
+</div>
+<script src="$link.getContextPath()/js/views/sys/busiprocess/userSelector.js"></script>
+<script type="application/javascript">
+    /**
+     * 页面配置（变量定义）
+     * @type {purchaseOrder} purchaseOrder
+     * @private
+     */
+    var purchaseOrder = new function () {
+        // element name defined
+        this.el = {
+            refcity: "refcity" //相关城市
+        };
+		this.blockInquiryOrderSellerIds="$!{blockInquiryOrderSellerIds}"
+        this.purchaseOrderItemList=null;
+        this.refreshPurchaseOrderItemList=false;
+        this.poid = "$!{id}";
+		this.clickedSaveInquiry=false;
+    }
+	#if($!{id})
+	//utils.showMsg("加载数据中。。。", '', '', 10000);
+	cbms.loading();
+	#end
+</script>
+
+<script src="$link.getContextPath()/js/views/smartmatch/purchaseorder/searchnsort.js"></script>
+<script src="$link.getContextPath()/js/views/smartmatch/purchaseorder/resultInquiryOrders.js"></script>
+<script src="$link.getContextPath()/js/views/smartmatch/purchaseorder/created.js"></script>
+<script src="$link.getContextPath()/js/views/account/searchaccount.js"></script>
+<script src="$link.getContextPath()/js/views/smartmatch/purchaseorder/orgSelector.js"></script>
+<script src="$link.getContextPath()/js/views/user/userorg.js"></script>
+<script src="$link.getContextPath()/js/puzzymatch.js"></script>
+
+
+

@@ -1,0 +1,672 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.kuandao.persist.dao.KuandaoAccountDao">
+    <resultMap id="KuandaoCustAccountMap" type="com.prcsteel.platform.kuandao.model.model.KuandaoCustAccount">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="acct_id" property="acctId" jdbcType="BIGINT"/>
+        <result column="memeber_code" property="memeberCode" jdbcType="VARCHAR"/>
+        <result column="virtual_acct_no" property="virAcctNo" jdbcType="VARCHAR"/>
+        <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
+        <result column="acct_type" property="acctType" jdbcType="VARCHAR"/>
+        <result column="branch_id" property="branchId" jdbcType="VARCHAR"/>
+        <result column="department_id" property="departmentId" jdbcType="VARCHAR"/>
+        <result column="acct_no" property="acctNo" jdbcType="VARCHAR"/>
+        <result column="draw_amount" property="drawAmt" jdbcType="DECIMAL"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="id_type" property="idType" jdbcType="VARCHAR"/>
+        <result column="modification_status" property="modificationStatus" jdbcType="INTEGER"/>
+        <result column="result" property="result" jdbcType="INTEGER"/>
+        <result column="failure_count" property="failureCount" jdbcType="INTEGER"/>
+        <result column="apply_time" property="applyTime" jdbcType="TIMESTAMP"/>
+        <result column="bound_time" property="boundTime" jdbcType="TIMESTAMP"/>
+        <result column="created" property="created" jdbcType="TIMESTAMP"/>
+        <result column="created_by" property="createdBy" jdbcType="VARCHAR"/>
+        <result column="modification_number" property="modificationNumber" jdbcType="INTEGER"/>
+    </resultMap>
+    <resultMap id="KuandaoAccountMap" type="com.prcsteel.platform.kuandao.model.dto.KuandaoAccountDto">
+        <id column="acct_id" property="acctId" jdbcType="BIGINT"/>
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="memeber_code" property="memeberCode" jdbcType="VARCHAR"/>
+        <result column="virtual_acct_no" property="virAcctNo" jdbcType="VARCHAR"/>
+        <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
+        <result column="acct_type" property="acctType" jdbcType="VARCHAR"/>
+        <result column="branch_id" property="branchId" jdbcType="VARCHAR"/>
+        <result column="department_id" property="departmentId" jdbcType="VARCHAR"/>
+        <result column="acct_no" property="acctNo" jdbcType="VARCHAR"/>
+        <result column="draw_amount" property="drawAmt" jdbcType="DECIMAL"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="id_type" property="idType" jdbcType="VARCHAR"/>
+        <result column="modification_status" property="modificationStatus" jdbcType="INTEGER"/>
+        <result column="result" property="result" jdbcType="INTEGER"/>
+        <result column="failure_count" property="failureCount" jdbcType="INTEGER"/>
+        <result column="apply_time" property="applyTime" jdbcType="TIMESTAMP"/>
+        <result column="bound_time" property="boundTime" jdbcType="TIMESTAMP"/>
+        <result column="created" property="created" jdbcType="TIMESTAMP"/>
+        <result column="created_by" property="createdBy" jdbcType="VARCHAR"/>
+        <result column="modification_number" property="modificationNumber" jdbcType="INTEGER"/>
+        <result column="name" property="memeberName" jdbcType="VARCHAR"/>
+        <result column="cust_type" property="custType" jdbcType="VARCHAR"/>
+        <result column="org_id" property="orgId" jdbcType="BIGINT"/>
+        <result column="org_name" property="orgName" jdbcType="VARCHAR"/>
+        <result column="cust_status" property="custStatus" jdbcType="VARCHAR"/>
+        <result column="org_code" property="idNo" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="SynchronizeLogMap" type="com.prcsteel.platform.kuandao.model.dto.SynchronizeLogDto">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="acct_id" property="acctId" jdbcType="INTEGER"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="result" property="result" jdbcType="INTEGER"/>
+        <result column="error_msg" property="errMsg" jdbcType="VARCHAR"/>
+        <result column="created" property="created" jdbcType="TIMESTAMP"/>
+        <result column="createdBy" property="createdBy" jdbcType="VARCHAR"/>
+        <result column="name" property="memeberName" jdbcType="VARCHAR"/>
+        <result column="memeber_code" property="memeberCode" jdbcType="VARCHAR"/>
+        <result column="org_id" property="orgId" jdbcType="BIGINT"/>
+        <result column="org_name" property="orgName" jdbcType="VARCHAR"/>
+        <result column="createDateTime" property="createDateTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="CustAccountMap" type="com.prcsteel.platform.kuandao.model.dto.CustAccountDto">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="addr" property="addr" jdbcType="VARCHAR"/>
+        <result column="zip" property="zip" jdbcType="VARCHAR"/>
+        <result column="tel" property="tel" jdbcType="VARCHAR"/>
+        <result column="balance" property="balance" jdbcType="DECIMAL"/>
+        <result column="balance_freeze" property="balanceFreeze" jdbcType="DECIMAL"/>
+        <result column="balance_second_settlement" property="balanceSecondSettlement" jdbcType="DECIMAL"/>
+        <result column="kd_balance_second_settlement" property="kdBalanceSecondSettlement" jdbcType="DECIMAL"/>
+        <result column="proxy_qty" property="proxyQty" jdbcType="DECIMAL"/>
+        <result column="balance_second_settlement_freeze" property="balanceSecondSettlementFreeze" jdbcType="DECIMAL"/>
+        <result column="balance_rebate" property="balanceRebate" jdbcType="DECIMAL"/>
+        <result column="fax" property="fax" jdbcType="VARCHAR"/>
+        <result column="legal_person_name" property="legalPersonName" jdbcType="VARCHAR"/>
+        <result column="mobil" property="mobil" jdbcType="VARCHAR"/>
+        <result column="business" property="business" jdbcType="VARCHAR"/>
+        <result column="web_site_url" property="webSiteUrl" jdbcType="VARCHAR"/>
+        <result column="business_type" property="businessType" jdbcType="CHAR"/>
+        <result column="province_id" property="provinceId" jdbcType="BIGINT"/>
+        <result column="city_id" property="cityId" jdbcType="BIGINT"/>
+        <result column="district_id" property="districtId" jdbcType="BIGINT"/>
+        <result column="proxy_factory" property="proxyFactory" jdbcType="VARCHAR"/>
+        <result column="license_code" property="licenseCode" jdbcType="VARCHAR"/>
+        <result column="reg_address" property="regAddress" jdbcType="VARCHAR"/>
+        <result column="org_code" property="orgCode" jdbcType="VARCHAR"/>
+        <result column="bank_name_main" property="bankNameMain" jdbcType="VARCHAR"/>
+        <result column="bank_code" property="bankCode" jdbcType="VARCHAR"/>
+        <result column="bank_name_branch" property="bankNameBranch" jdbcType="VARCHAR"/>
+        <result column="bank_province_id" property="bankProvinceId" jdbcType="BIGINT"/>
+        <result column="bank_city_id" property="bankCityId" jdbcType="BIGINT"/>
+        <result column="account_code" property="accountCode" jdbcType="VARCHAR"/>
+        <result column="tax_code" property="taxCode" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="CHAR"/>
+        <result column="account_tag" property="accountTag" jdbcType="BIGINT"/>
+        <result column="consign_type" property="consignType" jdbcType="VARCHAR"/>
+        <result column="manager_id" property="managerId" jdbcType="BIGINT"/>
+        <result column="org_id" property="orgId" jdbcType="BIGINT"/>
+        <result column="org_name" property="orgName" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="is_accept_draft_charged" property="isAcceptDraftCharged" jdbcType="INTEGER"/>
+        <result column="invoice_type" property="invoiceType" jdbcType="VARCHAR"/>
+        <result column="check_invoice_type" property="checkInvoiceType" jdbcType="VARCHAR"/>
+        <result column="invoice_data_status" property="invoiceDataStatus" jdbcType="VARCHAR"/>
+        <result column="invoice_data_decline_reason" property="invoiceDataDeclineReason" jdbcType="VARCHAR"/>
+        <result column="bank_data_status" property="bankDataStatus" jdbcType="VARCHAR"/>
+        <result column="bank_data_reason" property="bankDataReason" jdbcType="VARCHAR"/>
+        <result column="bank_data_reminded" property="bankDataReminded" jdbcType="VARCHAR"/>
+
+        <result column="register_date" property="registerDate" jdbcType="VARCHAR"/>
+        <result column="register_capital" property="registerCapital" jdbcType="DECIMAL"/>
+        <result column="supplier_label" property="supplierLabel" jdbcType="VARCHAR"/>
+        <result column="buyer_label" property="buyerLabel" jdbcType="VARCHAR"/>
+        <result column="payment_label" property="paymentLabel" jdbcType="VARCHAR"/>
+
+        <result column="seller_single_trade_weight" property="sellerSingleTradeWeight" jdbcType="DECIMAL"/>
+        <result column="seller_all_trade_weight" property="sellerAllTradeWeight" jdbcType="DECIMAL"/>
+        <result column="seller_all_trade_quality" property="sellerAllTradeQuality" jdbcType="DECIMAL"/>
+        <result column="is_seller_percent" property="isSellerPercent" jdbcType="INTEGER"/>
+        <result column="credit_amount" property="creditAmount" jdbcType="DECIMAL" />
+        <result column="is_deleted" property="isDeleted" jdbcType="BIT" />
+        <result column="credit_amount" property="creditAmount" jdbcType="DECIMAL"/>
+        <result column="structure_type" property="structureType" jdbcType="VARCHAR"/>
+        <result column="mail_addr" property="mailAddr" jdbcType="VARCHAR"/>
+        <result column="credit_amount_used" property="creditAmountUsed" jdbcType="DECIMAL"/>
+        <result column="is_auto_second_payment" property="isAutoSecondPayment" jdbcType="BIT"/>
+    </resultMap>
+    
+    <resultMap id="AccountContactMap" type="com.prcsteel.platform.kuandao.model.dto.AccountContactDto">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="account_id" property="accountId" jdbcType="BIGINT" />
+	    <result column="contact_id" property="contactId" jdbcType="BIGINT" />
+	    <result column="tel" property="tel" jdbcType="VARCHAR" />
+	    <result column="manager" property="manager" jdbcType="BIGINT" />
+	    <result column="managerName" property="managerName" jdbcType="VARCHAR" />
+	    <result column="status" property="status" jdbcType="INTEGER" />
+	    <result column="is_deleted" property="is_deleted" jdbcType="BIT" />
+	    <result column="type" property="type" jdbcType="VARCHAR" />
+	    <result column="created" property="created" jdbcType="TIMESTAMP"/>
+        <result column="created_by" property="createdBy" jdbcType="VARCHAR"/>
+        <result column="modification_number" property="modificationNumber" jdbcType="INTEGER"/>
+    </resultMap>
+    
+    <sql id="CustAccount_Column_List">
+        t1.id, t1.balance, t1.balance_freeze, t1.balance_second_settlement, t1.balance_second_settlement_freeze,
+        t1.balance_rebate, t1.business, t1.business_type, t1.last_bill_time, t1.buyer_deal_total, t1.seller_deal_total,
+        t1.type, t1.account_tag, t1.consign_type, t1.manager_id, t1.status, t1.is_accept_draft_charged, t1.check_invoice_type,
+        t1.credit_amount, t1.parent_id, t1.created, t1.created_by, t1.last_updated, t1.last_updated_by,
+        t1.modification_number, t1.row_id, t1.parent_row_id, t1.is_deleted,t1.credit_amount_used,t1.is_auto_second_payment,
+        t2.cust_account_id, t2.code, t1.name, t2.addr, t2.zip, t2.mail_addr, t2.tel, t2.fax, t2.legal_person_name, t2.mobil, t2.web_site_url,
+        t1.org_id, t1.org_name,t2.reg_time,t2.province_id,t2.city_id,t2.district_id,t2.bank_data_status,t2.bank_data_reminded,
+        t2.org_code, t2.bank_name_main, t2.bank_code, t2.bank_name_branch, t2.bank_province_id,
+        t2.bank_city_id, t2.account_code, t2.tax_code,t2.invoice_data_status, t1.register_date, t1.register_capital,
+    t1.supplier_label, t1.buyer_label, t1.payment_label,
+    t1.seller_single_trade_weight,t1.seller_all_trade_weight,t1.seller_all_trade_quality,
+    t1.is_seller_percent
+    </sql>
+    <select id="queryCustAccountByCondition" resultMap="CustAccountMap" parameterType="com.prcsteel.platform.kuandao.model.dto.CustAccountDto" >
+        select
+        <include refid="CustAccount_Column_List" />,(select min(balance_second_settlement) from cust_account acct where acct.parent_id = t1.id ) as kd_balance_second_settlement
+        from cust_account t1
+        left join cust_account_ext t2 on t1.id = t2.cust_account_id
+        <where>
+        	t1.is_deleted = 0
+        	<if test="id != null">
+        		and t1.id = #{id,jdbcType=BIGINT}
+        	</if>
+        </where>
+    </select>
+    <sql id="KuandaoCustAccount_Column_List">
+	    id, acct_id, memeber_code, virtual_acct_no, mobile, acct_type, branch_id, department_id,
+	    acct_no, draw_amount, status, type, id_type,modification_status,result,failure_count,
+	    apply_time,bound_time,created,created_by,modification_number
+  	</sql>
+  	<sql id="KuandaoAccount_Column_List">
+	   k.id, c.id as acct_id, k.memeber_code, k.virtual_acct_no, k.mobile, k.acct_type, k.branch_id, k.department_id,
+	   k.acct_no, k.draw_amount, k.status, k.type, k.id_type,k.modification_status,k.result,k.failure_count,
+	   k.apply_time,k.bound_time,k.created,k.created_by,k.modification_number,c.name,
+	   c.status as cust_status,c.org_id,c.org_name,ce.org_code
+  	</sql>
+    <select id="queryOpenedAccount" resultMap="KuandaoAccountMap" parameterType="map">
+       select
+        <include refid="KuandaoAccount_Column_List"/>
+        from cust_account c
+        inner join kuandao_cust_account k
+        on k.acct_id = c.id
+        left join cust_account_ext ce 
+        on c.id = ce.cust_account_id
+		<where>
+			k.status in ('0','2','3')
+			<if test="memeberName != null and memeberName != '' ">
+				and c.name like concat('%',#{memeberName,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="memeberCode != null and memeberCode != '' ">
+				and k.memeber_code like concat('%',#{memeberCode,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="virAcctNo != null and virAcctNo != '' ">
+				and k.virtual_acct_no like concat('%',#{virAcctNo,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="status != null and status == '0'.toString() ">
+				and k.status = #{status,jdbcType=VARCHAR}
+			</if>
+			<if test="status != null and status == '1'.toString() ">
+				and k.status in ('2','3') and k.modification_status = 0
+			</if>
+			<if test="status != null and status == '2'.toString() ">
+				and k.modification_status != 0
+			</if>
+        </where>
+        order by k.modification_status desc,k.apply_time desc
+        limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER}
+    </select>
+     <select id="totalOpenedAccount" resultType="int" parameterType="com.prcsteel.platform.kuandao.model.dto.KuandaoAccountDto">
+        select count(k.id)
+        from cust_account c
+        inner join kuandao_cust_account k
+        on k.acct_id = c.id
+        left join cust_account_ext ce 
+        on c.id = ce.cust_account_id
+		<where>
+			k.status in ('0','2','3')
+			<if test="memeberName != null and memeberName != '' ">
+				and c.name like concat('%',#{memeberName,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="memeberCode != null and memeberCode != '' ">
+				and k.memeber_code like concat('%',#{memeberCode,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="virAcctNo != null and virAcctNo != '' ">
+				and k.virtual_acct_no like concat('%',#{virAcctNo,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="status != null and status == '0'.toString() ">
+				and k.status = #{status,jdbcType=VARCHAR}
+			</if>
+			<if test="status != null and status == '1'.toString() ">
+				and k.status in ('2','3') and k.modification_status = 0
+			</if>
+			<if test="status != null and status == '2'.toString() ">
+				and k.modification_status != 0
+			</if>
+        </where>
+    </select>
+    <select id="queryUnOpenedAccount" resultMap="KuandaoAccountMap" parameterType="map">
+        select
+        <include refid="KuandaoAccount_Column_List"/>,c.account_tag as cust_type
+        from cust_account c
+        left join cust_account_ext ce 
+        on c.id = ce.cust_account_id
+        left join kuandao_cust_account k
+        on k.acct_id = c.id
+		<where>
+			(k.id is null or k.status in ('1','5')) and c.structure_type in ('Group','Company')
+			<if test="memeberName != null and memeberName != '' ">
+				and c.name like concat('%',#{memeberName,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="orgId != null">
+				and c.org_id = #{orgId,jdbcType=BIGINT}
+			</if>
+			<if test="custType != null">
+				<![CDATA[and c.account_tag & #{custType,jdbcType=BIGINT} = #{custType,jdbcType=BIGINT}]]>
+			</if>
+			<if test="status != null and status == '0'.toString() ">
+				and c.status = 1 and ce.org_code != ''
+			</if>
+			<if test="status != null and status == '1'.toString() ">
+				and c.status = 0
+			</if>
+			<if test="status != null and status == '2'.toString() ">
+				and (ce.org_code = '' or ce.org_code is null)
+			</if>
+        </where>
+        order by c.id desc
+        limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER}
+    </select>
+     <select id="totalUnOpenedAccount" resultType="int" parameterType="com.prcsteel.platform.kuandao.model.dto.KuandaoAccountDto">
+        select count(c.id)        
+        from cust_account c
+        left join cust_account_ext ce 
+        on c.id = ce.cust_account_id
+        left join kuandao_cust_account k
+        on k.acct_id = c.id
+		<where>
+			(k.id is null or k.status in ('1','5')) and c.structure_type in ('Group','Company')
+			<if test="memeberName != null and memeberName != '' ">
+				and c.name like concat('%',#{memeberName,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="orgId != null">
+				and c.org_id = #{orgId,jdbcType=BIGINT}
+			</if>
+			<if test="custType != null">
+				<![CDATA[and c.account_tag & #{custType,jdbcType=BIGINT} = #{custType,jdbcType=BIGINT}]]>
+			</if>
+			<if test="status != null and status == '0'.toString() ">
+				and c.status = 1 and ce.org_code != ''
+			</if>
+			<if test="status != null and status == '1'.toString() ">
+				and c.status = 0
+			</if>
+			<if test="status != null and status == '2'.toString() ">
+				and (ce.org_code = '' or ce.org_code is null)
+			</if>
+        </where>
+    </select>
+    
+    <select id="querySynchronizeLog" resultMap="SynchronizeLogMap" parameterType="map">
+        select s.id,s.acct_id,s.type,s.description,s.result,s.error_msg,s.created,date_format(s.created,'%Y-%m-%d %H:%i:%s') as createDateTime,s.created_by,
+        k.memeber_code,c.name,
+        c.org_id,c.org_name
+        from kuandao_cust_synchronize_log s
+        inner join kuandao_cust_account k
+        on k.id = s.acct_id
+        inner join cust_account c
+        on k.acct_id = c.id
+		<where>
+			1 = 1
+			<if test="memeberName != null and memeberName != '' ">
+				and c.name like concat('%',#{memeberName,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="orgId != null">
+				and c.org_id = #{orgId,jdbcType=BIGINT}
+			</if>
+			<if test="result != null">
+				and s.result = #{result,jdbcType=VARCHAR}
+			</if>
+        </where>
+        order by s.created desc
+        limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER}
+    </select>
+     <select id="totalSynchronizeLog" resultType="int" parameterType="com.prcsteel.platform.kuandao.model.dto.SynchronizeLogDto">
+        select count(s.id)        
+       from kuandao_cust_synchronize_log s
+        inner join kuandao_cust_account k
+        on k.id = s.acct_id
+        inner join cust_account c
+        on k.acct_id = c.id
+		<where>
+			1 = 1
+			<if test="memeberName != null and memeberName != '' ">
+				and c.name like concat('%',#{memeberName,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="orgId != null">
+				and c.org_id = #{orgId,jdbcType=BIGINT}
+			</if>
+			<if test="result != null">
+				and s.result = #{result,jdbcType=VARCHAR}
+			</if>
+        </where>
+    </select>
+    
+    <select id="queryKuandaoAccountByCondition" resultMap="KuandaoCustAccountMap" parameterType="com.prcsteel.platform.kuandao.model.dto.KuandaoAccountDto">
+       select
+        <include refid="KuandaoCustAccount_Column_List"/>
+        from kuandao_cust_account k       
+		<where>
+			<if test="acctId != null">
+				and k.acct_id = #{acctId,jdbcType=BIGINT}
+			</if>
+			<if test="memeberCode != null and memeberCode != '' ">
+				and k.memeber_code = #{memeberCode,jdbcType=VARCHAR}
+			</if>
+			<if test="virAcctNo != null and virAcctNo != '' ">
+				and k.virtual_acct_no = #{virAcctNo,jdbcType=VARCHAR}
+			</if>
+			<if test="status != null and status != '' ">
+				and k.status = #{status,jdbcType=VARCHAR}
+			</if>
+        </where>
+    </select>
+    
+   <insert id="insert" useGeneratedKeys="true" parameterType="com.prcsteel.platform.kuandao.model.model.KuandaoCustAccount"
+          keyProperty="id">
+       insert into kuandao_cust_account
+       <trim prefix="(" suffix=")" suffixOverrides=",">
+           acct_id,
+           memeber_code,
+           <if test="virAcctNo != null">
+               virtual_acct_no,
+           </if>
+           <if test="mobile != null">
+               mobile,
+           </if>
+           <if test="status != null">
+                status,
+            </if>
+           <if test="type != null">
+               type,
+           </if>
+           <if test="idType != null">
+               id_type,
+           </if>
+           <if test="modificationStatus != null">
+               modification_status,
+           </if>
+           <if test="failureCount != null">
+               failure_count,
+           </if>
+           <if test="created != null">
+               created,
+           </if>
+           <if test="createdBy != null">
+               created_by,
+           </if>
+           <if test="lastUpdated != null">
+               last_updated,
+           </if>
+           <if test="lastUpdatedBy != null">
+               last_updated_by,
+           </if>
+           <if test="modificationNumber != null">
+               modification_number,
+           </if>
+           <if test="rowId != null">
+               row_id,
+           </if>
+           <if test="parentRowId != null">
+               parent_row_id,
+           </if>
+       </trim>
+       <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #{acctId,jdbcType=BIGINT},
+            #{memeberCode,jdbcType=VARCHAR},
+           <if test="virAcctNo != null">
+               #{virAcctNo,jdbcType=VARCHAR},
+           </if>
+           <if test="mobile != null">
+               #{mobile,jdbcType=VARCHAR},
+           </if>
+           <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+           <if test="type != null">
+               #{type,jdbcType=VARCHAR},
+           </if>
+           <if test="idType != null">
+               #{idType,jdbcType=VARCHAR},
+           </if>
+           <if test="modificationStatus != null">
+               #{modificationStatus,jdbcType=INTEGER},
+           </if>
+           <if test="failureCount != null">
+               #{failureCount,jdbcType=INTEGER},
+           </if>
+           <if test="created != null">
+               #{created,jdbcType=TIMESTAMP},
+           </if>
+           <if test="createdBy != null">
+               #{createdBy,jdbcType=VARCHAR},
+           </if>
+           <if test="lastUpdated != null">
+               #{lastUpdated,jdbcType=TIMESTAMP},
+           </if>
+           <if test="lastUpdatedBy != null">
+               #{lastUpdatedBy,jdbcType=VARCHAR},
+           </if>
+           <if test="modificationNumber != null">
+               #{modificationNumber,jdbcType=INTEGER},
+           </if>
+           <if test="rowId != null">
+               #{rowId,jdbcType=VARCHAR},
+           </if>
+           <if test="parentRowId != null">
+               #{parentRowId,jdbcType=VARCHAR},
+           </if>
+       </trim>
+   </insert>
+   
+   <update id="update" parameterType="com.prcsteel.platform.kuandao.model.model.KuandaoCustAccount">
+        update kuandao_cust_account
+        <set>
+            <if test="memeberCode != null">
+                memeber_code = #{memeberCode,jdbcType=VARCHAR},
+            </if>
+            <if test="virAcctNo != null">
+                virtual_acct_no = #{virAcctNo,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                mobile = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="acctType != null">
+                acct_type = #{acctType,jdbcType=VARCHAR},
+            </if>
+            <if test="branchId != null">
+                branch_id = #{branchId,jdbcType=VARCHAR},
+            </if>
+            <if test="departmentId != null">
+                department_id = #{departmentId,jdbcType=VARCHAR},
+            </if>
+            <if test="acctNo != null">
+                acct_no = #{acctNo,jdbcType=VARCHAR},
+            </if>
+            <if test="drawAmt != null">
+                draw_amount = #{drawAmt,jdbcType=DECIMAL},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="idType != null">
+                id_type = #{idType,jdbcType=VARCHAR},
+            </if>
+            <if test="modificationStatus != null">
+                modification_status = #{modificationStatus,jdbcType=INTEGER},
+            </if>
+            <if test="result != null">
+                result = #{result,jdbcType=INTEGER},
+            </if>
+            <if test="failureCount != null">
+                failure_count = #{failureCount,jdbcType=INTEGER},
+            </if>
+            <if test="applyTime != null">
+                apply_time = #{applyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="boundTime != null">
+                bound_time = #{boundTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="created != null">
+                created = #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdBy != null">
+                created_by = #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdated != null">
+                last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdatedBy != null">
+                last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+            </if>
+            modification_number =ifnull(modification_number,0)+1,
+            <if test="rowId != null">
+                row_id = #{rowId,jdbcType=VARCHAR},
+            </if>
+            <if test="parentRowId != null">
+                parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+	<select id="queryAccountByCondition" resultMap="KuandaoAccountMap" parameterType="com.prcsteel.platform.kuandao.model.dto.KuandaoAccountDto">
+        select
+        <include refid="KuandaoAccount_Column_List"/>
+        from cust_account c
+        left join kuandao_cust_account k
+        on k.acct_id = c.id
+        left join cust_account_ext ce 
+        on c.id = ce.cust_account_id
+		<where>
+			<if test="id != null">
+				and k.id = #{id,jdbcType=INTEGER}
+			</if>
+			<if test="acctId != null">
+				and c.id = #{acctId,jdbcType=BIGINT}
+			</if>
+			<if test="memeberName != null and memeberName != '' ">
+				and c.name = #{memeberName,jdbcType=VARCHAR}
+			</if>
+			<if test="memeberCode != null and memeberCode != '' ">
+				and k.memeber_code = #{memeberCode,jdbcType=VARCHAR}
+			</if>
+			<if test="virAcctNo != null and virAcctNo != '' ">
+				and k.virtual_acct_no = #{virAcctNo,jdbcType=VARCHAR}
+			</if>
+			<if test="status != null and status != '' ">
+				and k.status = #{status,jdbcType=VARCHAR}
+			</if>
+			<if test="idNo != null and idNo != '' ">
+				and ce.org_code = #{idNo,jdbcType=VARCHAR}
+			</if>
+        </where>
+    </select>
+
+	<insert id="insertSynchronizeLog" useGeneratedKeys="true" parameterType="com.prcsteel.platform.kuandao.model.model.SynchronizeLog"
+          keyProperty="id">
+       insert into kuandao_cust_synchronize_log
+       <trim prefix="(" suffix=")" suffixOverrides=",">
+           acct_id,
+           type,
+           description,
+           result,
+           <if test="errMsg != null">
+               error_msg,
+           </if>
+           <if test="created != null">
+               created,
+           </if>
+           <if test="createdBy != null">
+               created_by,
+           </if>
+           <if test="lastUpdated != null">
+               last_updated,
+           </if>
+           <if test="lastUpdatedBy != null">
+               last_updated_by,
+           </if>
+           <if test="modificationNumber != null">
+               modification_number,
+           </if>
+           <if test="rowId != null">
+               row_id,
+           </if>
+           <if test="parentRowId != null">
+               parent_row_id,
+           </if>
+       </trim>
+       <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #{acctId,jdbcType=BIGINT},
+            #{type,jdbcType=INTEGER},
+            #{description,jdbcType=VARCHAR},
+            #{result,jdbcType=VARCHAR},
+           <if test="errMsg != null">
+               #{errMsg,jdbcType=VARCHAR},
+           </if>
+           <if test="created != null">
+               #{created,jdbcType=TIMESTAMP},
+           </if>
+           <if test="createdBy != null">
+               #{createdBy,jdbcType=VARCHAR},
+           </if>
+           <if test="lastUpdated != null">
+               #{lastUpdated,jdbcType=TIMESTAMP},
+           </if>
+           <if test="lastUpdatedBy != null">
+               #{lastUpdatedBy,jdbcType=VARCHAR},
+           </if>
+           <if test="modificationNumber != null">
+               #{modificationNumber,jdbcType=INTEGER},
+           </if>
+           <if test="rowId != null">
+               #{rowId,jdbcType=VARCHAR},
+           </if>
+           <if test="parentRowId != null">
+               #{parentRowId,jdbcType=VARCHAR},
+           </if>
+       </trim>
+   </insert>
+   
+   <select id="queryAllOpenAccount" resultMap="KuandaoAccountMap" parameterType="com.prcsteel.platform.kuandao.model.dto.KuandaoAccountDto">
+        select
+        <include refid="KuandaoAccount_Column_List"/>
+        from cust_account c
+        inner join kuandao_cust_account k
+        on k.acct_id = c.id and k.status in ('0','2')
+        left join cust_account_ext ce 
+        on c.id = ce.cust_account_id
+    </select>
+    
+    <select id="queryContactByAccountId" resultMap="AccountContactMap" parameterType="long">
+        SELECT
+        contact.id,contact.account_id,contact.contact_id,contact.manager,contact.status,
+		contact.created,contact.created_by,contact.last_updated,contact.last_updated_by,
+		contact.modification_number,contact.type,u.name as managerName,u.tel
+        FROM cust_account_contact contact
+        INNER JOIN cust_contact u
+        ON contact.contact_id = u.id  and u.is_deleted = 0
+        AND contact.is_deleted = 0 and contact.status = 1
+        INNER JOIN cust_account account
+        ON account.id = contact.account_id
+        AND account.parent_id = #{accountId,jdbcType=BIGINT}
+    </select>
+</mapper>

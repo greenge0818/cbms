@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.smartmatch.persist.dao.PurchaseOrderItemAttributesDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.smartmatch.model.model.PurchaseOrderItemAttributes" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="purchase_order_item_id" property="purchaseOrderItemId" jdbcType="BIGINT" />
+    <result column="attribute_uuid" property="attributeUuid" jdbcType="VARCHAR" />
+    <result column="value" property="value" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, purchase_order_item_id, attribute_uuid, value, remark, created, created_by
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from busi_purchase_order_item_attributes
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from busi_purchase_order_item_attributes
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.prcsteel.platform.smartmatch.model.model.PurchaseOrderItemAttributes" >
+    insert into busi_purchase_order_item_attributes (id, purchase_order_item_id, attribute_uuid, 
+      value, remark, created, 
+      created_by)
+    values (#{id,jdbcType=BIGINT}, #{purchaseOrderItemId,jdbcType=BIGINT}, #{attributeUuid,jdbcType=VARCHAR}, 
+      #{value,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, 
+      #{createdBy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="batchInsert" parameterType="com.prcsteel.platform.smartmatch.model.model.PurchaseOrderItemAttributes">
+    insert into busi_purchase_order_item_attributes (id, purchase_order_item_id, attribute_uuid,
+    value, remark, created, created_by) values
+    <foreach collection="list" item="it" separator=",">
+      (#{it.id,jdbcType=BIGINT}, #{it.purchaseOrderItemId,jdbcType=BIGINT}, #{it.attributeUuid,jdbcType=VARCHAR},
+      #{it.value,jdbcType=VARCHAR}, #{it.remark,jdbcType=VARCHAR}, #{it.created,jdbcType=TIMESTAMP},
+      #{it.createdBy,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.smartmatch.model.model.PurchaseOrderItemAttributes" >
+    insert into busi_purchase_order_item_attributes
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="purchaseOrderItemId != null" >
+        purchase_order_item_id,
+      </if>
+      <if test="attributeUuid != null" >
+        attribute_uuid,
+      </if>
+      <if test="value != null" >
+        value,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="purchaseOrderItemId != null" >
+        #{purchaseOrderItemId,jdbcType=BIGINT},
+      </if>
+      <if test="attributeUuid != null" >
+        #{attributeUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null" >
+        #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.smartmatch.model.model.PurchaseOrderItemAttributes" >
+    update busi_purchase_order_item_attributes
+    <set >
+      <if test="purchaseOrderItemId != null" >
+        purchase_order_item_id = #{purchaseOrderItemId,jdbcType=BIGINT},
+      </if>
+      <if test="attributeUuid != null" >
+        attribute_uuid = #{attributeUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null" >
+        value = #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.smartmatch.model.model.PurchaseOrderItemAttributes" >
+    update busi_purchase_order_item_attributes
+    set purchase_order_item_id = #{purchaseOrderItemId,jdbcType=BIGINT},
+      attribute_uuid = #{attributeUuid,jdbcType=VARCHAR},
+      value = #{value,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      created = #{created,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <delete id="deleteByPurchaseOrderId" parameterType="java.lang.Long" >
+    delete from busi_purchase_order_item_attributes
+    where purchase_order_item_id in (
+      select id from busi_purchase_order_items
+      where purchase_order_id = #{orderId,jdbcType=BIGINT}
+      )
+  </delete>
+
+  <resultMap id="PurchaseOrderItemsAttributeDto" type="com.prcsteel.platform.smartmatch.model.dto.PurchaseOrderItemsAttributeDto" extends="BaseResultMap">
+    <result column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="value" property="value" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="options" property="options" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="attributeId" property="attributeId" jdbcType="BIGINT" />
+  </resultMap>
+  <select id="getAttributesByPurchaseOrderItemIdAndCategoryUuid" resultMap="PurchaseOrderItemsAttributeDto">
+     select a.id AS attributeId, a.uuid, a.name, a.type, a.options, x.value
+    from common_attribute a
+    left join common_category_attribute ca on ca.attribute_uuid = a.uuid
+    left join (select ia.* from busi_purchase_order_item_attributes ia
+    left join busi_purchase_order_items i on ia.purchase_order_item_id = i.id where i.id = #{purchaseOrderItemId}) x on a.uuid = x.attribute_uuid
+    where ca.category_uuid = #{categoryUuid} and a.is_deleted = 0
+    order by ca.priority;
+  </select>
+  
+  <!-- 获取所有属 -->
+  <select id="getAllAttributes" resultMap="PurchaseOrderItemsAttributeDto">
+     select a.id AS attributeId, a.uuid, a.name, a.type, a.options
+    from common_attribute a
+  </select>  
+</mapper>

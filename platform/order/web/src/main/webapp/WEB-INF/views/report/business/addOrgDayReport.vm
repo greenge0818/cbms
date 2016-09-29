@@ -1,0 +1,12 @@
+#*
+手动执行服务中心日报数据返回界面*#
+
+<div class="main-content-inner">
+    <div class="page-content">
+        <div class="settlement-info bg-yellow-style row">
+            <div class="clearfix">
+                <span class="bolder red"><em>$!msg</em></span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.acl.persist.dao.RoleDao">
+
+    <resultMap id="BaseResultMap" type="com.prcsteel.platform.acl.model.model.Role">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="parent_id" property="parentId" jdbcType="BIGINT"/>
+        <result column="type" property="type" jdbcType="INTEGER"/>
+        <result column="created" property="created" jdbcType="TIMESTAMP"/>
+        <result column="created_by" property="createdBy" jdbcType="VARCHAR"/>
+        <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP"/>
+        <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR"/>
+        <result column="modification_number" property="modificationNumber" jdbcType="INTEGER"/>
+        <result column="row_id" property="rowId" jdbcType="VARCHAR"/>
+        <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="role_type" property="roleType" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, name, code, parent_id, type, created, created_by, last_updated, last_updated_by,
+        modification_number, row_id, parent_row_id, status, role_type
+    </sql>
+
+    <insert id="insert" parameterType="com.prcsteel.platform.acl.model.model.Role">
+        insert into acl_role (id, name, code,
+        parent_id, type, created,
+        created_by, last_updated, last_updated_by,
+        modification_number, row_id, parent_row_id,
+        status,role_type)
+        values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR},
+        #{parentId,jdbcType=BIGINT}, #{type,jdbcType=INTEGER}, #{created,jdbcType=TIMESTAMP},
+        #{createdBy,jdbcType=VARCHAR}, #{lastUpdated,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR},
+        #{modificationNumber,jdbcType=INTEGER}, #{rowId,jdbcType=VARCHAR}, #{parentRowId,jdbcType=VARCHAR},
+        #{status,jdbcType=INTEGER},#{roleType,jdbcType=VARCHAR})
+    </insert>
+
+    <update id="updateStatusById" parameterType="com.prcsteel.platform.acl.model.model.Role">
+        update acl_role
+        set last_updated = NOW(),
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+        modification_number = modification_number+1,
+        status = #{status,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from acl_role where status=1
+    </select>
+
+    <select id="queryById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from acl_role
+        where id = #{id,jdbcType=BIGINT} and status=1
+    </select>
+
+    <select id="queryByParentId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from acl_role
+        where parent_id = #{id,jdbcType=BIGINT} and status=1
+    </select>
+
+
+    <select id="queryByCode" resultMap="BaseResultMap" parameterType="String">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM acl_role
+        WHERE code = #{code,jdbcType=VARCHAR}
+    </select>
+
+    <update id="updateKeyFieldById" parameterType="com.prcsteel.platform.acl.model.model.Role">
+        update acl_role
+        set name = #{name},
+        code = #{code},
+        type = #{type},
+        role_type = #{roleType},
+        last_updated = NOW(),
+        last_updated_by = #{lastUpdatedBy},
+        modification_number = modification_number+1
+        where id = #{id}
+    </update>
+</mapper>

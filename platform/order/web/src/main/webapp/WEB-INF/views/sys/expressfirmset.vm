@@ -1,0 +1,76 @@
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li><i class="ace-icon fa fa-home home-icon"></i>系统管理</li>
+        <li>系统设置</li>
+        <li class="active">快递公司设置</li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+    #parse("layout/topbtn.vm")
+    <!-- /.nav-search -->
+</div>
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <!--TAPBAR-->
+            #parse("sys/systemmenu.vm")
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="clearfix">
+                        <div class="input-group pull-left" col-md-12 col-sm-12 col-lg-12 search-bar">
+                        <form class="form-inline" style="display: none">
+                            <label>快递公司：</label>
+                            <input id="name" type="text" />
+                            <label>添加人：</label>
+                            <input id="createdBy" type="text" />
+                            <input id="startTime" class="ipt-text" type="text" value="$!startTime"
+                                   onFocus="WdatePicker()"/> -
+                            <input id="endTime" class="ipt-text" type="text" value="$!endTime"
+                                   onFocus="WdatePicker()"/>
+                            <button class="btn btn-sm btn-default ok-btn" type="button" id="queryBtn">
+                                <i class="aace-icon fa fa-search bigger-110"></i>搜索
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="nav-search" id="nav-search">
+                    <a href="javascript:;" id="addExpress" class="btn btn-default btn-sm">新增快递公司</a>
+                </div>
+                <!-- div.dataTables_borderWrap -->
+                <div>
+                    <table id="formExp" class="table table-striped table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>快递公司名称</th>
+                            <th>添加时间</th>
+                            <th>添加人</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.col -->
+</div><!-- /.row -->
+</div><!-- /.page-content -->
+<div id="userDialog" style="display: none">
+    <div class='well'>
+        <form id='addexp'>
+            <label style='width: 100px'>快递公司名称</label><input must='1' type='text' id='expressName'
+                                                           style='width: 200px'/><br/>
+        </form>
+    </div>
+    <p align='center'><a class='button btn-info btn-lg' id='submit'>提交</a></p>
+</div>
+<input type="hidden" id="settingEdit" value="$shiro.hasPermission("sys:settinglist:edit")">
+<script type="text/javascript" src="$link.getContextPath()/js/views/sys/expressfirmset.js"></script>

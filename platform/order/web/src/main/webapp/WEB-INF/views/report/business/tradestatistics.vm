@@ -1,0 +1,95 @@
+<!-- 待审核-->
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="#">业务报表</a>
+        </li>
+        <li>
+            <a href="#">服务中心交易统计</a>
+        </li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+    #parse("layout/topbtn.vm")
+    <!-- /.nav-search -->
+</div>
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="clearfix">
+                        <div class="input-group pull-right col-md-12 col-sm-12 col-lg-12 search-bar">
+                            <label>时间：</label>
+                            <select id="tradetimespan">
+                                #if($timeList)
+                                    #foreach($item in $timeList)
+                                        <option value="$!{item}">$!{item}</option>
+                                    #end
+                                #end
+                            </select>
+                            <input type="hidden" value="$!{timeList[0]}" id="timespanvalue"/>
+                            <button id="queryBtn" class="btn btn-sm btn-default" type="button" title="搜索">
+                                <i class="aace-icon fa fa-search bigger-110"></i>搜索
+                            </button>
+                            <button id="exportexcel" class="btn btn-sm btn-default none" type="button" title="导出excel">
+                                <i class="aace-icon fa fa-search bigger-110"></i>导出excel
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- div.dataTables_borderWrap -->
+                    <div>
+                        <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th class="center" rowspan="2" width="2%"></th>
+                                <th rowspan="2">服务中心</th>
+                                <th rowspan="2">备用金额度(元)</th>
+                                <th rowspan="2">备用金已用额度(元)</th>
+                                <th rowspan="2">交易员人数</th>
+                                <th rowspan="2">交易总笔数</th>
+                                <th rowspan="2">品牌店交易笔数占比</th>
+                                <th rowspan="2">交易总金额(元)</th>
+                                <th rowspan="2">交易总重量(吨)</th>
+                                <th rowspan="2">平均每笔交易重量(吨)</th>
+                                <th rowspan="2">交易买家数</th>
+                                <th colspan="2">月采购三次以上买家</th>
+                                <th colspan="2">新客户数</th>
+                                <th colspan="3">品牌店卖家交易数据</th>
+                                <th colspan="3">非品牌店卖家交易数据</th>
+                            </tr>
+                            <tr>
+                                <th>当月</th>
+                                <th>上月</th>
+                                <th>卖家</th>
+                                <th>买家</th>
+                                <th>交易卖家数</th>
+                                <th>交易笔数</th>
+                                <th>交易总重量(吨)</th>
+                                <th>交易卖家数</th>
+                                <th>交易笔数</th>
+                                <th>交易总重量(吨)</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+<script src="$link.getContextPath()/js/views/report/business/tradestatistics.js"></script>

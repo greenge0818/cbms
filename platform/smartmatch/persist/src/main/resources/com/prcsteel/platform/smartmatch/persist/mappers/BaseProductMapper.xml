@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.smartmatch.persist.dao.BaseProductDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.smartmatch.model.model.BaseProduct" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="category_uuid" property="categoryUuid" jdbcType="VARCHAR" />
+    <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+    <result column="material_uuid" property="materialUuid" jdbcType="VARCHAR" />
+    <result column="material_name" property="materialName" jdbcType="VARCHAR" />
+    <result column="spec1" property="spec1" jdbcType="VARCHAR" />
+    <result column="spec2" property="spec2" jdbcType="VARCHAR" />
+    <result column="spec3" property="spec3" jdbcType="VARCHAR" />
+    <result column="spec" property="spec" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="factory_id" property="factoryId" jdbcType="BIGINT" />
+    <result column="factory_name" property="factoryName" jdbcType="VARCHAR" />
+    <result column="city_id" property="cityId" jdbcType="BIGINT" />
+    <result column="city_name" property="cityName" jdbcType="VARCHAR" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="BIGINT" />
+    <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+    <result column="weight_concept" property="weightConcept" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+    <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+    <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, category_uuid, category_name, material_uuid, material_name, spec1, spec2, spec3, price,
+    spec, factory_id, factory_name, city_id, city_name, warehouse_id, warehouse_name, 
+    weight_concept, created, created_by, last_updated, last_updated_by, modification_number, 
+    row_id, parent_row_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from base_product
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from base_product
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.prcsteel.platform.smartmatch.model.model.BaseProduct" >
+    insert into base_product (id, category_uuid, category_name, 
+      material_uuid, material_name, spec1, 
+      spec2, spec3, spec, price, factory_id, 
+      factory_name, city_id, city_name, 
+      warehouse_id, warehouse_name, weight_concept, 
+      created, created_by, last_updated, 
+      last_updated_by, modification_number, row_id, 
+      parent_row_id)
+    values (#{id,jdbcType=INTEGER}, #{categoryUuid,jdbcType=VARCHAR}, #{categoryName,jdbcType=VARCHAR}, 
+      #{materialUuid,jdbcType=VARCHAR}, #{materialName,jdbcType=VARCHAR}, #{spec1,jdbcType=VARCHAR}, 
+      #{spec2,jdbcType=VARCHAR}, #{spec3,jdbcType=VARCHAR}, #{spec,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
+      #{factoryId,jdbcType=BIGINT}, #{factoryName,jdbcType=VARCHAR}, #{cityId,jdbcType=BIGINT}, #{cityName,jdbcType=VARCHAR}, 
+      #{warehouseId,jdbcType=BIGINT}, #{warehouseName,jdbcType=VARCHAR}, #{weightConcept,jdbcType=VARCHAR}, 
+      #{created,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, #{lastUpdated,jdbcType=TIMESTAMP}, 
+      #{lastUpdatedBy,jdbcType=VARCHAR}, #{modificationNumber,jdbcType=INTEGER}, #{rowId,jdbcType=VARCHAR}, 
+      #{parentRowId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.smartmatch.model.model.BaseProduct" >
+    insert into base_product
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="categoryUuid != null" >
+        category_uuid,
+      </if>
+      <if test="categoryName != null" >
+        category_name,
+      </if>
+      <if test="materialUuid != null" >
+        material_uuid,
+      </if>
+      <if test="materialName != null" >
+        material_name,
+      </if>
+      <if test="spec1 != null" >
+        spec1,
+      </if>
+      <if test="spec2 != null" >
+        spec2,
+      </if>
+      <if test="spec3 != null" >
+        spec3,
+      </if>
+      <if test="spec != null" >
+        spec,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="factoryId != null" >
+        factory_id,
+      </if>
+      <if test="factoryName != null" >
+        factory_name,
+      </if>
+      <if test="cityId != null" >
+        city_id,
+      </if>
+      <if test="cityName != null" >
+        city_name,
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id,
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name,
+      </if>
+      <if test="weightConcept != null" >
+        weight_concept,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by,
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number,
+      </if>
+      <if test="rowId != null" >
+        row_id,
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="categoryUuid != null" >
+        #{categoryUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryName != null" >
+        #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="materialUuid != null" >
+        #{materialUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="materialName != null" >
+        #{materialName,jdbcType=VARCHAR},
+      </if>
+      <if test="spec1 != null" >
+        #{spec1,jdbcType=VARCHAR},
+      </if>
+      <if test="spec2 != null" >
+        #{spec2,jdbcType=VARCHAR},
+      </if>
+      <if test="spec3 != null" >
+        #{spec3,jdbcType=VARCHAR},
+      </if>
+      <if test="spec != null" >
+        #{spec,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="factoryId != null" >
+        #{factoryId,jdbcType=BIGINT},
+      </if>
+      <if test="factoryName != null" >
+        #{factoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null" >
+        #{cityId,jdbcType=BIGINT},
+      </if>
+      <if test="cityName != null" >
+        #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseId != null" >
+        #{warehouseId,jdbcType=BIGINT},
+      </if>
+      <if test="warehouseName != null" >
+        #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="weightConcept != null" >
+        #{weightConcept,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        #{parentRowId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+		SELECT LAST_INSERT_ID() AS id
+	</selectKey>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.smartmatch.model.model.BaseProduct" >
+    update base_product
+    <set >
+      <if test="categoryUuid != null" >
+        category_uuid = #{categoryUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryName != null" >
+        category_name = #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="materialUuid != null" >
+        material_uuid = #{materialUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="materialName != null" >
+        material_name = #{materialName,jdbcType=VARCHAR},
+      </if>
+      <if test="spec1 != null" >
+        spec1 = #{spec1,jdbcType=VARCHAR},
+      </if>
+      <if test="spec2 != null" >
+        spec2 = #{spec2,jdbcType=VARCHAR},
+      </if>
+      <if test="spec3 != null" >
+        spec3 = #{spec3,jdbcType=VARCHAR},
+      </if>
+      <if test="spec != null" >
+        spec = #{spec,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="factoryId != null" >
+        factory_id = #{factoryId,jdbcType=BIGINT},
+      </if>
+      <if test="factoryName != null" >
+        factory_name = #{factoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null" >
+        city_id = #{cityId,jdbcType=BIGINT},
+      </if>
+      <if test="cityName != null" >
+        city_name = #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id = #{warehouseId,jdbcType=BIGINT},
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="weightConcept != null" >
+        weight_concept = #{weightConcept,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number = #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        row_id = #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.smartmatch.model.model.BaseProduct" >
+    update base_product
+    set category_uuid = #{categoryUuid,jdbcType=VARCHAR},
+      category_name = #{categoryName,jdbcType=VARCHAR},
+      material_uuid = #{materialUuid,jdbcType=VARCHAR},
+      material_name = #{materialName,jdbcType=VARCHAR},
+      spec1 = #{spec1,jdbcType=VARCHAR},
+      spec2 = #{spec2,jdbcType=VARCHAR},
+      spec3 = #{spec3,jdbcType=VARCHAR},
+      spec = #{spec,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      factory_id = #{factoryId,jdbcType=BIGINT},
+      factory_name = #{factoryName,jdbcType=VARCHAR},
+      city_id = #{cityId,jdbcType=BIGINT},
+      city_name = #{cityName,jdbcType=VARCHAR},
+      warehouse_id = #{warehouseId,jdbcType=BIGINT},
+      warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      weight_concept = #{weightConcept,jdbcType=VARCHAR},
+      created = #{created,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      modification_number = #{modificationNumber,jdbcType=INTEGER},
+      row_id = #{rowId,jdbcType=VARCHAR},
+      parent_row_id = #{parentRowId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+   <resultMap id="BaseDtoMap" type="com.prcsteel.platform.smartmatch.model.dto.BaseProductDto" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="category_uuid" property="categoryUuid" jdbcType="VARCHAR" />
+    <result column="material_uuid" property="materialUuid" jdbcType="VARCHAR" />
+    <result column="material_name" property="materialName" jdbcType="VARCHAR" />
+    <result column="spec_length" property="specLength" jdbcType="VARCHAR" />
+    <result column="spec_width" property="specWidth" jdbcType="VARCHAR" />
+    <result column="spec_height" property="specHeight" jdbcType="VARCHAR" />
+    <result column="factory_id" property="factoryId" jdbcType="BIGINT" />
+    <result column="factory_name" property="factoryName" jdbcType="VARCHAR" />
+    <result column="city_id" property="cityId" jdbcType="BIGINT" />
+    <result column="city_name" property="cityName" jdbcType="VARCHAR" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="BIGINT" />
+    <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+    <result column="account_id" property="accountId" jdbcType="BIGINT" />
+    <result column="weight" property="weight" jdbcType="DECIMAL" />
+    <result column="weight_concept" property="weightConcept" jdbcType="VARCHAR" />
+    <result column="quantity" property="quantity" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+  </resultMap>
+
+  <select id="selectBaseProductForSave" resultMap="BaseDtoMap" parameterType="com.prcsteel.platform.smartmatch.model.dto.ResourceDto" >
+  	SELECT 
+	  	t1.id, t1.category_uuid, t1.material_uuid, t1.material_name, t1.spec1, t1.spec2, t1.spec3,
+	  	t1.factory_id, t1.factory_name, t1.city_id, t1.city_name, t1.warehouse_id, 
+	  	t1.warehouse_name, t1.price
+  	FROM base_product t1
+  	<where>
+      <if test="warehouseId != null and warehouseId != ''">
+        AND t1.warehouse_Id = #{warehouseId}
+      </if>
+      <if test="warehouseId == null and warehouseName != null">
+        AND t1.warehouse_name = #{warehouseName}
+      </if>
+      <if test="categoryUuid != null and categoryUuid != ''">
+        AND t1.category_uuid = #{categoryUuid}
+      </if>
+      <if test="materialUuid != null and materialUuid != ''">
+        AND t1.material_Uuid = #{materialUuid}
+      </if>
+      <if test="materialUuid == null">
+        <if test="materialName != null and materialName != ''">
+          AND t1.material_name = #{materialName}
+        </if>
+      </if>
+      <if test="factoryId != null and factoryId != ''">
+        AND t1.factory_Id = #{factoryId}
+      </if>
+      <if test="factoryId == null and factoryName != null">
+        AND t1.factory_name = #{factoryName}
+      </if>
+      <if test="spec != '' and spec != null">
+        AND t1.spec = #{spec}
+      </if>
+      <if test="weightConcept != '' and weightConcept != null">
+        AND t1.weight_concept = #{weightConcept}
+      </if>
+      <if test="cityId != '' and cityId != null">
+        AND t1.city_id = #{cityId}
+      </if>
+  	</where>
+  	order by t1.last_updated desc
+	limit 1
+  </select>
+</mapper>

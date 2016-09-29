@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<toolbox>
+	<xhtml>true</xhtml>
+	<tool>
+		<key>link</key>
+		<scope>request</scope>
+		<class>org.apache.velocity.tools.view.tools.LinkTool</class>
+	</tool>
+
+	<!-- 在前台页面中需要显示时间的地方添加这样的代码： 例如：要显示的时间为：$!user.time 那么添加的代码为： $!date.format('yyyy-MM-dd 
+		HH:mm:ss ',$!user.time) 其中'yyyy-MM-dd HH:mm:ss '格式可以自己定义。 -->
+	<tool>
+		<key>date</key>
+		<scope>application</scope>
+		<class>org.apache.velocity.tools.generic.DateTool</class>
+	</tool>
+    <tool>  
+        <key>NumberTool</key>  
+        <scope>application</scope>  
+        <class>com.prcsteel.platform.common.utils.NumberTool</class>
+    </tool>
+    <tool>
+	     <key>math</key>
+	     <scope>application</scope>
+	     <class>org.apache.velocity.tools.generic.MathTool</class>
+	</tool>
+    <tool>
+	     <key>cbmsNumberUtil</key>
+	     <scope>application</scope>
+	     <class>com.prcsteel.platform.common.utils.CbmsNumberUtil</class>
+	</tool>
+</toolbox>

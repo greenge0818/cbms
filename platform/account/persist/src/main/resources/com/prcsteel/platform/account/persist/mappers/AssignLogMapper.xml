@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.account.persist.dao.AssignLogDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.account.model.model.AssignLog" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="account_id" property="accountId" jdbcType="BIGINT" />
+    <result column="reg_time" property="regTime" jdbcType="TIMESTAMP" />
+    <result column="manager_ex_id" property="managerExId" jdbcType="BIGINT" />
+    <result column="manager_ex_name" property="managerExName" jdbcType="VARCHAR" />
+    <result column="manager_next_id" property="managerNextId" jdbcType="BIGINT" />
+    <result column="manager_next_name" property="managerNextName" jdbcType="VARCHAR" />
+    <result column="assigner_id" property="assignerId" jdbcType="BIGINT" />
+    <result column="assigner_name" property="assignerName" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="CHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+    <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+    <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+    <result column="name" property="accountName" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="query" resultMap="BaseResultMap">
+    select t1.*,t2.name
+   from cust_account_assign_logs t1 inner join cust_account t2
+    on t2.id=t1.account_id
+    where t1.account_id = #{accountId,jdbcType=BIGINT}
+   order by t1.created desc
+    limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER}
+  </select>
+  <select id="count" resultType="java.lang.Integer">
+    select count(id) from cust_account_assign_logs where account_id = #{accountId,jdbcType=BIGINT}
+  </select>
+</mapper>

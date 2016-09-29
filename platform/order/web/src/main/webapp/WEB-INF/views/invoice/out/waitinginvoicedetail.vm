@@ -1,0 +1,94 @@
+<div class="breadcrumbs" id="breadcrumbs">
+	<script type="text/javascript">
+		try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+	</script>
+
+	<ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>发票管理
+        </li>
+        <li>销项票管理</li>
+		<li>待开票</li>
+	</ul><!-- /.breadcrumb -->
+
+		#parse("layout/topbtn.vm")<!-- /.nav-search -->
+</div>
+
+<div class="page-content">
+	<form id="ser">
+	<div class="row">
+		<div class="col-xs-12">
+			<!--TAPBAR-->
+			<div class="tabbar order-tab">
+				<ul class="nav nav-tabs padding-12 tab-color-blue" id="myTab4">
+					<li>
+						<a  href="vendorlist.html">待审核开票资料<span class="red"></span></a>
+					</li>
+					<li>
+						<a href="vendoruser.html">待申请开票<span class="red"></span></a>
+					</li>
+					<li>
+						<a data-toggle="tab">待申请审核<span class="red"></span></a>
+					</li>
+					<li class="active">
+						<a data-toggle="tab">待开票<span class="red">($!{counts})</span></a>
+					</li>
+					<li>
+						<a data-toggle="tab">已开票</a>
+					</li>
+					<li>
+						<a data-toggle="tab">待寄出<span class="red"></span></a>
+					</li>
+					<li>
+						<a data-toggle="tab">待确认<span class="red"></span></a>                                      
+					</li>
+					<li>
+						<a data-toggle="tab">已确认</a>
+					</li>
+				</ul>
+			</div>
+		
+			<!-- div.table-bar -->
+			<div class="col-sm-12 print-finfo">
+				<div class="pull-left btn-bar ">
+					<button class="btn btn-primary btn-sm" type="button" id="excelBtn" title="">导出全部到EXCEL</button>
+				</div>
+				<div class="pull-right btn-bar ">
+					<label>导出时间：</label>
+                    <input id="startTime" class="ipt-text" type="text" value=""
+                           onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')||\'2020-10-01\'}'})"/> -
+                    <input id="endTime" class="ipt-text" type="text" value=""
+                           onFocus="WdatePicker({minDate:'#F{$dp.$D(\'startTime\')}',maxDate:'2020-10-01'})"/>
+					<button class="btn btn-primary btn-sm" type="button" id="download" title="">下载</button>
+				</div>
+			</div>
+			<input type="hidden" id="invoicoutMainId" value="$!{id}"/>
+			<div class="table-bar col-sm-12">
+			<span class="bolder">$!{buyerName}</span>
+				<table id="dynamic-table" class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>编号</th>
+							<th>品名</th>
+							<th>规格</th>
+							<th>材质</th>
+							<th>数量(吨)</th>
+							<th>单价(元)</th>
+							<th>金额(元)</th>
+							<th>税额(元)</th>
+							<th>价税合计(元)</th>
+							<th>服务中心</th>
+							<th>提交时间</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+	</div>
+	</form>
+</div><!-- /.page-content -->
+<div class=" recordbar col-xs-12" text-left" style="text-align:left">
+ 	<a href="javascript :;" onClick="javascript :history.back(-1);">返回</a>
+</div>
+<script src="$link.getContextPath()/js/views/invoice/out/waitinginvoicedetail.js"></script>
+<script src="$link.getContextPath()/js/views/invoice/out/outexcebyid.js"></script>

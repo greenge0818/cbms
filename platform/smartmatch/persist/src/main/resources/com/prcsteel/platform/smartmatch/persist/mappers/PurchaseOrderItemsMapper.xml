@@ -1,0 +1,1212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.smartmatch.persist.dao.PurchaseOrderItemsDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.smartmatch.model.model.PurchaseOrderItems" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="purchase_order_id" property="purchaseOrderId" jdbcType="BIGINT" />
+    <result column="category_uuid" property="categoryUuid" jdbcType="VARCHAR" />
+    <result column="material_uuid" property="materialUuid" jdbcType="VARCHAR" />
+    <result column="spec1" property="spec1" jdbcType="VARCHAR" />
+    <result column="spec2" property="spec2" jdbcType="VARCHAR" />
+    <result column="spec3" property="spec3" jdbcType="VARCHAR" />
+    <result column="spec4" property="spec4" jdbcType="VARCHAR" />
+    <result column="spec5" property="spec5" jdbcType="VARCHAR" />
+    <result column="factory_ids" property="factoryIds" jdbcType="VARCHAR" />
+    <result column="weight" property="weight" jdbcType="DECIMAL" />
+    <result column="quantity" property="quantity" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+    <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+    <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+    <result column="ext1" property="ext1" jdbcType="VARCHAR" />
+    <result column="ext2" property="ext2" jdbcType="VARCHAR" />
+    <result column="ext3" property="ext3" jdbcType="VARCHAR" />
+    <result column="ext4" property="ext4" jdbcType="INTEGER" />
+    <result column="ext5" property="ext5" jdbcType="INTEGER" />
+    <result column="ext6" property="ext6" jdbcType="INTEGER" />
+    <result column="ext7" property="ext7" jdbcType="TIMESTAMP" />
+    <result column="ext8" property="ext8" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, purchase_order_id, category_uuid, material_uuid, spec1, spec2, spec3, spec4,
+    spec5, factory_ids, weight, quantity, created, created_by, last_updated, last_updated_by, modification_number,
+    row_id, parent_row_id, ext1, ext2, ext3, ext4, ext5, ext6, ext7, ext8
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from busi_purchase_order_items
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from busi_purchase_order_items
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.prcsteel.platform.smartmatch.model.model.PurchaseOrderItems" >
+    insert into busi_purchase_order_items (id, purchase_order_id, category_uuid,
+      material_uuid, spec1, spec2,
+      spec3, spec4, spec5,
+      factory_ids, weight, quantity, created, created_by,
+      last_updated, last_updated_by, modification_number,
+      row_id, parent_row_id, ext1,
+      ext2, ext3, ext4, ext5,
+      ext6, ext7, ext8)
+    values (#{id,jdbcType=BIGINT}, #{purchaseOrderId,jdbcType=BIGINT}, #{categoryUuid,jdbcType=VARCHAR},
+      #{materialUuid,jdbcType=VARCHAR}, #{spec1,jdbcType=VARCHAR}, #{spec2,jdbcType=VARCHAR},
+      #{spec3,jdbcType=VARCHAR}, #{spec4,jdbcType=VARCHAR}, #{spec5,jdbcType=VARCHAR},
+      #{factoryIds,jdbcType=VARCHAR}, #{weight}, #{quantity}, #{created,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR},
+      #{lastUpdated,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}, #{modificationNumber,jdbcType=INTEGER},
+      #{rowId,jdbcType=VARCHAR}, #{parentRowId,jdbcType=VARCHAR}, #{ext1,jdbcType=VARCHAR},
+      #{ext2,jdbcType=VARCHAR}, #{ext3,jdbcType=VARCHAR}, #{ext4,jdbcType=INTEGER}, #{ext5,jdbcType=INTEGER},
+      #{ext6,jdbcType=INTEGER}, #{ext7,jdbcType=TIMESTAMP}, #{ext8,jdbcType=BIGINT})
+  </insert>
+  <!--modify by zhoucai@prcsteel.com 新增分拣计重方式 2016-9-13 -->
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.smartmatch.model.model.PurchaseOrderItems" useGeneratedKeys="true" keyProperty="id">
+    insert into busi_purchase_order_items
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="purchaseOrderId != null" >
+        purchase_order_id,
+      </if>
+      <if test="categoryUuid != null" >
+        category_uuid,
+      </if>
+      <if test="categoryName != null" >
+        category_name,
+      </if>
+      <if test="materialUuid != null" >
+        material_uuid,
+      </if>
+      <if test="materialName != null" >
+        material_name,
+      </if>
+      <if test="spec1 != null" >
+        spec1,
+      </if>
+      <if test="spec2 != null" >
+        spec2,
+      </if>
+      <if test="spec3 != null" >
+        spec3,
+      </if>
+      <if test="spec4 != null" >
+        spec4,
+      </if>
+      <if test="spec5 != null" >
+        spec5,
+      </if>
+      <if test="factoryIds != null" >
+        factory_ids,
+      </if>
+      <if test="factoryNames != null" >
+        factory_names,
+      </if>
+      <if test="weight != null" >
+        weight,
+      </if>
+      <if test="quantity != null" >
+        quantity,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by,
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number,
+      </if>
+      <if test="rowId != null" >
+        row_id,
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id,
+      </if>
+      <if test="ext1 != null" >
+        ext1,
+      </if>
+      <if test="ext2 != null" >
+        ext2,
+      </if>
+      <if test="ext3 != null" >
+        ext3,
+      </if>
+      <if test="ext4 != null" >
+        ext4,
+      </if>
+      <if test="ext5 != null" >
+        ext5,
+      </if>
+      <if test="ext6 != null" >
+        ext6,
+      </if>
+      <if test="ext7 != null" >
+        ext7,
+      </if>
+      <if test="ext8 != null" >
+        ext8,
+      </if>
+       <if test="remark != null" >
+        remark,
+      </if>
+      <if test="weightConcept != null" >
+        weight_concept,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="purchaseOrderId != null" >
+        #{purchaseOrderId,jdbcType=BIGINT},
+      </if>
+      <if test="categoryUuid != null" >
+        #{categoryUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryName != null" >
+        #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="materialUuid != null" >
+        #{materialUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="materialName != null" >
+        #{materialName,jdbcType=VARCHAR},
+      </if>
+      <if test="spec1 != null" >
+        #{spec1,jdbcType=VARCHAR},
+      </if>
+      <if test="spec2 != null" >
+        #{spec2,jdbcType=VARCHAR},
+      </if>
+      <if test="spec3 != null" >
+        #{spec3,jdbcType=VARCHAR},
+      </if>
+      <if test="spec4 != null" >
+        #{spec4,jdbcType=VARCHAR},
+      </if>
+      <if test="spec5 != null" >
+        #{spec5,jdbcType=VARCHAR},
+      </if>
+      <if test="factoryIds != null" >
+        #{factoryIds,jdbcType=VARCHAR},
+      </if>
+      <if test="factoryNames != null" >
+        #{factoryNames,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null" >
+        #{weight},
+      </if>
+      <if test="quantity != null" >
+        #{quantity},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        #{parentRowId,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null" >
+        #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3 != null" >
+        #{ext3,jdbcType=VARCHAR},
+      </if>
+      <if test="ext4 != null" >
+        #{ext4,jdbcType=INTEGER},
+      </if>
+      <if test="ext5 != null" >
+        #{ext5,jdbcType=INTEGER},
+      </if>
+      <if test="ext6 != null" >
+        #{ext6,jdbcType=INTEGER},
+      </if>
+      <if test="ext7 != null" >
+        #{ext7,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ext8 != null" >
+        #{ext8,jdbcType=BIGINT},
+      </if>
+       <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="weightConcept != null" >
+        #{weightConcept,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.smartmatch.model.model.PurchaseOrderItems">
+    update busi_purchase_order_items
+    <set >
+      <if test="purchaseOrderId != null" >
+        purchase_order_id = #{purchaseOrderId,jdbcType=BIGINT},
+      </if>
+      <if test="categoryUuid != null" >
+        category_uuid = #{categoryUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryName != null" >
+        category_name = #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="materialUuid != null" >
+        material_uuid = #{materialUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="materialName != null" >
+        material_name = #{materialName,jdbcType=VARCHAR},
+      </if>
+      <if test="spec1 != null" >
+        spec1 = #{spec1,jdbcType=VARCHAR},
+      </if>
+      <if test="spec2 != null" >
+        spec2 = #{spec2,jdbcType=VARCHAR},
+      </if>
+      <if test="spec3 != null" >
+        spec3 = #{spec3,jdbcType=VARCHAR},
+      </if>
+      <if test="spec4 != null" >
+        spec4 = #{spec4,jdbcType=VARCHAR},
+      </if>
+      <if test="spec5 != null" >
+        spec5 = #{spec5,jdbcType=VARCHAR},
+      </if>
+      <if test="factoryIds != null" >
+        factory_ids = #{factoryIds,jdbcType=VARCHAR},
+      </if>
+      <if test="factoryNames != null" >
+        factory_names = #{factoryNames,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null" >
+        weight = #{weight},
+      </if>
+      <if test="quantity != null" >
+        quantity = #{quantity},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number = #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        row_id = #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null" >
+        ext1 = #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        ext2 = #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3 != null" >
+        ext3 = #{ext3,jdbcType=VARCHAR},
+      </if>
+      <if test="ext4 != null" >
+        ext4 = #{ext4,jdbcType=INTEGER},
+      </if>
+      <if test="ext5 != null" >
+        ext5 = #{ext5,jdbcType=INTEGER},
+      </if>
+      <if test="ext6 != null" >
+        ext6 = #{ext6,jdbcType=INTEGER},
+      </if>
+      <if test="ext7 != null" >
+        ext7 = #{ext7,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ext8 != null" >
+        ext8 = #{ext8,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.smartmatch.model.model.PurchaseOrderItems" >
+    update busi_purchase_order_items
+    set purchase_order_id = #{purchaseOrderId,jdbcType=BIGINT},
+      category_uuid = #{categoryUuid,jdbcType=VARCHAR},
+      material_uuid = #{materialUuid,jdbcType=VARCHAR},
+      spec1 = #{spec1,jdbcType=VARCHAR},
+      spec2 = #{spec2,jdbcType=VARCHAR},
+      spec3 = #{spec3,jdbcType=VARCHAR},
+      spec4 = #{spec4,jdbcType=VARCHAR},
+      spec5 = #{spec5,jdbcType=VARCHAR},
+      factory_ids = #{factoryIds,jdbcType=VARCHAR},
+      weight = #{weight,jdbcType=VARCHAR},
+      quantity = #{quantity},
+      created = #{created,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      modification_number = #{modificationNumber,jdbcType=INTEGER},
+      row_id = #{rowId,jdbcType=VARCHAR},
+      parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      ext1 = #{ext1,jdbcType=VARCHAR},
+      ext2 = #{ext2,jdbcType=VARCHAR},
+      ext3 = #{ext3,jdbcType=VARCHAR},
+      ext4 = #{ext4,jdbcType=INTEGER},
+      ext5 = #{ext5,jdbcType=INTEGER},
+      ext6 = #{ext6,jdbcType=INTEGER},
+      ext7 = #{ext7,jdbcType=TIMESTAMP},
+      ext8 = #{ext8,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="getListByPOId" resultMap="BaseResultMap" parameterType="Long">
+  	select
+  	<include refid="Base_Column_List" />
+  	from busi_purchase_order_items
+  	where
+  	purchase_order_id = #{purchaseOrderId,jdbcType=BIGINT}
+  </select>
+
+  <select id="getListByIds" resultMap="BaseResultMap">
+  	select
+  	<include refid="Base_Column_List" />
+  	from busi_purchase_order_items
+  	where
+  	id in
+  	<foreach collection="itemIds" item="itemId" open="(" separator="," close=")">#{itemId}</foreach>
+  </select>
+  <resultMap type="com.prcsteel.platform.smartmatch.model.dto.SellerMatchWeight" id="sellerMatchWeight">
+  	<result column="sellerId" property="sellerId" jdbcType="BIGINT" />
+  	<result column="sellerName" property="sellerName" jdbcType="VARCHAR" />
+  	<result column="weight" property="weight" jdbcType="DECIMAL" />
+  </resultMap>
+  <select id="getSellerCategoryCoverage" resultMap="sellerMatchWeight">
+  <![CDATA[
+  		select sellerId,sellerName,
+			case when rate is null then null
+			when rate < 0.5 then 0 
+			when rate >=0.5 and rate<0.6 then 0.1
+			when rate>=0.6 and rate<1 then 0.2
+			else 0.3 end as weight
+			from (
+		  		select seller_id as sellerId,
+		  		account.name as sellerName,
+				sum(case when cnt>0 then 1 else 0 end)
+				/ (select count(1) from busi_purchase_order_items where purchase_order_id=#{purchaseOrderId,jdbcType=BIGINT}) as rate
+				FROM
+				(
+				select a.account_id seller_id,b.id ,COUNT(1) cnt
+				from cust_resource a
+				join busi_purchase_order_items b
+				on a.category_uuid=b.category_uuid
+				and FIND_IN_SET(a.material_uuid,b.material_uuid) -- 材质可多选 #6733 redmine
+				and case when b.factory_ids is null or trim(b.factory_ids) = '' then true else FIND_IN_SET(a.factory_id,b.factory_ids) end -- 钢厂允许为空 #6726 redmine
+				join busi_purchase_order po
+				on po.id=b.purchase_order_id
+				
+				
+				join base_warehouse w
+				on a.warehouse_id = w.id and case when purchase_city_ids = '' or purchase_city_ids is null then true else find_in_set(w.city_id,CONCAT(
+					purchase_city_ids,
+					case when purchase_city_ids is null or trim(purchase_city_ids) ='' or purchase_city_other_id is null or trim(purchase_city_other_id) =''
+					then '' else ',' end,
+					purchase_city_other_id )) end
+					
+					
+				left join cust_resource_norms rn1
+				on rn1.resource_id=a.id and rn1.priority=1
+				left join cust_resource_norms rn2
+				on rn2.resource_id=a.id and rn2.priority=2
+				left join cust_resource_norms rn3
+				on rn3.resource_id=a.id and rn3.priority=3
+				where (a.status='approved' ) -- 上架的和历史的
+				]]>
+
+				<if test="purchaseOrderItemIds != null and purchaseOrderItemIds.size>0" >
+				and b.id in <foreach collection="purchaseOrderItemIds" item="purchaseOrderItemId" open="(" separator="," close=")">#{purchaseOrderItemId}</foreach>
+				</if>
+				<![CDATA[
+				and po.id=#{purchaseOrderId,jdbcType=BIGINT}
+				and case when trim(ifnull(b.spec1,''))!='C' and trim(ifnull(b.spec1,''))!='L' then FIND_IN_SET (rn1.`value`,b.spec1) else true end
+				and case when trim(ifnull(b.spec2,''))!='' and trim(ifnull(b.spec2,''))!='C' and trim(ifnull(b.spec2,''))!='L' and rn2.value is not null then
+					case when INSTR(b.spec2,'-')=0 then
+						rn2.value like concat('%',b.spec2,'%')
+					else
+						rn2.value>=SUBSTR(b.spec2,0,INSTR(b.spec2,'-'))*1.0
+						and
+						rn2.value<=SUBSTR(b.spec2,INSTR(b.spec2,'-')+1)*1.0
+					end
+				else true end
+				and case when trim(ifnull(b.spec3,''))!='' and trim(ifnull(b.spec3,''))!='C' and trim(ifnull(b.spec3,''))!='L' and rn3.value is not null then
+					case when INSTR(b.spec3,'-')=0 then
+						rn3.value like concat ('%',b.spec3,'%')
+					else
+						rn3.value>=SUBSTR(b.spec3,0,INSTR(b.spec3,'-'))*1.0
+						and
+						rn3.value<=SUBSTR(b.spec3,INSTR(b.spec3,'-')+1)*1.0
+					end
+				else true end
+				and a.account_id in (${sellers})
+				]]>
+
+				<if test="noSpecificSellerList != null and noSpecificSellerList.size>0" >
+				and a.account_id not in <foreach collection="noSpecificSellerList" item="sellerId" open="(" separator="," close=")">#{sellerId}</foreach>
+			    </if>
+
+		<![CDATA[
+				group by a.account_id,b.id
+				)x,cust_account account
+				where x.seller_id =account.id
+			group by x.seller_id
+			) y
+		]]>
+  </select>
+
+  <select id="getSellerPriceWeight" resultMap="sellerMatchWeight">
+  <![CDATA[
+  	set @num=0;
+	select account.id as sellerId,account.name as sellerName,if(weight>=0.3,0.3,weight) as weight from (
+	select seller_id,sum(cnt)*0.1 as weight FROM(
+	select seller_id,itemId,if(count(1)>0,1,0) cnt from(
+	SELECT -- resource_id,
+	seller_id,itemId ,
+	-- category_name,material_name,
+	-- spec,price,
+	if(@itemId=x.itemId,@num:=@num+1,@num:=1) as rank,@itemId:=x.itemId
+	FROM
+	(
+		select a.account_id seller_id,b.id as itemId,a.price,
+		a.mgt_last_updated last_updated
+		from cust_resource a
+		join busi_purchase_order_items b
+		on a.category_uuid=b.category_uuid
+		-- join busi_purchase_order ba
+		-- on b.purchase_order_id=ba.id
+		and FIND_IN_SET(a.material_uuid,b.material_uuid) -- 材质可多选 #6733 redmine
+		and case when b.factory_ids is null or trim(b.factory_ids) = '' then true else FIND_IN_SET(a.factory_id,b.factory_ids) end -- 钢厂允许为空 #6726 redmine
+		join busi_purchase_order bb
+		on bb.id=b.purchase_order_id
+		join base_warehouse w
+				on a.warehouse_id = w.id and case when purchase_city_ids = '' or purchase_city_ids is null then true else find_in_set(w.city_id,CONCAT(
+					purchase_city_ids,
+					case when purchase_city_ids is null or trim(purchase_city_ids) ='' or purchase_city_other_id is null or trim(purchase_city_other_id) =''
+					then '' else ',' end,
+					purchase_city_other_id )) end
+		left join cust_resource_norms rn1
+		on rn1.resource_id=a.id and rn1.priority=1
+		left join cust_resource_norms rn2
+		on rn2.resource_id=a.id and rn2.priority=2
+		left join cust_resource_norms rn3
+		on rn3.resource_id=a.id and rn3.priority=3
+
+		where (a.status='approved') -- 上架的和历史的
+		and b.purchase_order_id=#{purchaseOrderId,jdbcType=BIGINT}
+		]]>
+		<if test="purchaseOrderItemIds != null and purchaseOrderItemIds.size>0" >
+		and b.id in <foreach collection="purchaseOrderItemIds" item="purchaseOrderItemId" open="(" separator="," close=")">#{purchaseOrderItemId}</foreach>
+		</if>
+		<![CDATA[
+		and a.account_id in (${sellers})
+		and case when trim(ifnull(b.spec1,''))!='C' and trim(ifnull(b.spec1,''))!='L' then FIND_IN_SET (rn1.`value`,b.spec1) else true end
+		and case when trim(ifnull(b.spec2,''))!='' and trim(ifnull(b.spec2,''))!='C' and trim(ifnull(b.spec2,''))!='L' and rn2.value is not null then
+			case when INSTR(b.spec2,'-')=0 then
+				rn2.value like concat('%',b.spec2,'%')
+			else
+				rn2.value>=SUBSTR(b.spec2,0,INSTR(b.spec2,'-'))*1.0
+				and
+				rn2.value<=SUBSTR(b.spec2,INSTR(b.spec2,'-')+1)*1.0
+			end
+		else true end
+		and case when trim(ifnull(b.spec3,''))!='' and trim(ifnull(b.spec3,''))!='C' and trim(ifnull(b.spec3,''))!='L' and rn3.value is not null then
+			case when INSTR(b.spec3,'-')=0 then
+				rn3.value like concat ('%',b.spec3,'%')
+			else
+				rn3.value>=SUBSTR(b.spec3,0,INSTR(b.spec3,'-'))*1.0
+				and
+				rn3.value<=SUBSTR(b.spec3,INSTR(b.spec3,'-')+1)*1.0
+			end
+		else true end
+		]]>
+		<if test="noSpecificSellerList != null and noSpecificSellerList.size>0" >
+		and a.account_id not in <foreach collection="noSpecificSellerList" item="sellerId" open="(" separator="," close=")">#{sellerId}</foreach>
+	    </if>
+	<![CDATA[
+	group by a.id
+	) x	order by itemId	,last_updated, price
+	) y where rank<=3
+	group by seller_id,itemId
+	) z group by seller_id
+	) t, cust_account account
+	where t.seller_id=account.id
+	;
+	set @num=0;
+  	]]>
+  </select>
+
+  <select id="countHistoryTrading" resultType="map" parameterType="list">
+    select seller_id,sum(n) count from(
+    <foreach collection="list" item="q" separator="union all">
+	   SELECT seller_id,COUNT(0) n FROM busi_consign_order bco
+	   LEFT JOIN busi_consign_order_items bcoi ON bcoi.order_id = bco.id
+	   LEFT JOIN common_category cc ON cc.name = bcoi.nsort_name
+	   LEFT JOIN common_materials cm ON cm.name = bcoi.material
+	   <where>
+	   <if test="q.sellers != null and q.sellers!=''" >
+	   bcoi.seller_id IN (${q.sellers})
+	   </if>
+	   <if test="q.orderStatus != null and q.orderStatus.size>0" >
+	    AND bco.status IN <foreach collection="q.orderStatus" item="status" open="(" separator="," close=")">#{status}</foreach>
+	    </if>
+	   AND cc.uuid = #{q.nsortNameUuid}
+	   and FIND_IN_SET(cm.uuid,#{q.materialUuid}) -- 材质可多选 #6733 redmine
+	   <if test="q.factory != null and q.factory.size>0" >
+	    AND factory IN <foreach collection="q.factory" item="factory" open="(" separator="," close=")">#{factory}</foreach>
+	    </if>
+	   <![CDATA[
+	   ${q.sqlOfspec}
+	   AND DATE_SUB(CURDATE(), INTERVAL 1 MONTH ) <= date(bco.created)
+	   ]]>
+	   </where>
+	   group by bcoi.seller_id
+	   
+    </foreach>
+    ) n
+    group by seller_id
+  </select>
+
+  <delete id="deleteByIds" parameterType="java.lang.Long" >
+    delete from busi_purchase_order_items
+    where id in
+   <foreach collection="ids" item="id" open="(" separator="," close=")">#{id}</foreach>
+  </delete>
+
+  <resultMap id="SearchResultItemsDto" type="com.prcsteel.platform.smartmatch.model.dto.SearchResultItemsDto" >
+    <result column="purchase_order_id" property="purchaseOrderId" jdbcType="BIGINT" />
+    <result column="purchase_order_item_id" property="purchaseOrderItemId" jdbcType="BIGINT" />
+    <result column="inquiry_order_item_id" property="inquiryOrderItemId" jdbcType="BIGINT" />
+    <result column="resource_id" property="resourceId" jdbcType="BIGINT" />
+    <result column="factory_id" property="factoryId" jdbcType="BIGINT" />
+    <result column="factory_name" property="factoryName" jdbcType="VARCHAR" />
+    <result column="category_uuid" property="categoryUuid" jdbcType="VARCHAR" />
+    <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+    <result column="material_uuid" property="materialUuid" jdbcType="VARCHAR" />
+    <result column="material_name" property="materialName" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="purchase_weight" property="purchaseWeight" jdbcType="DECIMAL" />
+    <result column="purchase_quantity" property="purchaseQuantity" jdbcType="INTEGER" />
+    <result column="result_quantity" property="resultQuantity" jdbcType="INTEGER" />
+    <result column="result_weight" property="resultWeight" jdbcType="DECIMAL" />
+    <result column="spec" property="spec" jdbcType="VARCHAR" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="BIGINT" />
+    <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+    <result column="warehouse_city_id" property="warehouseCityId" jdbcType="BIGINT" />
+    <result column="warehouse_city_name" property="warehouseCityName" jdbcType="VARCHAR" />
+    <result column="weight_concept" property="weightConcept" jdbcType="VARCHAR" />
+    <result  column="single_weight" property="singleWeight" jdbcType="DECIMAL" />
+	<result column="is_ok" property="isOK" jdbcType="INTEGER" />
+	<result column="purchase_spec" property="purchaseSpec" jdbcType="VARCHAR" />
+	<result column="purchase_factory_ids" property="purchaseFactoryIds" jdbcType="VARCHAR" />
+	<result column="purchase_factory_names" property="purchaseFactoryNames" jdbcType="VARCHAR" />
+	<result column="purchase_spec_length" property="purchaseSpecLength" jdbcType="INTEGER" />
+	<result column="common_spec_length" property="commonSpecLength" jdbcType="INTEGER" />
+	<result column="status" property="status" jdbcType="VARCHAR" />
+	<result column="purchase_material_uuids" property="purchaseMaterialUuids" jdbcType="VARCHAR" />
+	<result column="purchase_material_names" property="purchaseMaterialNames" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <!-- 筛选卖家的所有资源 -->
+  <select id="queryResourceItems" resultMap="SearchResultItemsDto">
+  <![CDATA[
+  	set @num=0;
+	  	select *,null inquiry_order_item_id,
+		LENGTH(purchase_spec) - LENGTH( REPLACE(REPLACE(REPLACE(purchase_spec,'*',''),',',''),'-',''))+1 purchase_spec_length,
+		LENGTH(common_spec) - LENGTH( REPLACE(common_spec,'*',''))+1 common_spec_length,
+		if(abs(result_weight-purchase_weight)/purchase_weight<=0.15,1,0) is_ok
+		from (
+			select poi.id as purchase_order_item_id,poi.weight purchase_weight,poi.quantity purchase_quantity,poi.factory_ids purchase_factory_ids,
+			poi.factory_names purchase_factory_names,
+			-- CONCAT(poi.spec1,'*',poi.spec2,'*',poi.spec3) purchase_spec,
+
+			CONCAT(poi.spec1,if(ifnull(poi.spec2,'')='','','*'),ifnull(poi.spec2,''),if(ifnull(poi.spec3,'')='','','*'),ifnull(poi.spec3,'')) purchase_spec,
+			
+			(select GROUP_CONCAT(norms_uuid SEPARATOR '*') from common_category_norms where category_uuid=poi.category_uuid) common_spec,
+			poi.factory_Ids purchase_factoryIds,
+			poi.category_uuid category_uuid,(select name from common_category where uuid =poi.category_uuid) category_name,
+			z.material_uuid_inner material_uuid,z.material_name_inner material_name,
+			poi.material_uuid purchase_material_uuids,
+			poi.material_name purchase_material_names,
+			z.*,
+			-- if(poi.weight>z.stock_weight,z.stock_weight,poi.weight) weight,
+			case when z.resource_id is null then 0 
+				else case when z.single_weight is null then 0 
+						 else CEILING(poi.weight/single_weight) end
+			end result_quantity,
+			case when z.resource_id is null then 0
+				else case when z.single_weight is null then poi.weight else CEILING(poi.weight/single_weight)*single_weight end 
+			end result_weight
+			-- 这里有个问题，就是卖家货不够买家要求的时候会出现result大于purchase，这是因为计算的时候是按ceiling来取，虽然按两者中小的值在计算，但是ceiling的话会超出卖家的库存值
+			FROM
+			busi_purchase_order_items poi
+			left join (
+			select pp.*,caw.single_weight FROM(
+			select * from(
+				SELECT *,
+				if(@itemId=x.purchase_order_item_id_inner,@num:=@num+1,@num:=1) as rank,@itemId:=x.purchase_order_item_id_inner
+				FROM
+				(
+					select
+					-- a.account_id seller_id,
+					b.id as purchase_order_item_id_inner,
+					-- if(LOCATE(',',ifnull(b.spec1,''))>0,0,1) isSpec1Fixed,
+					-- if(LOCATE('-',ifnull(b.spec2,''))>0,0,1) isSpec2Fixed,
+					-- if(LOCATE('-',ifnull(b.spec3,''))>0,0,1) isSpec3Fixed,
+					a.mgt_last_updated last_updated,
+					a.price,
+					a.id resource_id,
+					bb.id purchase_order_id,
+					-- e.seller_id,e.seller_name,
+					c.uuid category_uuid_inner,c.name category_name_inner,
+					d.uuid material_uuid_inner,d.name material_name_inner,
+					f.id factory_id,f.name factory_name,
+					g.id warehouse_id,g.name warehouse_name,
+					h.id warehouse_city_id,h.name warehouse_city_name,
+					
+					CONCAT(ifnull(rn1.`value`,''),if(ifnull(rn2.`value`,'')!='','*',''),ifnull(rn2.`value`,''),if(ifnull(rn3.`value`,'')!='','*',''),ifnull(rn3.`value`,'')) spec,
+					a.weight_concept,
+					a.weight stock_weight,
+					a.status
+					from cust_resource a
+					join busi_purchase_order_items b
+					on a.category_uuid=b.category_uuid
+					and FIND_IN_SET(a.material_uuid,b.material_uuid) -- 材质可多选 #6733 redmine
+					and case when b.factory_ids is null or trim(b.factory_ids) = '' then true else FIND_IN_SET(a.factory_id,b.factory_ids) end -- 钢厂允许为空 #6726 redmine
+					join busi_purchase_order bb
+					on bb.id=b.purchase_order_id
+					left join common_category c
+					on a.category_uuid =c.uuid
+					left join common_materials d
+					on a.material_uuid =d.uuid
+					left join base_factory f
+					on a.factory_id=f.id
+					left join base_warehouse g
+					on a.warehouse_id=g.id 
+					and case when purchase_city_ids = '' or purchase_city_ids is null then true else find_in_set(g.city_id,CONCAT(
+					purchase_city_ids,
+					case when purchase_city_ids is null or trim(purchase_city_ids) ='' or purchase_city_other_id is null or trim(purchase_city_other_id) =''
+					then '' else ',' end,
+					purchase_city_other_id )) end
+					left join base_city h
+					on g.city_id=h.id
+					left join cust_resource_norms rn1
+					on rn1.resource_id=a.id and rn1.priority=1
+					left join cust_resource_norms rn2
+					on rn2.resource_id=a.id and rn2.priority=2
+					left join cust_resource_norms rn3
+					on rn3.resource_id=a.id and rn3.priority=3
+					where (a.status='approved') -- 上架的和历史的
+					and b.purchase_order_id=#{purchaseOrderId}
+					and a.account_id=#{specificSellerId}
+					and case when trim(ifnull(b.spec1,''))!='C' and trim(ifnull(b.spec1,''))!='L' then FIND_IN_SET (rn1.`value`,b.spec1) else true end
+					and case when trim(ifnull(b.spec2,''))!='' and trim(ifnull(b.spec2,''))!='C' and trim(ifnull(b.spec2,''))!='L' and rn2.value is not null then
+						case when INSTR(b.spec2,'-')=0 then
+							rn2.value like concat('%',b.spec2,'%')
+						else
+							rn2.value>=SUBSTR(b.spec2,0,INSTR(b.spec2,'-'))*1.0
+							and
+							rn2.value<=SUBSTR(b.spec2,INSTR(b.spec2,'-')+1)*1.0
+						end
+					else true end
+					and case when trim(ifnull(b.spec3,''))!='' and trim(ifnull(b.spec3,''))!='C' and trim(ifnull(b.spec3,''))!='L' and rn3.value is not null then
+						case when INSTR(b.spec3,'-')=0 then
+							rn3.value like concat ('%',b.spec3,'%')
+						else
+							rn3.value>=SUBSTR(b.spec3,0,INSTR(b.spec3,'-'))*1.0
+							and
+							rn3.value<=SUBSTR(b.spec3,INSTR(b.spec3,'-')+1)*1.0
+						end
+					else true end
+				) x	order by last_updated desc,purchase_order_item_id_inner,price
+				) y where rank=1
+			) pp
+			left join common_category_weight caw
+			on pp.category_uuid_inner=caw.category_uuid
+			-- and pp.material_uuid_inner=caw.material_uuid
+			and pp.factory_id=caw.factory_id
+			and pp.spec=caw.norms_name
+			) z on poi.id=z.purchase_order_item_id_inner
+			-- left join common_category as cc on poi.category_uuid = cc.uuid
+			-- left join common_materials as cm on poi.material_uuid = cm.uuid
+			where poi.purchase_order_id=#{purchaseOrderId}
+		) t;
+		set @num=0;
+	 ]]>
+  </select>
+
+  <select id="getListByPurchaseOrderId" resultMap="com.prcsteel.platform.smartmatch.persist.dao.PurchaseOrderDao.PurchaseListBaseResultMap" parameterType="long">
+   SELECT pur.id,pur.buyer_name buyerName,pur.contact contact,pur.tel tel,code,pur.created createdTime,pur.total_weight totalWeight,user.name ownerName,
+           pur.remark remark,org.name orgName,city.name deliveryName,x.categoryName categoryName,x.materialName materialName
+    FROM busi_purchase_order pur
+    LEFT JOIN(SELECT purchase_order_id pid,cate.name categoryName,mat.name materialName
+              FROM busi_purchase_order_items items,common_category cate,common_materials mat
+              WHERE cate.uuid=items.category_uuid and mat.uuid=items.material_uuid)x ON x.pid=pur.id
+    LEFT JOIN base_organization org ON pur.org_id=org.id
+    LEFT JOIN acl_user user ON pur.owner_id=user.id
+    LEFT JOIN base_city city ON pur.delivery_city_id=city.id
+    WHERE pur.id=#{id,jdbcType=BIGINT}
+  </select>
+
+  <resultMap id="PurchaseOrderItemsDto" type="com.prcsteel.platform.smartmatch.model.dto.PurchaseOrderItemsDto" extends="BaseResultMap">
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="sort_uuid" property="sortUuid" jdbcType="VARCHAR" />
+    <result column="category_uuid" property="categoryUuid" jdbcType="VARCHAR" />
+    <result column="material_uuid" property="materialUuid" jdbcType="VARCHAR" />
+    <result column="spec1" property="spec1" jdbcType="VARCHAR" />
+    <result column="spec2" property="spec2" jdbcType="VARCHAR" />
+    <result column="spec3" property="spec3" jdbcType="VARCHAR" />
+    <result column="factory_ids" property="factoryIds" jdbcType="VARCHAR" />
+    <result column="factory_names" property="factoryNames" jdbcType="VARCHAR" />
+    <result column="weight" property="weight" jdbcType="DECIMAL" />
+   	<result column="remark" property="remark" jdbcType="VARCHAR" /> 
+  </resultMap>
+  <select id="getItemsByPurchaseOrderId" resultMap="PurchaseOrderItemsDto" parameterType="java.lang.Long">
+  SELECT
+	i.id,
+	g.parent_uuid sort_uuid,
+	i.category_uuid,
+	i.material_uuid,
+	i.spec1,
+	i.spec2,
+	i.spec3,
+	i.remark,
+	(
+		SELECT
+			GROUP_CONCAT(id)
+		FROM
+			base_factory
+		WHERE
+			FIND_IN_SET(id, i.factory_ids)
+	) factory_ids,
+	i.factory_names,
+	i.weight,
+	i.quantity
+    FROM
+	busi_purchase_order_items i
+    LEFT JOIN busi_purchase_order o ON i.purchase_order_id = o.id
+    LEFT JOIN common_category c ON i.category_uuid = c.uuid
+    LEFT JOIN common_group_for_category gc on gc.category_uuid = c.uuid
+    LEFT JOIN common_category_group g ON g.uuid = gc.category_group_uuid
+    WHERE
+	o.id = #{purchaseOrderId} and g.site_uuid = 'outer_market'
+  </select>
+  <select id="getItemsByTelOrAccountName" resultMap="PurchaseOrderItemsDto" parameterType="com.prcsteel.platform.smartmatch.model.query.PurchaseOrderItemsQuery">
+    select
+    i.id,
+    g.parent_uuid sort_uuid,
+    i.category_uuid,
+    i.material_uuid,
+    i.spec1,
+    i.spec2,
+    i.spec3,
+    i.remark,
+    (
+    SELECT
+    GROUP_CONCAT(id)
+    FROM
+    base_factory
+    WHERE
+    FIND_IN_SET(id, i.factory_ids)
+    ) factory_ids,
+    i.factory_names,
+    i.weight,
+    i.quantity
+    from
+    (select id from busi_purchase_order
+    <where>
+      <if test="tel != null">and tel = #{tel}</if>
+      <if test="buyerName != null">and buyer_name = #{buyerName}</if>
+    </where>
+    order by id desc limit 0, 2
+    ) o
+    left join busi_purchase_order_items i on i.purchase_order_id = o.id
+    LEFT JOIN common_category c ON i.category_uuid = c.uuid
+    LEFT JOIN common_group_for_category gc on gc.category_uuid = c.uuid
+    LEFT JOIN common_category_group g ON g.uuid = gc.category_group_uuid
+    where g.site_uuid = 'outer_market'
+    group by g.parent_uuid, i.category_uuid, i.spec1, i.spec2, i.spec3, i.factory_ids
+  </select>
+
+  <select id="getCategoryByPurchaseOrderId" resultType="String" parameterType="java.lang.Long">
+  	select distinct po.category_uuid 
+  	from busi_purchase_order_items po
+	where po.purchase_order_id = #{purchaseOrderId,jdbcType=BIGINT}
+  </select>
+  
+  <select id="queryByPurchaseOrderId" resultMap="SearchResultItemsDto" parameterType="java.lang.Long">
+  	SELECT
+	i.category_name category_name,
+	CONCAT(i.spec1,if(ifnull(i.spec2,'')='','','*'),ifnull(i.spec2,''),if(ifnull(i.spec3,'')='','','*'),ifnull(i.spec3,'')) purchase_spec,
+	i.factory_names purchase_factory_names,
+	i.material_name purchase_material_names,
+	i.weight result_weight,
+	i.quantity result_quantity
+    FROM
+	busi_purchase_order_items i
+    LEFT JOIN busi_purchase_order o ON i.purchase_order_id = o.id
+    WHERE
+	o.id = #{purchaseOrderId,jdbcType=BIGINT}
+  </select>
+
+
+
+   <!--  智能找货2.0sql start  -->
+   <!--  -->
+   <select id="queryMatchedCitys" resultMap="com.prcsteel.platform.core.persist.dao.CityDao.BaseResultMap" parameterType="java.lang.Long">
+ 	  <![CDATA[	SELECT y.id, y.name, y.province_id
+ 	            FROM (
+					SELECT distinct  a.city_id
+					FROM cust_resource a
+					JOIN busi_purchase_order_items b  on a.category_uuid=b.category_uuid and FIND_IN_SET(a.material_uuid,b.material_uuid) -- 材质可多选 #6733 redmine
+					      and case when b.factory_ids is null or trim(b.factory_ids) = '' then true else FIND_IN_SET(a.factory_id,b.factory_ids) end -- 钢厂允许为空 #6726 redmine
+	        		LEFT JOIN cust_resource_norms rn1 on rn1.resource_id=a.id and rn1.priority=1
+					LEFT JOIN cust_resource_norms rn2 on rn2.resource_id=a.id and rn2.priority=2
+					LEFT JOIN cust_resource_norms  rn3 on rn3.resource_id=a.id and rn3.priority=3
+	       			WHERE  b.id  in (
+				    	select id from  busi_purchase_order_items where purchase_order_id = #{purchaseOrderId,jdbcType=BIGINT}
+	          		) and a.status = 'approved' and is_exception = 'normal'
+	          		and a.city_id is not null
+	          		and case when trim(ifnull(b.spec1,''))!='C' and trim(ifnull(b.spec1,''))!='L' then FIND_IN_SET (rn1.`value`,b.spec1) else true end
+	        		and case when trim(ifnull(b.spec2,''))!='' and trim(ifnull(b.spec2,''))!='C' and trim(ifnull(b.spec2,''))!='L' and rn2.value is not null then
+						case when INSTR(b.spec2,'-')=0 then
+							rn2.value like concat('%',b.spec2,'%')
+						else
+							rn2.value>=SUBSTR(b.spec2,0,INSTR(b.spec2,'-'))*1.0
+							and
+							rn2.value<=SUBSTR(b.spec2,INSTR(b.spec2,'-')+1)*1.0
+						end
+					else true end
+					and case when trim(ifnull(b.spec3,''))!='' and trim(ifnull(b.spec3,''))!='C' and trim(ifnull(b.spec3,''))!='L' and rn3.value is not null then
+						case when INSTR(b.spec3,'-')=0 then
+							rn3.value like concat ('%',b.spec3,'%')
+						else
+							rn3.value>=SUBSTR(b.spec3,0,INSTR(b.spec3,'-'))*1.0
+							and
+							rn3.value<=SUBSTR(b.spec3,INSTR(b.spec3,'-')+1)*1.0
+						end
+					else true end
+					group by  a.city_id 
+				)x  
+				LEFT JOIN base_city  y  on x.city_id  =  y.id
+		]]>
+  </select>
+   
+   <!-- 查询出所有有资源的公司 -->
+   <resultMap id="searchCompanyResultMap" type="com.prcsteel.platform.smartmatch.model.dto.SearchCompanyResultDto" >
+    <result column="city_id" property="cityId" jdbcType="BIGINT" />
+    <result column="seller_id" property="sellerId" jdbcType="BIGINT" />
+    <result column="seller_name" property="sellerName" jdbcType="VARCHAR" />
+    <result column="warehouse_id" property="wareHouseId" jdbcType="BIGINT" />
+    <result column="payment_label" property="payMentLaybel" jdbcType="VARCHAR" />
+    <result column="supplier_label" property="supplierLabel" jdbcType="VARCHAR" />
+    <result column="" property="returnBrokerage" jdbcType="VARCHAR" /><!-- 宝箱返佣 -->
+   	<result column="last_updated" property="lastUpdatedTime" jdbcType="TIMESTAMP" />
+    <result column="last_inquiry_date" property="lastInquiryedTime" jdbcType="TIMESTAMP" />
+    <result column="last_trade_date" property="lastTradeTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+   <select id="queryMatchedCompanies" resultMap="searchCompanyResultMap" parameterType="java.lang.Long">
+			select x.* ,y.name  seller_name,y.id  seller_id ,y.payment_label ,y.supplier_label   
+ 			from(
+			select aa3.* from (
+						select aa2.* ,inqs.last_updated last_inquiry_date  from  (
+								select aa1.* from (
+									select aa.account_id,aa.city_id ,aa.mgt_last_updated,aa.warehouse_id,consign.last_updated last_trade_date
+										from (
+											select  a.account_id, a.warehouse_id,a.city_id ,a.mgt_last_updated
+											from cust_resource a
+											join busi_purchase_order_items b  on a.category_uuid=b.category_uuid and FIND_IN_SET(a.material_uuid,b.material_uuid) -- 材质可多选 #6733 redmine
+											and case when b.factory_ids is null or trim(b.factory_ids) = '' then true else FIND_IN_SET(a.factory_id,b.factory_ids) end -- 钢厂允许为空 #6726 redmine
+											left join cust_resource_norms rn1 on rn1.resource_id=a.id and rn1.priority=1
+											left join cust_resource_norms rn2 on rn2.resource_id=a.id and rn2.priority=2
+											left join cust_resource_norms  rn3 on rn3.resource_id=a.id and rn3.priority=3
+											where  b.id  in (select id from  busi_purchase_order_items where purchase_order_id = #{purchaseOrderId,jdbcType=BIGINT} )
+											and a.status = 'approved' and is_exception = 'normal'
+										    <![CDATA[and case when trim(ifnull(b.spec1,''))!='C' and trim(ifnull(b.spec1,''))!='L' then FIND_IN_SET (rn1.`value`,b.spec1) else true end
+													 and case when trim(ifnull(b.spec2,''))!='' and trim(ifnull(b.spec2,''))!='C' and trim(ifnull(b.spec2,''))!='L' and rn2.value is not null then
+													case when INSTR(b.spec2,'-')=0 then
+														rn2.value like concat('%',b.spec2,'%')
+													else
+													    rn2.value>=SUBSTR(b.spec2,0,INSTR(b.spec2,'-'))*1.0
+																and
+														rn2.value<=SUBSTR(b.spec2,INSTR(b.spec2,'-')+1)*1.0
+													end
+													else true end
+													and case when trim(ifnull(b.spec3,''))!='' and trim(ifnull(b.spec3,''))!='C' and trim(ifnull(b.spec3,''))!='L' and rn3.value is not null then
+														case when INSTR(b.spec3,'-')=0 then
+																rn3.value like concat ('%',b.spec3,'%')
+														else
+																rn3.value>=SUBSTR(b.spec3,0,INSTR(b.spec3,'-'))*1.0
+																and
+																rn3.value<=SUBSTR(b.spec3,INSTR(b.spec3,'-')+1)*1.0
+																end
+														else true end
+														]]>
+												)aa
+											left join busi_consign_order_items consign  on aa.account_id = consign.seller_id
+											order by  consign.last_updated  desc
+													
+											) aa1
+											group by aa1.account_id,aa1.city_id-- 卖家会有多个仓库，按公司与仓库进行groupby
+										)aa2
+									left join busi_inquiry_order_sellers  inqs  on aa2.account_id = inqs.account_id  
+									order by  inqs.last_updated desc
+								)aa3
+								group by aa3.account_id ,aa3.city_id	
+					)x
+					left join  cust_account  y  on  x.account_id = y.id
+					
+			
+				order by y.payment_label asc,y.supplier_label asc, x.last_trade_date desc; -- 排序顺序，城市，银票预付，白名单，历史成交最近时间
+				<if test="start != null and end!=''" >
+			 	limit  #{start},#{end}
+			   </if>
+   		
+  </select>
+   <select id="queryComplementMatchedCompanies" resultMap="searchCompanyResultMap" parameterType="java.lang.Long">
+ 				select  x.* ,y.name  seller_name,y.id  seller_id ,y.payment_label ,y.supplier_label  
+				from(
+					select aa3.* from (
+						select aa2.* ,inqs.last_updated last_inquiry_date  from  (
+								select aa1.* from (
+									select aa.account_id,aa.city_id ,aa.mgt_last_updated,aa.warehouse_id,consign.last_updated last_trade_date
+										from (
+											select  a.account_id, a.warehouse_id,a.city_id ,a.mgt_last_updated
+											from cust_resource a
+											join busi_purchase_order_items b  on a.category_uuid=b.category_uuid and FIND_IN_SET(a.material_uuid,b.material_uuid) -- 材质可多选 #6733 redmine
+											and case when b.factory_ids is null or trim(b.factory_ids) = '' then true else FIND_IN_SET(a.factory_id,b.factory_ids) end -- 钢厂允许为空 #6726 redmine
+											left join cust_resource_norms rn1 on rn1.resource_id=a.id and rn1.priority=1
+											left join cust_resource_norms rn2 on rn2.resource_id=a.id and rn2.priority=2
+											left join cust_resource_norms  rn3 on rn3.resource_id=a.id and rn3.priority=3
+											where  b.id  in <foreach collection="purchaseOrderItemId" item="itemId" open="(" separator="," close=")">#{itemId}</foreach>
+											and a.status = 'approved' and is_exception = 'normal' 
+										    <![CDATA[and case when trim(ifnull(b.spec1,''))!='C' and trim(ifnull(b.spec1,''))!='L' then FIND_IN_SET (rn1.`value`,b.spec1) else true end
+													 and case when trim(ifnull(b.spec2,''))!='' and trim(ifnull(b.spec2,''))!='C' and trim(ifnull(b.spec2,''))!='L' and rn2.value is not null then
+													case when INSTR(b.spec2,'-')=0 then
+														rn2.value like concat('%',b.spec2,'%')
+													else
+													    rn2.value>=SUBSTR(b.spec2,0,INSTR(b.spec2,'-'))*1.0
+																and
+														rn2.value<=SUBSTR(b.spec2,INSTR(b.spec2,'-')+1)*1.0
+													end
+													else true end
+													and case when trim(ifnull(b.spec3,''))!='' and trim(ifnull(b.spec3,''))!='C' and trim(ifnull(b.spec3,''))!='L' and rn3.value is not null then
+														case when INSTR(b.spec3,'-')=0 then
+																rn3.value like concat ('%',b.spec3,'%')
+														else
+																rn3.value>=SUBSTR(b.spec3,0,INSTR(b.spec3,'-'))*1.0
+																and
+																rn3.value<=SUBSTR(b.spec3,INSTR(b.spec3,'-')+1)*1.0
+																end
+														else true end
+														]]>
+											)aa
+											left join busi_consign_order_items consign  on aa.account_id = consign.seller_id
+											order by  consign.last_updated  desc
+													
+										) aa1
+										group by aa1.account_id -- 卖家会有多个仓库，按公司与仓库进行groupby
+									)aa2
+								left join busi_inquiry_order_sellers  inqs  on aa2.account_id = inqs.account_id  
+								order by  inqs.last_updated desc
+						)aa3
+						where aa3.account_id not in  <foreach collection="notSpecificSellerId" item="sellerId" open="(" separator="," close=")">#{sellerId}</foreach> 
+						group by aa3.account_id 	
+						
+				)x
+				left join  cust_account  y  on  x.account_id = y.id
+				where   x.city_id = #{cityId}
+				order by y.payment_label asc,y.supplier_label asc, x.last_trade_date desc  ; -- 排序顺序，城市，银票预付，白名单，历史成交最近时间
+
+				
+   		
+  </select>
+  
+  
+   <!-- 获取客户的联系人  -->
+  <resultMap id="accountContactTraderMap" type="com.prcsteel.platform.smartmatch.model.dto.SearchCompanyContactDto" >
+    <result column="id" property="id" jdbcType="BIGINT" />
+    <result column="contact_name" property="name" jdbcType="VARCHAR" />
+     <result column="trader_name" property="traderName" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="qq" property="qq" jdbcType="VARCHAR" />
+  </resultMap>
+   <select id="queryCompanyContacts"  resultMap="accountContactTraderMap" parameterType="java.lang.Long">
+		select t3.id  id,t3.name as contact_name,t3.tel as tel , t3.qq, GROUP_CONCAT( t4.name  SEPARATOR '/') trader_name
+		from cust_account t
+		left join cust_account t1 on t1.parent_id = t.id
+		left join cust_account_contact t2 on t2.account_id = t1.id
+		left join cust_contact t3 on t3.id = t2.contact_id
+		left join acl_user t4 on t2.manager = t4.id
+	    where t.parent_id = 0 and t.id = #{accountId} and t2.is_deleted = 0 and t3.is_deleted = 0
+	    group by t3.name
+  </select>
+  
+  <!--查询出所有匹配的资源-->
+   <resultMap id="searchResourceResultMap" type="com.prcsteel.platform.smartmatch.model.dto.SearchResourceDtoTwo" >
+    <result column="city_id" property="cityId" jdbcType="BIGINT" />
+    <result column="item_id" property="itemId" jdbcType="BIGINT" />
+    <result column="resource_id" property="resourceId" jdbcType="BIGINT" />
+    <result column="account_id" property="accountId" jdbcType="BIGINT" />
+    <result column="category_uuid" property="categoryUuid" jdbcType="BIGINT" />
+    <result column="categoryName" property="categoryName" jdbcType="VARCHAR" />
+    <result column="material_uuid" property="materialUuid" jdbcType="BIGINT" />
+    <result column="material_name" property="materialName" jdbcType="VARCHAR" />
+    <result column="factory_id" property="factoryId" jdbcType="BIGINT" />
+    <result column="factory_name" property="factoryName" jdbcType="VARCHAR" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="BIGINT" />
+    <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+    <result column="weight_concept" property="weightConcept" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="spec" property="spec" jdbcType="VARCHAR" />
+    <result column="source_type" property="sourceType" jdbcType="VARCHAR" />
+    <result column="mgt_last_updated" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+    <result column="city_name" property="cityName" jdbcType="VARCHAR" />
+    <result column="weight" property="weight" jdbcType="DECIMAL" />
+    <result column="quantity" property="quantity" jdbcType="DECIMAL" />
+    
+  </resultMap>
+  
+   <select id="queryMatchedResources" resultMap="searchResourceResultMap" parameterType="java.lang.Long">
+ 	  
+  		        select  a.city_id , b.id as item_id,a.id as resource_id,a.account_id ,a.category_uuid,cate.name categoryName , a.material_uuid ,
+                        materials.name   material_name  ,a.factory_id   ,
+						ifnull(fac. NAME, a.factory_name) factory_name   ,a.weight_concept    ,
+						a.warehouse_id ,a.warehouse_name,city.name city_name,a.price ,
+						group_concat(norm. VALUE  order by norm.priority SEPARATOR '*') spec ,
+						a.source_type,a.mgt_last_updated ,a.weight,a.quantity-- 资源与更新时间，设置更新价格、历史成交价格、询价价格
+				from cust_resource a
+				join busi_purchase_order_items b  on a.category_uuid=b.category_uuid and FIND_IN_SET(a.material_uuid,b.material_uuid) -- 材质可多选 #6733 redmine
+				      and case when b.factory_ids is null or trim(b.factory_ids) = '' then true else FIND_IN_SET(a.factory_id,b.factory_ids) end -- 钢厂允许为空 #6726 redmine
+        		left join common_materials materials on materials.uuid = a.material_uuid
+        		left join cust_resource_norms rn1 on rn1.resource_id=a.id and rn1.priority=1
+				left join cust_resource_norms rn2 on rn2.resource_id=a.id and rn2.priority=2
+				left join cust_resource_norms  rn3 on rn3.resource_id=a.id and rn3.priority=3
+				LEFT JOIN cust_resource_norms norm ON a.id = norm.resource_id
+				LEFT JOIN common_category cate ON a.category_uuid = cate.uuid
+				LEFT JOIN base_factory fac ON a.factory_id = fac.id
+				LEFT JOIN base_city city ON city.id = a.city_id
+				LEFT JOIN cust_account account  on a.account_id  = account.id
+       		    where  b.id  in (
+			    		select id from  busi_purchase_order_items where purchase_order_id  = #{purchaseOrderId,jdbcType=BIGINT}
+         			 ) and a.status = 'approved' and is_exception = 'normal'
+         			
+         			<![CDATA[	and case when trim(ifnull(b.spec1,''))!='C' and trim(ifnull(b.spec1,''))!='L' then FIND_IN_SET (rn1.`value`,b.spec1) else true end
+        			and case when trim(ifnull(b.spec2,''))!='' and trim(ifnull(b.spec2,''))!='C' and trim(ifnull(b.spec2,''))!='L' and rn2.value is not null then
+						case when INSTR(b.spec2,'-')=0 then
+							rn2.value like concat('%',b.spec2,'%')
+						else
+							rn2.value>=SUBSTR(b.spec2,0,INSTR(b.spec2,'-'))*1.0
+							and
+							rn2.value<=SUBSTR(b.spec2,INSTR(b.spec2,'-')+1)*1.0
+						end
+					else true end
+					and case when trim(ifnull(b.spec3,''))!='' and trim(ifnull(b.spec3,''))!='C' and trim(ifnull(b.spec3,''))!='L' and rn3.value is not null then
+						case when INSTR(b.spec3,'-')=0 then
+							rn3.value like concat ('%',b.spec3,'%')
+						else
+							rn3.value>=SUBSTR(b.spec3,0,INSTR(b.spec3,'-'))*1.0
+							and
+							rn3.value<=SUBSTR(b.spec3,INSTR(b.spec3,'-')+1)*1.0
+						end
+					else true end
+					]]>
+				GROUP BY  a.id
+				order by a.mgt_last_updated desc
+		
+				
+  </select>
+  
+  
+  
+  
+  <select id="findCenterCityIds" resultMap="com.prcsteel.platform.core.persist.dao.CityDao.BaseResultMap" parameterType="java.lang.Long">
+ 	 SELECT id,name,province_id
+		from base_city
+		where id in (
+		  select area.center_city_id from 
+			base_city  city
+			left join base_area area
+			on  FIND_IN_SET (city.id ,area.ref_city_ids)
+			where city.id =  #{deliveryCityId,jdbcType=BIGINT}
+		)
+  </select>
+  
+  
+   <resultMap id="pruchaseOrderItemMaps" type="com.prcsteel.platform.smartmatch.model.dto.PurchaseOrderItemsDtoTwo" >
+    <result column="item_id" property="id" jdbcType="BIGINT" />
+    <result column="category_uuid" property="categoryUuid" jdbcType="BIGINT" />
+    <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+    <result column="material_uuid" property="materialUuid" jdbcType="BIGINT" />
+    <result column="material_name" property="materialName" jdbcType="VARCHAR" />
+    <result column="factoryIds" property="factoryId" jdbcType="VARCHAR" />
+    <result column="factory_names" property="factoryNames" jdbcType="VARCHAR" />
+    <result column="weight" property="weight" jdbcType="DECIMAL" />
+      <result column="quantity" property="quantity" jdbcType="INTEGER" />
+    <result column="purchase_spec" property="spec" jdbcType="VARCHAR" />
+  </resultMap>
+   <select id="getListByPOIdTwo" resultMap="pruchaseOrderItemMaps" parameterType="Long">
+  	select  item.id item_id, item.category_uuid  , item.category_name category_name,  item.material_uuid ,
+  	<!-- 增加了冗余字段,不在关联表查询 -->
+  	<!-- (SELECT GROUP_CONCAT(NAME) FROM common_materials WHERE FIND_IN_SET(`uuid`,item.material_uuid)) material_name, -->
+  	item.material_name,
+	item.factory_ids, item.weight ,item.quantity,
+	CONCAT(item.spec1,if(ifnull(item.spec2,'')='','','*'),ifnull(item.spec2,''),if(ifnull(item.spec3,'')='','','*'),ifnull(item.spec3,'')) purchase_spec,
+	item.factory_names
+	from busi_purchase_order_items  item 
+	where  item.purchase_order_id = #{purchaseOrderId,jdbcType=BIGINT}
+	group by item.id
+
+  </select>
+   <select id="getListByIdsTwo" resultMap="pruchaseOrderItemMaps">
+  	select  item.id id, item.category_uuid  , item.category_name category_name,  item.material_uuid ,
+  	<!-- 增加了冗余字段,不在关联表查询 -->
+    <!--  (SELECT GROUP_CONCAT(NAME) FROM common_materials WHERE FIND_IN_SET(`uuid`,item.material_uuid)) material_name, -->
+    item.material_name,
+	item.factory_ids, item.weight ,item.quantity,
+	CONCAT(item.spec1,if(ifnull(item.spec2,'')='','','*'),ifnull(item.spec2,''),if(ifnull(item.spec3,'')='','','*'),ifnull(item.spec3,'')) purchase_spec,
+	item.factory_names
+	from busi_purchase_order_items  item
+	where  
+  	item.id in
+  	<foreach collection="itemIds" item="itemId" open="(" separator="," close=")">#{itemId}</foreach>
+  	group by item.id
+  </select>
+  
+ 	<!--  智能找货2.0sql end  -->
+</mapper>
+

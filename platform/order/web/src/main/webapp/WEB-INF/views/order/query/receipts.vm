@@ -1,0 +1,273 @@
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+<ul class="breadcrumb">
+    <li>
+        <a href="$link.getContextPath()/common/menu/order-view/order-query-index-page.html">交易单管理</a>
+    </li>
+	#if($!{pay} == "true")
+        <li class="active">
+           
+        </li>
+		<li>
+           <a href="$link.getContextPath()/order/order/paymentmanager/payment.html">付款单</a>  
+        </li>
+    #else
+		#if($order.status=="4")
+            <li>
+                <a href="$link.getContextPath()/order/query/fillup.html">待放货</a>
+            </li>
+            <li class="active">
+                <a href="$link.getContextPath()/order/query/detail.html?orderid=$!order.id&op=fillup&menu=fillup">订单详情</a>
+            </li>
+		#end
+		#if($order.status=="6")
+        	<li>
+                <a href="$link.getContextPath()/order/query/secondsettlement.html">待二次结算</a>
+            </li>
+            <li class="active">
+                <a href="$link.getContextPath()/order/query/detail.html?orderid=$!order.id&menu=secondsettlement">订单详情</a>
+            </li>
+        #end
+        #if($order.status=="7")
+            <li>
+                <a href="$link.getContextPath()/order/query/invoice.html">已二次结算</a>
+            </li>
+            <li class="active">
+                <a href="$link.getContextPath()/order/query/detail.html?orderid=$!order.id&menu=invoice">订单详情</a>
+            </li>
+        #end
+        #if($order.status=="10")
+            <li>
+                <a href="$link.getContextPath()/order/query/tradecomplete.html">交易完成</a>
+            </li>
+            <li class="active">
+                <a href="$link.getContextPath()/order/query/detail.html?orderid=$!order.id&menu=tradecomplete">订单详情</a>
+            </li>
+    	#end
+	#end
+    <li class="active">付款回执单</li>
+</ul>
+
+        #parse("layout/topbtn.vm")<!-- /.nav-search -->
+</div>
+
+<div class="page-content">
+    <div class="ace-settings-container" id="ace-settings-container">
+        <div class="ace-settings-box clearfix" id="ace-settings-box">
+            <div class="pull-left width-50">
+                <div class="ace-settings-item">
+                    <div class="pull-left">
+                        <select id="skin-colorpicker" class="hide">
+                            <option data-skin="no-skin" value="#438EB9">#438EB9</option>
+                            <option data-skin="skin-1" value="#222A2D">#222A2D</option>
+                            <option data-skin="skin-2" value="#C6487E">#C6487E</option>
+                            <option data-skin="skin-3" value="#D0D0D0">#D0D0D0</option>
+                        </select>
+                    </div>
+                    <span>&nbsp; Choose Skin</span>
+                </div>
+
+                <div class="ace-settings-item">
+                    <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-navbar"/>
+                    <label class="lbl" for="ace-settings-navbar"> Fixed Navbar</label>
+                </div>
+
+                <div class="ace-settings-item">
+                    <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-sidebar"/>
+                    <label class="lbl" for="ace-settings-sidebar"> Fixed Sidebar</label>
+                </div>
+
+                <div class="ace-settings-item">
+                    <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-breadcrumbs"/>
+                    <label class="lbl" for="ace-settings-breadcrumbs"> Fixed Breadcrumbs</label>
+                </div>
+
+                <div class="ace-settings-item">
+                    <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-rtl"/>
+                    <label class="lbl" for="ace-settings-rtl"> Right To Left (rtl)</label>
+                </div>
+
+                <div class="ace-settings-item">
+                    <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-add-container"/>
+                    <label class="lbl" for="ace-settings-add-container">
+                        Inside
+                        <b>.container</b>
+                    </label>
+                </div>
+            </div>
+            <!-- /.pull-left -->
+
+            <div class="pull-left width-50">
+                <div class="ace-settings-item">
+                    <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-hover"/>
+                    <label class="lbl" for="ace-settings-hover"> Submenu on Hover</label>
+                </div>
+
+                <div class="ace-settings-item">
+                    <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-compact"/>
+                    <label class="lbl" for="ace-settings-compact"> Compact Sidebar</label>
+                </div>
+
+                <div class="ace-settings-item">
+                    <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-highlight"/>
+                    <label class="lbl" for="ace-settings-highlight"> Alt. Active Item</label>
+                </div>
+            </div>
+            <!-- /.pull-left -->
+        </div>
+        <!-- /.ace-settings-box -->
+    </div>
+    <!-- /.ace-settings-container -->
+
+<div class="row">
+    <div class="col-xs-12">
+        <!-- PAGE CONTENT BEGINS -->
+        <div class="page-content">
+            <div class="col-xs-12">
+                <div class="step-bar">
+                    <div class="ystep4"></div>
+                    <div class="ystep1" style="margin-left:260px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="print-page">
+    	#if($bankOriginalDto)
+    	<div style="width:100%; text-align:center;">
+	    	<table width="100%" border="1" style="line-height:30px; width:800px;margin: 20 auto;" >
+				<tr>
+					<td colspan="6" align="center"><img src="$link.getContextPath()/img/bank/bank_spdo.png" /></td>
+				</tr>
+				<tr>
+					<th colspan="6" class="text-center">网上转账支付操作凭证</th>
+				</tr>
+			    <tr>
+					<td colspan="2">预约日期：</td>
+					<td colspan="2">汇路：</td>
+					<td colspan="2">流水号：$!bankOriginalDto.seqno</td>
+			    </tr>
+			    <tr>
+					<td rowspan="3">付款人</td>
+					<td>全称</td>
+					<td>杭州钢为网络科技有限公司</td>
+					<td rowspan="3">收款人</td>
+					<td>全称</td>
+					<td>$!bankOriginalDto.payeename</td>
+			    </tr>
+			    <tr>
+					<td>账号</td>
+					<td>95090154800004792</td>
+					<td>账号</td>
+					<td>$!bankOriginalDto.payeeacctno</td>
+				</tr>
+				<tr>
+					<td>开户银行</td>
+					<td>上海浦东发展银行</td>
+					<td>开户银行</td>
+					<td>$!bankOriginalDto.payeebankname</td>
+				</tr>
+				<tr>
+					<td>金额大写</td>
+					<td colspan="2">$!debitAmount</td>
+					<td>金额小写</td>
+					<td colspan="2">$!NumberTool.toThousandth($!spdbAmount)</td>
+				</tr>
+				<tr>
+					<td>摘要</td>
+					<td colspan="2">$!bankOriginalDto.note</td>
+					<td>收费</td>
+					<td colspan="2"></td>
+				</tr>
+				<tr>
+					<td colspan="2">经办日期：$!date.format('yyyy-MM-dd HH:mm:ss ', $!bankOriginalDto.transDateTime)</td>
+					<td>经办操作员：zhengpeiyun</td>
+					<td colspan="2">最后授权日期：$!date.format('yyyy-MM-dd HH:mm:ss ', $!bankOriginalDto.created)</td>
+					<td>授权操作员：wangtao</td>
+				</tr>
+			</table>
+		</div>
+		#elseif($icbcBdlDetail)
+		<h1 class="h3 text-center bolder" style="width:800px;margin:20 auto;">中国工商银行&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size:10px">网上银行电子回单</span></h1>
+    	<div  class="clearfix" style="width:800px;margin:20 auto;">
+        	<span class="pull-left">电子回单号码：</span>
+        	<span class="pull-right">打印日期：</span>
+    	</div>
+    	<div style="width:100%; text-align:center;">
+			<table width="100%" border="1" style="line-height:30px; width:800px;margin: 20 auto;">
+			  <tr>
+			    <td rowspan="3">付款人</td>
+			    <td>户名</td>
+			    <td>杭州钢为网络科技有限公司</td>
+			    <td rowspan="3">收款人</td>
+			    <td>户名</td>
+			    <td>$!icbcBdlDetail.recipName</td>
+			  </tr>
+			  <tr>
+			    <td>账号</td>
+			    <td>1202020619900121479</td>
+			    <td>账号</td>
+			    <td>$!icbcBdlDetail.recipAccNo</td>
+			  </tr>
+			  <tr>
+			    <td>开户银行</td>
+			    <td>中国工商银行杭州湖墅支行</td>
+			    <td>开户银行</td>
+			    <td>$!requestItem.receiverBankName$!requestItem.receiverBranchBankName</td>
+			  </tr>
+			  <tr>
+			    <td colspan="2">金额</td>
+			    <td colspan="4">人民币（大写）：$!txAmount &nbsp;￥$!NumberTool.toThousandth($!icbcAmount)</td>
+			  </tr>
+			  <tr>
+			    <td colspan="2">摘要</td>
+			    <td>$!icbcBdlDetail.summary</td>
+			    <td colspan="2">业务（产品）种类</td>
+			    <td>跨行发报</td>
+			  </tr>
+			  <tr>
+			    <td colspan="2">用途</td>
+			    <td colspan="4">$!icbcBdlDetail.useCN</td>
+			  </tr>
+			  <tr>
+			    <td colspan="2">交易流水号</td>
+			    <td>$!icbcBdlDetail.sequenceNo</td>
+			    <td colspan="2">时间戳</td>
+			    <td>$!date.format('yyyy-MM-dd HH:mm:ss ',$!{icbcBdlDetail.timeStamp})</td>
+			  </tr>
+			  <tr>
+			    <td rowspan="2" colspan="2"> </td>
+			    <td colspan="4">$!icbcBdlDetail.postScript</td>
+			  </tr>
+			  <tr>
+			    <td colspan="4"></td>
+			  </tr>
+			    <td>记账网点</td>
+			    <td></td>
+			    <td>记账柜员</td>
+			    <td></td>
+			    <td>记账日期</td>
+			    <td></td>
+			</table>
+		</div>
+    </div>
+	#else
+	<div class="main-content-inner">
+		<div class="page-content">
+			<div class="settlement-info bg-yellow-style row">
+				<div class="clearfix">
+					<span class="bolder red"><em>没有回执单信息。</em></span>
+				</div>
+			</div>
+		</div>
+    </div>
+	#end
+    
+</div><!-- /.page-content -->
+</div>
+<script src="$link.getContextPath()/js/views/order/payrequest.js"></script>

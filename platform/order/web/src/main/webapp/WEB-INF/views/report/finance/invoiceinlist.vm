@@ -1,0 +1,123 @@
+<!-- 进项发票清单 -->
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            财务报表
+        </li>
+        <li class="active">
+            进项发票清单
+        </li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+    #parse("layout/topbtn.vm")
+    <!-- /.nav-search -->
+
+</div>
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="clearfix">
+                        <div class="input-group  col-md-12 col-sm-12 col-lg-12 search-bar">
+                            <form class="form-inline checkbox">
+                                #if(!$shiro.hasPermission("sys:field:org"))
+                                <label>服务中心：<input placeholder="请选择上级服务中心" id="sorganization" type="text"
+                                                   class="ipt-text" readonly="" value="" onclick="showMenu();">
+                                    <input type='hidden' id='sorganizationHidden' value='0'/>
+                                </label>
+                                #end
+                                <label>卖家全称：</label>
+                                <input class="ipt-text" type="text" value="" id="sellerName"/>
+                                <label>发票号码：</label>
+                                <input class="ipt-text" type="text" value="" id="code" style="width:80px;"/>
+                                <label>发票状态：</label>
+                                <label class="checkbox">
+                                    <input name="status" value="SENT,RECEIVED" type="checkbox" class="ace" checked="checked">
+                                    <span class="lbl">已录入</span>
+                                </label>
+                                <label class="checkbox">
+                                    <input name="status" value="WAIT" type="checkbox" class="ace" checked="checked">
+                                    <span  class="lbl">已确认</span>
+                                </label>
+                                <label class="checkbox">
+                                    <input name="status" value="ALREADY" type="checkbox" class="ace" checked="checked">
+                                    <span class="lbl">已认证</span>
+                                </label>
+                                <label>开票时间：</label>
+                                <input id="startTime" class="Wdate" type="text" value="$!{startTime}" style="width:100px;"
+                                       onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')||\'2020-10-01\'}'})"/> -
+                                <input id="endTime" class="Wdate" type="text" value="$!{endTime}" style="width:100px;"
+                                       onFocus="WdatePicker({minDate:'#F{$dp.$D(\'startTime\')}',maxDate:'2020-10-01'})"/>
+
+                                <button id="queryBtn" class="btn btn-sm btn-default" type="button" title="搜索">
+                                    <i class="aace-icon fa fa-search bigger-110"></i>搜索
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- div.dataTables_borderWrap -->
+                    <div>
+                        <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>
+                                    <label class="pos-rel">
+                                        <input type="checkbox" class="ace" id="allCheck"/>
+                                        <span class="lbl"></span>
+                                    </label>
+                                </th>
+                                <th>发票号码</th>
+                                <th>开票时间</th>
+                                <th>卖家全称</th>
+                                <th>品名</th>
+                                <th>规格</th>
+                                <th>材质</th>
+                                <th>数量（吨）</th>
+                                <th>价税合计（元）</th>
+                                <th>服务中心</th>
+                                <th>状态</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                                <td colspan="11" class="text-left">
+                                    <label>一共 <span class="red" id="total"></span> 张发票</label>
+                                    <label>当前已选择 <span class="red" id="checkCount">0</span> 张发票</label>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    </br>
+    <div>
+        <a class="button btn-sm btn-info" id="exportAll">导出全部到EXCEL</a>
+        <a class="button btn-sm btn-info" id="exportChecked">导出到EXCEL</a>
+    </div>
+    <!-- /.row -->
+</div>
+
+<div id="menuContent" class="menuContent" style="display:none; position: absolute;">
+    <ul id="orgTree" class="ztree" style="margin-top:0; width:160px;"></ul>
+</div>
+
+<script src='$link.getContextPath()/js/views/report/business/businesscommon.js'></script>
+<script src="$link.getContextPath()/js/views/report/finance/invoiceinlist.js"></script>

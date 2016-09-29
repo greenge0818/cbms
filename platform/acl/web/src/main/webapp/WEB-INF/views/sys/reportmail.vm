@@ -1,0 +1,61 @@
+#set($layout="layout/default.vm")
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li><i class="ace-icon fa fa-home home-icon"></i>系统管理</li>
+        <li>系统设置</li>
+        <li class="active">邮件设置</li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+    #parse("layout/topbtn.vm")
+    <!-- /.nav-search -->
+</div>
+
+<div class="page-content">
+
+    <div class="row">
+        <div class="col-xs-12">
+            <!--TAPBAR-->
+            #parse("sys/systemmenu.vm")
+            <!-- PAGE CONTENT BEGINS -->
+            <form id="checkForm">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- div.dataTables_borderWrap -->
+		                <div>
+		                    <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+		                        <thead>
+		                        <tr>
+		                            <th>邮件标题</th>
+		                            <th>发送时间</th>
+		                            <th>收件人</th>
+		                            <th>发送周期</th>
+		                            <th>创建人</th>
+		                            <th>创建时间</th>
+		                            <th>操作</th>
+		                        </tr>
+		                        </thead>
+		                        <tfoot>
+		                        	<tr><td colspan="7" style="text-align:right;">
+	                        			<a id="addBtn" href="javascript:void(0);">增加&nbsp;&nbsp;&nbsp;&nbsp;</a>
+		                        	</td></tr>
+		                        </tfoot>
+		                    </table>
+		                </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+<script type="text/javascript" src="$link.getContextPath()/js/views/sys/reportmail.js"></script>
+<!-- /.page-content -->

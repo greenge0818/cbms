@@ -1,0 +1,35 @@
+#set($layout="layout/blank.vm")
+#if($contractid)
+
+<form action="$link.getContextPath()/order/addattachment.html" method="POST" enctype="multipart/form-data"
+      id="uploadForm">
+    <div class="amount-box">公司名称：$!{accountname}<br/>
+        <input type="hidden" id="order_id" name="orderid" value="$!{orderid}"/>
+        <input type="hidden" id="contract_id" name="contractid" value="$!{contractid}"/>
+        <input type="hidden" id="picNum" name="picNum" value="$!{attachmentlist.size()}"/>
+        <input type="hidden" id="contractType" name="contractType" value="$!{contractType}"/><!--contractType 为change是合同变更，否则为正常订单流程 -->
+
+        <div class="category-box">合同编号：<input type="text" id="contract_no" msg="请填写合同编号" value="$!{contractno}"
+                                              must="1"/><span id="uploadmsg" class="red"></span>
+        </div>
+
+        <div class="category-box">上传资料：<input type="file" name="contractimgs" id="uploadselect" class="inline"  multiple="multiple"/>
+            <br/>盖章扫描件或数码照，支持jpeg、jpg、png、gif图片格式，小于2M；
+            <div id="img_pics" style="min-width:400px;min-height:230px;max-width:600px">
+                #foreach($attachment in $attachmentlist)
+                    <span class="pull-left pos-rel" style="margin-right:10px;margin-top:10px;"><a href="javascript:;" class="img-box">
+                        <img   #if($attachment.fileUrl)src="$link.getContextPath()/common/getfile.html?key=$attachment.fileUrl" #end alt="" width="100px" height="70px" style="border: 2px solid rgb(51, 122, 183);"/>
+                    </a><a href="javascript:;" class="pos-abs fa fa-close fa-lg red" style="right:-5px;top:-5px;z-index: 99;" #if($attachment.id)id="$attachment.id" #end></a>
+					</span>
+                #end
+            </div>
+
+            <div class="btn-bar text-center">
+                <button type="button" class="btn btn-info btn-sm" id="btnsubmit">确定</button>
+            </div>
+        </div>
+</form>
+
+#end
+
+<script src="$link.getContextPath()/js/views/order/contractupload.js"></script>

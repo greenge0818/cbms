@@ -1,0 +1,427 @@
+<!-- 待收票(按公司) -->
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="#">发票管理</a>
+        </li>
+        <li>
+            <a href="#">销项票管理</a>
+        </li>
+        <li class="active">待开票</li>
+    </ul>
+    <!-- /.breadcrumb -->
+</div>
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <!--TAPBAR-->
+            <!-- tapbar S -->
+            #invoiceTopBar(4, 0)
+            <!-- tapbar E -->
+            <!-- PAGE CONTENT BEGINS -->
+            <form id="invoiceForm">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="clearfix">
+                            <div class="settlement-info bg-yellow-style"
+                                 style=" padding-left: 10px; height: 50px; line-height: 22px;">
+                                <div class="pull-left">
+                                	<input id="applyTotalAmount" value="$!{applyTotalAmount}" type="hidden"/>
+                                	<table style="text-align: left;">
+                                		<tr>
+                                			<td>
+                                				<em>预期税负：</em>
+                                				#if(${taxRate} == 0)
+                                				<span>—</span>
+                                				<input id="taxRate" value="0" type="hidden"/>
+                                				#else
+                                				<input id="taxRate" value="$!{taxRate}" type="hidden"/>
+                                				<span>$!{taxRate}‰</span>
+                                				#end
+                               				</td>
+                                			<td>
+                                				<em>预期税额（元）：</em>
+                                				<span>
+                                					#if(${taxAmount} == 0)
+                                						—
+                                					<input id="taxAmount" value="0" type="hidden"/>
+                                					#else
+                                						$!{NumberTool.toThousandth(${taxAmount})}
+                                					<input id="taxAmount" value="$!{taxAmount}" type="hidden"/>
+                                					#end
+                               					</span>
+                               				</td>
+                                			<td>
+                                				<em title="本月已开总额+进项票已到票+已选择暂缓认证的总额">进项总额（元）：</em>
+                                				<input type="hidden" id="inAmount" value="$!{inAmount}"/>
+                                				<span>$!{NumberTool.toThousandth(${inAmount})}</span>
+                               				</td>
+                                			<td>
+                                				<em title="本月已开总额+销项票申请总额+已选择不开销项票总额">申请销项（元）：</em>
+                                				<input type="hidden" id="applyOutAmount" value="$!{applyOutAmount}"/>
+                                				<span>$!{NumberTool.toThousandth(${applyOutAmount})}</span>
+                                			</td>
+                                			<td rowspan="2"></td>
+                                			<td rowspan="2"></td>
+                                		</tr>
+                                		<tr>
+                                			<td>
+                                				<em title="(（实开销项-进项总额）/1.17*0.17）/实开销项">实际税负：</em>
+                                				<span id="actualRaxDisplay">0</span>
+                                				<input type="hidden" id="actualRax" value="0"/>
+                               				</td>
+                                			<td>
+												<em title="（实开销项-进项总额）/1.17*0.17">实际税额（元）：</em>
+												<input type="hidden" id="actualRaxAmount" value="0"/>
+												<span id="actualRaxAmountDisplay">0</span></td>
+                                			<td> 
+                                				<em title="本月已认证总额+已确认未认证的进项票总额">认证总额（元）：</em>
+                                				<input type="hidden" id="invoiceInSumAmount" value="$!{invoiceInSumAmount}"/>
+                                                <input type="hidden" id="approvedAmount" value="0"/>
+                                                <span id="approvedAmountDisplay">0</span>
+                                            </td>
+                                			<td> 
+                                				<em title="本月已开总额+待开销项票总额+已选择待开的销项票">实开销项（元）：</em>
+                                				<input type="hidden" id="actualOutAmount" value="0"/>
+                                    			<span id="actualOutAmountDisplay">0</span>
+                                   			</td>
+                                		</tr>
+                                	</table>
+                                </div>
+                                <div class="pull-right" style="line-height: 45px;">
+                                    <label title="包含所有服务中心数据">本月已开（元）：
+                                        <input type="hidden" id="openedAmount" value="$!{openedAmount}"/>
+                                        <span id="openedAmountDisplay">$!{NumberTool.toThousandth(${openedAmount})}</span>
+                                    </label>
+                                    <label title="包含所有服务中心数据">本月已认证：
+                                        <input type="hidden" id="approvedMonthAmount" value="$!{approvedMonthAmount}"/>
+                                        <span>$!{NumberTool.toThousandth(${approvedMonthAmount})}</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--second tab s-->
+                        <div class="">
+                            <ul class="nav nav-tabs" id="secTab">
+                                <li class="active" rel="first-table">
+                                    <a href="javascript:" aria-expanded="true">
+                                        第一步（预留进项票）
+                                    </a>
+                                </li>
+
+                                <li class="" rel="sec-table">
+                                    <a href="javascript:" aria-expanded="false">
+                                        第二步（开销项票）
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!--second tab e-->
+                        <!-- 第一步（预留进项票）-->
+                        <div id="step1Layer">
+                            <div class="clearfix">
+                                #if($!{tobeInAmount} > 0)
+                                    <div class="settlement-info bg-yellow-style text-left">
+                                        <label>还有已申请开销项票相应的进项票未确认，确认后才能开销项票</label>
+                                        <a href="javascript:" id="tobeInvoiceInView">查看待确认的进项票</a>
+                                        <label>发票总额（元）：</label>
+                                        <input type="hidden" id="tobeInAmount" value="$!{tobeInAmount}"/>
+                                        <span id="tobeInAmountDisplay">$!{NumberTool.toThousandth(${tobeInAmount})}</span>
+                                    </div>
+                                #end
+                                <div class="pull-left" style=" width: 46%;">
+                                    <div class="info-bar">
+                                        <label class="bolder">已确认未认证的进项票</label>
+                                        <label>推荐预留进项金额（元）：</label>
+                                        <span id="recommendLeaveAmount">0.00</span>
+                                        <label title="已选择待开总额">总额（元）：</label>
+                                        <input type="hidden" id="invoiceInAmount" value="$!{invoiceInConfirmedAmount}"/>
+                                        <span id="invoiceInAmountDisplay">$!{NumberTool.toThousandth(${invoiceInConfirmedAmount})}</span>
+                                        <a href="javascript:" class="none" id="autoSelect">自动选择</a>
+                                    </div>
+                                    <table id="invoiceInTable" class="table table-striped table-bordered table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>开票日期</th>
+                                            <th>发票号</th>
+                                            <th>服务中心</th>
+                                            <th>卖家全称</th>
+                                            <th>发票金额（元）</th>
+                                            <th>暂缓认证</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            #if(${invoiceIns})
+                                                #foreach($item in ${invoiceIns})
+                                                <tr invoiceinid="$!{item.id}">
+                                                    <td><span name="date">$!date.format(
+                                                        'yyyy-MM-dd',$!{item.invoiceDate})</span></td>
+                                                    <td><span name="code">$!{item.code}</span></td>
+                                                    <td><span name="org">$!{item.orgName}</span></td>
+                                                    <td><span name="seller">$!{item.sellerName}</span></td>
+                                                    <td class="text-right">
+                                                        #set($totalAmount=$item.totalAmount)
+                                                        #if($item.checkTotalAmount && $item.checkTotalAmount > 0)
+                                                            #set($totalAmount=$item.checkTotalAmount)
+                                                        #end
+                                                        <input type="hidden" name="amount" value="$!{totalAmount}"/>
+                                                        <span name="amount">$!{NumberTool.toThousandth(${totalAmount})}</span>
+                                                    </td>
+                                                    <td class="text-center"><a href="javascript:" name="shift"
+                                                                               class="bolder">→</a></td>
+                                                </tr>
+                                                #end
+                                            #end
+                                        </tbody>
+                                    </table>
+
+                                    #if($shiro.hasPermission("invoice:out:checklist:export"))
+                                        <div>
+                                            <button type="button" id="importExcel" class="btn btn-sm btn-primary">
+                                                导出excel
+                                            </button>
+                                        </div>
+                                    #end
+                                </div>
+                                <div class="pull-left" style=" width: 49%; margin-left: 1%;">
+                                    <div class="clearfix info-bar">
+                                        <label class="bolder">已选择暂缓认证的发票</label>
+                                        <label class="pull-right">总额（元）：
+                                            <input type="hidden" id="suspendAmount" value="$!{suspendAmount}"/>
+                                            <span id="suspendAmountDisplay">$!{NumberTool.toThousandth(${suspendAmount})}</span>
+                                        </label>
+                                    </div>
+                                    <table id="suspendTable" class="table table-striped table-bordered table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>编号</th>
+                                            <th>开票日期</th>
+                                            <th>发票号</th>
+                                            <th>服务中心</th>
+                                            <th>卖家全称</th>
+                                            <th>发票金额（元）</th>
+                                            <th>操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            #if(${suspendInvoiceIns})
+                                                #foreach($item in ${suspendInvoiceIns})
+                                                <tr invoiceinid="$!{item.id}">
+                                                    <td><span name='index'>$!{velocityCount}</span></td>
+                                                    <td><span name="date">$!date.format(
+                                                        'yyyy-MM-dd',$!{item.invoiceDate})</span></td>
+                                                    <td><span name="code">$!{item.code}</span></td>
+                                                    <td><span name="org">$!{item.orgName}</span></td>
+                                                    <td><span name="seller">$!{item.sellerName}</span></td>
+                                                    <td class="text-right">
+                                                        #set($totalAmount=$item.totalAmount)
+                                                        #if($item.checkTotalAmount && $item.checkTotalAmount > 0)
+                                                            #set($totalAmount=$item.checkTotalAmount)
+                                                        #end
+                                                        <input type="hidden" name="amount" value="$!{totalAmount}"/>
+                                                        <span name="amount">$!{NumberTool.toThousandth(${totalAmount})}</span>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <a href="javascript:" name="billing" invoiceinid="$!{item.id}">开票</a>&nbsp;
+                                                        <a href="javascript:" name="cancel" invoiceinid="$!{item.id}">取消</a>
+                                                    </td>
+                                                </tr>
+                                                #end
+                                            #end
+                                        </tbody>
+                                    </table>
+                                    <div id="waitRegion" style="display: none;">
+                                        <div class="clearfix info-bar">
+                                            <label class="bolder">已选择待开的销项票</label>
+                                            <label class="pull-right">总额（元）：
+                                                <input type="hidden" id="selectedOutAmount" value="0"/>
+                                                <span id="selectedOutAmountDisplay">0.00</span>
+                                            </label>
+                                        </div>
+                                        <table id="waitTable" class="table table-striped table-bordered table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th>编号</th>
+                                                <th>买家全称</th>
+                                                <th>品名</th>
+                                                <th>材质</th>
+                                                <th>规格</th>
+                                                <th>数量（吨）</th>
+                                                <th>价税合计（元）</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center clearfix">
+                                <a href="$link.getContextPath()/invoice/out/waitinginvoice.html" id="back"
+                                   class="pull-left">返回</a>
+                                <button type="button" id="nextStep" class="btn btn-sm btn-primary">下一步</button>
+                            </div>
+                        </div>
+                        <!--第二步（开销项票）-->
+                        <div id="step2Layer" style="display: none;">
+                        	<div class="scroll-layer" style="width:100%; overflow:auto;">
+                            <div class="clearfix" style="width:1400px; ">
+                                <div class="pull-left" style=" width: 46%;">
+                                    <div class="clearfix info-bar">
+                                        <label class="bolder">待开销项票</label>
+                                        <label class="pull-right">总额（元）：
+                                            <input type="hidden" id="tobeOutAmount" value="0"/>
+                                            <span id="tobeOutAmountDisplay">0.00</span>
+                                        </label>
+                                    </div>
+                                    <table id="tobeOutTable" class="table table-striped table-bordered table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>买家全称</th>
+                                            <th>品名</th>
+                                            <th>材质</th>
+                                            <th>规格</th>
+                                            <th>已申请开票金额（元）</th>
+                                            <th>二结帐户欠款 </th>
+                                            <th>凭证审核状态 </th>
+                                            <th>操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="pull-left" style=" width: 49%; margin-left: 1%;">
+                                    <div class="clearfix info-bar">
+                                        <label class="bolder">已选择不开的销项票</label>
+                                        <label class="pull-right">总额（元）：
+                                            <input type="hidden" id="selectedNotOutAmount" value="0"/>
+                                            <span id="selectedNotOutAmountDisplay">0.00</span>
+                                        </label>
+                                    </div>
+                                    <table id="selectedNotOutTable"
+                                           class="table table-striped table-bordered table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>买家全称</th>
+                                            <th>品名</th>
+                                            <th>材质</th>
+                                            <th>规格</th>
+                                            <th>数量（吨）</th>
+                                            <th>已申请开票金额（元）</th>
+                                            <th>二结帐户欠款 </th>
+                                            <th>凭证审核状态 </th>
+                                            <th>操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            #if(${notOutItemDetails})
+                                                #foreach($item in ${notOutItemDetails})
+                                                <tr outdetailid="$!{item.id}" weight="$!{item.weight}" isdefer="no">
+                                                    <td><span name="buyer">$!{item.buyerName}</span></td>
+                                                    <td><span name="nsortname">$!{item.nsortName}</span></td>
+                                                    <td><span name="material">$!{item.material}</span></td>
+                                                    <td><span name="spec">$!{item.spec}</span></td>
+                                                    <td><span name='weight'>$!{item.weight}</span></td>
+                                                    <td class="text-right">
+                                                        #set($usefulAmount=$item.amount)
+                                                        #if($item.actualAmount)
+                                                            #set($usefulAmount=$item.amount - $item.actualAmount)
+                                                        #end
+                                                        <input type="hidden" name="amount" value="$!{usefulAmount}"/>
+                                                        <span name="amount">$!{NumberTool.toThousandth(${usefulAmount})}</span>
+                                                    </td>
+                                                    <td>
+                                                    	## modify by tuxianming 20150526
+                                                    	<input type="hidden" name="balanceSecondSettlement" value="$!item.balanceSecondSettlement"/> 
+                                                    	
+                                                    	#set($duartionAmount=$item.balanceSecondSettlement + $InvoiceOutApplySecond)
+                                                    	#set($absBalanceSecondSettlement = $!NumberTool.abs($!item.balanceSecondSettlement))
+                                                    	
+                                                    	#if( $duartionAmount > 0)
+                                                    	
+                                                    		$!NumberTool.toThousandth($absBalanceSecondSettlement)
+                                                    		
+                                                    	#elseif($absBalanceSecondSettlement > $InvoiceOutApplySecond)
+                                                    		<span style="color:red;">
+	                                                			$!NumberTool.toThousandth($absBalanceSecondSettlement)
+	                                                		</span>
+                                                    	#else
+                                                    		0.00
+                                                    	#end
+                                                    </td>
+                                                    <td>
+                                                    	<input type="hidden" name="credentialStatus"  #if($item.credentialStatus==false) value="0" #else value="1" #end /> 
+                                                    	<span style="#if($item.credentialStatus==false) color:red; #end">
+                                                    		$!item.credentialStatusStr
+                                                    	</span>
+                                                    	
+                                                    </td>
+                                                    ## end modify by tuxianming 20150526
+                                                    <td><a href="javascript:" name="cancel" outdetailid="$!{item.id}">取消</a></td>
+                                                </tr>
+                                                #end
+                                            #end
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            </div><!-- end scroll-layer -->
+                            <div class="text-center clearfix">
+                                <a href="javascript:" id="previous" class="pull-left">返回</a>
+                                #if($shiro.hasPermission("invoice:out:generate:btn1"))
+	                                <button type="button" sendstatus="ALL" class="submit-save btn btn-sm btn-primary">生成开票清单并进项票提交认证</button>
+								#end  
+								#if($shiro.hasPermission("invoice:out:generate:btn2"))
+	                                <button type="button" sendstatus="SEND" class="submit-save btn btn-sm btn-primary">生成可寄出开票清单并进项票提交认证</button>
+								#end
+								#if($shiro.hasPermission("invoice:out:generate:btn3"))
+	                                <button type="button" sendstatus="UNSEND" class="submit-save btn btn-sm btn-danger">生成不可寄出开票清单并进项票提交认证</button>
+								#end                             
+                                <button type="button" id="cancel" class="btn btn-sm">取消</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+<input type="hidden" id="applyIds" value="$!{applyIds}" )">
+<input type="hidden" name="InvoiceOutApplySecond" value="$!InvoiceOutApplySecond" />
+##<input type="hidden" id="invoiceInInput" value="$shiro.hasPermission("invoice:in:bill:input")">
+<script src="$link.getContextPath()/js/views/common/calculate.js"></script>
+<script src="$link.getContextPath()/js/views/invoice/out/generate.js"></script>
+<script type="text/javascript">
+        #if($!taxRatePercent)
+        var _taxRate = $!taxRatePercent;
+        #else
+        var _taxRate = 0;
+        #end
+
+    var _modifyNumStr = [];
+        #if($!{modifyNumList})
+            #set($modifyNumStr = "[")
+            #foreach($item in $modifyNumList)
+                #set($modifyNumStr = "${modifyNumStr}{'id':${item.id},'modificationNumber':${item.modificationNumber}},")
+            #end
+            #set($modifyNumStrLength = $modifyNumStr.length() - 1)
+            #if($modifyNumStrLength > 0)
+                #set($modifyNumStr=$modifyNumStr.substring(0,${modifyNumStrLength}))
+            #end
+            #set($modifyNumStr = "${modifyNumStr}]")
+        _modifyNumStr = "$!{modifyNumStr}";
+        _modifyNumStr = _modifyNumStr.replace(/'/g, '"');
+        #end
+</script>

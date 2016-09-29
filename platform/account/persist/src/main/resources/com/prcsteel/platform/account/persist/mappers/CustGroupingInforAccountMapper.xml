@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.account.persist.dao.CustGroupingInforAccountDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.account.model.model.CustGroupingInforAccount" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="grouping_infor_id" property="groupingInforId" jdbcType="BIGINT" />
+    <result column="account_id" property="accountId" jdbcType="BIGINT" />
+    <result column="account_name" property="accountName" jdbcType="VARCHAR" />
+    <result column="department_id" property="departmentId" jdbcType="BIGINT" />
+    <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
+    <result column="is_auto_second_payment" property="isAutoSecondPayment" jdbcType="BIT" />
+    <result column="is_auto_second_payment_audit" property="isAutoSecondPaymentAudit" jdbcType="BIT" />
+    <result column="serial" property="serial" jdbcType="VARCHAR" />
+    <result column="credit_limit" property="creditLimit" jdbcType="DECIMAL" />
+    <result column="credit_limit_audit" property="creditLimitAudit" jdbcType="DECIMAL" />
+    <result column="credit_amount_used" property="creditUsed" jdbcType="DECIMAL" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="ower_type" property="owerType" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="is_delete" property="isDelete" jdbcType="BIT" />
+    <result column="note" property="note" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+    <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+    <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, grouping_infor_id, account_id, account_name, department_id, department_name, 
+    is_auto_second_payment, is_auto_second_payment_audit, serial, credit_limit, credit_limit_audit, status, ower_type, user_id,
+    user_name, is_delete, note, created, created_by, last_updated, last_updated_by, modification_number, 
+    row_id, parent_row_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from cust_grouping_infor_account
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from cust_grouping_infor_account
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.prcsteel.platform.account.model.model.CustGroupingInforAccount" >
+    insert into cust_grouping_infor_account (id, grouping_infor_id, account_id, 
+      account_name, department_id, department_name, 
+      is_auto_second_payment, is_auto_second_payment_audit, serial, credit_limit,
+      credit_limit_audit, status, ower_type, user_id,
+      user_name, is_delete, note, 
+      created, created_by, last_updated, 
+      last_updated_by, modification_number, row_id, 
+      parent_row_id)
+    values (#{id,jdbcType=BIGINT}, #{groupingInforId,jdbcType=BIGINT}, #{accountId,jdbcType=BIGINT}, 
+      #{accountName,jdbcType=VARCHAR}, #{departmentId,jdbcType=BIGINT}, #{departmentName,jdbcType=VARCHAR}, 
+      #{isAutoSecondPayment,jdbcType=BIT}, #{isAutoSecondPaymentAudit,jdbcType=BIT}, #{serial,jdbcType=VARCHAR}, #{creditLimit,jdbcType=DECIMAL},
+      #{creditLimitAudit,jdbcType=DECIMAL}, #{status,jdbcType=VARCHAR}, #{owerType,jdbcType=VARCHAR}, #{userId,jdbcType=BIGINT},
+      #{userName,jdbcType=VARCHAR}, #{isDelete,jdbcType=BIT}, #{note,jdbcType=VARCHAR}, 
+      #{created,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, #{lastUpdated,jdbcType=TIMESTAMP}, 
+      #{lastUpdatedBy,jdbcType=VARCHAR}, #{modificationNumber,jdbcType=INTEGER}, #{rowId,jdbcType=VARCHAR}, 
+      #{parentRowId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.account.model.model.CustGroupingInforAccount" >
+    insert into cust_grouping_infor_account
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="groupingInforId != null" >
+        grouping_infor_id,
+      </if>
+      <if test="accountId != null" >
+        account_id,
+      </if>
+      <if test="accountName != null" >
+        account_name,
+      </if>
+      <if test="departmentId != null" >
+        department_id,
+      </if>
+      <if test="departmentName != null" >
+        department_name,
+      </if>
+      <if test="isAutoSecondPayment != null" >
+        is_auto_second_payment,
+      </if>
+      <if test="isAutoSecondPaymentAudit != null" >
+        is_auto_second_payment_audit,
+      </if>
+      <if test="serial != null" >
+        serial,
+      </if>
+      <if test="creditLimit != null" >
+        credit_limit,
+      </if>
+      <if test="creditLimitAudit != null" >
+        credit_limit_audit,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="owerType != null" >
+        ower_type,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="isDelete != null" >
+        is_delete,
+      </if>
+      <if test="note != null" >
+        note,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by,
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number,
+      </if>
+      <if test="rowId != null" >
+        row_id,
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="groupingInforId != null" >
+        #{groupingInforId,jdbcType=BIGINT},
+      </if>
+      <if test="accountId != null" >
+        #{accountId,jdbcType=BIGINT},
+      </if>
+      <if test="accountName != null" >
+        #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null" >
+        #{departmentId,jdbcType=BIGINT},
+      </if>
+      <if test="departmentName != null" >
+        #{departmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="isAutoSecondPayment != null" >
+        #{isAutoSecondPayment,jdbcType=BIT},
+      </if>
+      <if test="isAutoSecondPaymentAudit != null" >
+        #{isAutoSecondPaymentAudit,jdbcType=BIT},
+      </if>
+      <if test="serial != null" >
+        #{serial,jdbcType=VARCHAR},
+      </if>
+      <if test="creditLimit != null" >
+        #{creditLimit,jdbcType=DECIMAL},
+      </if>
+      <if test="creditLimitAudit != null" >
+        #{creditLimitAudit,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="owerType != null" >
+        #{owerType,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=BIT},
+      </if>
+      <if test="note != null" >
+        #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        #{parentRowId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.account.model.model.CustGroupingInforAccount" >
+    update cust_grouping_infor_account
+    <set >
+      <if test="groupingInforId != null" >
+        grouping_infor_id = #{groupingInforId,jdbcType=BIGINT},
+      </if>
+      <if test="accountId != null" >
+        account_id = #{accountId,jdbcType=BIGINT},
+      </if>
+      <if test="accountName != null" >
+        account_name = #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null" >
+        department_id = #{departmentId,jdbcType=BIGINT},
+      </if>
+      <if test="departmentName != null" >
+        department_name = #{departmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="isAutoSecondPayment != null" >
+        is_auto_second_payment = #{isAutoSecondPayment,jdbcType=BIT},
+      </if>
+      <if test="isAutoSecondPaymentAudit != null" >
+        is_auto_second_payment_audit = #{isAutoSecondPaymentAudit,jdbcType=BIT},
+      </if>
+      <if test="serial != null" >
+        serial = #{serial,jdbcType=VARCHAR},
+      </if>
+      <if test="creditLimit != null" >
+        credit_limit = #{creditLimit,jdbcType=DECIMAL},
+      </if>
+      <if test="creditLimitAudit != null" >
+        credit_limit_audit = #{creditLimitAudit,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="owerType != null" >
+        ower_type = #{owerType,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null" >
+        is_delete = #{isDelete,jdbcType=BIT},
+      </if>
+      <if test="note != null" >
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number = #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        row_id = #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="deleteLimitGroupAccount" parameterType="java.lang.Long" >
+    update cust_grouping_infor_account  set is_delete=1
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.account.model.model.CustGroupingInforAccount" >
+    update cust_grouping_infor_account
+    set grouping_infor_id = #{groupingInforId,jdbcType=BIGINT},
+      account_id = #{accountId,jdbcType=BIGINT},
+      account_name = #{accountName,jdbcType=VARCHAR},
+      department_id = #{departmentId,jdbcType=BIGINT},
+      department_name = #{departmentName,jdbcType=VARCHAR},
+      is_auto_second_payment = #{isAutoSecondPayment,jdbcType=BIT},
+      is_auto_second_payment_audit = #{isAutoSecondPaymentAudit,jdbcType=BIT},
+      serial = #{serial,jdbcType=VARCHAR},
+      credit_limit = #{creditLimit,jdbcType=DECIMAL},
+      credit_limit_audit = #{creditLimitAudit,jdbcType=DECIMAL},
+      status = #{status,jdbcType=VARCHAR},
+      ower_type = #{owerType,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=BIGINT},
+      user_name = #{userName,jdbcType=VARCHAR},
+      is_delete = #{isDelete,jdbcType=BIT},
+      note = #{note,jdbcType=VARCHAR},
+      created = #{created,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      modification_number = #{modificationNumber,jdbcType=INTEGER},
+      row_id = #{rowId,jdbcType=VARCHAR},
+      parent_row_id = #{parentRowId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <resultMap id="groupInfoAccountMap" type="com.prcsteel.platform.account.model.dto.GroupInforAccountDto" extends="BaseResultMap">
+    	<result column="groupInfoId" property="groupInfoId" jdbcType="BIGINT"/>
+    	<result column="groupName" property="groupName" jdbcType="VARCHAR"/>
+    	<result column="groupNameAudit" property="groupNameAudit" jdbcType="VARCHAR"/>
+    	<result column="groupCreditLimit" property="groupCreditLimit" jdbcType="DECIMAL"/>
+    	<result column="groupCreditLimitAudit" property="groupCreditLimitAudit" jdbcType="DECIMAL"/>
+    	<result column="groupInfoSerial" property="groupInfoSerial" jdbcType="VARCHAR"/>
+    	<result column="groupInfoStatus" property="groupInfoStatus" jdbcType="VARCHAR"/>
+    	<result column="groupInfoCreated" property="groupInfoCreated" jdbcType="TIMESTAMP"/>
+    	<result column="departmentCount" property="departmentCount" jdbcType="INTEGER"/>
+        <result column="is_auto_second_payment" property="isAutoSecondPayment" jdbcType="INTEGER"/>
+        <result column="is_auto_second_payment_audit" property="isAutoSecondPaymentAudit" jdbcType="INTEGER"/>
+  </resultMap>
+  
+  <select id="queryGroupInfoAccount" resultMap="groupInfoAccountMap" parameterType="com.prcsteel.platform.account.model.query.CustGroupingInforQuery" >
+  	SELECT
+	  	t1.id, t1.grouping_infor_id, t1.account_id, t1.account_name, t1.credit_limit, t1.serial, t1.department_id, t1.department_name,  
+    	t1.credit_limit_audit, t1.status, t1.user_id, t1.user_name, t1.is_delete, t1.note, t1.created, t1.created_by, 
+    	t1.last_updated, t1.last_updated_by,
+		t2.id AS groupInfoId, t2.name AS groupName, t2.name_audit AS groupNameAudit, t2.credit_limit AS groupCreditLimit,
+		t2.credit_limit_audit AS groupCreditLimitAudit, t2.serial AS groupInfoSerial, t2.status AS groupInfoStatus,
+		t2.created AS groupInfoCreated,t3.credit_amount_used,t1.is_auto_second_payment,t1.is_auto_second_payment_audit,
+		(SELECT COUNT(t5.id) FROM cust_account t5 WHERE t5.parent_id = t1.account_id) AS departmentCount
+	FROM cust_grouping_infor t2 
+	LEFT JOIN cust_grouping_infor_account t1 ON t1.grouping_infor_id = t2.id AND t1.is_delete=0
+    inner join cust_account t3 on t1.account_id = t3.id AND t3.is_deleted=0
+	WHERE t2.is_delete = 0
+	<if test="groupInfoName != null and groupInfoName !=''">
+		AND (case when t2.status='APPROVED' then t2.name else t2.name_audit end)like '%${groupInfoName}%'
+	</if>
+	<if test="accountName != null and accountName !=''">
+      	AND t2.id in( select grouping_infor_id from cust_grouping_infor_account
+        where account_name like concat('%',#{accountName},'%') and is_delete=0)
+    </if>
+    <if test="groupStatusList != null and groupStatusList.size > 0 ">
+        AND t2.status in
+      <foreach item="status" index="index" collection="groupStatusList" open="(" separator="," close=")">
+        #{status,jdbcType=VARCHAR}
+      </foreach>
+    </if>
+    <if test="accountStatusList != null and accountStatusList.size > 0 ">
+       AND t1.status in
+      <foreach item="status" index="index" collection="accountStatusList" open="(" separator="," close=")">
+        #{status,jdbcType=VARCHAR}
+      </foreach>
+    </if>
+    </select>
+
+  <select id="queryGroupInfoById" resultMap="groupInfoAccountMap" parameterType="java.lang.Long">
+    select t1.id, t1.grouping_infor_id, t1.account_id, t1.account_name, t1.credit_limit, t1.serial, t1.department_id, t1.department_name,
+    	t1.credit_limit_audit, t1.status, t1.user_id, t1.user_name, t1.is_delete, t1.note, t1.created, t1.created_by,
+    	t1.last_updated, t1.last_updated_by,
+		t2.id AS groupInfoId, t2.name AS groupName, t2.name_audit AS groupNameAudit, t2.credit_limit AS groupCreditLimit,
+		t2.credit_limit_audit AS groupCreditLimitAudit, t2.serial AS groupInfoSerial, t2.status AS groupInfoStatus,
+		t2.created AS groupInfoCreated,t3.credit_amount_used,t1.is_auto_second_payment,t1.is_auto_second_payment_audit,
+		 (SELECT COUNT(t5.id) FROM cust_account t5 WHERE t5.parent_id = t1.account_id) AS departmentCount
+    from cust_grouping_infor t2
+    LEFT join cust_grouping_infor_account t1 on t1.grouping_infor_id = t2.id and t1.is_delete=0
+    LEFT join cust_account t3 on t1.department_id=t3.id and t3.is_deleted=0
+    where t2.id={#groupId} and t2.is_delete=0
+  </select>
+
+  <select id="queryGroupInfo" resultMap="groupInfoAccountMap" parameterType="com.prcsteel.platform.account.model.query.CustGroupingInforQuery" >
+    SELECT
+    t1.id, t1.grouping_infor_id, t1.account_id, t1.account_name,t1.credit_limit,
+    t1.serial, t1.department_id, t1.department_name,
+    t1.credit_limit_audit, t1.status, t1.user_id, t1.user_name, t1.is_delete, t1.note, t1.created, t1.created_by,
+    t1.last_updated, t1.last_updated_by,t2.id AS groupInfoId,t2.name AS groupName,t2.name_audit AS groupNameAudit,
+    t2.credit_limit AS groupCreditLimit,t2.credit_limit_audit AS groupCreditLimitAudit, t2.serial AS groupInfoSerial, t2.status AS groupInfoStatus,
+    t2.created AS groupInfoCreated,t3.credit_amount_used,t1.is_auto_second_payment,t1.is_auto_second_payment_audit,
+    (SELECT COUNT(t5.id) FROM cust_account t5 WHERE t5.parent_id = t1.account_id) AS departmentCount
+    FROM cust_grouping_infor t2
+    LEFT JOIN cust_grouping_infor_account t1 ON t1.grouping_infor_id = t2.id and t1.is_delete=0
+    LEFT JOIN cust_account t3 on t1.department_id=t3.id and t3.is_deleted=0
+    WHERE t2.is_delete = 0
+    <if test="groupInfoName != null and groupInfoName !=''">
+      AND (case when t2.status='APPROVED' then t2.name else t2.name_audit end) like concat('%',#{groupInfoName},'%')
+    </if>
+    <if test="accountName != null and accountName !=''">
+      AND t2.id in( select grouping_infor_id from cust_grouping_infor_account
+        where account_name like concat('%',#{accountName},'%') and is_delete=0)
+    </if>
+    <!-- 客户管理额度查询条件 afeng -->
+    <if test="departmentId != null and departmentId !=''">
+      AND t2.id in( select grouping_infor_id from cust_grouping_infor_account
+        where department_id = #{departmentId} and is_delete=0)
+    </if>
+    <if test="groupStatusList != null and groupStatusList.size > 0 ">
+      AND t2.status in
+      <foreach item="status" index="index" collection="groupStatusList" open="(" separator="," close=")">
+        #{status,jdbcType=VARCHAR}
+      </foreach>
+    </if>
+    <if test="accountStatusList != null and accountStatusList.size > 0 ">
+      AND t1.status in
+      <foreach item="status" index="index" collection="accountStatusList" open="(" separator="," close=")">
+        #{status,jdbcType=VARCHAR}
+      </foreach>
+    </if>
+    order by t2.created desc,t1.created asc
+  </select>
+
+  <select id="queryGroupInfoCount" resultType="int" parameterType="com.prcsteel.platform.account.model.query.CustGroupingInforQuery" >
+    select count(*) from (
+      SELECT t2.id FROM cust_grouping_infor t2
+      LEFT JOIN cust_grouping_infor_account t1 ON t1.grouping_infor_id = t2.id and t1.is_delete=0
+      LEFT join cust_account t3 on t1.account_id=t3.id AND t3.is_deleted = 0
+      WHERE t2.is_delete = 0
+      <if test="groupInfoName != null and groupInfoName !=''">
+        AND (case when t2.status='APPROVED' then t2.name else t2.name_audit end) like concat('%',#{groupInfoName},'%')
+      </if>
+      <if test="accountName != null and accountName !=''">
+        AND t2.id in( select grouping_infor_id from cust_grouping_infor_account
+        where account_name like concat('%',#{accountName},'%') and is_delete=0)
+      </if>
+      <if test="groupStatusList != null and groupStatusList.size > 0 ">
+        AND t2.status in
+        <foreach item="status" index="index" collection="groupStatusList" open="(" separator="," close=")">
+          #{status,jdbcType=VARCHAR}
+        </foreach>
+      </if>
+      <if test="accountStatusList != null and accountStatusList.size > 0 ">
+        AND t1.status in
+        <foreach item="status" index="index" collection="accountStatusList" open="(" separator="," close=")">
+          #{status,jdbcType=VARCHAR}
+        </foreach>
+      </if>
+      group by t2.id
+    )  as t
+  </select>
+    <!--add by zhoucai@prcsteel.com 根据流水号删除记录-->
+    <delete id="deleteCompanyLimitByFlowNo" parameterType="java.lang.Long" >
+      delete from cust_grouping_infor_account
+      where serial IN (#{serial,jdbcType=VARCHAR})
+    </delete>
+	
+	<select id="queryByGroupId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+		SELECT 
+    	<include refid="Base_Column_List" />
+    	From cust_grouping_infor_account
+    	WHERE grouping_infor_id = #{groupId}
+    	AND is_delete = 0
+	</select>
+  <!--add by zhoucai@prcsteel.com 查询当前公司向下的部门是否已创建分组-->
+  <select id="judgeCompanyIsExit" resultType="int" parameterType="com.prcsteel.platform.account.model.model.CustGroupingInforAccount" >
+    SELECT
+      count(t1.id)
+    FROM cust_grouping_infor_account t1
+    WHERE
+      t1.is_delete = 0
+    <if test="accountId != null and accountId !=''">
+      AND t1.account_id = #{accountId}
+    </if>
+    <if test="departmentId != null and departmentId !=''">
+      AND t1.department_id = #{departmentId}
+    </if>
+  </select>
+  <!--add by zhoucai@prcsteel.com c查询当前分组下额度的最大值-->
+  <select id="queryGroupMaxCompanyLimt" resultType="BigDecimal" parameterType="java.lang.Long" >
+     SELECT MAX(t3.credit_limit_audit) FROM
+    (select ifnull(max(t1.credit_limit_audit),0) AS credit_limit_audit FROM cust_grouping_infor_account t1 WHERE
+    t1.is_delete = 0
+      AND t1.grouping_infor_id = #{groupId}
+    UNION select ifnull(max(t2.credit_limit),0)from cust_grouping_infor_account t2 WHERE
+    t2.is_delete = 0
+      AND t2.grouping_infor_id = #{groupId}
+    ) t3
+  </select>
+
+  <!--add by chengui 按客户ID查询分组记录数-->
+  <select id="getGroupCountByAccountId" resultType="int" parameterType="java.lang.Long" >
+    SELECT COUNT(*) FROM
+    cust_grouping_infor_account
+    WHERE account_id = #{accountId}
+  </select>
+
+</mapper>

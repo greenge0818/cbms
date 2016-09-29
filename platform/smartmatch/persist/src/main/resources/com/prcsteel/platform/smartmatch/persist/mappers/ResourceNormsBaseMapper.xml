@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.smartmatch.persist.dao.ResourceNormsBaseDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.smartmatch.model.model.ResourceNormsBase" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="resource_id" property="resourceId" jdbcType="BIGINT" />
+    <result column="norm_uuid" property="normUuid" jdbcType="VARCHAR" />
+    <result column="value" property="value" jdbcType="VARCHAR" />
+    <result column="priority" property="priority" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, resource_id, norm_uuid, value, priority, created, created_by
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from cust_resource_norms_base
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from cust_resource_norms_base
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.prcsteel.platform.smartmatch.model.model.ResourceNormsBase" >
+    insert into cust_resource_norms_base (id, resource_base_id, norm_uuid, 
+      value, priority, created, 
+      created_by)
+    values (#{id,jdbcType=BIGINT}, #{resourceBaseId,jdbcType=BIGINT}, #{normUuid,jdbcType=VARCHAR}, 
+      #{value,jdbcType=VARCHAR}, #{priority,jdbcType=INTEGER}, #{created,jdbcType=TIMESTAMP}, 
+      #{createdBy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.smartmatch.model.model.ResourceNormsBase" >
+    insert into cust_resource_norms_base
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="resourceId != null" >
+        resource_id,
+      </if>
+      <if test="normUuid != null" >
+        norm_uuid,
+      </if>
+      <if test="value != null" >
+        value,
+      </if>
+      <if test="priority != null" >
+        priority,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+       <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by,
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number,
+      </if>
+      <if test="rowId != null" >
+        row_id,
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="resourceId != null" >
+        #{resourceId,jdbcType=BIGINT},
+      </if>
+      <if test="normUuid != null" >
+        #{normUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null" >
+        #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="priority != null" >
+        #{priority,jdbcType=INTEGER},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+       <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        #{parentRowId,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.smartmatch.model.model.ResourceNormsBase" >
+    update cust_resource_norms_base
+    <set >
+      <if test="resourceBaseId != null" >
+        resource_base_id = #{resourceBaseId,jdbcType=BIGINT},
+      </if>
+      <if test="normUuid != null" >
+        norm_uuid = #{normUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null" >
+        value = #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="priority != null" >
+        priority = #{priority,jdbcType=INTEGER},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.smartmatch.model.model.ResourceNormsBase" >
+    update cust_resource_norms_base
+    set resource_base_id = #{resourceBaseId,jdbcType=BIGINT},
+      norm_uuid = #{normUuid,jdbcType=VARCHAR},
+      value = #{value,jdbcType=VARCHAR},
+      priority = #{priority,jdbcType=INTEGER},
+      created = #{created,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  
+</mapper>

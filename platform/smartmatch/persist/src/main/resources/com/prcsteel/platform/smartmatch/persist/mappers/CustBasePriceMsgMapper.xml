@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.smartmatch.persist.dao.CustBasePriceMsgDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.smartmatch.model.model.CustBasePriceMsg" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="msg_content" property="msgContent" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="account_id" property="accountId" jdbcType="BIGINT" />
+    <result column="contact_id" property="contactId" jdbcType="BIGINT" />
+    <result column="account_name" property="accountName" jdbcType="VARCHAR" />
+    <result column="contact_name" property="contactName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, created, tel, msg_content, status, last_updated,account_id,contact_id,account_name,contact_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from cust_base_price_msg
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from cust_base_price_msg
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.prcsteel.platform.smartmatch.model.model.CustBasePriceMsg" >
+    insert into cust_base_price_msg (id, created, tel, 
+      msg_content, status, last_updated ,account_id,contact_id,account_name,contact_name
+      )
+    values (#{id,jdbcType=BIGINT}, #{created,jdbcType=TIMESTAMP}, #{tel,jdbcType=VARCHAR}, 
+      #{msgContent,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{lastUpdated,jdbcType=TIMESTAMP},
+      #{accountId,jdbcType=BIGINT},#{contactId,jdbcType=BIGINT},#{accountName,jdbcType=VARCHAR},#{contactName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.smartmatch.model.model.CustBasePriceMsg" >
+    insert into cust_base_price_msg
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="tel != null" >
+        tel,
+      </if>
+      <if test="msgContent != null" >
+        msg_content,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="accountId != null" >
+        account_id ,
+      </if>
+      <if test="contactId != null" >
+        contact_id ,
+      </if>
+      <if test=" accountName!= null" >
+        account_name ,
+      </if>
+      <if test="contactName != null" >
+        contact_name ,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="msgContent != null" >
+        #{msgContent,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accountId != null" >
+        #{accountId,jdbcType=BIGINT},
+      </if>
+      <if test="contactId != null" >
+        #{contactId,jdbcType=BIGINT},
+      </if>
+      <if test="accountName != null" >
+        #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactName != null" >
+        #{contactName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.smartmatch.model.model.CustBasePriceMsg" >
+    update cust_base_price_msg
+    <set >
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tel != null" >
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="msgContent != null" >
+        msg_content = #{msgContent,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.smartmatch.model.model.CustBasePriceMsg" >
+    update cust_base_price_msg
+    set created = #{created,jdbcType=TIMESTAMP},
+      tel = #{tel,jdbcType=VARCHAR},
+      msg_content = #{msgContent,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="getHistoricalMsg" resultMap="BaseResultMap" parameterType="com.prcsteel.platform.smartmatch.model.query.MsgQuery">
+  	SELECT 
+  		*
+  	FROM cust_base_price_msg
+  	<where>
+  		<if test="startTime != null and endTime != null ">
+            and created between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="mobile != null and mobile !=''">
+        	and tel = #{mobile,jdbcType=VARCHAR}
+        </if>
+  	</where>
+  	ORDER BY created desc
+  	<if test="start != null and length != null">
+        limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER}
+    </if>
+  </select>
+  
+  <select id="getHistoricalMsgCount" resultType="java.lang.Integer" parameterType="com.prcsteel.platform.smartmatch.model.query.MsgQuery">
+  	SELECT 
+  		COUNT(1)
+  	FROM cust_base_price_msg
+  	<where>
+  		<if test="startTime != null and endTime != null ">
+            and created between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="mobile != null and mobile !=''">
+        	and tel = #{mobile,jdbcType=VARCHAR}
+        </if>
+  	</where>
+  </select>
+  
+</mapper>

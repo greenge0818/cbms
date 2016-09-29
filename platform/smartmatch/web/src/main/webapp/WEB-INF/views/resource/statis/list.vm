@@ -1,0 +1,101 @@
+<div class="breadcrumbs" id="breadcrumbs">
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="#">基础数据</a>
+        </li>
+        <li>
+            <a href="$link.getContextPath()/resource/sort/index.html">资源管理</a>
+        </li>
+        <li>
+            资源更新统计
+        </li>
+    </ul>
+</div>
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="clearfix">
+                        <div class="input-group pull-right col-md-12 col-sm-12 col-lg-12 text-left">
+                        	<form id="serchForm" class="form-inline" method="post">
+	                            <label>地区：
+									<select id="cityName" >
+	                                        <option selected value="" >全部</option>
+	                                        #foreach($city in $cityList)
+	                                        	<option value="$!city.centerCityName" >$!city.centerCityName</option>
+	                                        #end
+	                                </select>
+	                            </label>    
+					            <label id="lab_serviceArea">服务中心：
+					                <select id="serviceArea" class="c-text">
+					                </select>
+					            </label>	                                
+	                            <label>操作员：
+									<select id="userId" name="userId">
+	                                        <option selected value="" >全部</option>userList
+	                                        #foreach($user in $userList)
+	                                        	<option value="$!user.id" >$!user.name</option>
+	                                        #end
+	                                </select>
+	                            </label>    
+	                            <label>资源类型：
+	                            	<select id="sourceType" name="sourceType">
+	                                        <option selected value="" >全部</option>
+	                                        <option value="daily_common" >日常资源</option>
+	                                        <option value="inquiry" >询价资源</option>
+	                                        <option value="history_transaction" >历史成交</option>
+	                                </select>
+	                            </label>    
+								&nbsp;&nbsp;&nbsp;
+	                            <label>更新时间：
+									 <input id="beginDate" name="beginDate" value="$!{beginDate}" class="Wdate" type="text"  readonly onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',maxDate:'%y-%M-%d'})" />
+										-
+									 <input id="endDate" name="endDate" value="$!{endDate}" class="Wdate" type="text"  readonly onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',maxDate:'%y-%M-%d'})" />
+								 </label>
+								 &nbsp;&nbsp;&nbsp;
+								 <button id="searchList" class="btn btn-sm btn-default" type="button">搜索
+	                            </button>
+								<button class="btn btn-sm btn-default" type="button" id='cleanSearch'>清空</button>
+							</form>
+                        </div>
+                    </div>
+                    <div>
+                    	<span id="totalLab" style="color:red">
+                    		<label>总计:</label>
+                    		<label id="totalLbl">0</label>
+                    		<label>位卖家,</label>
+                    		<label>日常资源更新</label><label id="dailyTotalLbl">0</label><label>条,</label>
+                    		<label>询价资源更新</label><label id="inquiryTotalLbl">0</label><label>条,</label>
+                    		<label>历史成交资源更新</label><label id="historyTotalLbl">0</label><label>条</label>
+                    	</span>
+                        <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+                            <thead>
+	                            <tr>
+	                                <th>序号</th>
+	                                <th>卖方名称</th>
+	                                <th>日常资源更新条数</th>
+	                                <th>询价资源更新条数</th>
+	                                <th>历史成交资源更新条数</th>
+	                                <th>合计</th>
+	                            </tr>
+	                            <tfoot>
+		                            <tr>
+		                                <td></td>
+		                                <td>合计</td>
+		                                <td id="totalDaily"></td>
+		                                <td id="totalInquiry"></td>
+		                                <td id="totalHistory"></td>
+		                                <td id="totalAll"></td>
+		                            </tr>                              
+								</tfoot>  
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="$link.getContextPath()/js/views/resource/statis/list.js"></script>

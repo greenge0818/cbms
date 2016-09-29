@@ -1,0 +1,57 @@
+<!-- basic scripts -->
+
+<!--[if !IE]> -->
+<script src="$link.getContextPath()/theme/default/js/jquery.2.1.1.min.js"></script>
+
+<!-- <![endif]-->
+
+<!--[if IE]>
+<script src="$link.getContextPath()/theme/default/js/jquery.1.11.1.min.js"></script>
+<![endif]-->
+
+<!--[if !IE]> -->
+<script type="text/javascript">
+    window.jQuery || document.write("<script src='$link.getContextPath()/theme/default/js/jquery.min.js'>"+"<"+"/script>");
+</script>
+
+<!-- <![endif]-->
+
+<!--[if IE]>
+<script type="text/javascript">
+    window.jQuery || document.write("<script src='$link.getContextPath()/theme/default/js/jquery1x.min.js'>"+"<"+"/script>");
+</script>
+<![endif]-->
+<script type="text/javascript">
+    if('ontouchstart' in document.documentElement) document.write("<script src='$link.getContextPath()/theme/default/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+</script>
+<script src="$link.getContextPath()/theme/default/js/bootstrap.min.js"></script>
+##<script src="$link.getContextPath()/theme/default/font-awesome/4.2.0/css/font-awesome.min.css" />
+##<!-- page specific plugin styles -->
+##<!-- text fonts -->
+##<script src="$link.getContextPath()/theme/default/fonts/fonts.googleapis.com.css" />
+
+<!-- page specific plugin scripts -->
+<script src="$link.getContextPath()/theme/default/js/jquery.dataTables.min.js"></script>
+<script src="$link.getContextPath()/theme/default/js/jquery.dataTables.bootstrap.min.js"></script>
+<script src="$link.getContextPath()/theme/default/js/dataTables.tableTools.min.js"></script>
+<script src="$link.getContextPath()/theme/default/js/dataTables.colVis.min.js"></script>
+<script src="$link.getContextPath()/theme/default/js/datePicker/WdatePicker.js"></script>
+<script src="$link.getContextPath()/theme/default/js/jquery.print.js"></script>
+<script src="$link.getContextPath()/theme/default/js/jquery.form.min.js"></script>
+<!-- ace scripts -->
+<script src="$link.getContextPath()/theme/default/js/ace-elements.min.js"></script>
+<script src="$link.getContextPath()/theme/default/js/ace.min.js"></script>
+<script src="$link.getContextPath()/theme/default/js/bootbox.min.js"></script>
+<script src="$link.getContextPath()/theme/default/js/artdialog.min.js"></script>
+<script src="$link.getContextPath()/theme/default/js/jquery.gritter.min.js"></script>
+<script src="$link.getContextPath()/js/views/common/calculate.js"></script>
+<script src="$link.getContextPath()/js/big.js"></script>
+<script src="$link.getContextPath()/js/global.js"></script>
+
+<!-- inline scripts related to this page -->
+<script src="$link.getContextPath()/js/utils.js"></script>
+
+<!-- ztree -->
+<script src="$link.getContextPath()/theme/default/js/jquery.ztree.core.min.js"></script>
+<link rel="stylesheet" href="$link.getContextPath()/theme/default/css/zTreeStyle.css"/>
+<link rel="stylesheet" href="$link.getContextPath()/css/style.css"/>

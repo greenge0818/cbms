@@ -1,0 +1,113 @@
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            	交易管理
+        </li>
+        <li>
+            <a href="$link.getContextPath()/common/menu/order-view/order-query-index-page.html">交易单管理</a>
+        </li>
+        <li>
+            #if($!{status}=="REQUESTED")
+                <a href="$link.getContextPath()/order/query/paymentapplication.html">待审核付款</a>
+            #else
+                <a href="$link.getContextPath()/order/query/withdrawconfirm.html">待确认付款</a>
+            #end
+        </li>
+        <li class="active">预付款详情</li>
+    </ul>
+    <!-- /.breadcrumb -->
+</div>
+
+<div class="page-content">
+    #if($!{success}=="false")
+        <div>
+            <span>抱歉，没有找到对应的记录或者无法查看！</span>
+        </div>
+    #else
+        <form id="applyWithdraw">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="col-sm-12">
+                        <label class="bolder">$!{payRequestItems.receiverName}</label>
+                        #if($!departmentNums > 1)
+                        	<label class="bolder" >&nbsp;-&nbsp;$!payRequestItems.receiverDepartmentName</label>
+                        #end
+                    </div>
+
+                    <div class="table-bar col-sm-8">
+                        <table class="contable">
+                            <tbody>
+                            <tr>
+                                <td class="bg-gray text-right">银行账户名称：</td>
+                                <td colspan="3">
+                                    <span class="vendor-text">$!{payRequestItems.receiverName}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bg-gray text-right">开户银行：</td>
+                                <td colspan="3">
+                                    <span class="vendor-text" id="bankName">$!{payRequestItems.receiverBankName}-$!{payRequestItems.receiverBranchBankName}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bg-gray text-right">银行帐号：</td>
+                                <td colspan="3">
+                                    <span class="vendor-text" id="bankCode">$!{payRequestItems.receiverAccountCode}</span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-sm-12">
+                        <ul class="">
+                            <li class="info-bar">
+                                <span>申请预付金额：<em id="availableAmount"
+                                                 class="red bolder">$!{NumberTool.toThousandth($!{payRequestItems.payAmount})}</em> 元</span>&nbsp;&nbsp;
+                                <a href="$link.getContextPath()/order/query/payrequest.html?requestId=$!{payRequestItems.requestId}&type=4&from=1">查看付款申请单</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class="pull-left btn-bar ">
+                    <input type="hidden" id="requestId" value="$!{payRequestItems.requestId}">
+                    #if($!{status}=="REQUESTED")
+                        <a id="backUrl" href="$link.getContextPath()/order/query/paymentapplication.html">返回</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button class="btn btn-primary" type="button" id="checkPassed" pass="true" title="审核通过">通过</button>&nbsp;&nbsp;
+                        <button class="btn btn-info" type="button" id="checkNotPassed" pass="false" title="审核不通过">不通过</button>
+                    #else
+                        <a id="backUrl" href="$link.getContextPath()/order/query/withdrawconfirm.html">返回</a>
+						#if($shiro.hasPermission("order:query:withdrawconfirm:confirm"))
+                        <button class="btn btn-primary confirm" type="button" id="confirm" vtype="SPD" title="确认已付款(浦发)">确认已付款(浦发)</button>
+						#end
+						#if($shiro.hasPermission("order:query:withdrawconfirm:confirmicbc"))
+                        <button class="btn btn-primary confirm" type="button" id="confirm" vtype="ICBC" title="确认已付款(工行)">确认已付款(工行)</button>
+                        #end
+                    #end
+                </div>
+
+                #if($!{status}!="REQUESTED")
+                    <div style="margin-top:18px;">
+                        <label>银行出账时间：
+                            <input id="bankAccountTime" class="ipt-text" type="text" value="$!{bankAccountStartTime}" style="width: 85px"
+                                   onFocus="WdatePicker({minDate:'#F{$dp.$D(\'bankAccountTime\')}',maxDate:'2020-10-01'})"/>
+                        </label>
+                    </div>
+                #end
+
+            </div>
+        </form>
+        <script src="$link.getContextPath()/js/views/order/requestdetail.js"></script>
+    #end
+</div>
+

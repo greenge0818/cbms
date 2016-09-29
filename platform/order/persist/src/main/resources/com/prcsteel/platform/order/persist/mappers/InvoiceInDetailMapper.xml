@@ -1,0 +1,607 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.order.persist.dao.InvoiceInDetailDao">
+    <resultMap id="BaseResultMap" type="com.prcsteel.platform.order.model.model.InvoiceInDetail">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="invoice_in_id" property="invoiceInId" jdbcType="BIGINT"/>
+        <result column="nsort_name" property="nsortName" jdbcType="VARCHAR"/>
+        <result column="material" property="material" jdbcType="VARCHAR"/>
+        <result column="spec" property="spec" jdbcType="VARCHAR"/>
+        <result column="weight" property="weight" jdbcType="DECIMAL"/>
+        <result column="no_tax_amount" property="noTaxAmount" jdbcType="DECIMAL"/>
+        <result column="tax_amount" property="taxAmount" jdbcType="DECIMAL"/>
+        <result column="amount" property="amount" jdbcType="DECIMAL"/>
+        <result column="nsort_name_comb" property="nsortNameComb" jdbcType="VARCHAR"/>
+        <result column="type_of_spec" property="typeOfSpec" jdbcType="VARCHAR"/>
+        <result column="actual_amount" property="actualAmount" jdbcType="DECIMAL"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="check_weight" property="checkWeight" jdbcType="DECIMAL"/>
+        <result column="check_no_tax_amount" property="checkNoTaxAmount" jdbcType="DECIMAL"/>
+        <result column="check_tax_amount" property="checkTaxAmount" jdbcType="DECIMAL"/>
+        <result column="alias_id" property="aliasId" jdbcType="BIGINT"/>
+        <result column="check_amount" property="checkAmount" jdbcType="DECIMAL"/>
+        <result column="created" property="created" jdbcType="TIMESTAMP"/>
+        <result column="created_by" property="createdBy" jdbcType="VARCHAR"/>
+        <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP"/>
+        <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR"/>
+        <result column="modification_number" property="modificationNumber" jdbcType="INTEGER"/>
+        <result column="row_id" property="rowId" jdbcType="VARCHAR"/>
+        <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR"/>
+        <result column="ext1" property="ext1" jdbcType="VARCHAR"/>
+        <result column="ext2" property="ext2" jdbcType="VARCHAR"/>
+        <result column="ext3" property="ext3" jdbcType="VARCHAR"/>
+        <result column="ext4" property="ext4" jdbcType="INTEGER"/>
+        <result column="ext5" property="ext5" jdbcType="INTEGER"/>
+        <result column="ext6" property="ext6" jdbcType="INTEGER"/>
+        <result column="ext7" property="ext7" jdbcType="TIMESTAMP"/>
+        <result column="ext8" property="ext8" jdbcType="BIGINT"/>
+        <result column="category_name" property="categoryName" jdbcType="VARCHAR"/>
+        <result column="category_id" property="categoryId" jdbcType="BIGINT"/>
+        <result column="alias_name" property="aliasName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+	    id, invoice_in_id, nsort_name, material, spec, weight, no_tax_amount, tax_amount, 
+	    amount, nsort_name_comb, type_of_spec, actual_amount, status,
+	    check_weight, check_no_tax_amount,alias_id, check_tax_amount, check_amount, created,
+	    created_by, last_updated, last_updated_by, modification_number, row_id, parent_row_id, 
+	    ext1, ext2, ext3, ext4, ext5, ext6, ext7, ext8
+  	</sql>
+  	
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from inv_invoice_in_detail
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from inv_invoice_in_detail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.prcsteel.platform.order.model.model.InvoiceInDetail"
+  	useGeneratedKeys="true" keyProperty="id">
+    insert into inv_invoice_in_detail (id, invoice_in_id, nsort_name, 
+      material, spec, weight, 
+      no_tax_amount, tax_amount, amount,
+      nsort_name_comb, type_of_spec, actual_amount, status,
+      check_weight, check_no_tax_amount, check_tax_amount, alias_id,
+      check_amount, created, created_by, 
+      last_updated, last_updated_by, modification_number, 
+      row_id, parent_row_id, ext1, 
+      ext2, ext3, ext4, ext5, 
+      ext6, ext7, ext8)
+    values (#{id,jdbcType=BIGINT}, #{invoiceInId,jdbcType=BIGINT}, #{nsortName,jdbcType=VARCHAR}, 
+      #{material,jdbcType=VARCHAR}, #{spec,jdbcType=VARCHAR}, #{weight,jdbcType=DECIMAL}, 
+      #{noTaxAmount,jdbcType=DECIMAL}, #{taxAmount,jdbcType=DECIMAL}, #{amount,jdbcType=DECIMAL},
+      #{nsortNameComb,jdbcType=VARCHAR},#{typeOfSpec,jdbcType=VARCHAR},#{actualAmount,jdbcType=DECIMAL},#{status,jdbcType=VARCHAR},
+      #{checkWeight,jdbcType=DECIMAL}, #{checkNoTaxAmount,jdbcType=DECIMAL}, #{checkTaxAmount,jdbcType=DECIMAL}, #{aliasId,jdbcType=BIGINT}, 
+      #{checkAmount,jdbcType=DECIMAL}, NOW(), #{createdBy,jdbcType=VARCHAR}, 
+      NOW(), #{lastUpdatedBy,jdbcType=VARCHAR}, 0, 
+      #{rowId,jdbcType=VARCHAR}, #{parentRowId,jdbcType=VARCHAR}, #{ext1,jdbcType=VARCHAR}, 
+      #{ext2,jdbcType=VARCHAR}, #{ext3,jdbcType=VARCHAR}, #{ext4,jdbcType=INTEGER}, #{ext5,jdbcType=INTEGER}, 
+      #{ext6,jdbcType=INTEGER}, #{ext7,jdbcType=TIMESTAMP}, #{ext8,jdbcType=BIGINT})
+  </insert>
+    <insert id="insertSelective" parameterType="com.prcsteel.platform.order.model.model.InvoiceInDetail">
+        insert into inv_invoice_in_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="invoiceInId != null">
+                invoice_in_id,
+            </if>
+            <if test="nsortName != null">
+                nsort_name,
+            </if>
+            <if test="material != null">
+                material,
+            </if>
+            <if test="spec != null">
+                spec,
+            </if>
+            <if test="weight != null">
+                weight,
+            </if>
+            <if test="noTaxAmount != null">
+                no_tax_amount,
+            </if>
+            <if test="taxAmount != null">
+                tax_amount,
+            </if>
+            <if test="amount != null">
+                amount,
+            </if>
+            <if test="nsortNameComb != null">
+                nsort_name_comb,
+            </if>
+            <if test="typeOfSpec != null">
+                type_of_spec,
+            </if>
+            <if test="actualAmount != null">
+                actual_amount,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="checkWeight != null">
+                check_weight,
+            </if>
+            <if test="checkNoTaxAmount != null">
+                check_no_tax_amount,
+            </if>
+            <if test="checkTaxAmount != null">
+                check_tax_amount,
+            </if>
+            <if test="aliasId != null">
+                alias_id,
+            </if>
+            <if test="checkAmount != null">
+                check_amount,
+            </if>
+            created,
+            <if test="createdBy != null">
+                created_by,
+            </if>
+            last_updated,
+            <if test="lastUpdatedBy != null">
+                last_updated_by,
+            </if>
+            modification_number,
+            <if test="rowId != null">
+                row_id,
+            </if>
+            <if test="parentRowId != null">
+                parent_row_id,
+            </if>
+            <if test="ext1 != null">
+                ext1,
+            </if>
+            <if test="ext2 != null">
+                ext2,
+            </if>
+            <if test="ext3 != null">
+                ext3,
+            </if>
+            <if test="ext4 != null">
+                ext4,
+            </if>
+            <if test="ext5 != null">
+                ext5,
+            </if>
+            <if test="ext6 != null">
+                ext6,
+            </if>
+            <if test="ext7 != null">
+                ext7,
+            </if>
+            <if test="ext8 != null">
+                ext8,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="invoiceInId != null">
+                #{invoiceInId,jdbcType=BIGINT},
+            </if>
+            <if test="nsortName != null">
+                #{nsortName,jdbcType=VARCHAR},
+            </if>
+            <if test="material != null">
+                #{material,jdbcType=VARCHAR},
+            </if>
+            <if test="spec != null">
+                #{spec,jdbcType=VARCHAR},
+            </if>
+            <if test="weight != null">
+                #{weight,jdbcType=DECIMAL},
+            </if>
+            <if test="noTaxAmount != null">
+                #{noTaxAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="taxAmount != null">
+                #{taxAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="amount != null">
+                #{amount,jdbcType=DECIMAL},
+            </if>
+            <if test="nsortNameComb != null">
+                #{nsortNameComb,jdbcType=VARCHAR},
+            </if>
+            <if test="typeOfSpec != null">
+                #{typeOfSpec,jdbcType=VARCHAR},
+            </if>
+            <if test="actualAmount != null">
+                #{actualAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="checkWeight != null">
+                #{checkWeight,jdbcType=DECIMAL},
+            </if>
+            <if test="checkNoTaxAmount != null">
+                #{checkNoTaxAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="checkTaxAmount != null">
+                #{checkTaxAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="aliasId != null">
+                #{aliasId,jdbcType=BIGINT},
+            </if>
+            <if test="checkAmount != null">
+                #{checkAmount,jdbcType=DECIMAL},
+            </if>
+            NOW(),
+            <if test="createdBy != null">
+                #{createdBy,jdbcType=VARCHAR},
+            </if>
+            NOW(),
+            <if test="lastUpdatedBy != null">
+                #{lastUpdatedBy,jdbcType=VARCHAR},
+            </if>
+            0,
+            <if test="rowId != null">
+                #{rowId,jdbcType=VARCHAR},
+            </if>
+            <if test="parentRowId != null">
+                #{parentRowId,jdbcType=VARCHAR},
+            </if>
+            <if test="ext1 != null">
+                #{ext1,jdbcType=VARCHAR},
+            </if>
+            <if test="ext2 != null">
+                #{ext2,jdbcType=VARCHAR},
+            </if>
+            <if test="ext3 != null">
+                #{ext3,jdbcType=VARCHAR},
+            </if>
+            <if test="ext4 != null">
+                #{ext4,jdbcType=INTEGER},
+            </if>
+            <if test="ext5 != null">
+                #{ext5,jdbcType=INTEGER},
+            </if>
+            <if test="ext6 != null">
+                #{ext6,jdbcType=INTEGER},
+            </if>
+            <if test="ext7 != null">
+                #{ext7,jdbcType=TIMESTAMP},
+            </if>
+            <if test="ext8 != null">
+                #{ext8,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    <insert id="batchInsert" parameterType="com.prcsteel.platform.order.model.model.InvoiceInDetail">
+        insert into inv_invoice_in_detail (id, invoice_in_id, nsort_name,
+        material, spec, weight,
+        no_tax_amount, tax_amount, amount,
+        nsort_name_comb, type_of_spec, actual_amount, status,
+        check_weight, check_no_tax_amount, check_tax_amount,
+        check_amount, created, created_by,
+        last_updated, last_updated_by, modification_number,
+        row_id, parent_row_id, ext1,
+        ext2, ext3, ext4, ext5,
+        ext6, ext7, ext8)
+        values
+        <foreach collection="list" item="it" separator=",">
+            (#{it.id,jdbcType=BIGINT}, #{it.invoiceInId,jdbcType=BIGINT}, #{it.nsortName,jdbcType=VARCHAR},
+            #{it.material,jdbcType=VARCHAR}, #{it.spec,jdbcType=VARCHAR}, #{it.weight,jdbcType=DECIMAL},
+            #{it.noTaxAmount,jdbcType=DECIMAL}, #{it.taxAmount,jdbcType=DECIMAL}, #{it.amount,jdbcType=DECIMAL},
+            #{it.nsortNameComb,jdbcType=VARCHAR},#{it.typeOfSpec,jdbcType=VARCHAR},#{it.actualAmount,jdbcType=DECIMAL},#{it.status,jdbcType=VARCHAR},
+            #{it.checkWeight,jdbcType=DECIMAL}, #{it.checkNoTaxAmount,jdbcType=DECIMAL},
+            #{it.checkTaxAmount,jdbcType=DECIMAL},
+            #{it.checkAmount,jdbcType=DECIMAL}, NOW(), #{it.createdBy,jdbcType=VARCHAR},
+            NOW(), #{it.lastUpdatedBy,jdbcType=VARCHAR}, 0,
+            #{it.rowId,jdbcType=VARCHAR}, #{it.parentRowId,jdbcType=VARCHAR}, #{it.ext1,jdbcType=VARCHAR},
+            #{it.ext2,jdbcType=VARCHAR}, #{it.ext3,jdbcType=VARCHAR}, #{it.ext4,jdbcType=INTEGER},
+            #{it.ext5,jdbcType=INTEGER},
+            #{it.ext6,jdbcType=INTEGER}, #{it.ext7,jdbcType=TIMESTAMP}, #{it.ext8,jdbcType=BIGINT})
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.order.model.model.InvoiceInDetail">
+        update inv_invoice_in_detail
+        <set>
+            <if test="invoiceInId != null">
+                invoice_in_id = #{invoiceInId,jdbcType=BIGINT},
+            </if>
+            <if test="nsortName != null">
+                nsort_name = #{nsortName,jdbcType=VARCHAR},
+            </if>
+            <if test="material != null">
+                material = #{material,jdbcType=VARCHAR},
+            </if>
+            <if test="spec != null">
+                spec = #{spec,jdbcType=VARCHAR},
+            </if>
+            <if test="weight != null">
+                weight = #{weight,jdbcType=DECIMAL},
+            </if>
+            <if test="noTaxAmount != null">
+                no_tax_amount = #{noTaxAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="taxAmount != null">
+                tax_amount = #{taxAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="amount != null">
+                amount = #{amount,jdbcType=DECIMAL},
+            </if>
+            <if test="nsortNameComb != null">
+                nsort_name_comb = #{nsortNameComb,jdbcType=VARCHAR},
+            </if>
+            <if test="typeOfSpec != null">
+                type_of_spec = #{typeOfSpec,jdbcType=VARCHAR},
+            </if>
+            <if test="actualAmount != null">
+                actual_amount = #{actualAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="checkWeight != null">
+                check_weight = #{checkWeight,jdbcType=DECIMAL},
+            </if>
+            <if test="checkNoTaxAmount != null">
+                check_no_tax_amount = #{checkNoTaxAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="checkTaxAmount != null">
+                check_tax_amount = #{checkTaxAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="aliasId != null">
+                alias_id = #{aliasId,jdbcType=BIGINT},
+            </if>
+            <if test="checkAmount != null">
+                check_amount = #{checkAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="created != null">
+                created = #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdBy != null">
+                created_by = #{createdBy,jdbcType=VARCHAR},
+            </if>
+            last_updated = NOW(),
+            <if test="lastUpdatedBy != null">
+                last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modificationNumber != null">
+                modification_number = #{modificationNumber,jdbcType=INTEGER},
+            </if>
+            <if test="rowId != null">
+                row_id = #{rowId,jdbcType=VARCHAR},
+            </if>
+            <if test="parentRowId != null">
+                parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+            </if>
+            <if test="ext1 != null">
+                ext1 = #{ext1,jdbcType=VARCHAR},
+            </if>
+            <if test="ext2 != null">
+                ext2 = #{ext2,jdbcType=VARCHAR},
+            </if>
+            <if test="ext3 != null">
+                ext3 = #{ext3,jdbcType=VARCHAR},
+            </if>
+            <if test="ext4 != null">
+                ext4 = #{ext4,jdbcType=INTEGER},
+            </if>
+            <if test="ext5 != null">
+                ext5 = #{ext5,jdbcType=INTEGER},
+            </if>
+            <if test="ext6 != null">
+                ext6 = #{ext6,jdbcType=INTEGER},
+            </if>
+            <if test="ext7 != null">
+                ext7 = #{ext7,jdbcType=TIMESTAMP},
+            </if>
+            <if test="ext8 != null">
+                ext8 = #{ext8,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.order.model.model.InvoiceInDetail">
+    update inv_invoice_in_detail
+    set invoice_in_id = #{invoiceInId,jdbcType=BIGINT},
+      nsort_name = #{nsortName,jdbcType=VARCHAR},
+      material = #{material,jdbcType=VARCHAR},
+      spec = #{spec,jdbcType=VARCHAR},
+      weight = #{weight,jdbcType=DECIMAL},
+      no_tax_amount = #{noTaxAmount,jdbcType=DECIMAL},
+      tax_amount = #{taxAmount,jdbcType=DECIMAL},
+      amount = #{amount,jdbcType=DECIMAL},
+      nsort_name_comb = #{nsortNameComb,jdbcType=VARCHAR},
+      type_of_spec = #{typeOfSpec,jdbcType=VARCHAR},
+      actual_amount = #{actualAmount,jdbcType=DECIMAL},
+      status = #{status,jdbcType=VARCHAR},
+      check_weight = #{checkWeight,jdbcType=DECIMAL},
+      check_no_tax_amount = #{checkNoTaxAmount,jdbcType=DECIMAL},
+      check_tax_amount = #{checkTaxAmount,jdbcType=DECIMAL},
+      alias_id = #{aliasId,jdbcType=BIGING},
+      check_amount = #{checkAmount,jdbcType=DECIMAL},
+      created = #{created,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      last_updated = NOW(),
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      modification_number = #{modificationNumber,jdbcType=INTEGER},
+      row_id = #{rowId,jdbcType=VARCHAR},
+      parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      ext1 = #{ext1,jdbcType=VARCHAR},
+      ext2 = #{ext2,jdbcType=VARCHAR},
+      ext3 = #{ext3,jdbcType=VARCHAR},
+      ext4 = #{ext4,jdbcType=INTEGER},
+      ext5 = #{ext5,jdbcType=INTEGER},
+      ext6 = #{ext6,jdbcType=INTEGER},
+      ext7 = #{ext7,jdbcType=TIMESTAMP},
+      ext8 = #{ext8,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <resultMap id="DtoResultMap" extends="BaseResultMap" type="com.prcsteel.platform.order.model.dto.InvoiceInDetailDto">
+        <id column="pool_in_id" property="poolInId" jdbcType="BIGINT"/>
+        <result column="pool_in_detail_id" property="poolInDetailId" jdbcType="BIGINT"/>
+        <result column="should_amount" property="shouldAmount" jdbcType="DECIMAL"/>
+        <result column="should_weight" property="shouldWeight" jdbcType="DECIMAL"/>
+    </resultMap>
+    <!--根据发票号查询详情-->
+    <select id="selectByInvoiceInId" resultMap="DtoResultMap" parameterType="java.lang.Long">
+    select
+    t4.pool_in_id,t4.id as pool_in_detail_id,t4.total_amount-t4.received_amount as should_amount,t4.total_weight-t4.received_weight as should_weight,
+    t1.id, t1.invoice_in_id, t1.nsort_name, t1.material, t1.spec, t1.weight, t1.no_tax_amount, t1.tax_amount,
+    t1.amount, t1.nsort_name_comb, t1.type_of_spec, t1.actual_amount, t1.status,
+    t1.check_weight, t1.check_no_tax_amount, t1.check_tax_amount, t1.check_amount, t1.created,
+    t1.created_by, t1.last_updated, t1.last_updated_by, t1.modification_number
+    from inv_invoice_in_detail t1
+    LEFT JOIN inv_invoice_in t2 on t1.invoice_in_id=t2.id
+    LEFT JOIN inv_pool_in t3 on t2.seller_id=t3.seller_id
+    LEFT JOIN inv_pool_in_detail t4
+    on t3.id=t4.pool_in_id
+    and t1.nsort_name=t4.nsort_name
+    and t1.material=t4.material
+    and t1.spec=t4.spec
+    where t1.invoice_in_id = #{invoiceInId,jdbcType=BIGINT}
+    and t4.total_amount-t4.received_amount>0
+  </select>
+
+    <resultMap id="DetailResultMap" extends="BaseResultMap" type="com.prcsteel.platform.order.model.dto.InvoiceInDetailDto">
+        <result column="spec_name" property="specName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="queryByInvoiceInId" resultMap="DetailResultMap" parameterType="java.lang.Long">
+        SELECT invd.id, invd.invoice_in_id, invd.nsort_name, invd.material, invd.spec, invd.weight, invd.no_tax_amount, invd.tax_amount, invd.
+            amount, invd.nsort_name_comb, invd.type_of_spec, invd.actual_amount, invd.status,
+            check_weight, invd.check_no_tax_amount, invd.check_tax_amount, invd.check_amount, invd.created,
+            invd.created_by, invd.last_updated, invd.last_updated_by, invd.modification_number, invd.row_id, invd.parent_row_id, invd.
+            ext1, invd.ext2, invd.ext3, invd.ext4, invd.ext5, invd.ext6, invd.ext7, invd.ext8, bss.display_name AS spec_name
+        FROM inv_invoice_in_detail invd
+        LEFT JOIN base_sys_setting bss ON bss.setting_type = 'typeofspec' AND bss.setting_value = invd.type_of_spec
+        WHERE invoice_in_id = #{invoiceInId,jdbcType=BIGINT}
+    </select>
+
+	<select id="queryByInvoiceInIds" resultMap="BaseResultMap" parameterType="java.util.List">
+        SELECT
+			<include refid="Base_Column_List"/>
+        FROM inv_invoice_in_detail
+        WHERE invoice_in_id in
+        <foreach collection="list" item="id" open="(" separator="," close=")">#{id}</foreach>
+    </select>
+
+  <!--根据条件查询进项发票清单 -->
+  <select id="queryInvoiceInDetailListByParams" resultType="com.prcsteel.platform.order.model.dto.InvoiceInWithDetailDto"
+          parameterType="com.prcsteel.platform.order.model.query.InvoiceInListQuery">
+      SELECT t2.id,t1.code,str_to_date(t1.invoice_date,'%Y-%m-%d') AS invoiceDate,t1.seller_name AS sellerName,
+      t1.org_name AS orgName,t1.status,t2.nsort_name AS nsortName,t2.spec,t2.material,t2.weight,t2.amount
+      FROM inv_invoice_in t1,inv_invoice_in_detail t2
+      <where>
+          <if test="detailIdList != null and detailIdList.size > 0" >
+              AND t2.id IN
+              <foreach collection="detailIdList" item="detailId" open="(" separator="," close=")">
+                #{detailId}
+              </foreach>
+          </if>
+          <if test="userIdList != null and userIdList.size > 0" >
+              AND t1.input_user_id IN
+              <foreach collection="userIdList" item="userId" open="(" separator="," close=")">
+                  #{userId}
+              </foreach>
+          </if>
+          <if test="statusList != null and statusList.size > 0">
+              AND t1.status IN
+              <foreach collection="statusList" item="status" open="(" separator="," close=")">
+                  #{status}
+              </foreach>
+          </if>
+          <if test="strStartTime != null and strStartTime != '' ">
+              AND str_to_date(t1.invoice_date,'%Y-%m-%d') <![CDATA[ >= #{strStartTime,jdbcType=VARCHAR} ]]>
+          </if>
+          <if test="strEndTime != null and strEndTime != '' ">
+              AND str_to_date(t1.invoice_date,'%Y-%m-%d') <![CDATA[ <= #{strEndTime,jdbcType=VARCHAR} ]]>
+          </if>
+          <if test="orgId != null and orgId > 0">
+              AND t1.org_id = #{orgId,jdbcType=BIGINT}
+          </if>
+          <if test="code != null and code != '' ">
+              AND t1.code LIKE #{code,jdbcType=VARCHAR}
+          </if>
+          <if test="sellerName != null and sellerName != '' ">
+              AND t1.seller_name LIKE #{sellerName,jdbcType=VARCHAR}
+          </if>
+          AND t1.id = t2.invoice_in_id
+          ORDER BY t1.invoice_date,t1.code
+          <if test="isPage">
+              LIMIT #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+          </if>
+      </where>
+  </select>
+
+    <!--根据条件查询进项发票清单总记录数 -->
+    <select id="queryInvoiceInDetailTotalByParams" resultType="int" parameterType="com.prcsteel.platform.order.model.query.InvoiceInListQuery">
+        SELECT COUNT(1)
+        FROM inv_invoice_in t1,inv_invoice_in_detail t2
+        <where>
+            <if test="userIdList != null" >
+                AND t1.input_user_id IN
+                <foreach collection="userIdList" item="userId" open="(" separator="," close=")">
+                    #{userId}
+                </foreach>
+            </if>
+            <if test="statusList != null">
+                AND t1.status IN
+                <foreach collection="statusList" item="status" open="(" separator="," close=")">
+                    #{status}
+                </foreach>
+            </if>
+            <if test="strStartTime != null and strStartTime != '' ">
+                AND str_to_date(t1.invoice_date,'%Y-%m-%d') <![CDATA[ >= #{strStartTime,jdbcType=VARCHAR} ]]>
+            </if>
+            <if test="strEndTime != null and strEndTime != '' ">
+                AND str_to_date(t1.invoice_date,'%Y-%m-%d') <![CDATA[ <= #{strEndTime,jdbcType=VARCHAR} ]]>
+            </if>
+            <if test="orgId != null and orgId > 0">
+                AND t1.org_id = #{orgId,jdbcType=BIGINT}
+            </if>
+            <if test="code != null and code != '' ">
+                AND t1.code LIKE #{code,jdbcType=VARCHAR}
+            </if>
+            <if test="sellerName != null and sellerName != '' ">
+                AND t1.seller_name LIKE #{sellerName,jdbcType=VARCHAR}
+            </if>
+            AND t1.id = t2.invoice_in_id
+        </where>
+    </select>
+
+    <select id="selectDetailByInvoiceInId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        SELECT 
+        
+        	t.id, t.invoice_in_id, t.nsort_name, t.material, t.spec, t.weight, t.no_tax_amount, t.tax_amount, 
+        	t.amount, t.nsort_name_comb, t.type_of_spec, t.actual_amount, t.status, 
+        	t.check_weight, t.check_no_tax_amount,alias_id, t.check_tax_amount, t.check_amount, t.created, 
+        	t.created_by, t.last_updated, t.last_updated_by, t.modification_number, t.row_id, t.parent_row_id, 
+        	t.ext1, t.ext2, t.ext3, t.ext4, t.ext5, t.ext6, t.ext7, t.ext8, 
+        	a.category_id, a.category_name, a.alias_name
+        	
+        FROM inv_invoice_in_detail  as t left join base_sys_category_alias as a on a.id = t.alias_id
+        WHERE invoice_in_id =#{invoiceInId,jdbcType=BIGINT}
+        group by t.id
+    </select>
+    
+    <select id="queryByIds" resultMap="BaseResultMap" parameterType="java.util.List">
+        SELECT
+			<include refid="Base_Column_List"/>
+        FROM inv_invoice_in_detail
+        WHERE id in
+        <foreach collection="list" item="id" open="(" separator="," close=")">#{id}</foreach>
+    </select>
+    
+    <delete id="deleteByInvoiceIds" parameterType="map">
+	   DELETE FROM inv_invoice_in_detail
+	   WHERE invoice_in_id IN
+	   <foreach collection="inIds" item="id" open="(" separator="," close=")">#{id}</foreach>
+  	</delete>
+
+    <delete id="deleteByIds" parameterType="map">
+        DELETE FROM inv_invoice_in_detail
+        WHERE id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">#{id}</foreach>
+    </delete>
+</mapper>

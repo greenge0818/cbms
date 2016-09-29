@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.smartmatch.persist.dao.FactoryDao">
+	<resultMap id="BaseResultMap" type="com.prcsteel.platform.smartmatch.model.model.Factory">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="alias" property="alias" jdbcType="VARCHAR" />
+		<result column="province_id" property="provinceId" jdbcType="BIGINT" />
+		<result column="city_id" property="cityId" jdbcType="BIGINT" />
+		<result column="district_id" property="districtId" jdbcType="BIGINT" />
+		<result column="addr" property="addr" jdbcType="VARCHAR" />
+		<result column="initials" property="initials" jdbcType="VARCHAR" />
+		<result column="contact" property="contact" jdbcType="VARCHAR" />
+		<result column="mobile" property="mobile" jdbcType="VARCHAR" />
+		<result column="business" property="business" jdbcType="VARCHAR" />
+		<result column="longitude" property="longitude" jdbcType="DECIMAL" />
+		<result column="latitude" property="latitude" jdbcType="DECIMAL" />
+		<result column="output" property="output" jdbcType="DECIMAL" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="created" property="created" jdbcType="TIMESTAMP" />
+		<result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+		<result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+		<result column="last_updated_by" property="lastUpdatedBy"
+			jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, name, alias, province_id, city_id, district_id, addr, initials,contact,
+		mobile,
+		business, longitude,
+		latitude, output, remark, created,
+		created_by, last_updated, last_updated_by
+	</sql>
+
+	<!-- 根据钢厂，城市及品名 分页模糊查询钢厂信息列表 -->
+	<select id="selectByFactoryNameAndCityAndBusiness" resultType="map"
+		parameterType="map">
+		SELECT
+		DISTINCT
+		t1.id,t1.name,t1.alias,t1.province_id,t1.city_id,t1.district_id,t1.contact,t1.mobile,
+		t1.business,t1.longitude,t1.latitude,t1.output,t1.initials,t3.name city,concat(t2.name,',',t3.name,',',IFNULL(t4.name,''),t1.addr) addr
+		FROM base_factory t1
+		left join base_province t2 on t1.province_id = t2.id
+		left join base_city t3 on t1.city_id = t3.id
+		left join base_district t4 on t1.district_id = t4.id
+		where 1=1
+		<!--modify by zhoucai@prcsteel.com  根据别名模糊查询钢厂-->
+		<if test="factoryName != null and factoryName != ''">
+			and (t1.name like TRIM(#{factoryName,jdbcType=VARCHAR}) OR t1.alias like TRIM(#{factoryName,jdbcType=VARCHAR}))
+		</if>
+		<if test="factoryCity != null and factoryCity != ''">
+			and t3.name like #{factoryCity,jdbcType=VARCHAR}
+		</if>
+		<if test="factoryBusiness != null and factoryBusiness != ''">
+			and t1.business like #{factoryBusiness,jdbcType=VARCHAR}
+		</if>
+		order by t1.id desc
+		limit
+		#{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+	</select>
+
+	<!-- 根据别名查询别名重复的钢厂 -->
+	<select id="getRepeatAlias" resultMap="BaseResultMap" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM base_factory 
+		where concat(',', ifnull(alias,''),',',name, ',')  regexp 
+			concat(',(',replace(#{alias,jdbcType=VARCHAR},',','|'),'),')
+		<if test="id!=null">
+            and id != #{id,jdbcType=BIGINT}
+        </if>
+	</select>
+
+	<!-- 查询钢厂总数 -->
+	<select id="totalFactory" resultType="int" parameterType="map">
+		SELECT count(DISTINCT t1.id)
+		FROM base_factory t1
+		left join base_city t2
+		on t1.city_id = t2.id
+		where 1=1
+		<!--modify by zhoucai@prcsteel.com  根据别名模糊查询钢厂-->
+		<if test="factoryName != null and factoryName != ''">
+			and (t1.name like TRIM(#{factoryName,jdbcType=VARCHAR}) OR t1.alias like TRIM(#{factoryName,jdbcType=VARCHAR}))
+		</if>
+		<if test="factoryCity != null and factoryCity != ''">
+			and t2.name like concat('%',TRIM(#{factoryCity,jdbcType=VARCHAR}),'%')
+		</if>
+		<if test="factoryBusiness != null and factoryBusiness != ''">
+			and t1.business like concat('%',TRIM(#{factoryBusiness,jdbcType=VARCHAR}),'%')
+		</if>
+	</select>
+
+	<!-- 获取所有钢厂 -->
+	<select id="getAllFactory" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List"/>
+		FROM base_factory 
+	</select>
+
+	<!-- 根据钢厂名称查询钢厂 -->
+	<select id="queryByName" resultMap="BaseResultMap"
+		parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from base_factory
+		<where>
+            <if test="name!=null and name!=''">
+	            concat(',',#{name,jdbcType=VARCHAR}, ',')  regexp 
+				concat(',(',replace(alias,',','|'),'),')
+                or name = #{name,jdbcType=VARCHAR}
+            </if>
+            <if test="id!=null">
+                and id != #{id,jdbcType=BIGINT}
+            </if>
+        </where>
+	</select>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from base_factory
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		base_factory
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.prcsteel.platform.smartmatch.model.model.Factory">
+		insert into base_factory (id,
+		name, alias, province_id,
+		city_id, district_id, addr,
+		contact, mobile,
+		business,
+		longitude, latitude, output,
+		remark, created, created_by,
+		last_updated, last_updated_by)
+		values (#{id,jdbcType=BIGINT},
+		#{name,jdbcType=VARCHAR},
+		#{alias,jdbcType=VARCHAR},
+		#{provinceId,jdbcType=BIGINT},
+		#{cityId,jdbcType=BIGINT}, #{districtId,jdbcType=BIGINT},
+		#{addr,jdbcType=VARCHAR},
+		#{contact,jdbcType=VARCHAR},
+		#{mobile,jdbcType=VARCHAR},
+		#{business,jdbcType=VARCHAR},
+		#{longitude,jdbcType=DECIMAL}, #{latitude,jdbcType=DECIMAL},
+		#{output,jdbcType=DECIMAL},
+		#{remark,jdbcType=VARCHAR},
+		#{created,jdbcType=TIMESTAMP},
+		#{createdBy,jdbcType=VARCHAR},
+		#{lastUpdated,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.prcsteel.platform.smartmatch.model.model.Factory">
+		insert into base_factory
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="alias != null">
+				alias,
+			</if>
+			<if test="provinceId != null">
+				province_id,
+			</if>
+			<if test="cityId != null">
+				city_id,
+			</if>
+			<if test="districtId != null">
+				district_id,
+			</if>
+			<if test="addr != null">
+				addr,
+			</if>
+			<if test="initials != null">
+				initials,
+			</if>
+			<if test="contact != null">
+				contact,
+			</if>
+			<if test="mobile != null">
+				mobile,
+			</if>
+			<if test="business != null">
+				business,
+			</if>
+			<if test="longitude != null">
+				longitude,
+			</if>
+			<if test="latitude != null">
+				latitude,
+			</if>
+			<if test="output != null">
+				output,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+			<if test="created != null">
+				created,
+			</if>
+			<if test="createdBy != null">
+				created_by,
+			</if>
+			<if test="lastUpdated != null">
+				last_updated,
+			</if>
+			<if test="lastUpdatedBy != null">
+				last_updated_by,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="name != null">
+				replace(#{name,jdbcType=VARCHAR},' ',''),
+			</if>
+			<if test="alias != null">
+				#{alias,jdbcType=VARCHAR},
+			</if>
+			<if test="provinceId != null">
+				#{provinceId,jdbcType=BIGINT},
+			</if>
+			<if test="cityId != null">
+				#{cityId,jdbcType=BIGINT},
+			</if>
+			<if test="districtId != null">
+				#{districtId,jdbcType=BIGINT},
+			</if>
+			<if test="addr != null">
+				#{addr,jdbcType=VARCHAR},
+			</if>
+			<if test="initials != null">
+				#{initials,jdbcType=VARCHAR},
+			</if>
+			<if test="contact != null">
+				replace(#{contact,jdbcType=VARCHAR},' ',''),
+			</if>
+			<if test="mobile != null">
+				replace(#{mobile,jdbcType=VARCHAR},' ',''),
+			</if>
+			<if test="business != null">
+				#{business,jdbcType=VARCHAR},
+			</if>
+			<if test="longitude != null">
+				#{longitude,jdbcType=DECIMAL},
+			</if>
+			<if test="latitude != null">
+				#{latitude,jdbcType=DECIMAL},
+			</if>
+			<if test="output != null">
+				#{output,jdbcType=DECIMAL},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="created != null">
+				#{created,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createdBy != null">
+				#{createdBy,jdbcType=VARCHAR},
+			</if>
+			<if test="lastUpdated != null">
+				#{lastUpdated,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastUpdatedBy != null">
+				#{lastUpdatedBy,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.smartmatch.model.model.Factory">
+		update base_factory
+		<set>
+			<if test="name != null">
+				name = replace(#{name,jdbcType=VARCHAR},' ',''),
+			</if>
+			<if test="alias != null">
+				alias = replace(#{alias,jdbcType=VARCHAR},' ',''),
+			</if>
+			<if test="provinceId != null">
+				province_id = #{provinceId,jdbcType=BIGINT},
+			</if>
+			<if test="cityId != null">
+				city_id = #{cityId,jdbcType=BIGINT},
+			</if>
+				district_id = #{districtId,jdbcType=BIGINT},
+			<if test="addr != null">
+				addr = #{addr,jdbcType=VARCHAR},
+			</if>
+			<if test="initials != null">
+				initials = #{initials,jdbcType=VARCHAR},
+			</if>
+			<if test="contact != null">
+				contact = replace(#{contact,jdbcType=VARCHAR},' ',''),
+			</if>
+			<if test="mobile != null">
+				mobile = replace(#{mobile,jdbcType=VARCHAR},' ',''),
+			</if>
+			<if test="business != null">
+				business = #{business,jdbcType=VARCHAR},
+			</if>
+				longitude = #{longitude,jdbcType=DECIMAL},
+				latitude = #{latitude,jdbcType=DECIMAL},
+				output = #{output,jdbcType=DECIMAL},
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="created != null">
+				created = #{created,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createdBy != null">
+				created_by = #{createdBy,jdbcType=VARCHAR},
+			</if>
+			last_updated = now(),
+			<if test="lastUpdatedBy != null">
+				last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.smartmatch.model.model.Factory">
+		update
+		base_factory
+		set name = #{name,jdbcType=VARCHAR},
+		alias = #{alias,jdbcType=VARCHAR},
+		province_id =
+		#{provinceId,jdbcType=BIGINT},
+		city_id = #{cityId,jdbcType=BIGINT},
+		district_id = #{districtId,jdbcType=BIGINT},
+		addr =
+		#{addr,jdbcType=VARCHAR},
+		contact = #{contact,jdbcType=VARCHAR},
+		mobile
+		= #{mobile,jdbcType=VARCHAR},
+		business = #{business,jdbcType=VARCHAR},
+		longitude = #{longitude,jdbcType=DECIMAL},
+		latitude =
+		#{latitude,jdbcType=DECIMAL},
+		output = #{output,jdbcType=DECIMAL},
+		remark = #{remark,jdbcType=VARCHAR},
+		created =
+		#{created,jdbcType=TIMESTAMP},
+		created_by =
+		#{createdBy,jdbcType=VARCHAR},
+		last_updated =
+		#{lastUpdated,jdbcType=TIMESTAMP},
+		last_updated_by =
+		#{lastUpdatedBy,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<select id="queryFactoryNamesByIds" resultType="String" parameterType="String">
+		SELECT name FROM base_factory
+		WHERE id IN (#{ids,jdbcType=VARCHAR})
+	</select>
+	
+	<select id="selectByName" resultMap="BaseResultMap" >
+		select * from base_factory
+		where name = #{name,jdbcType=VARCHAR}
+	</select>
+</mapper>

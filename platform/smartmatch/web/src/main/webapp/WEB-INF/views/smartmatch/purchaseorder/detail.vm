@@ -1,0 +1,65 @@
+<div class="breadcrumbs" id="breadcrumbs">
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="#">智能找货</a>
+        </li>
+        <li>
+            <a href="#">询价单管理</a>
+        </li>
+        <li>
+            询价详情
+        </li>
+    </ul>
+</div>
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="col-xs-12">
+					#inquiryDetailManager("inquiryDetail")
+                </div>
+                #foreach($detail in $detailList)
+				    <label>卖家:$!detail.accountName</label>
+				    <label>联系人:</label>
+						<select id="contact_$foreach.count" onchange="changeTel($foreach.count)">
+				                #foreach($contact in $detail.contactList)
+				                	<option value="$!contact.contactTel" >$!contact.contactName</option>
+				                #end
+				        </select>
+				    <label id="telLbl_$foreach.count">
+				    	#if($detail.contactList.size() > 0) $detail.contactList.get(0).contactTel#end
+				    </label>
+				    <label>$!detail.createDateStr</label>
+				    <table class="contable">
+				        <tbody>
+				        	<thead>
+				    			<tr>
+				        			<th>品名</th>
+				        			<th>材质</th>
+				        			<th>规格</th>
+				        			<th>厂家</th>
+				        			<th>仓库</th>
+				        			<th>采购重量(吨)</th>
+				        			<th>单价(元/吨)</th>
+				    			</tr>
+				    		</thead>
+					        #foreach($res in $detail.resList)
+						        <tr>
+						            <td>$!res.displayCategoryName</td>
+						            <td>$!res.materialName</td>
+						            <td>$!res.spec</td>
+						            <td>$!res.factoryName</td>
+						            <td>$!res.warehouseName</td>
+						            <td>$NumberTool.format("#0.000",$!{res.weight})</td>
+						            <td>$NumberTool.format("#0.000",$!{res.price})</td>
+						        </tr>
+					        #end
+				        </tbody>
+				    </table>
+				#end                
+            </div>
+        </div>
+    </div>
+</div>
+<script src="$link.getContextPath()/js/views/smartmatch/purchaseorder/detail.js"></script>

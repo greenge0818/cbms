@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.smartmatch.persist.dao.BasePriceRelationDetailDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.smartmatch.model.model.CustBasePriceRelationDetail" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="base_price_relation_id" property="basePriceRelationId" jdbcType="BIGINT" />
+    <result column="material_uuid" property="materialUuid" jdbcType="VARCHAR" />
+    <result column="material_name" property="materialName" jdbcType="VARCHAR" />
+    <result column="spec1" property="spec1" jdbcType="VARCHAR" />
+    <result column="spec2" property="spec2" jdbcType="VARCHAR" />
+    <result column="spec3" property="spec3" jdbcType="VARCHAR" />
+    <result column="price_deviation" property="priceDeviation" jdbcType="DECIMAL" />
+    <result column="is_deficiency_inventory" property="isDeficiencyInventory" jdbcType="BIT" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, base_price_relation_id, material_uuid,material_name, spec1, spec2, spec3, price_deviation, 
+    is_deficiency_inventory, created, created_by, last_updated, last_updated_by
+  </sql>
+  
+  <select id="selectDetailsByRelationId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from cust_base_price_relation_detail
+    where base_price_relation_id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from cust_base_price_relation_detail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from cust_base_price_relation_detail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <!-- 根据主表ID删除明细表信息 -->
+  <delete id="deleteDetailsByRelationId" parameterType="java.lang.Long" >
+    delete from cust_base_price_relation_detail
+    where base_price_relation_id = #{relationId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.prcsteel.platform.smartmatch.model.model.CustBasePriceRelationDetail" >
+    insert into cust_base_price_relation_detail (id, base_price_relation_id, material_uuid, 
+      spec1, spec2, spec3, 
+      price_deviation, is_deficiency_inventory, created, 
+      created_by, last_updated, last_updated_by
+      )
+    values (#{id,jdbcType=BIGINT}, #{basePriceRelationId,jdbcType=BIGINT}, #{materialUuid,jdbcType=VARCHAR}, 
+      #{spec1,jdbcType=VARCHAR}, #{spec2,jdbcType=VARCHAR}, #{spec3,jdbcType=VARCHAR}, 
+      #{priceDeviation,jdbcType=DECIMAL}, #{isDeficiencyInventory,jdbcType=BIT}, #{created,jdbcType=TIMESTAMP}, 
+      #{createdBy,jdbcType=VARCHAR}, #{lastUpdated,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.smartmatch.model.model.CustBasePriceRelationDetail" >
+    insert into cust_base_price_relation_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="basePriceRelationId != null" >
+        base_price_relation_id,
+      </if>
+      <if test="materialUuid != null" >
+        material_uuid,
+      </if>
+      <if test="materialName != null" >
+        material_name,
+      </if>
+      <if test="spec1 != null" >
+        spec1,
+      </if>
+      <if test="spec2 != null" >
+        spec2,
+      </if>
+      <if test="spec3 != null" >
+        spec3,
+      </if>
+      <if test="priceDeviation != null" >
+        price_deviation,
+      </if>
+      <if test="isDeficiencyInventory != null" >
+        is_deficiency_inventory,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="basePriceRelationId != null" >
+        #{basePriceRelationId,jdbcType=BIGINT},
+      </if>
+      <if test="materialUuid != null" >
+        #{materialUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="materialName != null" >
+        #{materialName,jdbcType=VARCHAR},
+      </if>
+      <if test="spec1 != null" >
+        #{spec1,jdbcType=VARCHAR},
+      </if>
+      <if test="spec2 != null" >
+        #{spec2,jdbcType=VARCHAR},
+      </if>
+      <if test="spec3 != null" >
+        #{spec3,jdbcType=VARCHAR},
+      </if>
+      <if test="priceDeviation != null" >
+        #{priceDeviation,jdbcType=DECIMAL},
+      </if>
+      <if test="isDeficiencyInventory != null" >
+        #{isDeficiencyInventory,jdbcType=BIT},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.smartmatch.model.model.CustBasePriceRelationDetail" >
+    update cust_base_price_relation_detail
+    <set >
+      <if test="basePriceRelationId != null" >
+        base_price_relation_id = #{basePriceRelationId,jdbcType=BIGINT},
+      </if>
+      <if test="materialUuid != null" >
+        material_uuid = #{materialUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="materialName != null" >
+        material_name = #{materialName,jdbcType=VARCHAR},
+      </if>
+      <if test="spec1 != null" >
+        spec1 = #{spec1,jdbcType=VARCHAR},
+      </if>
+      <if test="spec2 != null" >
+        spec2 = #{spec2,jdbcType=VARCHAR},
+      </if>
+      <if test="spec3 != null" >
+        spec3 = #{spec3,jdbcType=VARCHAR},
+      </if>
+      <if test="priceDeviation != null" >
+        price_deviation = #{priceDeviation,jdbcType=DECIMAL},
+      </if>
+      <if test="isDeficiencyInventory != null" >
+        is_deficiency_inventory = #{isDeficiencyInventory,jdbcType=BIT},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.smartmatch.model.model.CustBasePriceRelationDetail" >
+    update cust_base_price_relation_detail
+    set base_price_relation_id = #{basePriceRelationId,jdbcType=BIGINT},
+      material_uuid = #{materialUuid,jdbcType=VARCHAR},
+      spec1 = #{spec1,jdbcType=VARCHAR},
+      spec2 = #{spec2,jdbcType=VARCHAR},
+      spec3 = #{spec3,jdbcType=VARCHAR},
+      price_deviation = #{priceDeviation,jdbcType=DECIMAL},
+      is_deficiency_inventory = #{isDeficiencyInventory,jdbcType=BIT},
+      created = #{created,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

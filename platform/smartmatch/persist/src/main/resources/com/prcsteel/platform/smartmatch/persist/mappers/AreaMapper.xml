@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.smartmatch.persist.dao.AreaDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.core.model.model.Area" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="zone_name" property="zoneName" jdbcType="VARCHAR" />
+    <result column="center_city_id" property="centerCityId" jdbcType="BIGINT" />
+    <result column="ref_city_ids" property="refCityIds" jdbcType="VARCHAR" />
+    <result column="is_enable" property="isEnable" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="areaCityMap" type="com.prcsteel.platform.core.model.dto.AreaCityDto"  extends="BaseResultMap">
+  	<result column="centercityname" property="centerCityName" jdbcType="VARCHAR"/>
+    <result column="refcitynames" property="refCityNames" jdbcType="VARCHAR"/>
+  </resultMap> 
+  
+  <sql id="Base_Column_List" >
+    id, name, zone_name, center_city_id, ref_city_ids,  is_enable,created, created_by, last_updated, last_updated_by
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from base_area
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <select id="getRefCityNames" resultType="java.lang.String" parameterType="java.util.List">
+    select 
+    group_concat(t.name)  as refCityNames
+    from base_city t
+    where t.id in
+     <foreach item="id" index="index" collection="ids" open="(" separator="," close=")">
+         #{id}
+     </foreach>
+  </select>
+  
+  <select id="findByCenterCityIdBesidesId" resultMap="areaCityMap" >
+  	SELECT 
+  	t.id areaid,t.name areaname,t.center_city_id, t1.name centercityname,t.ref_city_ids 
+  	FROM base_area t 
+	LEFT JOIN base_city t1 on t.center_city_id=t1.id 
+	WHERE t.center_city_id=#{centerCityId,jdbcType=BIGINT}
+	 <if test="id != null and id!='' ">
+         and t.id !=#{id,jdbcType=INTEGER}
+     </if>
+  </select>
+  
+  <select id="findCenterCityByRefCityId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+  	SELECT 
+  	<include refid="Base_Column_List" />
+  	FROM base_area t 
+	WHERE find_in_set(#{refCityId,jdbcType=BIGINT},t.ref_city_ids);
+  </select>
+  
+  <!-- 根据中心城市id集获取城市数据 -->
+  <select id="findByCenterIds" resultMap="areaCityMap" >
+  	SELECT 
+  	t.id areaid,t.name areaname,t.center_city_id, t1.name centercityname,t.ref_city_ids 
+  	FROM base_area t
+  	LEFT JOIN base_city t1 on t.center_city_id=t1.id 
+	WHERE t.center_city_id in
+     <foreach item="id" index="index" collection="ids" open="(" separator="," close=")">
+         #{id}
+     </foreach>
+  </select>
+  
+   <!-- 查询 -->
+    <select id="query" resultMap="areaCityMap" parameterType="map">
+        SELECT 
+	  	t.id areaid,t.name areaname,t.zone_name zoneName, t.center_city_id, t1.name centercityname,t.ref_city_ids,t.is_enable
+	  	FROM base_area t 
+		LEFT JOIN base_city t1 on t.center_city_id=t1.id 
+        <where> 
+            <if test="name != null and name!='' ">
+                t.name like CONCAT('%',#{name,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="centerCityId != null and centerCityId !='' ">
+                and t.center_city_id=#{centerCityId,jdbcType=BIGINT}  
+            </if>
+            <if test="refsCityId != null and refsCityId !='' ">
+                and find_in_set(#{refsCityId,jdbcType=BIGINT},t.ref_city_ids)
+            </if>
+            <if test="isEnable != null and isEnable !='' ">
+                and t.is_enable = #{isEnable}
+            </if>            
+        </where> 
+        order by t.id asc
+        <if test="start!=null and length !=null">
+            limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+        </if>
+    </select>
+    <!-- 查询总数 -->
+    <select id="queryTotal" resultType="java.lang.Integer" parameterType="map">
+        select count(t.id)
+        from base_area t
+        <where> 
+            <if test="name != null and name!='' ">
+                t.name like CONCAT('%',#{name,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="centerCityId != null and centerCityId !='' ">
+                and t.center_city_id=#{centerCityId,jdbcType=BIGINT}  
+            </if>
+            <if test="refsCityId != null and refsCityId !='' ">
+                and find_in_set(#{refsCityId,jdbcType=BIGINT},t.ref_city_ids)
+            </if>
+        </where> 
+    </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from base_area
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.prcsteel.platform.core.model.model.Area" >
+    insert into base_area (name, center_city_id, 
+      ref_city_ids, created, created_by, 
+      last_updated, last_updated_by)
+    values (#{name,jdbcType=VARCHAR}, #{centerCityId,jdbcType=BIGINT}, 
+      #{refCityIds,jdbcType=VARCHAR}, now(), #{createdBy,jdbcType=VARCHAR}, 
+      now(), #{lastUpdatedBy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.prcsteel.platform.core.model.model.Area" >
+    insert into base_area
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="zoneName != null" >
+        zone_name,
+      </if>
+      <if test="centerCityId != null" >
+        center_city_id,
+      </if>
+      <if test="refCityIds != null" >
+        ref_city_ids,
+      </if>
+      <if test="isEnable != null" >
+        is_enable,
+      </if>      
+        created,
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+        last_updated,
+      <if test="lastUpdatedBy != null" >
+        last_updated_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="zoneName != null" >
+        #{zoneName,jdbcType=VARCHAR},
+      </if>
+      <if test="centerCityId != null" >
+        #{centerCityId,jdbcType=BIGINT},
+      </if>
+      <if test="refCityIds != null" >
+        #{refCityIds,jdbcType=VARCHAR},
+      </if>
+      <if test="isEnable != null" >
+        #{isEnable,jdbcType=VARCHAR},
+      </if>      
+        now(),
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+        now(),
+      <if test="lastUpdatedBy != null" >
+         #{lastUpdatedBy,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.core.model.model.Area" >
+    update base_area
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="zoneName != null" >
+        zone_name = #{zoneName,jdbcType=VARCHAR},
+      </if>
+      <if test="centerCityId != null" >
+        center_city_id = #{centerCityId,jdbcType=BIGINT},
+      </if>
+      <if test="refCityIds != null" >
+        ref_city_ids = #{refCityIds,jdbcType=VARCHAR},
+      </if>
+      <if test="isEnable != null" >
+        is_enable = #{isEnable,jdbcType=VARCHAR},
+      </if>      
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.core.model.model.Area" >
+    UPDATE base_area
+    SET name = #{name,jdbcType=VARCHAR},
+		center_city_id = #{centerCityId,jdbcType=BIGINT},
+		ref_city_ids = #{refCityIds,jdbcType=VARCHAR},
+		created = #{created,jdbcType=TIMESTAMP},
+		created_by = #{createdBy,jdbcType=VARCHAR},
+		last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+		last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR}
+    WHERE id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <select id="queryAllCenterCity" resultType="com.prcsteel.platform.core.model.model.City">
+        SELECT bc.id, bc.name, bc.province_id, bc.created, bc.created_by, bc.last_updated, bc.last_updated_by, bc.modification_number, bc.row_id, bc.parent_row_id
+        FROM base_area ba
+        LEFT JOIN base_city bc ON bc.id = ba.center_city_id
+    </select>
+
+    <!--根据地区分组获取所有中心城市-->
+    <select id="selectAllCenterCityGroupByZone" resultType="com.prcsteel.platform.core.model.dto.AreaCityDto">
+        SELECT ba.zone_name zoneName,GROUP_CONCAT(ba.center_city_id,':',bc.name) citys
+        FROM base_area  ba
+        LEFT JOIN base_city bc ON ba.center_city_id=bc.id
+        GROUP BY ba.zone_name
+    </select>
+
+    <!--根据城市名称获取该城市映射的中心城市集 -->
+    <select id="selectCenterCitysByName" resultType="map">
+      SELECT
+	  	bc.id,bc.name
+      FROM base_area ba
+      LEFT JOIN base_city bc ON ba.center_city_id=bc.id
+      WHERE ba.center_city_id =(SELECT id FROM base_city b WHERE b.name LIKE '%' #{cityName} '%')
+	  OR FIND_IN_SET((SELECT id FROM base_city b WHERE b.name LIKE '%' #{cityName} '%') ,ba.ref_city_ids)
+    </select>
+</mapper>

@@ -1,0 +1,127 @@
+##买家年度采购协议审核界面 协议或图片的展示
+
+#set($account=$accountdto.account)
+#set($accountExt=$accountdto.accountExt)
+#set($attachmentList=$accountdto.attachments)
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            客户管理
+        </li>
+        <li>
+            <i class="ace-icon"></i>
+            <a href="javascript:void(0)">我的客户</a>
+        </li>
+        <li>
+            <i class="ace-icon"></i>
+            <a href="javascript:void(0)">$!{account.name}</a>
+        </li>
+        <li class="active">年度采购协议
+        </li>
+    </ul>
+    <!-- /.breadcrumb -->
+</div>
+#if($accountdto)
+<!-- 协议已上传待审核状态下是显示图片列表 其他情况下显示协议内容 -->
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- PAGE CONTENT BEGINS -->
+            #if($agreementcontent)
+                <!-- table-bar 协议-->
+                <div class="table-bar tab-pane in active">
+                    <div style="width:auto; height:40px;">
+                        <span class="logo-bar print-logo pull-left" style="float:left;">
+                            <img src="$link.getContextPath()/img/print-logo.png"" />
+                        </span>
+                    </div>
+                    <h1 class="bolder text-center clearfix"><span style="margin-right:100px">钢材销售协议</span></h1>
+                    <table class="contable print-table border0 mg-t-35">
+                        <tbody class="border0">
+                        <tr>
+                            <td colspan="5">需方(甲方)： $!{account.name}</td>
+                            <td colspan="5">合同编号：  </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5">供方(乙方)： 杭州钢为网络科技有限公司</td>
+                            <td colspan="5">签订时间：　　　年　　　月　　　日</td>
+                        </tr>
+                        <tr>
+                            <td colspan="5"></td>
+                            <td colspan="5">签订地点： 杭州市下城区</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    $!{agreementcontent}
+
+                    <table class="contable print-table border0">
+                        <tbody>
+                        <tr>
+                            <td width="90">需方（章）：</td><td colspan="5" width="200"></td><td width="90">供方（章）：</td><td colspan="3" width="200">杭州钢为网络科技有限公司</td>
+                        </tr>
+
+                        <tr>
+                            <td>签约代表人：</td><td colspan="5"></td><td>签约代表人：</td><td colspan="3"></td>
+                        </tr>
+                        <tr>
+                            <td class="lh-25">日期：</td><td colspan="5" class="lh-25">2016年　　　月　　　日</td>
+                            <td class="lh-25">日期：</td><td colspan="3" class="lh-25">2016年　　　月　　　日</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.table-bar协议 -->
+            #else
+                <!-- 图片 -->
+                <div id="purchaseContractImg">
+                    #if($attachmentList.purchase_agreement)
+                        #foreach($item in $attachmentList.purchase_agreement)
+                            <a rel="lightbox">
+                                <img class="imgbigger imgo"
+                                     src="$link.getContextPath()/common/getfile.html?key=$item.url">
+                            </a>
+                        #end
+                    #end
+                </div>
+            #end
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div><!-- /.page-content -->
+
+<div class="text-center">
+    <button type="button" id="btnBack" class="btn btn-primary" title="返回">
+        返回
+    </button>
+    <button type="button" id="btnPass" class="btn btn-primary">通过</button>
+    <button type="button" id="btnRefuse" class="btn btn-primary">不通过</button>
+</div>
+
+
+<input type="hidden" value="$!{account.id}"id="accountId"/>
+<input type="hidden" value="$!{auditType}" id="auditType"/>
+<input type="hidden" value="$!{accountExt.id}"id="accountExtId"/>
+<input type="hidden" value="$!{accountExt.annualPurchaseAgreementStatus}" id="status"/>
+
+<script src="$link.getContextPath()/js/views/company/workflow/annualPurchaseAgreement.js"></script>
+
+#else
+<div class="page-content">
+    <div class="settlement-info bg-yellow-style row">
+        <div class="clearfix">
+            <span class="bolder red"><em>没有找到该客户的审核信息或您没有权限审核。</em></span>
+        </div>
+    </div>
+</div>
+#end
+

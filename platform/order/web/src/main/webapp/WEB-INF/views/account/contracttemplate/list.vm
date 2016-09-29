@@ -1,0 +1,102 @@
+<div class="breadcrumbs" id="breadcrumbs">
+			<script type="text/javascript">
+				try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+			</script>
+
+			<ul class="breadcrumb">
+				<li>
+					<i class="ace-icon fa fa-home home-icon"></i>
+					客户管理
+				</li>
+
+				<li><a href="$link.getContextPath()/account/${type}.html">我的#if($type=="buyer")买#else卖#end家客户</a></li>
+				<li><a href="$link.getContextPath()/account/${type}/${account.id}.html">$!{account.name}</a></li>
+				<li class="active">合同模板</li>
+			</ul><!-- /.breadcrumb -->
+		#parse("layout/topbtn.vm")<!-- /.nav-search -->
+		</div>
+<div class="page-content">
+    <!--TAPBAR-->
+    <div class="tabbar">
+        <ul class="nav nav-tabs padding-12 tab-color-blue" id="myTab4">
+            <li>
+                <a href="$link.getContextPath()/account/${type}/${accountId}.html">企业基本信息</a>
+            </li>
+            <li>
+                <a href="$link.getContextPath()/account/${type}/${accountId}/contactlist.html">联系人信息</a>
+            </li>
+            <li>
+                <a href="$link.getContextPath()/account/${type}/${accountId}/assignlog.html">客户划转记录</a>
+            </li>
+            <li>
+				#if($type=="buyer")
+					<a href="$link.getContextPath()/account/buyer/${accountId}/purchaselist.html">采购记录</a>
+				#else
+					<a href="$link.getContextPath()/account/seller/${accountId}/salelist.html">销售记录</a>
+				#end
+            </li>
+            <li class="active">
+                <a href="$link.getContextPath()/account/${type}/${accountId}/contracttemplate.html">合同模板</a>
+            </li>
+            <li>
+                <a href="$link.getContextPath()/account/${type}/${accountId}/translog.html">账户信息</a>
+            </li>
+            <li>
+                <a href="$link.getContextPath()/account/${type}/${accountId}/bankinfo.html">银行信息</a>
+            </li>
+        </ul>
+    </div>
+	<div class="clearfix">
+	    <div class="pull-left">
+			<input type="hidden" id="type" name="type" value="$!{type}"/>
+			<input type="hidden" id="accountId" name="accountId" value="$!{accountId}"/>
+	    </div>
+    </div>	
+	<div class="col-xs-12">
+		<div class="row clearfix">
+
+				#foreach( $template in $templates)
+					#foreach( $temp in $template)
+						#if($velocityCount==1)
+                            <div class="row form-actions">
+                                <div class="col-xs-12 col-lg-12">
+									$!{temp.name}:
+                                </div>
+                            </div>
+						#end
+                        <div class="row ">
+                            <div class="col-xs-12 col-lg-4">
+								$temp.name
+                            </div>
+                            <div class="col-xs-12 col-lg-4">
+                                    <label>
+                                        <input name="form-field-radio-$!{temp.type}" type="radio" class="ace" #if($temp.enabled==1) checked #end>
+                                        <span class="lbl"> 设为默认</span>
+                                    </label>
+                            </div>
+                            <div class="col-xs-12 col-lg-4">
+                                <button id ="btnView" class="btn btn-link">
+                                    <a target="_blank" href="$link.getContextPath()/account/view/${temp.type}/${temp.accountId}/contracttemplate/${temp.id}.html">查看</a>
+                                </button>
+                                #if($temp.accountId!=0)
+                                <button id ="btnView" class="btn btn-link">
+                                    <a target="_blank" href="$link.getContextPath()/account/edit/${temp.type}/${temp.accountId}/contracttemplate/${temp.id}.html">编辑</a>
+                                </button>
+                                <button id ="btnView" class="btn btn-link">
+                                    <a target="_blank" href="$link.getContextPath()">删除</a>
+                                </button>
+                                #end
+                            </div>
+                        </div>
+                        <div class="hr hr-dotted hr12"></div>
+					#end
+                <div class="row ">
+                    <div class="col-xs-12 col-lg-12">
+                        <button class="btn btn-sm btn-primary" title="添加"><i class="ace-icon glyphicon glyphicon-plus align-top bigger-125"></i>添加</button>
+                    </div>
+				</div>
+				#end
+
+		</div>
+	</div>
+</div><!-- /.page-content -->

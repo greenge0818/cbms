@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="com.prcsteel.platform.smartmatch.persist.dao.CustBasePriceSubscriberDao">
+	<resultMap id="BaseResultMap"
+		type="com.prcsteel.platform.smartmatch.model.model.CustBasePriceSubscriber">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="account_id" jdbcType="BIGINT" property="accountId" />
+		<result column="owner_id" jdbcType="VARCHAR" property="ownerId" />
+		<result column="city_id" jdbcType="BIGINT" property="cityId" />
+	</resultMap>
+	<!-- 订阅的买家联系人 -->
+	<resultMap id="contactInfo"
+		type="com.prcsteel.platform.smartmatch.model.model.CustBasePriceContactRelation">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="subscriber_id" jdbcType="BIGINT" property="subscriberId" />
+		<result column="contact_id" jdbcType="BIGINT" property="contactId" />
+		<result column="contact_name" jdbcType="VARCHAR" property="contactName" />
+		<result column="tel" jdbcType="VARCHAR" property="tel" />
+		<result column="created" jdbcType="TIMESTAMP" property="created" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, account_id, owner_id, city_id
+	</sql>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from cust_base_price_subscriber
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from cust_base_price_subscriber
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert"
+		parameterType="com.prcsteel.platform.smartmatch.model.model.CustBasePriceSubscriber">
+		insert into cust_base_price_subscriber (id, account_id, owner_id,
+		city_id)
+		values (#{id,jdbcType=BIGINT}, #{accountId,jdbcType=BIGINT},
+		#{ownerId,jdbcType=VARCHAR},
+		#{cityId,jdbcType=BIGINT})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.prcsteel.platform.smartmatch.model.model.CustBasePriceSubscriber">
+		insert into cust_base_price_subscriber
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="accountId != null">
+				account_id,
+			</if>
+			<if test="ownerId != null">
+				owner_id,
+			</if>
+			<if test="cityId != null">
+				city_id,
+			</if>
+			<if test="created != null">
+				created,
+			</if>
+			<if test="createdBy != null">
+				created_by,
+			</if>
+			<if test="lastUpdated != null">
+				last_updated,
+			</if>
+			<if test="lastUpdatedBy != null">
+				last_updated_by,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="accountId != null">
+				#{accountId,jdbcType=BIGINT},
+			</if>
+			<if test="ownerId != null">
+				#{ownerId,jdbcType=VARCHAR},
+			</if>
+			<if test="cityId != null">
+				#{cityId,jdbcType=BIGINT},
+			</if>
+			<if test="created != null">
+				#{created,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createdBy != null">
+				#{createdBy,jdbcType=VARCHAR},
+			</if>
+			<if test="lastUpdated != null">
+				#{lastUpdated,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastUpdatedBy != null">
+				#{lastUpdatedBy,jdbcType=VARCHAR},
+			</if>
+		</trim>
+		
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS id
+		</selectKey>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.prcsteel.platform.smartmatch.model.model.CustBasePriceSubscriber">
+		update cust_base_price_subscriber
+		<set>
+			<if test="accountId != null">
+				account_id = #{accountId,jdbcType=BIGINT},
+			</if>
+			<if test="ownerId != null">
+				owner_id = #{ownerId,jdbcType=VARCHAR},
+			</if>
+			<if test="cityId != null">
+				city_id = #{cityId,jdbcType=BIGINT},
+			</if>
+			<if test="created != null">
+				created = #{created,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createdBy != null">
+				created_by = #{createdBy,jdbcType=VARCHAR},
+			</if>
+			<if test="lastUpdated != null">
+				last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastUpdatedBy != null">
+				last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.prcsteel.platform.smartmatch.model.model.CustBasePriceSubscriber">
+		update cust_base_price_subscriber
+		set account_id = #{accountId,jdbcType=BIGINT},
+		owner_id = #{ownerId,jdbcType=VARCHAR},
+		city_id = #{cityId,jdbcType=BIGINT},
+		created = #{created,jdbcType=TIMESTAMP},
+		created_by = #{createdBy,jdbcType=VARCHAR},
+		last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+		last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<!-- 查询订阅列表信息，分页 -->
+	<sql id="selectBasePriceSubListSql">
+		SELECT
+			t.id,
+			acc. NAME AS accountName,
+			contact.tel,
+			trader_user.traderTel,
+			user.name as ownerName,
+			t.owner_id as ownerId,
+			t.city_id AS cityId,
+			city. NAME AS cityName,
+			t.account_id as accountId,
+			GROUP_CONCAT(bp.id) AS subBasePriceIds,
+			GROUP_CONCAT(bp.base_price_name) AS subBasePriceName,
+			contact.subBasePriceContactIds,
+			(select group_concat(distinct trader_id) from cust_base_price_trader_relation where subscriber_id=t.id) as subBasePriceTraderIds
+		FROM
+		cust_base_price_subscriber t
+		LEFT JOIN cust_base_price_subscriber_relation r ON r.subscriber_id = t.id
+		LEFT JOIN cust_base_price bp ON bp.id = r.base_price_id
+		LEFT JOIN cust_account acc ON acc.id = t.account_id
+		LEFT JOIN base_city city ON city.id = t.city_id
+		LEFT JOIN (select
+		bpc.subscriber_id,GROUP_CONCAT(concat(ct.`name`,ct.tel))as tel,GROUP_CONCAT(ct.id) AS subBasePriceContactIds from
+		cust_base_price_contact_relation bpc
+		left join cust_contact ct on bpc.contact_id=ct.id
+		GROUP BY bpc.subscriber_id)contact on contact.subscriber_id=t.id
+		<!--查询对接业务员 -->
+		LEFT JOIN (select trader.subscriber_id,GROUP_CONCAT(concat(u.`name`,u.tel))as traderTel 
+		from cust_base_price_trader_relation trader 
+		left join acl_user u on trader.trader_id=u.id GROUP BY trader.subscriber_id)trader_user 
+		on trader_user.subscriber_id=t.id
+		LEFT JOIN acl_user user ON t.owner_id = user.id
+		<where>
+			<if test="accountName !=null and accountName !=''">
+				and acc.NAME LIKE '%' #{accountName,jdbcType=VARCHAR} '%'
+			</if>
+			<if test="cityName !=null and cityName !=''">
+				and city. NAME LIKE '%' #{cityName,jdbcType=VARCHAR} '%'
+			</if>
+			<if test="ownerName !=null and ownerName !=''">
+				and user.name LIKE '%' #{ownerName,jdbcType=VARCHAR} '%'
+			</if>
+			<!-- 当钱记录的创建人和当前登录用户一致,或者当条记录的userId属于当前登录人的查看权限范围内 -->
+			<!-- useridList为空表示为管理员可以看见所有的数据 -->
+			<if test="userIdList != null and loginId !=null and loginId !=''">
+				and (t.created_by = #{loginId,jdbcType=VARCHAR}
+				<if test="userIdList != null and userIdList.size > 0" >
+              		or t.owner_id IN
+	              <foreach collection="userIdList" item="userId" open="(" separator="," close=")">
+	                  #{userId}
+	              </foreach>
+          		</if>
+          		 )
+			</if>			
+		</where>
+		GROUP BY id
+		ORDER BY t.last_updated DESC
+	</sql>
+	
+	<resultMap id="basepriceSubMap" type="com.prcsteel.platform.smartmatch.model.dto.CustBasePriceSubscriberDto" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="accountName" property="accountName" jdbcType="VARCHAR" />
+    <result column="accountId" property="accountId" jdbcType="VARCHAR" />
+    <result column="cityName" property="cityName" jdbcType="VARCHAR" />
+    <result column="cityId" property="cityId" jdbcType="BIGINT" />
+    <result column="subBasePriceName" property="subBasePriceName" jdbcType="VARCHAR" />
+    <result column="subBasePriceIds" property="subBasePriceIds" jdbcType="VARCHAR" />
+    <result column="subBasePriceContactIds" property="subBasePriceContactIds" jdbcType="VARCHAR" />
+	<result column="subBasePriceTraderIds" property="subBasePriceTraderIds" jdbcType="VARCHAR" />
+    <result column="ownerId" property="ownerId" jdbcType="VARCHAR" />
+    <result column="ownerName" property="ownerName" jdbcType="VARCHAR" />
+  	</resultMap>
+	<select id="selectBasePriceSubListCount" resultType="int"
+		parameterType="map">
+		select count(id) from (
+		<include refid="selectBasePriceSubListSql" />
+		)y
+	</select>
+	<select id="selectBasePriceSubList" resultMap="basepriceSubMap"
+		parameterType="map">
+		<include refid="selectBasePriceSubListSql" />
+		limit
+		#{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+	</select>
+
+
+	<!-- 根据id集删除记录 -->
+	<delete id="batchDelBasePriceSubByIds">
+		DELETE FROM cust_base_price_subscriber
+		WHERE id in
+		<foreach item="id" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+	<!-- 根据id集删除关联记录 -->
+	<delete id="batchDelBasePriceSubRelationByIds">
+		DELETE FROM cust_base_price_subscriber_relation
+		WHERE subscriber_id in
+		<foreach item="id" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+	<!-- 根据id集删除关联的联系人记录 -->
+	<delete id="batchDelBasePriceSubContactByIds">
+		DELETE FROM cust_base_price_contact_relation
+		WHERE subscriber_id in
+		<foreach item="id" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+	<!-- 根据id集删除关联的联系人记录 -->
+	<delete id="batchDelBasePriceSubTraderByIds">
+		DELETE FROM cust_base_price_trader_relation
+		WHERE subscriber_id in
+		<foreach item="id" index="index" collection="ids" open="("
+				 separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+	<!-- 根据城市获取基价 -->
+	<select id="getBasePriceDataBycityId" parameterType="long"
+		resultType="java.util.HashMap">
+		select id as id,base_price_name as basePriceName,city_id as cityId,remark from cust_base_price where
+		city = #{cityName} and is_deleted = 0;
+	</select>
+	<!-- 获取联系人 -->
+	<select id="getContactDataByAccountId" parameterType="long"
+		resultType="java.util.HashMap">
+		SELECT
+		DISTINCT
+		contact.id,
+		contact.`name`,
+		contact.tel
+		FROM
+		cust_contact contact
+
+		LEFT JOIN cust_account_contact a_contact ON contact.id =
+		a_contact.contact_id
+		LEFT JOIN cust_account acc ON acc.id = a_contact.account_id
+		WHERE
+		acc.id = #{accountId} or acc.parent_id= #{accountId}
+	</select>
+
+	<!-- 获取城市-->
+	<select id="getCityNameByuserOrgId" parameterType="long"
+		resultType="java.util.HashMap">
+		SELECT
+		city.`id` as cityId,
+		city.`name` as cityName
+		from base_organization o
+		LEFT JOIN base_city city ON city.id = o.city_id
+		where
+		o.id = #{id}
+
+	</select>
+	<!-- 保存订阅联系人 -->
+	<insert id="insertCustBasePriceContactRelation"
+		parameterType="com.prcsteel.platform.smartmatch.model.model.CustBasePriceContactRelation">
+		insert into cust_base_price_contact_relation
+		(subscriber_id, contact_id,contact_name,contact_tel,created,created_by,last_updated,last_updated_by) values
+		(#{subscriberId,jdbcType=BIGINT}, #{contactId,jdbcType=BIGINT}, #{contactName,jdbcType=VARCHAR},
+		#{tel,jdbcType=VARCHAR},#{created,jdbcType=TIMESTAMP},#{createdBy,jdbcType=VARCHAR},
+		#{lastUpdated,jdbcType=TIMESTAMP},#{lastUpdatedBy,jdbcType=VARCHAR})
+	</insert>
+	<!-- 保存订阅交易员 -->
+	<insert id="insertCustBasePriceTraderRelation"
+			parameterType="com.prcsteel.platform.smartmatch.model.model.CustBasePriceTraderRelation">
+		insert into cust_base_price_trader_relation
+		(subscriber_id, trader_id, created) values
+		(#{subscriberId,jdbcType=BIGINT}, #{traderId,jdbcType=BIGINT}, #{created,jdbcType=TIMESTAMP})
+	</insert>
+	<!-- 保存订阅的基价 -->
+	<insert id="insertCustBasePriceSubscriberRelation"
+		parameterType="com.prcsteel.platform.smartmatch.model.model.CustBasePriceSubscriberRelation">
+		insert into cust_base_price_subscriber_relation (subscriber_id,
+		base_price_id, created,created_by,last_updated,last_updated_by
+		)
+		values (#{subscriberId,jdbcType=BIGINT}, #{basePriceId,jdbcType=BIGINT},
+		#{created,jdbcType=TIMESTAMP},#{createdBy,jdbcType=VARCHAR},
+		#{lastUpdated,jdbcType=TIMESTAMP},#{lastUpdatedBy,jdbcType=VARCHAR})
+	</insert>
+	<select id="selectBasePriceSubByAccountId" parameterType="com.prcsteel.platform.smartmatch.model.dto.CustBasePriceSubscriberDto"
+		resultMap="BaseResultMap">
+		select id, account_id, owner_id, city_id from (	
+		select
+		id, account_id, owner_id, city_id,
+    	(select group_concat(r.contact_id  SEPARATOR ',') from cust_base_price_contact_relation r where r.subscriber_id = t.id) contactids
+		from cust_base_price_subscriber t
+		where account_id = #{accountId}
+		and city_id = #{cityId}) info
+		<where> 
+	        <foreach item="cid" index="index" collection="contactIds" open="(" separator="or" close=")">
+                FIND_IN_SET(#{cid},info.contactids)
+            </foreach>
+    	</where>
+	</select>
+	<!--根据买家id获取订阅的买家联系人 -->
+	<select id="selectBasePriceContactByAccountId" parameterType="com.prcsteel.platform.smartmatch.model.model.CustBasePriceSubscriber"
+		resultMap="contactInfo">
+		select r.*,contact.name as contact_name,contact.tel 
+		from cust_base_price_contact_relation r
+		LEFT JOIN cust_base_price_subscriber t on t.id = r.subscriber_id
+		left join cust_contact contact on contact.id = r.contact_id
+		where account_id = #{accountId}
+		<!--modify by zhoucai@prcsteel.com 2016-8-28 -->
+		<if test="cityId != null">
+			and city_id =#{cityId}
+		</if>
+		<if test="id != null">
+			and r.subscriber_id <![CDATA[ <> ]]> #{id}
+		</if>
+	</select>
+	
+	<select id="selectContactByBasePrice" resultType="java.util.HashMap">
+		SELECT 
+			GROUP_CONCAT(pr.base_price_name, convert(pr.price,decimal) SEPARATOR ';') AS basePriceName,
+			GROUP_CONCAT(sbr.base_price_id SEPARATOR ',') AS basePriceId,pr.city,
+			con.name,con.tel,sb.account_id as accountId,cr.contact_id as contactId,cust.name as accountName,
+			(select group_concat(distinct t2.name,t2.tel) from cust_base_price_trader_relation t1
+			INNER JOIN acl_user t2 on t1.trader_id=t2.id
+			where t1.subscriber_id=sb.id) as traderinfo
+		from cust_contact con
+			LEFT JOIN cust_base_price_contact_relation cr on cr.contact_id = con.id
+			LEFT JOIN cust_base_price_subscriber sb on cr.subscriber_id = sb.id
+		    LEFT JOIN cust_account cust on cust.id = sb.account_id
+			LEFT JOIN cust_base_price_subscriber_relation sbr on sbr.subscriber_id = sb.id
+			INNER JOIN cust_base_price pr ON pr.id = sbr.base_price_id
+		WHERE
+		sbr.base_price_id in
+		 <foreach item="bid" index="index" collection="basepriceids" open="(" separator="," close=")">
+    		#{bid}
+  		 </foreach>
+  		GROUP BY con.tel
+		ORDER BY sbr.base_price_id
+	</select>
+
+	<resultMap id="CustSubscribInfoMap" type="com.prcsteel.platform.smartmatch.model.dto.BasePriceCustSubscribeInfo">
+		<result column="id" jdbcType="BIGINT" property="accountId" />
+		<result column="name" jdbcType="VARCHAR" property="accountName" />
+		<result column="departmentId" jdbcType="BIGINT" property="departmentId" />
+		<result column="subscribed" jdbcType="INTEGER" property="subscribed" />
+	</resultMap>
+	<select id="queryCustSubscribInfo" parameterType="java.util.List" resultMap="CustSubscribInfoMap">
+		<!--modify by zhoucai@prcsteel.com  2016-8-28修改有多部门时去重会重复买家-->
+		SELECT DISTINCT t3.name,t3.id,
+		(CASE WHEN EXISTS(
+		SELECT 1 FROM cust_base_price_subscriber WHERE account_id=t3.id
+		) THEN 1 ELSE 0 END) AS subscribed
+		FROM cust_account_contact t1
+		INNER JOIN cust_account t2 ON t1.account_id=t2.id  AND t2.status=1 AND t2.is_deleted=0
+		INNER JOIN cust_account t3 ON t2.parent_id=t3.id AND t2.status=1 AND t3.parent_id=0 AND t3.is_deleted=0
+		<where>
+			t1.status=1 AND t1.is_deleted=0
+			<if test="userList != null and userList.size">
+				and manager in
+				<foreach item="uid" index="index" collection="userList" open="(" separator="," close=")">
+					#{uid}
+				</foreach>
+			</if>
+		</where>
+		order by subscribed asc,t3.name asc
+	</select>
+</mapper>

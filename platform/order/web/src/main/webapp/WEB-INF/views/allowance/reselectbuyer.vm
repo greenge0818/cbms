@@ -1,0 +1,93 @@
+<!--重新选择买家交易单（审核不通过后）-->
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            折让单管理
+        </li>
+        <li class="active">编辑买家折让单</li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+        #parse("layout/topbtn.vm")<!-- /.nav-search -->
+</div>
+
+<div class="page-content">
+
+    <div>
+        <span style="color:red">1、选择交易单</span> > 2、添加折扣金额
+    </div>
+    </br>
+
+    <form id="createForm">
+        <div class="input-group pull-left col-md-12 col-sm-12 col-lg-12">
+		    <span class="pull-left">
+		    	<label>
+                    买 家 全 称&nbsp;
+                    <input type="text" id="buyer" accountid="$!{buyer.id}" value="$!{buyer.name}"
+                           consigntype="$!{buyer.consignType}"
+                           maxlength="50" must="1" search="account" accounttype="buyer"
+                           class="c-text #if($!{buyer.consignType}=='temp') temp-lin #else #end"/>
+                    合 同 号&nbsp;
+                    <input id="contractCode" type="text">
+                </label>
+                </br>
+                <label>
+                    寄售交易单号&nbsp;
+                    <input id="orderCode" type="text">
+                    时间&nbsp;
+                    <input id="startTime" class="Wdate" type="text" value="$!{startTime}"
+                           onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')||\'2020-10-01\'}'})"/> -
+                    <input id="endTime" class="Wdate" type="text" value="$!{endTime}"
+                           onFocus="WdatePicker({minDate:'#F{$dp.$D(\'startTime\')}',maxDate:'2020-10-01'})"/>
+                </label>
+		        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		        <button id="btnSearch" type="button" class="btn-sm btn btn-info">搜索</button>
+		    </span>
+        </div>
+    </form>
+    <div class="table-bar col-sm-12">
+        <table id="list-table" class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th><input type="checkbox" id="allCheck"/></th>
+                <th>开单时间</th>
+                <th>合同号</th>
+                <th>寄售交易单号</th>
+                <th>买家全称</th>
+                <th>件数(件)</th>
+                <th>总重量(吨)</th>
+                <th>实提总重量(吨)</th>
+                <th>总金额(元)</th>
+                <th>实提总金额(元)</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <tr>
+                <td colspan="10">
+                    <label>一共选择了 <span class="red" id="checkCount">0</span> 条订单</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td colspan="10">
+                    <a href="$link.getContextPath()/allowance/$!{allowanceId}/modifybuyer.html"
+                       aria-expanded="true">返回</a>
+                    <button type="button" id="allowanceNext" class="btn btn-sm pull-right btn-primary">下一步</button>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+
+<input type="hidden" value="$!{allowanceId}" id="allowanceId"/>
+<input type="hidden" value="$!{buyer.id}" id="buyerId"/>
+<script src="$link.getContextPath()/js/views/allowance/reselectbuyer.js"></script>
+<script src="$link.getContextPath()/js/views/account/searchaccount.js"></script>

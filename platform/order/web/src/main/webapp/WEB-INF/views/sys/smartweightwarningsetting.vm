@@ -1,0 +1,71 @@
+#set($layout="layout/default.vm")
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+    <ul class="breadcrumb">
+        <li><i class="ace-icon fa fa-home home-icon"></i>系统管理</li>
+        <li>系统设置</li>
+        <li class="active">智能匹配重量容差报警设置</li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+    #parse("layout/topbtn.vm")
+    <!-- /.nav-search -->
+</div>
+
+<div class="page-content">
+
+    <div class="row">
+        <div class="col-xs-12">
+            <!--TAPBAR-->
+            #parse("sys/systemmenu.vm")
+            <!-- PAGE CONTENT BEGINS -->
+            <form id="checkForm">
+                <div class="row">
+                    <div class="col-xs-12">
+
+                        <!--.recordbar-->
+                        <div>智能匹配重量容差报警设置:</div>
+                        <div class="print-finfo">
+                            <label><input type="text" must="1" verify="rmb" msg="小数点后最多2位" value="$!least" class="c-text" id="leastvalue"/>%到</label>
+                            <label><input type="text" must="1" verify="rmb" msg="小数点后最多2位" value="$!highest" class="c-text" id="highestvalue"/>%</label>
+                            <label><span><em class="">设置后，填写报价单时，若选取的某品规没有达到或超过该范围，会有明显提示</em></span></label>
+                        </div>
+                        <div class="btn-bar">
+                            <button type="button" verify="" class="btn btn-info btn-sm" id="submit">确定</button>
+                        </div>
+                        <!--/.recordbar-->
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+
+<!-- /.page-content -->
+<script type="text/javascript">
+    $(function(){
+        $("#submit").click(function(){
+            if(!setlistensSave("#checkForm")){return;}
+            $.ajax({
+                type:'POST',
+                url:Context.PATH+'/sys/setsmartweightwarning.html',
+                data:{
+                    leastvalue:$('#leastvalue').val(),
+                    highestvalue:$('#highestvalue').val()
+                },
+                dataType: "json",
+                success:function(data){
+                    cbms.alert(data.data);
+                }
+            });
+
+        });
+    });
+</script>

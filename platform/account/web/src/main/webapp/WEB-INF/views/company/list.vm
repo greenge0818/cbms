@@ -1,0 +1,258 @@
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="#">客户管理</a>
+        </li>
+
+        <li class="active">我的客户</li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+    <!--#parse("layout/topbtn.vm") /.nav-search -->
+</div>
+
+<div class="page-content">
+    <div class="page-header search-box clearfix backgr">		
+        <div class="input-group search-ipt-bar cvlo">
+            <label class="height-b shk pull-left mar-left-20">客户性质：
+                <select class="form-control input-sm select-middle" aria-controls="dynamic-table"
+                        name="dynamic-table_length" id="accountTag">
+                    <option value="">全部</option>
+                    #foreach($tag in $accountTags)
+                        <option value="$tag.code">$tag.name</option>
+                    #end
+                </select>
+            </label>
+            <label class="height-b pull-left">公司名称：<input class="l-text" type="text" value="" search='account' id="accountName"/></label>
+            #if(!$shiro.hasPermission("sys:field:org"))
+                <label class="height-b shk pull-left">服务中心：
+                    <select class="form-control input-sm select-middle" aria-controls="dynamic-table"
+                            name="dynamic-table_length" id="orgId">
+                        <option value="">全部</option>
+                        #foreach($org in $orgs)
+                            <option value="$org.id">$org.name</option>
+                        #end
+                    </select>
+                </label>
+            #end
+			<div class="pull-left">
+				<button value="" type="button" class="btn btn-xs btn-primary" id="searchBtn">搜 索</button>
+			</div>
+			<ul class="ajx fl-leftimportant">
+				<li class="pd-b-5">
+            		<span>年度采购协议状态：</span>
+
+		            <div class="pull-down pull-downYes" id="purchaseStatus">
+		                <div class="pull-down-button">
+		                   <span class="kongot">未选择</span>
+		                    <i class="fa fa-angle-down"></i>
+		
+		                    <div class="clear"></div>
+		                </div>
+		
+		                <div class="mulsel-content-list hide">
+		                    <ul class="downpush"></ul>
+		                    <div class="button-content">
+		                        <button type="button" class="btn btn-primary mulsel-btn-ok btn-xs">
+		                            确定
+		                        </button>
+		
+		                        <button type="button" class="mulsel-btn-cancle btn btn-xs">
+		                            取消
+		                        </button>
+		                    </div>
+		                </div>
+		            </div>
+		        </li>
+		    	<li class="pd-b-5">
+            		<span>卖家代运营协议状态：</span>
+
+		            <div class="pull-down pull-downYes" id="consignStatus">
+		                <div class="pull-down-button">
+		                    <span class="kongot">未选择</span>
+		                    <i class="fa fa-angle-down"></i>
+		
+		                    <div class="clear"></div>
+		                </div>
+		
+		                <div class="mulsel-content-list hide">
+		                    <ul class="downpush"></ul>
+		                    <div class="button-content">
+		                        <button type="button" class="btn btn-primary mulsel-btn-ok btn-xs">
+		                            确定
+		                        </button>
+		
+		                        <button type="button" class="mulsel-btn-cancle btn btn-xs">
+		                            取消
+		                        </button>
+		                    </div>
+		                </div>
+		            </div>
+		        </li>
+		     	<li class="pd-b-5">
+            		<span>证件资料状态：</span>
+
+		            <div class="pull-down pull-downYes" id="cardStatus">
+		                <div class="pull-down-button">
+		                    <span class="kongot">未选择</span>
+		                    <i class="fa fa-angle-down"></i>
+		
+		                    <div class="clear"></div>
+		                </div>
+		
+		                <div class="mulsel-content-list hide">
+		                    <ul class="downpush"></ul>
+		                    <div class="button-content">
+		                        <button type="button" class="btn btn-primary mulsel-btn-ok btn-xs">
+		                            确定
+		                        </button>
+		
+		                        <button type="button" class="mulsel-btn-cancle btn btn-xs">
+		                            取消
+		                        </button>
+		                    </div>
+		                </div>
+		            </div>
+		        </li>
+		        <li class="pd-b-5">    
+            		<span>开票资料状态：</span>
+
+		            <div class="pull-down pull-downYes" id="invoiceStatus">
+		                <div class="pull-down-button">
+		                    <span class="kongot">未选择</span>
+		                    <i class="fa fa-angle-down"></i>
+		
+		                    <div class="clear"></div>
+		                </div>
+		
+		                <div class="mulsel-content-list hide">
+		                    <ul class="downpush"></ul>
+		                    <div class="button-content">
+		                        <button type="button" class="btn btn-primary mulsel-btn-ok btn-xs">
+		                            确定
+		                        </button>
+		
+		                        <button type="button" class="mulsel-btn-cancle btn btn-xs">
+		                            取消
+		                        </button>
+		                    </div>
+		                </div>
+		            </div>
+		        </li>
+		        <li class="pd-b-5">
+            		<span>打款资料状态：</span>
+
+		            <div class="pull-down pull-downYes" id="payStatus">
+		                <div class="pull-down-button">
+		                    <span class="kongot">未选择</span>
+		                    <i class="fa fa-angle-down"></i>
+		
+		                    <div class="clear"></div>
+		                </div>
+		
+		                <div class="mulsel-content-list hide">
+		                    <ul class="downpush"></ul>
+		                    <div class="button-content">
+		                        <button type="button" class="btn btn-primary mulsel-btn-ok btn-xs">
+		                            确定
+		                        </button>
+		
+		                        <button type="button" class="mulsel-btn-cancle btn btn-xs">
+		                            取消
+		                        </button>
+		                    </div>
+		                </div>
+		            </div>
+				</li>
+			</ul>
+        </div>
+        
+    </div>
+    <!-- /.page-header -->
+
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- PAGE CONTENT BEGINS -->
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="clearfix">
+                        <div class="pull-left">
+                        </div>
+                        <div class="pull-left toolsbar">
+                            <button id="addUser" class="btn btn-xm btn-primary" title="添 加">添 加</button>
+                            <button id="lockUser" class="btn btn-xm btn-primary" title="锁定">锁 定</button>
+                            <button id="unlockUser" class="btn btn-xm btn-primary" title="解锁">解 锁</button>
+                            <div class="pull-right height-b po-rel">
+                                <p class=" clienthover">显示列</p>
+                                <div class=" po-abso">
+                                    <div class="row fir">
+                                        <div class="col-md-6">
+                                            <label><input type="checkbox" checked class="toggle-vis" data-column="3">年度采购协议</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label><input type="checkbox" checked class="toggle-vis" data-column="4">卖家代运营协议</label>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label><input type="checkbox" checked class="toggle-vis" data-column="5">证件资料</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label><input type="checkbox" checked class="toggle-vis" data-column="6">开票资料</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label><input type="checkbox" checked class="toggle-vis" data-column="7">打款资料</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label><input type="checkbox" checked class="toggle-vis" data-column="8">服务中心</label>
+                                        </div>
+                                    </div>
+                                    <div class="row fir">
+                                        <div class="col-md-6">
+                                            <label><input type="checkbox" checked class="toggle-vis" data-column="9">注册时间</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label><input type="checkbox" checked class="toggle-vis" data-column="10">状态</label>
+                                        </div>
+                                    </div>
+                                    <!-- <button class="btn btn-xs pull-right">取消</button>
+                                    <button class="btn btn-sm btn-primary pull-right">确认</button> -->
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- div.dataTables_borderWrap -->
+                    <div>
+                        <table id="dynamic-table"
+                               class="table table-striped table-bordered table-hover table-center-nth text-center">
+                            <thead>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div><!-- /.page-content -->
+
+
+<script src="$link.getContextPath()/js/views/company/list.js"></script>
+<script src="$link.getContextPath()/js/views/account/searchaccount.js"></script>

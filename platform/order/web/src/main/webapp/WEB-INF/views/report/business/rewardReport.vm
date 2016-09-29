@@ -1,0 +1,237 @@
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="#">业务报表</a>
+        </li>
+        <li class="active">
+            服务中心提成统计报表
+        </li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+        #parse("layout/topbtn.vm")<!-- /.nav-search -->
+</div>
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- PAGE CONTENT BEGINS -->
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="clearfix">
+                        <div class="input-group pull-right col-md-12 col-sm-12 col-lg-12 search-bar">
+                            <form method="get" id="searchForm" class="form-inline"
+                                  action="$link.getContextPath()/report/reward/commission.html"
+                                  enctype="multipart/form-data">
+                                #if(!$shiro.hasPermission("sys:field:org"))
+                                <label>
+                                    服务中心：<input placeholder="请选择上级服务中心" id="sorganization" name="orgName" type="text"
+                                                class="ipt-text" readonly=""
+                                                value='$!{queryParam.orgName}' onclick="showMenu();">
+                                    <input type='hidden' id='sorganizationHidden' name="orgId"
+                                           value='$!{queryParam.orgId}'/>
+                                </label>
+                                #end
+                                <label>时间：</label>
+                                <select name="month" id="month" value="201508">
+                                    #foreach($month in $months)
+                                        <option value="$month" #if($!{queryParam.month} == $month) selected='true' #else
+                                                class='' #end >$month</option>
+                                    #end
+                                </select>
+                                <input type="hidden" name="init" id="init"/>
+                                <button id="queryBtn" class="btn btn-sm btn-default" type="button"  title="搜索">
+                                    <i class="aace-icon fa fa-search bigger-110"></i>搜索
+                                </button>
+                                <button id="exportBtn" class="btn btn-primary btn-sm" type="button" title=""  >
+                                    导出明细Excel
+                                </button>
+                                <button id="exportBtn2" class="btn btn-primary btn-sm" type="button" title=""  >
+                                    导出汇总Excel
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- div.dataTables_borderWrap -->
+                    <div class="print-finfo">
+                        #foreach($report in $list)
+                            <span><label class="bolder">$report.orgName</label></span>
+                        
+                        	#if(${isNotCurrMonth})
+                            <span>
+                                <label>新增买家客户:</label>
+                                <span>
+                                    #if(${report.addNewBuyer}) ${report.addNewBuyer} #else 0
+                                    #end 家* #if(${report.buyerRewardRole}) $NumberTool.format("#0.00",$!{report.buyerRewardRole}) #else 0.00 #end
+                                    =#if(${report.buyerRewardAmount}) $NumberTool.format("#0.00",$!{report.buyerRewardAmount})
+                                    #else 0.00 #end 元
+                                </span>
+                            </span>
+                           <span>
+                               <label>新增卖家客户:</label>
+                               <span>
+                                   #if(${report.addNewSeller}) ${report.addNewSeller} #else 0
+                                   #end 家* #if(${report.sellerRewardRole}) $NumberTool.format("#0.00",$!{report.sellerRewardRole}) #else 0.00 #end
+                                   =#if(${report.sellerRewardAmount})$NumberTool.format("#0.00",$!{report.sellerRewardAmount})
+                                   #else 0.00 #end 元
+                               </span>
+                            </span>
+                            <span class="pull-right">
+                                <a href='$link.getContextPath()/report/reward/showmanagerrewardreport.html?orgId=$!{report.orgId}&orgName=$!{report.orgName}&month=$!{queryParam.month}'>查看详情</a>
+                            </span>
+							#end
+                            <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th rowspan="2">品类</th>
+                                    <th colspan="2">本服务中心交易买家成交量(吨）</th>
+                                    <th colspan="2">跨服务中心交易买家成交量(吨）</th>
+                                    <th colspan="2">本服务中心交易卖家成交量(吨）</th>
+                                    <th colspan="2">跨服务中心交易卖家成交量(吨）</th>
+                                    <th rowspan="2">买家提成金额（元）</th>
+                                    <th rowspan="2">卖家提成金额（元）</th>
+                                </tr>
+                                <tr>
+                                    <th>临采卖家</th>
+                                    <th>品牌店卖家</th>
+                                    <th>临采卖家</th>
+                                    <th>品牌店卖家</th>
+                                    <th>临采卖家</th>
+                                    <th>品牌店卖家</th>
+                                    <th>临采卖家</th>
+                                    <th>品牌店卖家</th>
+                                </tr>
+                                </thead>
+                                <tbody id="secondpayment_datarow">
+                                    #foreach($cate in $report.details)
+                                    <tr>
+                                        <td>$cate.groupName</td>
+                                        <td class="text-right">
+                                            #if($cate.groupName == '小计')
+                                            <em class="bolder">
+                                                $NumberTool.format( "#0.000000",$cate.currOrgBuyerTempWeight)
+                                            <em>
+                                            #else
+                                                $NumberTool.format( "#0.000000",$cate.currOrgBuyerTempWeight)
+                                            #end
+                                        </td>
+                                        <td class="text-right">
+                                            #if($cate.groupName == '小计')
+                                            <em class="bolder">
+                                                $NumberTool.format("#0.000000",$cate.currOrgBuyerConsignWeight)
+                                            <em>
+                                            #else
+                                                $NumberTool.format("#0.000000",$cate.currOrgBuyerConsignWeight)
+                                            #end
+                                        </td>
+                                        <td class="text-right">
+                                            #if($cate.groupName == '小计')
+                                            <em class="bolder">
+                                                $NumberTool.format("#0.000000",$cate.otherOrgBuyerTempWeight)
+                                            <em>
+                                            #else
+                                                $NumberTool.format("#0.000000",$cate.otherOrgBuyerTempWeight)
+                                            #end
+                                        </td>
+                                        <td class="text-right">
+                                            #if($cate.groupName == '小计')
+                                            <em class="bolder">
+                                                $NumberTool.format("#0.000000",$cate.otherOrgBuyerConsignWeight)
+                                            <em>
+                                            #else
+                                                $NumberTool.format("#0.000000",$cate.otherOrgBuyerConsignWeight)
+                                            #end
+                                        </td>
+
+                                        <td class="text-right">
+                                            #if($cate.groupName == '小计')
+                                            <em class="bolder">
+                                                $NumberTool.format("#0.000000",$cate.currOrgSellerTempWeight)
+                                            <em>
+                                            #else
+                                                $NumberTool.format("#0.000000",$cate.currOrgSellerTempWeight)
+                                            #end
+                                        </td>
+                                        <td class="text-right">
+                                            #if($cate.groupName == '小计')
+                                            <em class="bolder">
+                                                $NumberTool.format("#0.000000",$cate.currOrgSellerConsignWeight)
+                                            <em>
+                                            #else
+                                                $NumberTool.format("#0.000000",$cate.currOrgSellerConsignWeight)
+                                            #end
+                                        </td>
+                                        <td class="text-right">
+                                            #if($cate.groupName == '小计')
+                                            <em class="bolder">
+                                                $NumberTool.format("#0.000000",$cate.otherOrgSellerTempWeight)
+                                            <em>
+                                            #else
+                                                $NumberTool.format("#0.000000",$cate.otherOrgSellerTempWeight)
+                                            #end
+                                        </td>
+                                        <td class="text-right">
+                                            #if($cate.groupName == '小计')
+                                            <em class="bolder">
+                                                $NumberTool.format("#0.000000",$cate.otherOrgSellerConsignWeight)
+                                            <em>
+                                            #else
+                                                $NumberTool.format("#0.000000",$cate.otherOrgSellerConsignWeight)
+                                            #end
+                                        </td>
+                                        <td class="text-right">
+                                            #if($cate.groupName == '小计')
+                                            <em class="bolder">
+                                                $NumberTool.toThousandth($cate.buyerRewardAmount)
+                                            <em>
+                                            #else
+                                                $NumberTool.toThousandth($cate.buyerRewardAmount)
+                                            #end
+                                        </td>
+                                        <td class="text-right">
+                                            #if($cate.groupName == '小计')
+                                            <em class="bolder">
+                                                $NumberTool.toThousandth($cate.sellerRewardAmount)
+                                            <em>
+                                            #else
+                                                $NumberTool.toThousandth($cate.sellerRewardAmount)
+                                            #end
+                                        </td>
+                                    </tr>
+                                    #end
+                                </tbody>
+                                <tfoot class="tbody-border0" id="secondpayment_footer">
+                                <tr>
+                                    <td class="text-right bolder" colspan="11">提成合计: $!{report.calFormula}</td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        #end
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div><!-- /.page-content -->
+
+<script src="$link.getContextPath()/js/views/report/business/rewardReport.js"></script>
+
+<div id="menuContent" class="menuContent" style="display:none; position: absolute;">
+    <ul id="orgTree" class="ztree" style="margin-top:0; width:160px;"></ul>
+</div>
+<script src='$link.getContextPath()/js/views/report/business/businesscommon.js'></script>
+    

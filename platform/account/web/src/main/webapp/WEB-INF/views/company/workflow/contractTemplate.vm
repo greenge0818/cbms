@@ -1,0 +1,93 @@
+<style>
+    .clause{
+        height: 100px;
+        width: 100%;
+    }
+</style>
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="#">客户管理</a>
+        </li>
+
+        <li class="active">客户资料</li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+    #parse("layout/topbtn.vm")
+    <!-- /.nav-search -->
+</div>
+
+<div class="page-content">
+
+    <div class="row">
+        <div class="col-xs-12">
+			模板名称：<input value="$!{actOprt.name}" id="templateName" size="25" readOnly />
+			<hr/>
+            <div class="row ">
+				<div class="col-xs-3">
+					<span class="logo-bar">
+						<img src="$link.getContextPath()/img/print-logo.png" />
+                	</span>
+                 </div>
+                <div class="col-xs-6">
+                    <h1 class="center">
+                         #if($actOprt.type=="buyer")
+                            销售合同
+                        #elseif($actOprt.type=="seller")
+                            采购合同
+                        #end
+                    </h1>
+					
+                </div>
+				<div class="col-xs-3">
+					<span id="contractNo" style="overflow: auto;width: 270px !important;height: 86px;
+					position: relative;left: 50%;margin-left: -135px;display: inline-block;">$!templateNo</span>
+                 </div>
+            </div>
+           $!{detail}
+
+            </br>
+            <div class="row ">
+                <div id="audit" class="row row-marginbottom">
+                    <div class="col-md-6">
+                    </div>
+                    <div class="col-md-6">
+                        <label><input name="auditOp" type="radio" value="threeCard" checked="true" onclick="isShowAuditDesc(false)"/>通过</label>
+                        <label><input id="disagree"name="auditOp" type="radio" value="threeCard" onclick="isShowAuditDesc(true)"/>不通过</label>
+                        <input id="auditDesc" type="text" style="display: none"/>
+                        </br>
+                    </div>
+                </div>
+
+                <div style="padding-left: 100px">
+                    <a  href="$accountDomain/flow/invoice/list.html">返回</a>
+                </div>
+                <div style="padding-left: 600px">
+                    <input id="auditBtn" type="button" value="审核" onclick="doAudit($actOprt.id)"/>
+                </div>
+
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+
+<script src="$link.getContextPath()/js/views/company/workflow/contractTemplate.js"></script>
+<script src="$link.getContextPath()/js/views/contracttemplate/jquery-barcode.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+		$("#contractNo").barcode($("#contractNo").text(), "code128",{barWidth:1, barHeight:30,showHRI:true});
+		$("#contractNo").css("padding-left","60px").css("width","270px");
+        $(".clause").attr("readOnly",true);
+    });
+</script>

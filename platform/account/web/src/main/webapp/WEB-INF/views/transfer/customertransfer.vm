@@ -1,0 +1,92 @@
+ <div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            客户管理
+        </li>
+        <li class="active">
+            客户划转
+        </li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+   
+    <!-- /.nav-search -->
+
+</div>
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="clearfix">
+                        <div class="input-group  col-md-12 col-sm-12 col-lg-12 search-bar">
+                            <form class="form-inline checkbox">
+                                <label>客户名称：</label>
+                                <input id="accountName" type="text" search='account'/>
+                                <label>服务中心：</label>
+                                <select id="org"> 
+                                </select>
+                                <input  type="hidden" id="currentOrgId" value="$!{organization.id}"/>   
+                                <input  type="hidden" id="currentOrgName" value="$!{organization.name}"/>                                                              
+                                <button id="queryBtn" class="btn btn-sm btn-default" type="button" title="搜索">
+                                    <i class="aace-icon fa fa-search bigger-110"></i>搜索
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- div.dataTables_borderWrap -->
+                    <div>
+                        <table id="transferTable" class="table table-bordered table-hover table-striped">
+                            <thead>                            
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    </br>
+    <!--  TODO 按钮权限-->
+    <div>
+        <button id="transferBtn" class="btn btn-sm btn-default" type="button" title="客户划转历史">
+            <i class="aace-icon fa bigger-110"></i>客户划转历史
+        </button>
+    </div>
+    <!-- /.row -->
+
+    <div id="transfer" class="none">
+    	<input type="hidden" id="accountId" value=""/>
+    	<input type="hidden" id="transferType" value=""/>
+        <label> 是否确认？</label>
+        </br>
+        </label>将  <label id="tempName"></label> 划转给</label>
+        </br>        
+        <select id="transferOrg">
+        	
+        </select>       
+        <button id="confirmBtn" class="btn btn-sm btn-default" type="button" title="确认">
+            <i class="aace-icon fa bigger-110"></i>确认
+        </button>
+        <button id="cancelBtn" class="btn btn-sm btn-default" type="button" title="取消">
+            <i class="aace-icon fa bigger-110"></i>取消
+        </button>
+    </div>
+    
+</div>
+
+<script src="$link.getContextPath()/js/views/transfer/customertransfer.js"></script>
+<script src="$link.getContextPath()/js/views/account/searchaccount.js"></script>

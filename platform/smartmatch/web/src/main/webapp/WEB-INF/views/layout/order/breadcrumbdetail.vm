@@ -1,0 +1,80 @@
+#if(${menu} == 'index')
+<li>
+    <a href="$link.getContextPath()/order/query/index.html">全部</a>
+</li>
+#end
+
+#if(${menu} == 'approval')
+<li>
+    <a href="$link.getContextPath()/order/query/approval.html">待审核</a>
+</li>
+#end
+
+#if(${menu} == 'associate')
+<li>
+    <a href="$link.getContextPath()/order/query/associate.html">待关联</a>
+</li>
+#end
+
+#if(${menu} == 'applypayment')
+<li>
+    <a href="$link.getContextPath()/order/query/applypayment.html">待申请付款</a>
+</li>
+#end
+
+#if(${menu} == 'payment')
+<li>
+    <a href="$link.getContextPath()/order/query/payment.html">待审核付款</a>
+</li>
+#end
+
+#if(${menu} == 'confirmpayment')
+<li>
+    <a href="$link.getContextPath()/order/query/confirmpayment.html">待确认已付款</a>
+</li>
+#end
+
+#if(${menu} == 'pickup')
+<li>
+    <a href="$link.getContextPath()/order/query/pickup.html">待提货</a>
+</li>
+#end
+
+#if(${menu} == 'fillup')
+<li>
+    <a href="$link.getContextPath()/order/query/fillup.html">待放货</a>
+</li>
+#end
+
+#if(${menu} == 'secondsettlement')
+<li>
+    <a href="$link.getContextPath()/order/query/secondsettlement.html">待二次结算</a>
+</li>
+#end
+
+#if(${menu} == 'invoice')
+<li>
+    <a href="$link.getContextPath()/order/query/invoice.html">已二次结算</a>
+</li>
+#end
+
+#if(${menu} == 'tradecomplete')
+<li>
+    <a href="$link.getContextPath()/order/query/tradecomplete.html">交易完成</a>
+</li>
+#end
+
+#if(${menu} == 'tradecloseapproval')
+<li>
+    <a href="$link.getContextPath()/order/query/tradecloseapproval.html">交易关闭待审核</a>
+</li>
+#end
+
+#if(${menu} == 'tradeclose')
+<li>
+    <a href="$link.getContextPath()/order/query/tradeclose.html">交易关闭</a>
+</li>
+#end
+
+
+

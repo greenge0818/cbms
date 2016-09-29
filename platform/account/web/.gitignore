@@ -1,0 +1,13 @@
+src/main/webapp/META-INF/**
+src/main/webapp/css/
+src/main/webapp/js/*.js
+src/main/webapp/img/
+src/main/webapp/theme/
+src/main/webapp/favicon.ico
+src/main/webapp/js/sys/
+src/main/webapp/js/findgoods/
+src/main/webapp/js/order/
+src/main/webapp/upload/
+src/main/webapp/index.html
+src/main/webapp/swagger-ui/
+

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.acl.persist.dao.AllHolidayDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.acl.model.model.AllHoliday" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="holiday_date" property="holidayDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, title, holiday_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from fn_all_holiday
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from fn_all_holiday
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.prcsteel.platform.acl.model.model.AllHoliday" >
+    insert into fn_all_holiday (id, title, holiday_date
+      )
+    values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{holidayDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.acl.model.model.AllHoliday" >
+    insert into fn_all_holiday
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="holidayDate != null" >
+        holiday_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="holidayDate != null" >
+        #{holidayDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.acl.model.model.AllHoliday" >
+    update fn_all_holiday
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="holidayDate != null" >
+        holiday_date = #{holidayDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.acl.model.model.AllHoliday" >
+    update fn_all_holiday
+    set title = #{title,jdbcType=VARCHAR},
+      holiday_date = #{holidayDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="com.prcsteel.platform.acl.model.query.HolidayQuery">
+    SELECT 
+    <include refid="Base_Column_List" />
+    FROM fn_all_holiday
+    <if test="startTime != null and endTime != null ">
+        where holiday_date between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+    </if> 
+    ORDER BY holiday_date
+    limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+  </select>
+  
+  <select id="selectAllCount" resultType="java.lang.Integer" parameterType="com.prcsteel.platform.acl.model.query.HolidayQuery">
+    SELECT 
+    COUNT(id)
+    FROM fn_all_holiday
+    <if test="startTime != null and endTime != null ">
+        where holiday_date between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+    </if> 
+    ORDER BY holiday_date
+  </select>
+  
+  <select id="selectByDate" resultMap="BaseResultMap" parameterType="java.util.Date" >
+   SELECT 
+   <include refid="Base_Column_List" />
+   FROM fn_all_holiday WHERE holiday_date= #{holidayDate,jdbcType=TIMESTAMP}
+  </select>
+</mapper>

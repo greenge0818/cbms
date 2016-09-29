@@ -1,0 +1,134 @@
+<!-- 进行票清单报表-->
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="#">业务报表</a>
+        </li>
+        <li>
+       		进项票清单
+        </li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+    #parse("layout/topbtn.vm")
+    <!-- /.nav-search -->
+</div>
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="clearfix">
+                        <div class="input-group pull-right col-md-12 col-sm-12 col-lg-12 search-bar">
+                            <form class="form-inline print-finfo">
+                                #if(!$shiro.hasPermission("sys:field:org"))
+                                    <label>服务中心：<input placeholder="请选择服务中心" id="sorganization" type="text"
+                                                       class="ipt-text" readonly="" value="" onclick="showMenu();">
+                                        <input type='hidden' id='sorganizationHidden' value=""/>
+                                    </label>
+                                #end
+                                <label>卖家全称：</label>
+                                <input id="sellerName" class="ipt-text" type="text" value=""/>
+                                <label>交易单号：</label>
+                                <input id="orderCode" class="ipt-text" type="text" value=""/>
+                                <label>日期：</label>
+                                <input id="startTime" class="Wdate" type="text" value="$startTime"
+                                       onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')||\'2020-10-01\'}'})"/> -
+                                <input id="endTime" class="Wdate" type="text" value="$endTime"
+                                       onFocus="WdatePicker({minDate:'#F{$dp.$D(\'startTime\')}',maxDate:'2020-10-01'})"/>
+
+                                <button id="queryBtn" class="btn btn-sm btn-default" type="button" title="搜索">
+                                    <i class="aace-icon fa fa-search bigger-110"></i>搜索
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- div.dataTables_borderWrap -->
+                    <div>
+                        <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th style="width:5%;">日期</th>
+                                <th style="width:8%;">交易单号</th>
+                                <th style="width:12%;">卖家全称</th>
+                                <th style="width:6%;">品名</th>
+                                <th style="width:6%;">材质</th>
+                                <th style="width:6%;">规格</th>
+                                <th style="width:6%;">实提重量（吨）</th>
+                                <th style="width:6%;">实提金额（元）</th>
+                                <th style="width:6%;">折让重量（吨）</th>
+                                <th style="width:6%;">折让金额（元）</th>
+                                <th style="width:6%;">已到票重量（吨）</th>
+                                <th style="width:6%;">已到票金额（元）</th>
+                                <th style="width:6%;">未到票重量（吨）</th>
+                                <th style="width:6%;">未到票金额（元）</th>
+                                <th class="pos-rel" style="width:6%;">
+                                	<a id="orderStatusBtn" href="javascript:void(0);"><i class="fa fa-caret-down"></i>状态</a>
+	                            	<div id="orderStatusList" class='pos-abs none' style="z-index:10;top:15px;right:-10px;width:120px;background:#fff;border:1px solid #ccc">
+	                                <ul>
+	                                	<li class="text-left" style="padding:5px;">
+	                                   		<label class="pos-rel">
+	                                   			<input type="checkbox"  class="ace" value="0" checked="checked">
+	                                   			<span class="lbl">全部</span>
+	                                   		</label>
+	                                    </li>
+	                                    <li class="text-left" style="padding:5px;">
+	                                   		<label class="pos-rel">
+	                                   			<input type="checkbox"  class="ace" value="1">
+	                                   			<span class="lbl">未到票</span>
+	                                   		</label>
+	                                    </li>
+	                                    <li class="text-left" style="padding:5px;">
+	                                   		<label class="pos-rel">
+	                                   			<input type="checkbox"  class="ace" value="2">
+	                                   			<span class="lbl">部分到票</span>
+	                                   		</label>
+	                                    </li>
+	                                    <li class="text-left" style="padding:5px;">
+	                                   		<label class="pos-rel">
+	                                   			<input type="checkbox"  class="ace" value="3">
+	                                   			<span class="lbl">已到票</span>
+	                                   		</label>
+	                                    </li>	
+	                                    <button id="yes" class="btn btn-sm btn-default" type="button" title="确定">
+		                                	<i class="aace-icon fa bigger-110"></i>确定
+		                            	</button>
+	                                </ul>
+	                            	</div>
+                                </th>
+                            </tr>
+                            </thead>
+                        </table>
+                        <div class="input-group pull-right col-md-12 col-sm-12 col-lg-12 search-bar text-right">  
+	                        <label>应收发票合计：<span class="red" id="totalNoWeight"></span> 吨</label>&nbsp;&nbsp;&nbsp;&nbsp;
+	                        <label><span class="red" id="totalNoAmount"></span>元</label>
+	                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    </br>
+    <div>
+        <a class="button btn-sm btn-info" id="output">导出到EXCEL</a>
+    </div>
+    <!-- /.row -->
+</div>
+<div id="menuContent" class="menuContent" style="display:none; position: absolute;">
+    <ul id="orgTree" class="ztree" style="margin-top:0; width:160px;"></ul>
+</div>
+<script src="$link.getContextPath()/js/views/report/business/businesscommon.js"></script>
+<script src='$link.getContextPath()/js/views/report/business/invoiceinbordereaux.js'></script>

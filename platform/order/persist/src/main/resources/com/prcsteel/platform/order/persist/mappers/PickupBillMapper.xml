@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.order.persist.dao.PickupBillDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.order.model.model.PickupBill" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="consign_order_id" property="consignOrderId" jdbcType="BIGINT" />
+    <result column="consign_order_code" property="consignOrderCode" jdbcType="VARCHAR" />
+    <result column="buyer_id" property="buyerId" jdbcType="BIGINT" />
+    <result column="buyer_name" property="buyerName" jdbcType="VARCHAR" />
+    <result column="delivery_type" property="deliveryType" jdbcType="VARCHAR" />
+    <result column="note" property="note" jdbcType="VARCHAR" />
+    <result column="total_weight" property="totalWeight" jdbcType="DECIMAL" />
+    <result column="total_quantity" property="totalQuantity" jdbcType="INTEGER" />
+    <result column="total_amount" property="totalAmount" jdbcType="DECIMAL" />
+    <result column="print_times" property="printTimes" jdbcType="INTEGER" />
+    <result column="buyer_pickupbill_path" property="buyerPickupbillPath" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+    <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+    <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+    <result column="ext1" property="ext1" jdbcType="VARCHAR" />
+    <result column="ext2" property="ext2" jdbcType="VARCHAR" />
+    <result column="ext3" property="ext3" jdbcType="VARCHAR" />
+    <result column="ext4" property="ext4" jdbcType="INTEGER" />
+    <result column="ext5" property="ext5" jdbcType="INTEGER" />
+    <result column="ext6" property="ext6" jdbcType="INTEGER" />
+    <result column="ext7" property="ext7" jdbcType="TIMESTAMP" />
+    <result column="ext8" property="ext8" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, code, consign_order_id, consign_order_code, buyer_id, buyer_name, delivery_type, 
+    note, total_weight, total_quantity, total_amount, print_times, buyer_pickupbill_path, 
+    created, created_by, last_updated, last_updated_by, modification_number, row_id, 
+    parent_row_id, ext1, ext2, ext3, ext4, ext5, ext6, ext7, ext8, status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from busi_pickup_bill
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from busi_pickup_bill
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.prcsteel.platform.order.model.model.PickupBill" >
+    insert into busi_pickup_bill (id, code, consign_order_id, 
+      consign_order_code, buyer_id, buyer_name, 
+      delivery_type, note, total_weight, 
+      total_quantity, total_amount, print_times, 
+      buyer_pickupbill_path, created, created_by, 
+      last_updated, last_updated_by, modification_number, 
+      row_id, parent_row_id, ext1, 
+      ext2, ext3, ext4, ext5, 
+      ext6, ext7, ext8, 
+      status)
+    values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{consignOrderId,jdbcType=BIGINT}, 
+      #{consignOrderCode,jdbcType=VARCHAR}, #{buyerId,jdbcType=BIGINT}, #{buyerName,jdbcType=VARCHAR}, 
+      #{deliveryType,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR}, #{totalWeight,jdbcType=DECIMAL}, 
+      #{totalQuantity,jdbcType=INTEGER}, #{totalAmount,jdbcType=DECIMAL}, #{printTimes,jdbcType=INTEGER}, 
+      #{buyerPickupbillPath,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, 
+      #{lastUpdated,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}, #{modificationNumber,jdbcType=INTEGER}, 
+      #{rowId,jdbcType=VARCHAR}, #{parentRowId,jdbcType=VARCHAR}, #{ext1,jdbcType=VARCHAR}, 
+      #{ext2,jdbcType=VARCHAR}, #{ext3,jdbcType=VARCHAR}, #{ext4,jdbcType=INTEGER}, #{ext5,jdbcType=INTEGER}, 
+      #{ext6,jdbcType=INTEGER}, #{ext7,jdbcType=TIMESTAMP}, #{ext8,jdbcType=BIGINT}, 
+      #{status,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.order.model.model.PickupBill" useGeneratedKeys="true" keyProperty="id">
+    insert into busi_pickup_bill
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="consignOrderId != null" >
+        consign_order_id,
+      </if>
+      <if test="consignOrderCode != null" >
+        consign_order_code,
+      </if>
+      <if test="buyerId != null" >
+        buyer_id,
+      </if>
+      <if test="buyerName != null" >
+        buyer_name,
+      </if>
+      <if test="deliveryType != null" >
+        delivery_type,
+      </if>
+      <if test="note != null" >
+        note,
+      </if>
+      <if test="totalWeight != null" >
+        total_weight,
+      </if>
+      <if test="totalQuantity != null" >
+        total_quantity,
+      </if>
+      <if test="totalAmount != null" >
+        total_amount,
+      </if>
+      <if test="printTimes != null" >
+        print_times,
+      </if>
+      <if test="buyerPickupbillPath != null" >
+        buyer_pickupbill_path,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by,
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number,
+      </if>
+      <if test="rowId != null" >
+        row_id,
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id,
+      </if>
+      <if test="ext1 != null" >
+        ext1,
+      </if>
+      <if test="ext2 != null" >
+        ext2,
+      </if>
+      <if test="ext3 != null" >
+        ext3,
+      </if>
+      <if test="ext4 != null" >
+        ext4,
+      </if>
+      <if test="ext5 != null" >
+        ext5,
+      </if>
+      <if test="ext6 != null" >
+        ext6,
+      </if>
+      <if test="ext7 != null" >
+        ext7,
+      </if>
+      <if test="ext8 != null" >
+        ext8,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="consignOrderId != null" >
+        #{consignOrderId,jdbcType=BIGINT},
+      </if>
+      <if test="consignOrderCode != null" >
+        #{consignOrderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerId != null" >
+        #{buyerId,jdbcType=BIGINT},
+      </if>
+      <if test="buyerName != null" >
+        #{buyerName,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryType != null" >
+        #{deliveryType,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null" >
+        #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="totalWeight != null" >
+        #{totalWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="totalQuantity != null" >
+        #{totalQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="totalAmount != null" >
+        #{totalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="printTimes != null" >
+        #{printTimes,jdbcType=INTEGER},
+      </if>
+      <if test="buyerPickupbillPath != null" >
+        #{buyerPickupbillPath,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        #{parentRowId,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null" >
+        #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3 != null" >
+        #{ext3,jdbcType=VARCHAR},
+      </if>
+      <if test="ext4 != null" >
+        #{ext4,jdbcType=INTEGER},
+      </if>
+      <if test="ext5 != null" >
+        #{ext5,jdbcType=INTEGER},
+      </if>
+      <if test="ext6 != null" >
+        #{ext6,jdbcType=INTEGER},
+      </if>
+      <if test="ext7 != null" >
+        #{ext7,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ext8 != null" >
+        #{ext8,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.order.model.model.PickupBill" >
+    update busi_pickup_bill
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="consignOrderId != null" >
+        consign_order_id = #{consignOrderId,jdbcType=BIGINT},
+      </if>
+      <if test="consignOrderCode != null" >
+        consign_order_code = #{consignOrderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerId != null" >
+        buyer_id = #{buyerId,jdbcType=BIGINT},
+      </if>
+      <if test="buyerName != null" >
+        buyer_name = #{buyerName,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryType != null" >
+        delivery_type = #{deliveryType,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null" >
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="totalWeight != null" >
+        total_weight = #{totalWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="totalQuantity != null" >
+        total_quantity = #{totalQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="totalAmount != null" >
+        total_amount = #{totalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="printTimes != null" >
+        print_times = #{printTimes,jdbcType=INTEGER},
+      </if>
+      <if test="buyerPickupbillPath != null" >
+        buyer_pickupbill_path = #{buyerPickupbillPath,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number = #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        row_id = #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null" >
+        ext1 = #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        ext2 = #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3 != null" >
+        ext3 = #{ext3,jdbcType=VARCHAR},
+      </if>
+      <if test="ext4 != null" >
+        ext4 = #{ext4,jdbcType=INTEGER},
+      </if>
+      <if test="ext5 != null" >
+        ext5 = #{ext5,jdbcType=INTEGER},
+      </if>
+      <if test="ext6 != null" >
+        ext6 = #{ext6,jdbcType=INTEGER},
+      </if>
+      <if test="ext7 != null" >
+        ext7 = #{ext7,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ext8 != null" >
+        ext8 = #{ext8,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.order.model.model.PickupBill" >
+    update busi_pickup_bill
+    set code = #{code,jdbcType=VARCHAR},
+      consign_order_id = #{consignOrderId,jdbcType=BIGINT},
+      consign_order_code = #{consignOrderCode,jdbcType=VARCHAR},
+      buyer_id = #{buyerId,jdbcType=BIGINT},
+      buyer_name = #{buyerName,jdbcType=VARCHAR},
+      delivery_type = #{deliveryType,jdbcType=VARCHAR},
+      note = #{note,jdbcType=VARCHAR},
+      total_weight = #{totalWeight,jdbcType=DECIMAL},
+      total_quantity = #{totalQuantity,jdbcType=INTEGER},
+      total_amount = #{totalAmount,jdbcType=DECIMAL},
+      print_times = #{printTimes,jdbcType=INTEGER},
+      buyer_pickupbill_path = #{buyerPickupbillPath,jdbcType=VARCHAR},
+      created = #{created,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      modification_number = #{modificationNumber,jdbcType=INTEGER},
+      row_id = #{rowId,jdbcType=VARCHAR},
+      parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      ext1 = #{ext1,jdbcType=VARCHAR},
+      ext2 = #{ext2,jdbcType=VARCHAR},
+      ext3 = #{ext3,jdbcType=VARCHAR},
+      ext4 = #{ext4,jdbcType=INTEGER},
+      ext5 = #{ext5,jdbcType=INTEGER},
+      ext6 = #{ext6,jdbcType=INTEGER},
+      ext7 = #{ext7,jdbcType=TIMESTAMP},
+      ext8 = #{ext8,jdbcType=BIGINT},
+      status = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="getPickupBillSeq" resultType="java.lang.String" parameterType="java.lang.Long" >
+    select LPAD(count(1)+1,2,'0') seq from busi_pickup_bill where consign_order_id = #{orderId,jdbcType=BIGINT}
+  </select>
+  <select id="getOrderPickedQty" resultType="java.lang.Integer" parameterType="java.lang.Long" >
+    select sum(total_quantity) from busi_pickup_bill where consign_order_id = #{orderId,jdbcType=BIGINT} and status=1
+  </select>
+  <select id="selectByOrderId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select <include refid="Base_Column_List" />
+    from busi_pickup_bill
+    where consign_order_id = #{orderId,jdbcType=BIGINT}
+    and status=1
+  </select>
+  <update id="disableBill" parameterType="java.lang.Long">
+  	update busi_pickup_bill set status=0 where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="getHead" resultType="java.util.HashMap" parameterType="java.lang.Long" >
+    select a.id,b.contract_code,a.buyer_name,d.addr,a.code,d.tel,d.fax,a.delivery_type,a.note,a.created
+	from busi_pickup_bill a,busi_consign_order b,cust_account c, cust_account_ext d
+	where a.id= #{pickupId,jdbcType=BIGINT}
+	and a.consign_order_id = b.id
+	and a.buyer_id=c.id
+	and c.id=d.cust_account_id
+  </select>
+  <!-- 检查订单是否完全录入提货单 -->
+  <select id="checkIfAllInput" resultType="java.lang.Integer" parameterType="java.lang.Long">
+  	select a.total_quantity-ifnull((select sum(x.total_quantity) 
+	from busi_pickup_bill x 
+	where x.status=1 and x.consign_order_id = a.id ),0) as lefr_quantity
+	from busi_consign_order a
+	where a.id=#{orderId,jdbcType=BIGINT}
+  </select>
+  <!-- 查询某订单最早的提货单时间 -->
+  <select id="getEarlestPickupBillDateByOrderId" resultType="java.util.Date" parameterType="java.lang.Long">
+  	select min(created) from busi_pickup_bill 
+  	where consign_order_id=#{orderId,jdbcType=BIGINT}
+  	and status=1
+  </select>
+</mapper>

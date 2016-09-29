@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.account.persist.dao.AccountContractTemplateDao">
+    <resultMap id="BaseResultMap" type="com.prcsteel.platform.account.model.model.AccountContractTemplate">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="account_id" property="accountId" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="thumbnail_url" property="thumbnailUrl" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="CHAR"/>
+        <result column="enabled" property="enabled" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="created" property="created" jdbcType="TIMESTAMP"/>
+        <result column="created_by" property="createdBy" jdbcType="VARCHAR"/>
+        <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP"/>
+        <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR"/>
+        <result column="pre_content" property="preContent" jdbcType="LONGVARCHAR"/>
+        <result column="sys_template_status" property="sysTemplateStatus" jdbcType="INTEGER"/>
+        <result column="modification_number" property="modificationNumber" jdbcType="INTEGER"/>
+        <result column="row_id" property="rowId" jdbcType="VARCHAR"/>
+        <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR"/>
+        <result column="renew_after_expriration" property="renewAfterExpriration" jdbcType="INTEGER"/>
+        <result column="status_decline_reason" property="statusDeclineReason" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="com.prcsteel.platform.account.model.model.AccountContractTemplate"
+               extends="BaseResultMap">
+        <result column="content" property="content" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, account_id, name, thumbnail_url, type, enabled, status, created, created_by, last_updated,
+        last_updated_by, pre_content, sys_template_status, modification_number, row_id, parent_row_id
+        ,renew_after_expriration,status_decline_reason
+    </sql>
+    <sql id="Blob_Column_List">
+        content
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from cust_account_contract_template
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from cust_account_contract_template
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <!-- updated by chengui 增加属性useGeneratedKeys,keyProperty -->
+    <insert id="insertSelective" parameterType="com.prcsteel.platform.account.model.model.AccountContractTemplate"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into cust_account_contract_template
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="accountId != null">
+                account_id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="thumbnailUrl != null">
+                thumbnail_url,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="enabled != null">
+                enabled,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="created != null">
+                created,
+            </if>
+            <if test="createdBy != null">
+                created_by,
+            </if>
+            <if test="lastUpdated != null">
+                last_updated,
+            </if>
+            <if test="lastUpdatedBy != null">
+                last_updated_by,
+            </if>
+            <if test="modificationNumber != null">
+                modification_number,
+            </if>
+            <if test="rowId != null">
+                row_id,
+            </if>
+            <if test="parentRowId != null">
+                parent_row_id,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="preContent != null">
+                pre_content,
+            </if>
+            <if test="sysTemplateStatus != null">
+                sys_template_status,
+            </if>
+            <if test="renewAfterExpriration != null">
+                renew_after_expriration,
+            </if>
+            <if test="statusDeclineReason != null">
+                status_decline_reason,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="accountId != null">
+                #{accountId,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="thumbnailUrl != null">
+                #{thumbnailUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=CHAR},
+            </if>
+            <if test="enabled != null">
+                #{enabled,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="created != null">
+                #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdBy != null">
+                #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdated != null">
+                #{lastUpdated,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdatedBy != null">
+                #{lastUpdatedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modificationNumber != null">
+                #{modificationNumber,jdbcType=INTEGER},
+            </if>
+            <if test="rowId != null">
+                #{rowId,jdbcType=VARCHAR},
+            </if>
+            <if test="parentRowId != null">
+                #{parentRowId,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="preContent != null">
+                #{preContent,jdbcType=VARCHAR},
+            </if>
+            <if test="sysTemplateStatus != null">
+                #{sysTemplateStatus,jdbcType=INTEGER},
+            </if>
+            <if test="renewAfterExpriration != null">
+                renew_after_expriration = #{renewAfterExpriration,jdbcType=INTEGER},
+            </if>
+            <if test="statusDeclineReason != null">
+                status_decline_reason = #{statusDeclineReason,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective"
+            parameterType="com.prcsteel.platform.account.model.model.AccountContractTemplate">
+        update cust_account_contract_template
+        <set>
+            <if test="accountId != null">
+                account_id = #{accountId,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="thumbnailUrl != null">
+                thumbnail_url = #{thumbnailUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=CHAR},
+            </if>
+            <if test="enabled != null">
+                enabled = #{enabled,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="created != null">
+                created = #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdBy != null">
+                created_by = #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdated != null">
+                last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdatedBy != null">
+                last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modificationNumber != null">
+                modification_number = #{modificationNumber,jdbcType=INTEGER},
+            </if>
+            <if test="rowId != null">
+                row_id = #{rowId,jdbcType=VARCHAR},
+            </if>
+            <if test="parentRowId != null">
+                parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="preContent != null">
+                pre_content = #{preContent,jdbcType=VARCHAR},
+            </if>
+            <if test="sysTemplateStatus != null">
+                sys_template_status = #{sysTemplateStatus,jdbcType=INTEGER},
+            </if>
+            <if test="renewAfterExpriration != null">
+                renew_after_expriration = #{renewAfterExpriration,jdbcType=INTEGER},
+            </if>
+            <if test="statusDeclineReason != null">
+                status_decline_reason = #{statusDeclineReason,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.account.model.model.AccountContractTemplate">
+        update cust_account_contract_template
+        set account_id = #{accountId,jdbcType=BIGINT},
+        name = #{name,jdbcType=VARCHAR},
+        thumbnail_url = #{thumbnailUrl,jdbcType=VARCHAR},
+        type = #{type,jdbcType=CHAR},
+        enabled = #{enabled,jdbcType=INTEGER},
+        status = #{status,jdbcType=VARCHAR},
+        created = #{created,jdbcType=TIMESTAMP},
+        created_by = #{createdBy,jdbcType=VARCHAR},
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+        modification_number = #{modificationNumber,jdbcType=INTEGER},
+        row_id = #{rowId,jdbcType=VARCHAR},
+        parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+        renew_after_expriration = #{renewAfterExpriration,jdbcType=INTEGER},
+        status_decline_reason = #{statusDeclineReason,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="selectByModel" resultMap="BaseResultMap"
+            parameterType="com.prcsteel.platform.account.model.model.AccountContractTemplate">
+        select
+        <include refid="Base_Column_List"/>,
+        <include refid="Blob_Column_List"/>
+        from cust_account_contract_template
+        <where>
+            <if test="id != null">
+                and id = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="accountId != null">
+                and account_id = #{accountId,jdbcType=BIGINT}
+            </if>
+            <if test="name != null">
+                and name = #{name,jdbcType=VARCHAR}
+            </if>
+            <if test="thumbnailUrl != null">
+                and thumbnail_url = #{thumbnailUrl,jdbcType=VARCHAR}
+            </if>
+            <if test="type != null">
+                and type = #{type,jdbcType=CHAR}
+            </if>
+            <if test="enabled != null">
+                and enabled = #{enabled,jdbcType=INTEGER}
+            </if>
+            <if test="status != null">
+                and status = #{status,jdbcType=VARCHAR}
+            </if>
+            <if test="created != null">
+                and created = #{created,jdbcType=TIMESTAMP}
+            </if>
+            <if test="createdBy != null">
+                and created_by = #{createdBy,jdbcType=VARCHAR}
+            </if>
+            <if test="lastUpdated != null">
+                and last_updated = #{lastUpdated,jdbcType=TIMESTAMP}
+            </if>
+            <if test="lastUpdatedBy != null">
+                and last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR}
+            </if>
+            <if test="modificationNumber != null">
+                and modification_number = #{modificationNumber,jdbcType=INTEGER}
+            </if>
+            <if test="rowId != null">
+                and row_id = #{rowId,jdbcType=VARCHAR}
+            </if>
+            <if test="parentRowId != null">
+                and parent_row_id = #{parentRowId,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <update id="disableOtherByAccountIdAndType">
+        update cust_account_contract_template set enabled = 0 where account_id=#{0} and type=#{1}
+    </update>
+
+    <select id="selectContractTemplateById" resultMap="BaseResultMap"
+            parameterType="java.lang.Long">
+        select id,name,type,enabled,status_decline_reason,
+        CASE status
+        WHEN 'PENDING' THEN '待审核'
+        WHEN 'APPROVED' THEN '审核通过'
+        WHEN 'DISAPPROVED ' THEN '审核未通过'
+        END AS status
+        from cust_account_contract_template
+        where account_id='0' or account_id=#{accountId,jdbcType=BIGINT}
+        order by account_id
+    </select>
+
+    <update id="setDefaultById" parameterType="java.lang.Long">
+        update cust_account_contract_template set enabled = 1 where account_id != '0' and id=#{contractTemplateId,jdbcType=BIGINT}
+    </update>
+
+    <update id="releaseTemplate" parameterType="java.lang.Long">
+        update cust_account_contract_template
+        set content=pre_content, sys_template_status='1',pre_content=null
+        where id=#{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="doNotReleaseTemplate" parameterType="java.lang.Long">
+        update cust_account_contract_template
+        set sys_template_status='1',pre_content=null
+        where id=#{id,jdbcType=BIGINT}
+    </update>
+
+    <!-- created by chengui 查询公司待审核合同模板列表-->
+    <select id="queryContractTemplateByStatus" parameterType="com.prcsteel.platform.account.model.query.CompanyQuery"
+            resultType="com.prcsteel.platform.account.model.dto.ContractTemplateDto">
+        SELECT t1.name as accountName, t2.id as id, t2.account_id as accountId, t2.name as name, t2.type, t3.id as companyId, t3.name as companyName
+        from cust_account t1
+        join cust_account_contract_template t2 on t1.id = t2.account_id
+        left join cust_account t3 ON t1.parent_id = t3.id
+        where t1.is_deleted = 0
+        and t2.status = 'PENDING'
+        <if test="orgId != null and orgId > 0">
+            and t1.org_id= #{orgId}
+        </if>
+        and t2.id in
+        <foreach collection="idList" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        <if test="companyName != null and companyName != ''">
+            and t3.name like '%${companyName}%'
+        </if>
+        <if test="contractTemplateTypeList != null and contractTemplateTypeList.size > 0">
+            AND t2.type IN
+            <foreach collection="contractTemplateTypeList" item="type" open="(" separator="," close=")">
+                #{type,jdbcType=VARCHAR}
+            </foreach>
+        </if>
+        LIMIT #{start,jdbcType=INTEGER}, #{length,jdbcType=INTEGER}
+    </select>
+
+    <!-- created by chengui 统计公司待审核合同模板列表-->
+    <select id="queryTotalContractTemplateByStatus" parameterType="com.prcsteel.platform.account.model.query.CompanyQuery" resultType="java.lang.Integer">
+        SELECT count(*)
+        from cust_account t1
+        join cust_account_contract_template t2 on t1.id = t2.account_id
+        left join cust_account t3 ON t1.parent_id = t3.id
+        where t1.is_deleted = 0
+        and t2.status = 'PENDING'
+        <if test="orgId != null and orgId > 0">
+            and t1.org_id= #{orgId}
+        </if>
+        and t2.id in
+        <foreach collection="idList" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        <if test="companyName != null and companyName != ''">
+            and t3.name like '%${companyName}%'
+        </if>
+        <if test="contractTemplateTypeList != null and contractTemplateTypeList.size > 0">
+            AND t2.type IN
+            <foreach collection="contractTemplateTypeList" item="type" open="(" separator="," close=")">
+                #{type,jdbcType=VARCHAR}
+            </foreach>
+        </if>
+    </select>
+    <!-- created by chengui 审核/取消审核合同模板 -->
+    <update id="updateContractTemplateStatus">
+        update cust_account_contract_template
+        <set>
+            last_updated = now(),
+            <if test="status != null" >
+                status = #{status},
+            </if>
+            <if test="statusDeclineReason != null and statusDeclineReason != ''" >
+                status_decline_reason = #{statusDeclineReason},
+            </if>
+            <if test="lastUpdateBy != null" >
+                last_updated_by = #{lastUpdateBy}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

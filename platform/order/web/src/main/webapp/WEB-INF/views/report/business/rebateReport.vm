@@ -1,0 +1,77 @@
+<div class="breadcrumbs" id="breadcrumbs">
+	<script type="text/javascript">
+		try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+	</script>
+
+	<ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            报表管理
+        </li>
+        <li>
+            <a href="$link.getContextPath()/report/business/buyerRebate.html">买家返利报表</a>
+        </li>
+        <li class="active">
+            <a href="#">买家返利报表公司详情</a>
+        </li>
+	</ul><!-- /.breadcrumb -->
+
+		#parse("layout/topbtn.vm")<!-- /.nav-search -->
+</div>
+
+<div class="page-content">
+	<div class="row">
+		<div class="col-xs-12">
+			<!-- PAGE CONTENT BEGINS -->
+
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="clearfix">
+						<div class="input-group pull-left" col-md-12 col-sm-12 col-lg-12 search-bar">
+						<form method="post" id="searchForm" class="form-inline" action="$link.getContextPath()/reportReward/queryrewardreport.html" enctype="multipart/form-data">							                     		
+							<label>时间：</label>
+                            <input id="startTime" name="startTime" class="Wdate" type="text" value="$!startTime"
+                                   onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')||\'2020-10-01\'}'})"/> -
+                            <input id="endTime" name="endTime" class="Wdate" type="text" value="$!endTime"
+                                   onFocus="WdatePicker({minDate:'#F{$dp.$D(\'startTime\')}',maxDate:'2020-10-01'})"/>
+			
+							<button class="btn btn-sm btn-default ok-btn" type="button" id="btn">
+								<i class="aace-icon fa fa-search bigger-110"></i>搜索
+							</button>
+						</form>
+                        </div>
+					</div>
+
+					<!-- div.dataTables_borderWrap -->
+					<div class="col-sm-12">
+					<h5  class="h5 bolder pull-left">买家全称：$!accountName</h5>
+					</div>
+					<div>
+					<input type="hidden" id="account_id" value="$account_id">
+						<table id="dynamic-table" class="table table-striped table-bordered table-hover">
+							<thead>
+								<tr>
+									<th>时间</th>
+									<th>类型</th>
+									<th>单号</th>
+									<th>联系人</th>
+									<th>实提总重（吨）</th>
+									<th>实提总金额（元）</th>
+									<th>金额增加（元）</th>
+									<th>金额减少（元）</th>
+									<th>当前余额（元）</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div><!-- /.col -->
+	</div><!-- /.row -->
+</div><!-- /.page-content -->
+
+<script src="$link.getContextPath()/js/views/report/business/rebateReportCom.js"></script>
+
+
+
+    

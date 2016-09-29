@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta charset="utf-8" />
+		<title>Login Page - Ace Admin</title>
+
+		<meta name="description" content="User login page" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+		<!-- bootstrap & fontawesome -->
+		<link rel="stylesheet" href="../theme/default/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../theme/default/font-awesome/4.2.0/css/font-awesome.min.css" />
+
+		<!-- text fonts -->
+		<link rel="stylesheet" href="../theme/default/fonts/fonts.googleapis.com.css" />
+
+		<!-- ace styles -->
+		<link rel="stylesheet" href="../theme/default/css/ace.min.css" />
+
+		<!--[if lte IE 9]>
+		<link rel="stylesheet" href="../theme/default/css/ace-part2.min.css"/>
+		<![endif]-->
+		<link rel="stylesheet" href="../theme/default/css/ace-rtl.min.css" />
+		<link rel="stylesheet" href="../css/picbox.css" />
+		<link rel="stylesheet" href="../css/style.css" />
+		<!--[if lte IE 9]>
+		<link rel="stylesheet" href="../theme/default/css/ace-ie.min.css"/>
+		<![endif]-->
+
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+		<!--[if lt IE 9]>
+		<script src="../theme/default/js/html5shiv.min.js"></script>
+		<script src="../theme/default/js/respond.min.js"></script>
+		<![endif]-->
+	</head>
+<form id="checkData">
+	<body class="">
+		<div id="form-checkData" class="main-container" style="margin-top:50px;">
+
+				<label class="">
+						string：<input type="text" must="1" verify="stri" maxlength="6" value="" />
+				</label>
+				<label class="">
+						数字类型：<input type="text" must="1" verify="number" value="" />
+				</label>
+				<label class="">
+						字母类型：<input type="text" must="1" verify="letter" value="" />
+				</label>
+				<label class="">
+						数值类型(含浮点)：<input type="text" must="1" verify="numeric" value="" />
+				</label><br>
+				<label class="">
+						数值类型(四舍五入)：<input id="toFiexd" type="text" must="1" verify="numeric" value="" />
+				</label><br>            
+				<label class="">
+						重量小数点后面最多四位(含浮点)：<input type="text" must="1" verify="weight" value="" />
+                        重量计算：<input type="text" value="" id="six" name="six" />
+				</label><br>
+				<label class="">
+						金额小数点后面最多两位(含浮点)：<input type="text" must="1" verify="rmb" value="" />
+				</label><br>
+				<label class="">
+						数字，字母，下划线：<input type="text" must="1" verify="account" value="" />
+				</label>
+				<label class="">
+						数字，字母，下划线且不能数字开头：<input type="text" must="1" verify="accountvar" value="" />
+				</label>
+				<label class="">
+						邮箱格式：<input type="text" must="1" verify="email" value="" />
+				</label>
+				<label class="">
+						手机格式：<input type="text" must="1" verify="mobile" value="" />
+				</label>
+				<label class="">
+						电话格式：<input type="text" must="1" verify="phone" value="" />
+				</label>
+				<label class="">
+						中文格式：<input type="text" must="1" verify="chinese" value="" />
+				</label>
+				<label class="">
+						qq：<input type="text" must="1" verify="qq" value="" />
+				</label>
+				<label class="">
+						身份证：<input type="text" must="1" verify="IDCard" value=""  />
+				</label>
+				<label class="">
+						不能为空<input type="text" must="1"  value=""  />
+				</label>
+				<span class="btn btn-danger btn-sm tooltip-error" data-rel="tooltip" data-placement="top" title="Top Danger">Top</span>
+				 <input data-rel="tooltip" type="text" id="form-field-6" placeholder="Tooltip on hover" title="Hello Tooltip!" data-placement="top" />
+				<button type="submit">submit</button>
+				<button type="button" id="but">button</button>
+				<a id="alertTest" href="javascript:;">alert</a>
+				<a id="confirmTest" href="javascript:;">confirm</a>
+		</div><!-- /.main-container -->
+
+		</form>
+		      <p>
+				  <a href="../img/err404.png" rel="lightbox-group" title="图片信息1">打开大图</a>
+				  <a href="../img/err500.png" rel="lightbox-group" title="图片信息2">Click here</a>
+			  </p>
+		
+		       <p>
+				  <a href="../img/bank_spdo.png" rel="lightbox1" title="图片信息1">打开大图</a>
+				  <a href="../img/print-logo.png" rel="lightbox1" title="图片信息2">Click here</a>
+			  </p>
+			  
+		
+		       <p>
+				  <a href="../img/fp.png" rel="lightbox2" title="图片信息1">打开大图</a>
+				  <a href="../img/default_sys_emplate.png" rel="lightbox2" title="图片信息2">Click here</a>
+			  </p>	
+	  		
+		<!-- basic scripts -->
+
+		<!--[if !IE]> -->
+		<script src="../theme/default/js/jquery.2.1.1.min.js"></script>
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+		<script src="../theme/default/js/jquery.1.11.1.min.js"></script>
+		<![endif]-->
+
+		<!--[if !IE]> -->
+		<script type="text/javascript">
+			window.jQuery || document.write("<script src='../theme/default/js/jquery.min.js'>"+"<"+"/script>");
+		</script>
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+<script type="text/javascript">
+ window.jQuery || document.write("<script src='assets/js/jquery1x.min.js'>"+"<"+"/script>");
+</script>
+<![endif]-->
+		<script type="text/javascript">
+			if('ontouchstart' in document.documentElement) document.write("<script src='../theme/default/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+		</script>
+				<script type="text/javascript" src="../js/picbox.js"></script>
+		<script src="../theme/default/js/bootstrap.min.js"></script>
+		<!-- ace scripts -->
+		<script src="../theme/default/js/ace-elements.min.js"></script>
+		<script src="../theme/default/js/ace.min.js"></script>
+		<script src="../theme/default/js/bootbox.min.js"></script>
+		<!-- inline scripts related to this page -->
+        <script src="../js/big.js"></script>
+		<script src="../js/global.js"></script>
+
+
+		<script type="text/javascript">
+        
+        	function test(){
+        		console.log(1);
+				
+        	}
+			jQuery(function($) {
+				 $(document).on('click', '.toolbar a[data-target]', function(e) {
+					e.preventDefault();
+					var target = $(this).data('target');
+					$('.widget-box.visible').removeClass('visible');//hide others
+					$(target).addClass('visible');//show target
+				 });
+
+
+				 $("#checkData").verifyForm();
+				 $('[data-rel=tooltip]').tooltip({trigger: 'focus'});
+				 //$('[data-rel=tooltip]').focus();
+				 $("#alertTest").click(function(){
+				 	cbms.alert("成功",test);
+				 });
+                
+				 $("#confirmTest").click(function(){
+				 	cbms.confirm("成功",'1',test);
+				 });
+                
+                $("#six").blur(function(){
+                    var v = cbms.convertFloat($(this).val());
+					$(this).val(v);
+                });
+			});
+
+            $("#toFiexd").blur(function(){
+ 
+                var v = parseFloat($(this).val());
+                var vv = v.toFixed(2);
+                alert("toFixed"+vv);
+				
+                alert("cbms.subStr"+cbms.subStr($(this).val(),2));
+				
+				
+            });
+            $(document).on('click','#but',function(){
+            
+            // setlistensSave("#checkData");
+            	if(setlistensSave("#checkData")){
+            		console.log(isT.noValidate);
+            	}
+            });
+		</script>
+	</body>
+</html>
+

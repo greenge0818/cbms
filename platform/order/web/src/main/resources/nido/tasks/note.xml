@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nido
+	xmlns="http://www.prcsteel.com/nido/tasks"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.prcsteel.com/nido/tasks http://192.168.0.205:8090/tasks.xsd">
+	
+	<method id="sendNoteMessage" method="sendSMS" desc="发送短信" class="com.prcsteel.platform.core.service.impl.CommonServiceImpl">
+		<param name="phone" type="java.lang.String"></param>
+		<param name="content" type="java.lang.String"></param>
+		<param name="result" type="java.lang.String" direction="Out"></param>
+	</method>
+	<event id="afterNoteMessageSendedEvent" desc="短信发送完成事件">
+		<listeners>
+		</listeners>
+	</event>
+	<task id="sendNoteMessageTask" desc="发送短信" async="true">
+		<steps>
+			<call refId="sendNoteMessage"/>
+			<trigger event="afterNoteMessageSendedEvent"/>
+		</steps>
+	</task>
+</nido>

@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.order.persist.dao.AllowanceOrderDetailItemDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.order.model.model.AllowanceOrderDetailItem" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="allowance_order_id" property="allowanceOrderId" jdbcType="BIGINT" />
+    <result column="order_detail_id" property="orderDetailId" jdbcType="BIGINT" />
+    <result column="buyer_id" property="buyerId" jdbcType="BIGINT" />
+    <result column="buyer_name" property="buyerName" jdbcType="VARCHAR" />
+    <result column="buyer_department_id" property="buyerDepartmentId" jdbcType="BIGINT" />
+    <result column="buyer_department_name" property="buyerDepartmentName" jdbcType="VARCHAR" />
+    <result column="nsort_name" property="nsortName" jdbcType="VARCHAR" />
+    <result column="material" property="material" jdbcType="VARCHAR" />
+    <result column="spec" property="spec" jdbcType="VARCHAR" />
+    <result column="actual_weight" property="actualWeight" jdbcType="DECIMAL" />
+    <result column="actual_amount" property="actualAmount" jdbcType="DECIMAL" />
+    <result column="allowance_weight" property="allowanceWeight" jdbcType="DECIMAL" />
+    <result column="allowance_amount" property="allowanceAmount" jdbcType="DECIMAL" />
+    <result column="is_deleted" property="isDeleted" jdbcType="TINYINT" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+  </resultMap>
+
+  <resultMap id="DetailsMap" type="com.prcsteel.platform.order.model.dto.AllowanceOrderItemsDto" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <id column="detail_item_id" property="detailItemId" jdbcType="BIGINT" />
+    <result column="buyer_id" property="buyerId" jdbcType="BIGINT" />
+    <result column="buyer_name" property="buyerName" jdbcType="VARCHAR" />
+    <result column="nsort_name" property="nsortName" jdbcType="VARCHAR" />
+    <result column="material" property="material" jdbcType="VARCHAR" />
+    <result column="spec" property="spec" jdbcType="VARCHAR" />
+    <result column="actual_weight" property="actualWeight" jdbcType="DECIMAL" />
+    <result column="actual_amount" property="actualAmount" jdbcType="DECIMAL" />
+    <result column="total_actual_weight" property="totalActualWeight" jdbcType="DECIMAL" />
+    <result column="total_actual_amount" property="totalActualAmount" jdbcType="DECIMAL" />
+    <result column="allowance_amount" property="allowanceAmount" jdbcType="DECIMAL" />
+    <result column="allowance_weight" property="allowanceWeight" jdbcType="DECIMAL" />
+	<result column="order_id" property="orderId" jdbcType="BIGINT" />
+    <result column="order_code" property="orderCode" jdbcType="VARCHAR" />
+    <result column="order_time" property="orderTime" jdbcType="TIMESTAMP" />
+    <result column="unAllowanceAmount" property="unAllowanceAmount" jdbcType="DECIMAL" />
+    <result column="unAllowanceWeight" property="unAllowanceWeight" jdbcType="DECIMAL" />
+  	<result column="allowanceDetilId" property="allowanceDetilId" jdbcType="BIGINT" />
+  	<result column="order_detail_id" property="orderDetailId" jdbcType="BIGINT" />
+    <result column="total_weight" property="totalWeight" jdbcType="DECIMAL" />
+    <result column="total_amount" property="totalAmount" jdbcType="DECIMAL" />
+    <result column="total_quantity" property="totalQuantity" jdbcType="INTEGER" />
+    <result column="allowance_code" property="allowanceCode" jdbcType="VARCHAR" />
+    <result column="note" property="note" jdbcType="VARCHAR" />
+    <result column="buyer_department_id" property="buyerDepartmentId" jdbcType="BIGINT"/>
+    <result column="buyer_department_name" property="buyerDepartmentName" jdbcType="VARCHAR" />
+    <result column="is_show_buyer_dept" property="isShowBuyerDept" jdbcType="BOOLEAN" />
+    <result column="is_show_dept" property="isShowDept" jdbcType="BOOLEAN" />
+    <result column="account_id" property="accountId" jdbcType="BIGINT" />
+    <result column="account_name" property="accountName" jdbcType="VARCHAR" />
+    <result column="department_id" property="departmentId" jdbcType="BIGINT" />
+    <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, allowance_order_id, order_detail_id,buyer_id,buyer_name,nsort_name, material, spec, actual_weight, 
+    actual_amount, allowance_weight, allowance_amount, is_deleted, created, created_by, 
+    last_updated, last_updated_by, modification_number, buyer_department_id, buyer_department_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from reb_allowance_order_detail_item
+    where id = #{id,jdbcType=BIGINT}
+    AND is_deleted = 0
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from reb_allowance_order_detail_item
+    where id = #{id,jdbcType=BIGINT}
+    AND is_deleted = 0
+  </delete>
+  <insert id="insert" parameterType="com.prcsteel.platform.order.model.model.AllowanceOrderDetailItem" >
+    insert into reb_allowance_order_detail_item (id, allowance_order_id, order_detail_id,
+      buyer_id,buyer_name,
+      nsort_name, material, spec, 
+      actual_weight, actual_amount, allowance_weight, 
+      allowance_amount, is_deleted, created, 
+      created_by, last_updated, last_updated_by, 
+      modification_number, buyer_department_id, buyer_department_name)
+    values (#{id,jdbcType=BIGINT}, #{allowanceOrderId,jdbcType=BIGINT}, #{orderDetailId,jdbcType=BIGINT}, 
+      #{buyerId,jdbcType=BIGINT},#{buyerName,jdbcType=VARCHAR},	
+      #{nsortName,jdbcType=VARCHAR}, #{material,jdbcType=VARCHAR}, #{spec,jdbcType=VARCHAR}, 
+      #{actualWeight,jdbcType=DECIMAL}, #{actualAmount,jdbcType=DECIMAL}, #{allowanceWeight,jdbcType=DECIMAL}, 
+      #{allowanceAmount,jdbcType=DECIMAL}, #{isDeleted,jdbcType=TINYINT}, #{created,jdbcType=TIMESTAMP}, 
+      #{createdBy,jdbcType=VARCHAR}, #{lastUpdated,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}, 
+      #{modificationNumber,jdbcType=INTEGER}, #{buyerDepartmentId,jdbcType=BIGINT},#{buyerDepartmentName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.order.model.model.AllowanceOrderDetailItem" >
+    insert into reb_allowance_order_detail_item
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="allowanceOrderId != null" >
+        allowance_order_id,
+      </if>
+      <if test="orderDetailId != null" >
+        order_detail_id,
+      </if>
+      <if test="buyerId != null" >
+        buyer_id,
+      </if>
+      <if test="buyerName != null" >
+        buyer_name,
+      </if>
+      <if test="nsortName != null" >
+        nsort_name,
+      </if>
+      <if test="material != null" >
+        material,
+      </if>
+      <if test="spec != null" >
+        spec,
+      </if>
+      <if test="actualWeight != null" >
+        actual_weight,
+      </if>
+      <if test="actualAmount != null" >
+        actual_amount,
+      </if>
+      <if test="allowanceWeight != null" >
+        allowance_weight,
+      </if>
+      <if test="allowanceAmount != null" >
+        allowance_amount,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by,
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number,
+      </if>
+      <if test="buyerDepartmentId != null" >
+        buyer_department_id,
+      </if>
+      <if test="buyerDepartmentName != null" >
+        buyer_department_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="allowanceOrderId != null" >
+        #{allowanceOrderId,jdbcType=BIGINT},
+      </if>
+      <if test="orderDetailId != null" >
+        #{orderDetailId,jdbcType=BIGINT},
+      </if>
+      <if test="buyerId != null" >
+        #{buyerId,jdbcType=BIGINT},
+      </if>
+      <if test="buyerName != null" >
+        #{buyerName,jdbcType=VARCHAR},
+      </if>
+      <if test="nsortName != null" >
+        #{nsortName,jdbcType=VARCHAR},
+      </if>
+      <if test="material != null" >
+        #{material,jdbcType=VARCHAR},
+      </if>
+      <if test="spec != null" >
+        #{spec,jdbcType=VARCHAR},
+      </if>
+      <if test="actualWeight != null" >
+        #{actualWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="actualAmount != null" >
+        #{actualAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="allowanceWeight != null" >
+        #{allowanceWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="allowanceAmount != null" >
+        #{allowanceAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="buyerDepartmentId != null" >
+       	#{buyerDepartmentId,jdbcType=BIGINT},
+      </if>
+      <if test="buyerDepartmentName != null" >
+        #{buyerDepartmentName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.order.model.model.AllowanceOrderDetailItem" >
+    update reb_allowance_order_detail_item
+    <set >
+      <if test="allowanceOrderId != null" >
+        allowance_order_id = #{allowanceOrderId,jdbcType=BIGINT},
+      </if>
+      <if test="orderDetailId != null" >
+        order_detail_id = #{orderDetailId,jdbcType=BIGINT},
+      </if>
+      <if test="buyerId != null" >
+       	buyer_id = #{buyerId,jdbcType=BIGINT},
+      </if>
+      <if test="buyerName != null" >
+        buyer_name = #{buyerName,jdbcType=VARCHAR},
+      </if>
+      <if test="nsortName != null" >
+        nsort_name = #{nsortName,jdbcType=VARCHAR},
+      </if>
+      <if test="material != null" >
+        material = #{material,jdbcType=VARCHAR},
+      </if>
+      <if test="spec != null" >
+        spec = #{spec,jdbcType=VARCHAR},
+      </if>
+      <if test="actualWeight != null" >
+        actual_weight = #{actualWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="actualAmount != null" >
+        actual_amount = #{actualAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="allowanceWeight != null" >
+        allowance_weight = #{allowanceWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="allowanceAmount != null" >
+        allowance_amount = #{allowanceAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number = #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="buyerDepartmentId != null" >
+       	buyer_department_id = #{buyerDepartmentId,jdbcType=BIGINT},
+      </if>
+      <if test="buyerDepartmentName != null" >
+        buyer_department_name = #{buyerDepartmentName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+    AND is_deleted = 0
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.order.model.model.AllowanceOrderDetailItem" >
+    update reb_allowance_order_detail_item
+    set allowance_order_id = #{allowanceOrderId,jdbcType=BIGINT},
+      order_detail_id = #{orderDetailId,jdbcType=BIGINT},
+      buyer_id = #{buyerId,jdbcType=BIGINT},
+      buyer_name = #{buyerName,jdbcType=VARCHAR},
+      nsort_name = #{nsortName,jdbcType=VARCHAR},
+      material = #{material,jdbcType=VARCHAR},
+      spec = #{spec,jdbcType=VARCHAR},
+      actual_weight = #{actualWeight,jdbcType=DECIMAL},
+      actual_amount = #{actualAmount,jdbcType=DECIMAL},
+      allowance_weight = #{allowanceWeight,jdbcType=DECIMAL},
+      allowance_amount = #{allowanceAmount,jdbcType=DECIMAL},
+      is_deleted = #{isDeleted,jdbcType=TINYINT},
+      created = #{created,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      modification_number = #{modificationNumber,jdbcType=INTEGER},
+      buyer_department_id = #{buyerDepartmentId,jdbcType=BIGINT},
+      buyer_department_name = #{buyerDepartmentName,jdbcType=VARCHAR},
+    where id = #{id,jdbcType=BIGINT}
+    AND is_deleted = 0
+  </update>
+
+  <select id="queryDetails" resultMap="DetailsMap" parameterType="com.prcsteel.platform.order.model.query.AllowanceDetailItemQuery">
+  	SELECT t1.order_detail_id,t1.buyer_id,t1.buyer_name,t1.actual_weight, t1.actual_amount, t1.allowance_amount,t1.allowance_weight,
+	t1.nsort_name, t1.material, t1.spec,t2.order_time, t2.order_id, t2.order_code,t3.id,t3.allowance_code,t1.id AS detail_item_id,
+    t2.actual_weight as total_actual_weight,t2.actual_amount as total_actual_amount,
+	(t1.actual_amount + t1.allowance_amount) AS unAllowanceAmount,
+	(t1.actual_weight + t1.allowance_weight) AS unAllowanceWeight,
+    t3.total_quantity,t2.weight AS total_weight,t2.amount AS total_amount,t3.note,
+    t3.account_id,t3.account_name,t3.department_id,t3.department_name,
+    t1.buyer_department_id, t1.buyer_department_name,
+    case when
+    (SELECT COUNT(DISTINCT t.id) FROM cust_account t WHERE t.structure_type = 'Department' AND t.is_deleted = 0
+    AND t.parent_id = t1.buyer_id) > 1
+    then 1 else  0 end as is_show_buyer_dept,
+    case when
+    (SELECT COUNT(DISTINCT t.id) FROM cust_account t WHERE t.structure_type = 'Department' AND t.is_deleted = 0
+    AND t.parent_id = t3.account_id) > 1
+    then 1 else  0 end as is_show_dept
+	FROM reb_allowance_order_detail_item t1
+    INNER JOIN reb_allowance_order_item t2 ON t1.allowance_order_id = t2.id
+    INNER JOIN reb_allowance t3 ON t3.id = t2.allowance_id
+    <where>
+      <if test="allowanceId != null">
+        t3.allowance_id = #{allowanceId,jdbcType=BIGINT}
+      </if>
+      <if test="id != null">
+        AND t3.id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="accountId != null">
+        AND t3.account_id = #{accountId,jdbcType=BIGINT}
+      </if>
+      <if test="allowanceType != null and allowanceType != '' ">
+        AND t3.allowance_type = #{allowanceType,jdbcType=VARCHAR}
+      </if>
+      <if test="allowanceKey != null">
+          t3.id = #{allowanceKey,jdbcType=BIGINT}
+      </if>
+      <if test="listStatus != null">
+        AND t3.status IN
+        <foreach item="status" index="index" collection="listStatus" open="(" separator="," close=")">
+          #{status}
+        </foreach>
+      </if>
+      <if test="allowanceIds != null">
+        AND t3.id IN
+        <foreach item="allowanceId" index="index" collection="allowanceIds" open="(" separator="," close=")">
+          #{allowanceId}
+        </foreach>
+      </if>
+      <if test="allowanceUnused!=null and allowanceUnused==true and accountId != null ">
+        AND t1.order_detail_id IN(
+        SELECT t4.id FROM busi_consign_order_items t4
+        WHERE invoice_amount+allowance_amount <![CDATA[ < ]]> ROUND(actual_pick_weight_server * deal_price,2)
+        AND t4.seller_id=#{accountId,jdbcType=BIGINT})
+      </if>
+    </where>
+    AND t1.is_deleted = 0
+    AND t2.is_deleted = 0
+    AND t3.is_deleted = 0
+	ORDER BY t3.account_id
+  </select>
+  
+  <select id="queryOrderDetailIds"  parameterType="com.prcsteel.platform.order.model.query.AllowanceOrderQuery" resultType="java.lang.Long">
+  	SELECT 
+  		od.order_detail_id 
+	FROM reb_allowance_order_detail_item od
+	LEFT JOIN reb_allowance_order_item o ON od.allowance_order_id = o.id
+	LEFT JOIN reb_allowance a ON o.allowance_id = a.id
+	WHERE a.status NOT IN ('closed')
+	AND a.is_deleted = 0 AND o.is_deleted = 0 AND od.is_deleted = 0
+	<if test="allowanceType !=null and allowanceType != ''">
+    	AND a.allowance_type = #{allowanceType,jdbcType=VARCHAR}
+    </if>
+    <if test="id != null">
+      AND a.id != #{id,jdbcType=BIGINT}
+    </if>
+	AND od.order_detail_id IN
+  	<foreach collection="orderDetailIds" item="id" open="(" close=")" separator=",">#{id}</foreach>
+  	GROUP BY od.order_detail_id 
+  </select>
+  
+  <insert id="batchInsert" parameterType="com.prcsteel.platform.order.model.model.AllowanceOrderDetailItem">
+		insert into reb_allowance_order_detail_item (
+			id,allowance_order_id, order_detail_id,
+			buyer_id,buyer_name,
+			nsort_name, material, spec, 
+			actual_weight, actual_amount, allowance_weight, 
+			allowance_amount, is_deleted, created, 
+			created_by, last_updated, last_updated_by, 
+			modification_number,
+            buyer_department_id,buyer_department_name
+		)values
+        <foreach collection="list" item="it" separator=",">
+			(
+			#{it.id,jdbcType=BIGINT},#{it.allowanceOrderId,jdbcType=BIGINT}, #{it.orderDetailId,jdbcType=BIGINT}, 
+			#{it.buyerId,jdbcType=BIGINT},#{it.buyerName,jdbcType=VARCHAR},	
+			#{it.nsortName,jdbcType=VARCHAR}, #{it.material,jdbcType=VARCHAR}, #{it.spec,jdbcType=VARCHAR}, 
+			#{it.actualWeight,jdbcType=DECIMAL}, #{it.actualAmount,jdbcType=DECIMAL}, #{it.allowanceWeight,jdbcType=DECIMAL}, 
+			#{it.allowanceAmount,jdbcType=DECIMAL}, 0, #{it.created,jdbcType=TIMESTAMP}, 
+			#{it.createdBy,jdbcType=VARCHAR}, #{it.lastUpdated,jdbcType=TIMESTAMP}, #{it.lastUpdatedBy,jdbcType=VARCHAR}, 
+			0,#{it.buyerDepartmentId,jdbcType=BIGINT},#{it.buyerDepartmentName,jdbcType=VARCHAR}
+			)
+        </foreach>
+    </insert>
+
+  <update id="updateDeletedByAllowanceId">
+    UPDATE reb_allowance_order_detail_item t1
+    SET t1.is_deleted = 1,t1.last_updated= CURRENT_TIMESTAMP,t1.modification_number = t1.modification_number + 1,
+    t1.last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR}
+    WHERE t1.allowance_order_id IN
+    (SELECT  t2.id FROM reb_allowance_order_item t2
+    <where>
+      <if test="allowanceIds != null">
+        AND t2.allowance_id IN
+        <foreach item="id" index="index" collection="allowanceIds" open="(" separator="," close=")">
+          #{id}
+        </foreach>
+      </if>
+    </where>
+    )
+    AND t1.is_deleted = 0
+  </update>
+  
+  <select id="queryAllowanceAmount" resultType="java.math.BigDecimal" parameterType="java.lang.Long">
+  	select sum(IFNULL(k.allowance_amount,0)), k.buyer_id, k.buyer_name 
+	from reb_allowance_order_detail_item as k
+	left join reb_allowance_order_item as k1 on k1.id = k.allowance_order_id
+	left join reb_allowance as k2 on k2.id = k1.allowance_id
+	where k2.status = 'approved' and k.buyer_id=#{buyerId,jdbcType=BIGINT}
+  </select>
+  
+</mapper>

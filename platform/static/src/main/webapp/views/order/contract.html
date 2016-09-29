@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta charset="utf-8" />
+		<title>打印放货单</title>
+
+		<meta name="description" content="Static &amp; Dynamic Tables" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+		<!-- bootstrap & fontawesome -->
+		<link rel="stylesheet" href="../../theme/default/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../../theme/default/font-awesome/4.2.0/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="../../theme/default/css/daterangepicker.min.css" />
+		<!-- page specific plugin styles -->
+
+		<!-- text fonts -->
+		<link rel="stylesheet" href="../../theme/default/fonts/fonts.googleapis.com.css" />
+
+		<!-- ace styles -->
+		<link rel="stylesheet" href="../../theme/default/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+		<link rel="stylesheet" href="../../css/style.css" />
+		<!--[if lte IE 9]>
+		<link rel="stylesheet" href="../../theme/default/css/ace-part2.min.css" class="ace-main-stylesheet"/>
+		<![endif]-->
+
+		<!--[if lte IE 9]>
+		<link rel="stylesheet" href="../../theme/default/css/ace-ie.min.css"/>
+		<![endif]-->
+
+		<!-- inline styles related to this page -->
+
+		<!-- ace settings handler -->
+		<script src="../../theme/default/js/ace-extra.min.js"></script>
+
+		<!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+		<!--[if lte IE 8]>
+		<script src="../../theme/default/js/html5shiv.min.js"></script>
+		<script src="../../theme/default/js/respond.min.js"></script>
+		<![endif]-->
+	</head>
+
+	<body class="no-skin">
+		<div id="navbar" class="navbar navbar-default">
+			<script type="text/javascript">
+				try {
+					ace.settings.check('navbar', 'fixed')
+				} catch(e) {
+				}
+			</script>
+
+			<div class="navbar-container" id="navbar-container">
+				<button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
+					<span class="sr-only">Toggle sidebar</span>
+
+					<span class="icon-bar"></span>
+
+					<span class="icon-bar"></span>
+
+					<span class="icon-bar"></span>
+				</button>
+
+				<div class="navbar-header pull-left">
+					<a href="index.html" class="navbar-brand"> <small> <i class="fa fa-leaf"></i> Ace Admin </small> </a>
+				</div>
+
+				<div class="navbar-buttons navbar-header pull-right" role="navigation">
+					<ul class="nav ace-nav">
+						<li class="grey">
+							<a data-toggle="dropdown" class="dropdown-toggle" href="#"> <i class="ace-icon fa fa-tasks"></i> <span class="badge badge-grey">4</span> </a>
+
+							<ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
+								<li class="dropdown-header">
+									<i class="ace-icon fa fa-check"></i>
+									4 Tasks to complete
+								</li>
+
+								<li class="dropdown-content">
+									<ul class="dropdown-menu dropdown-navbar">
+										<li>
+											<a href="#">
+											<div class="clearfix">
+												<span class="pull-left">Software Update</span>
+												<span class="pull-right">65%</span>
+											</div>
+											<div class="progress progress-mini">
+												<div style="width:65%" class="progress-bar"></div>
+											</div> </a>
+										</li>
+
+										<li>
+											<a href="#">
+											<div class="clearfix">
+												<span class="pull-left">Hardware Upgrade</span>
+												<span class="pull-right">35%</span>
+											</div>
+											<div class="progress progress-mini">
+												<div style="width:35%" class="progress-bar progress-bar-danger"></div>
+											</div> </a>
+										</li>
+
+										<li>
+											<a href="#">
+											<div class="clearfix">
+												<span class="pull-left">Unit Testing</span>
+												<span class="pull-right">15%</span>
+											</div>
+											<div class="progress progress-mini">
+												<div style="width:15%" class="progress-bar progress-bar-warning"></div>
+											</div> </a>
+										</li>
+
+										<li>
+											<a href="#">
+											<div class="clearfix">
+												<span class="pull-left">Bug Fixes</span>
+												<span class="pull-right">90%</span>
+											</div>
+											<div class="progress progress-mini progress-striped active">
+												<div style="width:90%" class="progress-bar progress-bar-success"></div>
+											</div> </a>
+										</li>
+									</ul>
+								</li>
+
+								<li class="dropdown-footer">
+									<a href="#"> See tasks with details <i class="ace-icon fa fa-arrow-right"></i> </a>
+								</li>
+							</ul>
+						</li>
+
+						<li class="purple">
+							<a data-toggle="dropdown" class="dropdown-toggle" href="#"> <i class="ace-icon fa fa-bell icon-animated-bell"></i> <span class="badge badge-important">8</span> </a>
+
+							<ul class="dropdown-menu-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close">
+								<li class="dropdown-header">
+									<i class="ace-icon fa fa-exclamation-triangle"></i>
+									8 Notifications
+								</li>
+
+								<li class="dropdown-content">
+									<ul class="dropdown-menu dropdown-navbar navbar-pink">
+										<li>
+											<a href="#">
+											<div class="clearfix">
+												<span class="pull-left"> <i class="btn btn-xs no-hover btn-pink fa fa-comment"></i> New Comments </span>
+												<span class="pull-right badge badge-info">+12</span>
+											</div> </a>
+										</li>
+
+										<li>
+											<a href="#"> <i class="btn btn-xs btn-primary fa fa-user"></i> Bob just signed up as an editor ... </a>
+										</li>
+
+										<li>
+											<a href="#">
+											<div class="clearfix">
+												<span class="pull-left"> <i class="btn btn-xs no-hover btn-success fa fa-shopping-cart"></i> New Orders </span>
+												<span class="pull-right badge badge-success">+8</span>
+											</div> </a>
+										</li>
+
+										<li>
+											<a href="#">
+											<div class="clearfix">
+												<span class="pull-left"> <i class="btn btn-xs no-hover btn-info fa fa-twitter"></i> Followers </span>
+												<span class="pull-right badge badge-info">+11</span>
+											</div> </a>
+										</li>
+									</ul>
+								</li>
+
+								<li class="dropdown-footer">
+									<a href="#"> See all notifications <i class="ace-icon fa fa-arrow-right"></i> </a>
+								</li>
+							</ul>
+						</li>
+
+						<li class="green">
+							<a data-toggle="dropdown" class="dropdown-toggle" href="#"> <i class="ace-icon fa fa-envelope icon-animated-vertical"></i> <span class="badge badge-success">5</span> </a>
+
+							<ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
+								<li class="dropdown-header">
+									<i class="ace-icon fa fa-envelope-o"></i>
+									5 Messages
+								</li>
+
+								<li class="dropdown-content">
+									<ul class="dropdown-menu dropdown-navbar">
+										<li>
+											<a href="#" class="clearfix"> <img src="../../theme/default/avatars/avatar.png" class="msg-photo" alt="Alex's Avatar" /> <span class="msg-body"> <span class="msg-title"> <span class="blue">Alex:</span> Ciao sociis natoque penatibus et auctor ... </span> <span class="msg-time"> <i class="ace-icon fa fa-clock-o"></i> <span>a moment ago</span> </span> </span> </a>
+										</li>
+
+										<li>
+											<a href="#" class="clearfix"> <img src="../../theme/default/avatars/avatar3.png" class="msg-photo" alt="Susan's Avatar" /> <span class="msg-body"> <span class="msg-title"> <span class="blue">Susan:</span> Vestibulum id ligula porta felis euismod ... </span> <span class="msg-time"> <i class="ace-icon fa fa-clock-o"></i> <span>20 minutes ago</span> </span> </span> </a>
+										</li>
+
+										<li>
+											<a href="#" class="clearfix"> <img src="../../theme/default/avatars/avatar4.png" class="msg-photo" alt="Bob's Avatar" /> <span class="msg-body"> <span class="msg-title"> <span class="blue">Bob:</span> Nullam quis risus eget urna mollis ornare ... </span> <span class="msg-time"> <i class="ace-icon fa fa-clock-o"></i> <span>3:15 pm</span> </span> </span> </a>
+										</li>
+
+										<li>
+											<a href="#" class="clearfix"> <img src="../../theme/default/avatars/avatar2.png" class="msg-photo" alt="Kate's Avatar" /> <span class="msg-body"> <span class="msg-title"> <span class="blue">Kate:</span> Ciao sociis natoque eget urna mollis ornare ... </span> <span class="msg-time"> <i class="ace-icon fa fa-clock-o"></i> <span>1:33 pm</span> </span> </span> </a>
+										</li>
+
+										<li>
+											<a href="#" class="clearfix"> <img src="../../theme/default/avatars/avatar5.png" class="msg-photo" alt="Fred's Avatar" /> <span class="msg-body"> <span class="msg-title"> <span class="blue">Fred:</span> Vestibulum id penatibus et auctor  ... </span> <span class="msg-time"> <i class="ace-icon fa fa-clock-o"></i> <span>10:09 am</span> </span> </span> </a>
+										</li>
+									</ul>
+								</li>
+
+								<li class="dropdown-footer">
+									<a href="inbox.html"> See all messages <i class="ace-icon fa fa-arrow-right"></i> </a>
+								</li>
+							</ul>
+						</li>
+
+						<li class="light-blue">
+							<a data-toggle="dropdown" href="#" class="dropdown-toggle"> <img class="nav-user-photo" src="../../theme/default/avatars/user.jpg" alt="Jason's Photo" /> <span class="user-info"> <small>Welcome,</small> Jason </span> <i class="ace-icon fa fa-caret-down"></i> </a>
+
+							<ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+								<li>
+									<a href="#"> <i class="ace-icon fa fa-cog"></i> Settings </a>
+								</li>
+
+								<li>
+									<a href="profile.html"> <i class="ace-icon fa fa-user"></i> Profile </a>
+								</li>
+
+								<li class="divider"></li>
+
+								<li>
+									<a href="#"> <i class="ace-icon fa fa-power-off"></i> Logout </a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div><!-- /.navbar-container -->
+		</div>
+
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try {
+					ace.settings.check('main-container', 'fixed')
+				} catch(e) {
+				}
+			</script>
+
+			<div id="sidebar" class="sidebar                  responsive">
+				<script type="text/javascript">
+					try {
+						ace.settings.check('sidebar', 'fixed')
+					} catch(e) {
+					}
+				</script>
+
+				<ul class="nav nav-list">
+					<li class="active">
+						<a href="index.html"> <i class="menu-icon fa fa-tachometer"></i> <span class="menu-text"> 控制台 </span> </a>
+
+						<b class="arrow"></b>
+					</li>
+
+					<li class="">
+						<a href="#" class="dropdown-toggle"> <i class="menu-icon fa fa-pencil-square-o"></i> <span class="menu-text"> 系统管理 </span> <b class="arrow fa fa-angle-down"></b> </a>
+
+						<b class="arrow"></b>
+
+						<ul class="submenu">
+							<li class="">
+								<a href="sysuser-list.html"> <i class="menu-icon fa fa-caret-right"></i> 管理服务中心 </a>
+
+								<b class="arrow"></b>
+							</li>
+
+							<li class="">
+								<a href="sysuser-list.html"> <i class="menu-icon fa fa-caret-right"></i> 服务中心人员 </a>
+
+								<b class="arrow"></b>
+							</li>
+
+							<li class="">
+								<a href="sysuser-list.html"> <i class="menu-icon fa fa-caret-right"></i> 提成比例设置 </a>
+
+								<b class="arrow"></b>
+							</li>
+							<li class="">
+								<a href="sysuser-list.html"> <i class="menu-icon fa fa-caret-right"></i> 返利设置 </a>
+
+								<b class="arrow"></b>
+							</li>
+							<li class="">
+								<a href="sysuser-list.html"> <i class="menu-icon fa fa-caret-right"></i> 系统日志 </a>
+
+								<b class="arrow"></b>
+							</li>
+							<li class="">
+								<a href="sys/role.html"> <i class="menu-icon fa fa-caret-right"></i> 设置权限 </a>
+
+								<b class="arrow"></b>
+							</li>
+						</ul>
+					</li>
+
+					<li class="">
+						<a href="#" class="dropdown-toggle"> <i class="menu-icon fa fa-pencil-square-o"></i> <span class="menu-text"> 客户管理 </span> <b class="arrow fa fa-angle-down"></b> </a>
+
+						<b class="arrow"></b>
+
+						<ul class="submenu">
+							<li class="">
+								<a href="vendorlist.html"> <i class="menu-icon fa fa-caret-right"></i> 我的买家客户 </a>
+
+								<b class="arrow"></b>
+							</li>
+
+							<li class="">
+								<a href="vendorlist.html"> <i class="menu-icon fa fa-caret-right"></i> 我的卖家客户 </a>
+
+								<b class="arrow"></b>
+							</li>
+
+							<li class="">
+								<a href="sysuser-list.html"> <i class="menu-icon fa fa-caret-right"></i> 划转买家用户 </a>
+								<b class="arrow"></b>
+							</li>
+							<li class="">
+								<a href="sysuser-list.html"> <i class="menu-icon fa fa-caret-right"></i> 划转卖家客户 </a>
+								<b class="arrow"></b>
+							</li>
+							<li class="">
+								<a href="sysuser-list.html"> <i class="menu-icon fa fa-caret-right"></i> 卖家客户分组查询 </a>
+								<b class="arrow"></b>
+							</li>
+						</ul>
+					</li>
+
+					<li class="">
+						<a href="#" class="dropdown-toggle"> <i class="menu-icon fa fa-pencil-square-o"></i> <span class="menu-text"> 订单管理 </span> <b class="arrow fa fa-angle-down"></b> </a>
+
+						<b class="arrow"></b>
+
+						<ul class="submenu">
+							<li class="">
+								<a href="sysuser-list.html"> <i class="menu-icon fa fa-caret-right"></i> 配货单 </a>
+
+								<b class="arrow"></b>
+							</li>
+
+							<li class="">
+								<a href="sysuser-list.html"> <i class="menu-icon fa fa-caret-right"></i> 物流单 </a>
+
+								<b class="arrow"></b>
+							</li>
+
+						</ul>
+					</li>
+
+					<li class="">
+						<a href="widgets.html"> <i class="menu-icon fa fa-list-alt"></i> <span class="menu-text"> 财务中心 </span> </a>
+
+						<b class="arrow"></b>
+					</li>
+
+				</ul><!-- /.nav-list -->
+
+				<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+					<i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+				</div>
+
+				<script type="text/javascript">
+					try {
+						ace.settings.check('sidebar', 'collapsed')
+					} catch(e) {
+					}
+				</script>
+			</div>
+
+			<div class="main-content">
+				<div class="main-content-inner">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try {
+								ace.settings.check('breadcrumbs', 'fixed')
+							} catch(e) {
+							}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="ace-icon fa fa-home home-icon"></i>
+								<a href="#">订单管理</a>
+							</li>
+
+							<li class="active">
+								打印销售合同
+							</li>
+						</ul><!-- /.breadcrumb -->
+
+					</div>
+
+					<div class="page-content print-page">
+						<div class="row">
+							<div class="col-xs-12">
+
+								<!-- PAGE CONTENT BEGINS -->
+								<!-- table-bar-->
+								<div id="print1" class="table-bar tab-pane in active">
+									<h1 class="bolder text-center clearfix"><span class="logo-bar print-logo pull-left"><img src="../../img/print-logo.png" /></span><span style="margin-right:100px">销售合同</span></h1>
+									<table class="contable print-table border0">
+										<tbody class="border0">
+											<tr>
+												<td colspan="5">甲方（需方）：</td>
+												<td colspan="5">合同编号：</td>
+											</tr>
+											<tr>
+												<td colspan="5">乙方（供方）：杭州钢为网络科技有限公司</td>
+												<td colspan="5">签订时间：　　　年　　　月　　　日</td>
+											</tr>
+											<tr>
+												<td colspan="5"></td>
+												<td colspan="5">签订地点：</td>
+											</tr>
+											<tr>
+												<td colspan="10">甲乙双方就现货销售事宜，经平等、自愿协商，达成如下一致意见：</td>
+											</tr>
+											<tr>
+												<td colspan="10">一、产品信息：</td>
+											</tr>											
+											
+										</tbody>
+									</table>										
+									<table class="contable print-table">
+
+										<tbody>
+
+											<tr>
+												<td rowspan="2" width="90">货物名称</td><td rowspan="2">规格</td><td rowspan="2">材质</td><td rowspan="2">厂家</td><td rowspan="2">仓库</td>
+												<td class="text-center">件数<br />(件)</td><td class="text-right">重量<br />(吨)</td><td class="text-center">计重<br />方式</td><td class="text-right">单价(含税)<br />(元/吨)</td><td class="text-right">金额<br />(元)</td>
+											</tr>
+										</tbody>
+										<tbody>
+											<tr>
+												<td>螺纹钢</td><td>QH234</td><td></td><td>HRB400E</td><td>沙钢</td>
+												<td class="text-center">1</td><td class="text-right">1999.000</td><td class="text-center"></td><td class="text-right">2,189.98</td><td class="text-right">4,337,770.02</td>
+											</tr>
+											<tr>
+												<td></td><td></td><td></td><td></td><td></td>
+												<td></td><td class="text-right">1.000</td><td class="text-center"></td><td class="text-right">2,500.00</td><td class="text-right">2,500.00</td>
+											</tr>
+											<tr>
+												<td></td><td></td><td></td><td></td><td></td>
+												<td></td><td class="text-right">100.200</td><td class="text-center"></td><td class="text-right">1,000.00</td><td class="text-right">100,200.00</td>
+											</tr>
+											<tr>
+												<td></td><td></td><td></td><td></td><td></td>
+												<td></td><td class="text-right">100.00</td><td class="text-center"></td><td class="text-right">1,000.00</td><td class="text-right">100,000.00</td>
+											</tr>
+											<tr>
+												<td></td><td></td><td></td><td></td><td></td>
+												<td></td><td></td><td></td><td></td><td></td>
+											</tr>
+											<tr>
+												<td></td><td></td><td></td><td></td><td></td>
+												<td></td><td></td><td></td><td></td><td></td>
+											</tr>
+										</tbody>
+										<tbody>
+											<tr>
+												<td colspan="5" align="center">合计</td>
+												<td></td><td class="text-right">2200.200</td><td></td><td></td><td class="text-right">4,580,470.02</td>
+											</tr>
+											<tr>
+												<td colspan="2">金额大写</td><td colspan="8">人民币：肆佰伍拾捌万零肆佰柒拾元零贰分(￥4580470.02元)</td>
+											</tr>
+										</tbody>
+									</table>	
+									<table class="contable print-table border0">
+										<tbody class="border0">											
+											<tr>
+												<td colspan="10">二、结算信息：</td>
+											</tr>
+										</tbody>
+									</table>
+									<table class="contable print-table">
+										<tbody>
+											<tr>
+												<td width="90">乙方（供方）</td><td colspan="5" width="200">杭州钢为网络科技有限公司</td><td width="90">行号</td><td colspan="3" width="200">310331000068</td>
+											</tr>
+											<tr>
+												<td>开户行</td><td colspan="5">浦发银行杭州市钱江支行</td><td>税号</td><td colspan="3">91330103MA27X0F7XW</td>
+											</tr>
+											<tr>
+												<td>账号</td><td colspan="5">95090154800004792</td><td>电话</td><td colspan="3">400-705-9515</td>
+											</tr>
+											<tr>
+												<td>地址</td><td colspan="9">杭州市西湖区西溪街道文二路188号16号楼559室</td>
+											</tr>
+										</tbody>
+									</table>
+									<div>
+										<ul>
+											<li>三、付款及交(提)货信息：</li>
+											<li class="print-indent">1.付款方式：签订本合同后<em class="line-under">1</em>日内通过<em class="line-under">网银</em>支付货款，款到放货；</li>
+											<li class="print-indent">2.交(提)货地点：<em class="line-under">货物所在仓库</em>；</li> 
+											<li class="print-indent">3.运输方式：<em class="line-under">自提</em>；</li>
+											<li class="print-indent">4.相关费用承担：出库费由<em class="line-under">　　　　　</em>担，运费由<em class="line-under">　　　　　</em>方承担。</li>
+											<li>四、质量要求及技术标准：供货方所提供的产品须符合国家行业的标准。</li>
+											<li>五、乙方对质量负责的条件和期限：如发生质量异议，在甲方收货后 7 个工作日内通知乙方，双方协商解决，对原货物不得变动或使用,非乙方过错造成损失的乙方不承担责任。质量争议最终以钢厂的处理意见为准。若在该期限内若甲方未提出异议，则认为验收合格。</li>
+											<li>六、违约责任：<em class="line-under">依据《中华人民共和国合同法》相关规定处理。</em></li>
+											<li>七、合同争议的解决方式：本合同在履行过程中发生的争议由双方当事人协商解决，协商或调节不成的在合同签定所在地法院诉讼解决。</li>
+											<li>八、本合同自双方盖章之日起生效，本合同一式二份，双方各执一份。传真件与原件具有同等法律效力。</li>
+										</ul>
+									</div>
+									<table class="contable print-table">
+										<tbody>
+											<tr>
+												<td width="90">甲方：</td><td colspan="5" width="200"></td><td width="90">乙方：</td><td colspan="3" width="200">杭州钢为网络科技有限公司</td>
+											</tr>
+											<tr>
+												<td>地址：</td><td colspan="5"></td><td>地址：</td><td colspan="3"></td>
+											</tr>
+											<tr>
+												<td>传真号码：</td><td colspan="5">0571-89718790</td><td>传真号码：</td><td colspan="3">0571-89718790</td>
+											</tr>
+											<tr>
+												<td>法定代表人<br/> (授权代表)：</td><td colspan="5">95090154800004792</td><td>法定代表人<br/> (授权代表)：</td><td colspan="3">400-705-9515</td>
+											</tr>
+											<tr>
+												<td>日期：</td><td colspan="5"></td>
+												<td>日期：</td><td colspan="3"></td>
+											</tr>
+										</tbody>
+									</table>									
+								</div><!-- /.table-bar -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+							<div class="btn-bar text-center"><button class="btn btn-info"><i class="fa fa-print"></i>打印合同</button></div>
+					</div><!-- /.page-content -->
+				</div>
+			</div><!-- /.main-content -->
+
+			<div class="footer">
+				<div class="footer-inner">
+					<div class="footer-content">
+						<span class="bigger-120"> <span class="blue bolder">Ace</span> Application &copy; 2013-2014 </span>
+
+						&nbsp; &nbsp;
+						<span class="action-buttons"> <a href="#"> <i class="ace-icon fa fa-twitter-square light-blue bigger-150"></i> </a> <a href="#"> <i class="ace-icon fa fa-facebook-square text-primary bigger-150"></i> </a> <a href="#"> <i class="ace-icon fa fa-rss-square orange bigger-150"></i> </a> </span>
+					</div>
+				</div>
+			</div>
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse"> <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i> </a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+
+		<!--[if !IE]> -->
+		<script src="../../theme/default/js/jquery.2.1.1.min.js"></script>
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+		<script src="../../theme/default/js/jquery.1.11.1.min.js"></script>
+		<![endif]-->
+
+		<!--[if !IE]> -->
+		<script type="text/javascript">
+			window.jQuery || document.write("<script src='../../theme/default/js/jquery.min.js'>" + "<" + "/script>");
+		</script>
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+		<script type="text/javascript">
+		window.jQuery || document.write("<script src='assets/js/jquery1x.min.js'>"+"<"+"/script>");
+		</script>
+		<![endif]-->
+		<script type="text/javascript">
+			if ('ontouchstart' in document.documentElement)
+				document.write("<script src='../../theme/default/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+		</script>
+		<script src="../../theme/default/js/bootstrap.min.js"></script>
+
+		<!-- page specific plugin scripts -->
+
+		<!-- ace scripts -->
+
+		<!-- inline scripts related to this page -->
+		<script type="text/javascript" src="../../js/global.js"></script>
+	</body>
+</html>

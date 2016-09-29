@@ -1,0 +1,103 @@
+#set($account=$accountdto.account)
+<div class="main-content">
+	<div class="main-content-inner">
+		<div class="breadcrumbs" id="breadcrumbs">
+            <script type="text/javascript">
+                try {
+                    ace.settings.check('breadcrumbs', 'fixed')
+                } catch (e) {
+                }
+            </script>
+
+            <ul class="breadcrumb">
+                <li>
+                    <i class="ace-icon fa fa-home home-icon"></i>
+                    客户管理
+                </li>
+                <li>
+                    <i class="ace-icon"></i>
+                    <a href="$link.getContextPath()/company/list.html">我的客户</a>
+                </li>
+                <li>
+                    <i class="ace-icon"></i>
+                    <a href="$link.getContextPath()/accountinfo/$!{account.id}/accountinfo.html">$!{account.name}</a>
+                </li>
+        		<li class="active">合同模板</li>
+            </ul>
+            <!-- /.breadcrumb -->
+        </div>
+
+		<div class="page-content">
+			#parse("baseinfo.vm")
+			<ul class="ck">
+				#foreach($department in $accountdto.department)
+        			<li class=" #if($!{velocityCount}==1) acti #end pull-left left13" style="cursor:pointer;">
+						<a href="#" val="$!{department.id}"><span class="font16">$!{department.name}</span></a>
+					</li>
+    			#end
+			</ul>
+			#foreach($department in $accountdto.department)
+    			<div class="mode-bar #if($!{velocityCount}!=1) none #end " id ="deptTemp_$!{department.id}" >
+    				<div class="backgr ame padding-top10" id="buyer">
+    					<div class="row height-b backgrf0" type="buyer" >
+    						<div class="col-md-12">
+    							<p class="font14 font14-428bca boldwei">买家合同模板<span class=" font12">（单笔订单生成的合同）</span></p>
+    						</div>
+    					</div>
+                        <div name="addDiv"></div>
+						<div class="row margin-top5" type="buyer">
+							<div class="col-md-12">
+								<button class="btn btn-sm btn-primary doTemplateOprt" action="add">+添加</button>
+							</div>
+						</div>
+    				</div>
+    			
+    				<div class="backgr ame padding-top10 checkbox-list-bar" id="seller">
+    					<div class="row height-b backgrf0" type="seller">
+    						<div class="col-md-12">
+    							<p class="font14 font14-428bca boldwei">卖家合同模板<span class=" font12">（单笔订单生成的合同）</span></p>
+    						</div>
+    					</div>
+    					<div name="addDiv"></div>
+						<div class="row margin-top5" type="seller">
+							<div class="col-md-12">
+								<button class="btn btn-sm btn-primary doTemplateOprt" action="add">+添加</button>
+							</div>
+						</div>
+    				</div>
+    			
+    				<div class="backgr ame padding-top10 checkbox-list-bar" id="frame">
+    					<div class="row height-b backgrf0" type="frame">
+    						<div class="col-md-12">
+    							<p class="font14 font14-428bca boldwei">框架合同模板<span class=" font12">（多笔订单生成的合同）</span></p>
+    						</div>
+    					</div>
+    					<div name="addDiv"></div>
+						<div class="row margin-top5" type="frame">
+							<div class="col-md-12">
+								<button class="btn btn-sm btn-primary doTemplateOprt" action="add">+添加</button>
+							</div>
+						</div>
+    				</div>
+    			
+    				<div class="backgr ame padding-top10 checkbox-list-bar" id="channel">
+    					<div class="row height-b backgrf0" type="channel">
+    						<div class="col-md-12">
+    							<p class="font14 font14-428bca boldwei">款道合同模板</p>
+    						</div>
+    					</div>
+    					<div name="addDiv"></div>
+						<div class="row margin-top5" type="channel">
+							<div class="col-md-12">
+								<button class="btn btn-sm btn-primary doTemplateOprt" action="add">+添加</button>
+							</div>
+						</div>
+    				</div>
+    			</div>
+			#end
+		</div><!-- /.page-content -->
+	</div>
+</div><!-- /.main-content -->
+<input type="hidden" id="companyId" value="$!{account.id}"/>
+<input type="hidden" id="companyName" value="$!{accountdto.account.name}"/>
+<script src="$link.getContextPath()/js/views/contracttemplate/contracttemplate.js"></script>

@@ -1,0 +1,33 @@
+<div class="tabbar order-tab">
+    <ul class="nav nav-tabs padding-12 tab-color-blue" id="myTab4">
+        <li><a href="$aclDomain/reward/showreward.html#idx=0">提成设置</a></li>
+        <li><a href="$orderDomain/rebate/showrebate.html#idx=1">返利设置</a></li>
+        <li><a href="$aclDomain/sys/filterClient.html#idx=2">客户过滤设置</a></li>
+        <li><a href="$aclDomain/sys/setInvoice.html#idx=3">发票设置</a></li>
+        <li><a href="$link.getContextPath()/category/showcategory.html#idx=4">品类归属设置</a></li>
+        <li><a href="$orderDomain/sys/template.html#idx=5">模板设置</a></li>
+        <li><a href="$aclDomain/sys/toleranceamountsetting.html#idx=6">金额容差设置</a></li>
+        <li><a href="$aclDomain/sys/smartweightwarningsetting.html#idx=7">智能匹配重量容差报警设置</a></li>
+        <li><a href="$aclDomain/sys/settinglist.html#idx=8">系统配置设置</a></li>
+        <li><a href="$aclDomain/sys/creditlimit.html#idx=9">信用额度设置</a></li>
+        <li><a href="$aclDomain/sys/reportmail.html#idx=10">邮件设置</a></li>
+        <li><a href="$aclDomain/sys/createdate.html#idx=11">服务中心日报时间节点设置</a></li>
+        <li><a href="$aclDomain/sys/expresstime.html#idx=12">服务中心快递时间表</a></li>
+        <li><a href="$aclDomain/sys/expressfirmset.html#idx=13">快递公司设置</a></li>
+        <li><a href="$link.getContextPath()/category/categoryalias.html#idx=14">进项票品名映射设置</a></li>
+        <li><a href="$aclDomain/sys/riskcontrol.html#idx=15">风控设置</a></li>
+        <li><a href="$aclDomain/sys/targetweight.html#idx=16">服务中心目标交易量设置</a></li>
+    </ul>
+</div>
+<script type="text/javascript">
+    jQuery(function ($) {
+        //绑定确认方法
+        var hashIdx=location.hash;
+        var  idx = hashIdx.split("="),index = parseInt(idx[1]);
+        if (hashIdx==""){
+            index=0;
+        }
+        $("#myTab4").children("li").eq(index).addClass("active");
+        // $(".active").removeClass("active")
+    });
+</script>

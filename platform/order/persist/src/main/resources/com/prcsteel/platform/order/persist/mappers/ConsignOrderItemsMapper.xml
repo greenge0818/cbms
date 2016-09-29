@@ -1,0 +1,2299 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.order.persist.dao.ConsignOrderItemsDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.order.model.model.ConsignOrderItems" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="order_id" property="orderId" jdbcType="BIGINT" />
+    <result column="seller_id" property="sellerId" jdbcType="BIGINT" />
+    <result column="seller_name" property="sellerName" jdbcType="VARCHAR" />
+
+    <result column="department_id" property="departmentId" jdbcType="BIGINT"/>
+    <result column="department_name" property="departmentName" jdbcType="VARCHAR"/>
+    <result column="contact_id" property="contactId" jdbcType="BIGINT"/>
+    <result column="contact_name" property="contactName" jdbcType="VARCHAR"/>
+
+    <result column="nsort_name" property="nsortName" jdbcType="VARCHAR" />
+    <result column="material" property="material" jdbcType="VARCHAR" />
+    <result column="spec" property="spec" jdbcType="VARCHAR" />
+    <result column="factory" property="factory" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="warehouse" property="warehouse" jdbcType="VARCHAR" />
+    <result column="quantity" property="quantity" jdbcType="INTEGER" />
+    <result column="weight" property="weight" jdbcType="DECIMAL" />
+    <result column="weight_concept" property="weightConcept" jdbcType="VARCHAR" />
+    <result column="cost_price" property="costPrice" jdbcType="DECIMAL" />
+    <result column="deal_price" property="dealPrice" jdbcType="DECIMAL" />
+    <result column="amount" property="amount" jdbcType="DECIMAL" />
+    <result column="invoice_amount" property="invoiceAmount" jdbcType="DECIMAL" />
+    <result column="invoice_weight" property="invoiceWeight" jdbcType="DECIMAL" />
+    <result column="actual_pick_weight_salesman" property="actualPickWeightSalesman" jdbcType="DECIMAL" />
+    <result column="actual_pick_weight_server" property="actualPickWeightServer" jdbcType="DECIMAL" />
+    <result column="actual_pick_quantity_salesman" property="actualPickQuantitySalesman" jdbcType="INTEGER" />
+    <result column="actual_pick_quantity_server" property="actualPickQuantityServer" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="is_payed_by_accept_draft" property="isPayedByAcceptDraft" jdbcType="BIT" />
+    <result column="accept_draft_id" property="acceptDraftId" jdbcType="BIGINT" />
+    <result column="accept_draft_code" property="acceptDraftCode" jdbcType="VARCHAR" />
+    <result column="seller_org_id" property="sellerOrgId" jdbcType="BIGINT"/>
+    <result column="seller_org_name" property="sellerOrgName" jdbcType="VARCHAR"/>
+    <result column="seller_owner_id" property="sellerOwnerId" jdbcType="BIGINT"/>
+    <result column="seller_owner_name" property="sellerOwnerName" jdbcType="VARCHAR"/>
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+    <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+    <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+    <result column="used_amount" property="usedAmount" jdbcType="DECIMAL" />
+    <result column="used_weight" property="usedWeight" jdbcType="DECIMAL" />
+    <result column="allowance_amount" property="allowanceAmount" jdbcType="DECIMAL" />
+    <result column="allowance_weight" property="allowanceWeight" jdbcType="DECIMAL" />
+    <result column="allowance_buyer_amount" property="allowanceBuyerAmount" jdbcType="DECIMAL" />
+    <result column="seller_job_number" property="sellerJobNumber" jdbcType="VARCHAR" />
+
+    <result column="seller_credential_code" property="sellerCredentialCode" jdbcType="VARCHAR" />
+    <result column="batch_seller_credential_code" property="batchSellerCredentialCode" jdbcType="VARCHAR" />
+
+    <result column="strapping_num" property="strappingNum" jdbcType="VARCHAR" /> <!-- 捆包号 -->
+
+</resultMap>
+
+<resultMap id="PurchaseRecordDto" type="com.prcsteel.platform.order.model.dto.PurchaseRecordDto" >
+  <result column="nsort_name" property="nsortName" jdbcType="VARCHAR" />
+  <result column="city" property="city" jdbcType="VARCHAR" />
+</resultMap>
+
+  <resultMap id="OrderSellerInfoDto" type="com.prcsteel.platform.order.model.dto.ConsignOrderSellerInfoDto" >
+    <result column="id" property="contractId" jdbcType="BIGINT" />
+    <result column="seller_id" property="sellerId" jdbcType="BIGINT" />
+    <result column="name" property="companyName" jdbcType="VARCHAR" />
+
+    <result column="department_id" property="sellerDepartmentId" jdbcType="BIGINT" />
+    <result column="department_name" property="sellerDepartmentName" jdbcType="VARCHAR" />
+
+    <result column="mobil" property="mobile" jdbcType="VARCHAR" />
+    <result column="addr" property="address" jdbcType="VARCHAR" />
+    <result column="reg_address" property="regAddress" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="bank_name_main" property="bankNameMain" jdbcType="VARCHAR" />
+    <result column="bank_name_branch" property="bankNameBranch" jdbcType="VARCHAR" />
+    <result column="bank_code" property="bankCode" jdbcType="VARCHAR" />
+    <result column="amount" property="orderAmount" jdbcType="DECIMAL" />
+    <result column="contract_amount" property="contractAmount" jdbcType="DECIMAL" />
+    <result column="balance_second_settlement" property="balanceSecondSettlement" jdbcType="DECIMAL" />
+    <result column="credit_amount_used" property="creditUsed" jdbcType="DECIMAL" />
+    <result column="status" property="contractStatus" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="OrderItemsInfo" type="com.prcsteel.platform.order.model.dto.ConsignOrderItemsInfoDto" extends="BaseResultMap">
+    <result column="consign_type" property="consignType" jdbcType="VARCHAR" />
+    <result column="traderName" property="sellerTraderName" jdbcType="VARCHAR" />
+    <result column="invoice_in_id" property="invoiceInId" jdbcType="INTEGER" />
+    <result column="invoice_in_detail_id" property="invoiceInDetailId" jdbcType="INTEGER" />
+    <result column="no_tax_amount" property="noTaxAmount" jdbcType="DECIMAL" />
+    <result column="tax_amount" property="taxAmount" jdbcType="DECIMAL" />
+    <result column="invoice_amount" property="invoiceAmount" jdbcType="DECIMAL" />
+    <result column="order_code" property="orderCode" jdbcType="VARCHAR" />
+    <result column="contract_code_auto" property="contractCodeAuto" jdbcType="VARCHAR" />
+    <result column="departmentCount" property="departmentCount" jdbcType="BIGINT"/>
+    <result column="resourceId" property="resourceId" jdbcType="BIGINT"/>
+  </resultMap>
+  <resultMap id="OrderItemsInfoReport" type="com.prcsteel.platform.order.model.dto.ConsignOrderItemsInfoDto" extends="BaseResultMap">
+    <result column="consign_type" property="consignType" jdbcType="VARCHAR" />
+    <result column="traderName" property="sellerTraderName" jdbcType="VARCHAR" />
+    <result column="invoice_in_id" property="invoiceInId" jdbcType="INTEGER" />
+    <result column="invoice_in_detail_id" property="invoiceInDetailId" jdbcType="INTEGER" />
+    <result column="no_tax_amount" property="noTaxAmount" jdbcType="DECIMAL" />
+    <result column="tax_amount" property="taxAmount" jdbcType="DECIMAL" />
+    <result column="invoice_amount" property="invoiceAmount" jdbcType="DECIMAL" />
+    <result column="order_code" property="orderCode" jdbcType="VARCHAR" />
+    <result column="contract_code_auto" property="contractCodeAuto" jdbcType="VARCHAR" />
+    <result column="departmentCount" property="departmentCount" jdbcType="BIGINT"/>
+    
+    <result column="supplier_label" property="supplierLabel" jdbcType="VARCHAR" />
+    <result column="accept_draft" property="acceptDraft" jdbcType="VARCHAR" />
+    <result column="settlement_time" property="settlementTime" jdbcType="VARCHAR" />
+    <result column="invoice_time" property="invoiceTime" jdbcType="VARCHAR" />
+    <result column="financeOrder " property="financeOrder" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ApplicationDetailInfo" type="com.prcsteel.platform.order.model.dto.InvoiceApplicationDetailDto">
+    <result column="order_id" property="orderId" jdbcType="BIGINT" />
+    <result column="order_detail_id" property="orderDetailId" jdbcType="BIGINT" />
+    <result column="invoice_orderitem_id" property="invoiceOrderitemId" jdbcType="BIGINT" />
+    <result column="order_code" property="orderCode" jdbcType="VARCHAR" />
+    <result column="seller_id" property="sellerId" jdbcType="BIGINT" />
+    <result column="seller_name" property="sellerName" jdbcType="VARCHAR" />
+    <result column="nsort_name" property="nsortName" jdbcType="VARCHAR" />
+    <result column="cost_price" property="costPrice" jdbcType="DECIMAL" />
+    <result column="deal_price" property="dealPrice" jdbcType="DECIMAL" />
+    <result column="material" property="material" jdbcType="VARCHAR" />
+    <result column="spec" property="spec" jdbcType="VARCHAR" />
+    <result column="factory" property="factory" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="warehouse" property="warehouse" jdbcType="VARCHAR" />
+    <result column="quantity" property="quantity" jdbcType="INTEGER" />
+    <result column="invoice_in_id" property="invoiceInId" jdbcType="BIGINT"/>
+    <result column="invoice_in_detail_id" property="invoiceInDetailId" jdbcType="BIGINT"/>
+    <result column="weight" property="weight" jdbcType="DECIMAL" />
+    <result column="amount" property="amount" jdbcType="DECIMAL" />
+    <result column="contract_amount" property="contractAmount" jdbcType="DECIMAL" />
+    <result column="contract_weight" property="contractWeight" jdbcType="DECIMAL" />
+    <result column="actual_amount" property="actualAmount" jdbcType="DECIMAL" />
+    <result column="actual_weight" property="actualWeight" jdbcType="DECIMAL" />
+    <result column="un_amount" property="unAmount" jdbcType="DECIMAL" />
+    <result column="un_weight" property="unWeight" jdbcType="DECIMAL" />
+    <result column="allowance_weight" property="allowanceWeight" jdbcType="DECIMAL" />
+    <result column="allowance_buyer_amount" property="allowanceBuyerAmount" jdbcType="DECIMAL" />
+    <result column="used_weight" property="usedWeight" jdbcType="DECIMAL" />
+    <result column="used_amount" property="usedAmount" jdbcType="DECIMAL" />
+
+    <result column="department_id" property="departmentId" jdbcType="BIGINT" />
+    <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
+
+
+    <result column="seller_credential_code" property="sellerCredentialCode" jdbcType="VARCHAR" />
+    <result column="seller_credential_status" property="sellerCredentialStatus" jdbcType="VARCHAR" />
+    <result column="batch_seller_credential_code" property="batchSellerCredentialCode" jdbcType="VARCHAR" />
+    <result column="batch_seller_credential_status" property="batchSellerCredentialStatus" jdbcType="VARCHAR" />
+    <result column="buyer_credential_code" property="buyerCredentialCode" jdbcType="VARCHAR"/>
+    <result column="buyer_credential_status" property="buyerCredentialStatus" jdbcType="VARCHAR"/>
+    <result column="batch_buyer_credential_code" property="batchBuyerCredentialCode" jdbcType="VARCHAR"/>
+    <result column="batch_buyer_credential_status" property="batchBuyerCredentialStatus" jdbcType="VARCHAR"/>
+    <result column="buyer_check_value" property="buyerCheckValue" jdbcType="VARCHAR"/>
+    <result column="seller_check_value" property="sellerCheckValue" jdbcType="VARCHAR"/>
+
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, order_id, seller_id, seller_name,department_id,department_name,contact_id, contact_name, nsort_name, material, spec, factory, city,
+
+    warehouse, quantity, weight, weight_concept, cost_price, deal_price, amount, invoice_amount,
+    invoice_weight,actual_pick_weight_salesman, actual_pick_weight_server, actual_pick_quantity_salesman,
+    actual_pick_quantity_server, status, is_payed_by_accept_draft, accept_draft_id, accept_draft_code,
+    seller_org_id, seller_org_name, seller_owner_id, seller_owner_name,
+    created, created_by, last_updated, last_updated_by,
+    modification_number, row_id, parent_row_id,used_amount,used_weight,
+    allowance_amount,allowance_weight,allowance_buyer_amount,seller_job_number,seller_credential_code,batch_seller_credential_code,strapping_num
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select
+    <include refid="Base_Column_List"/>
+    from busi_consign_order_items
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from busi_consign_order_items
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.prcsteel.platform.order.model.model.ConsignOrderItems">
+    insert into busi_consign_order_items (id, order_id, seller_id,
+    seller_name,department_id,department_name,contact_id, contact_name, nsort_name, material,
+    spec, factory, city,
+    warehouse, quantity, weight,
+    weight_concept, cost_price, deal_price,
+    amount, invoice_amount,invoice_weight, actual_pick_weight_salesman,
+    actual_pick_weight_server, actual_pick_quantity_salesman,
+    actual_pick_quantity_server, status, is_payed_by_accept_draft,
+    accept_draft_id, accept_draft_code, seller_org_id, seller_org_name,
+    seller_owner_id, seller_owner_name,
+    created, created_by, last_updated, last_updated_by,
+    modification_number, row_id, parent_row_id,seller_job_number
+    )
+    values (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{sellerId,jdbcType=BIGINT},
+
+    #{sellerName,jdbcType=VARCHAR},#{departmentId,jdbcType=BIGINT},#{departmentName,jdbcType=VARCHAR},
+    #{contactId,jdbcType=BIGINT}, #{contactName,jdbcType=VARCHAR},#{nsortName,jdbcType=VARCHAR}, #{material,jdbcType=VARCHAR},
+    #{spec,jdbcType=VARCHAR}, #{factory,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR},
+    #{warehouse,jdbcType=VARCHAR}, #{quantity,jdbcType=INTEGER}, #{weight,jdbcType=DECIMAL},
+    #{weightConcept,jdbcType=VARCHAR}, #{costPrice,jdbcType=DECIMAL}, #{dealPrice,jdbcType=DECIMAL},
+    #{amount,jdbcType=DECIMAL}, #{invoiceAmount,jdbcType=DECIMAL},#{invoiceWeight,jdbcType=DECIMAL}, #{actualPickWeightSalesman,jdbcType=DECIMAL},
+    #{actualPickWeightServer,jdbcType=DECIMAL}, #{actualPickQuantitySalesman,jdbcType=INTEGER},
+    #{actualPickQuantityServer,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{isPayedByAcceptDraft,jdbcType=BIT},
+    #{acceptDraftId,jdbcType=BIGINT}, #{acceptDraftCode,jdbcType=VARCHAR},
+    #{sellerOrgId,jdbcType=BIGINT}, #{sellerOrgName,jdbcType=VARCHAR},
+    #{sellerOwnerId,jdbcType=BIGINT}, #{sellerOwnerName,jdbcType=VARCHAR},
+    #{created,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, #{lastUpdated,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR},
+    #{modificationNumber,jdbcType=INTEGER}, #{rowId,jdbcType=VARCHAR}, #{parentRowId,jdbcType=VARCHAR}, #{sellerJobNumber,jdbcType=VARCHAR}
+    )
+  </insert>
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.order.model.model.ConsignOrderItems" useGeneratedKeys="true" keyProperty="id" >
+    insert into busi_consign_order_items
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="sellerId != null" >
+        seller_id,
+      </if>
+      <if test="sellerName != null" >
+        seller_name,
+      </if>
+      <if test="departmentId != null">
+        department_id,
+      </if>
+      <if test="departmentName != null">
+        department_name,
+      </if>
+      <if test="contactId != null">
+        contact_id,
+      </if>
+      <if test="contactName != null">
+        contact_name,
+      </if>
+
+      <if test="nsortName != null" >
+        nsort_name,
+      </if>
+      <if test="material != null" >
+        material,
+      </if>
+      <if test="spec != null" >
+        spec,
+      </if>
+      <if test="factory != null" >
+        factory,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="warehouse != null" >
+        warehouse,
+      </if>
+      <if test="quantity != null" >
+        quantity,
+      </if>
+      <if test="weight != null" >
+        weight,
+      </if>
+      <if test="weightConcept != null" >
+        weight_concept,
+      </if>
+      <if test="costPrice != null" >
+        cost_price,
+      </if>
+      <if test="dealPrice != null" >
+        deal_price,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="invoiceAmount != null" >
+        invoice_amount,
+      </if>
+      <if test="invoiceWeight != null" >
+        invoice_weight,
+      </if>
+      <if test="actualPickWeightSalesman != null" >
+        actual_pick_weight_salesman,
+      </if>
+      <if test="actualPickWeightServer != null" >
+        actual_pick_weight_server,
+      </if>
+      <if test="actualPickQuantitySalesman != null" >
+        actual_pick_quantity_salesman,
+      </if>
+      <if test="actualPickQuantityServer != null" >
+        actual_pick_quantity_server,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="isPayedByAcceptDraft != null" >
+        is_payed_by_accept_draft,
+      </if>
+      <if test="acceptDraftId != null" >
+        accept_draft_id,
+      </if>
+      <if test="acceptDraftCode != null" >
+        accept_draft_code,
+      </if>
+      <if test="sellerOrgId != null" >
+        seller_org_id,
+      </if>
+      <if test="sellerOrgName != null" >
+        seller_org_name,
+      </if>
+      <if test="sellerOwnerId != null" >
+        seller_owner_id,
+      </if>
+      <if test="sellerOwnerName != null" >
+        seller_owner_name,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by,
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number,
+      </if>
+      <if test="rowId != null" >
+        row_id,
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id,
+      </if>
+      <if test="sellerJobNumber != null" >
+        seller_job_number,
+      </if>
+      <if test="strappingNum != null" >
+        strapping_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="sellerId != null" >
+        #{sellerId,jdbcType=BIGINT},
+      </if>
+      <if test="sellerName != null" >
+        #{sellerName,jdbcType=VARCHAR},
+      </if>
+
+      <if test="departmentId != null">
+        #{departmentId,jdbcType=BIGINT},
+      </if>
+      <if test="departmentName != null">
+        #{departmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactId != null">
+        #{contactId,jdbcType=BIGINT},
+      </if>
+      <if test="contactName != null">
+        #{contactName,jdbcType=VARCHAR},
+      </if>
+
+      <if test="nsortName != null" >
+        #{nsortName,jdbcType=VARCHAR},
+      </if>
+      <if test="material != null" >
+        #{material,jdbcType=VARCHAR},
+      </if>
+      <if test="spec != null" >
+        #{spec,jdbcType=VARCHAR},
+      </if>
+      <if test="factory != null" >
+        #{factory,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouse != null" >
+        #{warehouse,jdbcType=VARCHAR},
+      </if>
+      <if test="quantity != null" >
+        #{quantity,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null" >
+        #{weight,jdbcType=DECIMAL},
+      </if>
+      <if test="weightConcept != null" >
+        #{weightConcept,jdbcType=VARCHAR},
+      </if>
+      <if test="costPrice != null" >
+        #{costPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="dealPrice != null" >
+        #{dealPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="invoiceAmount != null" >
+        #{invoiceAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="invoiceWeight != null" >
+        #{invoiceWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="actualPickWeightSalesman != null" >
+        #{actualPickWeightSalesman,jdbcType=DECIMAL},
+      </if>
+      <if test="actualPickWeightServer != null" >
+        #{actualPickWeightServer,jdbcType=DECIMAL},
+      </if>
+      <if test="actualPickQuantitySalesman != null" >
+        #{actualPickQuantitySalesman,jdbcType=INTEGER},
+      </if>
+      <if test="actualPickQuantityServer != null" >
+        #{actualPickQuantityServer,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="isPayedByAcceptDraft != null" >
+        #{isPayedByAcceptDraft,jdbcType=BIT},
+      </if>
+      <if test="acceptDraftId != null" >
+        #{acceptDraftId,jdbcType=BIGINT},
+      </if>
+      <if test="acceptDraftCode != null" >
+        #{acceptDraftCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerOrgId != null" >
+        #{sellerOrgId,jdbcType=BIGINT},
+      </if>
+      <if test="sellerOrgName != null" >
+        #{sellerOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerOwnerId != null" >
+        #{sellerOwnerId,jdbcType=BIGINT},
+      </if>
+      <if test="sellerOwnerName != null" >
+        #{sellerOwnerName,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        #{parentRowId,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerJobNumber != null" >
+        #{sellerJobNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="strappingNum != null" >
+        #{strappingNum,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.order.model.model.ConsignOrderItems" >
+    update busi_consign_order_items
+    <set >
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="sellerId != null" >
+        seller_id = #{sellerId,jdbcType=BIGINT},
+      </if>
+      <if test="sellerName != null" >
+        seller_name = #{sellerName,jdbcType=VARCHAR},
+      </if>
+
+      <if test="departmentId != null">
+        department_id = #{departmentId,jdbcType=BIGINT},
+      </if>
+      <if test="departmentName != null">
+        department_name = #{departmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactId != null">
+        contact_id = #{contactId,jdbcType=BIGINT},
+      </if>
+      <if test="contactName != null">
+        contact_name = #{contactName,jdbcType=VARCHAR},
+      </if>
+
+      <if test="nsortName != null" >
+        nsort_name = #{nsortName,jdbcType=VARCHAR},
+      </if>
+      <if test="material != null" >
+        material = #{material,jdbcType=VARCHAR},
+      </if>
+      <if test="spec != null" >
+        spec = #{spec,jdbcType=VARCHAR},
+      </if>
+      <if test="factory != null" >
+        factory = #{factory,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouse != null" >
+        warehouse = #{warehouse,jdbcType=VARCHAR},
+      </if>
+      <if test="quantity != null" >
+        quantity = #{quantity,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null" >
+        weight = #{weight,jdbcType=DECIMAL},
+      </if>
+      <if test="weightConcept != null" >
+        weight_concept = #{weightConcept,jdbcType=VARCHAR},
+      </if>
+      <if test="costPrice != null" >
+        cost_price = #{costPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="dealPrice != null" >
+        deal_price = #{dealPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="invoiceAmount != null" >
+        invoice_amount = #{invoiceAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="invoiceAmount != null" >
+        invoice_weight = #{invoiceWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="usedAmount != null" >
+        used_amount = #{usedAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="usedWeight != null" >
+        used_weight = #{usedWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="allowanceAmount != null" >
+        allowance_amount = #{allowanceAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="allowanceWeight != null" >
+        allowance_weight = #{allowanceWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="allowanceBuyerAmount != null" >
+        allowance_buyer_amount = #{allowanceBuyerAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="actualPickWeightSalesman != null" >
+        actual_pick_weight_salesman = #{actualPickWeightSalesman,jdbcType=DECIMAL},
+      </if>
+      <if test="actualPickWeightServer != null" >
+        actual_pick_weight_server = #{actualPickWeightServer,jdbcType=DECIMAL},
+      </if>
+      <if test="actualPickQuantitySalesman != null" >
+        actual_pick_quantity_salesman = #{actualPickQuantitySalesman,jdbcType=INTEGER},
+      </if>
+      <if test="actualPickQuantityServer != null" >
+        actual_pick_quantity_server = #{actualPickQuantityServer,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="isPayedByAcceptDraft != null" >
+        is_payed_by_accept_draft = #{isPayedByAcceptDraft,jdbcType=BIT},
+      </if>
+      <if test="acceptDraftId != null" >
+        accept_draft_id = #{acceptDraftId,jdbcType=BIGINT},
+      </if>
+      <if test="acceptDraftCode != null" >
+        accept_draft_code = #{acceptDraftCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerOrgId != null" >
+        seller_org_id = #{sellerOrgId,jdbcType=BIGINT},
+      </if>
+      <if test="sellerOrgName != null" >
+        seller_org_name = #{sellerOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerOwnerId != null" >
+        seller_owner_id = #{sellerOwnerId,jdbcType=BIGINT},
+      </if>
+      <if test="sellerOwnerName != null" >
+        seller_owner_name = #{sellerOwnerName,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number = #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        row_id = #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerJobNumber != null" >
+        seller_job_number = #{sellerJobNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerCredentialCode != null">
+        seller_credential_code = #{sellerCredentialCode,jdbcType=VARCHAR},
+      </if>
+      <if test="batchSellerCredentialCode != null">
+        batch_seller_credential_code = #{batchSellerCredentialCode,jdbcType=VARCHAR},
+      </if>
+      <if test="strappingNum != null" >
+        strapping_num = #{strappingNum,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT} and modification_number+1 = #{modificationNumber}
+  </update>
+
+  <update id="updateByOrderIdSelective" parameterType="com.prcsteel.platform.order.model.model.ConsignOrderItems" >
+    update busi_consign_order_items
+    <set >
+      <if test="sellerCredentialCode != null">
+        seller_credential_code = #{sellerCredentialCode,jdbcType=VARCHAR},
+      </if>
+      <if test="batchSellerCredentialCode != null">
+        batch_seller_credential_code = #{batchSellerCredentialCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=BIGINT}
+    and seller_id = #{sellerId,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.order.model.model.ConsignOrderItems" >
+    update busi_consign_order_items
+    set order_id = #{orderId,jdbcType=BIGINT},
+    seller_id = #{sellerId,jdbcType=BIGINT},
+    seller_name = #{sellerName,jdbcType=VARCHAR},
+
+    department_id = #{departmentId,jdbcType=BIGINT},
+    department_name = #{departmentName,jdbcType=VARCHAR},
+    contact_id = #{contactId,jdbcType=BIGINT},
+    contact_name = #{contactName,jdbcType=VARCHAR},
+
+    nsort_name = #{nsortName,jdbcType=VARCHAR},
+    material = #{material,jdbcType=VARCHAR},
+    spec = #{spec,jdbcType=VARCHAR},
+    factory = #{factory,jdbcType=VARCHAR},
+    city = #{city,jdbcType=VARCHAR},
+    warehouse = #{warehouse,jdbcType=VARCHAR},
+    quantity = #{quantity,jdbcType=INTEGER},
+    weight = #{weight,jdbcType=DECIMAL},
+    weight_concept = #{weightConcept,jdbcType=VARCHAR},
+    cost_price = #{costPrice,jdbcType=DECIMAL},
+    deal_price = #{dealPrice,jdbcType=DECIMAL},
+    amount = #{amount,jdbcType=DECIMAL},
+    invoice_amount = #{invoiceAmount,jdbcType=DECIMAL},
+    invoice_weight = #{invoiceWeight,jdbcType=DECIMAL},
+    used_amount = #{usedAmount,jdbcType=DECIMAL},
+    used_weight = #{usedWeight,jdbcType=DECIMAL},
+    allowance_amount = #{allowanceAmount,jdbcType=DECIMAL},
+    allowance_weight = #{allowanceWeight,jdbcType=DECIMAL},
+    allowance_buyer_amount = #{allowanceBuyerAmount,jdbcType=DECIMAL},
+    actual_pick_weight_salesman = #{actualPickWeightSalesman,jdbcType=DECIMAL},
+    actual_pick_weight_server = #{actualPickWeightServer,jdbcType=DECIMAL},
+    actual_pick_quantity_salesman = #{actualPickQuantitySalesman,jdbcType=INTEGER},
+    actual_pick_quantity_server = #{actualPickQuantityServer,jdbcType=INTEGER},
+    status = #{status,jdbcType=INTEGER},
+    is_payed_by_accept_draft = #{isPayedByAcceptDraft,jdbcType=BIT},
+    accept_draft_id = #{acceptDraftId,jdbcType=BIGINT},
+    accept_draft_code = #{acceptDraftCode,jdbcType=VARCHAR},
+    seller_org_id = #{sellerOrgId,jdbcType=BIGINT},
+    seller_org_name = #{sellerOrgName,jdbcType=VARCHAR},
+    seller_owner_id = #{sellerOwnerId,jdbcType=BIGINT},
+    seller_owner_name = #{sellerOwnerName,jdbcType=VARCHAR},
+    created = #{created,jdbcType=TIMESTAMP},
+    created_by = #{createdBy,jdbcType=VARCHAR},
+    last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+    last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+    modification_number = #{modificationNumber,jdbcType=INTEGER},
+    row_id = #{rowId,jdbcType=VARCHAR},
+    parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+    seller_job_number = #{sellerJobNumber,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="getSellerInfo" resultMap="OrderSellerInfoDto" parameterType="java.lang.Long" >
+
+    select t3.id,t1.seller_id,t2.name,t1.department_id, t1.department_name, t4.bank_name_main,t4.bank_name_branch,
+    t4.bank_code,t4.mobil,t4.reg_address as addr,t4.tel,t4.reg_address,
+    sum(t1.amount) as amount,
+    sum(ROUND(t1.weight*t1.cost_price,2)) as contract_amount,
+    t5.balance_second_settlement,t3.status,
+    t5.credit_amount_used
+    from busi_consign_order_items t1
+    inner join cust_account t2 on t1.seller_id=t2.id
+    inner join cust_account_ext t4 on t2.id = t4.cust_account_id
+    inner join cust_account t5 on t5.id = t1.department_id
+    left join busi_consign_order_contract t3 on t1.department_id=t3.customer_department_id and t3.consign_order_id=#{orderId ,jdbcType=BIGINT}
+    <!--去掉变更合同 -->
+    and t3.change_order_id is null
+    where t1.order_id = #{orderId ,jdbcType=BIGINT}
+    group by t1.department_id
+
+  </select>
+  <!-- add by myh 通过订单Id查询-->
+  <select id="selectByOrderIdAndSellerId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from busi_consign_order_items
+    where order_id = #{0} and seller_id = #{1}
+  </select>
+
+  <select id="selectSellerIdByOrderId" resultType="java.lang.Long" parameterType="java.lang.Long">
+    select
+    DISTINCT seller_id
+    from busi_consign_order_items
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByOrderId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select
+    <include refid="Base_Column_List"/>
+    from busi_consign_order_items
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteByOrderId" parameterType="java.lang.Long">
+    delete from busi_consign_order_items
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </delete>
+
+  <select id="queryCountNotMatch" resultType="java.lang.Integer" parameterType="java.lang.Long">
+    select count(id)
+    from busi_consign_order_items
+    where order_id = #{orderId,jdbcType=BIGINT} and status != 3
+  </select>
+
+  <resultMap id="BalanceDtoResultMap" type="com.prcsteel.platform.order.model.dto.BalanceDto">
+    <result column="nsort_name" property="nsortName" jdbcType="VARCHAR"/>
+    <result column="material" property="material" jdbcType="VARCHAR"/>
+    <result column="spec" property="spec" jdbcType="VARCHAR"/>
+    <result column="total" property="total" jdbcType="DECIMAL"/>
+  </resultMap>
+
+  <select id="queryAmountList" resultMap="BalanceDtoResultMap" parameterType="map">
+    <![CDATA[
+
+        SELECT  bcoi.nsort_name, bcoi.material, bcoi.spec, SUM(bcoi.amount)-SUM(bcoi.invoice_amount) total
+        FROM busi_consign_order_items bcoi
+          LEFT JOIN busi_consign_order bco ON bcoi.order_id = bco.id
+          LEFT JOIN acl_user au ON au.id = bcoi.seller_id
+          LEFT JOIN base_organization bo ON bo.id = au.org_id
+        WHERE (bco.status='8' OR bco.status='7') AND bcoi.seller_id = #{sellerId,jdbcType=BIGINT} AND bco.account_id = #{accountId,jdbcType=BIGINT}
+        GROUP BY bcoi.nsort_name, bcoi.material, bcoi.spec;
+
+        ]]>
+  </select>
+
+  <resultMap id="UnInvoicedDto" type="com.prcsteel.platform.order.model.dto.UnInvoicedDto">
+    <result column="item_id" property="itemId" jdbcType="BIGINT"/>
+    <result column="buyer_name" property="buyerName" jdbcType="VARCHAR"/>
+    <result column="tax_code" property="taxCode" jdbcType="VARCHAR"/>
+    <result column="nsort_name" property="nsortName" jdbcType="VARCHAR"/>
+    <result column="spec" property="spec" jdbcType="VARCHAR"/>
+    <result column="material" property="material" jdbcType="VARCHAR"/>
+    <result column="org_name" property="orgName" jdbcType="VARCHAR"/>
+    <result column="weight" property="weight" jdbcType="DECIMAL"/>
+    <result column="price" property="price" jdbcType="DECIMAL"/>
+    <result column="total_amount" property="totalAmount" jdbcType="DECIMAL"/>
+    <result column="order_code" property="orderCode" jdbcType="VARCHAR"/>
+    <result column="invoice_status" property="invoiceStatus" jdbcType="INTEGER"/>
+    <result column="departmentName" property="departmentName" jdbcType="VARCHAR"/>
+    <result column="departmentCount" property="departmentCount" jdbcType="BIGINT"/>
+  </resultMap>
+  <select id="queryUnInvoicedList" resultMap="UnInvoicedDto" parameterType="map">
+    <if test="selectIds != null">SELECT t.* from(</if>
+    SELECT i.id AS 'item_id', a.name AS 'buyer_name', i.department_name AS departmentName, e.tax_code AS 'tax_code', i.nsort_name AS 'nsort_name', i.spec
+    AS 'spec', i.material AS 'material',
+    SUM(ROUND(i.actual_pick_weight_server-ifnull(i.used_weight, 0), 6))
+    AS 'weight', o.order_org_name as org_name,
+    ROUND(i.deal_price, 2) AS 'price',
+    SUM(ROUND((i.deal_price*i.actual_pick_weight_server-IFNULL(i.used_amount, 0)), 2)) AS 'total_amount',
+    (SELECT COUNT(t2.id) FROM cust_account t2 WHERE t2.parent_id = a.id) AS departmentCount,
+    o.code AS 'order_code', 0 AS 'invoice_status'
+    FROM busi_consign_order_items i
+    LEFT JOIN busi_consign_order o ON i.order_id = o.id
+    LEFT JOIN cust_account a ON a.id = o.account_id
+    LEFT JOIN cust_account_ext e ON e.cust_account_id = a.id
+    WHERE <![CDATA[ o.status in (7, 8) AND i.status != 4 AND i.actual_pick_weight_server > 0 AND i.deal_price*i.actual_pick_weight_server-IFNULL(i.used_amount, 0) > 0 ]]>
+    <if test="timeFrom != null">
+      <![CDATA[ AND str_to_date(o.created,'%Y-%m-%d') >= #{timeFrom}]]>
+    </if>
+    <if test="timeTo != null">
+      <![CDATA[ AND str_to_date(o.created,'%Y-%m-%d') <= #{timeTo}]]>
+    </if>
+    <if test ="buyerName != null">
+      AND o.account_name = #{buyerName}
+    </if>
+    <if test ="organization != null">
+      AND o.owner_id IN (SELECT u.id FROM acl_user u WHERE u.org_id = #{organization})
+    </if>
+    <if test="userIds != null">
+      AND o.owner_id IN
+      <foreach item="id" index="index" collection="userIds" open="(" separator="," close=")">
+        #{id}
+      </foreach>
+    </if>
+    GROUP BY a.id, nsort_name, spec, material, o.id, i.deal_price
+    ORDER BY a.id
+    <if test="selectIds != null">
+      ) AS t WHERE t.item_id IN
+      <foreach item="id" index="index" collection="selectIds" open="(" separator="," close=")">
+        #{id}
+      </foreach>
+    </if>
+    <if test="start != null and length != null">
+      limit #{start},#{length}
+    </if>
+  </select>
+
+  <select id="queryOrderdetails" resultMap="OrderItemsInfoReport" parameterType="com.prcsteel.platform.order.model.query.ConsignOrderDetailQuery">
+    select
+    i.id,i.order_id,i.seller_id,i.seller_name,i.nsort_name,i.material,i.spec,i.factory,i.city,
+    i.warehouse,i.quantity,i.weight,i.weight_concept,i.cost_price,i.deal_price,i.amount,i.invoice_amount,
+    i.actual_pick_weight_salesman,i.actual_pick_weight_server,i.actual_pick_quantity_salesman,
+    i.actual_pick_quantity_server,i.status,i.created,i.created_by,i.last_updated,i.last_updated_by,
+    i.modification_number,i.row_id,i.parent_row_id,u.name as traderName,i.is_payed_by_accept_draft,i.accept_draft_id,i.accept_draft_code,contract.contract_code_auto,
+    i.department_id, i.department_name, p.departmentCount
+
+    <!-- add by tuxianming : 20160722,用于利润表报 -->
+    ,i.allowance_buyer_amount, i.allowance_amount, c.supplier_label
+    <!-- 是不是银票支付： 不是："无"；是：银票id是不是为空：是： "银票支付"； 不是： "银票号" -->
+    ,if(i.is_payed_by_accept_draft=true, if(i.accept_draft_id is not null or i.accept_draft_id != 0, i.accept_draft_code, '银票支付'), '无') as accept_draft
+    <!-- 结算时间： 二结时间 -->
+    , if(o.secondary_time is null, '', date_format(o.secondary_time,'%Y-%m-%d')) as settlement_time
+    <!-- 开票时间： 如果没开票为空，如果开票：不为空 -->
+    , if(inv.created is null, '', date_format(inv.created,'%Y-%m-%d')) as invoice_time
+
+    ,o.finance_order as financeOrder
+
+    from busi_consign_order_items i
+    left join busi_consign_order as o on i.order_id = o.id
+    inner join (SELECT parent_id,COUNT(id) as departmentCount FROM cust_account   group by parent_id ) p on p.parent_id = i.seller_id
+    inner join cust_account c on i.seller_id=c.id
+    inner join acl_user u on c.manager_id=u.id
+    inner join busi_consign_order_contract contract on i.order_id=contract.consign_order_id and i.seller_id=contract.customer_id and contract.change_order_id is null
+    left join (select t.order_detail_id,r.created
+    from inv_invoice_out_receipt r
+    INNER JOIN inv_invoice_out_item_detail t on t.id = r.item_detail_id
+    group by t.order_detail_id) inv on inv.order_detail_id = i.id
+
+    <!-- where t1.order_id in(
+    select t1.id from busi_consign_order t1-->
+
+    <where>
+      <if test="orgId!=null and orgId!=0">
+        and o.order_org_id=#{orgId}
+      </if>
+      <if test="buyerTrader!=null and buyerTrader!=0">
+        and o.owner_id=#{buyerTrader}
+
+      </if>
+
+      <if test="beginTime!=null">
+        AND <![CDATA[o.created >=  #{beginTime} ]]>
+      </if>
+      <if test="endTime!=null">
+        AND <![CDATA[o.created < #{endTime} ]]>
+      </if>
+      <if test="secBeginTime!=null">
+        AND <![CDATA[o.secondary_time >=  #{secBeginTime} ]]>
+      </if>
+      <if test="secEndTime!=null">
+        AND <![CDATA[o.secondary_time < #{secEndTime} ]]>
+      </if>
+
+      <if test="statusList != null and statusList.size > 0 ">
+        and o.status in
+        <foreach item="status" index="index" collection="statusList" open="(" separator="," close=")">
+          #{status}
+        </foreach>
+      </if>
+      <if test="payStatusList != null and payStatusList.size > 0 ">
+        and o.pay_Status in
+        <foreach item="status" index="index" collection="payStatusList" open="(" separator="," close=")">
+          #{status}
+        </foreach>
+      </if>
+      <if test="fillUpStatusList != null and fillUpStatusList.size > 0 ">
+        and o.fillup_status in
+        <foreach item="status" index="index" collection="fillUpStatusList" open="(" separator="," close=")">
+          #{status}
+        </foreach>
+      </if>
+      <if test="sellId!=null and  sellId!=0">
+        and i.seller_id=#{sellId}
+      </if>    </where>
+  </select>
+  <select id="queryOrderdetailsSecond" resultMap="OrderItemsInfo" parameterType="com.prcsteel.platform.order.model.query.ConsignOrderDetailQuery">
+    select
+    t1.id,t1.order_id,t1.seller_id,t1.seller_name,t1.nsort_name,t1.material,t1.spec,t1.factory,t1.city,
+    t1.warehouse,t1.quantity,t1.weight,t1.weight_concept,t1.cost_price,t1.deal_price,t1.amount,t1.invoice_amount,
+    t1.actual_pick_weight_salesman,t1.actual_pick_weight_server,t1.actual_pick_quantity_salesman,
+    t1.actual_pick_quantity_server,t1.status,t1.created,t1.created_by,t1.last_updated,t1.last_updated_by,
+    t1.modification_number,t1.row_id,t1.parent_row_id,t3.name as traderName,t1.is_payed_by_accept_draft,t1.accept_draft_id,t1.accept_draft_code,t4.contract_code_auto
+    from busi_consign_order_items t1
+    inner join cust_account t2 on t1.seller_id=t2.id
+    inner join acl_user t3 on t2.manager_id=t3.id
+    inner join busi_consign_order_contract t4 on t1.order_id=t4.consign_order_id and t1.seller_id=t4.customer_id
+    where t1.order_id in(
+    select id from (select t1.id from busi_consign_order t1
+    inner join acl_user t2 on t1.owner_id=t2.id
+    <where>
+      <if test="orgId!=null and orgId!=0">
+        and t2.org_id=#{orgId}
+      </if>
+      <if test="buyerTrader!=null and buyerTrader!=0">
+        and t1.owner_id=#{buyerTrader}
+      </if>
+
+      <if test="beginTime!=null">
+        AND <![CDATA[t1.created >=  #{beginTime} ]]>
+      </if>
+      <if test="endTime!=null">
+        AND <![CDATA[t1.created < #{endTime} ]]>
+      </if>
+      <if test="secBeginTime!=null">
+        AND <![CDATA[t1.secondary_time >=  #{secBeginTime} ]]>
+      </if>
+      <if test="secEndTime!=null">
+        AND <![CDATA[t1.secondary_time < #{secEndTime} ]]>
+      </if>
+      <if test="statusList != null and statusList.size > 0 ">
+        and t1.status in
+        <foreach item="status" index="index" collection="statusList" open="(" separator="," close=")">
+          #{status}
+        </foreach>
+      </if>
+      <if test="payStatusList != null and payStatusList.size > 0 ">
+        and t1.pay_Status in
+        <foreach item="status" index="index" collection="payStatusList" open="(" separator="," close=")">
+          #{status}
+        </foreach>
+      </if>
+      <if test="fillUpStatusList != null and fillUpStatusList.size > 0 ">
+        and t1.fillup_status in
+        <foreach item="status" index="index" collection="fillUpStatusList" open="(" separator="," close=")">
+          #{status}
+        </foreach>
+      </if>
+    </where>
+    order by t1.created desc,t1.account_id asc
+    limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+    ) as t5 )
+    <if test="sellId!=null and  sellId!=0">
+      and t1.seller_id=#{sellId}
+    </if>
+  </select>
+
+  <select id="countContractAmountByOrderId" resultType="java.math.BigDecimal">
+    <![CDATA[
+        SELECT SUM(ROUND(weight * deal_price,2)) contract_amount
+        FROM busi_consign_order_items 
+        WHERE order_id=#{orderId}
+    ]]>
+  </select>
+
+  <select id="queryOrderItemsForInvoiceIn"
+          parameterType="com.prcsteel.platform.order.model.query.OrderItemsForInvoiceInQuery"
+          resultType="com.prcsteel.platform.order.model.dto.OrderItemsInvoiceInDto">
+    SELECT
+    item.order_id orderId,
+    item.id orderItemId,
+    item.created orderDateTime,
+
+    o.code orderNumber,
+    o.contract_code contractCode,
+    item.nsort_name nsortName,
+    item.spec spec,
+    o.department_id as departmentId,
+    o.department_name as departmentName,
+
+    item.material materials,
+    item.invoice_amount invoiceAmount,
+    item.invoice_weight invoiceWeight,
+    item.cost_price costPrice,
+    item.actual_pick_weight_server actualPickWeightServer,
+
+    o.account_name buyerName,
+    o.alter_status alterStatus,
+    IFNULL(item.allowance_amount,0) AS allowanceAmount,
+    IFNULL(item.allowance_weight,0) AS allowanceWeight,
+    case when
+    (SELECT COUNT(DISTINCT t.id) FROM cust_account t WHERE t.structure_type = 'Department' AND t.is_deleted = 0
+    AND t.parent_id = o.account_id) > 1
+    then 1 else  0 end as isShowDept
+    FROM busi_consign_order_items item
+    INNER JOIN busi_consign_order o ON item.order_id = o.id
+
+    WHERE
+    <![CDATA[
+        	IFNULL(item.invoice_weight,0) + IFNULL(item.invoice_amount,0) 
+        		< item.actual_pick_weight_server + item.allowance_weight +
+        		ROUND((item.actual_pick_weight_server + item.allowance_weight) * item.cost_price,2)
+        	AND o.status in (7,8,10)
+       		]]>
+    <if test="sellerAccountId != null and sellerAccountId != ''">
+      AND item.seller_id = #{sellerAccountId}
+    </if>
+    <if test="orderBeginDate != null">
+      <![CDATA[
+       		AND item.created >= #{orderBeginDate}
+
+       		]]>
+    </if>
+    <if test="orderEndDate != null">
+      <![CDATA[
+
+       		AND item.created < #{orderEndDate}
+       		]]>
+    </if>
+    <if test="nsortName != null and nsortName != ''">
+      AND item.nsort_name like '%' #{nsortName} '%'
+    </if>
+    <if test="materials != null and materials != ''">
+      AND item.material like '%' #{materials} '%'
+    </if>
+    <if test="spec != null and spec != ''">
+      AND item.spec like '%' #{spec} '%'
+    </if>
+    <if test="contractCode != null and contractCode != ''">
+      AND o.contract_code like '%' #{contractCode} '%'
+    </if>
+    <if test="departmentId != null"><!-- 这里用来根据部门查询这个公司下面的所有的部门  -->
+      AND item.department_id = #{departmentId}
+
+    </if>
+    <if test="purchasePrice != null and purchasePrice != ''">
+      AND item.cost_price = #{purchasePrice}
+    </if>
+    <if test="actualWeight != null and actualWeight != ''">
+      AND item.actual_pick_weight_server = #{actualWeight}
+    </if>
+    ORDER BY item.created ASC
+    LIMIT #{start},#{length}
+  </select>
+
+  <select id="queryClientCanceledOrderItemsForInvoiceIn"
+          parameterType="com.prcsteel.platform.order.model.query.OrderItemsForInvoiceInQuery"
+          resultType="com.prcsteel.platform.order.model.dto.OrderItemsInvoiceInDto">
+    SELECT
+    item.order_id orderId,
+    item.id orderItemId,
+    item.created orderDateTime,
+
+    o.code orderNumber,
+    o.contract_code contractCode,
+
+    item.nsort_name nsortName,
+    item.spec spec,
+    item.material materials,
+    item.invoice_amount invoiceAmount,
+    item.invoice_weight invoiceWeight,
+    item.cost_price costPrice,
+    item.actual_pick_weight_server actualPickWeightServer,
+
+    o.account_name buyerName,
+    o.department_id departmentId,
+    o.department_name departmentName,
+    case when
+    (SELECT COUNT(DISTINCT t.id) FROM cust_account t WHERE t.structure_type = 'Department' AND t.is_deleted = 0
+    AND t.parent_id = o.account_id) > 1
+    then 1 else  0 end as isShowDept
+    FROM busi_consign_order_items item
+    INNER JOIN busi_consign_order o ON item.order_id = o.id
+    WHERE
+    o.status in (7,8)
+    <!--部门id -->
+    <!-- AND item.seller_id = #{sellerAccountId} -->
+    AND item.department_id = #{departmentId}
+    AND item.id IN
+
+    <foreach collection="cancelAssigned" item="id" open="(" separator="," close=")">
+      #{id.orderitemId}
+    </foreach>
+    ORDER BY item.created ASC
+  </select>
+
+  <select id="queryOrderItemsForInvoiceInByDetailId" parameterType="java.lang.Long"
+          resultType="com.prcsteel.platform.order.model.dto.OrderItemsInvoiceInDto">
+    SELECT DISTINCT
+    item.order_id orderId,
+    item.id orderItemId,
+    item.created orderDateTime,
+
+    o.code orderNumber,
+    o.contract_code contractCode,
+    o.alter_status alterStatus,
+
+    item.nsort_name nsortName,
+    item.spec spec,
+    item.material materials,
+    item.invoice_amount invoiceAmount,
+    item.invoice_weight invoiceWeight,
+    item.cost_price costPrice,
+    item.actual_pick_weight_server actualPickWeightServer,
+    detail.weight increaseWeight,
+    detail.amount increaseAmount,
+    IFNULL(item.allowance_amount,0) AS allowanceAmount,
+    IFNULL(item.allowance_weight,0) AS allowanceWeight,
+
+    o.account_name buyerName,
+    o.department_id departmentId,
+    o.department_name departmentName,
+    case when
+    (SELECT COUNT(DISTINCT t.id) FROM cust_account t WHERE t.structure_type = 'Department' AND t.is_deleted = 0
+    AND t.parent_id = o.account_id) > 1
+    then 1 else  0 end as isShowDept
+    FROM inv_invoice_in_detail_orderitem detail
+    INNER JOIN busi_consign_order_items item ON detail.orderitem_id = item.id
+    INNER JOIN busi_consign_order o ON item.order_id = o.id
+
+    WHERE
+    detail.active=1 AND
+    detail.invoice_detail_id = #{detailId}
+  </select>
+
+  <select id="queryInvoiceApplicationDetailDtoByBuyerId" resultMap="ApplicationDetailInfo" parameterType="com.prcsteel.platform.order.model.query.ConsignOrderItemsQuery">
+    SELECT
+    t1.id AS order_id,t1.code AS order_code,t1.created,
+
+    t2.id AS order_detail_id, t2.seller_id, t2.seller_name, t2.department_id, t2.department_name,
+    t2.cost_price, t2.deal_price,
+
+    t2.factory, t2.city, t2.warehouse, t2.quantity,
+    t3.id AS invoice_orderitem_id,
+    t4.nsort_name,t4.material, t4.spec,
+    t4.invoice_in_id AS invoice_in_id,t4.id AS invoice_in_detail_id,
+    IFNULL(t2.weight,0) AS contract_weight,
+    IFNULL(t2.amount,0) AS contract_amount,
+    IFNULL(t2.actual_pick_weight_server,0) as actual_weight,
+    IFNULL(t2.actual_pick_weight_server,0)*IFNULL(t2.deal_price,0) actual_amount,
+    IFNULL(t2.invoice_weight,0) - IFNULL(t2.used_weight,0) AS un_weight,
+    ROUND(IFNULL(t2.invoice_weight,0)*IFNULL(t2.deal_price,0),2) - IFNULL(t2.used_amount,0) AS un_amount,
+    IFNULL(t3.weight,0) AS weight,
+    IFNULL(t3.weight,0)*IFNULL(t2.deal_price,0) AS amount,
+    IFNULL(t2.allowance_weight,0) AS allowance_weight,
+    IFNULL(t2.allowance_buyer_amount,0) AS allowance_buyer_amount,
+    IFNULL(t2.used_weight,0) AS used_weight,
+    IFNULL(t2.used_amount,0) AS used_amount,
+
+    t1.buyer_credential_code, coc.status as buyer_credential_status,
+    t1.batch_buyer_credential_code,  coc1.status as batch_buyer_credential_status,
+    t2.seller_credential_code, coc2.status as seller_credential_status,
+    t2.batch_seller_credential_code,  coc3.status as batch_seller_credential_status,
+    t6.setting_value as seller_check_value, t7.setting_value as buyer_check_value
+
+    FROM busi_consign_order t1
+    RIGHT JOIN busi_consign_order_items t2 ON t1.id = t2.order_id
+    RIGHT JOIN inv_invoice_in_detail_orderitem t3 ON t2.id = t3.orderitem_id
+    LEFT JOIN inv_invoice_in_detail t4 ON t3.invoice_detail_id = t4.id
+    LEFT JOIN inv_invoice_in t5 ON t4.invoice_in_id = t5.id
+    LEFT JOIN (select k1.id, k2.setting_value
+    from cust_account as k1 left join base_sys_setting as k2 on
+    k1.supplier_label = k2.setting_name
+    where k2.setting_type='client_type'
+    and (k2.display_name='卖家凭证')
+    ) as t6 on (t6.id = t2.seller_id)
+    LEFT JOIN (
+    select k1.id, k2.setting_value
+    from cust_account as k1
+    left join base_sys_setting as k2 on
+    k1.supplier_label = k2.setting_name
+    where k2.setting_type='client_type'
+    and (k2.display_name='买家凭证')
+    ) as t7 on (t7.id = t2.seller_id)
+    left join busi_consign_order_credential as coc on t1.buyer_credential_code = coc.credential_code
+    left join busi_consign_order_credential as coc1 on t1.batch_buyer_credential_code = coc1.credential_code
+    left join busi_consign_order_credential as coc2 on t2.seller_credential_code = coc2.credential_code
+    left join busi_consign_order_credential as coc3 on t2.batch_seller_credential_code = coc3.credential_code
+    WHERE t3.active = 1
+    AND IFNULL(t2.invoice_weight,0) <![CDATA[ > ]]> IFNULL(t2.used_weight,0)
+    <if test="buyerId != null">
+      AND t1.account_id = #{buyerId}
+    </if>
+    <if test="departmentId != null">
+      AND t1.department_id = #{departmentId}
+    </if>
+    <if test="ownerId != null">
+      AND t1.owner_id = #{ownerId}
+    </if>
+    <if test="consignOrderStatus != null">
+      AND t1.status IN
+      <foreach collection="consignOrderStatus" item="st" open="(" separator="," close=")">#{st}</foreach>
+    </if>
+    <if test="relationStatus != null">
+      AND t5.relation_status = #{relationStatus}
+    </if>
+    <if test="invoiceInStatus != null">
+      AND t5.status IN
+      <foreach collection="invoiceInStatus" item="sta" open="(" separator="," close=")">#{sta}</foreach>
+    </if>
+    AND t3.id <if test="outApplyId == null"> NOT </if> IN (
+    SELECT item.invoice_orderitem_id
+    FROM inv_invoice_out_apply apply
+    RIGHT JOIN inv_invoice_out_apply_detail detail ON apply.id = detail.invoice_out_apply_id
+    RIGHT JOIN inv_invoice_out_item_detail item ON detail.id = item.apply_detail_id
+    WHERE apply.is_deleted = 0 AND detail.is_deleted = 0 AND item.is_deleted = 0
+    AND item.invoice_orderitem_id = t3.id
+    <if test="outApplyId == null and invoiceOutApplyStatus != null">
+      AND apply.status IN
+      <foreach collection="invoiceOutApplyStatus" item="stat" open="(" separator="," close=")">#{stat}</foreach>
+    </if>
+    <if test="outApplyId != null">
+      AND apply.id = #{outApplyId}
+    </if>
+    )
+
+    GROUP BY t3.id
+
+    ORDER BY t1.id,t2.id
+  </select>
+
+  <update id="increaseInvoiceIn" parameterType="com.prcsteel.platform.order.model.dto.IncreaseInvoiceInDto">
+    UPDATE busi_consign_order_items
+    SET
+    invoice_amount = #{goalAmount},
+    invoice_weight = #{goalWeight}
+    WHERE
+    id = #{orderItemId}
+    AND invoice_amount = #{originalAmount}
+    AND invoice_weight = #{originalWeight}
+  </update>
+  <update id="restoreOrderitemInvoiceIn" parameterType="com.prcsteel.platform.order.model.model.InvoiceInDetailOrderItem">
+    <![CDATA[
+  	UPDATE busi_consign_order_items
+  	SET
+  		invoice_amount = invoice_amount - #{amount},
+  		invoice_weight = invoice_weight - #{weight} 
+  	WHERE
+  		id = #{orderitemId}
+  		AND invoice_amount >= #{amount}
+  		AND invoice_weight >= #{weight} 
+  	]]>
+  </update>
+  <update id="reEffectiveInvoiceIn" parameterType="com.prcsteel.platform.order.model.model.InvoiceInDetailOrderItem">
+    <![CDATA[
+  	UPDATE busi_consign_order_items
+  	SET
+  		invoice_amount = invoice_amount + #{amount},
+  		invoice_weight = invoice_weight + #{weight} 
+  	WHERE
+  		id = #{orderitemId}
+  		AND (weight * cost_price) >= (#{amount} + invoice_amount)
+  		AND weight >= (#{weight} + invoice_weight)
+  	]]>
+  </update>
+  <select id="queryOrderItemsByDetailIds" resultMap="BaseResultMap" parameterType="java.util.List">
+    SELECT
+    items.id, items.order_id, items.seller_id, items.seller_name, items.nsort_name, items.material,
+    items.spec, items.factory, items.city,
+    items.warehouse, items.quantity, items.weight, items.weight_concept, items.cost_price,
+    items.deal_price, items.amount, items.invoice_amount,
+    items.invoice_weight,items.actual_pick_weight_salesman, items.actual_pick_weight_server,
+    items.actual_pick_quantity_salesman,
+    items.actual_pick_quantity_server, items.status,
+    items.is_payed_by_accept_draft,items.accept_draft_id,items.accept_draft_code,
+    items.created, items.created_by, items.last_updated,
+    items.last_updated_by,
+    items.modification_number, items.row_id, items.parent_row_id,items.used_amount,items.used_weight
+    FROM busi_consign_order_items items INNER join
+    inv_invoice_in_detail_orderitem detail ON detail.orderitem_id=items.id
+    WHERE detail.invoice_detail_id in
+    <foreach collection="list" item="id" open="(" separator="," close=")">#{id}</foreach>
+  </select>
+
+  <select id="queryByIds" resultMap="BaseResultMap" parameterType="java.util.List">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM busi_consign_order_items
+    WHERE id in
+    <foreach collection="list" item="id" open="(" separator="," close=")">#{id}</foreach>
+  </select>
+
+  <!--查询实提重量与已开重量相等的订单Id集合-->
+  <select id="queryWeightByConsignOrderItemsQuery" resultType="java.lang.Long" parameterType="com.prcsteel.platform.order.model.query.ConsignOrderItemsQuery">
+    SELECT t2.order_id FROM(
+    SELECT t1.order_id,
+    IFNULL(SUM(t1.actual_pick_weight_server),0) AS actual_pick_weight_server,
+    IFNULL(SUM(t1.used_weight),0) AS used_weight,
+    IFNULL(SUM(t1.allowance_weight),0) AS allowance_weight
+
+    FROM busi_consign_order_items t1
+    WHERE t1.actual_pick_weight_server > 0
+    AND t1.order_id in
+    <foreach collection="orderIds" item="id" open="(" separator="," close=")">
+      #{id,jdbcType=BIGINT}
+    </foreach>
+    GROUP BY order_id) t2
+    LEFT JOIN busi_consign_order t3 ON t2.order_id=t3.id
+
+    WHERE t2.actual_pick_weight_server+t2.allowance_weight = t2.used_weight
+
+    AND t3.status in
+    <foreach collection="consignOrderStatus" item="st" open="(" separator="," close=")">
+      #{st}
+    </foreach>
+  </select>
+
+  <resultMap id="AllowanceOrderMap" type="com.prcsteel.platform.order.model.dto.AllowanceOrderItemsDto">
+    <result column="order_id" property="orderId" jdbcType="BIGINT"/>
+    <result column="order_time" property="orderTime" jdbcType="TIMESTAMP" />
+    <result column="order_detail_id" property="orderDetailId" jdbcType="BIGINT"/>
+    <result column="order_code" property="orderCode" jdbcType="VARCHAR" />
+    <result column="contract_code" property="contractCode" jdbcType="VARCHAR" />
+    <result column="account_id" property="buyerId" jdbcType="BIGINT"/>
+    <result column="account_name" property="buyerName" jdbcType="VARCHAR" />
+    <result column="seller_id" property="sellerId" jdbcType="BIGINT"/>
+    <result column="seller_name" property="sellerName" jdbcType="VARCHAR" />
+    <result column="total_quantity" property="totalQuantity" jdbcType="INTEGER" />
+    <result column="total_weight" property="totalWeight" jdbcType="DECIMAL" />
+    <result column="total_amount" property="totalAmount" jdbcType="DECIMAL" />
+    <result column="actual_weight" property="actualWeight" jdbcType="DECIMAL" />
+    <result column="actual_amount" property="actualAmount" jdbcType="DECIMAL" />
+    <result column="nsort_name" property="nsortName" jdbcType="VARCHAR" />
+    <result column="material" property="material" jdbcType="VARCHAR" />
+    <result column="spec" property="spec" jdbcType="VARCHAR" />
+    <result column="buyer_department_id" property="buyerDepartmentId" jdbcType="BIGINT"/>
+    <result column="buyer_department_name" property="buyerDepartmentName" jdbcType="VARCHAR" />
+    <result column="seller_department_id" property="sellerDepartmentId" jdbcType="BIGINT"/>
+    <result column="seller_department_name" property="sellerDepartmentName" jdbcType="VARCHAR" />
+    <result column="is_show_buyer_dept" property="isShowBuyerDept" jdbcType="BOOLEAN" />
+    <result column="is_show_seller_dept" property="isShowSellerDept" jdbcType="BOOLEAN" />
+  </resultMap>
+
+
+
+
+  <!-- 查询买卖家订单记录-->
+
+  <select id="queryOrderItems" parameterType="com.prcsteel.platform.order.model.query.AllowanceOrderQuery" resultMap="AllowanceOrderMap">
+    SELECT
+    o.id AS order_id, o.created AS order_time, o.code AS order_code, o.contract_code,
+    o.account_id, o.account_name,i.seller_id,i.seller_name,
+    o.total_quantity, ROUND(o.total_weight,6) AS total_weight, ROUND(o.total_amount,2) AS total_amount,
+    i.id AS order_detail_id,i.nsort_name,i.material,i.spec,
+    ROUND(i.actual_pick_weight_server,6) actual_weight,
+
+    o.department_id as buyer_department_id,o.department_name as buyer_department_name,
+    i.department_id as seller_department_id,i.department_name as seller_department_name,
+    case when
+    (SELECT COUNT(DISTINCT t.id) FROM cust_account t WHERE t.structure_type = 'Department' AND t.is_deleted = 0
+    AND t.parent_id = o.account_id) > 1
+    then 1 else  0 end as is_show_buyer_dept,
+    case when
+    (SELECT COUNT(DISTINCT t.id) FROM cust_account t WHERE t.structure_type = 'Department' AND t.is_deleted = 0
+    AND t.parent_id = i.seller_id) > 1
+    then 1 else  0 end as is_show_seller_dept,
+
+    <if test="allowanceType !=null and allowanceType == 'seller'">
+      ROUND(ROUND(i.cost_price,2)*ROUND(i.actual_pick_weight_server,6),2) AS actual_amount
+    </if>
+    <if test="allowanceType !=null and allowanceType == 'buyer'">
+      ROUND(ROUND(i.deal_price,2)*ROUND(i.actual_pick_weight_server,6),2) AS actual_amount
+    </if>
+    FROM busi_consign_order_items i
+    LEFT JOIN busi_consign_order o ON o.id = i.order_id
+    WHERE 1=1
+    <if test="sellerId != null and sellerId != '' ">
+      AND i.seller_id = #{sellerId,jdbcType=BIGINT}
+    </if>
+    <if test="startTime != null and startTime != '' ">
+      AND str_to_date(o.created,'%Y-%m-%d') &gt;= #{startTime,jdbcType=VARCHAR}
+    </if>
+    <if test="endTime != null and endTime != '' ">
+      AND str_to_date(o.created,'%Y-%m-%d') &lt;= #{endTime,jdbcType=VARCHAR}
+    </if>
+    <if test="buyerId !=null and buyerId != '' ">
+      AND o.account_id = #{buyerId,jdbcType=BIGINT}
+    </if>
+    <if test="contractCode !=null and contractCode != '' ">
+      AND o.contract_code like CONCAT('%',#{contractCode,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="orderCode !=null and orderCode != '' ">
+      AND o.code like CONCAT('%',#{orderCode,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="orderIds !=null">
+      AND o.id IN
+      <foreach collection="orderIds" item="id" open="(" separator="," close=")">
+        #{id,jdbcType=VARCHAR}
+      </foreach>
+    </if>
+    <if test="orderDetailIds !=null">
+      AND i.id IN
+      <foreach collection="orderDetailIds" item="id" open="(" separator="," close=")">
+        #{id,jdbcType=VARCHAR}
+      </foreach>
+    </if>
+    AND o.status IN (7,8)
+
+    <if test="sellerDeptId != null and sellerDeptId > 0">
+      AND  i.department_id = #{sellerDeptId,jdbcType=BIGINT}
+    </if>
+    <if test="buyerDeptId != null and buyerDeptId > 0">
+      AND  o.department_id = #{buyerDeptId,jdbcType=BIGINT}
+    </if>
+
+
+    ORDER BY o.created DESC
+  </select>
+
+  <select id="selectBuyerIdsBySellerId" parameterType="java.lang.Long" resultType="java.lang.Long">
+    SELECT DISTINCT
+    odr.account_id
+    FROM busi_consign_order_items item
+    INNER JOIN busi_consign_order odr
+    ON odr.id = item.order_id
+    WHERE item.seller_id = #{sellerId}
+    AND odr.status = 7
+  </select>
+
+
+  <update id="updateOrderDetail" parameterType="com.prcsteel.platform.order.model.dto.OrderDetailModifier">
+    update busi_consign_order_items
+    <set>
+      <if test="changeAmount !=null">
+        allowance_amount = allowance_amount + #{changeAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="changeWeight !=null">
+        allowance_weight = allowance_weight + #{changeWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="changeBuyerAmount !=null">
+        allowance_buyer_amount = allowance_buyer_amount + #{changeBuyerAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{orderDetailId}
+  </update>
+
+  <select id="selectAcceptDraftCodeByOrderId" resultType="java.lang.String" parameterType="java.lang.Long">
+    SELECT DISTINCT accept_draft_code
+    FROM busi_consign_order_items
+    WHERE order_id = #{orderId}
+    and accept_draft_id != 0
+  </select>
+
+  <update id="batchUpdateAcceptDraf" parameterType="java.util.List">
+    <foreach collection="list" item="item" index="index" open="" close=";" separator=";" >
+      update busi_consign_order_items
+      <set>
+        accept_draft_id = #{item.acceptDraftId},
+        accept_draft_code = #{item.acceptDraftCode}
+      </set>
+      where id = #{item.id}
+    </foreach>
+  </update>
+
+  <select id="querySumAmountBySellerId" resultType="java.math.BigDecimal" parameterType="com.prcsteel.platform.order.model.query.ReportSellerInvoiceInQuery" >
+    SELECT
+    SUM(
+    CASE WHEN bco.status <![CDATA[ >= ]]>  7
+    THEN ROUND(bcoi.actual_pick_quantity_server*bcoi.cost_price,2)
+    ELSE ROUND(bcoi.weight*bcoi.cost_price,2) END
+    )
+    FROM busi_consign_order bco
+    LEFT JOIN busi_consign_order_items bcoi ON bcoi.order_id = bco.id
+    WHERE 1=1
+    AND bcoi.seller_id = #{sellerId,jdbcType=BIGINT}
+    AND bco.status IN
+    <foreach collection="statusList" item="status" open="(" separator="," close=")">
+      #{status,jdbcType=VARCHAR}
+    </foreach>
+    GROUP BY bcoi.seller_id
+  </select>
+
+  <resultMap id="OrderItemsMap" type="com.prcsteel.platform.order.model.dto.OrderItemsDto" >
+    <result column="creationTime" property="creationTime" jdbcType="TIMESTAMP" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="account_name" property="accountName" jdbcType="VARCHAR" />
+    <result column="bringamount" property="bringamount" jdbcType="DECIMAL" />
+    <result column="notOpenWeight" property="notOpenWeight" jdbcType="DECIMAL" />
+    <result column="notOpenAmount" property="notOpenAmount" jdbcType="DECIMAL" />
+    <result column="nsort_name" property="nsortName" jdbcType="VARCHAR" />
+    <result column="material" property="material" jdbcType="VARCHAR" />
+    <result column="spec" property="spec" jdbcType="VARCHAR" />
+    <result column="invoice_amount" property="invoiceAmount" jdbcType="DECIMAL" />
+    <result column="invoice_weight" property="invoiceWeight" jdbcType="DECIMAL" />
+    <result column="used_amount" property="usedAmount" jdbcType="DECIMAL" />
+    <result column="used_weight" property="usedWeight" jdbcType="DECIMAL" />
+    <result column="actual_pick_weight_server" property="actualPickWeightServer" jdbcType="DECIMAL" />
+    <result column="allowance_buyer_amount" property="allowanceBuyerAmount" jdbcType="DECIMAL" />
+    <result column="allowance_weight" property="allowanceWeight" jdbcType="DECIMAL" />
+    <result column="orderId" property="orderId" jdbcType="BIGINT"/>
+    <result column="departmentName" property="departmentName" jdbcType="VARCHAR"/>
+    <result column="departmentCount" property="departmentCount" jdbcType="BIGINT"/>
+  </resultMap>
+
+  <select id="selectTicketList" resultMap="OrderItemsMap" parameterType="com.prcsteel.platform.order.model.query.OrderItemsQuery">
+    SELECT (SELECT COUNT(f.id) FROM cust_account f WHERE f.parent_id = t.account_id) AS departmentCount,t.* FROM (
+    SELECT t1.nsort_name,t1.material,t1.spec,t1.invoice_amount,t1.invoice_weight,
+    t1.used_amount,t1.used_weight,t1.actual_pick_weight_server,
+    SUM(ROUND(t1.actual_pick_weight_server * t1.deal_price,2)) AS bringamount,
+    t1.actual_pick_weight_server-t1.used_weight+t1.allowance_weight AS notOpenWeight,
+    SUM(t1.actual_pick_weight_server * t1.deal_price)-t1.used_amount+t1.allowance_buyer_amount AS notOpenAmount,
+    t2.account_id, t2.department_name AS departmentName,
+    t2.account_name,t2.code,t2.created AS creationTime,t1.allowance_buyer_amount,t1.allowance_weight,t2.id AS orderId
+    FROM busi_consign_order_items t1
+    LEFT JOIN busi_consign_order t2 ON t2.id = t1.order_id
+    WHERE t2.status in(7,8,10)
+    <if test="accountName != null and accountName != ''">
+      and t2.account_name like '%${accountName}%'
+    </if>
+    <if test="code != null and code != ''">
+      and t2.code like '%${code}%'
+    </if>
+    <if test="orgName != null and orgName != ''">
+      and t2.order_org_name = #{orgName,jdbcType=VARCHAR}
+    </if>
+    <if test="startDate != null and endDate != null ">
+      and t2.created between #{startDate,jdbcType=TIMESTAMP} and #{endDate,jdbcType=TIMESTAMP}
+    </if>
+    GROUP BY t1.id
+    ORDER BY t2.created
+    )AS t
+    <if test="state != null">
+      <where>
+        <foreach collection="state" item="st" open="" separator="" close="">
+          <if test="st == 3">
+            OR t.used_weight = 0
+          </if>
+          <if test="st == 2">
+            <![CDATA[OR (t.used_weight < t.actual_pick_weight_server AND t.used_weight <> 0)]]>
+          </if>
+          <if test="st == 1">
+            <![CDATA[ OR (t.used_weight = t.actual_pick_weight_server AND t.used_weight <> 0)]]>
+          </if>
+        </foreach>
+      </where>
+    </if>
+    LIMIT #{start,jdbcType=VARCHAR},#{length,jdbcType=VARCHAR}
+  </select>
+
+  <select id="queryTicketTotal" resultType="java.lang.Integer" parameterType="com.prcsteel.platform.order.model.query.OrderItemsQuery">
+    SELECT COUNT(1) FROM (SELECT t.* FROM (
+    SELECT t1.nsort_name,t1.material,t1.spec,t1.invoice_amount,t1.invoice_weight,
+    t1.used_amount,t1.used_weight,t1.actual_pick_weight_server,
+    SUM(ROUND(t1.actual_pick_weight_server * t1.deal_price,2)) AS bringamount,
+    t1.actual_pick_weight_server-t1.used_weight+t1.allowance_weight AS notOpenWeight,
+    SUM(t1.actual_pick_weight_server * t1.deal_price)-t1.used_amount+t1.allowance_buyer_amount AS notOpenAmount,
+    t2.account_name,t2.code,t2.created AS creationTime,t1.allowance_buyer_amount,t1.allowance_weight
+    FROM busi_consign_order_items t1
+    LEFT JOIN busi_consign_order t2 ON t2.id = t1.order_id
+    WHERE t2.status in(7,8,10)
+    <if test="accountName != null and accountName != ''">
+      and t2.account_name like '%${accountName}%'
+    </if>
+    <if test="code != null and code != ''">
+      and t2.code like '%${code}%'
+    </if>
+    <if test="orgName != null and orgName != ''">
+      and t2.order_org_name = #{orgName,jdbcType=VARCHAR}
+    </if>
+    <if test="startDate != null and endDate != null ">
+      and t2.created between #{startDate,jdbcType=TIMESTAMP} and #{endDate,jdbcType=TIMESTAMP}
+    </if>
+    GROUP BY t1.id)AS t
+    <if test="state != null">
+      <where>
+        <foreach collection="state" item="st" open="" separator="" close="">
+          <if test="st == 3">
+            OR t.used_weight = 0
+          </if>
+          <if test="st == 2">
+            <![CDATA[OR (t.used_weight < t.actual_pick_weight_server AND t.used_weight <> 0)]]>
+          </if>
+          <if test="st == 1">
+            <![CDATA[ OR (t.used_weight = t.actual_pick_weight_server AND t.used_weight <> 0)]]>
+          </if>
+        </foreach>
+      </where>
+    </if>
+    )f
+  </select>
+
+  <select id="totalTicketList" resultMap="OrderItemsMap" parameterType="com.prcsteel.platform.order.model.query.OrderItemsQuery">
+    SELECT SUM(t1.actual_pick_weight_server-t1.used_weight+t1.allowance_weight) AS notOpenWeight,
+    SUM((t1.actual_pick_weight_server * t1.deal_price)-t1.used_amount+t1.allowance_buyer_amount) AS notOpenAmount,
+    t1.used_weight,t1.actual_pick_weight_server
+    FROM busi_consign_order_items t1
+    LEFT JOIN busi_consign_order t2 ON t2.id = t1.order_id
+    WHERE t2.status in(7,8,10)
+    <if test="accountName != null and accountName != ''">
+      and t2.account_name like '%${accountName}%'
+    </if>
+    <if test="code != null and code != ''">
+      and t2.code like '%${code}%'
+    </if>
+    <if test="orgName != null and orgName != ''">
+      and t2.order_org_name = #{orgName,jdbcType=VARCHAR}
+    </if>
+    <if test="startDate != null and endDate != null ">
+      and t2.created between #{startDate,jdbcType=TIMESTAMP} and #{endDate,jdbcType=TIMESTAMP}
+    </if>
+    <if test="state != null">
+      AND (
+      <foreach collection="state" item="st" open="(" separator=" OR " close=")">
+        <if test="st == 3">
+          t1.used_weight = 0
+        </if>
+        <if test="st == 2">
+          <![CDATA[(t1.used_weight < t1.actual_pick_weight_server AND t1.used_weight <> 0)]]>
+        </if>
+        <if test="st == 1">
+          <![CDATA[ (t1.used_weight = t1.actual_pick_weight_server AND t1.used_weight <> 0)]]>
+        </if>
+      </foreach>
+      )
+    </if>
+  </select>
+
+  <resultMap id="resultMapConsignOrderItemsDto" type="com.prcsteel.platform.order.model.dto.ConsignOrderItemsDto" >
+    <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+    <result column="material" property="material" jdbcType="VARCHAR" />
+    <result column="spec" property="spec" jdbcType="VARCHAR" />
+    <result column="factory" property="factory" jdbcType="VARCHAR" />
+    <result column="warehouse" property="warehouse" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="seller_name" property="sellerName" jdbcType="VARCHAR" />
+    <result column="city_id" property="cityId" jdbcType="BIGINT" />
+    <result column="category_uuid" property="categoryUuid" jdbcType="VARCHAR" />
+    <result column="price_deviation" property="priceDeviation" jdbcType="DECIMAL" />
+  </resultMap>
+
+  <select id="queryOrderItemsOfToday" resultMap="resultMapConsignOrderItemsDto">
+    SELECT bcoi.nsort_name AS category_name,bcoi.material,bcoi.spec,bcoi.factory,bcoi.warehouse,bcoi.cost_price AS price,bcoi.seller_name,
+    bw.city_id, cc.uuid AS category_uuid, cc.price_deviation
+    FROM busi_consign_order_items bcoi
+    LEFT JOIN common_category cc ON cc.name=bcoi.nsort_name
+    LEFT JOIN base_warehouse bw ON bw.name=bcoi.warehouse
+    WHERE date_format(bcoi.created,'%Y-%m-%d') = date_format(NOW(), '%Y-%m-%d')
+  </select>
+
+
+  <select id="buildOrderItemsByQuotationOrderId" resultMap="OrderItemsInfo" parameterType="java.lang.Long">
+    SELECT
+    quo.seller_id, ca.name seller_name, ca.consign_type,cate.name nsort_name, mat.name material,
+
+    concat(ifnull(quo.spec1, ''), if(ifnull(quo.spec2, '') != '', '*', ''), ifnull(quo.spec2, ''),
+    if(ifnull(quo.spec3, '') != '', '*', ''), ifnull(quo.spec3, ''), if(ifnull(quo.spec4, '') != '', '*', ''),
+    ifnull(quo.spec4, ''), if(ifnull(quo.spec5, '') != '', '*', ''), ifnull(quo.spec5, ''))spec,
+    fac.name factory, bc.name city, ware.name warehouse, quo.quantity, quo.weight, quo.weight_concept, quo.cost_price, quo.deal_price, quo.total_amount amount
+    FROM busi_quotation_order_items quo
+    LEFT JOIN common_category cate ON quo.category_uuid = cate.uuid
+    LEFT JOIN common_materials mat ON quo.material_uuid = mat.uuid
+    LEFT JOIN base_factory fac ON quo.factory_id = fac.id
+    LEFT JOIN base_warehouse ware ON quo.warehouse_id = ware.id
+    LEFT JOIN cust_account ca ON ca.id = quo.seller_id
+    LEFT JOIN base_city bc ON bc.id = ware.city_id
+    WHERE quo.quotation_order_id = #{id,jdbcType=BIGINT};
+  </select>
+  
+  <!--根据资源Id查询开单的信息 -->
+  <select id="buildOrderItemsByResourceId" resultMap="OrderItemsInfo" parameterType="java.util.List">
+	SELECT
+		r.account_id AS seller_id,
+		ca.`name` AS seller_name,
+		NULL AS consign_type,
+		cate. NAME AS nsort_name,
+		mat. NAME material,
+		(select GROUP_CONCAT(norm.value order by norm.priority SEPARATOR '*') 
+	 	from cust_resource_norms norm where norm.resource_id=r.id) spec,
+		fac. NAME factory,
+		bc. NAME city,
+		ware. NAME warehouse,
+		<!-- r.quantity,
+		r.weight, -->
+		r.weight_concept,
+		r.price AS cost_price,
+		r.price AS deal_price,
+		r.price AS amount,
+        r.id AS resourceId
+	FROM
+		cust_resource r
+	LEFT JOIN cust_account ca ON ca.id = r.account_id
+	LEFT JOIN common_category cate ON cate.uuid = r.category_uuid
+	LEFT JOIN common_materials mat ON r.material_uuid = mat.uuid
+	LEFT JOIN base_factory fac ON r.factory_id = fac.id
+	LEFT JOIN base_warehouse ware ON r.warehouse_id = ware.id
+	LEFT JOIN base_city bc ON bc.id = ware.city_id
+    WHERE r.id in
+      <foreach item="id" index="index" collection="list" open="(" separator="," close=")">
+        #{id}
+      </foreach>
+  </select>
+  
+  <resultMap id="consignOrderItemsInvoiceDto" type="com.prcsteel.platform.order.model.dto.ConsignOrderItemsInvoiceDto">
+    <result column="created" property="created" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="contract_code" property="contractCode" jdbcType="VARCHAR" />
+    <result column="account_name" property="accountName" jdbcType="VARCHAR" />
+    <result column="nsort_name" property="nsortName" jdbcType="VARCHAR" />
+    <result column="material" property="material" jdbcType="VARCHAR" />
+    <result column="spec" property="spec" jdbcType="VARCHAR" />
+    <result column="cost_price" property="costPrice" jdbcType="DECIMAL" />
+    <result column="actual_pick_weight_server" property="actualPickWeightServer" jdbcType="DECIMAL" />
+    <result column="actual_pick_amount" property="actualPickAmount" jdbcType="DECIMAL" />
+    <result column="unarrive_invoice_weight" property="unarriveInvoiceWeight" jdbcType="DECIMAL" />
+    <result column="unarrive_invoice_amount" property="unarriveInvoiceAmount" jdbcType="DECIMAL" />
+  </resultMap>
+  <select id="queryOrderItemsById" resultMap="consignOrderItemsInvoiceDto" parameterType="java.lang.Long">
+    SELECT
+    date_format(o.created,'%Y-%m-%d') AS created,o.code,o.contract_code,o.account_name,i.nsort_name,
+    i.material,i.spec,i.cost_price,i.actual_pick_weight_server,round((i.actual_pick_weight_server * i.cost_price ),6) AS actual_pick_amount,
+    round((i.actual_pick_weight_server - i.invoice_weight + ifnull(t.allowance_weight,0)),6) AS unarrive_invoice_weight,
+    round((i.actual_pick_weight_server * i.cost_price - i.invoice_amount + ifnull(t.allowance_amount,0)),6) AS unarrive_invoice_amount
+    FROM busi_consign_order_items i
+    LEFT JOIN busi_consign_order o ON o.id = i.order_id
+    LEFT JOIN (select  t1.order_detail_id, t1.allowance_weight, t1.allowance_amount
+    FROM reb_allowance_order_detail_item t1
+    INNER JOIN reb_allowance_order_item t2 ON t1.allowance_order_id = t2.id
+    INNER JOIN reb_allowance t3 ON t3.id = t2.allowance_id
+    where t3.status ='approved'
+    and t3.allowance_type='seller'
+    and t1.is_deleted = 0
+    and t2.is_deleted = 0
+    and t3.is_deleted =0 ) t ON t.order_detail_id = i.id
+    WHERE i.id  = #{id,jdbcType=BIGINT};
+  </select>
+
+  <resultMap id="incomeSummaryMap" type="com.prcsteel.platform.order.model.dto.IncomeSummaryDto">
+    <result column="orgId" property="orgId" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="accountName" property="accountName" jdbcType="VARCHAR" />
+    <result column="nsort_name" property="nsortName" jdbcType="VARCHAR" />
+    <result column="amount" property="amount" jdbcType="DECIMAL" />
+    <result column="weight" property="weight" jdbcType="DECIMAL" />
+    <result column="saleAmount" property="saleAmount" jdbcType="DECIMAL" />
+    <result column="incomeAmount" property="incomeAmount" jdbcType="DECIMAL" />
+    <result column="departmentName" property="departmentName" jdbcType="VARCHAR"/>
+    <result column="departmentCount" property="departmentCount" jdbcType="BIGINT"/>
+  </resultMap>
+
+  <!-- 根据 卖家查询利润  -->
+  <select id="incomeSummaryForSeller" resultMap="incomeSummaryMap" parameterType="com.prcsteel.platform.order.model.query.IncomeSummaryQuery">
+    SELECT c.*,(SELECT COUNT(t.id) FROM cust_account t WHERE t.parent_id = c.sellerId) AS departmentCount FROM(
+    SELECT
+    f.sellerId, f.departmentName, f.orgId, t7.name,f.accountName, f.nsort_name,
+    SUM(f.amount) AS amount,
+    SUM(f.weight) AS weight,
+    SUM(f.saleAmount1) AS saleAmount,
+    SUM(f.incomeAmount) AS incomeAmount
+    from (
+    SELECT t1.seller_id AS sellerId, t1.department_name AS departmentName,
+    t2.order_org_id AS orgId,t1.seller_name AS accountName, t1.nsort_name,
+    IFNULL(t1.used_weight, 0) AS weight,
+    IFNULL(t1.used_amount, 0) + IFNULL(t1.allowance_amount, 0) AS saleAmount1,<!-- 销售金额 -->
+    IFNULL(t1.cost_price, 0) AS costPrice,
+    (ROUND(IFNULL(t1.cost_price,0),2)*ROUND(IFNULL(t1.used_weight, 0),2)) AS amount,<!-- 采购金额 -->
+    IFNULL(t1.used_amount, 0) + IFNULL(t1.allowance_amount, 0) - (ROUND(IFNULL(t1.cost_price,0),2)*ROUND(IFNULL(t1.used_weight, 0),2)) AS incomeAmount<!-- 利润金额 -->
+    FROM busi_consign_order_items t1
+    LEFT JOIN busi_consign_order t2 ON t2.id = t1.order_id
+    LEFT JOIN inv_invoice_in_detail_orderitem t4 ON t4.order_id = t2.id
+    LEFT JOIN inv_invoice_out_item_detail t5 ON t5.order_detail_id = t1.id
+    LEFT JOIN inv_invoice_out_checklist_detail t6 ON t6.item_detail_id = t5.id
+    WHERE t2.status in(7,8,10) AND t4.active = 1
+    AND t6.created BETWEEN #{startDate,jdbcType=VARCHAR} and #{endDate,jdbcType=VARCHAR}
+    GROUP BY t1.id
+    )as f
+    RIGHT JOIN base_organization t7 ON t7.id = f.orgId
+    WHERE t7.is_org = 1
+    <if test="accountName != null and accountName != ''">
+      AND f.accountName = #{accountName,jdbcType=VARCHAR}
+    </if>
+    <if test="orgIds != null">
+      AND t7.id in
+      <foreach item="orgId" index="index" collection="orgIds" open="(" separator="," close=")">
+        #{orgId}
+      </foreach>
+    </if>
+    <if test="nsortName != null and nsortName != ''">
+      AND f.nsort_name = #{nsortName,jdbcType=VARCHAR}
+    </if>
+    group by t7.id
+    <if test="groupType!=null and groupType=='seller'.toString()">
+      , f.accountName, f.nsort_name
+    </if>
+    <if test="groupType!=null and groupType=='category'.toString()">
+      , f.nsort_name, f.accountName
+    </if>
+    ) as c
+    <where>
+      <if test="showNoneIncome != null and showNoneIncome == false">
+        AND c.incomeAmount != 0
+      </if>
+    </where>
+  </select>
+
+  <!-- 根据 买家查询利润  -->
+  <select id="incomeSummaryForBuyer" resultMap="incomeSummaryMap" parameterType="com.prcsteel.platform.order.model.query.IncomeSummaryQuery">
+    SELECT c.*,(SELECT COUNT(t.id) FROM cust_account t WHERE t.parent_id = c.buyerId) AS departmentCount FROM(
+    SELECT
+    f.buyerId, f.departmentName,f.orgId, t7.name,f.accountName, f.nsort_name,
+    SUM(f.amount) AS amount,
+    SUM(f.weight) AS weight,
+    SUM(f.saleAmount1) AS saleAmount,
+    SUM(f.incomeAmount) AS incomeAmount
+    from (
+    SELECT t2.account_id AS buyerId, t2.department_name AS departmentName,
+    t2.order_org_id AS orgId,t2.account_name AS accountName, t1.nsort_name,
+    IFNULL(t1.used_weight, 0) AS weight,
+    IFNULL(t1.used_amount, 0) + IFNULL(t1.allowance_amount, 0) AS saleAmount1,<!-- 销售金额 -->
+    IFNULL(t1.cost_price, 0) AS costPrice,
+    (ROUND(IFNULL(t1.cost_price,0),2)*ROUND(IFNULL(t1.used_weight, 0),2)) AS amount,<!-- 采购金额 -->
+    IFNULL(t1.used_amount, 0) + IFNULL(t1.allowance_amount, 0) - (ROUND(IFNULL(t1.cost_price,0),2)*ROUND(IFNULL(t1.used_weight, 0),2)) AS incomeAmount<!-- 利润金额 -->
+    FROM busi_consign_order_items t1
+    LEFT JOIN busi_consign_order t2 ON t2.id = t1.order_id
+    LEFT JOIN inv_invoice_in_detail_orderitem t4 ON t4.order_id = t2.id
+    LEFT JOIN inv_invoice_out_item_detail t5 ON t5.order_detail_id = t1.id
+    LEFT JOIN inv_invoice_out_checklist_detail t6 ON t6.item_detail_id = t5.id
+    WHERE t2.status in(7,8,10) AND t4.active = 1
+    AND t6.created BETWEEN #{startDate,jdbcType=VARCHAR} and #{endDate,jdbcType=VARCHAR}
+    GROUP BY t1.id
+    )as f
+    RIGHT JOIN base_organization t7 ON t7.id = f.orgId
+    WHERE t7.is_org = 1
+    <if test="accountName != null and accountName != ''">
+      AND f.accountName = #{accountName,jdbcType=VARCHAR}
+    </if>
+    <if test="orgIds != null">
+      AND t7.id in
+      <foreach item="orgId" index="index" collection="orgIds" open="(" separator="," close=")">
+        #{orgId}
+      </foreach>
+    </if>
+    <if test="nsortName != null and nsortName != ''">
+      AND f.nsort_name = #{nsortName,jdbcType=VARCHAR}
+    </if>
+    group by t7.id
+    <if test="groupType!=null and groupType=='buyer'.toString()">
+      , f.accountName, f.nsort_name
+    </if>
+    <if test="groupType!=null and groupType=='category'.toString()">
+      , f.nsort_name, f.accountName
+    </if>
+    ) as c
+    <where>
+      <if test="showNoneIncome != null and showNoneIncome == false">
+        AND c.incomeAmount != 0
+      </if>
+    </where>
+
+
+  </select>
+
+
+
+
+
+
+  <!-- 根据 买家查询总利润  -->
+  <select id="totalIncomeSummaryForBuyer" resultMap="incomeSummaryMap" parameterType="com.prcsteel.platform.order.model.query.IncomeSummaryQuery">
+    select
+    SUM(c.camount) as amount,
+    SUM(c.cweight) as weight,
+    SUM(c.csaleAmount) as saleAmount,
+    SUM(c.cincomeAmount) as incomeAmount
+    from  (
+    SELECT
+    SUM(f.amount) AS camount,
+    SUM(f.weight) AS cweight,
+    SUM(f.saleAmount1) AS csaleAmount,
+    SUM(f.incomeAmount) AS cincomeAmount
+    FROM (
+    SELECT t2.order_org_id AS orgId, t2.order_org_name AS name,t2.account_name AS accountName, t1.nsort_name,
+    IFNULL(t1.used_weight, 0) AS weight,
+    IFNULL(t1.used_amount, 0) + IFNULL(t1.allowance_amount, 0) AS saleAmount1,<!-- 销售金额 -->
+    IFNULL(t1.cost_price, 0) AS costPrice,
+    (ROUND(IFNULL(t1.cost_price,0),2)*ROUND(IFNULL(t1.used_weight, 0),2)) AS amount,<!-- 采购金额 -->
+    IFNULL(t1.used_amount, 0) + IFNULL(t1.allowance_amount, 0) - (ROUND(IFNULL(t1.cost_price,0),2)*ROUND(IFNULL(t1.used_weight, 0),2)) AS incomeAmount<!-- 利润金额 -->
+    FROM busi_consign_order_items t1
+    LEFT JOIN busi_consign_order t2 ON t2.id = t1.order_id
+    LEFT JOIN inv_invoice_in_detail_orderitem t4 ON t4.order_id = t2.id
+    LEFT JOIN inv_invoice_out_item_detail t5 ON t5.order_detail_id = t1.id
+    LEFT JOIN inv_invoice_out_checklist_detail t6 ON t6.item_detail_id = t5.id
+    WHERE t2.status in(7,8,10) AND t4.active = 1
+    AND t6.created BETWEEN #{startDate,jdbcType=VARCHAR} and #{endDate,jdbcType=VARCHAR}
+    GROUP BY t1.id
+    )as f
+    <where>
+      <if test="accountName != null and accountName != ''">
+        AND f.accountName = #{accountName,jdbcType=VARCHAR}
+      </if>
+      <if test="orgIds != null">
+        AND f.orgId in
+        <foreach item="orgId" index="index" collection="orgIds" open="(" separator="," close=")">
+          #{orgId}
+        </foreach>
+      </if>
+      <if test="nsortName != null and nsortName != ''">
+        AND f.nsort_name = #{nsortName,jdbcType=VARCHAR}
+      </if>
+    </where>
+    group by f.orgId
+    <if test="groupType!=null and groupType=='buyer'.toString()">
+      , f.accountName, f.nsort_name
+    </if>
+    <if test="groupType!=null and groupType=='category'.toString()">
+      , f.nsort_name, f.accountName
+    </if>
+    ) as c
+    <where>
+      <if test="showNoneIncome != null and showNoneIncome == false">
+        AND c.cincomeAmount != 0
+      </if>
+    </where>
+  </select>
+
+  <!-- 根据 卖家查询总利润  -->
+  <select id="totalIncomeSummaryForSeller" resultMap="incomeSummaryMap" parameterType="com.prcsteel.platform.order.model.query.IncomeSummaryQuery">
+    select
+    SUM(c.camount) as amount,
+    SUM(c.cweight) as weight,
+    SUM(c.csaleAmount) as saleAmount,
+    SUM(c.cincomeAmount) as incomeAmount
+    from (
+    select
+    SUM(f.amount) AS camount,
+    SUM(f.weight) AS cweight,
+    SUM(f.saleAmount1) AS csaleAmount,
+    SUM(f.incomeAmount) AS cincomeAmount
+    from (
+    SELECT t2.order_org_id AS orgId, t2.order_org_name AS name,t1.seller_name AS accountName, t1.nsort_name,
+    IFNULL(t1.used_weight, 0) AS weight,
+    IFNULL(t1.used_amount, 0) + IFNULL(t1.allowance_amount, 0) AS saleAmount1,<!-- 销售金额 -->
+    IFNULL(t1.cost_price, 0) AS costPrice,
+    (ROUND(IFNULL(t1.cost_price,0),2)*ROUND(IFNULL(t1.used_weight, 0),2)) AS amount,<!-- 采购金额 -->
+    IFNULL(t1.used_amount, 0) + IFNULL(t1.allowance_amount, 0) - (ROUND(IFNULL(t1.cost_price,0),2)*ROUND(IFNULL(t1.used_weight, 0),2)) AS incomeAmount<!-- 利润金额 -->
+    FROM busi_consign_order_items t1
+    LEFT JOIN busi_consign_order t2 ON t2.id = t1.order_id
+    LEFT JOIN inv_invoice_in_detail_orderitem t4 ON t4.order_id = t2.id
+    LEFT JOIN inv_invoice_out_item_detail t5 ON t5.order_detail_id = t1.id
+    LEFT JOIN inv_invoice_out_checklist_detail t6 ON t6.item_detail_id = t5.id
+    WHERE t2.status in(7,8,10) AND t4.active = 1
+    AND t6.created BETWEEN #{startDate,jdbcType=VARCHAR} and #{endDate,jdbcType=VARCHAR}
+    GROUP BY t1.id
+    )as f
+    <where>
+      <if test="accountName != null and accountName != ''">
+        AND f.accountName = #{accountName,jdbcType=VARCHAR}
+      </if>
+      <if test="orgIds != null">
+        AND f.orgId in
+        <foreach item="orgId" index="index" collection="orgIds" open="(" separator="," close=")">
+          #{orgId}
+        </foreach>
+      </if>
+      <if test="nsortName != null and nsortName != ''">
+        AND f.nsort_name = #{nsortName,jdbcType=VARCHAR}
+      </if>
+    </where>
+    group by f.orgId
+    <if test="groupType!=null and groupType=='seller'.toString()">
+      , f.accountName, f.nsort_name
+    </if>
+    <if test="groupType!=null and groupType=='category'.toString()">
+      , f.nsort_name, f.accountName
+    </if>
+    ) as c
+    <where>
+      <if test="showNoneIncome != null and showNoneIncome == false">
+        AND c.cincomeAmount != 0
+      </if>
+    </where>
+  </select>
+
+  <select id="querySellerQuantity" resultMap="AllowanceOrderMap" parameterType="map">
+    select sum(case
+    when  Od.status >6  then  Ie.actual_pick_weight_salesman
+    else    Ie.weight
+    end)AS total_weight ,COUNT(DISTINCT Ie.order_id)AS total_quantity
+    from busi_consign_order_items Ie
+    LEFT JOIN busi_consign_order Od ON Ie.order_id = Od.id
+    where Ie.seller_id=#{accountId}
+    <if test="month != null and month != ''">
+      and  EXTRACT(YEAR_MONTH FROM Ie.created) =#{month}
+    </if>
+
+    and  Od.status in ('1','2','3','4','5','6','7','8','10','-5','-6')
+  </select>
+
+  <select id="querySellerOrgQuantity" resultMap="AllowanceOrderMap" parameterType="map">
+    select sum(case
+    when  Od.status >6 then Ie.actual_pick_weight_salesman
+    else   Ie.weight
+    end)AS total_weight ,COUNT(DISTINCT Ie.order_id)AS total_quantity
+    from busi_consign_order_items Ie
+    LEFT JOIN busi_consign_order Od ON Ie.order_id = Od.id
+    LEFT JOIN cust_account a ON Ie.seller_id=a.id
+    where Od.order_org_id=(select org_id from acl_user where  id=#{accountId}) and  EXTRACT(YEAR_MONTH FROM Ie.created) =#{month} and a.supplier_label=#{supplierLabel} and  Od.status in ('1','2','3','4','5','6','7','8','10','-5','-6')
+  </select>
+  <!-- 财务报表 应收应付发票报表 tuxianming 20160614 -->
+  <resultMap id="InvoiceInAndOutMap" type="com.prcsteel.platform.order.model.dto.ReportInvoiceInAndOutDto">
+    <result column="accountId" property="accountId" jdbcType="INTEGER" />
+    <result column="accountName" property="accountName" jdbcType="VARCHAR" />
+    <result column="initAmount" property="initAmount" jdbcType="DECIMAL" />
+    <result column="invoiceAmount" property="invoiceAmount" jdbcType="DECIMAL" />
+    <result column="actInvoiceAmount" property="actInvoiceAmount" jdbcType="DECIMAL" />
+    <result column="finalAmount" property="finalAmount" jdbcType="DECIMAL" />
+  </resultMap>
+  
+  <select id="queryInvoiceIn" resultMap="InvoiceInAndOutMap" parameterType="com.prcsteel.platform.order.model.query.ReportInvoiceInAndOutQuery">
+	select k.seller_id as accountId, k.seller_name as accountName, 
+		IFNULL(k1.initActInvoiceAmount, 0) - IFNULL(k0.initInvoiceAmount, 0) as initAmount,
+		IFNULL(k3.invoiceAmount, 0) as invoiceAmount,
+		IFNULL(k2.actInvoiceAmount, 0) as actInvoiceAmount,
+		(IFNULL(k1.initActInvoiceAmount, 0) - IFNULL(k0.initInvoiceAmount, 0) + IFNULL(k3.invoiceAmount, 0) - IFNULL(k2.actInvoiceAmount, 0)) as finalAmount
+	from busi_consign_order_items as k
+	left join(
+		select 
+			t.seller_id, SUM(IFNULL(t.check_total_amount, 0)) as initInvoiceAmount
+		from inv_invoice_in as t
+		<where>
+			t.relation_status = 'hasrelation' 
+			and t.status in ('WAIT', 'ALREADY') 
+			<if test='startTime != null'>
+				and DATE_FORMAT(t.check_date, '%Y-%m-%d')  <![CDATA[ < ]]>  DATE_FORMAT(#{startTime} , '%Y-%m-%d') 
+			</if>
+		</where>
+		group by t.seller_id
+	) as k0 on k.seller_id = k0.seller_id 
+	left join (
+		select t.seller_id, 
+			SUM((IFNULL(t.cost_price, 0) * IFNULL(t.actual_pick_weight_server, 0)) +  IFNULL(t.allowance_amount, 0)) as initActInvoiceAmount
+		from busi_consign_order_items as t	
+			left join busi_consign_order as t1 on t1.id = t.order_id
+		<where>
+			t1.status in ('7', '8', '10')
+			<if test='startTime != null'>
+				and DATE_FORMAT(t1.secondary_time, '%Y-%m-%d')  <![CDATA[ < ]]>  DATE_FORMAT(#{startTime}, '%Y-%m-%d') 
+			</if>
+		</where>
+		group by t.seller_id
+	) as k1 on k.seller_id = k1.seller_id
+	left join(
+		select 
+			t.seller_id, SUM(IFNULL(t.check_total_amount, 0)) as actInvoiceAmount
+		from inv_invoice_in as t
+		<where>
+			t.relation_status = 'hasrelation' 
+			and t.status in ('WAIT', 'ALREADY') 
+			<if test='startTime != null'>
+				and DATE_FORMAT(t.check_date, '%Y-%m-%d') <![CDATA[ >= ]]> DATE_FORMAT(#{startTime} , '%Y-%m-%d') 
+			</if>
+			<if test='endTime != null'>
+				and DATE_FORMAT(t.check_date, '%Y-%m-%d') <![CDATA[ <= ]]> DATE_FORMAT(#{endTime}, '%Y-%m-%d') 
+			</if>
+		</where> 
+		group by t.seller_id
+	) as k2 on k2.seller_id = k.seller_id 
+	left join(
+		select t.seller_id, 
+			SUM((IFNULL(t.cost_price, 0) * IFNULL(t.actual_pick_weight_server, 0)) +  IFNULL(t.allowance_amount, 0)) as invoiceAmount
+		from busi_consign_order_items as t	
+			left join busi_consign_order as t1 on t1.id = t.order_id
+		<where>
+			t1.status in ('7', '8', '10')
+			<if test='startTime != null'>
+				and DATE_FORMAT(t1.secondary_time, '%Y-%m-%d') <![CDATA[ >= ]]> DATE_FORMAT(#{startTime} , '%Y-%m-%d') 
+			</if>
+			<if test='endTime != null'>
+				and DATE_FORMAT(t1.secondary_time, '%Y-%m-%d') <![CDATA[ <= ]]> DATE_FORMAT(#{endTime}, '%Y-%m-%d') 
+			</if>
+		</where> 
+		group by t.seller_id
+	) as k3 on k3.seller_id = k.seller_id
+	<where>
+		<if test='accountId != null'>
+			and k.seller_id = #{accountId}
+		</if> 
+	</where>
+	group by k.seller_id
+	<if test="start != null and length != null">
+      limit #{start}, #{length}
+    </if>
+  </select>
+  
+  <select id="totalInvoiceIn" resultType="java.lang.Integer" parameterType="com.prcsteel.platform.order.model.query.ReportInvoiceInAndOutQuery">
+	select count(1) 
+	from (select seller_id  from  busi_consign_order_items
+		<where>
+			<if test='accountId != null'>
+				seller_id = #{accountId}
+			</if>
+		</where>
+	 group by seller_id ) as f
+  </select>
+  
+  <select id="totalInvoiceOut" resultType="java.lang.Integer" parameterType="com.prcsteel.platform.order.model.query.ReportInvoiceInAndOutQuery">
+	select count(1) 
+	from (select account_id  from  busi_consign_order
+		<where>
+			<if test='accountId != null'>
+				account_id = #{accountId}
+			</if>
+		</where>
+	group by account_id ) as f
+  </select>
+  
+  <select id="queryInvoiceOut" resultMap="InvoiceInAndOutMap" parameterType="com.prcsteel.platform.order.model.query.ReportInvoiceInAndOutQuery">
+  	select k.account_id as accountId, k.account_name as accountName, 
+		IFNULL(k0.initInvoiceAmount, 0) - IFNULL(k1.initActInvoiceAmount, 0) as initAmount,
+		IFNULL(k3.invoiceAmount, 0) as invoiceAmount,
+		IFNULL(k2.actInvoiceAmount, 0) as actInvoiceAmount,
+		(IFNULL(k0.initInvoiceAmount, 0) - IFNULL(k1.initActInvoiceAmount, 0) + IFNULL(k3.invoiceAmount, 0) - IFNULL(k2.actInvoiceAmount, 0)) as finalAmount
+	from busi_consign_order as k
+		left join (
+			select t.account_id, 
+				SUM((IFNULL(t1.deal_price, 0) * IFNULL(t1.actual_pick_weight_server, 0)) +  IFNULL(t1.allowance_amount, 0)) as initInvoiceAmount
+			from busi_consign_order as t	
+				left join busi_consign_order_items as t1 on t1.order_id = t.id
+			where
+				 t.status in ('7','8','10')
+				<if test='startTime != null'>
+					and DATE_FORMAT(t.secondary_time, '%Y-%m-%d')  <![CDATA[ < ]]> DATE_FORMAT(#{startTime}, '%Y-%m-%d') 
+				</if>
+			group by t.account_id
+		) as k0 on k0.account_id = k.account_id
+		left join(
+			select t.buyer_id, 
+				SUM(IFNULL(t2.amount,0)) as initActInvoiceAmount
+			from inv_invoice_out_apply_detail as t
+				left join inv_invoice_out_item_detail as t1 on t1.apply_detail_id = t.id
+				left join inv_invoice_out_checklist_detail as t2 on t2.item_detail_id = t1.id
+			where 
+				t.is_deleted != 1
+				and t1.is_deleted != 1
+				<if test='startTime != null'>
+					and DATE_FORMAT(t2.created, '%Y-%m-%d')  <![CDATA[ < ]]> DATE_FORMAT(#{startTime} , '%Y-%m-%d') 
+				</if>
+			group by t.buyer_id
+		) as k1 on k1.buyer_id = k.account_id
+		left join(
+			select t.buyer_id, 
+				SUM(IFNULL(t2.amount,0)) as actInvoiceAmount
+			from inv_invoice_out_apply_detail as t
+				left join inv_invoice_out_item_detail as t1 on t1.apply_detail_id = t.id
+				left join inv_invoice_out_checklist_detail as t2 on t2.item_detail_id = t1.id
+			<where> 
+				t.is_deleted != 1
+				and t1.is_deleted != 1
+				<if test='startTime != null'>
+					and DATE_FORMAT(t2.created, '%Y-%m-%d') <![CDATA[ >= ]]> DATE_FORMAT(#{startTime} , '%Y-%m-%d') 
+				</if>
+				<if test='endTime != null'>
+					and DATE_FORMAT(t2.created, '%Y-%m-%d') <![CDATA[ <= ]]> DATE_FORMAT(#{endTime}, '%Y-%m-%d') 
+				</if>
+			</where>
+			group by t.buyer_id
+		) as k2 on k.account_id = k2.buyer_id
+		left join(
+			select t.account_id, 
+				SUM((IFNULL(t1.deal_price, 0) * IFNULL(t1.actual_pick_weight_server, 0)) +  IFNULL(t1.allowance_amount, 0)) as invoiceAmount
+			from busi_consign_order as t	
+				left join busi_consign_order_items as t1 on t1.order_id = t.id
+			<where>
+				<if test='startTime != null'>
+					and DATE_FORMAT(t.secondary_time, '%Y-%m-%d') <![CDATA[ >= ]]> DATE_FORMAT(#{startTime}, '%Y-%m-%d') 
+				</if>
+				<if test='endTime != null'>
+					and DATE_FORMAT(t.secondary_time, '%Y-%m-%d') <![CDATA[ <= ]]> DATE_FORMAT(#{endTime}, '%Y-%m-%d') 
+				</if>
+				and t.status in ('7','8',10)
+			</where> 
+			group by t.account_id
+		) as k3 on k3.account_id = k.account_id
+		<where>
+			<if test='accountId != null'>
+				and k.account_id = #{accountId}
+			</if>
+		</where>
+		group by k.account_id
+		<if test="start != null and length != null">
+	      limit #{start}, #{length}
+	    </if>
+  </select>
+  <!-- end 财务报表 应收应付发票报表 tuxianming 20160614 -->
+
+  <!-- cbms接口  获取采购历史记录  -->
+  <select id="findPurchaseRecord" resultMap="PurchaseRecordDto"  parameterType="java.lang.String">
+   SELECT DISTINCT  b.nsort_name AS nsort_name, SUBSTR(b.city,1,CHAR_LENGTH(b.city)-1) AS city
+    FROM busi_consign_order_items b,busi_consign_order o
+    WHERE b.order_id=o.id AND o.contact_tel=#{phone}
+ </select>
+  <!--订单ID查询对应的订单明细-->
+  <resultMap id="appConsignOrderItemsMap" type="com.prcsteel.platform.order.model.AppOrderItems">
+    <result column="nsortName" property="nsortName" jdbcType="VARCHAR"/>
+    <result column="material" property="material" jdbcType="VARCHAR"/>
+    <result column="spec" property="spec" jdbcType="VARCHAR"/>
+    <result column="factory" property="factory" jdbcType="VARCHAR"/>
+    <result column="warehouse" property="warehouse" jdbcType="VARCHAR"/>
+    <result column="city" property="city" jdbcType="VARCHAR"/>
+    <result column="dealPrice" property="dealPrice" jdbcType="DECIMAL"/>
+    <result column="weight" property="weight" jdbcType="DECIMAL"/>
+    <result column="weightConcept" property="weightConcept" jdbcType="VARCHAR"/>
+    <result column="actual_pick_weight_server" property="actualPickWeight" jdbcType="DECIMAL"/>
+  </resultMap>
+  <select id="selectItemsByorderId" resultMap="appConsignOrderItemsMap">
+    select i.id,i.nsort_name as nsortName,i.material,i.spec,i.factory,
+    i.warehouse,i.city,ROUND(i.deal_price,2) as dealPrice,i.weight_concept as weightConcept,weight,
+    (case o.status when '6' then 0.00 else i.actual_pick_weight_server end) actual_pick_weight_server
+    from busi_consign_order_items i
+    left join busi_consign_order o on o.id = i.order_id
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </select>
+  <!-- 清空订单明细中卖家凭证号-->
+  <update id="updateOrderItemsByCertCode" parameterType="map">
+    UPDATE busi_consign_order_items
+    SET seller_credential_code = #{credentialCode,jdbcType=VARCHAR},
+    modification_number = modification_number + 1
+    where seller_credential_code = #{certCode,jdbcType=VARCHAR}
+  </update>
+  <!-- 清空订单明细中卖家凭证号-->
+  <update id="updateOrderItemsByBatchCertCode" parameterType="map">
+    UPDATE busi_consign_order_items
+    SET batch_seller_credential_code = #{credentialCode,jdbcType=VARCHAR},
+    modification_number = modification_number + 1
+    where  batch_seller_credential_code = #{certCode,jdbcType=VARCHAR}
+  </update>
+  <!--订单ID查询对应的订单明细-->
+  <resultMap id="ecConsignOrderItemsMap" type="com.prcsteel.platform.order.model.EcOrderItems">
+    <result column="category_uuid" property="categoryUuid" jdbcType="VARCHAR"/>
+    <result column="category" property="categoryName" jdbcType="VARCHAR"/>
+    <result column="material_uuid" property="materialUuid" jdbcType="VARCHAR"/>
+    <result column="material" property="materialName" jdbcType="VARCHAR"/>
+    <result column="spec1" property="spec1" jdbcType="VARCHAR"/>
+    <result column="factory_id" property="factoryId" jdbcType="VARCHAR"/>
+    <result column="factory" property="factoryName" jdbcType="VARCHAR"/>
+    <result column="warehouse_id" property="warehouseId" jdbcType="VARCHAR"/>
+    <result column="warehouse" property="warehouseName" jdbcType="VARCHAR"/>
+    <result column="city_id" property="cityId" jdbcType="VARCHAR"/>
+    <result column="city" property="cityName" jdbcType="VARCHAR"/>
+    <result column="price" property="price" jdbcType="DECIMAL"/>
+    <result column="weight" property="weight" jdbcType="DECIMAL"/>
+    <result column="amount" property="amount" jdbcType="DECIMAL"/>
+    <result column="weight_concept" property="weightConcept" jdbcType="VARCHAR"/>
+  </resultMap>
+  <select id="selectEcItemsByorderId" resultMap="ecConsignOrderItemsMap">
+    select id,nsort_name as category,material,spec as spec1,factory,
+    warehouse,city,ROUND(deal_price,2) as price,weight_concept,weight,amount
+    from busi_consign_order_items
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </select>
+  <!-- added by chengui 根据订单ID查询对应的订单明细，包含已删除记录-->
+  <select id="selectUnionAllByOrderId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select
+    <include refid="Base_Column_List"/>
+    from busi_consign_order_items
+    where order_id = #{orderId,jdbcType=BIGINT}
+    UNION ALL
+    (
+    SELECT i.order_item_id, i.order_id, i.seller_id, i.seller_name, i.department_id, i.department_name, i.contact_id, i.contact_name,
+    null,null,null,null,null,null,null,null,null,null,null,null,
+    null,null,null,null,null,null,null,null,null,null, null,null,null,null,null,null,null,null,null,null,
+    null,null,null,null,null,null,null,null,null,null FROM
+    busi_consign_order_items_changedrecord d LEFT JOIN busi_consign_order_items_change i ON i.id = d.item_change_id
+    WHERE i.order_id = #{orderId,jdbcType=BIGINT} AND d.status ='DEL'
+    )
+  </select>
+
+</mapper>

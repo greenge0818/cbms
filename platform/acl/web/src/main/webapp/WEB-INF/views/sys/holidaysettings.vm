@@ -1,0 +1,91 @@
+
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+
+    </script>
+
+    <ul class="breadcrumb">
+        <li><i class="ace-icon fa fa-home home-icon"></i>系统管理</li>
+        <li>系统设置</li>
+        <li class="active">假期设置</li>
+    </ul>
+    <!-- /.breadcrumb -->
+    #parse("layout/topbtn.vm")
+    <!-- /.nav-search -->
+</div>
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <!--TAPBAR-->
+            #parse("sys/systemmenu.vm")
+			<div class="recordbar  text-left col-xs-12">
+                   <span class="bolder">假期设置：</span>
+            </div>
+			<button class="btn btn-danger btn-sm" type="button" id="addHoliday">
+				<i class="aace-icon fa fa-search bigger-110"></i>添加假期
+			</button>
+			<form id="searchForm" class="form-inline">
+    			<span class="bolder">时间：</span>
+    			<input id="startTime" class="Wdate" type="text" value="" onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')||\'2020-10-01\'}'})" must="1"/>-
+                <input id="endTime" class="Wdate" type="text" value=""  onFocus="WdatePicker({minDate:'#F{$dp.$D(\'startTime\')}',maxDate:'2020-10-01'})" must="1"/>
+                <button class="btn btn-sm btn-default ok-btn" type="button" id="btn">
+    				<i class="aace-icon fa fa-search bigger-110"></i>搜索
+    			</button>
+            </form>
+			<table class="table table-striped table-bordered table-hover alp sTWidth" id="dynamic-table">
+                <thead>
+                <tr>
+                    <th class="text-center">假期类型</th>
+                    <th class="text-center" >时间</th>
+                    <th class="text-center" >操作</th>
+                </tr>
+                </thead>
+                <tbody class="text-center">
+                <tr class="bolder-b-dashed">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+				</tbody> 
+			</table>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+<!-- /.page-content -->
+
+<div id="determine" style="display: none;">
+	<div style='margin-top:15px; margin-bottom: 25px;' id = "style">
+	    <form id='form-horizontal' class='form-horizontal' role='form'>
+			<div class='well'>
+            <label style='width: 100px'><em class="red">*</em>时间：</label>
+            <input id="holidayDate" class="Wdate" type="text" value="" onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')||\'2020-10-01\'}'})" must="1"/>
+            <input id="endTime" class="Wdate" type="hidden" value=""  onFocus="WdatePicker({minDate:'#F{$dp.$D(\'holidayDate\')}',maxDate:'2020-10-01'})" must="1"/><br/>
+            <label style='width: 100px'><em class="red">*</em>类型：</label>
+            <select id="title" must="1">  
+              <option>周末</option>
+			  <option>休假</option> 
+              <option>元旦</option>  
+              <option>春节</option>  
+              <option>清明节</option>
+              <option>劳动节</option>  
+              <option>端午节</option>  
+              <option>中秋</option>  
+              <option>国庆</option>
+              <option>补班</option> 
+            </select>
+            </br>
+<div class="table-bar text-center">
+	<button id="btncommit" data-bb-handler="success" type="button" class="btn btn-sm btn-primary"><i class="ace-icon fa fa-check"></i>保存</button>
+	<button id="btnClose" data-bb-handler="button" type="button" class="btn btn-sm">取消</button>
+</div> 
+</div> 
+		</form>
+	</div><!-- end style-->
+</div><!-- end determine-->
+<script type="text/javascript" src="$link.getContextPath()/js/views/sys/holidaysettings.js"></script>

@@ -1,0 +1,710 @@
+<div class="main-content" xmlns="http://www.w3.org/1999/html">
+    <div class="main-content-inner">
+        <div class="breadcrumbs" id="breadcrumbs">
+            <script type="text/javascript">
+                try {
+                    ace.settings.check('breadcrumbs', 'fixed')
+                } catch (e) {
+                }
+            </script>
+
+            <ul class="breadcrumb">
+                <li>
+                    <i class="ace-icon fa fa-home home-icon"></i>
+                    客户管理
+                </li>
+                <li>
+                    <i class="ace-icon"></i>
+                    <a href="$link.getContextPath()/company/list.html">我的客户</a>
+                </li>
+                <li class="active">添加客户
+                </li>
+            </ul>
+            <!-- /.breadcrumb -->
+        </div>
+
+        <div class="page-content">
+            <div class="customer">
+                <ul class="customerT" id="progressBar">
+                    <li class="cu1"><p><span>1</span>添加基本信息</p></li>
+                    <li><p><span>2</span>上传资料</p></li>
+                    <li><p><span>3</span>等待审核通过</p></li>
+                </ul>
+                <form action="$link.getContextPath()/account/save.html" method="POST"
+                      enctype="multipart/form-data" id="formstep1">
+                    <div id="step1">
+                        <!--TAPBAR-->
+                        <div class="tableOne" id="step_one_div">
+                            <h1>公司基本信息<span>（带 * 号为必填）</span></h1>
+
+                            <div class="row row-marginbottom">
+                                <div class="col-md-6">
+                                    <span class="xo edo"><label>*</label>公司名称：</span>
+                                    <input type="text" class="z-text" value="$!{account.name}" id="acountName"
+                                           must="1"/>
+                                    <span id="view" style="display: none;">该公司已经存在，<a target="_blank" href="#">点击查看</a></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <span class="pull-left xo edo"><label>*</label>选择客户性质：</span>
+                                    <ul class="checkinput pull-left">
+                                        #foreach( $elem in $accountTag)
+                                            #if($!{elem.code}!="4" && $!{elem.code}!= "8")
+                                                <li>
+                                                    <label><input name="nature" value="$!{elem.code}" type="checkbox">
+                                                        $!{elem.name}</label>
+                                                </li>
+                                            #end
+                                        #{end}
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row row-marginbottom">
+                                <div class="col-md-6">
+                                    <span class="xo edo pull-left height-b">客户类型：</span>
+                                    <label>
+                                        <select class=" select-middle" name="businessType" id="businessType">
+                                            #foreach( $elem in $businessTypes)
+                                                <option value="$elem" #if($elem == $!{account.businessType})
+                                                        selected #{end}>$elem.name</option>
+                                            #{end}
+                                        </select>
+                                    </label>
+                                </div>
+                                <div class="col-md-6 orgtd" style="display: none;">
+                                    <span class="xo edo pull-left height-b"><label>*</label>归属服务中心：</span>
+                                    <label>
+                                        <select class=" select-middle" id="org">
+                                            <option value="">-选择服务中心-</option>
+                                            #foreach( $elem in $orgList)
+                                                <option value="$elem.id" #if($elem.id == $!{account.orgId})
+                                                        selected #{end}>
+                                                    $elem.name</option>
+                                            #{end}
+                                        </select>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row row-marginbottom">
+                                <div class="col-md-6">
+                                    <span class="xo edo">法人姓名：</span>
+                                    <input type="text" value="$!{account.legalPersonName}" class="z-text"
+                                           id="legalPersonName" name="legalPersonName"/>
+                                </div>
+                                <div class="col-md-6">
+                                    <span class="xo edo">公司网址：</span>
+                                    <input type="text" value="$!{account.webSiteUrl}" class="z-text" id="webSiteUrl"
+                                           name="webSiteUrl"/>
+                                </div>
+                            </div>
+                            <!--迁移风控代码，增加5个字段 add by zhoucai@prcsteel.com 2016-5-6-->
+                            <div class="row row-marginbottom">
+                                <div class="col-md-6">
+                                    <span class="xo edo">注册资金：</span>
+                                   <span class="vendor-edit"><input verify="rmb" id="registerCapital" class="ipt-text" type="text" value="$!{account.registerCapital}"
+                                                                     name="registerCapital" />&nbsp;&nbsp;万元</span>
+                                </div>
+                                <div class="col-md-6">
+                                    <span class="xo edo">成立日期：</span>
+                                    <span class="vendor-edit"><input id="registerDate" class="ipt-text" name="registerDate" type="text" value="$!{account.registerDate}"
+                                                                     onFocus="WdatePicker()" /></span>
+                                </div>
+                            </div>
+                            <div class="row row-marginbottom">
+                                <div class="col-md-6">
+                                    <span class="xo edo">买家客户标示：</span>
+                                    #if($!hasQualificate)
+                                        <span class="vendor-edit">
+                                            <select name="buyerLabel" class="choiceshow" id="buyerLabel">
+                                                <option  value="非白名单">非白名单</option>
+                                                #if($!buyerLabel)
+                                                    #foreach($label in $buyerLabel)
+                                                        <option value="$label">$label</option>
+                                                    #end
+                                                #end
+                                            </select>
+                                        </span>
+                                    #else
+                                        <span>非白名单</span>
+                                        <input type="hidden" name="buyerLabel" id="buyerLabel" value="非白名单"/>
+                                    #end
+                                </div>
+                                <div class="col-md-6">
+                                    <span class="xo edo">卖家客户标示：</span>
+                                    #if($!hasQualificate)
+                                        <span class="vendor-edit">
+                                            <select name="supplierLabel" class="choiceshow" id="supplierLabel">
+                                                <option  value="非白名单">非白名单</option>
+                                                #if($!sellerLabel)
+                                                    #foreach($label in $sellerLabel)
+                                                        <option value="$label">$label</option>
+                                                    #end
+                                                #end
+                                            </select>
+                                        </span>
+                                    #else
+                                        <span>非白名单</span>
+                                        <input type="hidden" name="supplierLabel" id="supplierLabel" value="非白名单"/>
+                                    #end
+                                </div>
+                            </div>
+                                <div class="row row-marginbottom">
+                                    <div class="col-md-6">
+                                            <span >卖家客户单笔交易吨位上限：</span>
+                                            #if($!hasQualificate)
+                                            <input type="text" value="$!{account.sellerSingleTradeWeight}"
+                                                   id="sellerSingleTradeWeight"  name="sellerSingleTradeWeight" verify="numeric"/> &nbsp;&nbsp;吨
+
+                                            #end
+                                    </div>
+                                    <div class="col-md-6">
+
+                                            <span>卖家客户总交易笔数上限：</span>
+                                            #if($!hasQualificate)
+                                            <input type="text" value="$!{account.sellerAllTradeQuality}"
+                                                   id="sellerAllTradeQuality"  name="sellerAllTradeQuality" verify="numeric"/>&nbsp;&nbsp;笔
+                                        #end
+                                    </div>
+                                </div>
+
+                                <div class="row row-marginbottom">
+                                    <div class="col-md-6">
+                                            <span>卖家客户总交易吨位上限：</span>
+                                        #if($!hasQualificate)
+                                            <input type="text" value="$!{account.sellerAllTradeWeight}"
+                                                   id="sellerAllTradeWeight"  name="sellerAllTradeWeight" verify="numeric"/>&nbsp;&nbsp;吨
+                                        #end
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span>卖家客户计入所属标示类型百分比上限：</span>
+                                        #if($!hasQualificate)
+                                            <label><input type="radio" name="isSellerPercent" class="check" value="1">是</label>
+                                            <label><input type="radio" name="isSellerPercent" class="check" value="0" checked="true">否</label>#else
+                                            <span>是</span>
+                                            <input type="hidden" name="isSellerPercent" value="1"/>
+                                        #end
+                                    </div>
+                                </div>
+                            <div class="row row-marginbottom">
+                                <div class="col-md-12">
+                                    <span class="xo edo">预付款标示：</span>
+                                    #if($!hasQualificate)
+                                        <span class="vendor-edit">
+                                            <select name="paymentLabel" id="paymentLabel">
+                                                <option value="3">无预付</option>
+                                                <option value="1">银票预付</option>
+                                                <option value="2">现金预付</option>
+                                            </select>
+                                        </span>
+                                    #else
+                                        <span>无预付</span>
+                                        <input type="hidden" id="paymentLabel" name="paymentLabel" value="3"/>
+                                    #end
+                                </div>
+                            </div>
+                            <div class="row row-marginbottom">
+                                <div class="col-md-6">
+                                    <span class="xo edo">手机：</span>
+                                    <input type="text" value="$!{account.mobil}" class="z-text"
+                                           id="mobile" name="mobile" verify="mobile"/>
+                                </div>
+                                <div class="col-md-6">
+                                    <span class="xo edo">传真：</span>
+                                    <input type="text" value="$!{account.fax}" class="z-text" id="fax" name="fax"/>
+                                </div>
+                            </div>
+                            <div class="row row-marginbottom">
+                                <div class="col-md-6">
+                                    <span class="xo edo">邮编：</span>
+                                    <input type="text" value="$!{account.zip}" class="z-text" id="zip" name="zip"/>
+                                </div>
+                                <div class="col-md-6">
+                                    <span class="xo edo">邮寄地址：</span>
+                                    <input type="text" value="$!{account.mailAddr}" class="z-text" id="mailAddr"
+                                           name="mailAddr"/>
+                                </div>
+                            </div>
+                            <div class="row row-marginbottom borderbottom">
+                                <div class="col-md-6">
+                                    <span class="xo edo">城市：</span>
+                                    <label>
+                                        <select id="province" name="provinceId" class=" select-middlehalf">
+                                            <option value="">-请选择-</option>
+                                        </select>
+                                    </label>
+                                    <label>
+                                        <select id="city" name="cityId" class=" select-middlehalf">
+                                        </select>
+                                    </label>
+                                    <label>
+                                        <select id="district" name="districtId" class=" select-middlehalf">
+                                        </select>
+                                    </label>
+                                </div>
+                                <div class="col-md-6">
+                                    <span class="xo edo">公司电话：</span>
+                                    <input type="text" class="z-text" id="tel" verify="phone" name="tel"/>
+                                </div>
+                            </div>
+
+                            <div id="factoryInfo" class="tableTwo" style=" display: none;">
+                                <h1>代理钢厂信息</h1>
+                                <table id="tab-width">
+                                    <tbody id="factoryInfoTbody">
+                                    <tr id="factoryFirstRow" class="row">
+                                        <td>&nbsp;&nbsp;<span class="xo">代理钢厂：</span></td>
+                                        <td><input type="text" class="c-text" name="factory"/></td>
+                                        <td>&nbsp;&nbsp;<span class="xo">经营品种：</span></td>
+                                        <td><input type="text" name="nsortName" search="nsort" readonly="readonly" class="v-text"/>
+                                        </td>
+                                        <td>&nbsp;&nbsp;<span class="xo">代理资质：</span></td>
+                                        <td>
+                                            <label>
+                                                <select name="qualification" class="select-middlehalf">
+                                                    <option value="一级代理">一级代理</option>
+                                                    <option value="二级代理">二级代理</option>
+                                                    <option value="三级代理">三级代理</option>
+                                                    <option value="其他">其他</option>
+                                                </select>
+                                            </label>
+                                        </td>
+                                        <td>&nbsp;&nbsp;<span class="xo">代理量：</span></td>
+                                        <td>
+                                            <select name="quantityUnit">
+                                                <option value="一年">一年</option>
+                                                <option value="一月">一月</option>
+                                            </select>
+                                            <input type="text" name="quantity" verify="numeric" class="d-text"/>&nbsp吨
+                                        </td>
+                                        <td>&nbsp;&nbsp;<span class="xo">常备库存：</span></td>
+                                        <td><input type="text" name="stock" verify="numeric" class="v-text"/>&nbsp;吨
+                                        </td>
+                                        <td class="col-md-1">
+                                            <a href="javascript:" option="add">添加</a>&nbsp;
+                                            <a href="javascript:" option="del" style="display: none;">删除</a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <h1>联系人信息<span>（带 * 号为必填）</span></h1>
+
+                            <div class="row row-marginbottom">
+                                <div class="col-md-6">
+                                    <span class="xo edo"><label>*</label>姓名：</span>
+                                    <input type="text" id="contactName" placeholder="请输入姓名" must="1" contactid="0"
+                                           data-original-title="不能为空" class="z-text"/>
+                                </div>
+                                <div class="col-md-6">
+                                    <span class="xo edo">邮箱：</span>
+                                    <input type="text" id="contactEmail" placeholder="请输入邮箱" verify="email"
+                                           class="z-text">
+                                </div>
+                            </div>
+                            <div class="row row-marginbottom">
+                                <div class="col-md-6">
+                                    <span class="xo edo"><label>*</label>手机号：</span>
+                                    <input type="text" id="contactTel" must="1" verify="mobile" class="z-text">
+                                </div>
+                                <div class="col-md-6">
+                                    <span class="xo edo">备注：</span>
+                                    <input type="text" id="contactNote" placeholder="请输入备注" class="z-text">
+                                </div>
+                            </div>
+                            <div class="row row-marginbottom">
+                                <div class="col-md-6">
+                                    <span class="xo edo">QQ：</span>
+                                    <input type="text" id="contactQq" placeholder="请输入QQ" verify="qq" class="z-text">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <form action="$link.getContextPath()/account/save.html" method="POST"
+                      enctype="multipart/form-data" id="formstep2">
+                    <div id="step2" style="display: none;">
+                        <div class="upload1" id="companyInfo">
+                            <span>公司全称：<label id="nameText"></label></span>
+                            <span>客户性质：<label id="businessTypeText"></label></span>
+                            <span id="orgNameText">服务中心：<label></label></span>
+                        </div>
+                        <div class="upload2">
+                            <span>* 图片可上传盖章扫描件或数码照，支持jpeg、jpg、png、gif 图片格式，小于2M；</span>
+                        </div>
+
+                        <div class="tableFour">
+                            <h1><font>公司证件资料<span>（带 * 号为必填）</span></font>
+                                <label><input name="cardRadio" type="radio" value="threeCard"
+                                              checked="checked">三证</label>
+                                <label><input name="cardRadio" type="radio" value="fiveCard">五证合一</label>
+                            </h1>
+
+                            <div id="cardInfo" style="height: 315px;">
+                                <div id="threeCard">
+                                    <div class="row row-marginbottom">
+                                        <div class="col-md-6">
+                                            <span class="xo edo"><label must="true"></label>营业执照注册号：</span>
+                                            <input id="licenseCode" type="text" class="z-text" placeholder="营业执照注册号"/>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span class="xo edo"><label must="true"></label>组织机构代码：</span>
+                                            <input id="orgCode" type="text" class="z-text" placeholder="组织机构代码"/>
+                                        </div>
+                                    </div>
+                                    <div class="row row-marginbottom">
+                                        <div class="col-md-6">
+                                            <div class="row-marginbottom">
+                                                <span class="xo edo"><label must="true"></label>企业注册地址：</span>
+                                                <input id="regAddress" type="text" class="z-text" placeholder="企业注册地址"/>
+                                            </div>
+                                            <div>
+                                                <div class="pull-left">
+                                                    <span class="xo edo"><label must="true"></label>营业执照：</span>
+                                                </div>
+                                                <a rel="lightbox"><img class="imgbigger imgo" src=""/></a>
+                                                <img class="imgo" src="../theme/default/avatars/file.png"
+                                                     onclick="getElementById('picLicense').click()" alt="点击添加图片"
+                                                     title="点击添加图片"/>
+                                                <input id="picLicense" type="file" upload="file" pictype="license"/>
+
+                                                <p class="po" onclick="getElementById('picLicense').click()"><span
+                                                        class="may"><label>选择文件</label></span></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="pull-left">
+                                                <span class="xo edo"><label must="true"></label>组织机构代码证：</span>
+                                            </div>
+                                            <div class=" pull-left">
+                                                <a rel="lightbox"><img class="imgbigger imgo" src=""/></a>
+                                                <img class="imgo" src="../theme/default/avatars/file.png"
+                                                     onclick="getElementById('picOrgCode').click()" alt="点击添加图片"
+                                                     title="点击添加图片"/>
+                                                <input id="picOrgCode" type="file" upload="file" pictype="org_code"/>
+
+                                                <p class="po" onclick="getElementById('picOrgCode').click()"><span
+                                                        class="may"><label>选择文件</label></span></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="pull-left">
+                                                <span class="xo edo"><label must="true"></label>税务登记本(副本)：</span>
+                                            </div>
+                                            <div class=" pull-left">
+                                                <a rel="lightbox"><img class="imgbigger imgo" src=""/></a>
+                                                <img class="imgo" src="../theme/default/avatars/file.png"
+                                                     onclick="getElementById('picTaxReg').click()" alt="点击添加图片"
+                                                     title="点击添加图片"/>
+                                                <input id="picTaxReg" type="file" upload="file" pictype="tax_reg"/>
+
+                                                <p class="po" onclick="getElementById('picTaxReg').click()"><span
+                                                        class="may"><label>选择文件</label></span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="fiveCard" style="display: none;">
+                                    <div class="row row-marginbottom">
+                                        <div class="col-md-6">
+                                            <div class="row-marginbottom">
+                                                <span class="xo edo"><label must="true"></label>统一社会信用代码号：</span>
+                                                <input id="creditCode" type="text" class="z-text"
+                                                       placeholder="统一社会信用代码号"/>
+                                            </div>
+                                            <div>
+                                                <div class="pull-left">
+                                                    <span class="xo edo"><label must="true"></label>统一社会信用代码：</span>
+                                                </div>
+                                                <a rel="lightbox"><img class="imgbigger imgo" src=""/></a>
+                                                <img class="imgo" src="../theme/default/avatars/file.png"
+                                                     onclick="getElementById('picCreditCode').click()" alt="点击添加图片"
+                                                     title="点击添加图片"/>
+                                                <input id="picCreditCode" type="file" upload="file"
+                                                       pictype="credit_code"/>
+
+                                                <p class="po" onclick="getElementById('picCreditCode').click()"><span
+                                                        class="may"><label>选择文件</label></span></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tableFive">
+                            <h1>代运营资料<span></span></h1>
+
+                            <div id="cbmsInfo">
+                            <div class="row row-marginbottom">
+                                <div class="col-md-6">
+                                    <div class="pull-left">
+                                        <span class="xo edo">银行开户许可证：</span>
+                                    </div>
+                                    <div class=" pull-left">
+                                        <a rel="lightbox"><img class="imgbigger imgo" src=""/></a>
+                                        <img class="imgo" src="../theme/default/avatars/file.png"
+                                             onclick="getElementById('picOpenAccountLicense').click()" alt="点击添加图片"
+                                             title="点击添加图片"/>
+                                        <input id="picOpenAccountLicense" type="file" upload="file"
+                                               pictype="open_account_license"/>
+
+                                        <p class="po" onclick="getElementById('picOpenAccountLicense').click()"><span
+                                                class="may"><label>选择文件</label></span></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="pull-left">
+                                        <span class="xo edo">法人身份证：</span>
+                                    </div>
+                                    <div class=" pull-left">
+                                        <a rel="lightbox"><img class="imgbigger imgo" src=""/></a>
+                                        <img class="imgo" src="../theme/default/avatars/file.png"
+                                             onclick="getElementById('picLegalID').click()" alt="点击添加图片"
+                                             title="点击添加图片"/>
+                                        <input id="picLegalID" type="file" upload="file" pictype="legal_ID"/>
+
+                                        <p class="po" onclick="getElementById('picLegalID').click()"><span
+                                                class="may"><label>选择文件</label></span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row row-marginbottom">
+                                <div class="col-md-6">
+                                    <div class="pull-left">
+                                        <span class="xo edo">一般纳税人证明：</span>
+                                    </div>
+                                    <div class=" pull-left">
+                                        <a rel="lightbox"><img class="imgbigger imgo" src=""/></a>
+                                        <img class="imgo" src="../theme/default/avatars/file.png"
+                                             onclick="getElementById('picTaxpayerEvidence').click()" alt="点击添加图片"
+                                             title="点击添加图片"/>
+                                        <input id="picTaxpayerEvidence" type="file" upload="file"
+                                               pictype="taxpayer_evidence"/>
+
+                                        <p class="po" onclick="getElementById('picTaxpayerEvidence').click()"><span
+                                                class="may"><label>选择文件</label></span></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="pull-left">
+                                        <span class="xo edo">企业调查表：</span>
+                                    </div>
+                                    <div class=" pull-left">
+                                        <a rel="lightbox"><img class="imgbigger imgo" src=""/></a>
+                                        <img class="imgo" src="../theme/default/avatars/file.png"
+                                             onclick="getElementById('picEnterpriseSurvey').click()" alt="点击添加图片"
+                                             title="点击添加图片"/>
+                                        <input id="picEnterpriseSurvey" type="file" upload="file"
+                                               pictype="enterprise_survey"/>
+
+                                        <p class="po" onclick="getElementById('picEnterpriseSurvey').click()"><span
+                                                class="may"><label>选择文件</label></span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row row-marginbottom">
+                                <div class="col-md-6">
+                                    <div class="pull-left">
+                                        <span class="xo edo">卖家代运营协议：</span>
+                                    </div>
+                                    <div class=" pull-left">
+                                        <a rel="lightbox"><img class="imgbigger imgo" src=""/></a>
+                                        <img class="imgo" src="../theme/default/avatars/file.png"
+                                             onclick="getElementById('picConsignContract').click()" alt="点击添加图片"
+                                             title="点击添加图片"/>
+                                        <input id="picConsignContract" type="file" upload="file"
+                                               pictype="consign_contract"/>
+
+                                        <p class="po" onclick="getElementById('picConsignContract').click()"><span
+                                                class="may"><label>选择文件</label></span></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="pull-left">
+                                        <span class="xo edo">开票速度：</span>
+                                    </div>
+                                    <div class=" pull-left">
+                                        <label><input type="radio" name="invoiceSpeed" value="NORMAL"
+                                                      checked="checked"/>正常&nbsp;&nbsp;</label>
+                                        <label><input type="radio" name="invoiceSpeed" value="SLOW"/>慢&nbsp;&nbsp;
+                                        </label>
+                                        <label><input type="radio" name="invoiceSpeed" value="FAST"/>快&nbsp;&nbsp;
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                                </div>
+                        </div>
+
+                        <div class="tableSix">
+                            <h1>开票资料<span></span></h1>
+
+                            <div id="billingInfo">
+                                <div class="row row-marginbottom">
+                                    <div class="col-md-6">
+                                        <div class=" row-marginbottom">
+                                            <span class="xo edo">税号：</span><input id="taxCode" type="text" class="z-text"
+                                                                              placeholder="税号"/>
+                                        </div>
+                                        <div class=" row-marginbottom">
+                                            <span class="xo edo">开票地址：</span><input id="addr" type="text" class="z-text"
+                                                                                placeholder="开票地址"/>
+                                        </div>
+                                        <div>
+                                            <span class="xo edo">电话号码：</span><input id="taxTel" type="text" class="z-text"
+                                                                                placeholder="电话号码"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="pull-left">
+                                            <span class="xo edo">开票资料：</span>
+                                        </div>
+                                        <div class=" pull-left">
+                                            <a rel="lightbox"><img class="imgbigger imgo" src=""/></a>
+                                            <img class="imgo" src="../theme/default/avatars/file.png"
+                                                 onclick="getElementById('picInvoiceData').click()" alt="点击添加图片"
+                                                 title="点击添加图片"/>
+                                            <input id="picInvoiceData" type="file" upload="file"
+                                                   pictype="invoice_data"/>
+
+                                            <p class="po" onclick="getElementById('picInvoiceData').click()"><span
+                                                    class="may"><label>选择文件</label></span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row row-marginbottom">
+                                    <div class="col-md-12">
+                                        <span class="xo edo">开户银行：</span>
+                                        <input type="text" id="taxBankNameMain" class="z-text" placeholder="开户银行"/>
+                                        <input type="text" id="taxBankNameBranch" class="z-text" placeholder="支行名称"/>
+                                    </div>
+                                </div>
+                                <div class="row row-marginbottom">
+                                    <div class="col-md-12">
+                                        <span class="xo edo">银行账号：</span>
+                                        <input id="bankNumber" type="text" class="z-text" placeholder="银行账号"/>
+                                    </div>
+                                </div>
+                                <div class="row row-marginbottom">
+                                    <div class="col-md-12">
+                                        <div class="pull-left">
+                                            <span class="xo edo">开票类型：</span>
+                                        </div>
+                                        <label><input type="radio" name="invoiceType" value="NORMAL"/>增值税普通发票</label>
+                                        <label><input type="radio" name="invoiceType" value="PRIVATE" checked="checked"/>增值税专用发票</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tableSeven">
+                            <h1>打款资料<span></span></h1>
+
+                            <div id="payInfo">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row-marginbottom">
+                                            <span class="xo edo">开户行所在城市：</span>
+                                            <label>
+                                                <select class=" xil" id="bankProvince" name="bankProvinceId">
+                                                    <option value="">--请选择--</option>
+                                                </select>
+                                            </label>
+                                            <label>
+                                                <select class=" xil" id="bankCity" name="bankCityId">
+                                                </select>
+                                            </label>
+                                        </div>
+                                        <div class="row-marginbottom">
+                                            <span class="xo edo">开户银行：</span>
+                                            <input type="text" placeholder="开户行" id="bankNameMain"/>
+                                            <input type="text" placeholder="支行" id="bankNameBranch"/>
+                                        </div>
+                                        <div class="row-marginbottom">
+                                            <span class="xo edo">行号：</span><input id="bankCode" type="text" class="z-text"
+                                                                              placeholder="行号"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="pull-left">
+                                            <span class="xo edo">打款资料：</span>
+                                        </div>
+                                        <div class=" pull-left">
+                                            <a rel="lightbox"><img class="imgbigger imgo" src=""/></a>
+                                            <img class="imgo" src="../theme/default/avatars/file.png"
+                                                 onclick="getElementById('picPaymentData').click()" alt="点击添加图片"
+                                                 title="点击添加图片"/>
+                                            <input id="picPaymentData" type="file" upload="file"
+                                                   pictype="payment_data"/>
+
+                                            <p class="po" onclick="getElementById('picPaymentData').click()"><span
+                                                    class="may"><label>选择文件</label></span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <span class="xo edo">银行账号：</span>
+                                        <input id="accountCode" type="text" class="z-text" placeholder="银行账号"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="audit" id="step3" style="display: none ">
+                        <img src="../theme/default/avatars/audit.png"/>
+
+                        <p>客户资料已提交，请等待审核！</p>
+                        <a href="$link.getContextPath()/company/list.html">返回我的客户</a>
+                    </div>
+                    <div id="btnBar" class="table_next">
+                        <button class="btn btn-primary" id="prevStepBtn" type="button" style="display: none;">上一步
+                        </button>
+                        <button class="btn btn-primary" id="saveInfoBtn" type="button">提交注册</button>
+                        <button class="btn btn-primary" id="nextStepBtn" type="button">下一步（完善资料）</button>
+                    </div>
+                </form>
+            </div>
+            <div id="contactInfoLayer" style="display:none;">
+                <div style=" width: 400px; height: 150px; padding:10px;">
+                    <form id="formMobile">
+                    <div>
+                        <input type="text" id="inputMobile" placeholder="请输入联系人手机号" verify="mobile"
+                               data-original-title="不能为空">
+                        <input type="text" style="display:none;" id="inputName" placeholder="姓名"
+                               data-original-title="不能为空">
+                        <button type="button" style="display:none;" id="contactAddDefine"
+                                class="btn btn-primary btn-sm">确定
+                        </button>
+                    </div>
+                    <div>
+                        <ul id="contactList">
+                        </ul>
+                        <div id="contactEmpty" style="display: none;">
+                            没有找到联系人，是否添加？<br/>
+                            <button type="button" id="contactAdd" class="btn btn-primary btn-sm">添加</button>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- /.page-content -->
+    </div>
+</div><!-- /.main-content -->
+<script src="$link.getContextPath()/js/views/common/regionallinkage.js"></script>
+<script src="$link.getContextPath()/js/views/common/searchnsort.js"></script>
+<script src="$link.getContextPath()/js/views/common/uploadfile.js"></script>
+<script src="$link.getContextPath()/js/views/account/create.js"></script>
+<script type="text/javascript">
+    $().ready(function () {
+        // 客户性质默认选中买家
+        $("input[name='nature'][value='1']").prop("checked", true);
+        $("a[rel='lightbox']").hide();
+
+        bindRegionData($("#province"), $("#city"), $("#district"),#if(${account.provinceId})$!{account.provinceId}#else ""#{end},#if(${account.cityId})$!{account.cityId}#else ""#{end},#if(${account.districtId})$!{account.districtId}#else ""#{end});
+        bindRegionData($("#bankProvince"), $("#bankCity"), null,#if(${account.bankProvinceId})$!{account.bankProvinceId}#else ""#{end},#if(${account.bankCityId})$!{account.bankCityId}#else ""#{end}, null);
+    });
+</script>

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.smartmatch.persist.dao.ResourceNormsDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.smartmatch.model.model.ResourceNorms" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="resource_id" property="resourceId" jdbcType="BIGINT" />
+    <result column="norm_uuid" property="normUuid" jdbcType="VARCHAR" />
+    <result column="value" property="value" jdbcType="VARCHAR" />
+    <result column="priority" property="priority" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="tmp" property="tmp" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, resource_id, norm_uuid, value, priority, created, created_by, tmp
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from cust_resource_norms
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from cust_resource_norms
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.prcsteel.platform.smartmatch.model.model.ResourceNorms" >
+    insert into cust_resource_norms (id, resource_id, norm_uuid, 
+      value, priority, created, 
+      created_by, tmp)
+    values (#{id,jdbcType=BIGINT}, #{resourceId,jdbcType=BIGINT}, #{normUuid,jdbcType=VARCHAR}, 
+      #{value,jdbcType=VARCHAR}, #{priority,jdbcType=INTEGER}, #{created,jdbcType=TIMESTAMP}, 
+      #{createdBy,jdbcType=VARCHAR}, #{tmp,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.smartmatch.model.model.ResourceNorms" >
+    insert into cust_resource_norms
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="resourceId != null" >
+        resource_id,
+      </if>
+      <if test="normUuid != null" >
+        norm_uuid,
+      </if>
+      <if test="value != null" >
+        value,
+      </if>
+      <if test="priority != null" >
+        priority,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="tmp != null" >
+        tmp,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="resourceId != null" >
+        #{resourceId,jdbcType=BIGINT},
+      </if>
+      <if test="normUuid != null" >
+        #{normUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null" >
+        #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="priority != null" >
+        #{priority,jdbcType=INTEGER},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="tmp != null" >
+        #{tmp,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.smartmatch.model.model.ResourceNorms" >
+    update cust_resource_norms
+    <set >
+      <if test="resourceId != null" >
+        resource_id = #{resourceId,jdbcType=BIGINT},
+      </if>
+      <if test="normUuid != null" >
+        norm_uuid = #{normUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null" >
+        value = #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="priority != null" >
+        priority = #{priority,jdbcType=INTEGER},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="tmp != null" >
+        tmp = #{tmp,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.smartmatch.model.model.ResourceNorms" >
+    update cust_resource_norms
+    set resource_id = #{resourceId,jdbcType=BIGINT},
+      norm_uuid = #{normUuid,jdbcType=VARCHAR},
+      value = #{value,jdbcType=VARCHAR},
+      priority = #{priority,jdbcType=INTEGER},
+      created = #{created,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      tmp = #{tmp,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <!-- 根据资源id集删除规格记录-->
+  <delete id="deleteByResourceIds" >
+  	DELETE FROM  cust_resource_norms
+ 	WHERE resource_id in
+    <foreach item="id" index="index" collection="resourceIds" open="(" separator="," close=")">
+        #{id}
+    </foreach> 
+  </delete>
+  
+   <!-- 复制资源规格表数据至历史表 -->
+  <insert id="doCopyResourceNorms">
+  	INSERT INTO  cust_resource_norms_history 
+  	SELECT a.*,NOW() version_date 
+  	FROM cust_resource_norms a
+  </insert>
+  
+  <select id="selectByresourceId" resultMap="BaseResultMap" >
+		select * from cust_resource_norms
+		where resource_id = #{resourceId,jdbcType=BIGINT}
+  </select>
+  
+  <select id="queryByResourceId" resultType="java.lang.String">
+  	SELECT group_concat(norm.value order by res.id,norm.priority separator '*'  ) spec 
+  	FROM cust_resource res
+	LEFT JOIN cust_resource_norms norm ON norm.resource_id = res.id
+	WHERE norm.resource_id = #{resourceId,jdbcType=BIGINT}
+  </select>
+</mapper>

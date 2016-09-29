@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.kuandao.persist.dao.KuandaoRefundDao">
+	<resultMap type="com.prcsteel.platform.kuandao.model.dto.KuandaoRefundDto" id="refundResultMap">
+		<id column="id" property="id"/> 
+		<result column="imp_id" property="impId"/>
+		<result column="refund_code" property="refundCode"/>
+		<result column="refund_reason" property="refundReason"/>
+		<result column="transaction_type" property="transactionType"/>
+		<result column="oacq_ssn" property="oacqSsn"/>
+		<result column="acq_ssn" property="acqSsn"/>
+		<result column="ostt_date" property="osttDate"/>
+		<result column="transaction_amount" property="transactionAmount"/>
+		<result column="term_code" property="termCode"/>
+		<result column="sett_date" property="settDate"/>
+		<result column="result" property="result"/>
+		<result column="created" property="created"/>
+		<result column="created_by" property="createdBy"/>
+		<result column="last_updated" property="lastUpdated"/>
+		<result column="last_updated_by" property="lastUpdatedBy"/>
+		<result column="modification_number" property="modificationNumber"/>
+		<result column="row_id" property="rowId"/>
+		<result column="parent_row_id" property="parentRowId"/>
+		
+		<result column="imp_date" property="impDate"/>
+		<result column="imp_acq_ssn" property="impAcqSsn"/>
+		<result column="payee_virtual_acct_name" property="payeeVirtualAcctName"/>
+		<result column="pay_mer_name" property="payMerName"/>
+		<result column="pay_mer_branch_id" property="payMerBranchId"/>
+		<result column="pay_mer_acct_no" property="payMerAcctNo"/>
+		<result column="payment_order_code" property="paymentOrderCode"/>
+		<result column="imp_status" property="impStatus"/>
+	</resultMap>
+	
+	<resultMap type="com.prcsteel.platform.kuandao.model.model.KuandaoRefund" id="queryRefundResultMap">
+		<id column="id" property="id"/> 
+		<result column="imp_id" property="impId"/>
+		<result column="refund_code" property="refundCode"/>
+		<result column="refund_reason" property="refundReason"/>
+		<result column="transaction_type" property="transactionType"/>
+		<result column="oacq_ssn" property="oacqSsn"/>
+		<result column="acq_ssn" property="acqSsn"/>
+		<result column="ostt_date" property="osttDate"/>
+		<result column="transaction_amount" property="transactionAmount"/>
+		<result column="term_code" property="termCode"/>
+		<result column="sett_date" property="settDate"/>
+		<result column="result" property="result"/>
+		<result column="created" property="created"/>
+		<result column="created_by" property="createdBy"/>
+		<result column="last_updated" property="lastUpdated"/>
+		<result column="last_updated_by" property="lastUpdatedBy"/>
+		<result column="modification_number" property="modificationNumber"/>
+		<result column="row_id" property="rowId"/>
+		<result column="parent_row_id" property="parentRowId"/>
+	</resultMap>
+	<!-- 插入日退款记录 -->
+	<insert id="insertRefund" useGeneratedKeys="true" parameterType="com.prcsteel.platform.kuandao.model.model.KuandaoRefund"
+			keyProperty="id">
+		INSERT INTO kuandao_refund
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="impId!=null">imp_id,</if>
+			<if test="refundCode!=null">refund_code,</if>
+			<if test="refundReason!=null">refund_reason,</if>
+			<if test="transactionType!=null">transaction_type,</if>
+			<if test="oacqSsn!=null">oacq_ssn,</if>
+			<if test="acqSsn!=null">acq_ssn,</if>
+			<if test="osttDate!=null">ostt_date,</if>
+			<if test="transactionAmount!=null">transaction_amount,</if>
+			<if test="termCode!=null">term_code,</if>
+			<if test="settDate!=null">sett_date,</if>
+			<if test="result!=null">result,</if>
+			<if test="created!=null">created,</if>
+			<if test="createdBy!=null">created_by,</if>
+			<if test="lastUpdated!=null">last_updated,</if>
+			<if test="lastUpdatedBy!=null">last_updated_by,</if>
+			<if test="modificationNumber!=null">modification_number,</if>
+			<if test="rowId!=null">row_id,</if>
+			<if test="parentRowId!=null">parent_row_id,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="impId!=null">#{impId,jdbcType=INTEGER},</if>
+			<if test="refundCode!=null">#{refundCode,jdbcType=VARCHAR},</if>
+			<if test="refundReason!=null">#{refundReason,jdbcType=VARCHAR},</if>
+			<if test="transactionType!=null">#{transactionType,jdbcType=INTEGER},</if>
+			<if test="oacqSsn!=null">#{oacqSsn,jdbcType=VARCHAR},</if>
+			<if test="acqSsn!=null">#{acqSsn,jdbcType=VARCHAR},</if>
+			<if test="osttDate!=null">#{osttDate,jdbcType=VARCHAR},</if>
+			<if test="transactionAmount!=null">#{transactionAmount,jdbcType=DECIMAL},</if>
+			<if test="termCode!=null">#{termCode,jdbcType=VARCHAR},</if>
+			<if test="settDate!=null">#{settDate,jdbcType=VARCHAR},</if>
+			<if test="result!=null">#{result,jdbcType=INTEGER},</if>
+			<if test="created!=null">#{created,jdbcType=TIMESTAMP},</if>
+			<if test="createdBy!=null">#{createdBy,jdbcType=VARCHAR},</if>
+			<if test="lastUpdated!=null">#{lastUpdated,jdbcType=TIMESTAMP},</if>
+			<if test="lastUpdatedBy!=null">#{lastUpdatedBy,jdbcType=VARCHAR},</if>
+			<if test="modificationNumber!=null">#{modificationNumber,jdbcType=INTEGER},</if>
+			<if test="rowId!=null">#{rowId,jdbcType=VARCHAR},</if>
+			<if test="parentRowId!=null">#{parentRowId,jdbcType=VARCHAR},</if>
+		</trim>
+	</insert>
+	<select id="queryRefundById" parameterType="int" resultMap="queryRefundResultMap">
+		SELECT * FROM kuandao_refund WHERE id=#{value}
+	</select>
+	
+	<update id="updateRefundByCondition" parameterType="com.prcsteel.platform.kuandao.model.model.KuandaoRefund">
+		UPDATE kuandao_refund
+		<set>
+			<if test="impId!=null">imp_id=#{impId,jdbcType=INTEGER},</if>
+			<if test="refundCode!=null">refund_code=#{refundCode,jdbcType=VARCHAR},</if>
+			<if test="refundReason!=null">refund_reason=#{refundReason,jdbcType=VARCHAR},</if>
+			<if test="transactionType!=null">transaction_type=#{transactionType,jdbcType=INTEGER},</if>
+			<if test="oacqSsn!=null">oacq_ssn=#{oacqSsn,jdbcType=VARCHAR},</if>
+			<if test="acqSsn!=null">acq_ssn=#{acqSsn,jdbcType=VARCHAR},</if>
+			<if test="osttDate!=null">ostt_date=#{osttDate,jdbcType=VARCHAR},</if>
+			<if test="transactionAmount!=null">transaction_amount=#{transactionAmount,jdbcType=DECIMAL},</if>
+			<if test="termCode!=null">term_code=#{termCode,jdbcType=VARCHAR},</if>
+			<if test="settDate!=null">sett_date=#{settDate,jdbcType=VARCHAR},</if>
+			<if test="result!=null">result=#{result,jdbcType=INTEGER},</if>
+			<if test="created!=null">created=#{created,jdbcType=TIMESTAMP},</if>
+			<if test="createdBy!=null">created_by=#{createdBy,jdbcType=VARCHAR},</if>
+			<if test="lastUpdated!=null">last_updated=#{lastUpdated,jdbcType=TIMESTAMP},</if>
+			<if test="lastUpdatedBy!=null">last_updated_by=#{lastUpdatedBy,jdbcType=VARCHAR},</if>
+				modification_number=ifnull(modification_number,0)+1,
+			<if test="rowId!=null">row_id = #{rowId,jdbcType=VARCHAR},</if>
+			<if test="parentRowId!=null">parent_row_id = #{parentRowId,jdbcType=VARCHAR},</if>
+		</set>
+		<where>
+			<if test="id != null">
+				AND id =#{id,jdbcType=INTEGER}
+			</if>
+			<if test="impId != null">
+				AND imp_id=#{impId,jdbcType=INTEGER}
+			</if>
+		</where>
+	</update>
+	
+	<sql id="queryRefundCondition">
+		<if test="startDate != null and startDate != '' ">
+			<![CDATA[AND d.imp_date >= #{startDate,jdbcType=VARCHAR}]]>
+		</if>
+		<if test="endDate != null and endDate != '' ">
+			<![CDATA[AND d.imp_date <= #{startDate,jdbcType=VARCHAR}]]>
+		</if>
+		<if test="impStatus != null and impStatus != ''">
+			AND d.imp_status=#{impStatus,jdbcType=VARCHAR}
+		</if>
+		<if test="payMerName != null and payMerName != ''">
+			AND d.pay_mer_name like concat('%',#{payMerName,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="paymentOrderCode!=null">
+			AND p.payment_order_code like concat('%',#{paymentOrderCode,jdbcType=VARCHAR},'%')
+		</if>
+	</sql>
+	<!-- 退款明细查询多表 -->
+	<select id="queryRefund" parameterType="map" resultMap="refundResultMap">
+		SELECT r.*,d.imp_date,d.imp_acq_ssn,d.payee_virtual_acct_name,d.pay_mer_name,d.pay_mer_branch_id,
+		d.pay_mer_acct_no,p.payment_order_code,d.imp_status
+		FROM kuandao_refund r
+		LEFT JOIN kuandao_deposit_journal d 
+		ON d.id=r.imp_id
+		LEFT JOIN kuandao_payment_order p 
+		ON p.imp_acq_ssn=d.imp_acq_ssn
+		<where>
+			<include refid="queryRefundCondition"></include>
+		</where>
+		ORDER BY d.imp_date DESC,d.imp_acq_ssn DESC
+		LIMIT #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER}
+	</select>
+	
+	<!-- 日终对账查询总数 -->
+	<select id="queryTotalRefund" parameterType="com.prcsteel.platform.kuandao.model.dto.KuandaoRefundDto" resultType="int">
+		SELECT count(r.id)
+		FROM kuandao_refund r
+		LEFT JOIN kuandao_deposit_journal d 
+		ON d.id=r.imp_id
+		LEFT JOIN kuandao_payment_order p 
+		ON p.imp_acq_ssn=d.imp_acq_ssn
+		<where>
+			<include refid="queryRefundCondition"></include>
+		</where>
+	</select>
+	
+	<select id="queryRefundByCondition" parameterType="com.prcsteel.platform.kuandao.model.dto.KuandaoRefundDto" resultType="com.prcsteel.platform.kuandao.model.model.KuandaoRefund">
+		SELECT refund.*
+		FROM kuandao_refund refund
+		<where>
+			<if test="impId != null">
+				imp_id = #{impId,jdbcType=INTEGER}
+			</if>
+		</where>
+	</select>
+	
+</mapper>
+
+
+

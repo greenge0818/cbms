@@ -1,0 +1,179 @@
+<div class="main-content">
+    <div class="main-content-inner">
+        <div class="breadcrumbs" id="breadcrumbs">
+            <script type="text/javascript">
+                try {
+                    ace.settings.check('breadcrumbs', 'fixed')
+                } catch (e) {
+                }
+            </script>
+
+            <ul class="breadcrumb">
+                <li>
+                    <i class="ace-icon fa fa-home home-icon"></i>
+                    交易管理
+                </li>
+                <li>
+                    <a href="$link.getContextPath()/common/menu/order-view/order-query-index-page.html">交易单管理</a>
+                </li>
+                <li>
+                    <a href="$link.getContextPath()/order/query/pickup.html">待提货</a>
+                </li>
+                <li class="active">
+                    打印提货单
+                </li>
+            </ul>
+            <!-- /.breadcrumb -->
+
+        </div>
+
+        <div class="page-content">
+            <div class="row">
+                <div class="col-xs-12">
+
+                    <!-- PAGE CONTENT BEGINS -->
+
+                    <div class="table-bar tab-pane in active">
+                        <table id="print1" style="border: none;" class="contable text-center">
+                            <thead>
+                            <tr>
+                                <td style="border: none;" colspan="7">
+                                    <h1 class="bolder text-center">提货单</h1>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border: none;" colspan="7">
+                                    <h5 class="text-left">致：杭州钢为网络科技有限公司，请为我司安排的提货人办理下表中货物的提货、出库手续：</h5>
+                                </td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td colspan="7" style="border:none;">
+                                    <table class="contable text-center print-table ">
+                                        <tbody>
+                                            #set($head=$printInfo.get("head"))
+                                        <tr>
+                                            <td colspan="6">
+                                                <div class=" text-left clearfix">
+                                                    <ul class="pull-left">
+                                                        <li>合同号：<span>$!head.contract_code</span></li>
+                                                        <li>公司全称：<span>$!head.buyer_name</span></li>
+                                                        <li>公司地址：<span>$!head.addr</span></li>
+                                                    </ul>
+                                                    <ul class="pull-right">
+                                                        <li>提货单号：<span>$!head.code</span></li>
+                                                        <li>公司电话：<span>$!head.tel</span></li>
+                                                        <li>公司传真：<span>$!head.fax</span></li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th rowspan="2">品名</th>
+                                            <th rowspan="2">材质</th>
+                                            <th rowspan="2">规格</th>
+                                            <th rowspan="2">厂家</th>
+                                            <th colspan="2">应发数</th>
+                                        </tr>
+                                        <tr>
+                                            <th>数量</th>
+                                            <th>重量（吨）</th>
+                                        </tr>
+                                            #foreach($elem in $!printInfo.detail)
+                                            <tr>
+                                                <td>$!elem.nsort_name</td>
+                                                <td>$!elem.material</td>
+                                                <td>$!elem.spec</td>
+                                                <td>$!elem.factory</td>
+                                                <td>$!elem.pick_quantity</td>
+                                                <td>$!elem.pick_weight</td>
+                                            </tr>
+                                            #end
+                                            #if($!printInfo.detail.size() < 10)
+                                                #set($loopNum = 8 - $!printInfo.detail.size())
+                                                #foreach($i in [0 .. $!loopNum])
+                                                <tr>
+                                                    <td>#if($velocityCount==1)以下为空白#end</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                #end
+                                            #end
+                                            #set($rowSpanSize = $printInfo.persons.size() + 1)
+                                        <tr>
+                                            <td rowspan="$!rowSpanSize">提货人信息</td>
+                                            <td>提货人姓名</td>
+                                            <td colspan="2">身份证号</td>
+                                            <td>电话</td>
+                                            <td>车牌号</td>
+                                        </tr>
+                                            #foreach($p in $!printInfo.persons)
+                                            <tr>
+                                                <td>$p.name</td>
+                                                <td colspan="2">#if($!head.delivery_type!="CAR") $!p.validCode#end</td>
+                                                <td>$!p.mobil</td>
+                                                <td>#if($!head.delivery_type=="CAR") $!p.validCode#end</td>
+                                            </tr>
+                                            #end
+                                        <tr>
+                                            <td>备注</td>
+                                            <td colspan="5" class="text-left">$!head.note</td>
+                                        </tr>
+                                        <tr>
+                                            <td>注意</td>
+                                            <td colspan="5" class="text-left"></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3"></td>
+                                            <td>单位盖章</td>
+                                            <td colspan="2"></td>
+                                        </tr>
+                                        </tbody>
+                                        <tfoot>
+                                        <tr>
+                                            <td colspan="6"></td>
+                                        </tr>
+
+                                        </tfoot>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /.col -->
+            <div class="btn-bar text-center">
+                #if($shiro.hasPermission("order:query:pickup:print"))
+                    <button type="button" id="prints" class="btn btn-info"><i class="fa fa-print"></i>打印提货单</button>
+                #end
+                &nbsp;
+                <button id="back" type="button" class="btn btn-default">返回</button>
+            </div>
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.page-content -->
+</div>
+</div><!-- /.main-content -->
+
+<script type="application/javascript">
+    $(document).ready(function () {
+        $(document).on("click", "#prints", function () {
+            $.get("$link.getContextPath()/order/pickup/$!head.id/print.html", function () {
+                $("#print1").print();
+            });
+        });
+        $(document).on("click", "#back", function () {
+            location.href = "$link.getContextPath()/order/query/pickup.html";
+        })
+    });
+</script>

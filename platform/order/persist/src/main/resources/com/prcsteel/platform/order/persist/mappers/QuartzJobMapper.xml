@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.order.persist.dao.QuartzJobDao">
+    <resultMap id="BaseResultMap" type="com.prcsteel.platform.order.model.model.QuartzJob" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="job_name" property="jobName" jdbcType="VARCHAR" />
+        <result column="status" property="status" jdbcType="VARCHAR" />
+        <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+        <result column="previous_executed_time" property="previousExecutedTime" jdbcType="TIMESTAMP" />
+        <result column="created" property="created" jdbcType="TIMESTAMP" />
+        <result column="description" property="description" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        id, job_name, status, last_updated, previous_executed_time, created, description
+    </sql>
+
+    <insert id="insert" parameterType="com.prcsteel.platform.order.model.model.QuartzJob" >
+        INSERT base_quartz_job (job_name, status, description)
+        VALUE (#{jobName,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR})
+    </insert>
+
+    <select id="selectByJobName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM base_quartz_job
+        WHERE job_name = #{jobName, jdbcType=INTEGER}
+    </select>
+
+    <update id="updateByJobName" parameterType="com.prcsteel.platform.order.model.model.QuartzJob" >
+        UPDATE base_quartz_job
+        <set >
+            <if test="status != null" >
+                status = #{status,jdbcType=DECIMAL},
+            </if>
+            <if test="lastUpdated != null" >
+                last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+            </if>
+            <if test="previousExecutedTime != null" >
+                previous_executed_time = #{previousExecutedTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="description != null" >
+                description = #{description,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE job_name = #{jobName,jdbcType=VARCHAR}
+    </update>
+</mapper>

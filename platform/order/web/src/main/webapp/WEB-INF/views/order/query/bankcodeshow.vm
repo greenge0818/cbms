@@ -1,0 +1,99 @@
+<div class="main-content">
+	<div class="main-content-inner">
+		<div class="breadcrumbs" id="breadcrumbs">
+			<script type="text/javascript">
+				try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+			</script>
+			
+			<ul class="breadcrumb">
+				<li>
+					<i class="ace-icon fa fa-home home-icon"></i>
+					交易管理
+				</li>
+				<li>
+					<a href="/order/order/query/confirmpayment.html">待确认已付款</a>
+				</li>
+				<li>
+					<a href="/order/order/query/bankcodeverify.html">客户银行信息审核</a>
+				</li>
+				<li class="active">详情</li>
+			</ul><!-- /.breadcrumb -->
+				#parse("layout/topbtn.vm")<!-- /.nav-search -->
+		</div>
+
+		<div class="page-content">
+
+			<div class="row">
+				<div class="col-xs-12">
+					<!-- PAGE CONTENT BEGINS -->
+
+					<div class="row">
+						<div class="col-xs-12">
+							<!-- div.dataTables_borderWrap -->
+							<div class="table-bar" id="first-table">
+								<table class="contable">
+									<tbody>
+										<tr>
+											<td class="bg-gray">客户名称</td>
+											<td colSpan="3">$!{account.account.name}</td>
+										</tr>
+										<tr>
+											<td class="bg-gray">开户银行</td>
+											<td>$!{account.account.bankNameMain} $!{account.account.bankNameBranch}</td>
+											<td class="bg-gray">开户银行所在城市</td>
+											<td>$!{account.bankProvince.name} $!{account.bankCity.name}</td>
+										</tr>
+										<tr>
+											<td class="bg-gray">银行账号</td>
+											<td>$!{account.account.accountCode}</td>
+											<td class="bg-gray">行号</td>
+											<td>$!{account.account.bankCode}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<div class="clearfix" id ="picture">
+								<div class="pull-left img-list">
+									<h5 class="h5 bolder">打款资料：</h5>
+									<div class="img-bar">
+										<a href="javascript:;" class="img-box"><img  alt="打款资料" class="" width="130" #if($!{account.attachments.payment_data.url}) src="$link.getContextPath()/common/getfile.html?key=$!{account.attachments.payment_data.url}" #end height="130" /></a>
+										<img alt="打款资料" class="none" #if($!{account.attachments.payment_data.url}) src="$link.getContextPath()/common/getfile.html?key=$!{account.attachments.payment_data.url}" #end />
+									</div>
+								</div>
+								<div class="pull-left img-list">
+									<h5 class="h5 bolder">银行开户许可证：</h5>
+									<div class="img-bar">
+										<a href="javascript:;" class="img-box"><img alt="银行开户许可证" class="" width="130" #if($!{account.attachments.open_account_license.url}) src="$link.getContextPath()/common/getfile.html?key=$!{account.attachments.open_account_license.url}"#end height="130" /></a>
+										<img alt="银行开户许可证" #if($!{account.attachments.open_account_license.url}) src="$link.getContextPath()/common/getfile.html?key=$!{account.attachments.open_account_license.url}"#end class="getImg none"/>
+									</div>
+								</div>	
+							</div>
+							<input type="hidden" id="account_id" value="$!{account.account.id}"/>
+							<!-- 客户银行账号审核状态为待审核-->
+							#if(${account.account.bankDataStatus} == 'Requested' || ${account.account.bankDataStatus} == 'Insufficient')
+							<div class="btn-bar">
+								<button type="button" class="btn btn-primary btn-sm" id="approval">通过</button>
+								<button type="button" class="btn btn-default btn-sm" id="decline">不通过</button>
+								<a class="" href="$link.getContextPath()/order/query/bankcodeverify.html">返回</a>
+							</div>
+							#end
+						</div>
+					</div>
+				</div><!-- /.col -->
+			</div><!-- /.row -->
+		</div><!-- /.page-content -->
+	</div>
+</div><!-- /.main-content -->
+<div id="addreason" class='well' style='margin-top:25px;display: none;'>
+	<div style='margin-top:25px;width: 400px;'>
+	    <form id='form-horizontal' class='form-horizontal' role='form'>
+	        <div class='form-group'><label class='col-sm-3 control-label no-padding-right' for='txtNewPwd2'>理由：</label>
+	            <div class='col-sm-9'><textarea id="reason" must='1' type='text' name="name" must='1' placeholder='请填写不通过的理由。' class='col-xs-10 col-sm-10'></textarea></div>
+	        </div>
+	        <div class="able-bar text-center"><button id="btncommit" data-bb-handler="success" type="button" class="btn btn-sm btn-primary"><i class="ace-icon fa fa-check"></i> 保存</button>
+	            <button id="btnClose" data-bb-handler="button" type="button" class="btn btn-sm">取消</button>
+	        </div>
+	    </form>
+	</div>
+</div>
+<script src="$link.getContextPath()/js/views/order/bankcodeshow.js"></script>

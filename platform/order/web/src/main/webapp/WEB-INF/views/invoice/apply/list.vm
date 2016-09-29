@@ -1,0 +1,63 @@
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+    </script>
+    <ul class="breadcrumb">
+        <li><i class="ace-icon fa fa-home home-icon"></i>发票管理</li>
+        <li>销项票管理</li>
+        <li class="active">待申请开票</li>
+    </ul><!-- /.breadcrumb -->
+    #parse("layout/topbtn.vm")<!-- /.nav-search -->
+</div>
+<!-- content S -->
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+			<div class="clearfix">
+            <!--TAPBAR-->
+            #invoiceTopBar(2, 0)
+            <!-- div.table-bar -->
+            <div class="input-group pull-right col-md-12 col-sm-12 col-lg-12 search-bar">
+                <span class="pull-left">
+                    #if($shiro.hasPermission("invoice:out:apply:add"))
+                    <button class="btn btn-primary btn-sm" type="button" id="btnAdd">新增开票申请</button>
+                    #end
+                </span>
+                <span class="pull-right">
+                    <label>
+					时间<input id="startTime" class="Wdate" type="text" value="$!{startTime}"
+                               onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')||\'2020-10-01\'}'})"/> -
+                        <input id="endTime" class="Wdate" type="text"  value="$!{endTime}"
+                               onFocus="WdatePicker({minDate:'#F{$dp.$D(\'startTime\')}',maxDate:'2020-10-01'})"/>
+                    </label>
+                    <button id="btnSearch" type="button" class="btn-sm btn btn-info">搜索</button>
+                </span>
+            </div>
+
+                <div class="table-bar col-sm-12">
+                    <table id="list-table" class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th class="none">ID</th>
+                            <th class="none">服务中心ID</th>
+                            <th class="none">状态值</th>
+                            <th>申请时间</th>
+                            <th>服务中心</th>
+                            <th>申请开票金额</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- /.page-content -->
+<!-- content E -->
+
+<input type="hidden" id="allowShow" value="$shiro.hasPermission("invoice:out:apply:show")"/>
+<input type="hidden" id="alloDelete" value="$shiro.hasPermission("invoice:out:apply:delete")"/>
+
+<script src="$link.getContextPath()/js/views/invoice/apply/list.js"></script>

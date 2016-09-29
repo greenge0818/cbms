@@ -1,0 +1,91 @@
+#set($layout="layout/default.vm")
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+    <ul class="breadcrumb">
+        <li><i class="ace-icon fa fa-home home-icon"></i>系统管理</li>
+        <li>系统设置</li>
+        <li class="active">模板设置</li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+    #parse("layout/topbtn.vm")
+    <!-- /.nav-search -->
+</div>
+
+<div class="page-content">
+
+    <div class="">
+        <div class="col-xs-12">
+            <!--TAPBAR-->
+            #parse("sys/systemmenu.vm")
+
+            <form action="$link.getContextPath()/sys/savetemplate.html" method="post" enctype="multipart/form-data">
+                买家模板：<input type="file" value="choose file" name="template_buyer"/>
+                <br />
+                #if($!{buyer})
+                	当前模板：$!{buyer}
+                	<a href="$link.getContextPath()/common/getfile.html?key=$!{buyer}" target="_blank">下载</a>
+                #end
+                &nbsp;&nbsp;是否开启新的买家模板：    &nbsp;&nbsp;
+                #if($!{buyerParam} == "")
+                    <input type="radio" name="isStartNewtemp" value="0" checked/>
+                #else
+                    <input type="radio" name="isStartNewtemp" value="0" #if($!{buyerParam} == "0") checked  #end/>
+                #end 不开启
+                &nbsp;&nbsp; <input type="radio" name="isStartNewtemp" value="1"  #if($!{buyerParam} == "1") checked  #end/> 开启
+
+                <br />
+                <hr>
+                卖家模板：<input type="file" value="choose file" name="template_seller"/>
+                <br />
+                #if($!{seller})
+                	当前模板：$!{seller}
+                	<a href="$link.getContextPath()/common/getfile.html?key=$!{seller}" target="_blank">下载</a>
+                #end
+                <br/>
+                <hr>
+				上传图片：<input id="pic" name="pic_cert" class="" type="file"  value="" />
+                                                <br /><span id="upload-hint">上传凭证图片支持jpeg、jpg、png、gif 图片格式，小于2M；</span>	
+				<br/>
+				#if($!{attachment})
+				<img   #if($attachment)src="$link.getContextPath()/common/getfile.html?key=$attachment" #end alt="" width="100px" height="70px" style="border: 2px solid rgb(51, 122, 183);"/>
+				#end
+					<br/>
+                <input class="btn btn-info btn-sm" type="submit" value="提交"/>
+            </form>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+
+<!-- /.page-content -->
+<script type="text/javascript">
+    $(document).ready(function() {
+
+    });
+
+    function uploadFormData(){
+        $('#result').html('');
+
+        var oMyForm = new FormData();
+        oMyForm.append("file", file2.files[0]);
+
+        $.ajax({
+            url: '$link.getContextPath()/upload.html',
+            data: oMyForm,
+            dataType: 'text',
+            processData: false,
+            contentType: false,
+            type: 'POST',
+            success: function(data){
+                $('#result').html(data);
+            }
+        });
+    }
+</script>

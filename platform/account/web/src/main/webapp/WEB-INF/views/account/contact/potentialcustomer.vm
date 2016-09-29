@@ -1,0 +1,200 @@
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="#">客户管理</a>
+        </li>
+        <li>
+        	入口用户管理
+        </li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+    #parse("layout/topbtn.vm")
+    <!-- /.nav-search -->
+</div>
+
+<div class="page-content">
+	<div class="row">
+		<div class="col-xs-12">
+			<!-- PAGE CONTENT BEGINS -->
+
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="clearfix search-bar">
+						<div class="clearfix">
+						<form id="searchForm" class="form-inline input-group">
+							<label>姓名：
+								<input placeholder="姓名" name="name" type="text" class="ipt-text" value="">
+							</label>
+	                        <label>手机号：
+								<input placeholder="手机号" name="mobile" type="text" class="ipt-text" value="" />
+							</label>
+	                        <label>公司名称：
+								<input placeholder="公司名称" id="companyName" name="company" type="text" class="ipt-text" value="" />
+							</label>
+							<label>状态：
+	                            <select id="status">
+	                            	<option value="">全部</option>
+	                            	<option value="1">已关联</option>
+	                            	<option value="0">未关联</option>
+	                            </select>
+							</label>
+							
+                            <button id="queryBtn" class="btn btn-sm btn-default" type="button" title="搜索">
+                                <i class="ace-icon fa fa-search bigger-110"></i>搜索
+                            </button>
+						</form>
+                        </div>
+					</div>
+
+					<!-- div.dataTables_borderWrap -->
+					<div id="table-wrapper">
+						<table id="dynamic-table" class="table table-striped table-bordered table-hover">
+							<thead>
+								<tr>
+									<th>序号</th>
+									<th>手机号</th>
+									<th>姓名</th>
+									<th>企业名称</th>
+									<th>注册时间</th>
+									<th>来源</th>
+									<th>状态</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+
+		</div><!-- /.col -->
+	</div><!-- /.row -->
+</div><!-- /.page-content -->
+
+<style type='text/css'>
+	.edit-tb-dlg td{
+	  padding: 5px;
+	}
+</style>
+
+<div id="edit-dialog" style="display:none;">
+	<table class="edit-tb-dlg">
+		<tr>
+			<td style="width:150px; text-align:right;">手机号：</td>
+			<td style="width:300px;"><input type='text' class='edit-tel' value=""/></td>
+		</tr>
+		<tr>
+			<td style="width:150px; text-align:right;">姓名：</td>
+			<td style="width:300px;"><input type='text' class='edit-name' value=""/></td>
+		</tr>
+		<tr>
+			<td style="width:150px; text-align:right;">企业名称：</td>
+			<td style="width:300px;" class="edit-company"></td>
+		</tr>
+		<tr>
+			<td style="width:150px; text-align:right;">来源：</td>
+			<td style="width:300px;" class="edit-origin"></td>
+		</tr>
+		<tr>
+			<td style="width:150px; text-align:right;">注册时间：</td>
+			<td style="width:300px;" class="edit-regdate"></td>
+		</tr>
+		<tr>
+			<td style="width:150px; text-align:right;">修改时间：</td>
+			<td style="width:300px;" class="edit-lastupdted"></td>
+		</tr>
+		<tr>
+			<td colspan='2' style="text-align:center;">
+				<button class="btn btn-default edit-dlg-close">关闭</button>
+				<button class="btn btn-primary edit-dlg-submit">确认</button>
+			</td>
+		</tr>
+	</table>
+</div>
+
+<style type="text/css">
+	.assign-wrapper{
+		height:250px;
+		overflow-y:auto;
+		min-width: 600px;
+		
+		border: 1px solid #ccc;
+		padding-left: 0px;
+		padding-right:0px;
+		box-shadow: 0px 0px 2px rgba(110,110,110, 0.5) inset;
+		border-radius: 3px;
+	}
+	.assign-wrapper > * {
+		padding: 10px 20px;
+		cursor:pointer;
+	}
+	.assign-wrapper:hover{
+		border-color: #f59942;
+	}
+	.assign-wrapper > *:hover {
+		background:#F5F5F5;
+	}
+	
+	#accountId{
+		width: 100%;
+	}
+	
+	.assign-dialog-box{
+		padding: 20px 30px;
+	}
+	
+</style>
+
+<div id="assign-dialog" style="display:none">
+	<div class="assign-dialog-box">
+		<input type='hidden' name='assign-contactid' value='' />
+		<input type='hidden' name='assign-index' value='' />
+		<div style="margin-bottom:20px;">
+			联系人：<span class="assign-show-name"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+			手机号码：<span class="assign-show-tel"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+			公司名称：<span class="assign-show-company"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+		</div>
+		<div style="margin-bottom:20px;">
+			<input placeholder="公司名称" id="accountId" search='account' accounttype='department' name="accountName" type="text" class="ipt-text" value="">
+		</div>
+		<div class="assign-wrapper">
+			<!--
+			<div class="clearfix">无锡市泰铭不锈钢有限公司
+				<a href="javascript:;" class="pull-right fa fa-close fa-lg red" >&nbsp;</a>
+			</div>
+			-->
+		</div>
+		<br/>
+		<div>
+			<label>服务中心：</label>
+			<input placeholder="请选择服务中心" must='1' id="sorganization" type="text" 
+				class="ipt-text" readonly="" value=""
+                onclick="showMenu(); style='width: 200px'"/>
+            <input type='hidden' id='sorganizationHidden' value='0'/><br/><br/>
+			<label>划转给交易员：</label>
+			<select id="userId"></select>
+		</div>
+		<br/><br/>
+		<div class="text-center">
+			<button class="btn btn-default assign-close-btn">取消</button>&nbsp;&nbsp;&nbsp;&nbsp;
+			<button class="btn btn-primary assign-submit-btn">确认</button>
+		</div>
+		<br/>
+	</div>
+</div>
+
+<div id="menuContent" class="menuContent" style="display:none; position: absolute;">
+    <ul id="tree" class="ztree" style="margin-top:0; width:160px;"></ul>
+</div>
+
+<script src="$link.getContextPath()/js/views/contact/potentialcustomer.js"></script>      
+<script src="$link.getContextPath()/js/views/account/searchaccount.js"></script>
+<script src="$link.getContextPath()/js/views/account/assigncommen.js"></script>

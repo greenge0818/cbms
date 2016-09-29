@@ -1,0 +1,577 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.order.persist.dao.ReportRewardRecordDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.order.model.model.ReportRewardRecord" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="order_id" property="orderId" jdbcType="BIGINT" />
+    <result column="order_items_id" property="orderItemsId" jdbcType="BIGINT" />
+    <result column="reward_date" property="rewardDate" jdbcType="TIMESTAMP" />
+    <result column="category_group_UUID" property="categoryGroupUuid" jdbcType="VARCHAR" />
+    <result column="category_group_name" property="categoryGroupName" jdbcType="VARCHAR" />
+    <result column="buyer_manager_id" property="buyerManagerId" jdbcType="BIGINT" />
+    <result column="buyer_manager_name" property="buyerManagerName" jdbcType="VARCHAR" />
+    <result column="category_rewart_role_id" property="categoryRewartRoleId" jdbcType="BIGINT" />
+    <result column="category_rewart_role" property="categoryRewartRole" jdbcType="DECIMAL" />
+    <result column="buyer_rewart_role_id" property="buyerRewartRoleId" jdbcType="BIGINT" />
+    <result column="seller_rewart_role_id" property="sellerRewartRoleId" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="is_deleted" property="isDeleted" jdbcType="BIT" />
+    <result column="buyer_manager_org_id" property="buyerManagerOrgId" jdbcType="BIGINT" />
+    <result column="buyer_manager_org_name" property="buyerManagerOrgName" jdbcType="VARCHAR" />
+    <result column="seller_manager_id" property="sellerManagerId" jdbcType="BIGINT" />
+    <result column="seller_manager_name" property="sellerManagerName" jdbcType="VARCHAR" />
+    <result column="seller_manager_org_id" property="sellerManagerOrgId" jdbcType="BIGINT" />
+    <result column="seller_manager_org_name" property="sellerManagerOrgName" jdbcType="VARCHAR" />
+    <result column="consign_type" property="consignType" jdbcType="VARCHAR" />
+    <result column="weight" property="weight" jdbcType="DECIMAL" />
+    <result column="buyer_rewart_role" property="buyerRewartRole" jdbcType="DECIMAL" />
+    <result column="seller_rewart_role" property="sellerRewartRole" jdbcType="DECIMAL" />
+    <result column="buyer_reward_amount" property="buyerRewardAmount" jdbcType="DECIMAL" />
+    <result column="seller_reward_amount" property="sellerRewardAmount" jdbcType="DECIMAL" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+    <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+    <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, order_id, order_items_id, reward_date, category_group_UUID, category_group_name, 
+    buyer_manager_id, buyer_manager_name, category_rewart_role_id, category_rewart_role, 
+    buyer_rewart_role_id, seller_rewart_role_id, status, is_deleted, buyer_manager_org_id, 
+    buyer_manager_org_name, seller_manager_id, seller_manager_name, seller_manager_org_id, 
+    seller_manager_org_name, consign_type, weight, buyer_rewart_role, seller_rewart_role, 
+    buyer_reward_amount, seller_reward_amount, created, created_by, last_updated, last_updated_by, 
+    modification_number, row_id, parent_row_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from report_reward_record
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from report_reward_record
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.prcsteel.platform.order.model.model.ReportRewardRecord" >
+    insert into report_reward_record (id, order_id, order_items_id, 
+      reward_date, category_group_UUID, category_group_name, 
+      buyer_manager_id, buyer_manager_name, category_rewart_role_id, 
+      category_rewart_role, buyer_rewart_role_id, seller_rewart_role_id, 
+      status, is_deleted, buyer_manager_org_id, 
+      buyer_manager_org_name, seller_manager_id, seller_manager_name, 
+      seller_manager_org_id, seller_manager_org_name, 
+      consign_type, weight, buyer_rewart_role, 
+      seller_rewart_role, buyer_reward_amount, seller_reward_amount, 
+      created, created_by, last_updated, 
+      last_updated_by, modification_number, row_id, 
+      parent_row_id)
+    values (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{orderItemsId,jdbcType=BIGINT}, 
+      #{rewardDate,jdbcType=TIMESTAMP}, #{categoryGroupUuid,jdbcType=VARCHAR}, #{categoryGroupName,jdbcType=VARCHAR}, 
+      #{buyerManagerId,jdbcType=BIGINT}, #{buyerManagerName,jdbcType=VARCHAR}, #{categoryRewartRoleId,jdbcType=BIGINT}, 
+      #{categoryRewartRole,jdbcType=DECIMAL}, #{buyerRewartRoleId,jdbcType=BIGINT}, #{sellerRewartRoleId,jdbcType=BIGINT}, 
+      #{status,jdbcType=VARCHAR}, #{isDeleted,jdbcType=BIT}, #{buyerManagerOrgId,jdbcType=BIGINT}, 
+      #{buyerManagerOrgName,jdbcType=VARCHAR}, #{sellerManagerId,jdbcType=BIGINT}, #{sellerManagerName,jdbcType=VARCHAR}, 
+      #{sellerManagerOrgId,jdbcType=BIGINT}, #{sellerManagerOrgName,jdbcType=VARCHAR}, 
+      #{consignType,jdbcType=VARCHAR}, #{weight,jdbcType=DECIMAL}, #{buyerRewartRole,jdbcType=DECIMAL}, 
+      #{sellerRewartRole,jdbcType=DECIMAL}, #{buyerRewardAmount,jdbcType=DECIMAL}, #{sellerRewardAmount,jdbcType=DECIMAL}, 
+      #{created,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, #{lastUpdated,jdbcType=TIMESTAMP}, 
+      #{lastUpdatedBy,jdbcType=VARCHAR}, #{modificationNumber,jdbcType=INTEGER}, #{rowId,jdbcType=VARCHAR}, 
+      #{parentRowId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="batchInsert" parameterType="com.prcsteel.platform.order.model.model.ReportRewardRecord" >
+    insert into report_reward_record (order_id, order_items_id,
+    reward_date, category_group_UUID, category_group_name,
+    buyer_manager_id, buyer_manager_name, category_rewart_role_id,
+    category_rewart_role, buyer_rewart_role_id, seller_rewart_role_id,
+    status, is_deleted, buyer_manager_org_id,
+    buyer_manager_org_name, seller_manager_id, seller_manager_name,
+    seller_manager_org_id, seller_manager_org_name,
+    consign_type, weight, buyer_rewart_role,
+    seller_rewart_role, buyer_reward_amount, seller_reward_amount,
+    created, created_by, last_updated,
+    last_updated_by, modification_number, row_id,
+    parent_row_id)
+    values
+    <foreach collection="list" item="it" separator=",">
+      (#{it.orderId,jdbcType=BIGINT}, #{it.orderItemsId,jdbcType=BIGINT},
+      #{it.rewardDate,jdbcType=TIMESTAMP}, #{it.categoryGroupUuid,jdbcType=VARCHAR}, #{it.categoryGroupName,jdbcType=VARCHAR},
+      #{it.buyerManagerId,jdbcType=BIGINT}, #{it.buyerManagerName,jdbcType=VARCHAR}, #{it.categoryRewartRoleId,jdbcType=BIGINT},
+      #{it.categoryRewartRole,jdbcType=DECIMAL}, #{it.buyerRewartRoleId,jdbcType=BIGINT},
+      #{it.sellerRewartRoleId,jdbcType=BIGINT},
+      #{it.status,jdbcType=VARCHAR}, #{it.isDeleted,jdbcType=BIT}, #{it.buyerManagerOrgId,jdbcType=BIGINT},
+      #{it.buyerManagerOrgName,jdbcType=VARCHAR}, #{it.sellerManagerId,jdbcType=BIGINT},
+      #{it.sellerManagerName,jdbcType=VARCHAR},
+      #{it.sellerManagerOrgId,jdbcType=BIGINT}, #{it.sellerManagerOrgName,jdbcType=VARCHAR},
+      #{it.consignType,jdbcType=VARCHAR}, #{it.weight,jdbcType=DECIMAL}, #{it.buyerRewartRole,jdbcType=DECIMAL},
+      #{it.sellerRewartRole,jdbcType=DECIMAL}, #{it.buyerRewardAmount,jdbcType=DECIMAL},
+      #{it.sellerRewardAmount,jdbcType=DECIMAL},
+      #{it.created,jdbcType=TIMESTAMP}, #{it.createdBy,jdbcType=VARCHAR}, #{it.lastUpdated,jdbcType=TIMESTAMP},
+      #{it.lastUpdatedBy,jdbcType=VARCHAR}, #{it.modificationNumber,jdbcType=INTEGER}, #{it.rowId,jdbcType=VARCHAR},
+      #{it.parentRowId,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.order.model.model.ReportRewardRecord" >
+    insert into report_reward_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="orderItemsId != null" >
+        order_items_id,
+      </if>
+      <if test="rewardDate != null" >
+        reward_date,
+      </if>
+      <if test="categoryGroupUuid != null" >
+        category_group_UUID,
+      </if>
+      <if test="categoryGroupName != null" >
+        category_group_name,
+      </if>
+      <if test="buyerManagerId != null" >
+        buyer_manager_id,
+      </if>
+      <if test="buyerManagerName != null" >
+        buyer_manager_name,
+      </if>
+      <if test="categoryRewartRoleId != null" >
+        category_rewart_role_id,
+      </if>
+      <if test="categoryRewartRole != null" >
+        category_rewart_role,
+      </if>
+      <if test="buyerRewartRoleId != null" >
+        buyer_rewart_role_id,
+      </if>
+      <if test="sellerRewartRoleId != null" >
+        seller_rewart_role_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+      <if test="buyerManagerOrgId != null" >
+        buyer_manager_org_id,
+      </if>
+      <if test="buyerManagerOrgName != null" >
+        buyer_manager_org_name,
+      </if>
+      <if test="sellerManagerId != null" >
+        seller_manager_id,
+      </if>
+      <if test="sellerManagerName != null" >
+        seller_manager_name,
+      </if>
+      <if test="sellerManagerOrgId != null" >
+        seller_manager_org_id,
+      </if>
+      <if test="sellerManagerOrgName != null" >
+        seller_manager_org_name,
+      </if>
+      <if test="consignType != null" >
+        consign_type,
+      </if>
+      <if test="weight != null" >
+        weight,
+      </if>
+      <if test="buyerRewartRole != null" >
+        buyer_rewart_role,
+      </if>
+      <if test="sellerRewartRole != null" >
+        seller_rewart_role,
+      </if>
+      <if test="buyerRewardAmount != null" >
+        buyer_reward_amount,
+      </if>
+      <if test="sellerRewardAmount != null" >
+        seller_reward_amount,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by,
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number,
+      </if>
+      <if test="rowId != null" >
+        row_id,
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="orderItemsId != null" >
+        #{orderItemsId,jdbcType=BIGINT},
+      </if>
+      <if test="rewardDate != null" >
+        #{rewardDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="categoryGroupUuid != null" >
+        #{categoryGroupUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryGroupName != null" >
+        #{categoryGroupName,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerManagerId != null" >
+        #{buyerManagerId,jdbcType=BIGINT},
+      </if>
+      <if test="buyerManagerName != null" >
+        #{buyerManagerName,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryRewartRoleId != null" >
+        #{categoryRewartRoleId,jdbcType=BIGINT},
+      </if>
+      <if test="categoryRewartRole != null" >
+        #{categoryRewartRole,jdbcType=DECIMAL},
+      </if>
+      <if test="buyerRewartRoleId != null" >
+        #{buyerRewartRoleId,jdbcType=BIGINT},
+      </if>
+      <if test="sellerRewartRoleId != null" >
+        #{sellerRewartRoleId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="buyerManagerOrgId != null" >
+        #{buyerManagerOrgId,jdbcType=BIGINT},
+      </if>
+      <if test="buyerManagerOrgName != null" >
+        #{buyerManagerOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerManagerId != null" >
+        #{sellerManagerId,jdbcType=BIGINT},
+      </if>
+      <if test="sellerManagerName != null" >
+        #{sellerManagerName,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerManagerOrgId != null" >
+        #{sellerManagerOrgId,jdbcType=BIGINT},
+      </if>
+      <if test="sellerManagerOrgName != null" >
+        #{sellerManagerOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="consignType != null" >
+        #{consignType,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null" >
+        #{weight,jdbcType=DECIMAL},
+      </if>
+      <if test="buyerRewartRole != null" >
+        #{buyerRewartRole,jdbcType=DECIMAL},
+      </if>
+      <if test="sellerRewartRole != null" >
+        #{sellerRewartRole,jdbcType=DECIMAL},
+      </if>
+      <if test="buyerRewardAmount != null" >
+        #{buyerRewardAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="sellerRewardAmount != null" >
+        #{sellerRewardAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        #{parentRowId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.order.model.model.ReportRewardRecord" >
+    update report_reward_record
+    <set >
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="orderItemsId != null" >
+        order_items_id = #{orderItemsId,jdbcType=BIGINT},
+      </if>
+      <if test="rewardDate != null" >
+        reward_date = #{rewardDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="categoryGroupUuid != null" >
+        category_group_UUID = #{categoryGroupUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryGroupName != null" >
+        category_group_name = #{categoryGroupName,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerManagerId != null" >
+        buyer_manager_id = #{buyerManagerId,jdbcType=BIGINT},
+      </if>
+      <if test="buyerManagerName != null" >
+        buyer_manager_name = #{buyerManagerName,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryRewartRoleId != null" >
+        category_rewart_role_id = #{categoryRewartRoleId,jdbcType=BIGINT},
+      </if>
+      <if test="categoryRewartRole != null" >
+        category_rewart_role = #{categoryRewartRole,jdbcType=DECIMAL},
+      </if>
+      <if test="buyerRewartRoleId != null" >
+        buyer_rewart_role_id = #{buyerRewartRoleId,jdbcType=BIGINT},
+      </if>
+      <if test="sellerRewartRoleId != null" >
+        seller_rewart_role_id = #{sellerRewartRoleId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="buyerManagerOrgId != null" >
+        buyer_manager_org_id = #{buyerManagerOrgId,jdbcType=BIGINT},
+      </if>
+      <if test="buyerManagerOrgName != null" >
+        buyer_manager_org_name = #{buyerManagerOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerManagerId != null" >
+        seller_manager_id = #{sellerManagerId,jdbcType=BIGINT},
+      </if>
+      <if test="sellerManagerName != null" >
+        seller_manager_name = #{sellerManagerName,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerManagerOrgId != null" >
+        seller_manager_org_id = #{sellerManagerOrgId,jdbcType=BIGINT},
+      </if>
+      <if test="sellerManagerOrgName != null" >
+        seller_manager_org_name = #{sellerManagerOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="consignType != null" >
+        consign_type = #{consignType,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null" >
+        weight = #{weight,jdbcType=DECIMAL},
+      </if>
+      <if test="buyerRewartRole != null" >
+        buyer_rewart_role = #{buyerRewartRole,jdbcType=DECIMAL},
+      </if>
+      <if test="sellerRewartRole != null" >
+        seller_rewart_role = #{sellerRewartRole,jdbcType=DECIMAL},
+      </if>
+      <if test="buyerRewardAmount != null" >
+        buyer_reward_amount = #{buyerRewardAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="sellerRewardAmount != null" >
+        seller_reward_amount = #{sellerRewardAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number = #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        row_id = #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.order.model.model.ReportRewardRecord" >
+    update report_reward_record
+    set order_id = #{orderId,jdbcType=BIGINT},
+      order_items_id = #{orderItemsId,jdbcType=BIGINT},
+      reward_date = #{rewardDate,jdbcType=TIMESTAMP},
+      category_group_UUID = #{categoryGroupUuid,jdbcType=VARCHAR},
+      category_group_name = #{categoryGroupName,jdbcType=VARCHAR},
+      buyer_manager_id = #{buyerManagerId,jdbcType=BIGINT},
+      buyer_manager_name = #{buyerManagerName,jdbcType=VARCHAR},
+      category_rewart_role_id = #{categoryRewartRoleId,jdbcType=BIGINT},
+      category_rewart_role = #{categoryRewartRole,jdbcType=DECIMAL},
+      buyer_rewart_role_id = #{buyerRewartRoleId,jdbcType=BIGINT},
+      seller_rewart_role_id = #{sellerRewartRoleId,jdbcType=BIGINT},
+      status = #{status,jdbcType=VARCHAR},
+      is_deleted = #{isDeleted,jdbcType=BIT},
+      buyer_manager_org_id = #{buyerManagerOrgId,jdbcType=BIGINT},
+      buyer_manager_org_name = #{buyerManagerOrgName,jdbcType=VARCHAR},
+      seller_manager_id = #{sellerManagerId,jdbcType=BIGINT},
+      seller_manager_name = #{sellerManagerName,jdbcType=VARCHAR},
+      seller_manager_org_id = #{sellerManagerOrgId,jdbcType=BIGINT},
+      seller_manager_org_name = #{sellerManagerOrgName,jdbcType=VARCHAR},
+      consign_type = #{consignType,jdbcType=VARCHAR},
+      weight = #{weight,jdbcType=DECIMAL},
+      buyer_rewart_role = #{buyerRewartRole,jdbcType=DECIMAL},
+      seller_rewart_role = #{sellerRewartRole,jdbcType=DECIMAL},
+      buyer_reward_amount = #{buyerRewardAmount,jdbcType=DECIMAL},
+      seller_reward_amount = #{sellerRewardAmount,jdbcType=DECIMAL},
+      created = #{created,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      modification_number = #{modificationNumber,jdbcType=INTEGER},
+      row_id = #{rowId,jdbcType=VARCHAR},
+      parent_row_id = #{parentRowId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+  <!-- 自定义 -->
+
+  <!-- 提成详情 -->
+  <resultMap id="RewardDetailResultMap" type="com.prcsteel.platform.order.model.dto.RewardDetailDto">
+    <result column="org_id" property="orgId" jdbcType="BIGINT" />
+    <result column="org_name" property="orgName" jdbcType="VARCHAR" />
+    <result column="manager_id" property="managerId" jdbcType="BIGINT" />
+    <result column="manager_name" property="managerName" jdbcType="VARCHAR" />
+    <result column="group_name" property="groupName" jdbcType="VARCHAR" />
+    
+    <result column="curr_org_buyer_temp_weight" property="currOrgBuyerTempWeight" jdbcType="DECIMAL" />
+    <result column="curr_org_buyer_consign_weight" property="currOrgBuyerConsignWeight" jdbcType="DECIMAL" />
+    <result column="other_org_buyer_temp_weight" property="otherOrgBuyerTempWeight" jdbcType="DECIMAL" />
+    <result column="other_org_buyer_consign_weight" property="otherOrgBuyerConsignWeight" jdbcType="DECIMAL" />
+
+    <result column="curr_org_seller_temp_weight" property="currOrgSellerTempWeight" jdbcType="DECIMAL" />
+    <result column="curr_org_seller_consign_weight" property="currOrgSellerConsignWeight" jdbcType="DECIMAL" />
+    <result column="other_org_seller_temp_weight" property="otherOrgSellerTempWeight" jdbcType="DECIMAL" />
+    <result column="other_org_seller_consign_weight" property="otherOrgSellerConsignWeight" jdbcType="DECIMAL" />
+
+    <result column="buyer_reward_amount" property="buyerRewardAmount" jdbcType="DECIMAL" />
+    <result column="seller_reward_amount" property="sellerRewardAmount" jdbcType="DECIMAL" />
+  </resultMap>
+
+  <!-- 查询服务中心的所有大类提成详情 -->
+  <select id="queryOrgRewardDetails" resultMap="RewardDetailResultMap" parameterType="com.prcsteel.platform.order.model.query.ReportRewardQuery">
+    SELECT t1.id AS org_id,t1.name AS org_name,t2.name AS group_name
+    ,SUM(CASE WHEN(t1.id = t.buyer_manager_org_id AND t.buyer_manager_org_id = t.seller_manager_org_id AND t.consign_type = 'temp') THEN t.weight ELSE 0 END) AS curr_org_buyer_temp_weight
+    ,SUM(CASE WHEN(t1.id = t.buyer_manager_org_id AND t.buyer_manager_org_id = t.seller_manager_org_id AND t.consign_type = 'consign') THEN t.weight ELSE 0 END) AS curr_org_buyer_consign_weight
+    ,SUM(CASE WHEN(t1.id = t.buyer_manager_org_id AND t.buyer_manager_org_id != t.seller_manager_org_id and t.consign_type = 'temp') THEN t.weight ELSE 0 END) AS other_org_buyer_temp_weight
+    ,SUM(CASE WHEN(t1.id = t.buyer_manager_org_id AND t.buyer_manager_org_id != t.seller_manager_org_id and t.consign_type = 'consign') THEN t.weight ELSE 0 END) AS other_org_buyer_consign_weight
+    ,SUM(CASE WHEN(t1.id = t.seller_manager_org_id AND t.buyer_manager_org_id = t.seller_manager_org_id AND t.consign_type = 'temp') THEN t.weight ELSE 0 END) AS curr_org_seller_temp_weight
+    ,SUM(CASE WHEN(t1.id = t.seller_manager_org_id AND t.buyer_manager_org_id = t.seller_manager_org_id AND t.consign_type = 'consign') THEN t.weight ELSE 0 END) AS curr_org_seller_consign_weight
+    ,SUM(CASE WHEN(t1.id = t.seller_manager_org_id AND t.buyer_manager_org_id != t.seller_manager_org_id AND t.consign_type = 'temp') THEN t.weight ELSE 0 END) AS other_org_seller_temp_weight
+    ,SUM(CASE WHEN(t1.id = t.seller_manager_org_id AND t.buyer_manager_org_id != t.seller_manager_org_id AND t.consign_type = 'consign') THEN t.weight ELSE 0 END) AS other_org_seller_consign_weight
+    ,SUM(CASE WHEN t1.id = t.buyer_manager_org_id THEN t.buyer_reward_amount ELSE 0 END)AS buyer_reward_amount
+    ,SUM(CASE WHEN t1.id = t.seller_manager_org_id THEN t.seller_reward_amount ELSE 0 END)AS seller_reward_amount
+    FROM base_organization t1
+    CROSS JOIN common_category_group t2
+    LEFT JOIN
+    (
+      SELECT t3.buyer_manager_org_id,t3.seller_manager_org_id,t3.category_group_UUID,t3.weight,t3.consign_type,t3.buyer_reward_amount,t3.seller_reward_amount
+      FROM report_reward_record t3
+      WHERE 1=1
+      AND t3.is_deleted = '0'
+      AND Extract(YEAR_MONTH from t3.reward_date)= #{month,jdbcType=VARCHAR}
+    ) AS t ON (t.buyer_manager_org_id = t1.id OR t.seller_manager_org_id = t1.id) AND t.category_group_UUID = t2.uuid
+    WHERE 1=1
+    <if test="orgId != null and orgId > 0">
+      AND t1.id = #{orgId,jdbcType=BIGINT}
+    </if>
+    AND EXISTS (
+      SELECT 1 FROM acl_user t WHERE 1=1
+      <if test="userIdList != null">
+        AND t.id IN
+        <foreach collection="userIdList" item="userId" open="(" separator="," close=")">
+          #{userId}
+        </foreach>
+      </if>
+      AND t1.id = t.org_id
+    )
+    AND t2.site_uuid='inner_cbms' AND t1.name LIKE '%服务中心%'
+    GROUP BY t1.id ,t1.name,t2.uuid,t2.name
+    ORDER BY t1.id,t2.id
+  </select>
+
+  <!-- 查询交易员的所有大类提成详情 -->
+  <select id="queryManagerRewardDetails" resultMap="RewardDetailResultMap" parameterType="com.prcsteel.platform.order.model.query.ReportRewardQuery">
+    SELECT t1.id as manager_id,t1.name as manager_name,t2.name AS group_name
+    ,SUM(CASE WHEN(t1.id = t.buyer_manager_id AND t.buyer_manager_org_id = t.seller_manager_org_id AND t.consign_type = 'temp') THEN t.weight ELSE 0 END) AS curr_org_buyer_temp_weight
+    ,SUM(CASE WHEN(t1.id = t.buyer_manager_id AND t.buyer_manager_org_id = t.seller_manager_org_id AND t.consign_type = 'consign') THEN t.weight ELSE 0 END) AS curr_org_buyer_consign_weight
+    ,SUM(CASE WHEN(t1.id = t.buyer_manager_id AND t.buyer_manager_org_id != t.seller_manager_org_id and t.consign_type = 'temp') THEN t.weight ELSE 0 END) AS other_org_buyer_temp_weight
+    ,SUM(CASE WHEN(t1.id = t.buyer_manager_id AND t.buyer_manager_org_id != t.seller_manager_org_id and t.consign_type = 'consign') THEN t.weight ELSE 0 END) AS other_org_buyer_consign_weight
+    ,SUM(CASE WHEN(t1.id = t.seller_manager_id AND t.buyer_manager_org_id = t.seller_manager_org_id AND t.consign_type = 'temp') THEN t.weight ELSE 0 END) AS curr_org_seller_temp_weight
+    ,SUM(CASE WHEN(t1.id = t.seller_manager_id AND t.buyer_manager_org_id = t.seller_manager_org_id AND t.consign_type = 'consign') THEN t.weight ELSE 0 END) AS curr_org_seller_consign_weight
+    ,SUM(CASE WHEN(t1.id = t.seller_manager_id AND t.buyer_manager_org_id != t.seller_manager_org_id AND t.consign_type = 'temp') THEN t.weight ELSE 0 END) AS other_org_seller_temp_weight
+    ,SUM(CASE WHEN(t1.id = t.seller_manager_id AND t.buyer_manager_org_id != t.seller_manager_org_id AND t.consign_type = 'consign') THEN t.weight ELSE 0 END) AS other_org_seller_consign_weight
+    ,SUM(CASE WHEN t1.id = t.buyer_manager_id THEN t.buyer_reward_amount ELSE 0 END)AS buyer_reward_amount
+    ,SUM(CASE WHEN t1.id = t.seller_manager_id THEN t.seller_reward_amount ELSE 0 END)AS seller_reward_amount
+    FROM acl_user t1
+    CROSS JOIN common_category_group t2
+    LEFT JOIN
+    (
+    SELECT t3.buyer_manager_org_id,t3.seller_manager_org_id,t3.buyer_manager_id,t3.seller_manager_id
+    ,t3.category_group_UUID,t3.weight,t3.consign_type,t3.buyer_reward_amount,t3.seller_reward_amount
+    FROM report_reward_record t3
+    WHERE t3.is_deleted = '0'
+    AND Extract(YEAR_MONTH from t3.reward_date) = #{month,jdbcType=VARCHAR}
+    )AS t ON (t.buyer_manager_id = t1.id OR t.seller_manager_id = t1.id) AND t.category_group_UUID = t2.uuid
+    WHERE 1=1
+    <if test="orgId != null">
+      AND t1.org_id = #{orgId,jdbcType=BIGINT}
+    </if>
+    <if test="userIdList != null">
+      AND t1.id IN
+      <foreach collection="userIdList" item="userId" open="(" separator="," close=")">
+        #{userId}
+      </foreach>
+    </if>
+    AND t2.site_uuid='inner_cbms'
+    <if test="managerName != null and managerName != '' ">
+      AND t1.name LIKE #{managerName,jdbcType=VARCHAR}
+    </if>
+    GROUP BY t1.id ,t1.name,t2.uuid,t2.name
+    ORDER BY t1.id,t2.id
+  </select>
+
+  <update id="disableRewardByOrderId" parameterType="java.lang.Long" >
+    update report_reward_record
+    set is_deleted = 1
+    where order_id = #{orderId}
+  </update>
+
+
+
+</mapper>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.account.persist.dao.AccountDocumentDao" >
+    <!-- 查看带审核资料公司列表-->
+    <select id="queryCompanyByStatus" parameterType="com.prcsteel.platform.account.model.query.CompanyQuery"
+            resultType="com.prcsteel.platform.account.model.dto.CompanyDto">
+        SELECT t1.id,t1.name,t1.account_tag AS accountTag,t2.annual_purchase_agreement_status AS purchaseAgreementStatus
+        ,t2.annual_purchase_agreement_decline_reason AS purchaseAgreementReason,
+        t2.seller_consign_agreement_status AS consignAgreementStatus,t2.seller_consign_agreement_decline_reason AS consignAgreementReason
+        ,t2.invoice_data_status AS invoiceDataStatus,t2.bank_data_status AS bankDataStatus,
+        t2.card_info_status AS cardInfoStatus,t1.org_name AS orgName,t1.status,DATE_FORMAT(t2.reg_time,'%Y-%m-%d') AS regTime
+        from cust_account t1
+        join cust_account_ext t2 on t1.id = t2.cust_account_id
+        where t1.is_deleted = 0
+        and t1.structure_type = 'Company'
+        <if test="orgId != null and orgId > 0">
+        	and t1.org_id= #{orgId}
+        </if>        
+        and t1.id in
+        <foreach collection="idList" item="id" open="(" separator="," close=")">
+                #{id}
+        </foreach>
+        <if test="companyName != null and companyName != ''">
+            and t1.name like '%${companyName}%'
+        </if>        
+        <if test="queryStatus == 10000">
+            and t2.card_info_status = 'Requested'   
+        </if>
+        <if test="queryStatus == 10001">
+            and t2.invoice_data_status = 2
+        </if>
+        <if test="queryStatus == 10002">
+            and t2.bank_data_status = 'Requested'
+        </if>
+        <if test="queryStatus == 10003">
+            and t2.annual_purchase_agreement_status = 'Requested'
+        </if>
+         <if test="queryStatus == 10004">
+            and t2.annual_purchase_agreement_status = 'FirstApproved'
+        </if>
+        <if test="queryStatus == 10005">
+            and t2.annual_purchase_agreement_status = 'Uploaded'
+        </if>
+        <if test="queryStatus == 10006">
+            and t2.seller_consign_agreement_status = 'Requested'
+        </if>
+        <if test="queryStatus == 10007">
+            and t2.seller_consign_agreement_status = 'FirstApproved'
+        </if>
+        <if test="queryStatus == 10008">
+            and t2.seller_consign_agreement_status = 'Uploaded'
+        </if>                          
+        LIMIT #{start,jdbcType=INTEGER}, #{length,jdbcType=INTEGER}
+    </select>
+    
+     <!-- 统计带审核资料公司列表-->
+    <select id="queryTotalCompanyByStatus" parameterType="com.prcsteel.platform.account.model.query.CompanyQuery" resultType="java.lang.Integer">
+        SELECT count(*)
+        from cust_account t1
+        join cust_account_ext t2 on t1.id = t2.cust_account_id
+        where t1.is_deleted = 0
+        and t1.structure_type = 'Company'
+        <if test="orgId != null and orgId > 0">
+        	and t1.org_id= #{orgId}
+        </if>
+        and t1.id in
+        <foreach collection="idList" item="id" open="(" separator="," close=")">
+                #{id}
+        </foreach>
+         <if test="companyName != null and companyName != ''">
+            and t1.name like '%${companyName}%'
+        </if>       
+        <if test="queryStatus == 10000">
+            and t2.card_info_status = 'Requested'
+        </if>
+        <if test="queryStatus == 10001">
+            and t2.invoice_data_status = 2
+        </if>
+        <if test="queryStatus == 10002">
+            and t2.bank_data_status = 'Requested'
+        </if>
+        <if test="queryStatus == 10003">
+            and t2.annual_purchase_agreement_status = 'Requested'
+        </if>
+         <if test="queryStatus == 10004">
+            and t2.annual_purchase_agreement_status = 'FirstApproved'
+        </if>
+        <if test="queryStatus == 10005">
+            and t2.annual_purchase_agreement_status = 'Uploaded'
+        </if>
+        <if test="queryStatus == 10006">
+            and t2.seller_consign_agreement_status = 'Requested'
+        </if>
+        <if test="queryStatus == 10007">
+            and t2.seller_consign_agreement_status = 'FirstApproved'
+        </if>
+        <if test="queryStatus == 10008">
+            and t2.seller_consign_agreement_status = 'Uploaded'
+        </if>                                                                 
+    </select>
+    
+    <!-- 审核/取消审核公司资料 -->
+    <update id="updateAccountExtStatus" parameterType="com.prcsteel.platform.account.model.dto.AccountDocumentDto">
+    	update cust_account_ext
+   		<set>
+   				last_updated = now(),
+	    	<if test="cardInfoStatus != null" >
+	       		card_info_status = #{cardInfoStatus},
+				card_info_status_reason = #{disagreeDesc},
+	      	</if>
+	    	<if test="invoiceDataStatus != null" >
+	       		invoice_data_status = #{invoiceDataStatus},
+				invoice_data_decline_reason = #{disagreeDesc},
+	      	</if>
+	    	<if test="bankDataStatus != null" >
+	       		bank_data_status = #{bankDataStatus},
+	      	</if>	
+	    	<if test="purchaseAgreementStatus != null" >
+	       		annual_purchase_agreement_status = #{purchaseAgreementStatus},
+	      	</if>		      	
+	    	<if test="consignAgreementStatus != null" >
+	       		seller_consign_agreement_status = #{consignAgreementStatus},
+	      	</if>	      	      		      	
+	    	<if test="lastUpdateBy != null" >
+	       		last_updated_by = #{lastUpdateBy},
+	      	</if> 	      	   		
+   		</set>
+   		where cust_account_id = #{id}
+   		<if test="extId != null">
+   			and id = #{extId}
+   		</if>
+    </update>   
+</mapper>

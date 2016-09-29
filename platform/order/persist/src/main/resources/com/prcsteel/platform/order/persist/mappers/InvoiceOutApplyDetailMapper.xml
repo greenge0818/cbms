@@ -1,0 +1,506 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.order.persist.dao.InvoiceOutApplyDetailDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.order.model.model.InvoiceOutApplyDetail" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="invoice_out_apply_id" property="invoiceOutApplyId" jdbcType="BIGINT" />
+    <result column="owner_id" property="ownerId" jdbcType="BIGINT" />
+    <result column="owner_name" property="ownerName" jdbcType="VARCHAR" />
+    <result column="org_id" property="orgId" jdbcType="BIGINT" />
+    <result column="org_name" property="orgName" jdbcType="VARCHAR" />
+    <result column="buyer_id" property="buyerId" jdbcType="BIGINT" />
+    <result column="buyer_name" property="buyerName" jdbcType="VARCHAR" />
+    <result column="department_id" property="departmentId" jdbcType="BIGINT" />
+    <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
+    <result column="apply_amount" property="applyAmount" jdbcType="DECIMAL" />
+    <result column="lend_amount" property="lendAmount" jdbcType="DECIMAL" />
+    <result column="uninvoice_amount" property="uninvoiceAmount" jdbcType="DECIMAL" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+    <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+    <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+    <result column="ext1" property="ext1" jdbcType="VARCHAR" />
+    <result column="ext2" property="ext2" jdbcType="VARCHAR" />
+    <result column="ext3" property="ext3" jdbcType="VARCHAR" />
+    <result column="ext4" property="ext4" jdbcType="INTEGER" />
+    <result column="ext5" property="ext5" jdbcType="INTEGER" />
+    <result column="ext6" property="ext6" jdbcType="INTEGER" />
+    <result column="ext7" property="ext7" jdbcType="TIMESTAMP" />
+    <result column="ext8" property="ext8" jdbcType="BIGINT" />
+  </resultMap>
+  
+  <resultMap id="DetailResultMap" type="com.prcsteel.platform.order.model.dto.InvoiceOutApplyDetailDto"
+               extends="BaseResultMap">
+    <result column="totalApplyAmount" property="totalApplyAmount" jdbcType="DECIMAL" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, invoice_out_apply_id, owner_id, owner_name, org_id, org_name, buyer_id, buyer_name, department_id, department_name,
+    apply_amount, lend_amount,uninvoice_amount, created, created_by, last_updated, last_updated_by, modification_number, 
+    row_id, parent_row_id, ext1, ext2, ext3, ext4, ext5, ext6, ext7, ext8
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from inv_invoice_out_apply_detail
+    where id = #{id,jdbcType=BIGINT}
+    AND is_deleted = 0
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from inv_invoice_out_apply_detail
+    where id = #{id,jdbcType=BIGINT}
+    AND is_deleted = 0
+  </delete>
+  <insert id="insert" parameterType="com.prcsteel.platform.order.model.model.InvoiceOutApplyDetail" >
+    insert into inv_invoice_out_apply_detail (id, invoice_out_apply_id, owner_id, 
+      owner_name, org_id, org_name, 
+      buyer_id, buyer_name, department_id, department_name, apply_amount,
+      lend_amount,uninvoice_amount, created, created_by, 
+      last_updated, last_updated_by, modification_number, 
+      row_id, parent_row_id, ext1, 
+      ext2, ext3, ext4, ext5, 
+      ext6, ext7, ext8)
+    values (#{id,jdbcType=BIGINT}, #{invoiceOutApplyId,jdbcType=BIGINT}, #{ownerId,jdbcType=BIGINT}, 
+      #{ownerName,jdbcType=VARCHAR}, #{orgId,jdbcType=BIGINT}, #{orgName,jdbcType=VARCHAR}, 
+      #{buyerId,jdbcType=BIGINT}, #{buyerName,jdbcType=VARCHAR}, #{departmentId,jdbcType=BIGINT}, #{departmentName,jdbcType=VARCHAR}, #{applyAmount,jdbcType=DECIMAL},
+      #{lendAmount,jdbcType=DECIMAL},#{uninvoiceAmount}, #{created,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, 
+      #{lastUpdated,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}, #{modificationNumber,jdbcType=INTEGER}, 
+      #{rowId,jdbcType=VARCHAR}, #{parentRowId,jdbcType=VARCHAR}, #{ext1,jdbcType=VARCHAR}, 
+      #{ext2,jdbcType=VARCHAR}, #{ext3,jdbcType=VARCHAR}, #{ext4,jdbcType=INTEGER}, #{ext5,jdbcType=INTEGER}, 
+      #{ext6,jdbcType=INTEGER}, #{ext7,jdbcType=TIMESTAMP}, #{ext8,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.prcsteel.platform.order.model.model.InvoiceOutApplyDetail" >
+    insert into inv_invoice_out_apply_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="invoiceOutApplyId != null" >
+        invoice_out_apply_id,
+      </if>
+      <if test="ownerId != null" >
+        owner_id,
+      </if>
+      <if test="ownerName != null" >
+        owner_name,
+      </if>
+      <if test="orgId != null" >
+        org_id,
+      </if>
+      <if test="orgName != null" >
+        org_name,
+      </if>
+      <if test="buyerId != null" >
+        buyer_id,
+      </if>
+      <if test="buyerName != null" >
+        buyer_name,
+      </if>
+      <if test="departmentId != null" >
+        department_id,
+      </if>
+      <if test="departmentName != null" >
+        department_name,
+      </if>
+      <if test="applyAmount != null" >
+        apply_amount,
+      </if>
+      <if test="lendAmount != null" >
+        lend_amount,
+      </if>
+      <if test="uninvoiceAmount != null" >
+        uninvoice_amount,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by,
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number,
+      </if>
+      <if test="rowId != null" >
+        row_id,
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id,
+      </if>
+      <if test="ext1 != null" >
+        ext1,
+      </if>
+      <if test="ext2 != null" >
+        ext2,
+      </if>
+      <if test="ext3 != null" >
+        ext3,
+      </if>
+      <if test="ext4 != null" >
+        ext4,
+      </if>
+      <if test="ext5 != null" >
+        ext5,
+      </if>
+      <if test="ext6 != null" >
+        ext6,
+      </if>
+      <if test="ext7 != null" >
+        ext7,
+      </if>
+      <if test="ext8 != null" >
+        ext8,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="invoiceOutApplyId != null" >
+        #{invoiceOutApplyId,jdbcType=BIGINT},
+      </if>
+      <if test="ownerId != null" >
+        #{ownerId,jdbcType=BIGINT},
+      </if>
+      <if test="ownerName != null" >
+        #{ownerName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null" >
+        #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="orgName != null" >
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerId != null" >
+        #{buyerId,jdbcType=BIGINT},
+      </if>
+      <if test="buyerName != null" >
+        #{buyerName,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null" >
+        #{departmentId,jdbcType=BIGINT},
+      </if>
+      <if test="departmentName != null" >
+        #{departmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="applyAmount != null" >
+        #{applyAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="lendAmount != null" >
+        #{lendAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="uninvoiceAmount != null" >
+        #{uninvoiceAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        #{parentRowId,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null" >
+        #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3 != null" >
+        #{ext3,jdbcType=VARCHAR},
+      </if>
+      <if test="ext4 != null" >
+        #{ext4,jdbcType=INTEGER},
+      </if>
+      <if test="ext5 != null" >
+        #{ext5,jdbcType=INTEGER},
+      </if>
+      <if test="ext6 != null" >
+        #{ext6,jdbcType=INTEGER},
+      </if>
+      <if test="ext7 != null" >
+        #{ext7,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ext8 != null" >
+        #{ext8,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.order.model.model.InvoiceOutApplyDetail" >
+    update inv_invoice_out_apply_detail
+    <set >
+      <if test="invoiceOutApplyId != null" >
+        invoice_out_apply_id = #{invoiceOutApplyId,jdbcType=BIGINT},
+      </if>
+      <if test="ownerId != null" >
+        owner_id = #{ownerId,jdbcType=BIGINT},
+      </if>
+      <if test="ownerName != null" >
+        owner_name = #{ownerName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null" >
+        org_id = #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="orgName != null" >
+        org_name = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerId != null" >
+        buyer_id = #{buyerId,jdbcType=BIGINT},
+      </if>
+      <if test="buyerName != null" >
+        buyer_name = #{buyerName,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null" >
+        department_id = #{departmentId,jdbcType=BIGINT},
+      </if>
+      <if test="departmentName != null" >
+        department_name = #{departmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="applyAmount != null" >
+        apply_amount = #{applyAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="lendAmount != null" >
+        lend_amount = #{lendAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="uninvoiceAmount != null" >
+        uninvoice_amount = #{uninvoiceAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number = #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        row_id = #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null" >
+        ext1 = #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        ext2 = #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3 != null" >
+        ext3 = #{ext3,jdbcType=VARCHAR},
+      </if>
+      <if test="ext4 != null" >
+        ext4 = #{ext4,jdbcType=INTEGER},
+      </if>
+      <if test="ext5 != null" >
+        ext5 = #{ext5,jdbcType=INTEGER},
+      </if>
+      <if test="ext6 != null" >
+        ext6 = #{ext6,jdbcType=INTEGER},
+      </if>
+      <if test="ext7 != null" >
+        ext7 = #{ext7,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ext8 != null" >
+        ext8 = #{ext8,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+    AND is_deleted = 0
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.order.model.model.InvoiceOutApplyDetail" >
+    update inv_invoice_out_apply_detail
+    set invoice_out_apply_id = #{invoiceOutApplyId,jdbcType=BIGINT},
+      owner_id = #{ownerId,jdbcType=BIGINT},
+      owner_name = #{ownerName,jdbcType=VARCHAR},
+      org_id = #{orgId,jdbcType=BIGINT},
+      org_name = #{orgName,jdbcType=VARCHAR},
+      buyer_id = #{buyerId,jdbcType=BIGINT},
+      buyer_name = #{buyerName,jdbcType=VARCHAR},
+      department_id = #{departmentId,jdbcType=BIGINT},
+      department_name = #{departmentName,jdbcType=VARCHAR},
+      apply_amount = #{applyAmount,jdbcType=DECIMAL},
+      lend_amount = #{lendAmount,jdbcType=DECIMAL},
+      uninvoice_amount = #{uninvoiceAmount,jdbcType=DECIMAL},
+      created = #{created,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      modification_number = #{modificationNumber,jdbcType=INTEGER},
+      row_id = #{rowId,jdbcType=VARCHAR},
+      parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      ext1 = #{ext1,jdbcType=VARCHAR},
+      ext2 = #{ext2,jdbcType=VARCHAR},
+      ext3 = #{ext3,jdbcType=VARCHAR},
+      ext4 = #{ext4,jdbcType=INTEGER},
+      ext5 = #{ext5,jdbcType=INTEGER},
+      ext6 = #{ext6,jdbcType=INTEGER},
+      ext7 = #{ext7,jdbcType=TIMESTAMP},
+      ext8 = #{ext8,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+    AND is_deleted = 0
+  </update>
+
+  <resultMap id="resultMapForQueryCondition" type="com.prcsteel.platform.order.model.dto.InvoiceOutApplyDetailDto" >
+    <result column="buyer_name" property="buyerName" jdbcType="VARCHAR" />
+    <result column="owner_name" property="ownerName" jdbcType="VARCHAR" />
+    <result column="owner_id" property="ownerId" jdbcType="INTEGER" />
+    <result column="total_apply_amount" property="totalApplyAmount" jdbcType="DECIMAL" />
+    <result column="balance_second_settlement" property="balanceSecondSettlement" jdbcType="DECIMAL" />
+    <result column="total_un_apply_amount" property="totalUnApplyAmount" jdbcType="DECIMAL" />
+    <result column="min_created" property="minCreated" jdbcType="TIMESTAMP" />
+    <result column="inv_invoice_out_apply_id" property="invoiceOutApplyId" jdbcType="BIGINT" />
+  </resultMap>
+
+  <select id="queryCondition" resultMap="resultMapForQueryCondition" parameterType="com.prcsteel.platform.order.model.query.InvoiceOutApplyDetailQuery" >
+    SELECT iioad.buyer_name, iioad.owner_name, SUM(iioad.apply_amount) AS total_apply_amount,
+      ca.balance_second_settlement,
+      t1.total AS total_un_apply_amount, t1.min_created,
+      iioa.id AS inv_invoice_out_apply_id, iioad.owner_id
+    FROM inv_invoice_out_apply_detail iioad
+    LEFT JOIN inv_invoice_out_apply iioa ON iioa.id = iioad.invoice_out_apply_id AND iioa.is_deleted = 0
+    LEFT JOIN cust_account ca ON ca.id = iioad.buyer_id
+    LEFT JOIN (SELECT SUM(ipod.total_amount)-SUM(ipod.sent_amount) AS total, MIN(ipo.created) AS min_created, ipo.buyer_id,ipo.owner_id
+    FROM inv_pool_out_detail ipod, inv_pool_out ipo
+    WHERE ipod.pool_out_id = ipo.id
+    GROUP BY ipo.buyer_id,ipo.owner_id) AS t1 ON t1.owner_id = iioad.owner_id AND t1.buyer_id = iioad.buyer_id
+    WHERE iioad.is_deleted = 0 AND iioad.org_id = #{orgId,jdbcType=BIGINT} AND iioa.status = #{status,jdbcType=VARCHAR}
+    GROUP BY iioad.owner_id, iioad.buyer_id
+  </select>
+  <insert id="batchInsert" parameterType="com.prcsteel.platform.order.model.model.InvoiceOutApplyDetail">
+  
+  insert into inv_invoice_out_apply_detail (
+  	  id, invoice_out_apply_id, owner_id, 
+      owner_name, org_id, org_name, 
+      buyer_id, buyer_name, department_id, department_name, apply_amount,
+      lend_amount,uninvoice_amount, created, created_by, 
+      last_updated, last_updated_by, modification_number, 
+      row_id, parent_row_id, ext1, 
+      ext2, ext3, ext4, ext5, 
+      ext6, ext7, ext8
+    )values 
+    <foreach collection="list" item="it" separator=",">
+    (
+      #{it.id,jdbcType=BIGINT}, #{it.invoiceOutApplyId,jdbcType=BIGINT}, #{it.ownerId,jdbcType=BIGINT}, 
+      #{it.ownerName,jdbcType=VARCHAR}, #{it.orgId,jdbcType=BIGINT}, #{it.orgName,jdbcType=VARCHAR}, 
+      #{it.buyerId,jdbcType=BIGINT}, #{it.buyerName,jdbcType=VARCHAR}, #{it.departmentId,jdbcType=BIGINT}, #{it.departmentName,jdbcType=VARCHAR}, #{it.applyAmount,jdbcType=DECIMAL},
+      #{it.lendAmount,jdbcType=DECIMAL},#{it.uninvoiceAmount,jdbcType=DECIMAL}, #{it.created,jdbcType=TIMESTAMP}, #{it.createdBy,jdbcType=VARCHAR}, 
+      #{it.lastUpdated,jdbcType=TIMESTAMP}, #{it.lastUpdatedBy,jdbcType=VARCHAR}, #{it.modificationNumber,jdbcType=INTEGER}, 
+      #{it.rowId,jdbcType=VARCHAR}, #{it.parentRowId,jdbcType=VARCHAR}, #{it.ext1,jdbcType=VARCHAR}, 
+      #{it.ext2,jdbcType=VARCHAR}, #{it.ext3,jdbcType=VARCHAR}, #{it.ext4,jdbcType=INTEGER}, #{it.ext5,jdbcType=INTEGER}, 
+      #{it.ext6,jdbcType=INTEGER}, #{it.ext7,jdbcType=TIMESTAMP}, #{it.ext8,jdbcType=BIGINT}
+    )
+    </foreach>
+  </insert>
+
+
+  <select id="selectIdByPrimaryKey" resultType="java.lang.Long" parameterType="java.lang.Long" >
+    SELECT
+    id
+    FROM inv_invoice_out_apply_detail
+    WHERE invoice_out_apply_id = #{invoiceOutApplyId,jdbcType=BIGINT}
+    AND is_deleted = 0
+  </select>
+  
+    <select id="queryByDjh" resultMap="DetailResultMap" parameterType="java.lang.String" >
+	    select 
+			t.id, t.invoice_out_apply_id, t.owner_id, t.owner_name, t.org_id, t.org_name, t.buyer_id, t.buyer_name, t.department_id, t.department_name,
+			t.apply_amount, t.lend_amount,t.uninvoice_amount, t.created, t.created_by, t.last_updated, t.last_updated_by, t.modification_number, 
+			t.row_id, t.parent_row_id, t.ext1, t.ext2, t.ext3, t.ext4, t.ext5, t.ext6, t.ext7, t.ext8,
+			sum(t3.amount) as totalApplyAmount
+		from inv_invoice_out_apply_detail as t
+			left join inv_invoice_out_item_detail as t1 on t.id = t1.apply_detail_id
+			left join inv_invoice_out_receipt as t2 on t2.item_detail_id = t1.id
+			left join inv_invoice_out_checklist_detail as t3 on t3.item_detail_id = t1.id
+		where
+			t2.djh = #{djh,jdbcType=VARCHAR}  and t.is_deleted = 0
+		group by t2.djh
+		limit 0,1
+  </select>
+  
+  <update id="deleteForInvoiceOutApplyId" parameterType="map" >
+    UPDATE inv_invoice_out_apply_detail
+	SET
+        is_deleted = 1,
+        last_updated = now(), 
+        modification_number = modification_number+1,
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR}
+    WHERE invoice_out_apply_id = #{invoiceOutApplyId,jdbcType=BIGINT}
+    AND is_deleted = 0
+  </update>
+  
+  <select id="queryInvoiceOutApplyDetails" resultMap="BaseResultMap">
+		SELECT 
+		t2.id, t2.invoice_out_apply_id, t2.owner_id, t2.owner_name, t2.org_id, t2.org_name, 
+		t2.buyer_id, t2.buyer_name, t2.department_id, t2.department_name, t2.apply_amount, t2.lend_amount,t2.uninvoice_amount, t2.created,
+		t2.created_by, t2.last_updated, t2.last_updated_by, t2.modification_number, 
+	    t2.row_id, t2.parent_row_id, t2.ext1, t2.ext2, t2.ext3, t2.ext4, t2.ext5, t2.ext6, 
+	    t2.ext7, t2.ext8
+		FROM 
+		inv_invoice_out_apply_detail t2,
+		inv_invoice_out_item_detail t3
+		WHERE t2.is_deleted = 0 AND t3.is_deleted = 0
+		AND t2.id = t3.apply_detail_id
+		AND t3.inv_invoice_in_id = #{invoiceId,jdbcType=BIGINT}
+		<if test="detailIds != null and detailIds.size > 0 ">
+        AND t2.id IN
+            <foreach item="detailId" index="index" collection="detailIds" open="(" separator="," close=")">
+                #{detailId}
+            </foreach>
+        </if>
+		GROUP BY t2.id
+   </select>
+   
+   <update id="batchDelete" >
+       UPDATE inv_invoice_out_apply_detail
+       SET
+       is_deleted = 1,
+       last_updated = NOW(),
+       modification_number = modification_number+1,
+       last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR}
+       WHERE id in
+       (
+       <foreach collection="detailIds" item="detailId" separator=",">
+           #{detailId,jdbcType=BIGINT}
+       </foreach>
+       )
+   </update>
+  
+  <update id="decreaseApplyAmount">
+    UPDATE inv_invoice_out_apply_detail
+    SET
+    apply_amount = apply_amount - #{amount},
+    last_updated = NOW(),
+    modification_number = modification_number+1,
+    last_updated_by=#{operatorName}
+    WHERE id=#{detailId}
+  </update>
+</mapper>
+

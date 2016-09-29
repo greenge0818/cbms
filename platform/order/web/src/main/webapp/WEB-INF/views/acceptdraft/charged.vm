@@ -1,0 +1,136 @@
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            银票管理
+        </li>
+        <li class="active">
+            银票审核
+        </li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+        #parse("layout/topbtn.vm")<!-- /.nav-search -->
+</div>
+
+#if(${acceptDraft})
+<div class="page-content">
+    <form>
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- div.table-bar -->
+                <div class="col-sm-12 clearfix">
+                    <div class="table-bar pull-left font2" style="width: 230px;margin-left:10px">
+                        <ul>
+                            <li>
+                                <label> 服务中心：
+                                    <span>$!{acceptDraft.orgName}</span>
+                                </label><br/>
+                            </li>
+                            <li>
+                                <label> 客户名称：
+                                    <span>$!{acceptDraft.accountName}</span>
+                                </label>
+                            </li>
+                            <br/>
+                            <li>
+                                <label> 银票票号：
+                                    <span>$!{acceptDraft.code}</span>
+                                </label>
+                            </li>
+                            <br/>
+                            <li>
+                                <label> 付款行全称：
+                                    <span>$!{acceptDraft.acceptanceBankFullName}</span>
+                                </label>
+                            </li>
+                            <br/>
+                            <li>
+                                <label> 出票金额：
+                                    <span class="bolder orange" style="font-size: 16px">$NumberTool.toThousandth($!{acceptDraft.amount})</span>元
+                                </label>
+                            </li>
+                            <br/>
+                            <li>
+                                <label> 汇票到期日：
+                                    <span>$!date.format('yyyy-MM-dd',$!{acceptDraft.endDate})</span>
+                                </label>
+                            </li>
+                            <br/>
+                            <li>
+                                <label> 贴现率：　
+                                    <span>$NumberTool.format("#0.000000",$!{acceptDraft.discountRate})‰</span>
+                                </label>
+                            </li>
+                            <br/>
+                            <li>
+                                <label> 贴现率成本：　
+                                    <span>$NumberTool.format("0.000000",$!{acceptDraft.discountRateBase})</span>‰
+                                </label>
+                            </li>
+                            <br/>
+                            <li>
+                                <label><em class="bolder">银票状态：　</em>
+                                    <span class="orange">
+                                        $!{acceptDraft.statusForShow}
+                                    </span>
+                                </label>
+                            </li>
+
+                        </ul>
+                        <div class="clearfix btn-bar">
+                            <a class="link" href="$link.getContextPath()/acceptdraft/list.html"">返回</a>&nbsp;&nbsp;
+                            <a href="javascript:;" title="旋转" class="revolveImg">旋转图片</a>&nbsp;&nbsp;
+                            #if(${isShow})
+                                <button class="btn #if($isDisabled)gray#{else}btn-primary#end btn-sm " type="button" id="cancleCharge" title="申请取消充值" #if($isDisabled)disabled#end>
+                                    申请取消充值
+                                </button>
+                            #end
+                        </div>
+                        <div class="img-sliders-nav clearfix" id="img_pics">
+                            #foreach($attachment in $attachments)
+                                <a href="javascript:;" class="pull-left">
+                                    <img #if($attachment.url)src="$link.getContextPath()/common/getfile.html?key=$attachment.url" #end alt="发票" width="100px" height="70px" style="border: 2px solid rgb(51, 122, 183);"/>
+                                </a>
+                            #end
+                        </div>
+
+                    </div>
+
+                    <div class="table-bar pull-left pos-rel" style="min-height:770px;margin-left:100px;background:#ccc;">
+                        <div>银票图片：</div>
+                        <img id="turnImg" #if($attachments[0].url)src="$link.getContextPath()/common/getfile.html?key=$attachments[0].url" #end alt="发票" rel="0" width="745" height="428" style="margin-top:160px;margin-bottom:100px;" />
+                        <a href="javascript:;" class="sliders-prve"></a>
+                        <a href="javascript:;" class="sliders-next"></a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+</div><!-- /.page-content -->
+#else
+<div class="page-content">
+    <div class="settlement-info bg-yellow-style row">
+        <div class="clearfix">
+            <span class="bolder red"><em>没有找到该数据或状态已经更新或您没有权限查看,请返回重试！&nbsp;&nbsp;<a class="link" href="$link.getContextPath()/acceptdraft/list.html">返回</a></em></span>
+        </div>
+    </div>
+</div>
+#end
+
+<input type="hidden" id="acceptDraftId" value=$!{acceptDraft.id}/>
+<script src="$link.getContextPath()/js/views/acceptraft/charged.js"></script>
+<script src="$link.getContextPath()/js/views/common/turnImg.js"></script>
+
+
+

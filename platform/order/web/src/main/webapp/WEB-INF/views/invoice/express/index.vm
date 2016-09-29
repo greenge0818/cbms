@@ -1,0 +1,136 @@
+#set($layout="layout/blank.vm")
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <title>品牌店代运营系统</title>
+    <!-- meta S -->
+    #parse("layout/meta.vm")
+    <!-- meta E -->
+    <!-- meta S -->
+    #parse("layout/context.vm")
+    <!-- meta E -->
+</head>
+
+<body class="no-skin">
+<!-- Header S-->
+    #parse("layout/header.vm")
+<!-- Header E -->
+
+<div class="main-container" id="main-container">
+    <script type="text/javascript">
+        try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+    </script>
+
+    <!-- Sidebar S-->
+    #parse("layout/sidebar.vm")
+    <!-- Sidebar E -->
+
+    <div class="main-content">
+        <div class="main-content-inner">
+            <div class="breadcrumbs" id="breadcrumbs">
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="ace-icon fa fa-home home-icon"></i>
+                        <a href="#">发票管理</a>
+                    </li>
+                    <li>
+                        <a href="#">销项票管理</a>
+                    </li>
+                    <li class="active">待寄出</li>
+                </ul><!-- /.breadcrumb -->
+                    #parse("layout/topbtn.vm")<!-- /.nav-search -->
+            </div>
+            <!-- content S -->
+
+            <div class="page-content">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!--TAPBAR-->
+                        #invoiceTopBar(6, 0)
+                        <!-- div.table-bar -->
+                        <div class="input-group pull-right col-md-12 col-sm-12 col-lg-12 search-bar">
+
+
+                            <label>服务中心：
+                                <input placeholder="请选择服务中心" id="sorganization" type="text" class=""
+                                       readonly value="" style="width:120px;" onclick="showMenu();"/>
+                                <input type="hidden" id="hidOrgId" value="0"/>
+                            </label>
+                            <label>
+                                买家全称：<input type="text" id="iptBuyerName" value="$!{buyerName}" class="" />
+                            </label>
+                            <label>
+                                录入时间：
+                                <input id="startTime" class="Wdate" type="text" value="$!{startTime}"
+                               onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')||\'2020-10-01\'}'})"/> -
+                        <input id="endTime" class="Wdate" type="text"  value="$!{endTime}"
+                               onFocus="WdatePicker({minDate:'#F{$dp.$D(\'startTime\')}',maxDate:'2020-10-01'})"/>
+                            </label>
+                            <button id="btnSearch" type="button" class="btn-sm btn btn-info">搜索</button>
+                        </div>
+                        <div class="btn-bar col-sm-12">
+                            <button id="btnShowAddExpressFrom" class="btn btn-primary btn-sm" type="button" title="登记快递单号">登记快递单号</button>
+                        </div>
+
+                        <div class="table-bar col-sm-12">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th><input type="checkbox" id="checkAll" /></th>
+                                    <th>销项发票号</th>
+                                    <th>买家名称</th>
+                                    <th>发票金额</th>
+                                    <th>录入人员</th>
+                                    <th>联系电话</th>
+                                    <th>录入时间</th>
+                                    <th>发票状态</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    #foreach($i in $list)
+                                    <tr>
+                                        <td><input type="checkbox" class="express" value="$!{i.id}" /></td>
+                                        <td><span class="enterName">$!{i.code}</span></td>
+                                        <td class="text-right">$!{i.buyerName}</td>
+                                        <td class="text-right"><span class="unopen-amount">$!NumberTool.format("#0.00", $!{i.amount})</span></td>
+                                        <td class="text-right"><span class="open-amount">$!{i.inputUserName}</span></td>
+                                        <td class="text-right"><span class="open-amount">$!{i.inputUserMobil}</span></td>
+                                        <td>$!date.format('yyyy-MM-dd HH:mm ', $!{i.lastUpdated})</td>
+                                        <td>
+                                            <span class="red">待寄出</span>
+                                        </td>
+
+                                    </tr>
+                                    #end
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.page-content -->
+            <!-- content E -->
+        </div>
+    </div><!-- /.main-content -->
+
+    <!-- Footer S -->
+    #parse("layout/footer.vm")
+    <!-- Footer E -->
+
+    <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+        <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+    </a>
+</div><!-- /.main-container -->
+
+<!-- basic scripts S -->
+    #parse("layout/scripts.vm")
+<!-- basic scripts E -->
+
+<input type="hidden" id="addExpress" value='$shiro.hasPermission("invoice:out:express:add")' />
+
+<script src="$link.getContextPath()/js/views/invoice/express/index.js"></script>
+<div id="menuContent" class="menuContent" style="display:none; position: absolute;">
+    <ul id="orgTree" class="ztree" style="margin-top:0; width:160px;"></ul>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,47 @@
+
+    <div class="main-content">
+        <script type="text/javascript">
+            try {
+                ace.settings.check('breadcrumbs', 'fixed')
+            } catch (e) {
+            }
+        </script>
+        <div class="main-content-inner">
+            <!-- content S -->
+            <div class="breadcrumbs" id="breadcrumbs">
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="ace-icon fa fa-home home-icon"></i>
+                        <a class="active">控制台</a>
+                    </li>
+                    <li class="active">主页</li>
+                </ul>
+                <div class="page-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <!-- PAGE CONTENT BEGINS -->
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="step-bar">
+                                        <h1 class="h5 bolder">系统管理</h1>
+                                    </div>
+                                    <div class="step-bar">
+                                        <h1 class="h5 bolder">客户管理</h1>
+                                    </div>
+                                    <div class="step-bar">
+                                        <h1 class="h5 bolder">交易管理</h1>
+                                    </div>
+                                    <div class="step-bar">
+                                        <h1 class="h5 bolder">结算管理</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.page-content -->
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,53 @@
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="#">客户管理</a>
+        </li>
+
+        <li class="active">客户资料</li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+    <!--#parse("layout/topbtn.vm") /.nav-search -->
+</div>
+
+
+<div class="page-content">
+	<div>
+       <label class="height-b pull-left">公司名称：<input class="l-text" type="text" value="" search='account' id="companyName"/></label>
+        #if(!$shiro.hasPermission("sys:field:org"))
+            <label class="height-b shk pull-left">服务中心：
+                <select class="form-control input-sm select-middle" aria-controls="dynamic-table"
+                        name="dynamic-table_length" id="orgId">
+                    <option value="">全部</option>
+                    #foreach($org in $orgs)
+                        <option value="$org.id">$org.name</option>
+                    #end
+                </select>
+            </label>
+        #end
+        <button value="" type="button" class="btn btn-xs btn-primary" id="searchBtn" onclick="doSearch()">搜 索</button>
+		<input type="hidden" id="ids" value="${ids}">
+		<input type="hidden" id="queryStatus" value="${queryStatus}">
+	    <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+		    <thead>
+		    <tr>
+		        <th>公司名称</th>
+		        <th>操作</th>
+		    </tr>
+		    </thead>
+	    </table>
+	</div>
+</div>
+
+
+<script src="$link.getContextPath()/js/views/company/workflow/cardInfoList.js"></script>
+<script src="$link.getContextPath()/js/views/account/searchaccount.js"></script>

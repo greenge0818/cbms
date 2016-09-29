@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.order.persist.dao.OrgInvoiceOutBalanceMonthlyDao" >
+
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.order.model.model.OrgInvoiceOutBalanceMonthly" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="month" property="month" jdbcType="VARCHAR" />
+    <result column="org_id" property="orgId" jdbcType="BIGINT" />
+    <result column="org_name" property="orgName" jdbcType="VARCHAR" />
+    <result column="invoice_in_amount" property="invoiceInAmount" jdbcType="DECIMAL" />
+    <result column="invoice_out_amount" property="invoiceOutAmount" jdbcType="DECIMAL" />
+    <result column="invoice_out_balance" property="invoiceOutBalance" jdbcType="DECIMAL" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+    <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+    <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+    <result column="ext1" property="ext1" jdbcType="VARCHAR" />
+    <result column="ext2" property="ext2" jdbcType="VARCHAR" />
+    <result column="ext3" property="ext3" jdbcType="VARCHAR" />
+    <result column="ext4" property="ext4" jdbcType="INTEGER" />
+    <result column="ext5" property="ext5" jdbcType="INTEGER" />
+    <result column="ext6" property="ext6" jdbcType="INTEGER" />
+    <result column="ext7" property="ext7" jdbcType="TIMESTAMP" />
+    <result column="ext8" property="ext8" jdbcType="BIGINT" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, month, org_id, org_name, invoice_in_amount, invoice_out_amount, invoice_out_balance, 
+    created, created_by, last_updated, last_updated_by, modification_number, row_id, 
+    parent_row_id, ext1, ext2, ext3, ext4, ext5, ext6, ext7, ext8
+  </sql>
+
+  <select id="queryByMonthAndOrgId" resultMap="BaseResultMap" parameterType="map" >
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM inv_org_invoice_out_balance_monthly
+    WHERE 1=1
+    <if test="orgId != null">
+      AND org_id = #{orgId,jdbcType=BIGINT}
+    </if>
+    <if test="month != null">
+      AND month = #{month,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+  <update id="updateInvoiceOutBalance" parameterType="com.prcsteel.platform.order.model.model.OrgInvoiceOutBalanceMonthly" >
+    UPDATE inv_org_invoice_out_balance_monthly
+    SET invoice_out_balance = #{invoiceOutBalance,jdbcType=DECIMAL}
+    WHERE org_id = #{orgId,jdbcType=BIGINT} AND month = #{month,jdbcType=VARCHAR}
+  </update>
+
+</mapper>

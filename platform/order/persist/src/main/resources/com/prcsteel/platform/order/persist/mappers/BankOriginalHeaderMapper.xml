@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.order.persist.dao.BankOriginalHeaderDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.order.model.model.BankOriginalHeader" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="req_acctNo" property="reqAcctno" jdbcType="VARCHAR" />
+    <result column="req_beginDate" property="reqBegindate" jdbcType="DATE" />
+    <result column="req_endDate" property="reqEnddate" jdbcType="DATE" />
+    <result column="req_queryNumber" property="reqQuerynumber" jdbcType="INTEGER" />
+    <result column="req_beginNumber" property="reqBeginnumber" jdbcType="INTEGER" />
+    <result column="req_transAmount" property="reqTransamount" jdbcType="DECIMAL" />
+    <result column="req_subAccount" property="reqSubaccount" jdbcType="CHAR" />
+    <result column="req_subAcctName" property="reqSubacctname" jdbcType="CHAR" />
+    <result column="res_totalCount" property="resTotalcount" jdbcType="INTEGER" />
+    <result column="res_acctNo" property="resAcctno" jdbcType="VARCHAR" />
+    <result column="res_acctName" property="resAcctname" jdbcType="VARCHAR" />
+    <result column="res_currency" property="resCurrency" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+    <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+    <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+    <result column="ext1" property="ext1" jdbcType="VARCHAR" />
+    <result column="ext2" property="ext2" jdbcType="VARCHAR" />
+    <result column="ext3" property="ext3" jdbcType="VARCHAR" />
+    <result column="ext4" property="ext4" jdbcType="INTEGER" />
+    <result column="ext5" property="ext5" jdbcType="INTEGER" />
+    <result column="ext6" property="ext6" jdbcType="INTEGER" />
+    <result column="ext7" property="ext7" jdbcType="TIMESTAMP" />
+    <result column="ext8" property="ext8" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, req_acctNo, req_beginDate, req_endDate, req_queryNumber, req_beginNumber, req_transAmount, 
+    req_subAccount, req_subAcctName, res_totalCount, res_acctNo, res_acctName, res_currency, 
+    created, created_by, last_updated, last_updated_by, modification_number, row_id, 
+    parent_row_id, ext1, ext2, ext3, ext4, ext5, ext6, ext7, ext8
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from busi_bank_transaction_original_header
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <insert id="insert" parameterType="com.prcsteel.platform.order.model.model.BankOriginalHeader" >
+    insert into busi_bank_transaction_original_header (req_acctNo, req_beginDate,
+      req_endDate, req_queryNumber, req_beginNumber, 
+      req_transAmount, req_subAccount, req_subAcctName, 
+      res_totalCount, res_acctNo, res_acctName, 
+      res_currency, created, created_by, 
+      last_updated, last_updated_by, modification_number, 
+      row_id, parent_row_id, ext1, 
+      ext2, ext3, ext4, ext5, 
+      ext6, ext7, ext8)
+    values (#{reqAcctno,jdbcType=VARCHAR}, #{reqBegindate,jdbcType=DATE},
+      #{reqEnddate,jdbcType=DATE}, #{reqQuerynumber,jdbcType=INTEGER}, #{reqBeginnumber,jdbcType=INTEGER}, 
+      #{reqTransamount,jdbcType=DECIMAL}, #{reqSubaccount,jdbcType=CHAR}, #{reqSubacctname,jdbcType=CHAR}, 
+      #{resTotalcount,jdbcType=INTEGER}, #{resAcctno,jdbcType=VARCHAR}, #{resAcctname,jdbcType=VARCHAR}, 
+      #{resCurrency,jdbcType=INTEGER}, #{created,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, 
+      #{lastUpdated,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}, #{modificationNumber,jdbcType=INTEGER}, 
+      #{rowId,jdbcType=VARCHAR}, #{parentRowId,jdbcType=VARCHAR}, #{ext1,jdbcType=VARCHAR}, 
+      #{ext2,jdbcType=VARCHAR}, #{ext3,jdbcType=VARCHAR}, #{ext4,jdbcType=INTEGER}, #{ext5,jdbcType=INTEGER}, 
+      #{ext6,jdbcType=INTEGER}, #{ext7,jdbcType=TIMESTAMP}, #{ext8,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true"
+          parameterType="com.prcsteel.platform.order.model.model.BankOriginalHeader"
+          keyProperty="id">
+    insert into busi_bank_transaction_original_header
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="reqAcctno != null" >
+        req_acctNo,
+      </if>
+      <if test="reqBegindate != null" >
+        req_beginDate,
+      </if>
+      <if test="reqEnddate != null" >
+        req_endDate,
+      </if>
+      <if test="reqQuerynumber != null" >
+        req_queryNumber,
+      </if>
+      <if test="reqBeginnumber != null" >
+        req_beginNumber,
+      </if>
+      <if test="reqTransamount != null" >
+        req_transAmount,
+      </if>
+      <if test="reqSubaccount != null" >
+        req_subAccount,
+      </if>
+      <if test="reqSubacctname != null" >
+        req_subAcctName,
+      </if>
+      <if test="resTotalcount != null" >
+        res_totalCount,
+      </if>
+      <if test="resAcctno != null" >
+        res_acctNo,
+      </if>
+      <if test="resAcctname != null" >
+        res_acctName,
+      </if>
+      <if test="resCurrency != null" >
+        res_currency,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by,
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number,
+      </if>
+      <if test="rowId != null" >
+        row_id,
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id,
+      </if>
+      <if test="ext1 != null" >
+        ext1,
+      </if>
+      <if test="ext2 != null" >
+        ext2,
+      </if>
+      <if test="ext3 != null" >
+        ext3,
+      </if>
+      <if test="ext4 != null" >
+        ext4,
+      </if>
+      <if test="ext5 != null" >
+        ext5,
+      </if>
+      <if test="ext6 != null" >
+        ext6,
+      </if>
+      <if test="ext7 != null" >
+        ext7,
+      </if>
+      <if test="ext8 != null" >
+        ext8,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="reqAcctno != null" >
+        #{reqAcctno,jdbcType=VARCHAR},
+      </if>
+      <if test="reqBegindate != null" >
+        #{reqBegindate,jdbcType=DATE},
+      </if>
+      <if test="reqEnddate != null" >
+        #{reqEnddate,jdbcType=DATE},
+      </if>
+      <if test="reqQuerynumber != null" >
+        #{reqQuerynumber,jdbcType=INTEGER},
+      </if>
+      <if test="reqBeginnumber != null" >
+        #{reqBeginnumber,jdbcType=INTEGER},
+      </if>
+      <if test="reqTransamount != null" >
+        #{reqTransamount,jdbcType=DECIMAL},
+      </if>
+      <if test="reqSubaccount != null" >
+        #{reqSubaccount,jdbcType=CHAR},
+      </if>
+      <if test="reqSubacctname != null" >
+        #{reqSubacctname,jdbcType=CHAR},
+      </if>
+      <if test="resTotalcount != null" >
+        #{resTotalcount,jdbcType=INTEGER},
+      </if>
+      <if test="resAcctno != null" >
+        #{resAcctno,jdbcType=VARCHAR},
+      </if>
+      <if test="resAcctname != null" >
+        #{resAcctname,jdbcType=VARCHAR},
+      </if>
+      <if test="resCurrency != null" >
+        #{resCurrency,jdbcType=INTEGER},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        #{parentRowId,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null" >
+        #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3 != null" >
+        #{ext3,jdbcType=VARCHAR},
+      </if>
+      <if test="ext4 != null" >
+        #{ext4,jdbcType=INTEGER},
+      </if>
+      <if test="ext5 != null" >
+        #{ext5,jdbcType=INTEGER},
+      </if>
+      <if test="ext6 != null" >
+        #{ext6,jdbcType=INTEGER},
+      </if>
+      <if test="ext7 != null" >
+        #{ext7,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ext8 != null" >
+        #{ext8,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.order.model.model.BankOriginalHeader" >
+    update busi_bank_transaction_original_header
+    <set >
+      <if test="reqAcctno != null" >
+        req_acctNo = #{reqAcctno,jdbcType=VARCHAR},
+      </if>
+      <if test="reqBegindate != null" >
+        req_beginDate = #{reqBegindate,jdbcType=DATE},
+      </if>
+      <if test="reqEnddate != null" >
+        req_endDate = #{reqEnddate,jdbcType=DATE},
+      </if>
+      <if test="reqQuerynumber != null" >
+        req_queryNumber = #{reqQuerynumber,jdbcType=INTEGER},
+      </if>
+      <if test="reqBeginnumber != null" >
+        req_beginNumber = #{reqBeginnumber,jdbcType=INTEGER},
+      </if>
+      <if test="reqTransamount != null" >
+        req_transAmount = #{reqTransamount,jdbcType=DECIMAL},
+      </if>
+      <if test="reqSubaccount != null" >
+        req_subAccount = #{reqSubaccount,jdbcType=CHAR},
+      </if>
+      <if test="reqSubacctname != null" >
+        req_subAcctName = #{reqSubacctname,jdbcType=CHAR},
+      </if>
+      <if test="resTotalcount != null" >
+        res_totalCount = #{resTotalcount,jdbcType=INTEGER},
+      </if>
+      <if test="resAcctno != null" >
+        res_acctNo = #{resAcctno,jdbcType=VARCHAR},
+      </if>
+      <if test="resAcctname != null" >
+        res_acctName = #{resAcctname,jdbcType=VARCHAR},
+      </if>
+      <if test="resCurrency != null" >
+        res_currency = #{resCurrency,jdbcType=INTEGER},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number = #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        row_id = #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null" >
+        ext1 = #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        ext2 = #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3 != null" >
+        ext3 = #{ext3,jdbcType=VARCHAR},
+      </if>
+      <if test="ext4 != null" >
+        ext4 = #{ext4,jdbcType=INTEGER},
+      </if>
+      <if test="ext5 != null" >
+        ext5 = #{ext5,jdbcType=INTEGER},
+      </if>
+      <if test="ext6 != null" >
+        ext6 = #{ext6,jdbcType=INTEGER},
+      </if>
+      <if test="ext7 != null" >
+        ext7 = #{ext7,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ext8 != null" >
+        ext8 = #{ext8,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.order.model.model.BankOriginalHeader" >
+    update busi_bank_transaction_original_header
+    set req_acctNo = #{reqAcctno,jdbcType=VARCHAR},
+      req_beginDate = #{reqBegindate,jdbcType=DATE},
+      req_endDate = #{reqEnddate,jdbcType=DATE},
+      req_queryNumber = #{reqQuerynumber,jdbcType=INTEGER},
+      req_beginNumber = #{reqBeginnumber,jdbcType=INTEGER},
+      req_transAmount = #{reqTransamount,jdbcType=DECIMAL},
+      req_subAccount = #{reqSubaccount,jdbcType=CHAR},
+      req_subAcctName = #{reqSubacctname,jdbcType=CHAR},
+      res_totalCount = #{resTotalcount,jdbcType=INTEGER},
+      res_acctNo = #{resAcctno,jdbcType=VARCHAR},
+      res_acctName = #{resAcctname,jdbcType=VARCHAR},
+      res_currency = #{resCurrency,jdbcType=INTEGER},
+      created = #{created,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      modification_number = #{modificationNumber,jdbcType=INTEGER},
+      row_id = #{rowId,jdbcType=VARCHAR},
+      parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      ext1 = #{ext1,jdbcType=VARCHAR},
+      ext2 = #{ext2,jdbcType=VARCHAR},
+      ext3 = #{ext3,jdbcType=VARCHAR},
+      ext4 = #{ext4,jdbcType=INTEGER},
+      ext5 = #{ext5,jdbcType=INTEGER},
+      ext6 = #{ext6,jdbcType=INTEGER},
+      ext7 = #{ext7,jdbcType=TIMESTAMP},
+      ext8 = #{ext8,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

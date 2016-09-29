@@ -1,0 +1,154 @@
+## created by tuxianming at 2016/04/08
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+    <style >
+        .menuContent{
+            overflow: auto;
+            height: 350px;
+            overflow-x:hidden;
+        }
+    </style>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            	风控管理
+        </li>
+        <li class="active crumb-nav">交易凭证审核</li>
+    </ul>
+    <!-- /.breadcrumb -->
+</div>
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <!--TAPBAR-->
+            <!-- tapbar S -->
+            <!-- tapbar E -->
+
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+            	<div class="tabbar order-tab" id="mytabbar">
+	                <ul class="nav nav-tabs padding-12 tab-color-blue">
+	                    <li class="cer-tab active"><a href="javascript:;">&nbsp;交易凭证审核&nbsp;</a></li>
+	                    <li class="cer-tab" style="display:none"><a href="javascript:;">&nbsp;客户资质审核&nbsp;</a></li>
+	                    <li class="cer-tab" style="display:none"><a href="javascript:;">&nbsp;合同模板审核&nbsp;</a></li>
+	                </ul>
+	            </div>
+            	<!--TAPBAR-->
+	            <div class="tabbar order-tab" id="mytabbar1">
+	                <ul class="nav nav-tabs padding-12 tab-color-blue">
+	                    <li class="cer-tab #if($isAudit == 'check')active #end" type="check"><a href="javascript:;">&nbsp;必须通过审核才能开票&nbsp;</a></li>
+	                    <li class="cer-tab #if($isAudit == 'uncheck')active #end" " type="uncheck"><a href="javascript:;">&nbsp;不须通过审核也能开票&nbsp;</a></li>
+	                </ul>
+	            </div>
+                <div class="col-xs-12">
+                    <div class="clearfix">
+                        <div class="input-group pull-right col-md-12 col-sm-12 col-lg-12 search-bar">
+                            <form class="form-inline">
+                                <label>卖家客户：<input id="sellerName" accounttype="seller" search='account' class="ipt-text" type="text" value=""/></label>
+                                <label>买家客户：<input id="buyerName" accounttype="buyer" search='account' class="ipt-text" type="text" value=""/></label>
+                                <label>凭证号：<input id="credentialCode" class="ipt-text" type="text" value=""/></label>
+                                <label>订单号：<input id="code" class="ipt-text" type="text" value=""/></label>
+								
+								<label class="pos-rel" id="org_options">服务中心：
+									<a id="orgSelectBtn" href="javascript:void(0);">选择服务中心</a>
+		                            <div id="orgSelect" class='pos-abs none' style="z-index:10;top:15px;left:70px;width:120px;background:#fff;border:1px solid #ccc">
+		                                <ul>
+		                               		<li class="text-left" style="padding:5px;">
+		                                   		<label class="pos-rel">
+		                                   			<input type="checkbox" id="selectAllOrg" class="ace" value="all">
+		                                   			<span class="lbl">全部服务中心</span>
+		                                   		</label>
+		                                    </li>
+		                                #foreach($userOrg in $!userOrgs)
+		                                    <li class="text-left" style="padding:5px;">
+		                                   		<label class="pos-rel">
+		                                   			<input type="checkbox" checked="checked"  class="ace" value="$userOrg.orgId">
+		                                   			<span class="lbl">$userOrg.orgName</span>
+		                                   		</label>
+		                                    </li>
+		                                #end
+		                                </ul>
+		                            </div>
+		                        </label>
+								
+								<label>状态：
+									<select id="status">
+										<option value="">全部</option>
+										<option value="0"  selected = "selected">待审核</option>
+										<option value="1">审核已通过</option>
+									</select>
+								</label>
+                                <label>提交时间：
+                                <input id="startTime" class="Wdate" type="text" value="$!{startTime}"
+                                       onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')||\'2020-10-01\'}'})"/> -
+                                <input id="endTime" class="Wdate" type="text"  value="$!{endTime}"
+                                       onFocus="WdatePicker({minDate:'#F{$dp.$D(\'startTime\')}',maxDate:'2020-10-01'})"/>
+								</label>
+                                <button id="queryBtn" class="btn btn-sm btn-default" type="button" title="搜索">
+                                    <i class="aace-icon fa fa-search bigger-110"></i>搜索
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+					
+                    <!-- div.dataTables_borderWrap -->
+                    <div class="dataTable-overflow" id="check-container">
+                        <table id="check-trade-credential" class="table table-striped table-bordered table-hover">
+                            <thead>
+	                            <tr>
+	                                <th style="width:120px;">凭证号</th>
+	                                <th style="width:120px;">提交时间</th>
+	                                <th style="width:100px;">凭证类型</th>
+	                                <th style="width:70px;">凭证名称</th>
+	                                <th style="width:120px;">卖家客户</th>
+	                                <th style="width:120px;">买家客户</th>
+	                                <th style="width:100px;">订单号</th>
+	                                <th style="width:140px;">距离提交时间已有<br/>（天）</th>
+	                                <th style="width:80px;">状态</th>
+	                                <th style="width:60px;">操作</th>
+	                            </tr>
+                            </thead>
+                            <tbody>
+                            
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- div.dataTables_borderWrap -->
+                    <div class="dataTable-overflow" id="uncheck-container" style="display:none;">
+                        <table id="uncheck-trade-credential" class="table table-striped table-bordered table-hover">
+                            <thead>
+	                            <tr>
+	                                <th style="width:120px;">凭证号</th>
+	                                <th style="width:120px;">类型</th>
+	                                <th style="width:120px;">凭证提交时间</th>
+	                                <th style="width:70px;">凭证类型</th>
+	                                <th style="width:120px;">卖家客户</th>
+	                                <th style="width:120px;">买家客户</th>
+	                                <th style="width:100px;">订单号</th>
+	                                <th style="width:80px;">状态</th>
+	                                <th style="width:60px;">操作</th>
+	                            </tr>
+                            </thead>
+                            <tbody>
+                            
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+<input type="hidden" id="isAudit" value="${isAudit}"/>
+<script src="$link.getContextPath()/js/views/account/searchaccount.js"></script>
+<script src="$link.getContextPath()/js/views/order/risk/checklist.js"></script>
+

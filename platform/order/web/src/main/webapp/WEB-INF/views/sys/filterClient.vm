@@ -1,0 +1,59 @@
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+
+        <li><i class="ace-icon fa fa-home home-icon"></i>系统管理</li>
+        <li>系统设置</li>
+        <li class="active">客户过滤设置</li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+    #parse("layout/topbtn.vm")
+    <!-- /.nav-search -->
+</div>
+
+<div class="page-content">
+
+    <div class="row">
+        <div class="col-xs-12">
+            <!--TAPBAR-->
+            #parse("sys/systemmenu.vm")
+            <!-- PAGE CONTENT BEGINS -->
+
+            <div class="row">
+                <div class="col-xs-12">
+
+                    <!--.recordbar-->
+                    <div class="print-finfo dotted-border-bottom">
+                        <form id="addEnterForm" class="form-inline">
+                            <input type="text" id="enterIpt" value="" must="1"
+                                   class="input-group" style="height: 30px"/> &nbsp;
+                            <button type="button" verify="" id="addEnter"
+                                    class="btn btn-info btn-sm">添加
+                            </button>
+                        </form>
+                    </div>
+                    <!--/.recordbar-->
+                </div>
+            </div>
+
+            <div class="row col-sm-12 enterpriselist">
+                <div>
+                    <span>已添加的客户：</span>
+                </div>
+                <ul id="filterList">
+                </ul>
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+
+<script type="text/javascript" src="$link.getContextPath()/js/views/sys/filter.js"></script>

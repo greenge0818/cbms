@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.smartmatch.persist.dao.CustBasePriceDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.smartmatch.model.model.CustBasePrice" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="base_price_name" property="basePriceName" jdbcType="VARCHAR" />
+    <result column="base_price_type" property="basePriceType" jdbcType="VARCHAR" />
+    <result column="city_id" property="cityId" jdbcType="BIGINT" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="material_uuid" property="materialUuid" jdbcType="VARCHAR" />
+    <result column="material" property="material" jdbcType="VARCHAR" />
+    <result column="category_uuid" property="categoryUuid" jdbcType="VARCHAR" />
+    <result column="category" property="category" jdbcType="VARCHAR" />
+    <result column="spec" property="spec" jdbcType="VARCHAR" />
+    <result column="factory_id" property="factoryId" jdbcType="BIGINT" />
+    <result column="factory" property="factory" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="base_last_updated" property="baseLastUpdated" jdbcType="TIMESTAMP" />
+    <result column="base_last_update_by" property="baseLastUpdateBy" jdbcType="VARCHAR" />
+    <result column="is_deleted" property="isDeleted" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, base_price_name,base_price_type, city_id, city, material_uuid, material, category_uuid, category, 
+    spec, factory_id, factory, price, remark, user_id, user_name, created, last_updated, base_last_updated,
+    base_last_update_by, is_deleted
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from cust_base_price
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from cust_base_price
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.prcsteel.platform.smartmatch.model.model.CustBasePrice" >
+    insert into cust_base_price (id, base_price_name,base_price_type, city_id, 
+      city, material_uuid, material, 
+      category_uuid, category, spec, 
+      factory_id, factory, price, remark,
+      user_id, user_name, created, 
+      last_updated, base_last_updated, base_last_update_by, 
+      is_deleted)
+    values (#{id,jdbcType=BIGINT}, #{basePriceName,jdbcType=VARCHAR}, #{basePriceType,jdbcType=VARCHAR},#{cityId,jdbcType=BIGINT}, 
+      #{city,jdbcType=VARCHAR}, #{materialUuid,jdbcType=VARCHAR}, #{material,jdbcType=VARCHAR}, 
+      #{categoryUuid,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR}, #{spec,jdbcType=VARCHAR}, 
+      #{factoryId,jdbcType=BIGINT}, #{factory,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{remark,jdbcType=VARCHAR},
+      #{userId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, 
+      #{lastUpdated,jdbcType=TIMESTAMP}, #{baseLastUpdated,jdbcType=TIMESTAMP}, #{baseLastUpdateBy,jdbcType=VARCHAR}, 
+      #{isDeleted,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.smartmatch.model.model.CustBasePrice" >
+    insert into cust_base_price
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="basePriceName != null" >
+        base_price_name,
+      </if>
+      <if test="basePriceType != null" >
+        base_price_type,
+      </if>
+      <if test="cityId != null" >
+        city_id,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="materialUuid != null" >
+        material_uuid,
+      </if>
+      <if test="material != null" >
+        material,
+      </if>
+      <if test="categoryUuid != null" >
+        category_uuid,
+      </if>
+      <if test="category != null" >
+        category,
+      </if>
+      <if test="spec != null" >
+        spec,
+      </if>
+      <if test="factoryId != null" >
+        factory_id,
+      </if>
+      <if test="factory != null" >
+        factory,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="baseLastUpdated != null" >
+        base_last_updated,
+      </if>
+      <if test="baseLastUpdateBy != null" >
+        base_last_update_by,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="basePriceName != null" >
+        #{basePriceName,jdbcType=VARCHAR},
+      </if>
+      <if test="basePriceType != null" >
+        #{basePriceType,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null" >
+        #{cityId,jdbcType=BIGINT},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="materialUuid != null" >
+        #{materialUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="material != null" >
+        #{material,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryUuid != null" >
+        #{categoryUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null" >
+        #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="spec != null" >
+        #{spec,jdbcType=VARCHAR},
+      </if>
+      <if test="factoryId != null" >
+        #{factoryId,jdbcType=BIGINT},
+      </if>
+      <if test="factory != null" >
+        #{factory,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="baseLastUpdated != null" >
+        #{baseLastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="baseLastUpdateBy != null" >
+        #{baseLastUpdateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.smartmatch.model.model.CustBasePrice" >
+    update cust_base_price
+    <set >
+      <if test="basePriceName != null" >
+        base_price_name = #{basePriceName,jdbcType=VARCHAR},
+      </if>
+       <if test="basePriceType != null" >
+        base_price_type = #{basePriceType,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null" >
+        city_id = #{cityId,jdbcType=BIGINT},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="materialUuid != null" >
+        material_uuid = #{materialUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="material != null" >
+        material = #{material,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryUuid != null" >
+        category_uuid = #{categoryUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null" >
+        category = #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="spec != null" >
+        spec = #{spec,jdbcType=VARCHAR},
+      </if>
+      <if test="factoryId != null" >
+        factory_id = #{factoryId,jdbcType=BIGINT},
+      </if>
+      <if test="factory != null" >
+        factory = #{factory,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="remark != null" >
+        price = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="baseLastUpdated != null" >
+        base_last_updated = #{baseLastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="baseLastUpdateBy != null" >
+        base_last_update_by = #{baseLastUpdateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <!-- 修改基价 -->
+  <update id="updateBasePriceById" parameterType="com.prcsteel.platform.smartmatch.model.model.CustBasePrice" >
+    update cust_base_price
+    <set >
+      <if test="basePriceName != null" >
+        base_price_name = #{basePriceName,jdbcType=VARCHAR},
+      </if>
+        base_price_type = #{basePriceType,jdbcType=VARCHAR},
+      <if test="cityId != null" >
+        city_id = #{cityId,jdbcType=BIGINT},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="materialUuid != null" >
+        material_uuid = #{materialUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="material != null" >
+        material = #{material,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryUuid != null" >
+        category_uuid = #{categoryUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null" >
+        category = #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="spec != null" >
+        spec = #{spec,jdbcType=VARCHAR},
+      </if>
+      <if test="factoryId != null" >
+        factory_id = #{factoryId,jdbcType=BIGINT},
+      </if>
+      <if test="factory != null" >
+        factory = #{factory,jdbcType=VARCHAR},
+      </if>
+        price = #{price,jdbcType=DECIMAL},
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="baseLastUpdated != null" >
+        base_last_updated = #{baseLastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="baseLastUpdateBy != null" >
+        base_last_update_by = #{baseLastUpdateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.smartmatch.model.model.CustBasePrice" >
+    update cust_base_price
+    set base_price_name = #{basePriceName,jdbcType=VARCHAR},
+   	  base_price_type = #{basePriceType,jdbcType=VARCHAR},
+      city_id = #{cityId,jdbcType=BIGINT},
+      city = #{city,jdbcType=VARCHAR},
+      material_uuid = #{materialUuid,jdbcType=VARCHAR},
+      material = #{material,jdbcType=VARCHAR},
+      category_uuid = #{categoryUuid,jdbcType=VARCHAR},
+      category = #{category,jdbcType=VARCHAR},
+      spec = #{spec,jdbcType=VARCHAR},
+      factory_id = #{factoryId,jdbcType=BIGINT},
+      factory = #{factory,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      remark = #{remark,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=BIGINT},
+      user_name = #{userName,jdbcType=VARCHAR},
+      created = #{created,jdbcType=TIMESTAMP},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      base_last_updated = #{baseLastUpdated,jdbcType=TIMESTAMP},
+      base_last_update_by = #{baseLastUpdateBy,jdbcType=VARCHAR},
+      is_deleted = #{isDeleted,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <resultMap id="basePriceDto" type="com.prcsteel.platform.smartmatch.model.dto.CustBasePriceDto" extends="BaseResultMap">
+    <result column="lowestPrice" property="lowestPrice" jdbcType="DECIMAL" />
+  </resultMap>
+  
+  <!-- modify by caosulin 修改发布基价的价格取值，取当日最新发布价格，去掉原来去资源表查价格的逻辑 -->
+  <select id="selectBasePrice" resultMap="basePriceDto" parameterType="com.prcsteel.platform.smartmatch.model.model.CustBasePrice">
+    SELECT 
+    *,IF(date_format(last_updated,'%Y-%m-%d')=curdate(),price,null)  AS lowestPrice
+	<!-- <if test="release == true">
+		,
+		(SELECT IFNULL((SELECT MIN(t2.price) FROM cust_resource t2 WHERE t2.material_uuid = t1.material_uuid
+			AND t2.category_uuid = t1.category_uuid AND t2.status ='approved' AND t2.factory_name = t1.factory
+			AND date_format(t2.mgt_last_updated,'%Y-%m-%d') = date_format(curdate(),'%Y-%m-%d') 
+			AND FIND_IN_SET((SELECT GROUP_CONCAT(noo.VALUE ORDER BY noo.priority SEPARATOR '*')FROM cust_resource_norms noo 
+			WHERE noo.resource_id = t2.id),t1.spec)
+ 		ORDER BY t2.last_updated DESC),0)) AS lowestPrice 
+	</if>-->
+    FROM cust_base_price t1
+    WHERE t1.is_deleted = 0
+   	<if test="city != null and city !=''">
+   		AND city = #{city,jdbcType=VARCHAR}
+   	</if>
+   	<if test="cityId != null">
+   		AND city_id = #{cityId,jdbcType=BIGINT}
+   	</if>
+   	<if test="basePriceType != null and basePriceType !=''">
+   		AND base_price_type = #{basePriceType,jdbcType=VARCHAR}
+   	</if>
+   	<if test="basePriceName != null and basePriceName !=''">
+   		AND base_price_name = #{basePriceName,jdbcType=VARCHAR}
+   	</if>
+   	<if test="id != null and id !=''">
+   		AND id = #{id,jdbcType=BIGINT}
+   	</if>
+   	ORDER BY t1.base_last_updated DESC
+  </select>
+  
+  <update id="deleteBybasePriceId">
+  	UPDATE cust_base_price SET is_deleted = 1
+    WHERE
+    is_deleted = 0 AND id = #{basePriceId,jdbcType=BIGINT}
+  </update>
+    
+  <select id="selectByName" resultMap="BaseResultMap" >
+  	SELECT 
+    <include refid="Base_Column_List" />
+    FROM cust_base_price
+    WHERE is_deleted = 0 AND base_price_name = #{basePriceName,jdbcType=VARCHAR}
+    AND city = #{cityName,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="getAllBasePriceType" resultType="java.lang.String">
+	SELECT 
+    base_price_type
+    FROM cust_base_price
+    WHERE is_deleted = 0 and base_price_type is not null
+    <if test="id != null">
+   		and city_id=#{id,jdbcType=BIGINT}
+   	</if>
+    group by base_price_type
+  </select>
+  <!-- 根据基价的ID获取当前的基价的订阅信息 -->
+  <select id="getSubByBasePriceId" resultType="com.prcsteel.platform.smartmatch.model.model.CustBasePriceSubscriberRelation"
+  	 parameterType="java.lang.Long">
+	select 
+		subscriber_id subscriberId,
+		base_price_id basePriceId,
+		created 
+	from cust_base_price_subscriber_relation
+	where base_price_id = #{id,jdbcType=BIGINT}
+  </select>
+  <!--根据基价ID列表更新询价资源-->
+  <update id="syncResourceByBasePriceIds" parameterType="com.prcsteel.platform.smartmatch.model.query.SyncResourceQuery">
+    UPDATE cust_resource t10 INNER JOIN (
+        SELECT t4.price,t1.id,t3.`price_deviation`
+        FROM cust_resource t1
+        INNER JOIN cust_base_price_relation t2 ON t1.account_id=t2.account_id AND t1.category_uuid=t2.category_uuid AND
+        t1.factory_id=t2.factory_id
+        INNER JOIN cust_base_price_relation_detail t3 ON t2.id=t3.base_price_relation_id
+        INNER JOIN cust_base_price t4 ON t2.base_price_id=t4.id
+        INNER JOIN (
+            SELECT MAX(CASE(priority) WHEN 1 THEN `value` ELSE '' END) AS spec1,
+            MAX(CASE(priority) WHEN 2 THEN `value` ELSE '' END) AS spec2,
+            MAX(CASE(priority) WHEN 3 THEN `value` ELSE '' END) AS spec3,
+            GROUP_CONCAT(`value` ORDER BY priority ASC SEPARATOR '*') AS spec,resource_id
+            FROM cust_resource_norms GROUP BY resource_id
+        ) t5 ON resource_id=t1.`id` AND IFNULL(t3.`spec1`,'')=t5.spec1
+          AND if(t3.spec2 is null,true,IFNULL(t3.`spec2`,'')=t5.spec2)
+          AND if(t3.spec3 is null,true,IFNULL(t3.`spec2`,'')=t5.spec2)
+        WHERE t1.source_type='daily_common' AND t1.is_exception='normal'
+        AND t2.is_enable=1 AND t3.is_deficiency_inventory=0 AND t4.price IS NOT NULL
+        AND t1.`material_uuid`=t3.`material_uuid`
+        AND IFNULL(t1.weight_concept,'')!=''
+        AND t4.id in
+        <foreach collection="basepriceIds" item="id" open="(" close=")" separator=",">
+          #{id}
+        </foreach>
+        ORDER BY IFNULL(t3.`spec1`,'') DESC,IFNULL(t3.`spec2`,'') DESC,IFNULL(t3.`spec3`,'') DESC
+    ) t11 ON t10.id=t11.id
+    SET t10.price=t11.price+t11.`price_deviation`,t10.mgt_last_updated_by=#{operator},t10.mgt_last_updated=NOW()
+  </update>
+  <!--根据基价ID列表查询关联的资源-->
+  <select id="queryRelateResourceByBasePriceIds" parameterType="java.util.List" resultMap="com.prcsteel.platform.smartmatch.persist.dao.ResourceDao.ResourceBaseResultMap">
+    SELECT t1.id,t1.`account_id` as accountid,t1.account_name as accountname,t1.`category_uuid` as categoryuuid,
+    t1.`category_name` as categoryname,t1.`material_uuid` as materialuuid,t1.`material_name` as materialname,
+    t5.spec,t1.`factory_id` as factoryid,t1.`factory_name` as factoryname,t1.`warehouse_id` as warehouseid,t1.`warehouse_name` as warehousename,
+    t1.`price`,t1.`weight_concept` as weightconcept,t1.`city_id` as cityid,t1.`city_name` as cityname,t1.`created`,t1.`created_by`,
+    t1.`mgt_last_updated`,t1.`mgt_last_updated_by` as last_updated_by,t1.remark,t1.source_type as sourcetype,t1.is_exception,t1.quantity,t1.weight
+    FROM cust_resource t1
+    INNER JOIN cust_base_price_relation t2 ON t1.account_id=t2.account_id AND t1.category_uuid=t2.category_uuid AND t1.factory_id=t2.factory_id
+    INNER JOIN cust_base_price_relation_detail t3 ON t2.id=t3.base_price_relation_id
+    INNER JOIN cust_base_price t4 ON t2.base_price_id=t4.id
+    INNER JOIN (
+        SELECT MAX(CASE(priority) WHEN 1 THEN `value` ELSE '' END) AS spec1,
+        MAX(CASE(priority) WHEN 2 THEN `value` ELSE '' END) AS spec2,
+        MAX(CASE(priority) WHEN 3 THEN `value` ELSE '' END) AS spec3,
+        GROUP_CONCAT(`value` ORDER BY priority ASC SEPARATOR '*') AS spec,resource_id
+        FROM cust_resource_norms GROUP BY resource_id
+    ) t5 ON resource_id=t1.`id` AND IFNULL(t3.`spec1`,'')=t5.spec1
+      AND if(t3.spec2 is null,true,IFNULL(t3.`spec2`,'')=t5.spec2)
+      AND if(t3.spec3 is null,true,IFNULL(t3.`spec2`,'')=t5.spec2)
+    WHERE t1.source_type='daily_common' AND t1.is_exception='normal'
+    AND t2.is_enable=1 AND t3.is_deficiency_inventory=0 AND t4.price IS NOT NULL
+    AND t1.`material_uuid`=t3.`material_uuid`
+    AND IFNULL(t1.weight_concept,'')!=''
+    AND t4.id IN
+    <foreach collection="list" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </select>
+</mapper>

@@ -1,0 +1,1102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.order.persist.dao.ReportRebateRecordDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.order.model.model.ReportRebateRecord" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="rebate_time" property="rebateTime" jdbcType="TIMESTAMP" />
+    <result column="account_id" property="accountId" jdbcType="BIGINT" />
+    <result column="account_name" property="accountName" jdbcType="VARCHAR" />
+    <result column="org_id" property="orgId" jdbcType="BIGINT" />
+    <result column="org_name" property="orgName" jdbcType="VARCHAR" />
+    <result column="manager_id" property="managerId" jdbcType="BIGINT" />
+    <result column="manager_name" property="managerName" jdbcType="VARCHAR" />
+    <result column="contact_id" property="contactId" jdbcType="BIGINT" />
+    <result column="contact_name" property="contactName" jdbcType="VARCHAR" />
+    <result column="category_group_UUID" property="categoryGroupUuid" jdbcType="VARCHAR" />
+    <result column="category_group_name" property="categoryGroupName" jdbcType="VARCHAR" />
+    <result column="weight" property="weight" jdbcType="DECIMAL" />
+    <result column="amount" property="amount" jdbcType="DECIMAL" />
+    <result column="rebate_amount" property="rebateAmount" jdbcType="DECIMAL" />
+    <result column="rebate_balance" property="rebateBalance" jdbcType="DECIMAL" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="is_deleted" property="isDeleted" jdbcType="BIT" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+    <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ExcelResultMap" type="com.prcsteel.platform.order.model.model.CommissionExcel" >
+    <result column="month" property="month" jdbcType="VARCHAR" />
+    <result column="second_settlement_time" property="secondSettlementTime" jdbcType="TIMESTAMP" />
+    <result column="invoice_time" property="invoiceTime" jdbcType="TIMESTAMP" />
+    <result column="buyer_org_name" property="buyerOrgName" jdbcType="VARCHAR" />
+    <result column="buyer_org_id" property="buyerOrgId" jdbcType="BIGINT" />
+    <result column="buyer_job_number" property="buyerJobNumber" jdbcType="VARCHAR" />
+    <result column="buyer_owner_name" property="buyerOwnerName" jdbcType="VARCHAR" />
+    <result column="buyer_owner_id" property="buyerOwnerId" jdbcType="BIGINT" />
+    <result column="seller_org_name" property="sellerOrgName" jdbcType="VARCHAR" />
+    <result column="seller_job_number" property="sellerJobNumber" jdbcType="VARCHAR" />
+    <result column="seller_owner_name" property="sellerOwnerName" jdbcType="VARCHAR" />
+    <result column="buyer_account_name" property="buyerAccountName" jdbcType="VARCHAR" />
+    <result column="seller_account_name" property="sellerAccountName" jdbcType="VARCHAR" />
+    <result column="cbname" property="cbname" jdbcType="VARCHAR" />
+    <result column="nsort_name" property="nsortName" jdbcType="VARCHAR" />
+    <result column="material" property="material" jdbcType="VARCHAR" />
+    <result column="spec" property="spec" jdbcType="VARCHAR" />
+    <result column="actual_pick_weight_server" property="actualPickWeightServer" jdbcType="DECIMAL" />
+    <result column="order_code" property="orderCode" jdbcType="VARCHAR" />
+    <result column="order_created" property="orderCreated" jdbcType="TIMESTAMP" />
+    <result column="buyer_count" property="buyerCount" jdbcType="DECIMAL" />
+    <result column="seller_count" property="sellerCount" jdbcType="DECIMAL" />
+    <result column="last_weight" property="lastWeight" jdbcType="DECIMAL" />
+    <result column="profit" property="profit" jdbcType="DECIMAL" />
+    <result column="diff_price" property="diffPrice" jdbcType="DECIMAL" />
+    <result column="sell_consign" property="sellConsign" jdbcType="VARCHAR" />
+    <result column="buy_consign" property="buyConsign" jdbcType="VARCHAR" />
+    <result column="reward_role" property="rewardRole" jdbcType="DECIMAL" />
+    <result column="buyer_reward_role" property="buyerRewardRole" jdbcType="DECIMAL" />
+    <result column="seller_reward_role" property="sellerRewardRole" jdbcType="DECIMAL" />
+    <result column="seller_deduct" property="sellerDeduct" jdbcType="DECIMAL" />
+    <result column="buyer_deduct" property="buyerDeduct" jdbcType="DECIMAL" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ExcelSumResultMap" type="com.prcsteel.platform.order.model.model.ReportCollect">
+    <result column="buyer_org_name" property="buyerOrgName" jdbcType="VARCHAR" />
+    <result column="buyer_owner_name" property="buyerOwnerName" jdbcType="VARCHAR" />
+    <result column="buyer_job_number" property="buyerJobNumber" jdbcType="VARCHAR" />
+    <result column="seller_org_name" property="sellerOrgName" jdbcType="VARCHAR" />
+    <result column="seller_owner_name" property="sellerOwnerName" jdbcType="VARCHAR" />
+    <result column="seller_job_number" property="sellerJobNumber" jdbcType="VARCHAR" />
+    <result column="buyer_count" property="buyerCount" jdbcType="DECIMAL" />
+    <result column="seller_count" property="sellerCount" jdbcType="DECIMAL" />
+    <result column="buyer_shop" property="buyerShop" jdbcType="VARCHAR" />
+    <result column="buyer_sum" property="buyerSum" jdbcType="DECIMAL" />
+    <result column="seller_sum" property="sellerSum" jdbcType="DECIMAL" />
+  </resultMap>
+  <resultMap id="RebateRecordDto" type="com.prcsteel.platform.order.model.dto.ReportRebateRecordDto">
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="rebate_time" property="rebateTime" jdbcType="TIMESTAMP" />
+    <result column="account_id" property="accountId" jdbcType="BIGINT" />
+    <result column="account_name" property="accountName" jdbcType="VARCHAR" />
+    <result column="contact_id" property="contactId" jdbcType="BIGINT" />
+    <result column="contact_name" property="contactName" jdbcType="VARCHAR" />
+    <result column="weight" property="weight" jdbcType="DECIMAL" />
+    <result column="amount" property="amount" jdbcType="DECIMAL" />
+    <result column="rebate_amount" property="rebateAmount" jdbcType="DECIMAL" />
+    <result column="rebate_balance" property="rebateBalance" jdbcType="DECIMAL" />
+    <result column="moneyReduce" property="moneyReduce" jdbcType="DECIMAL" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="recordtype" property="type" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, rebate_time, account_id, account_name, org_id, org_name, manager_id, manager_name,
+    contact_id, contact_name, category_group_UUID, category_group_name, weight, amount,
+    rebate_amount, rebate_balance, code, created, is_deleted, created_by, last_updated,
+    last_updated_by, modification_number, row_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from report_rebate_record
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from report_rebate_record
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="batchInsert" parameterType="com.prcsteel.platform.order.model.model.ReportRebateRecord" >
+    insert into report_rebate_record (rebate_time, account_id,
+    account_name, org_id, org_name,
+    manager_id, manager_name, contact_id,
+    contact_name, category_group_UUID, category_group_name,
+    weight, amount, rebate_amount,
+    rebate_balance, code, created,
+    is_deleted, created_by, last_updated,
+    last_updated_by, modification_number, row_id)
+    values
+    <foreach collection="list" item="it" separator=",">
+      (#{it.rebateTime,jdbcType=TIMESTAMP}, #{it.accountId,jdbcType=BIGINT},
+      #{it.accountName,jdbcType=VARCHAR}, #{it.orgId,jdbcType=BIGINT}, #{it.orgName,jdbcType=VARCHAR},
+      #{it.managerId,jdbcType=BIGINT}, #{it.managerName,jdbcType=VARCHAR}, #{it.contactId,jdbcType=BIGINT},
+      #{it.contactName,jdbcType=VARCHAR}, #{it.categoryGroupUuid,jdbcType=VARCHAR}, #{it.categoryGroupName,jdbcType=VARCHAR},
+      #{it.weight,jdbcType=DECIMAL}, #{it.amount,jdbcType=DECIMAL}, #{it.rebateAmount,jdbcType=DECIMAL},
+      #{it.rebateBalance,jdbcType=DECIMAL}, #{it.code,jdbcType=VARCHAR}, #{it.created,jdbcType=TIMESTAMP},
+      #{it.isDeleted,jdbcType=BIT}, #{it.createdBy,jdbcType=VARCHAR}, #{it.lastUpdated,jdbcType=TIMESTAMP},
+      #{it.lastUpdatedBy,jdbcType=VARCHAR}, #{it.modificationNumber,jdbcType=INTEGER}, #{it.rowId,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+  <insert id="insert" parameterType="com.prcsteel.platform.order.model.model.ReportRebateRecord" >
+    insert into report_rebate_record (id, rebate_time, account_id,
+    account_name, org_id, org_name,
+    manager_id, manager_name, contact_id,
+    contact_name, category_group_UUID, category_group_name,
+    weight, amount, rebate_amount,
+    rebate_balance, code, created,
+    is_deleted, created_by, last_updated,
+    last_updated_by, modification_number, row_id
+    )
+    values (#{id,jdbcType=BIGINT}, #{rebateTime,jdbcType=TIMESTAMP}, #{accountId,jdbcType=BIGINT},
+    #{accountName,jdbcType=VARCHAR}, #{orgId,jdbcType=BIGINT}, #{orgName,jdbcType=VARCHAR},
+    #{managerId,jdbcType=BIGINT}, #{managerName,jdbcType=VARCHAR}, #{contactId,jdbcType=BIGINT},
+    #{contactName,jdbcType=VARCHAR}, #{categoryGroupUuid,jdbcType=VARCHAR}, #{categoryGroupName,jdbcType=VARCHAR},
+    #{weight,jdbcType=DECIMAL}, #{amount,jdbcType=DECIMAL}, #{rebateAmount,jdbcType=DECIMAL},
+    #{rebateBalance,jdbcType=DECIMAL}, #{code,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP},
+    #{isDeleted,jdbcType=BIT}, #{createdBy,jdbcType=VARCHAR}, #{lastUpdated,jdbcType=TIMESTAMP},
+    #{lastUpdatedBy,jdbcType=VARCHAR}, #{modificationNumber,jdbcType=INTEGER}, #{rowId,jdbcType=VARCHAR}
+    )
+  </insert>
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.order.model.model.ReportRebateRecord" >
+    insert into report_rebate_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="rebateTime != null" >
+        rebate_time,
+      </if>
+      <if test="accountId != null" >
+        account_id,
+      </if>
+      <if test="accountName != null" >
+        account_name,
+      </if>
+      <if test="orgId != null" >
+        org_id,
+      </if>
+      <if test="orgName != null" >
+        org_name,
+      </if>
+      <if test="managerId != null" >
+        manager_id,
+      </if>
+      <if test="managerName != null" >
+        manager_name,
+      </if>
+      <if test="contactId != null" >
+        contact_id,
+      </if>
+      <if test="contactName != null" >
+        contact_name,
+      </if>
+      <if test="categoryGroupUuid != null" >
+        category_group_UUID,
+      </if>
+      <if test="categoryGroupName != null" >
+        category_group_name,
+      </if>
+      <if test="weight != null" >
+        weight,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="rebateAmount != null" >
+        rebate_amount,
+      </if>
+      <if test="rebateBalance != null" >
+        rebate_balance,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by,
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number,
+      </if>
+      <if test="rowId != null" >
+        row_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="rebateTime != null" >
+        #{rebateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accountId != null" >
+        #{accountId,jdbcType=BIGINT},
+      </if>
+      <if test="accountName != null" >
+        #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null" >
+        #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="orgName != null" >
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="managerId != null" >
+        #{managerId,jdbcType=BIGINT},
+      </if>
+      <if test="managerName != null" >
+        #{managerName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactId != null" >
+        #{contactId,jdbcType=BIGINT},
+      </if>
+      <if test="contactName != null" >
+        #{contactName,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryGroupUuid != null" >
+        #{categoryGroupUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryGroupName != null" >
+        #{categoryGroupName,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null" >
+        #{weight,jdbcType=DECIMAL},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="rebateAmount != null" >
+        #{rebateAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="rebateBalance != null" >
+        #{rebateBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        #{rowId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.order.model.model.ReportRebateRecord" >
+    update report_rebate_record
+    <set >
+      <if test="rebateTime != null" >
+        rebate_time = #{rebateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accountId != null" >
+        account_id = #{accountId,jdbcType=BIGINT},
+      </if>
+      <if test="accountName != null" >
+        account_name = #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null" >
+        org_id = #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="orgName != null" >
+        org_name = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="managerId != null" >
+        manager_id = #{managerId,jdbcType=BIGINT},
+      </if>
+      <if test="managerName != null" >
+        manager_name = #{managerName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactId != null" >
+        contact_id = #{contactId,jdbcType=BIGINT},
+      </if>
+      <if test="contactName != null" >
+        contact_name = #{contactName,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryGroupUuid != null" >
+        category_group_UUID = #{categoryGroupUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryGroupName != null" >
+        category_group_name = #{categoryGroupName,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null" >
+        weight = #{weight,jdbcType=DECIMAL},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="rebateAmount != null" >
+        rebate_amount = #{rebateAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="rebateBalance != null" >
+        rebate_balance = #{rebateBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number = #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        row_id = #{rowId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.order.model.model.ReportRebateRecord" >
+    update report_rebate_record
+    set rebate_time = #{rebateTime,jdbcType=TIMESTAMP},
+      account_id = #{accountId,jdbcType=BIGINT},
+      account_name = #{accountName,jdbcType=VARCHAR},
+      org_id = #{orgId,jdbcType=BIGINT},
+      org_name = #{orgName,jdbcType=VARCHAR},
+      manager_id = #{managerId,jdbcType=BIGINT},
+      manager_name = #{managerName,jdbcType=VARCHAR},
+      contact_id = #{contactId,jdbcType=BIGINT},
+      contact_name = #{contactName,jdbcType=VARCHAR},
+      category_group_UUID = #{categoryGroupUuid,jdbcType=VARCHAR},
+      category_group_name = #{categoryGroupName,jdbcType=VARCHAR},
+      weight = #{weight,jdbcType=DECIMAL},
+      amount = #{amount,jdbcType=DECIMAL},
+      rebate_amount = #{rebateAmount,jdbcType=DECIMAL},
+      rebate_balance = #{rebateBalance,jdbcType=DECIMAL},
+      code = #{code,jdbcType=VARCHAR},
+      created = #{created,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=BIT},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      modification_number = #{modificationNumber,jdbcType=INTEGER},
+      row_id = #{rowId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+
+  <!-- 自定义 -->
+
+  <resultMap id="ReportRebateResultMap" extends="BaseResultMap" type="com.prcsteel.platform.order.model.dto.ReportRebateDto">
+    <result column="previous_period_balance" property="previousPeriodBalance" jdbcType="DECIMAL" />
+    <result column="this_period_balance" property="thisPeriodBalance" jdbcType="DECIMAL" />
+    <result column="amount_reduce" property="amountReduce" jdbcType="DECIMAL" />
+    <result column="amount_increase" property="amountIncrease" jdbcType="DECIMAL" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="withdraw_amount" property="withdrawAmount" jdbcType="DECIMAL"/>
+  </resultMap>
+  <!-- 买家返利报表公司详情 -->
+  <select id="queryComRebateByPage" resultMap="BaseResultMap" parameterType="com.prcsteel.platform.order.model.query.ReportRebateQuery" >
+    select 
+    <include refid="Base_Column_List" />
+    from report_rebate_record
+    where account_id = #{accountId,jdbcType=BIGINT}
+   	 <if test="startTimeStr != null and startTimeStr!=''" >
+      and  rebate_time &gt;= #{startTimeStr,jdbcType=TIMESTAMP}
+      </if>
+      <if test="endTimeStr != null and endTimeStr!=''" >
+      and  rebate_time &lt;= #{endTimeStr,jdbcType=TIMESTAMP}
+      </if>
+      and is_deleted = 0
+      order by rebate_time desc
+       limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER}
+  </select>
+  
+    <select id="totalComRebate" resultType="int" parameterType="com.prcsteel.platform.order.model.query.ReportRebateQuery">
+        select 
+    count(1)
+    from report_rebate_record
+    where account_id = #{accountId,jdbcType=BIGINT}
+   	 <if test="startTimeStr != null and startTimeStr!=''" >
+      and  rebate_time &gt;= #{startTimeStr,jdbcType=TIMESTAMP}
+      </if>
+      <if test="endTimeStr != null and endTimeStr!=''" >
+      and  rebate_time &lt;= #{endTimeStr,jdbcType=TIMESTAMP}
+      </if>
+      and is_deleted = 0
+    </select>
+
+  <select id="queryUserRebateDetail" resultMap="RebateRecordDto" parameterType="com.prcsteel.platform.order.model.query.ReportRebateQuery" >
+    select
+    id, rebate_time, account_id, account_name, contact_id, contact_name, weight, amount,
+    rebate_amount, rebate_balance, code,'返利' as recordtype,0 as moneyreduce
+    from report_rebate_record
+    where account_id = #{accountId,jdbcType=BIGINT}
+    <if test="contactId != null and contactId!=0" >
+      and contact_id= #{contactId,jdbcType=BIGINT}
+    </if>
+    <if test="startTimeStr != null and startTimeStr!=''" >
+      and  rebate_time &gt;= #{startTimeStr,jdbcType=TIMESTAMP}
+    </if>
+    <if test="endTimeStr != null and endTimeStr!=''" >
+      and  rebate_time &lt;= #{endTimeStr,jdbcType=TIMESTAMP}
+    </if>
+    and is_deleted = 0
+    union all
+    select id,withdraw_date,0,'',contact_id,contact_name,0,0,0,balance,'','提现',withdraw_amount from report_withdraw_record
+    where account_id = #{accountId,jdbcType=BIGINT}
+    <if test="contactId != null and contactId!=0" >
+      and contact_id= #{contactId,jdbcType=BIGINT}
+    </if>
+    <if test="startTimeStr != null and startTimeStr!=''" >
+      and  withdraw_date &gt;= #{startTimeStr,jdbcType=TIMESTAMP}
+    </if>
+    <if test="endTimeStr != null and endTimeStr!=''" >
+      and  withdraw_date &lt;= #{endTimeStr,jdbcType=TIMESTAMP}
+    </if>
+    order by rebate_time desc
+    limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER}
+  </select>
+  <select id="queryUserRebateDetailCount" resultType="int" parameterType="com.prcsteel.platform.order.model.query.ReportRebateQuery">
+    select count(*) from (
+      select id
+      from report_rebate_record
+      where account_id = #{accountId,jdbcType=BIGINT}
+      <if test="contactId != null and contactId!=0">
+        and contact_id= #{contactId,jdbcType=BIGINT}
+      </if>
+      <if test="startTimeStr != null and startTimeStr!=''">
+        and rebate_time &gt;= #{startTimeStr,jdbcType=TIMESTAMP}
+      </if>
+      <if test="endTimeStr != null and endTimeStr!=''">
+        and rebate_time &lt;= #{endTimeStr,jdbcType=TIMESTAMP}
+      </if>
+      and is_deleted = 0
+      union all
+      select id from report_withdraw_record
+      where account_id = #{accountId,jdbcType=BIGINT}
+      <if test="contactId != null and contactId!=0">
+        and contact_id= #{contactId,jdbcType=BIGINT}
+      </if>
+      <if test="startTimeStr != null and startTimeStr!=''">
+        and withdraw_date &gt;= #{startTimeStr,jdbcType=TIMESTAMP}
+      </if>
+      <if test="endTimeStr != null and endTimeStr!=''">
+        and withdraw_date &lt;= #{endTimeStr,jdbcType=TIMESTAMP}
+      </if>
+    ) as t1
+  </select>
+
+    <!-- 查询买家返利列表-->
+    <select id="queryBuyerRebate" resultMap="ReportRebateResultMap" parameterType="com.prcsteel.platform.order.model.query.BuyerRebateQuery">
+      select t.account_id,t.account_name,t.org_name,t.manager_name,sum(t.weight) as weight, sum(t.amount) as amount
+      ,sum(t.rebate_amount) as rebate_amount
+      ,sq_balance.rebate_balance as previous_period_balance,bq_balance.rebate_balance as this_period_balance
+      ,GROUP_CONCAT(DISTINCT t2.tel) as tel
+      from report_rebate_record t
+      join cust_account_contact t2 on t2.id = t.contact_id
+      left join (
+        select t.account_id,substring_index(GROUP_CONCAT(t.rebate_balance order by t.id desc),',',1) as rebate_balance
+        from report_rebate_record t
+        where 1=1
+        <if test="strStartTime != null and strStartTime != '' ">
+          and str_to_date(t.rebate_time,'%Y-%m-%d') <![CDATA[ < #{strStartTime,jdbcType=VARCHAR} ]]>
+        </if>
+        and t.is_deleted = 0
+        group by t.account_id
+      )as sq_balance on sq_balance.account_id = t.account_id
+      left join (
+        select t.account_id,substring_index(GROUP_CONCAT(t.rebate_balance order by t.id desc ),',',1) as rebate_balance
+        from report_rebate_record t
+        where 1=1
+        <if test="strStartTime != null and strStartTime != '' ">
+          and str_to_date(t.rebate_time,'%Y-%m-%d') <![CDATA[ >= #{strStartTime,jdbcType=VARCHAR} ]]>
+        </if>
+        <if test="strEndTime != null and strEndTime != '' ">
+          and str_to_date(t.rebate_time,'%Y-%m-%d') <![CDATA[ <= #{strEndTime,jdbcType=VARCHAR} ]]>
+        </if>
+        and t.is_deleted = 0
+        group by t.account_id
+      )as bq_balance on bq_balance.account_id = t.account_id
+      where 1=1
+      <if test="userIdList != null">
+        and t.manager_id in
+        <foreach item="userId" collection="userIdList" open="(" separator="," close=")">
+            #{userId}
+        </foreach>
+      </if>
+      <if test="strStartTime != null and strStartTime != '' ">
+        and str_to_date(t.rebate_time,'%Y-%m-%d') <![CDATA[ >= #{strStartTime,jdbcType=VARCHAR} ]]>
+      </if>
+      <if test="strEndTime != null and strEndTime != '' ">
+        and str_to_date(t.rebate_time,'%Y-%m-%d') <![CDATA[ <= #{strEndTime,jdbcType=VARCHAR} ]]>
+      </if>
+      <if test="orgId != null and orgId > 0">
+        and t.org_id = #{orgId,jdbcType=BIGINT}
+      </if>
+      <if test="buyerTradeName != null and buyerTradeName != ''">
+        and t.manager_name like #{buyerTradeName,jdbcType=VARCHAR}
+      </if>
+      and t.is_deleted = 0
+      group by t.account_id,t.account_name,t.org_name,t.manager_id,t.manager_name
+      order by t.account_id
+      limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+    </select>
+
+    <!-- 统计买家返利记录数-->
+    <select id="countBuyerRebate" resultType="int" parameterType="com.prcsteel.platform.order.model.query.BuyerRebateQuery">
+     select  count(1)
+     from (
+        select t.account_id
+        from report_rebate_record t
+        where 1=1
+        <if test="userIdList != null">
+          and t.manager_id in
+          <foreach item="userId" collection="userIdList" open="(" separator="," close=")">
+            #{userId}
+          </foreach>
+        </if>
+        <if test="strStartTime != null and strStartTime != '' ">
+          and str_to_date(t.rebate_time,'%Y-%m-%d') <![CDATA[ >= #{strStartTime,jdbcType=VARCHAR} ]]>
+        </if>
+        <if test="strEndTime != null and strEndTime != '' ">
+          and str_to_date(t.rebate_time,'%Y-%m-%d') <![CDATA[ <= #{strEndTime,jdbcType=VARCHAR} ]]>
+        </if>
+        <if test="orgId != null and orgId > 0">
+          and t.org_id = #{orgId,jdbcType=BIGINT}
+        </if>
+        <if test="buyerTradeName != null and buyerTradeName != ''">
+          and t.manager_name like #{buyerTradeName,jdbcType=VARCHAR}
+        </if>
+        and t.is_deleted = 0
+        group by t.account_id,t.account_name,t.org_name,t.manager_id,t.manager_name
+      ) as t
+    </select>
+
+    <!-- 查询特定买家所有联系人的返利信息列表 -->
+    <select id="queryAllContactsRebateByBuyerId" resultMap="ReportRebateResultMap" parameterType="com.prcsteel.platform.order.model.query.BuyerRebateQuery">
+      select t2.tel,t.contact_id,t.contact_name,t.manager_name,sum(t.weight) as weight, sum(t.amount) as amount
+      ,sum(t.rebate_amount) as rebate_amount,sq_balance.rebate_balance as previous_period_balance
+      ,bq_balance.rebate_balance as this_period_balance
+      from report_rebate_record t
+      join cust_account_contact t2 on t2.id = t.contact_id
+      left join (
+        select t.contact_id,substring_index(GROUP_CONCAT(t.rebate_balance order by t.id desc ),',',1) as rebate_balance
+        from report_rebate_record t
+        where t.account_id = #{buyerId,jdbcType=BIGINT}
+        <if test="strStartTime != null and strStartTime != '' ">
+          and str_to_date(t.rebate_time,'%Y-%m-%d') <![CDATA[ < #{strStartTime,jdbcType=VARCHAR} ]]>
+        </if>
+        and t.is_deleted = 0
+        group by t.contact_id
+      )as sq_balance on sq_balance.contact_id = t.contact_id
+      left join (
+        select t.contact_id,substring_index(GROUP_CONCAT(t.rebate_balance order by t.id desc ),',',1) as rebate_balance
+        from report_rebate_record t
+        where  t.account_id = #{buyerId,jdbcType=BIGINT}
+        <if test="strStartTime != null and strStartTime != '' ">
+          and str_to_date(t.rebate_time,'%Y-%m-%d') <![CDATA[ >= #{strStartTime,jdbcType=VARCHAR} ]]>
+        </if>
+        <if test="strEndTime != null and strEndTime != '' ">
+          and str_to_date(t.rebate_time,'%Y-%m-%d') <![CDATA[ <= #{strEndTime,jdbcType=VARCHAR} ]]>
+        </if>
+        and t.is_deleted = 0
+        group by t.contact_id
+      )as bq_balance on bq_balance.contact_id = t.contact_id
+      where t.account_id = #{buyerId,jdbcType=BIGINT}
+      <if test="strStartTime != null and strStartTime != '' ">
+        and str_to_date(t.rebate_time,'%Y-%m-%d') <![CDATA[ >= #{strStartTime,jdbcType=VARCHAR} ]]>
+      </if>
+      <if test="strEndTime != null and strEndTime != '' ">
+        and str_to_date(t.rebate_time,'%Y-%m-%d') <![CDATA[ <= #{strEndTime,jdbcType=VARCHAR} ]]>
+      </if>
+      and t.is_deleted = 0
+      group by t2.tel,t.contact_id,t.contact_name,t.manager_id,t.manager_name
+    </select>
+
+    <!-- 查询联系人返利信息列表 -->
+    <select id="queryContactsRebate" resultMap="ReportRebateResultMap" parameterType="com.prcsteel.platform.order.model.query.BuyerRebateQuery">
+    SELECT t.account_name,t2.tel,t.contact_id,t.contact_name,t.org_name,t.manager_name,SUM(t.weight) AS weight, SUM(t.amount) AS amount
+    ,SUM(t.rebate_amount) AS rebate_amount,sq_balance.rebate_balance AS previous_period_balance,bq_balance.rebate_balance AS this_period_balance
+    FROM report_rebate_record t
+    JOIN cust_contact t2 ON t2.id = t.contact_id
+    LEFT JOIN (
+    SELECT t.contact_id,substring_index(GROUP_CONCAT(t.rebate_balance ORDER BY t.id DESC ),',',1) AS rebate_balance
+    FROM report_rebate_record t
+    WHERE 1=1
+    <if test="strStartTime != null and strStartTime != '' ">
+      AND str_to_date(t.rebate_time,'%Y-%m-%d') <![CDATA[ < #{strStartTime,jdbcType=VARCHAR} ]]>
+    </if>
+    AND t.is_deleted = 0
+    GROUP BY t.contact_id
+    )AS sq_balance ON sq_balance.contact_id = t.contact_id
+    LEFT JOIN (
+    SELECT t.contact_id,substring_index(GROUP_CONCAT(t.rebate_balance ORDER BY t.id DESC ),',',1) AS rebate_balance
+    FROM report_rebate_record t
+    WHERE 1=1
+    <if test="strStartTime != null and strStartTime != '' ">
+      AND str_to_date(t.rebate_time,'%Y-%m-%d') <![CDATA[ >= #{strStartTime,jdbcType=VARCHAR} ]]>
+    </if>
+    <if test="strEndTime != null and strEndTime != '' ">
+      AND str_to_date(t.rebate_time,'%Y-%m-%d') <![CDATA[ <= #{strEndTime,jdbcType=VARCHAR} ]]>
+    </if>
+    AND t.is_deleted = 0
+    GROUP BY t.contact_id
+    )AS bq_balance ON bq_balance.contact_id = t.contact_id
+    WHERE 1=1
+    <if test="userIdList != null">
+      AND t.manager_id IN
+      <foreach item="userId" collection="userIdList" open="(" separator="," close=")">
+        #{userId}
+      </foreach>
+    </if>
+    <if test="strStartTime != null and strStartTime != '' ">
+      AND str_to_date(t.rebate_time,'%Y-%m-%d') <![CDATA[ >= #{strStartTime,jdbcType=VARCHAR} ]]>
+    </if>
+    <if test="strEndTime != null and strEndTime != '' ">
+      AND str_to_date(t.rebate_time,'%Y-%m-%d') <![CDATA[ <= #{strEndTime,jdbcType=VARCHAR} ]]>
+    </if>
+    <if test="orgId != null and orgId > 0">
+      AND t.org_id = #{orgId,jdbcType=BIGINT}
+    </if>
+    <if test="buyerTradeName != null and buyerTradeName != ''">
+      AND t.manager_name LIKE #{buyerTradeName,jdbcType=VARCHAR}
+    </if>
+    AND t.is_deleted = 0
+    GROUP BY t.account_id,t.account_name,t2.tel,t.contact_id,t.contact_name,t.org_name,t.manager_id,t.manager_name
+    ORDER BY t.account_id
+  </select>
+
+  <!-- 查询买家的大类返利信息列表 -->
+  <select id="queryGroupCategoryRebateByBuyerId" resultMap="BaseResultMap" parameterType="com.prcsteel.platform.order.model.query.BuyerRebateQuery">
+    SELECT t.category_group_name,SUM(t.weight) AS weight,SUM(t.amount) AS amount,SUM(t.rebate_amount) AS rebate_amount
+    FROM report_rebate_record t
+    LEFT JOIN common_category_group t2 ON t2.uuid = t.category_group_UUID
+    WHERE t.account_id = #{buyerId,jdbcType=BIGINT}
+    <if test="strStartTime != null and strStartTime != '' ">
+      AND str_to_date(t.rebate_time,'%Y-%m-%d') <![CDATA[ >= #{strStartTime,jdbcType=VARCHAR} ]]>
+    </if>
+    <if test="strEndTime != null and strEndTime != '' ">
+      AND str_to_date(t.rebate_time,'%Y-%m-%d') <![CDATA[ <= #{strEndTime,jdbcType=VARCHAR} ]]>
+    </if>
+    AND t.is_deleted = 0
+    GROUP BY t.category_group_name
+    ORDER BY t2.id
+  </select>
+
+  <!-- 查询联系人的大类返利信息列表 -->
+  <select id="queryGroupCategoryRebateByContactId" resultMap="BaseResultMap" parameterType="com.prcsteel.platform.order.model.query.BuyerRebateQuery">
+    SELECT t.category_group_name,SUM(t.weight) AS weight,SUM(t.amount) AS amount,SUM(t.rebate_amount) AS rebate_amount
+    FROM report_rebate_record t
+    LEFT JOIN common_category_group t2 ON t2.uuid = t.category_group_UUID
+    WHERE t.contact_id = #{contactId,jdbcType=BIGINT}
+    <if test="strStartTime != null and strStartTime != '' ">
+      AND str_to_date(t.rebate_time,'%Y-%m-%d') <![CDATA[ >= #{strStartTime,jdbcType=VARCHAR} ]]>
+    </if>
+    <if test="strEndTime != null and strEndTime != '' ">
+      AND str_to_date(t.rebate_time,'%Y-%m-%d') <![CDATA[ <= #{strEndTime,jdbcType=VARCHAR} ]]>
+    </if>
+    AND t.is_deleted = 0
+    GROUP BY t.category_group_name
+    ORDER BY t2.id
+  </select>
+
+  <!-- 查询联系人的提现信息-->
+  <select id="queryContactWithdrawByContactIds" resultMap="ReportRebateResultMap" parameterType="com.prcsteel.platform.order.model.query.BuyerRebateQuery">
+    SELECT t.contact_id,SUM(t.withdraw_amount) as withdraw_amount
+    FROM report_withdraw_record t
+    WHERE
+    t.contact_id IN
+    <foreach collection="contactIdList" item="contactId" open="(" separator="," close=")">
+      #{contactId,jdbcType=BIGINT}
+    </foreach>
+    <if test="strStartTime != null and strStartTime != '' ">
+      AND str_to_date(t.withdraw_date,'%Y-%m-%d') <![CDATA[ >= #{strStartTime,jdbcType=VARCHAR} ]]>
+    </if>
+    <if test="strEndTime != null and strEndTime != '' ">
+      AND str_to_date(t.withdraw_date,'%Y-%m-%d') <![CDATA[ <= #{strEndTime,jdbcType=VARCHAR} ]]>
+    </if>
+    GROUP BY t.contact_id
+  </select>
+
+  <!-- 查询买家的提现信息-->
+  <select id="queryAccountWithdrawByAccountIds" resultMap="ReportRebateResultMap" parameterType="com.prcsteel.platform.order.model.query.BuyerRebateQuery">
+    SELECT t.account_id,SUM(t.withdraw_amount) as withdraw_amount
+    FROM report_withdraw_record t
+    WHERE
+    t.account_id IN
+    <foreach collection="buyerIdList" item="buyerId" open="(" separator="," close=")">
+      #{buyerId,jdbcType=BIGINT}
+    </foreach>
+    <if test="strStartTime != null and strStartTime != '' ">
+      AND str_to_date(t.withdraw_date,'%Y-%m-%d') <![CDATA[ >= #{strStartTime,jdbcType=VARCHAR} ]]>
+    </if>
+    <if test="strEndTime != null and strEndTime != '' ">
+      AND str_to_date(t.withdraw_date,'%Y-%m-%d') <![CDATA[ <= #{strEndTime,jdbcType=VARCHAR} ]]>
+    </if>
+    GROUP BY t.account_id
+  </select>
+
+  <update id="disableRebateByOrderCode" parameterType="java.lang.String" >
+    update report_rebate_record
+    set is_deleted = 1
+    where code = #{orderCode}
+  </update>
+
+  <select id="queryByOrderCode" parameterType="java.lang.String"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from report_rebate_record
+    where code = #{orderCode} and is_deleted = 0
+  </select>
+  <!--根据单号更新买家联系人信息-->
+  <update id="batchUpdateReportRebateList" parameterType="java.util.List">
+    <foreach collection="list" item="item" index="index" open="" close=";" separator=";" >
+      update report_rebate_record
+      <set>
+        contact_id = #{item.contactId},
+        contact_name = #{item.contactName},
+        last_updated = #{item.lastUpdated},
+        last_updated_by = #{item.lastUpdatedBy},
+        modification_number =  ifnull(modification_number, 0) + 1
+      </set>
+      where id = #{item.id}
+    </foreach>
+  </update>
+  <!--服务中心提成数据统计明细报表导出功能-->
+  <select id="findByParam" resultMap="ExcelResultMap" parameterType="com.prcsteel.platform.order.model.query.ReportRewardQuery" >
+    SELECT  Od.secondary_time AS second_settlement_time,
+    inv.created   AS invoice_time,
+    Od.order_org_name As buyer_org_name,
+    Od.order_org_id As buyer_org_id,
+    Od.owner_job_number AS buyer_job_number,
+    Od.owner_name AS buyer_owner_name,
+    Od.owner_id AS buyer_owner_id,
+    Ie.seller_org_name AS seller_org_name,
+    Ie.seller_job_number AS seller_job_number,
+    Ie.seller_owner_name AS seller_owner_name,
+    Od.account_name AS buyer_account_name,
+    Ie.seller_name AS seller_account_name,
+    TT.cbname AS cbname,
+    Ie.nsort_name AS nsort_name,
+    Ie.material AS material,
+    Ie.spec AS spec,
+    inv.weight AS actual_pick_weight_server,
+    Od.code AS order_code,
+    (case
+    when  buy.open_order_date = od.created then buy.buyer_reward_amount
+    else 0
+    end) as buyer_count,
+    (case
+    when  sell.open_order_date = od.created then sell.seller_reward_amount
+    else 0
+    end) as seller_count,
+    Ie.created AS order_created,
+    <!--从老系统导入买家累积量 -->
+    (ifnull(last.last_weight,0) + ifnull(his.weight,0)) AS last_weight,
+    Ct.consign_type AS sell_consign,
+    ac.consign_type AS buy_consign,
+    re.reward_role AS reward_role,
+    ifnull(invo.diff_price,0) AS diff_price
+    FROM busi_consign_order_items Ie
+    LEFT JOIN busi_consign_order Od ON Ie.order_id = Od.id
+    LEFT JOIN cust_account ac ON ac.id = Od.account_id
+    LEFT JOIN cust_account Ct ON Ie.seller_id = Ct.id
+    LEFT JOIN (
+    SELECT A.name AS nsort,
+    B.name AS cbname,
+    B.uuid
+    FROM common_category A
+    LEFT JOIN common_group_for_category C ON A.uuid = C.category_uuid and C.is_deleted = 0
+    LEFT JOIN common_category_group B ON C.category_group_uuid = B.uuid and B.is_deleted = 0
+    LEFT JOIN common_site D ON B.site_uuid=D.uuid and D.is_deleted = 0
+    WHERE d.name= '寄售系统' and A.is_deleted = 0
+    )  TT ON TT.nsort = Ie.nsort_name
+
+    LEFT JOIN  report_new_user_reward  sell ON sell.add_new_seller = Ie.seller_id and sell.manager_id=Ie.seller_owner_id and sell.is_deleted='0'
+    LEFT JOIN  report_new_user_reward  buy ON buy.add_new_buyer= Od.account_id and buy.manager_id=Od.owner_id and buy.is_deleted='0'
+    INNER JOIN (select t.order_detail_id,r.created,sum(r.weight) weight
+    from inv_invoice_out_receipt r
+    INNER JOIN inv_invoice_out_item_detail t on t.id = r.item_detail_id
+    where EXTRACT(YEAR_MONTH FROM r.created) = #{month,jdbcType=VARCHAR}
+    group by t.order_detail_id) inv on inv.order_detail_id = Ie.id
+    LEFT JOIN (select y.account_id,(y.weight - ifnull(m.weight,0)) as last_weight
+    from (select se.account_id as account_id, sum(se.weight) as weight
+    from (
+    <!-- 老系统的历史累积量已导入，不需要再按，201602之前是按二结计算，之后是按开票计算提成,统一按开票计算，故注释按二结计算的代码 -->
+    <!--
+    <select  o.account_id,sum(s.actual_pick_weight_server) weight
+    FROM busi_consign_order_items s
+    LEFT JOIN busi_consign_order o ON  o.id = s.order_id
+    where o.secondary_time <![CDATA[ < '2016-02-01 00:00:00' ]]>
+    and o.status > 6
+    <if test="minYearDate != null">
+      and o.secondary_time   <![CDATA[ >= #{minYearDate,jdbcType=TIMESTAMP} ]]>
+    </if>
+    <if test="maxYearDate != null">
+      and o.secondary_time    <![CDATA[ <= #{maxYearDate,jdbcType=TIMESTAMP} ]]>
+    </if>
+    group by o.account_id
+    union all
+    -->
+    select o.account_id,sum(w.weight) weight
+    from busi_consign_order_items s
+    inner join busi_consign_order o on o.id = s.order_id
+    inner join (select t.order_detail_id,sum(r.weight) weight
+    from inv_invoice_out_receipt r
+    INNER JOIN inv_invoice_out_item_detail t on t.id = r.item_detail_id
+    where r.created  >=  '2016-02-01 00:00:00'
+    <!--查询哪个月，开票时间要小于等于该月月底24点  -->
+    <if test="maxMonthDate != null">
+      and r.created    <![CDATA[ <= #{maxMonthDate,jdbcType=TIMESTAMP} ]]>
+    </if>
+    <if test="minYearDate != null">
+      and r.created  <![CDATA[ >= #{minYearDate,jdbcType=TIMESTAMP} ]]>
+    </if>
+    <if test="maxYearDate != null">
+      and r.created    <![CDATA[ <= #{maxYearDate,jdbcType=TIMESTAMP} ]]>
+    </if>
+    group by t.order_detail_id) w on w.order_detail_id =  s.id
+    where  o.secondary_time >= '2016-02-01 00:00:00'
+    group by o.account_id
+    ) se  group by se.account_id
+    ) y
+    left join (
+    select o.account_id,sum(w.weight) weight
+    from busi_consign_order_items s
+    inner join busi_consign_order o on o.id = s.order_id
+    inner join (select t.order_detail_id,sum(r.weight) weight
+    from inv_invoice_out_receipt r
+    INNER JOIN inv_invoice_out_item_detail t on t.id = r.item_detail_id
+    where r.created  <![CDATA[ >= #{minMonthDate,jdbcType=TIMESTAMP} ]]>
+    and r.created    <![CDATA[ <= #{maxMonthDate,jdbcType=TIMESTAMP} ]]>
+    group by t.order_detail_id) w on w.order_detail_id =  s.id
+    where o.secondary_time >= '2016-02-01 00:00:00'
+    group by o.account_id
+    ) m
+    on m.account_id = y.account_id ) last
+    ON last.account_id = Od.account_id
+    <!--取销项票开票金额与进项票确认金额之差 -->
+    LEFT JOIN (select inv_out.order_detail_id,(inv_out.amount -inv_in.check_amount ) as diff_price from (select t.order_detail_id,sum(r.amount) as amount
+    from inv_invoice_out_receipt r
+    INNER JOIN inv_invoice_out_item_detail t on t.id = r.item_detail_id
+    where r.created  <![CDATA[ >= #{minMonthDate,jdbcType=TIMESTAMP} ]]>
+    and r.created    <![CDATA[ <= #{maxMonthDate,jdbcType=TIMESTAMP} ]]>
+    group by t.order_detail_id) inv_out
+    inner join
+    (select i.orderitem_id ,sum(d.check_amount) as check_amount from inv_invoice_in inv
+    left join inv_invoice_in_detail d on d.invoice_in_id = inv.id
+    left join inv_invoice_in_detail_orderitem i on i.invoice_detail_id =d.id
+    where inv.relation_status ='hasrelation' and inv.status='ALREADY' and i.active=1
+    and inv.check_date  <![CDATA[ >= #{minMonthDate,jdbcType=TIMESTAMP} ]]>
+    and inv.check_date    <![CDATA[ <= #{maxMonthDate,jdbcType=TIMESTAMP} ]]>
+    group by i.orderitem_id) inv_in on  inv_in.orderitem_id = inv_out.order_detail_id) invo on invo.order_detail_id = Ie.id
+    <!--从老系统导入买家累积量 -->
+    LEFT JOIN cust_account_cumulant_history his ON his.account_id = last.account_id
+    LEFT JOIN base_reward re ON re.category_UUID = TT.uuid AND re.reward_type='category'  and re.reward_status='EFFECT'
+
+    <where>
+      Od.secondary_time >= '2016-02-01 00:00:00'
+      <if test="orgName != null and orgName != ''">
+        and Od.order_org_name =#{orgName,jdbcType=VARCHAR}
+      </if>
+      <if test="orgId != null and orgId > 0">
+        AND Od.order_org_id = #{orgId,jdbcType=BIGINT}
+      </if>
+      AND EXISTS (
+      SELECT 1 FROM acl_user t WHERE 1=1
+      <if test="userIdList != null">
+        AND t.id IN
+        <foreach collection="userIdList" item="userId" open="(" separator="," close=")">
+          #{userId}
+        </foreach>
+      </if>  AND Od.order_org_id = t.org_id
+      )
+      <if test="managerName != null and managerName != '' ">
+        AND Od.owner_name LIKE #{managerName,jdbcType=VARCHAR}
+      </if>
+    </where>
+    order by  Od.secondary_time ASC, Od.id ASC,Ie.created ASC;
+  </select>
+  <select id="findSellerSunParam" resultMap="ExcelSumResultMap" parameterType="com.prcsteel.platform.order.model.query.ReportRewardQuery">
+    select tt.buyer_org_name,tt.buyer_owner_name,tt.buyer_job_number,tt.seller_org_name,tt.seller_owner_name,tt.seller_job_number,
+    round(sum(tt.buyer_count)) as buyer_count,
+    round(sum(tt.seller_count)) as seller_count,
+    (case
+    when tt.buyer_org_name = tt.buyer_org_name and  tt.shop=1 then '本地临采'/* #判断本地还是异地  tt.shop=1则是临采*/
+    when tt.buyer_org_name = tt.buyer_org_name and  tt.shop=0 then '本地品牌'
+    when tt.buyer_org_name != tt.buyer_org_name and  tt.shop=1 then '异地临采'
+    when tt.buyer_org_name != tt.buyer_org_name and  tt.shop=0 then '异地品牌'
+    else '****'
+    end) as buyer_shop,
+    sum(tt.price*tt.actual_pick_weight_server)as buyer_sum,/* #交易总和*/
+    sum(tt.price*tt.actual_pick_weight_server)as seller_sum
+
+    from (
+    SELECT Od.secondary_time AS second_settlement_time,
+    Od.order_org_name As buyer_org_name,
+    Od.owner_job_number AS buyer_job_number,
+    Od.owner_name AS buyer_owner_name,
+    Ie.seller_org_name AS seller_org_name,
+    Ie.seller_job_number AS seller_job_number,
+    Ie.seller_owner_name AS seller_owner_name,
+    Od.account_name AS buyer_account_name,
+    Ie.seller_name AS seller_account_name,
+    cbname AS cbname,
+    nsort_name AS nsort_name,
+    material AS material,
+    spec AS spec,
+    Ie.actual_pick_weight_server AS actual_pick_weight_server,
+    Od.code AS order_code,
+    (case
+    when  buy.open_order_date = od.created then 80/(select count(1) from busi_consign_order_items bb where bb.order_id = Od.id)
+    else 0
+    end) as buyer_count,
+    (case
+    when  sell.open_order_date = od.created then 80/(select count(1) from busi_consign_order_items cc where cc.order_id = Od.id)
+    else 0
+    end) as seller_count,
+    (select reward_role
+    from base_reward where  category_UUID = (
+    SELECT  uuid FROM  common_category_group t where t.name=tt.cbname and site_uuid='inner_cbms'
+    ) and reward_status='EFFECT') AS price,
+    (case
+    when (
+    select consign_type from cust_account where name= Od.account_name
+    )='consign' then 1
+    else 0
+    end)
+    AS shop,
+    Ie.created AS order_created
+    FROM busi_consign_order_items Ie
+    LEFT JOIN busi_consign_order Od ON Ie.order_id = Od.id
+    LEFT JOIN cust_account Ct ON Ie.seller_id = Ct.id
+    LEFT JOIN (
+    SELECT A.name AS nsort,
+    B.name AS cbname
+    FROM common_category A
+    LEFT JOIN common_group_for_category C ON A.uuid = C.category_uuid and C.is_deleted = 0
+    LEFT JOIN common_category_group B ON C.category_group_uuid = B.uuid and B.is_deleted = 0
+    LEFT JOIN common_site D ON B.site_uuid=D.uuid and D.is_deleted = 0
+    WHERE d.name= '寄售系统' and A.is_deleted = 0
+    )  TT ON TT.nsort = Ie.nsort_name
+    /* LEFT JOIN (
+    SELECT order_id,MAX(created) created
+    FROM busi_consign_order_audit_trail
+    WHERE set_to_status =7
+    GROUP BY order_id
+    ) AD ON AD.order_id = Od.id*/
+    LEFT JOIN (
+    SELECT account_id,MIN(created) created
+    FROM cust_account_attachment
+    WHERE TYPE = 'consign_contract'
+    GROUP BY account_id
+    ) ac ON Ct.id = ac.account_id
+    LEFT JOIN  report_new_user_reward  sell ON sell.add_new_seller = Ie.seller_id and sell.manager_id=Ie.seller_owner_id and sell.is_deleted='0'
+    LEFT JOIN  report_new_user_reward  buy ON buy.add_new_buyer= Od.account_id and buy.manager_id=Od.owner_id and buy.is_deleted='0'
+    WHERE
+    EXTRACT(YEAR_MONTH FROM Od.secondary_time) =#{month,jdbcType=VARCHAR}
+    <if test="orgName != null and orgName != ''">
+      and Ie.seller_org_name =#{orgName,jdbcType=VARCHAR}
+    </if>
+    and Od.status > 6
+    order by Od.id ASC, Od.secondary_time ASC, Ie.created ASC
+    ) tt
+    GROUP BY seller_owner_name
+  </select>
+
+  <!--服务中心提成历史数据统计明细报表导出功能-->
+  <select id="selectCommissionListByMonth" resultMap="ExcelResultMap" parameterType="com.prcsteel.platform.order.model.query.ReportRewardQuery" >
+    select
+    second_settlement_time,invoice_time,buyer_org_name, buyer_org_id,buyer_job_number,buyer_owner_name,buyer_owner_id,seller_org_name,seller_job_number,seller_owner_name,
+    buyer_account_name,seller_account_name,cbname,nsort_name,material,spec,actual_pick_weight_server,order_code,buyer_count,
+    seller_count,order_created,last_weight,buyer_reward_role,seller_reward_role,buyer_deduct,seller_deduct,sell_consign,buy_consign,diff_price,ifnull(profit,0)
+    from commission_excel c
+    where  month= #{month,jdbcType=VARCHAR}
+    <if test="orgName != null and orgName != ''">
+      and c.buyer_org_name =#{orgName,jdbcType=VARCHAR}
+    </if>
+    <if test="orgId != null and orgId > 0">
+      AND c.buyer_org_id = #{orgId,jdbcType=BIGINT}
+    </if>
+    AND EXISTS (
+       SELECT 1 FROM acl_user t WHERE 1=1
+    <if test="userIdList != null">
+      AND t.id IN
+      <foreach collection="userIdList" item="userId" open="(" separator="," close=")">
+        #{userId}
+      </foreach>
+    </if> AND c.buyer_org_id = t.org_id
+    )
+    <if test="managerName != null and managerName != '' ">
+      AND c.buyer_owner_name LIKE #{managerName,jdbcType=VARCHAR}
+    </if>
+    order by c.second_settlement_time ASC, c.order_created ASC
+  </select>
+  <!--服务中心提成历史数据统计汇总报表导出功能-->
+  <select id="queryAllByMonth" resultMap="ExcelSumResultMap" parameterType="com.prcsteel.platform.order.model.query.ReportRewardQuery">
+    select buyer_org_name,buyer_job_number,buyer_owner_name,sum(buyer_deduct + seller_deduct) AS buyer_count,sum(buyer_count + seller_count) AS seller_count,
+    sum(buyer_deduct + seller_deduct + buyer_count + seller_count + ifnull(profit,0)) as buyer_sum
+    from commission_excel c
+    where  c.month= #{month,jdbcType=VARCHAR}
+    <if test="orgName != null and orgName != ''">
+      and c.buyer_org_name =#{orgName,jdbcType=VARCHAR}
+    </if>
+    <if test="orgId != null and orgId > 0">
+      AND c.buyer_org_id = #{orgId,jdbcType=BIGINT}
+    </if>
+    AND EXISTS (
+    SELECT 1 FROM acl_user t WHERE 1=1
+    <if test="userIdList != null">
+      AND t.id IN
+      <foreach collection="userIdList" item="userId" open="(" separator="," close=")">
+        #{userId}
+      </foreach>
+    </if> AND c.buyer_org_id = t.org_id
+    )
+    group by c.buyer_owner_name
+
+  </select>
+  <!--服务中心提成历史数据批量插入-->
+  <insert id="batchInsertCommission" parameterType="com.prcsteel.platform.order.model.model.CommissionExcel" >
+    insert into commission_excel (month,second_settlement_time,invoice_time,buyer_org_name,buyer_org_id,buyer_job_number,buyer_owner_name,buyer_owner_id,
+    seller_org_name,seller_job_number,seller_owner_name,
+    buyer_account_name,seller_account_name,cbname,nsort_name,material,spec,actual_pick_weight_server,order_code,buyer_count,
+    seller_count,order_created,last_weight,buyer_reward_role,seller_reward_role,buyer_deduct,seller_deduct,sell_consign,buy_consign,diff_price,profit)
+    values
+    <foreach collection="list" item="it" separator=",">
+      (#{it.month,jdbcType=VARCHAR}, #{it.secondSettlementTime,jdbcType=TIMESTAMP},#{it.invoiceTime,jdbcType=TIMESTAMP},
+      #{it.buyerOrgName,jdbcType=VARCHAR},#{it.buyerOrgId,jdbcType=BIGINT}, #{it.buyerJobNumber,jdbcType=VARCHAR},
+      #{it.buyerOwnerName,jdbcType=VARCHAR},#{it.buyerOwnerId,jdbcType=BIGINT},
+      #{it.sellerOrgName,jdbcType=VARCHAR}, #{it.sellerJobNumber,jdbcType=VARCHAR}, #{it.sellerOwnerName,jdbcType=VARCHAR},
+      #{it.buyerAccountName,jdbcType=VARCHAR}, #{it.sellerAccountName,jdbcType=VARCHAR}, #{it.cbname,jdbcType=VARCHAR},
+      #{it.nsortName,jdbcType=VARCHAR}, #{it.material,jdbcType=VARCHAR}, #{it.spec,jdbcType=VARCHAR},
+      #{it.actualPickWeightServer,jdbcType=VARCHAR}, #{it.orderCode,jdbcType=VARCHAR},
+      #{it.buyerCount,jdbcType=DECIMAL}, #{it.sellerCount,jdbcType=DECIMAL},#{it.orderCreated,jdbcType=TIMESTAMP}, #{it.lastWeight,jdbcType=DECIMAL},
+      #{it.buyerRewardRole,jdbcType=DECIMAL},
+      #{it.sellerRewardRole,jdbcType=DECIMAL}, #{it.buyerDeduct,jdbcType=DECIMAL}, #{it.sellerDeduct,jdbcType=DECIMAL},
+      #{it.sellConsign,jdbcType=VARCHAR}, #{it.buyConsign,jdbcType=VARCHAR}, #{it.diffPrice,jdbcType=DECIMAL}, #{it.profit,jdbcType=DECIMAL})
+    </foreach>
+  </insert>
+</mapper>

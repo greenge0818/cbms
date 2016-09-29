@@ -1,0 +1,29 @@
+        <div class="row upload1">
+			#if($!{PERMISSION_ADD_CUST_LIMIT} == "true")
+                <label class="" id="addGroupInfo">
+                    <input name="edu" type="button" id='addGrouping' class="text padding-top10" value="添加分组">
+                </label>
+			#end
+            <label class="">
+                <p class="pull-left guiIpt-bar  padding-top10" style="margin-left: 30px;">客户名称：</p>
+                <input name="edu" type="text" id='accountName' class="text padding-top10">
+            </label>
+            <label class="">
+                <p class="pull-left guiIpt-bar  padding-top10" style="margin-left: 30px;">分组名称：</p>
+                <input name="edu" type="text" id='groupingName' class="text padding-top10">
+            </label>
+            <label class="">
+                <button type="" id="searchBtn" class="btn btn-sm btn-primary">搜索</button>
+            </label>
+        </div>
+        <div class=" tab-blue">
+            <ul class="nav nav-tabs-blue padding-12 tab-color-blue">
+             #if($shiro.hasPermission("account:limitManager:view"))
+                <li id="ckeckLimit" ><a href="$link.getContextPath()/account/grouping/limitManager.html" >审核额度</a></li>
+              
+             #end
+             #if($shiro.hasPermission("account:grouping:querylimitgrouping:page"))
+                <li id="checkGrouing" ><a href="$link.getContextPath()/account/grouping/querylimitgrouping.html" >查看分组</a></li>
+			 #end
+            </ul>
+        </div>

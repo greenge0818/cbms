@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.order.persist.dao.OutApplyMainDao" >
+  <resultMap id="OutApplyMainMap" type="com.prcsteel.platform.order.model.dto.OutApplyMainDto" >
+  	<result column="id" property="id" jdbcType="BIGINT" />
+    <result column="org_apply_id" property="orgApplyId" jdbcType="BIGINT" />
+    <result column="code" property="code" jdbcType="VARCHAR" /> 
+    <result column="buyer_id" property="buyerId" jdbcType="BIGINT" />
+    <result column="buyer_name" property="buyerName" jdbcType="VARCHAR" />
+    <result column="total_amount" property="totalAmount" jdbcType="DECIMAL" />
+    <result column="total_weight" property="totalWeight" jdbcType="DECIMAL" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="org_id" property="orgId" jdbcType="BIGINT" />
+    <result column="org_name" property="orgName" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="balance_second_settlement" property="balanceSecondSettlement" jdbcType="DECIMAL" />
+  </resultMap>
+  
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.order.model.dto.InvoiceOutItemDetailDto" >
+    <result column="invoice_out_main_id" property="invoiceOutMainId" jdbcType="BIGINT" />
+    <result column="nsort_name" property="nsortName" jdbcType="VARCHAR" />
+    <result column="material" property="material" jdbcType="VARCHAR" />
+    <result column="spec" property="spec" jdbcType="VARCHAR" />
+    <result column="weight" property="weight" jdbcType="DECIMAL" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="no_tax_amount" property="noTaxAmount" jdbcType="DECIMAL" />
+    <result column="tax_amount" property="taxAmount" jdbcType="DECIMAL" />
+    <result column="amount" property="amount" jdbcType="DECIMAL" />
+    <result column="export_time" property="exportTime" jdbcType="TIMESTAMP" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+   	<result column="org_name" property="orgName" jdbcType="VARCHAR" />
+   	<result column="buyer_name" property="buyerName" jdbcType="VARCHAR" />
+   	<result column="code" property="code" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="queryByApplyId" resultMap="OutApplyMainMap">
+  	select m.id,m.buyer_id,m.buyer_name,count(m.code)code,sum(m.total_amount)total_amount,
+	sum(m.total_weight)total_weight,a.org_id,a.org_name,a.created,c.balance_second_settlement
+	from inv_org_invoice_out_main m,inv_org_invoice_out_apply a,cust_account c
+	where 1=1 and m.buyer_id = c.id and m.org_apply_id = a.id and m.status = '0' 
+	<if test="orgName != null and orgName != '' ">
+		and a.org_name = #{orgName,jdbcType=VARCHAR}
+	</if>
+	<if test="buyerName != null and buyerName != '' ">
+		and m.buyer_name like '%${buyerName}%'
+	</if>
+		group by m.buyer_name
+		order by a.created 
+	<if test="start != null and length != null">
+		limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+	</if>
+  </select>
+  
+  <select id="queryByApplyIdCount" resultType="java.lang.Integer">
+  	select count(m.id) from inv_org_invoice_out_main m,inv_org_invoice_out_apply a,cust_account c
+	where 1=1 and m.buyer_id = c.id and m.org_apply_id = a.id and m.status = '0'
+	<if test="orgName != null and orgName != '' ">
+		and a.org_name = #{orgName,jdbcType=VARCHAR}
+	</if>
+	<if test="buyerName != null and buyerName != '' ">
+		and  m.buyer_name like '%${buyerName}%'
+	</if>
+  </select>
+  
+  <select id="queryAllDetail" resultMap="BaseResultMap">
+    select item.nsort_name, item.material, item.spec, item.weight, item.price, item.no_tax_amount, 
+    item.tax_amount, item.amount, item.export_time, item.created,a.org_name,m.code
+	from inv_org_invoice_out_item_detail item, inv_org_invoice_out_main m,inv_org_invoice_out_apply a
+    where m.org_apply_id = a.id and item.invoice_out_main_id =m.id
+    <if test="dateStart != null and dateEnd != null ">
+         and export_time between #{dateStart,jdbcType=TIMESTAMP} and #{dateEnd,jdbcType=TIMESTAMP}
+    </if>
+  </select>
+  
+  <select id="selectByOutMainId" resultMap="BaseResultMap" >
+    select item.invoice_out_main_id,item.nsort_name, item.material, item.spec, item.weight, item.price, item.no_tax_amount, 
+    item.tax_amount, item.amount, item.export_time, item.created,m.buyer_name,m.code,a.org_name
+    from inv_org_invoice_out_item_detail item, inv_org_invoice_out_main m,inv_org_invoice_out_apply a
+    where m.org_apply_id = a.id and item.invoice_out_main_id =m.id and m.id = #{outMainId,jdbcType=BIGINT}
+    <if test="orgName != null and orgName != '' ">
+		and a.org_name = #{orgName,jdbcType=VARCHAR}
+	</if>
+	<if test="buyerName != null and buyerName != '' ">
+		and m.buyer_name = #{buyerName,jdbcType=VARCHAR}
+	</if>
+	<if test="dateStart != null and dateEnd != null ">
+         and item.export_time between #{dateStart,jdbcType=TIMESTAMP} and #{dateEnd,jdbcType=TIMESTAMP}
+    </if>
+    <if test="start != null and length != null">
+		limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+	</if>
+  </select>
+  
+  <select id="selectByOutMainIdCount" resultType="java.lang.Integer" >
+    select count(item.id)
+    from inv_org_invoice_out_item_detail item, inv_org_invoice_out_main m,inv_org_invoice_out_apply a
+    where m.org_apply_id = a.id and item.invoice_out_main_id =m.id and m.id = #{outMainId,jdbcType=BIGINT}
+    <if test="orgName != null and orgName != '' ">
+		and a.org_name = #{orgName,jdbcType=VARCHAR}
+	</if>
+	<if test="buyerName != null and buyerName != '' ">
+		and m.buyer_name = #{buyerName,jdbcType=VARCHAR}
+	</if>
+	<if test="dateStart != null and dateEnd != null ">
+         and item.export_time between #{dateStart,jdbcType=TIMESTAMP} and #{dateEnd,jdbcType=TIMESTAMP}
+    </if>
+  </select>
+  
+  <update id="updateDate" parameterType="com.prcsteel.platform.order.model.model.InvoiceOutItemDetail">
+  	update inv_org_invoice_out_item_detail 
+   
+        set export_time = #{exportTime,jdbcType=TIMESTAMP}
+    
+    where invoice_out_main_id = #{invoiceOutMainId,jdbcType=BIGINT}
+  </update>
+
+  <resultMap id="InvoiceOutApplyDtoMap" type="com.prcsteel.platform.order.model.dto.InvoiceOutApplyDto" >
+    <result column="id" property="id" jdbcType="BIGINT" />
+    <result column="amount" property="amount" jdbcType="DECIMAL" />
+    <result column="actual_amount" property="actualAmount" jdbcType="DECIMAL" />
+    <result column="org_id" property="orgId" jdbcType="BIGINT" />
+    <result column="org_name" property="orgName" jdbcType="VARCHAR" />
+    <result column="submitter_id" property="submitterId" jdbcType="BIGINT" />
+    <result column="submitter_name" property="submitterName" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="comment" property="comment" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+    <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+    <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+    <result column="ext1" property="ext1" jdbcType="VARCHAR" />
+    <result column="ext2" property="ext2" jdbcType="VARCHAR" />
+    <result column="ext3" property="ext3" jdbcType="VARCHAR" />
+    <result column="ext4" property="ext4" jdbcType="INTEGER" />
+    <result column="ext5" property="ext5" jdbcType="INTEGER" />
+    <result column="ext6" property="ext6" jdbcType="INTEGER" />
+    <result column="ext7" property="ext7" jdbcType="TIMESTAMP" />
+    <result column="ext8" property="ext8" jdbcType="BIGINT" />
+  </resultMap>
+
+  <sql id="out_apply_column">
+    id, amount, actual_amount, org_id, org_name, submitter_id, submitter_name, status, comment,
+    created, created_by, last_updated, last_updated_by, modification_number, row_id, parent_row_id,
+    ext1, ext2, ext3, ext4, ext5, ext6, ext7, ext8
+  </sql>
+
+  <select id="selectWaitInvoice" resultMap="InvoiceOutApplyDtoMap" parameterType="map" >
+        SELECT
+        <include refid="out_apply_column"/>
+        FROM inv_invoice_out_apply
+        WHERE 
+        	is_deleted = 0
+        AND amount != 0 AND actual_amount !=amount
+        <if test="orgIds != null">
+	        AND org_id IN
+	        <foreach item="id" index="index" collection="orgIds" open="(" separator="," close=")">
+	         	#{id}
+	        </foreach>
+      	</if>
+        
+        <if test="statusList != null">
+	        AND status IN
+	        <foreach item="status" index="index" collection="statusList" open="(" separator="," close=")">
+	         	#{status, jdbcType=VARCHAR}
+	        </foreach>
+      	</if>      
+        ORDER BY created DESC
+        LIMIT #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+  </select>
+
+  <select id="totalWaitInvoice" resultType="int" parameterType="map" >
+        select count(*)
+        from inv_invoice_out_apply
+        where is_deleted = 0 AND actual_amount !=amount
+		<if test="orgIds != null">
+	        AND org_id IN
+	        <foreach item="id" index="index" collection="orgIds" open="(" separator="," close=")">
+	         	#{id}
+	        </foreach>
+      	</if>
+        <if test="statusList != null">
+	        AND status IN
+	        <foreach item="status" index="index" collection="statusList" open="(" separator="," close=")">
+	         	#{status, jdbcType=VARCHAR}
+	        </foreach>
+      	</if>  
+  </select>
+
+</mapper>

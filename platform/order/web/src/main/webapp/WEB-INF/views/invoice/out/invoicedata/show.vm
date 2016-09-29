@@ -1,0 +1,180 @@
+<div class="main-content">
+	<div class="main-content-inner">
+		<div class="breadcrumbs" id="breadcrumbs">
+			<script type="text/javascript">
+				try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+			</script>
+			
+			<ul class="breadcrumb">
+				<li>
+					<i class="ace-icon fa fa-home home-icon"></i>
+					<a href="#">发票管理</a>
+				</li>
+				<li>
+					<a href="#">销项票管理</a>
+				</li>
+				<li class="active">待审核客户资料详情</li>
+			</ul><!-- /.breadcrumb -->
+				#parse("layout/topbtn.vm")<!-- /.nav-search -->
+		</div>
+
+		<div class="page-content">
+
+			<div class="row">
+				<div class="col-xs-12">
+					<!-- PAGE CONTENT BEGINS -->
+
+					<div class="row">
+						<div class="col-xs-12">
+
+							<!-- div.dataTables_borderWrap -->
+							<div class="table-bar" id="first-table">
+								<table class="contable">
+									<tbody>
+										<tr>
+											<td class="bg-gray">买家全称</td>
+											<td>$!{account.account.name}</td>
+											<td class="bg-gray">买家税号</td>														
+											<td>$!{account.account.taxCode}</td>														
+										</tr>
+										<tr>
+											<td class="bg-gray">买家地址</td>
+											<td>$!{account.account.addr}</td>
+											<td class="bg-gray">买家电话</td>														
+											<td>$!{account.account.tel}</td>														
+										</tr>
+										<tr>
+											<td class="bg-gray">买家开户银行</td>
+											<td>$!{account.account.bankNameMain} $!{account.account.bankNameBranch}</td>
+											<td class="bg-gray">买家开户帐号</td>														
+											<td>$!{account.account.accountCode}</td>														
+										</tr>
+										<tr>
+				                            <td class="bg-gray">发票类型：</td>
+				                            <td colspan="3">
+				                            	<span class="vendor-text">
+				                            	#if($!{account.account.invoiceType}=="PRIVATE")
+				                            		增值税专用发票
+				                            	#end	
+				                            	#if($!{account.account.invoiceType}=="NORMAL")
+				                            		增值税普通发票
+				                            	#end
+				                            </td>
+				                        </tr>
+									</tbody>
+								</table>
+							</div>
+							<div class="clearfix">
+								<div class="pull-left img-list">
+									<h5 class="h5 bolder">税务登记证书：</h5>
+									<div class="img-bar">
+										<a href="javascript:;" class="img-box"><img alt="税务登记证书" class="" width="130" #if($!{account.attachments.tax_reg.url}) src="$link.getContextPath()/common/getfile.html?key=$!{account.attachments.tax_reg.url}"#end height="130" /></a>
+										<img alt="税务登记证书" #if($!{account.attachments.tax_reg.url}) src="$link.getContextPath()/common/getfile.html?key=$!{account.attachments.tax_reg.url}"#end class="getImg none"/>
+									</div>
+								</div>	
+								<div class="pull-left img-list">
+									<h5 class="h5 bolder">开票资料：</h5>
+									<div class="img-bar">
+										<a href="javascript:;" class="img-box"><img  alt="开票资料" class="" width="130" #if($!{account.attachments.invoice_data.url}) src="$link.getContextPath()/common/getfile.html?key=$!{account.attachments.invoice_data.url}" #end height="130" /></a>
+										<img alt="开票资料" class="none" #if($!{account.attachments.invoice_data.url}) src="$link.getContextPath()/common/getfile.html?key=$!{account.attachments.invoice_data.url}" #end />
+									</div>
+								</div>
+							</div>
+							#if(${account.account.invoiceDataStatus}==2)
+							<div class="btn-bar">
+								<button type="button" class="btn btn-primary btn-sm" id="approval">通过</button>
+								<button type="button" class="btn btn-default btn-sm" id="decline">不通过</button>
+								<a class="" href="$link.getContextPath()/invoice/out/invoicedata/unchecklist.html">返回</a>
+							</div>
+							#end
+						</div>
+						
+					</div>
+
+				</div><!-- /.col -->
+			</div><!-- /.row -->
+		</div><!-- /.page-content -->
+	</div>
+</div><!-- /.main-content -->
+<div id="addreason" class='well' style='margin-top:25px;display: none;'>
+	<div style='margin-top:25px;width: 400px;'>
+	    <form id='form-horizontal' class='form-horizontal' role='form'>
+	        <div class='form-group'><label class='col-sm-3 control-label no-padding-right' for='txtNewPwd2'>理由：</label>
+	            <div class='col-sm-9'><textarea id="reason" must='1' type='text' name="name" must='1' placeholder='请填写不通过的理由。' class='col-xs-10 col-sm-10'></textarea></div>
+	        </div>
+	        <div class="modal-footer"><button id="btncommit" data-bb-handler="success" type="button" class="btn btn-sm btn-primary"><i class="ace-icon fa fa-check"></i> 保存</button>
+	            <button id="btnClose" data-bb-handler="button" type="button" class="btn btn-sm">取消</button>
+	        </div>
+	    </form>
+	</div>
+</div>
+<script>
+	$(function(){
+		$(".img-box").click(function () {
+			var $img = $(this).next("img"), tit = $img.attr("alt");
+			var src = $(this).find("img").attr("src");
+			renderImg(src);
+		});
+		
+		
+		approve();
+		decline();
+	});
+	
+	function approve(){
+		$("#approval").click(function(){
+			cbms.confirm("确定通过审核吗?","",function(){
+				cbms.loading();
+    			$.get("$link.getContextPath()/invoice/out/invoicedata/account/$!account.account.id/approve.html",function(data){
+    				if(data.success){
+						cbms.closeLoading();
+    					cbms.alert(data.data,function(){
+							location = "$link.getContextPath()/invoice/out/invoicedata/unchecklist.html";
+						});
+    				}
+    			});
+			})
+		});
+	}
+	
+	function decline(){
+    	$("#decline").click(function() {
+    		var html = $('#addreason').html();
+    		cbms.getDialog("不通过审核", html);
+    	});
+    	$(document).on("click", "#btnClose",function () {
+            cbms.closeDialog();
+        });
+    	$(document).on('click', '#btncommit', function() {
+    		if(!setlistensSave("#form-horizontal")){
+    			return;		
+    		}
+    		cbms.loading();
+    		$.ajax({
+    			type : "POST",
+    			url : "$link.getContextPath()/invoice/out/invoicedata/account/$!account.account.id/decline.html",
+    			data: {reason:$('#reason').val()},
+				success : function(result) {
+    				cbms.closeLoading();
+    				if (result && result.success) {
+    					$.gritter.add({
+    						title: '',
+    						text: result.data,
+    						class_name: 'gritter-item-wrapper gritter-info gritter-center gritter-light'
+    					});
+    					setTimeout(function(){location.href="$link.getContextPath()/invoice/out/invoicedata/unchecklist.html"},3000);	
+    				} else {
+    					if(result.data != null){
+    						cbms.alert(result.data);
+    					}else {
+    						cbms.alert("提交失败！");
+    					}
+    				}
+    			},
+    			error : function(xhr, textStatus, errorThrown) {
+    				cbms.closeLoading();
+    			}
+    		});
+    	});
+	}
+</script>

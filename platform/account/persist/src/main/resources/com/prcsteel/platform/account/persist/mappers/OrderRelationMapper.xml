@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.account.persist.dao.OrderRelationDao">
+     <!-- 项目管理 add by zhoucai@prcsteel.com 2016-3-30 -->
+    <resultMap id="BaseResultMap" type="com.prcsteel.platform.account.model.dto.OrderRelationDto">
+    	<id column="id" property="id" jdbcType="BIGINT" />
+    	<result column="project_id" property="projectId" jdbcType="BIGINT"/>
+        <result column="project_name" property="projectName" jdbcType="VARCHAR"/>
+		<result column="status" property="status" jdbcType="BIGINT"/>
+        <result column="created_by" property="userName" jdbcType="VARCHAR"/>
+        <result column="created_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="company_id" property="companyId" jdbcType="BIGINT"/>
+    </resultMap>     
+    <!-- add add by zhoucai@prcsteel.com 2016-3-30-->
+    <!-- 查询项目管理列表 -->
+    <select id="queryAllProjectList" parameterType="com.prcsteel.platform.account.model.query.OrderRelationQuery" resultMap="BaseResultMap">
+        select
+            project_id,
+            project_name,
+			status
+        from
+			pm_info
+		WHERE
+		 company_id = #{companyId,jdbcType=BIGINT}
+        <if test="userId !=null and userId != '' ">
+            and created_id = #{userId,jdbcType=VARCHAR}
+        </if>
+        <if test="projectId !=null">
+            and project_id = #{projectId,jdbcType=BIGINT}
+        </if>
+        <if test="status !=null and status != '' ">
+            and BIGINT = #{status,jdbcType=BIGINT}
+        </if>
+        ORDER BY created DESC
+    </select>
+    <!--ADD by zhoucia@prcsteel.com 2016-3-31 新增项目-->
+
+    <insert id="creatProject" parameterType="com.prcsteel.platform.account.model.query.OrderRelationQuery" >
+        insert into
+            pm_info
+            (
+                project_name,
+                created_by,
+                created_id,
+                company_id,
+                status
+            )
+        values
+            (
+              #{projectName,jdbcType=VARCHAR},
+              #{userName,jdbcType=VARCHAR},
+              #{userId,jdbcType=VARCHAR},
+              #{companyId,jdbcType=BIGINT},
+              #{status,jdbcType=BIGINT}
+            )
+    </insert>
+
+    <!-- 修改项目信息 add add by zhoucai@prcsteel.com 2016-3-30-->
+    <update id="editProjectInfo" parameterType="com.prcsteel.platform.account.model.query.OrderRelationQuery">
+        UPDATE
+        pm_info
+        SET
+        <if test="status !=null  ">
+            status = #{status,jdbcType=BIGINT},
+        </if>
+        <if test="projectName !=null and projectName != '' ">
+          project_name = #{projectName,jdbcType=VARCHAR},
+        </if>
+        last_updated_by =#{userId,jdbcType=VARCHAR}
+        WHERE
+            company_id =#{companyId,jdbcType=BIGINT}
+        <if test="projectId !=null">
+            and project_id = #{projectId,jdbcType=BIGINT}
+        </if>
+    </update>
+
+    <!-- 删除项目信息 add add by zhoucai@prcsteel.com 2016-3-30 -->
+    <update id="deleteProjectInfo" parameterType="com.prcsteel.platform.account.model.query.OrderRelationQuery">
+        DELETE FROM
+        pm_info
+        WHERE
+        project_id =#{beforeId,jdbcType=BIGINT}
+    </update>
+    <!--查询当前公司项目的显示状态 add by zhoucai@prcsteel.com-->
+    <select id="queryIsShow" parameterType="com.prcsteel.platform.account.model.query.OrderRelationQuery" resultType="int">
+        select
+        case WHEN status IS NULL
+        THEN 0
+        ELSE
+         sum(status)
+        END
+        from
+        pm_info
+        WHERE
+        company_id = #{companyId,jdbcType=BIGINT}
+    </select>
+</mapper>

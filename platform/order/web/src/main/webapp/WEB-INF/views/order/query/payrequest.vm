@@ -1,0 +1,335 @@
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+<ul class="breadcrumb">
+	#if($type)
+		#if($from)
+			<li>
+	        	<i class="ace-icon fa fa-home home-icon"></i>
+	        	交易管理
+	    	</li>
+		    <li>
+		        <a href="$link.getContextPath()/common/menu/order-view/order-query-index-page.html">交易单管理</a>
+		    </li>
+		    #if($status=="REQUESTED")
+		        <li>
+		            <a href="$link.getContextPath()/order/query/secondpayaudit.html">待审核付款</a>
+		        </li>
+		        <li class="active">
+		            <a href="$link.getContextPath()/order/query/$!payRequestItemDto.qid/requestdetail.html">预付款详情</a>
+		        </li>
+		    #end
+		    #if($status=="APPLYPRINTED")
+		    	<li>
+		            <a href="$link.getContextPath()/order/query/confirm/request.html">待确认已付款</a>
+		        </li>
+		        <li class="active">
+		            <a href="$link.getContextPath()/order/query/$!payRequestItemDto.qid/requestdetail.html">预付款详情</a>
+		        </li>
+		    #end
+		    #if($status=="APPROVED" && $print=="true")
+		        <li>
+		            <a href="$link.getContextPath()/order/query/secondpaysettlement.html">待打印预付款申请单</a>
+		        </li>
+		    #end
+		    <li class="active">预付款申请单</li>
+		#else
+			<li>
+		        <i class="ace-icon fa fa-home home-icon"></i>
+				交易管理
+			</li>
+			<li>
+		        	<a href="/order/order/paymentmanager/request.html">支付管理</a>
+			</li>
+		    <li class="active">付款申请单详情</li>
+		#end
+	#else
+	    <li>
+	        <i class="ace-icon fa fa-home home-icon"></i>
+	        	交易管理
+	    </li>
+	    <li>
+	        <a href="$link.getContextPath()/common/menu/order-view/order-query-index-page.html">交易单管理</a>
+	    </li>
+	    #if($status=="REQUESTED")
+	        <li>
+	            <a href="$link.getContextPath()/order/query/paymentapplication.html">待审核付款</a>
+	        </li>
+	        <li class="active">
+	            <a href="$link.getContextPath()/order/query/$!requestid/requestdetail.html">预付款详情</a>
+	        </li>
+	    #end
+	    #if($status=="APPROVED" && !$print)
+	    	<li>
+	            <a href="$link.getContextPath()/order/query/secondpaysettlement.html">待确认已付款</a>
+	        </li>
+	        <li class="active">
+	            <a href="$link.getContextPath()/order/query/secondpaysettlementconfirm.html?id=$!requestid">预付款详情</a>
+	        </li>
+	    #end
+	    #if($status=="APPROVED" && $print=="true")
+	    
+	        <li>
+	            <a href="$link.getContextPath()/order/query/secondpaysettlement.html">待打印付款申请单</a>
+	        </li>
+	    #end
+	    <li class="active">付款申请单</li>
+	 #end
+</ul>
+
+        #parse("layout/topbtn.vm")<!-- /.nav-search -->
+</div>
+
+<div class="page-content">
+    <div class="ace-settings-container" id="ace-settings-container">
+
+
+        <div class="ace-settings-box clearfix" id="ace-settings-box">
+            <div class="pull-left width-50">
+                <div class="ace-settings-item">
+                    <div class="pull-left">
+                        <select id="skin-colorpicker" class="hide">
+                            <option data-skin="no-skin" value="#438EB9">#438EB9</option>
+                            <option data-skin="skin-1" value="#222A2D">#222A2D</option>
+                            <option data-skin="skin-2" value="#C6487E">#C6487E</option>
+                            <option data-skin="skin-3" value="#D0D0D0">#D0D0D0</option>
+                        </select>
+                    </div>
+                    <span>&nbsp; Choose Skin</span>
+                </div>
+
+                <div class="ace-settings-item">
+                    <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-navbar"/>
+                    <label class="lbl" for="ace-settings-navbar"> Fixed Navbar</label>
+                </div>
+
+                <div class="ace-settings-item">
+                    <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-sidebar"/>
+                    <label class="lbl" for="ace-settings-sidebar"> Fixed Sidebar</label>
+                </div>
+
+                <div class="ace-settings-item">
+                    <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-breadcrumbs"/>
+                    <label class="lbl" for="ace-settings-breadcrumbs"> Fixed Breadcrumbs</label>
+                </div>
+
+                <div class="ace-settings-item">
+                    <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-rtl"/>
+                    <label class="lbl" for="ace-settings-rtl"> Right To Left (rtl)</label>
+                </div>
+
+                <div class="ace-settings-item">
+                    <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-add-container"/>
+                    <label class="lbl" for="ace-settings-add-container">
+                        Inside
+                        <b>.container</b>
+                    </label>
+                </div>
+            </div>
+            <!-- /.pull-left -->
+
+            <div class="pull-left width-50">
+                <div class="ace-settings-item">
+                    <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-hover"/>
+                    <label class="lbl" for="ace-settings-hover"> Submenu on Hover</label>
+                </div>
+
+                <div class="ace-settings-item">
+                    <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-compact"/>
+                    <label class="lbl" for="ace-settings-compact"> Compact Sidebar</label>
+                </div>
+
+                <div class="ace-settings-item">
+                    <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-highlight"/>
+                    <label class="lbl" for="ace-settings-highlight"> Alt. Active Item</label>
+                </div>
+            </div>
+            <!-- /.pull-left -->
+        </div>
+        <!-- /.ace-settings-box -->
+    </div>
+    <!-- /.ace-settings-container -->
+
+<div class="row">
+    <div class="col-xs-12">
+        <!-- PAGE CONTENT BEGINS -->
+        <div class="page-content">
+            <div class="col-xs-12">
+                <div class="step-bar">
+                    <div class="ystep4"></div>
+                    <div class="ystep1" style="margin-left:260px;"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.col -->
+    <div class="print-page">
+        <table id="printeare">
+        	<tr>
+        		<td>
+        			#if($type)
+        				<h2 class="h5 text-center bolder">预付款申请单</h2>
+        			#else
+            			<h2 class="h5 text-center bolder">二次结算付款申请单</h2>
+            		#end
+
+            		#if($paymentLabel == "1")
+						<h1 class="h1 text-right bolder">银票预付</h1>
+            		#end
+
+                	<div class="recordbar col-xs-12 text-left clearfix">
+	                	<span>公司：杭州钢为网络科技有限公司</span>
+	                	<span class="pull-right">申请日期：$!date.format('yyyy-MM-dd HH:mm:ss ',$!{payRequestItemDto.created})</span>
+                	</div>
+                	#if($type)
+	                		<div class="recordbar col-xs-12 text-left clearfix">
+                				<span>部门：$!{orgName}</span><span class="pull-right">申请单编号：$!{payRequestItemDto.payCode}</span>
+                			</div>
+	                	#else
+		                	<div class="recordbar col-xs-12 text-left clearfix">
+		                		 #if($payRequestItemDto.payCode)
+                					<span>部门：$!{orgName}</span><span class="pull-right">申请单编号：$!{payRequestItemDto.payCode}</span>
+                				 #else
+                				 	<span>部门：$!{orgName}</span><span class="pull-right">申请单编号：$!{payRequestItemDto.code}</span>
+                				 #end
+                			</div>
+		                #end
+                	
+                	<table id="dynamic-table" class="table table-striped table-bordered table-hover">
+	                    <thead>
+		                    <tr>
+		                        <th>收款方全称</th>
+		                        <th>开户帐号</th>
+		                        <th>开户银行</th>
+		                        <th>行号</th>
+		                        <th>支行</th>
+		                        <th>金额</th>
+		                    </tr>
+	                    </thead>
+                    	<tbody>
+	                       <input type="hidden" id="requestId" name="id" value="$!requestId"/>
+	                        <tr>
+	                            <td>$!{payRequestItemDto.receiverName}</td>
+	                            <td>$!{payRequestItemDto.receiverAccountCode}</td>
+	                            <td>$!{payRequestItemDto.receiverBankName}</td>
+	                            <td>$!{payRequestItemDto.receiverBankCode}</td>
+	                            <td>$!{payRequestItemDto.receiverBranchBankName}</td>
+	                            <td align="right">￥$!NumberTool.toThousandth($!{payRequestItemDto.payAmount})</td>
+	                        </tr>
+                        </tbody>
+                        <tbody class="tbody-border0" style="border: none;">
+		                    <tr>
+		                        <td colspan="6">合计金额大写：$!totalAmountCapital(￥$!NumberTool.toThousandth($!{payRequestItemDto.payAmount}))</td></td>
+		                    </tr>
+		                    <tr>
+		                        <td colspan="6">
+		                            <table class="table">
+		                                <tr>
+		                                    <td width="150">总出纳：</td>
+		                                    <td width="150" >出纳：</td>
+		                                    <td width="150">核算会计：</td>
+		                                    <td width="180">服总：$!{operatorName}</td>
+		                                    <td width="150">申请人：$!{payRequestItemDto.requesterName}</td>
+		                                </tr>
+		                            </table>
+		                        </td>
+		                    </tr>
+	                    </tbody>
+               		</table>
+               		<!-- 银行账号修改提醒 -->
+                    #if($!{showRemindedFlag})
+                    <div class="table-bar" style="margin-top:-6px">
+                         <div class="settlement-info bg-yellow-style text-left">
+                             <div class="clearfix">
+                                 <span class="bolder red">该客户的银行信息已发生变更，付款时请仔细注意核对！</span>
+                             </div>
+                         </div>
+                    </div>
+                    #end
+                    #if($accountList)
+                        #foreach($items in $accountList)
+                        <div class="table-bar" style="margin-top:-6px">
+                            <div class="settlement-info bg-yellow-style text-left">
+                                <div class="clearfix">
+                                <span class="red bolder">$!payRequestItemDto.receiverName #if($!items.departmentCount > 1)【$!items.departmentName】#end
+                                    &nbsp;尚有欠款：￥$!NumberTool.toThousandth($math.abs($!items.balanceSecondSettlement))</span>
+                                </div>
+                            </div>
+                        </div>
+                        #end
+                    #end
+               		<div class=" recordbar col-xs-12" text-left" style="text-align:left">
+	               		#if($!orgName == "杭州服务中心")
+	               			#if($isAcceptDraftCharged)
+	               			    </br>
+								<span class="bolder" >该客户使用过银票充值、支付，需金服部确认可付款并签字：______________</span><br>
+							#end
+						#end
+						#if($!orgName == "无锡服务中心")
+                            #if($isAcceptDraftCharged)
+                                </br>
+                                <span class="bolder" >该客户使用过银票充值、支付，需金服部确认可付款并签字：______________</span><br>
+                            #end
+                        #end
+               			#if($print)
+				    		<span class="bolder">已打印：<em id="printcount">$!{payRequestItemDto.printTimes}</em>次</span>
+					        #if($clientIp)
+					            <span class="bolder">IP地址：<em id="print_ip">$!{clientIp}</em></span>
+					            <span class="bolder"><em class="blue" id="print_name">$!payRequestItemDto.printName</em>上次打印时间：<em id="print_date">$!date.format('yyyy-MM-dd HH:mm:ss ',$!{payRequestItemDto.lastPrintDate})</em></span>
+					        #end
+				        #end
+				   </div>
+	    		</td>
+    		</tr>
+        </table>
+    </div>
+    <!--/table-bar 2-->
+    <div class="text-center">
+		#if($print=="true")
+			#if($shiro.hasPermission("order:query:callback")=='true')
+    			<button type="button" class="btn btn-danger btn-sm" id="callBack">打回</button>
+    		#end
+		    <!-- 若银行账号修改核算会计审核不通过则不显示 -->
+            #if($!{showPrintPaymentFlag})
+                <button type="button" class="btn graybtn-info btn-sm" id="prints" disabled>打印</button>
+            #else
+                <button type="button" class="btn btn-info btn-sm" id="prints">打印</button>
+            #end
+		#end
+		#if($type)
+			 #if($!status == "DECLINED")
+                <button type="button" class="btn btn-danger btn-sm" id="closed">关闭付款申请单</button>
+             #end
+		#end
+		<a href="javascript:history.back(-1);">返回</a>
+	</div>
+</div><!-- /.page-content -->
+
+<div id="addreason" class='well' style='margin-top:25px;display: none;'>
+	<div style='width: 460px;'>
+	    <form id='form-horizontal' class='form-horizontal' role='form'>
+            <div class="bg-yellow-style" style="padding:5px 10px;border:1px dotted orange">
+                <div class="clearfix  text-left">
+                	<p><span class="bolder">已打印<em class="red" id="dialogCount">$!payRequestItemDto.printTimes</em>次</span></p>
+                	<p><em class="blue" id="dialog_name">$!payRequestItemDto.printName</em>上次打印时间：<em id="dialog_date">$!date.format('yyyy-MM-dd HH:mm:ss ',$!{payRequestItemDto.lastPrintDate})</em></p>
+                	<p>IP地址：<em id="dialog_ip">$!{clientIp}</em></p>
+                </div>		                
+        	</div>
+			<div class="text-center bolder">是否再次打印？</div>
+	        <div class="text-center"><button id="btncommit" data-bb-handler="success" type="button" class="btn btn-sm btn-primary"><i class="ace-icon fa fa-check"></i>确定</button>
+	            <button id="btnClose" data-bb-handler="button" type="button" class="btn btn-sm">取消</button>
+	        </div>
+	    </form>
+	</div>
+</div>
+
+</div>
+<script src="$link.getContextPath()/js/views/order/payrequest.js"></script>
+<script src="$link.getContextPath()/js/views/order/callbackrequest.js"></script>
+<script src="$link.getContextPath()/js/views/order/closedpayrequest.js"></script>

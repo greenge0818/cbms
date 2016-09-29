@@ -1,0 +1,86 @@
+#set($layout="layout/blank.vm")
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>查看图片</title>
+	<link href="$link.getContextPath()/css/showImage.css" type="text/css" rel="stylesheet" />
+	<script src="$link.getContextPath()/theme/default/js/jquery.1.11.1.min.js"></script>
+	<script src="$link.getContextPath()/js/showImage.js" type="text/javascript"></script>
+	<script type="text/javascript">
+			  
+		function SaveImage(img)
+		{
+		  var win = $('genFrm').contentWindow;
+		  if (!win || img.tagName != 'IMG') return;
+		  win.location.href = img.src;
+		  setTimeout(function() { win.document.execCommand("SaveAs"); }, 200);
+		}
+		
+		$(function(){
+		 
+                $(".imageChange").eq(0).attr("id","images1");
+                var images1=document.getElementById("images1");
+                $(".imageChange").bind("mousedown",function(){
+                    $(".imageChange").closest(".dragAble").css({"z-index":"0"});
+                    $(".imageChange").removeAttr("id");
+                    images1 = $(this)[0];
+                    $(this).closest(".dragAble").css({"position":"relative","z-index":"15"});
+                    images1.setAttribute("id", "images1");
+					$("#images2").attr("src",$(this).attr("src"));
+                })
+		})
+	
+	</script>
+</head>
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" oncontextmenu="return false" ondragstart="return false" onselectstart ="return false" onbeforecopy="return false"> 
+	<div id="Layer1"  style="position:fixed;top:10px;"> 
+		<table border="0" cellspacing="2" cellpadding="0"> 
+			<tr> 
+				<td>&nbsp;</td> 
+				<td><img src="$link.getContextPath()/img/showImg/RotateL1.gif" class="c1" onclick="setRm()" title="向左(Left)旋转"/></td> 
+				<td>&nbsp;</td> 
+			</tr> 
+			<tr> 
+				<td> &nbsp;</td> 
+				<td><img src="$link.getContextPath()/img/showImg/RotateR1.gif" class="c1" onclick="setRl();" title="向右(Right)旋转"/></td> 
+				<td> &nbsp;</td> 
+			</tr> 
+			<tr> 
+				<td> </td> 
+				<td><img src="$link.getContextPath()/img/showImg/zoom_in.gif" class="c1" onClick="bigit();" title="放大(Zoom In)"/></td> 
+				<td> </td> 
+			</tr> 
+			<tr> 
+				<td> </td> 
+				<td><img src="$link.getContextPath()/img/showImg/zoom_out.gif" class="c1" onClick="smallit();" title="缩小(Zoom Out)"/></td> 
+				<td> </td> 
+			</tr> 
+			<tr> 
+				<td>　</td> 
+				<td>
+					<img src="$link.getContextPath()/img/showImg/down.gif" class="c1" title="下载图片" onclick="downloadfile();"/>	
+				</td> 
+				<td>&nbsp;</td> 
+			</tr> 
+			<tr> 
+				<td>　</td> 
+				<td><img src="$link.getContextPath()/img/showImg/zoom.gif" class="c1" onClick="realsize();" title="还原位置(Undo)"/></td> 
+				<td>&nbsp;</td> 
+			</tr> 
+		</table> 
+	</div> 
+
+ 
+	
+	
+	#foreach($src in $srcs)
+		#if($velocityCount==1)
+			<div id='hiddenPic' style='position:absolute; left:0; top:0px; width:0px; height:0px; z-index:1; visibility: hidden;'><img id="images2" name='images2' src='$!{src}' border='0'/></div> 
+		#end
+    <div onmouseout='drag=0' onmouseover='dragObj=this; drag=1;' style='width:0;z-index:10;margin-bottom:10px' class="dragAble">
+        <img name='images' src='$!{src}' border='0' class="imageChange"/>
+    </div>
+	#end
+	</body> 
+</html>

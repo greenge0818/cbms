@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.acl.persist.dao.RolePermissionDao">
+    <resultMap id="BaseResultMap" type="com.prcsteel.platform.acl.model.model.RolePermission">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="role_id" property="roleId" jdbcType="BIGINT"/>
+        <result column="permission_id" property="permissionId" jdbcType="BIGINT"/>
+        <result column="created" property="created" jdbcType="TIMESTAMP"/>
+        <result column="created_by" property="createdBy" jdbcType="VARCHAR"/>
+        <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP"/>
+        <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR"/>
+        <result column="modification_number" property="modificationNumber" jdbcType="INTEGER"/>
+        <result column="row_id" property="rowId" jdbcType="VARCHAR"/>
+        <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, role_id, permission_id, created, created_by, last_updated, last_updated_by, modification_number, 
+    row_id, parent_row_id
+  </sql>
+
+    <insert id="insert" parameterType="com.prcsteel.platform.acl.model.model.RolePermission">
+    insert into acl_role_permission (id, role_id, permission_id,
+    created, created_by, last_updated,
+    last_updated_by, modification_number, row_id,
+    parent_row_id)
+    values (#{id,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT}, #{permissionId,jdbcType=BIGINT},
+    #{created,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, #{lastUpdated,jdbcType=TIMESTAMP},
+    #{lastUpdatedBy,jdbcType=VARCHAR}, #{modificationNumber,jdbcType=INTEGER}, #{rowId,jdbcType=VARCHAR},
+    #{parentRowId,jdbcType=VARCHAR})
+  </insert>
+
+    <delete id="delete">
+    delete from acl_role_permission
+    where permission_id = #{0,jdbcType=BIGINT} and  role_id = #{1,jdbcType=BIGINT}
+  </delete>
+
+    <select id="count" resultType="java.lang.Integer">
+    select count(id) from acl_role_permission
+    where permission_id = #{0,jdbcType=BIGINT} and role_id =  #{1,jdbcType=BIGINT}
+  </select>
+
+    <select id="queryByRoleId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from acl_role_permission
+        where role_id = #{roleId,jdbcType=BIGINT}
+    </select>
+</mapper>

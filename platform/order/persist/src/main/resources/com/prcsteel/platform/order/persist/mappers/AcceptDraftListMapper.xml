@@ -1,0 +1,718 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.order.persist.dao.AcceptDraftListDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.order.model.model.AcceptDraftList" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="account_id" property="accountId" jdbcType="BIGINT" />
+    <result column="account_name" property="accountName" jdbcType="VARCHAR" />
+    <result column="org_id" property="orgId" jdbcType="BIGINT" />
+    <result column="org_name" property="orgName" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="acceptance_bank_full_name" property="acceptanceBankFullName" jdbcType="VARCHAR" />
+    <result column="amount" property="amount" jdbcType="DECIMAL" />
+    <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
+    <result column="discount_rate" property="discountRate" jdbcType="DECIMAL" />
+    <result column="discount_rate_base" property="discountRateBase" jdbcType="DECIMAL" />
+    <result column="end_date_approve" property="endDateApprove" jdbcType="TIMESTAMP" />
+    <result column="code_approve" property="codeApprove" jdbcType="VARCHAR" />
+    <result column="amount_approve" property="amountApprove" jdbcType="DECIMAL" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="reason" property="reason" jdbcType="VARCHAR" />
+    <result column="acceptance_date" property="acceptanceDate" jdbcType="TIMESTAMP" />
+    <result column="acceptance_bank_code" property="acceptanceBankCode" jdbcType="VARCHAR" />
+    <result column="drawer_name" property="drawerName" jdbcType="VARCHAR" />
+    <result column="drawer_account_code" property="drawerAccountCode" jdbcType="VARCHAR" />
+    <result column="drawer_bank_code" property="drawerBankCode" jdbcType="VARCHAR" />
+    <result column="drawer_bank_full_name" property="drawerBankFullName" jdbcType="VARCHAR" />
+    <result column="receiver_name" property="receiverName" jdbcType="VARCHAR" />
+    <result column="receiver_account_code" property="receiverAccountCode" jdbcType="VARCHAR" />
+    <result column="receiver_bank_full_name" property="receiverBankFullName" jdbcType="VARCHAR" />
+    <result column="adjust_date_count" property="adjustDateCount" jdbcType="INTEGER" />
+    <result column="read_times" property="readTimes" jdbcType="INTEGER" />
+    <result column="acceptance_agreement_number" property="acceptanceAgreementNumber" jdbcType="VARCHAR" />
+    <result column="is_different_bank" property="isDifferentBank" jdbcType="VARCHAR" />
+    <result column="is_payed" property="isPayed" jdbcType="BIT" />
+    <result column="is_deleted" property="isDeleted" jdbcType="BIT" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+    <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+    <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, account_id, account_name, org_id, org_name, code, acceptance_bank_full_name, 
+    amount, end_date, discount_rate, discount_rate_base, end_date_approve, code_approve, 
+    amount_approve, status, reason, acceptance_date, acceptance_bank_code, drawer_name, 
+    drawer_account_code, drawer_bank_code, drawer_bank_full_name, receiver_name, receiver_account_code, 
+    receiver_bank_full_name, adjust_date_count, read_times, acceptance_agreement_number, 
+    is_different_bank, is_payed, is_deleted, created, created_by, last_updated, last_updated_by, 
+    modification_number, row_id, parent_row_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from busi_accept_draft_list
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from busi_accept_draft_list
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.prcsteel.platform.order.model.model.AcceptDraftList" >
+    insert into busi_accept_draft_list (id, account_id, account_name, 
+      org_id, org_name, code, 
+      acceptance_bank_full_name, amount, end_date, 
+      discount_rate, discount_rate_base, end_date_approve, 
+      code_approve, amount_approve, status, 
+      reason, acceptance_date, acceptance_bank_code, 
+      drawer_name, drawer_account_code, drawer_bank_code, 
+      drawer_bank_full_name, receiver_name, receiver_account_code, 
+      receiver_bank_full_name, adjust_date_count, 
+      read_times, acceptance_agreement_number, is_different_bank, 
+      is_payed, is_deleted, created, 
+      created_by, last_updated, last_updated_by, 
+      modification_number, row_id, parent_row_id
+      )
+    values (#{id,jdbcType=BIGINT}, #{accountId,jdbcType=BIGINT}, #{accountName,jdbcType=VARCHAR}, 
+      #{orgId,jdbcType=BIGINT}, #{orgName,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
+      #{acceptanceBankFullName,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL}, #{endDate,jdbcType=TIMESTAMP}, 
+      #{discountRate,jdbcType=DECIMAL}, #{discountRateBase,jdbcType=DECIMAL}, #{endDateApprove,jdbcType=TIMESTAMP}, 
+      #{codeApprove,jdbcType=VARCHAR}, #{amountApprove,jdbcType=DECIMAL}, #{status,jdbcType=VARCHAR}, 
+      #{reason,jdbcType=VARCHAR}, #{acceptanceDate,jdbcType=TIMESTAMP}, #{acceptanceBankCode,jdbcType=VARCHAR}, 
+      #{drawerName,jdbcType=VARCHAR}, #{drawerAccountCode,jdbcType=VARCHAR}, #{drawerBankCode,jdbcType=VARCHAR}, 
+      #{drawerBankFullName,jdbcType=VARCHAR}, #{receiverName,jdbcType=VARCHAR}, #{receiverAccountCode,jdbcType=VARCHAR}, 
+      #{receiverBankFullName,jdbcType=VARCHAR}, #{adjustDateCount,jdbcType=SMALLINT}, 
+      #{readTimes,jdbcType=TINYINT}, #{acceptanceAgreementNumber,jdbcType=VARCHAR}, #{isDifferentBank,jdbcType=BIT}, 
+      #{isPayed,jdbcType=BIT}, #{isDeleted,jdbcType=BIT}, #{created,jdbcType=TIMESTAMP}, 
+      #{createdBy,jdbcType=VARCHAR}, #{lastUpdated,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}, 
+      #{modificationNumber,jdbcType=INTEGER}, #{rowId,jdbcType=VARCHAR}, #{parentRowId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.order.model.model.AcceptDraftList" >
+    insert into busi_accept_draft_list
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="accountId != null" >
+        account_id,
+      </if>
+      <if test="accountName != null" >
+        account_name,
+      </if>
+      <if test="orgId != null" >
+        org_id,
+      </if>
+      <if test="orgName != null" >
+        org_name,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="acceptanceBankFullName != null" >
+        acceptance_bank_full_name,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="endDate != null" >
+        end_date,
+      </if>
+      <if test="discountRate != null" >
+        discount_rate,
+      </if>
+      <if test="discountRateBase != null" >
+        discount_rate_base,
+      </if>
+      <if test="endDateApprove != null" >
+        end_date_approve,
+      </if>
+      <if test="codeApprove != null" >
+        code_approve,
+      </if>
+      <if test="amountApprove != null" >
+        amount_approve,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="reason != null" >
+        reason,
+      </if>
+      <if test="acceptanceDate != null" >
+        acceptance_date,
+      </if>
+      <if test="acceptanceBankCode != null" >
+        acceptance_bank_code,
+      </if>
+      <if test="drawerName != null" >
+        drawer_name,
+      </if>
+      <if test="drawerAccountCode != null" >
+        drawer_account_code,
+      </if>
+      <if test="drawerBankCode != null" >
+        drawer_bank_code,
+      </if>
+      <if test="drawerBankFullName != null" >
+        drawer_bank_full_name,
+      </if>
+      <if test="receiverName != null" >
+        receiver_name,
+      </if>
+      <if test="receiverAccountCode != null" >
+        receiver_account_code,
+      </if>
+      <if test="receiverBankFullName != null" >
+        receiver_bank_full_name,
+      </if>
+      <if test="adjustDateCount != null" >
+        adjust_date_count,
+      </if>
+      <if test="readTimes != null" >
+        read_times,
+      </if>
+      <if test="acceptanceAgreementNumber != null" >
+        acceptance_agreement_number,
+      </if>
+      <if test="isDifferentBank != null" >
+        is_different_bank,
+      </if>
+      <if test="isPayed != null" >
+        is_payed,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by,
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number,
+      </if>
+      <if test="rowId != null" >
+        row_id,
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="accountId != null" >
+        #{accountId,jdbcType=BIGINT},
+      </if>
+      <if test="accountName != null" >
+        #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null" >
+        #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="orgName != null" >
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="acceptanceBankFullName != null" >
+        #{acceptanceBankFullName,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="discountRate != null" >
+        #{discountRate,jdbcType=DECIMAL},
+      </if>
+      <if test="discountRateBase != null" >
+        #{discountRateBase,jdbcType=DECIMAL},
+      </if>
+      <if test="endDateApprove != null" >
+        #{endDateApprove,jdbcType=TIMESTAMP},
+      </if>
+      <if test="codeApprove != null" >
+        #{codeApprove,jdbcType=VARCHAR},
+      </if>
+      <if test="amountApprove != null" >
+        #{amountApprove,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null" >
+        #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="acceptanceDate != null" >
+        #{acceptanceDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="acceptanceBankCode != null" >
+        #{acceptanceBankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="drawerName != null" >
+        #{drawerName,jdbcType=VARCHAR},
+      </if>
+      <if test="drawerAccountCode != null" >
+        #{drawerAccountCode,jdbcType=VARCHAR},
+      </if>
+      <if test="drawerBankCode != null" >
+        #{drawerBankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="drawerBankFullName != null" >
+        #{drawerBankFullName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverName != null" >
+        #{receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverAccountCode != null" >
+        #{receiverAccountCode,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverBankFullName != null" >
+        #{receiverBankFullName,jdbcType=VARCHAR},
+      </if>
+      <if test="adjustDateCount != null" >
+        #{adjustDateCount,jdbcType=SMALLINT},
+      </if>
+      <if test="readTimes != null" >
+        #{readTimes,jdbcType=TINYINT},
+      </if>
+      <if test="acceptanceAgreementNumber != null" >
+        #{acceptanceAgreementNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="isDifferentBank != null" >
+        #{isDifferentBank,jdbcType=BIT},
+      </if>
+      <if test="isPayed != null" >
+        #{isPayed,jdbcType=BIT},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        #{parentRowId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.order.model.model.AcceptDraftList" >
+    update busi_accept_draft_list
+    <set >
+      <if test="accountId != null" >
+        account_id = #{accountId,jdbcType=BIGINT},
+      </if>
+      <if test="accountName != null" >
+        account_name = #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null" >
+        org_id = #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="orgName != null" >
+        org_name = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="acceptanceBankFullName != null" >
+        acceptance_bank_full_name = #{acceptanceBankFullName,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="endDate != null" >
+        end_date = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="discountRate != null" >
+        discount_rate = #{discountRate,jdbcType=DECIMAL},
+      </if>
+      <if test="discountRateBase != null" >
+        discount_rate_base = #{discountRateBase,jdbcType=DECIMAL},
+      </if>
+      <if test="endDateApprove != null" >
+        end_date_approve = #{endDateApprove,jdbcType=TIMESTAMP},
+      </if>
+      <if test="codeApprove != null" >
+        code_approve = #{codeApprove,jdbcType=VARCHAR},
+      </if>
+      <if test="amountApprove != null" >
+        amount_approve = #{amountApprove,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null" >
+        reason = #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="acceptanceDate != null" >
+        acceptance_date = #{acceptanceDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="acceptanceBankCode != null" >
+        acceptance_bank_code = #{acceptanceBankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="drawerName != null" >
+        drawer_name = #{drawerName,jdbcType=VARCHAR},
+      </if>
+      <if test="drawerAccountCode != null" >
+        drawer_account_code = #{drawerAccountCode,jdbcType=VARCHAR},
+      </if>
+      <if test="drawerBankCode != null" >
+        drawer_bank_code = #{drawerBankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="drawerBankFullName != null" >
+        drawer_bank_full_name = #{drawerBankFullName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverName != null" >
+        receiver_name = #{receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverAccountCode != null" >
+        receiver_account_code = #{receiverAccountCode,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverBankFullName != null" >
+        receiver_bank_full_name = #{receiverBankFullName,jdbcType=VARCHAR},
+      </if>
+      <if test="adjustDateCount != null" >
+        adjust_date_count = #{adjustDateCount,jdbcType=SMALLINT},
+      </if>
+      <if test="readTimes != null" >
+        read_times = #{readTimes,jdbcType=TINYINT},
+      </if>
+      <if test="acceptanceAgreementNumber != null" >
+        acceptance_agreement_number = #{acceptanceAgreementNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="isDifferentBank != null" >
+        is_different_bank = #{isDifferentBank,jdbcType=BIT},
+      </if>
+      <if test="isPayed != null" >
+        is_payed = #{isPayed,jdbcType=BIT},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number = #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        row_id = #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.order.model.model.AcceptDraftList" >
+    update busi_accept_draft_list
+    set account_id = #{accountId,jdbcType=BIGINT},
+      account_name = #{accountName,jdbcType=VARCHAR},
+      org_id = #{orgId,jdbcType=BIGINT},
+      org_name = #{orgName,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      acceptance_bank_full_name = #{acceptanceBankFullName,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=DECIMAL},
+      end_date = #{endDate,jdbcType=TIMESTAMP},
+      discount_rate = #{discountRate,jdbcType=DECIMAL},
+      discount_rate_base = #{discountRateBase,jdbcType=DECIMAL},
+      end_date_approve = #{endDateApprove,jdbcType=TIMESTAMP},
+      code_approve = #{codeApprove,jdbcType=VARCHAR},
+      amount_approve = #{amountApprove,jdbcType=DECIMAL},
+      status = #{status,jdbcType=VARCHAR},
+      reason = #{reason,jdbcType=VARCHAR},
+      acceptance_date = #{acceptanceDate,jdbcType=TIMESTAMP},
+      acceptance_bank_code = #{acceptanceBankCode,jdbcType=VARCHAR},
+      drawer_name = #{drawerName,jdbcType=VARCHAR},
+      drawer_account_code = #{drawerAccountCode,jdbcType=VARCHAR},
+      drawer_bank_code = #{drawerBankCode,jdbcType=VARCHAR},
+      drawer_bank_full_name = #{drawerBankFullName,jdbcType=VARCHAR},
+      receiver_name = #{receiverName,jdbcType=VARCHAR},
+      receiver_account_code = #{receiverAccountCode,jdbcType=VARCHAR},
+      receiver_bank_full_name = #{receiverBankFullName,jdbcType=VARCHAR},
+      adjust_date_count = #{adjustDateCount,jdbcType=SMALLINT},
+      read_times = #{readTimes,jdbcType=TINYINT},
+      acceptance_agreement_number = #{acceptanceAgreementNumber,jdbcType=VARCHAR},
+      is_different_bank = #{isDifferentBank,jdbcType=BIT},
+      is_payed = #{isPayed,jdbcType=BIT},
+      is_deleted = #{isDeleted,jdbcType=BIT},
+      created = #{created,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      modification_number = #{modificationNumber,jdbcType=INTEGER},
+      row_id = #{rowId,jdbcType=VARCHAR},
+      parent_row_id = #{parentRowId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="queryByParam" resultMap="BaseResultMap" parameterType="com.prcsteel.platform.order.model.query.AcceptDraftQuery">
+    select
+    <include refid="Base_Column_List"/>
+    from busi_accept_draft_list
+    <where>
+      <if test="code != null and code != ''">
+        and code  like '%' #{code} '%'
+      </if>
+      <if test="dateStartStr != null and dateStartStr != ''">
+        and str_to_date(created,'%Y-%m-%d') <![CDATA[ >= ]]> #{dateStartStr}
+      </if>
+      <if test="dateEndStr != null and dateEndStr != ''">
+        and str_to_date(created,'%Y-%m-%d') <![CDATA[ <= ]]> #{dateEndStr}
+      </if>
+    </where>
+    order by created desc
+    <if test="start!=null and length !=null">
+      limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+    </if>
+  </select>
+
+
+  <select id="findByParam" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List"/>
+    from busi_accept_draft_list
+    <where>
+      <if test="code != null and code != ''">
+        and code  like '%' #{code} '%'
+      </if>
+      <if test="startTime != null and startTime != ''">
+        and str_to_date(created,'%Y-%m-%d') <![CDATA[ >= ]]> #{startTime}
+      </if>
+      <if test="endTime != null and endTime != ''">
+        and str_to_date(created,'%Y-%m-%d') <![CDATA[ <= ]]> #{endTime}
+      </if>
+      <if test="ids != null">
+        and id in
+        <foreach item="id" index="index" collection="ids" open="(" separator="," close=")">
+          #{id}
+        </foreach>
+      </if>
+    </where>
+  </select>
+
+  <select id="countByParam" resultType="java.lang.Integer" parameterType="com.prcsteel.platform.order.model.query.AcceptDraftQuery">
+    select count(id)
+    from busi_accept_draft_list
+    <where>
+      <if test="code != null and code != ''">
+        and code  like '%' #{code} '%'
+      </if>
+      <if test="dateStartStr != null and dateStartStr != ''">
+        and str_to_date(created,'%Y-%m-%d') <![CDATA[ >= ]]> #{dateStartStr}
+      </if>
+      <if test="dateEndStr != null and dateEndStr != ''">
+        and str_to_date(created,'%Y-%m-%d') <![CDATA[ <= ]]> #{dateEndStr}
+      </if>
+    </where>
+  </select>
+
+  <select id="countById" resultType="java.lang.Integer" >
+    SELECT COUNT(1) FROM busi_accept_draft_list WHERE code =  #{code};
+  </select>
+
+  <insert id="batchInsert"  >
+    insert into busi_accept_draft_list(code, amount, acceptance_date,end_date,acceptance_bank_code,
+    acceptance_bank_full_name,drawer_name,drawer_account_code, drawer_bank_code,
+    drawer_bank_full_name, receiver_name, receiver_account_code,
+    receiver_bank_full_name, adjust_date_count,
+    read_times, acceptance_agreement_number, is_different_bank,
+     created,created_by, last_updated,last_updated_by
+    )
+    values
+    <foreach collection="list"  item="it" separator=",">
+      ( #{it.code,jdbcType=VARCHAR},
+        #{it.amount,jdbcType=DECIMAL},
+        #{it.acceptanceDate,jdbcType=TIMESTAMP},
+        #{it.endDate,jdbcType=TIMESTAMP},
+        #{it.acceptanceBankCode,jdbcType=VARCHAR},
+        #{it.acceptanceBankFullName,jdbcType=VARCHAR},
+        #{it.drawerName,jdbcType=VARCHAR},
+        #{it.drawerAccountCode,jdbcType=VARCHAR},
+        #{it.drawerBankCode,jdbcType=VARCHAR},
+        #{it.drawerBankFullName,jdbcType=VARCHAR},
+        #{it.receiverName,jdbcType=VARCHAR},
+        #{it.receiverAccountCode,jdbcType=VARCHAR},
+        #{it.receiverBankFullName,jdbcType=VARCHAR},
+        #{it.adjustDateCount,jdbcType=INTEGER},
+        #{it.readTimes,jdbcType=INTEGER},
+        #{it.acceptanceAgreementNumber,jdbcType=VARCHAR},
+        #{it.isDifferentBank,jdbcType=BIT},
+        #{it.created,jdbcType=TIMESTAMP},
+        #{it.createdBy,jdbcType=VARCHAR},
+        #{it.lastUpdated,jdbcType=TIMESTAMP},
+        #{it.lastUpdatedBy,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+
+  <update id="batchUpdateAcceptDrafList" >
+    <foreach collection="list" item="item" index="index" open="" close=";" separator=";" >
+      update busi_accept_draft_list
+      <set>
+        <if test="item.accountId != null" >
+          account_id = #{item.accountId,jdbcType=BIGINT},
+        </if>
+        <if test="item.accountName != null" >
+          account_name = #{item.accountName,jdbcType=VARCHAR},
+        </if>
+        <if test="item.orgId != null" >
+          org_id = #{item.orgId,jdbcType=BIGINT},
+        </if>
+        <if test="item.orgName != null" >
+          org_name = #{item.orgName,jdbcType=VARCHAR},
+        </if>
+        <if test="item.acceptanceBankFullName != null" >
+          acceptance_bank_full_name = #{item.acceptanceBankFullName,jdbcType=VARCHAR},
+        </if>
+        <if test="item.amount != null" >
+          amount = #{item.amount,jdbcType=DECIMAL},
+        </if>
+        <if test="item.endDate != null" >
+          end_date = #{item.endDate,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.discountRate != null" >
+          discount_rate = #{item.discountRate,jdbcType=DECIMAL},
+        </if>
+        <if test="item.discountRateBase != null" >
+          discount_rate_base = #{item.discountRateBase,jdbcType=DECIMAL},
+        </if>
+        <if test="item.endDateApprove != null" >
+          end_date_approve = #{item.endDateApprove,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.codeApprove != null" >
+          code_approve = #{item.codeApprove,jdbcType=VARCHAR},
+        </if>
+        <if test="item.amountApprove != null" >
+          amount_approve = #{item.amountApprove,jdbcType=DECIMAL},
+        </if>
+        <if test="item.status != null" >
+          status = #{item.status,jdbcType=VARCHAR},
+        </if>
+        <if test="item.reason != null" >
+          reason = #{item.reason,jdbcType=VARCHAR},
+        </if>
+        <if test="item.acceptanceDate != null" >
+          acceptance_date = #{item.acceptanceDate,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.acceptanceBankCode != null" >
+          acceptance_bank_code = #{item.acceptanceBankCode,jdbcType=VARCHAR},
+        </if>
+        <if test="item.drawerName != null" >
+          drawer_name = #{item.drawerName,jdbcType=VARCHAR},
+        </if>
+        <if test="item.drawerAccountCode != null" >
+          drawer_account_code = #{item.drawerAccountCode,jdbcType=VARCHAR},
+        </if>
+        <if test="item.drawerBankCode != null" >
+          drawer_bank_code = #{item.drawerBankCode,jdbcType=VARCHAR},
+        </if>
+        <if test="item.drawerBankFullName != null" >
+          drawer_bank_full_name = #{item.drawerBankFullName,jdbcType=VARCHAR},
+        </if>
+        <if test="item.receiverName != null" >
+          receiver_name = #{item.receiverName,jdbcType=VARCHAR},
+        </if>
+        <if test="item.receiverAccountCode != null" >
+          receiver_account_code = #{item.receiverAccountCode,jdbcType=VARCHAR},
+        </if>
+        <if test="item.receiverBankFullName != null" >
+          receiver_bank_full_name = #{item.receiverBankFullName,jdbcType=VARCHAR},
+        </if>
+        <if test="item.adjustDateCount != null" >
+          adjust_date_count = #{item.adjustDateCount,jdbcType=INTEGER},
+        </if>
+        <if test="item.readTimes != null" >
+          read_times = #{item.readTimes,jdbcType=INTEGER},
+        </if>
+        <if test="item.acceptanceAgreementNumber != null" >
+          acceptance_agreement_number = #{item.acceptanceAgreementNumber,jdbcType=VARCHAR},
+        </if>
+        <if test="item.isDifferentBank != null" >
+          is_different_bank = #{item.isDifferentBank,jdbcType=BIT},
+        </if>
+        <if test="item.isPayed != null" >
+          is_payed = #{item.isPayed,jdbcType=BIT},
+        </if>
+        <if test="item.isDeleted != null" >
+          is_deleted = #{item.isDeleted,jdbcType=BIT},
+        </if>
+        <if test="item.created != null" >
+          created = #{item.created,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.createdBy != null" >
+          created_by = #{item.createdBy,jdbcType=VARCHAR},
+        </if>
+        <if test="item.lastUpdated != null" >
+          last_updated = #{item.lastUpdated,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.lastUpdatedBy != null" >
+          last_updated_by = #{item.lastUpdatedBy,jdbcType=VARCHAR},
+        </if>
+        <if test="item.modificationNumber != null" >
+          modification_number = #{item.modificationNumber,jdbcType=INTEGER},
+        </if>
+        <if test="item.rowId != null" >
+          row_id = #{item.rowId,jdbcType=VARCHAR},
+        </if>
+        <if test="item.parentRowId != null" >
+          parent_row_id = #{item.parentRowId,jdbcType=VARCHAR},
+      </if>
+      </set>
+      where code = #{item.code}
+    </foreach>
+  </update>
+
+  <select id="queryByAccountStatus" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from busi_accept_draft_list
+    <where>
+      <if test="accountId != null and accountId != 0 and accountId != ''">
+        and account_id = #{accountId}
+      </if>
+      <if test="status != null and status != ''">
+        and status = #{status}
+      </if>
+    </where>
+    order by created desc
+  </select>
+
+</mapper>

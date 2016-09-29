@@ -1,0 +1,153 @@
+<!-- 全部-->
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+    <style >
+        .menuContent{
+            overflow: auto;
+            height: 350px;
+            overflow-x:hidden;
+        }
+    </style>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            	交易管理
+        </li>
+        <li>
+            <a href="$link.getContextPath()/common/menu/order-view/order-query-index-page.html">交易单管理</a>
+        </li>
+        <li>
+            <a href="$link.getContextPath()/order/query/tradecertificate.html?accountType=seller">交易凭证</a>
+        </li>
+        <li class="active">
+				#if($accountType == "seller")
+					上传卖家凭证
+	        	#else
+					上传买家凭证
+	        	#end
+		</li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+    #parse("layout/topbtn.vm")
+    <!-- /.nav-search -->
+</div>
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <!--TAPBAR-->
+            <!-- tapbar S -->
+            #parse("/layout/order/tapbar.vm")
+            <!-- tapbar E -->
+
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+            	<!--TAPBAR-->
+	            <div class="tabbar order-tab" id="mytabbar">
+	                <ul class="nav nav-tabs padding-12 tab-color-blue">
+	                    <li><a href="$link.getContextPath()/order/query/tradecertificate.html?accountType=seller">&nbsp;打印卖家凭证&nbsp;</a></li>
+	                    <li><a href="$link.getContextPath()/order/query/tradecertificate.html?accountType=buyer">&nbsp;打印买家凭证&nbsp;</a></li>
+                        #if($accountType == 'seller')
+                          <li class="active"><a  href="javascript:;" >&nbsp;上传卖家凭证&nbsp;</a></li>
+	                      <li><a href="$link.getContextPath()/order/certificate/uploadcertificatelist/buyer.html" >&nbsp;上传买家凭证&nbsp;</a></li>
+                       #else
+                        <li><a  href="$link.getContextPath()/order/certificate/uploadcertificatelist/seller.html" >&nbsp;上传卖家凭证&nbsp;</a></li>
+                        <li class="active"><a href="javascript:;">&nbsp;上传买家凭证&nbsp;</a></li>
+                       #end
+                        <li><a href="$link.getContextPath()/order/certificate/certificateinvoiceorder/seller.html">&nbsp;需补齐卖家凭证的已开票订单&nbsp;</a></li>
+                        <li><a href="$link.getContextPath()/order/certificate/certificateinvoiceorder/buyer.html">&nbsp;需补齐买家凭证的已开票订单&nbsp;</a></li>
+						<li ><a href="$link.getContextPath()/order/certificate/batchuploading.html">&nbsp;批量上传凭证图片&nbsp;</a></li>
+					
+					</ul>
+	            </div>
+                <div class="col-xs-12">
+                    <div class="clearfix">
+                        <div class="input-group pull-right col-md-12 col-sm-12 col-lg-12 search-bar">
+                            <form class="form-inline">
+								
+								<label>凭证号：</label><input id="certificateNO" class="ipt-text" type="text" value=""/>
+							    #if($accountType == "seller")
+                                    <label>卖家全称：<input id="sellerName" accounttype="seller" search='account' class="ipt-text" type="text" value=""/></label>
+                                #else
+                                    <label>买家全称：<input id="buyerName" accounttype="buyer" search='account' class="ipt-text" type="text" value=""/></label>
+					        	#end
+                                <label>交易员：</label><input id="ownerName" class="ipt-text" type="text" value="" />
+                                <label>交易单号：</label><input id="code" class="ipt-text" type="text" value=""/>
+                                <p>
+								<label>类型：</label>
+								<select id="blacklist">
+									<option value="">全部</option>
+									<option value="0">不须审核通过也能开票</option>
+                                    <option value="1">必须审核通过才能开票</option>
+								</select>
+								<label>上传凭证状态：</label>
+								<select name="status" id="status">
+                                    <option value="">全部</option>
+									<option value="PENDING_APPROVAL">待审核</option>
+									<option value="APPROVED">审核通过</option>
+									<option value="DISAPPROVE">审核不通过</option>
+									<option value="PENDING_SUBMIT">待提交</option>
+								</select>
+                                
+                                <label>创建凭证时间：</label>
+                                <input id="startTime" class="Wdate" type="text" value="$!{startTime}"
+                                       onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')||\'2020-10-01\'}'})"/> -
+                                <input id="endTime" class="Wdate" type="text"  value="$!{endTime}"
+                                       onFocus="WdatePicker({minDate:'#F{$dp.$D(\'startTime\')}',maxDate:'2020-10-01'})"/>
+								
+                                <button id="queryBtn" class="btn btn-sm btn-default" type="button" title="搜索">
+                                    <i class="aace-icon fa fa-search bigger-110"></i>搜索
+                                </button>
+
+                                <button id="export" class="btn btn-sm btn-default" type="button" title="导出" style="margin-left: 10px;">
+                                        <i class="aace-icon fa bigger-110"></i>导出到EXCEL
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+					
+                    <!-- div.dataTables_borderWrap -->
+                    <div class="dataTable-overflow">
+                        <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+                            <thead>
+	                            <tr>
+									<th style="width:120px;">凭证号</th>
+									<th style="width:120px;">创建凭证时间</th>
+	                                <th style="width:120px;">寄售交易单号</th>
+	                                <th style="width:120px;">开单时间</th>
+	                                <th style="width:120px;">买家全称</th>
+	                                <th style="width:70px;">钢为<br/>交易员</th>
+	                                <th style="width:120px;">卖家全称</th>
+	                                <th style="width:50px;">数量<br/>（件）</th>
+	                                <th style="width:100px;">总重量<br/>(吨)</th>
+	                                <th style="width:100px;">实提总重量<br/>(吨)</th>
+	                                <th style="width:100px;">总金额<br/>(元)</th>
+	                                <th style="width:100px;">实提总金额<br/>(元)</th>
+									<th style="width:80px;">类型</th>
+	                                <th style="width:80px;">状态</th>
+	                                <th style="width:60px;">操作</th>
+	                            </tr>
+                            </thead>
+                            <tbody>
+                            
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+<input type="hidden" id="accountType" value="${accountType}"/>
+<script src="$link.getContextPath()/js/views/order/uploadcertificatelist.js"></script>
+<script src="$link.getContextPath()/js/views/account/searchaccount.js"></script>
+

@@ -1,0 +1,88 @@
+#set($layout="layout/sys/default.vm")
+<div class="breadcrumbs" id="breadcrumbs">
+	<script type="text/javascript">
+		try {
+			ace.settings.check('breadcrumbs', 'fixed')
+		} catch (e) {
+		}
+	</script>
+
+	<ul class="breadcrumb">
+        <li><i class="ace-icon fa fa-home home-icon"></i>系统管理</li>
+        <li>系统设置</li>
+        <li class="active">品类归属设置</li>
+	</ul>
+	<!-- /.breadcrumb -->
+
+	#parse("layout/topbtn.vm")
+	<!-- /.nav-search -->
+</div>
+
+<div class="page-content">
+
+	<div class="row">
+		<div class="col-xs-12">
+			<!--TAPBAR-->
+			#parse("sys/systemmenu.vm")
+			<!-- PAGE CONTENT BEGINS -->
+
+			<div class="row">
+				<div class="col-xs-12">
+
+					<!-- div.dataTables_borderWrap -->
+					<div class="table-bar" id="first-table">
+						<table id="dynamic-table" class="contable border0">
+							<thead>
+								<tr class="bg-gray">
+									<th width="80" class="border0">所属大类</th>
+									<th class="border0">品类</th>
+									<th width="60" class="border0">操作</th>
+								</tr>
+							</thead>
+							<tbody>
+							#foreach( $group in $result)
+							
+								<tr class="bolder-b-dashed">
+									<td><span class="bolder">$group.categoryGroupName</span></td>
+									<td>
+									#foreach( $category in $group.CategoryDtoList)
+									$category.name									
+									#end
+									</td>
+									<td>
+										<div class="hidden-sm hidden-xs action-buttons">
+
+											<a class="green category-edit" href="$link.getContextPath()/category/editcategory.html?uuid=$group.categoryGroupUuid" title="编辑"> <i
+												class="ace-icon fa fa-pencil bigger-130"></i>
+											</a> <a class="red category-del" href="$link.getContextPath()/category/deleteCategory.html?uuid=$group.categoryGroupUuid" title="删除"> <i
+												class="ace-icon fa fa-trash-o bigger-130"></i>
+											</a>
+										</div>									
+									</td>
+								</tr>
+							#end	
+									
+							</tbody>
+						</table>
+					</div>
+					<!--.recordbar-->
+					<div class="btn-bar">
+						<a type="button" href="$link.getContextPath()/category/addcategory.html" title="添加"
+							class="btn btn-info btn-sm">添加</a>
+					</div>
+					<!--/.recordbar-->
+				</div>
+			</div>
+
+		</div>
+		<!-- /.col -->
+	</div>
+	<!-- /.row -->
+</div>
+<!-- /.page-content -->
+
+<script type="text/javascript">
+	$(".category-edit").click(function() {
+		location.href = "category-edit.html";
+	});
+</script>

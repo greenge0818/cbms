@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans  xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans 
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+http://www.springframework.org/schema/context 
+http://www.springframework.org/schema/context/spring-context-3.0.xsd
+"
+       default-lazy-init="false">
+ 	<context:property-placeholder location="classpath:kuandao.properties" />
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="syncAccountTrigger"/>
+                <ref bean="submitPaymentOrderTrigger"/>
+                <ref bean="queryMclsMatchTrigger"/>
+                <ref bean="queryNonPaymentOrderDepositTrigger"/>
+                <ref bean="queryMclsRefundTrigger"/>
+                <ref bean="queryDailyBillTrigger"/>
+            </list>
+        </property>
+        <property name="autoStartup" value="${KUANDAO_QUARTZ_JOB_ENABLED}"/>
+    </bean>
+
+    <bean id="syncAccountTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="syncAccountJobDetail"/>
+        <property name="cronExpression" value="${quartz.job.kuandao.syncKuandaoAccountJob.cron}"/>
+    </bean>
+
+    <bean id="syncAccountJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="syncAccountJob"/>
+        <property name="targetMethod" value="execute"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+
+    <bean id="syncAccountJob" class="com.prcsteel.platform.kuandao.web.job.SyncKuandaoAccountJob"/>
+    
+    <bean id="submitPaymentOrderTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="submitPaymentOrderJobDetail"/>
+        <property name="cronExpression" value="${quartz.job.kuandao.submitPaymentOrderJob.cron}"/>
+    </bean>
+
+    <bean id="submitPaymentOrderJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="submitPaymentOrderJob"/>
+        <property name="targetMethod" value="execute"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+
+    <bean id="submitPaymentOrderJob" class="com.prcsteel.platform.kuandao.web.job.SubmitPaymentOrderJob"/>
+
+    <bean id="queryMclsMatchTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="queryMclsMatchJobDetail"/>
+        <property name="cronExpression" value="${quartz.job.kuandao.queryMclsMatchOrderJob.cron}"/>
+    </bean>
+
+    <bean id="queryMclsMatchJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="queryMclsMatchJob"/>
+        <property name="targetMethod" value="execute"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+
+    <bean id="queryMclsMatchJob" class="com.prcsteel.platform.kuandao.web.job.QueryMclsMatchJob"/>
+
+    <bean id="queryNonPaymentOrderDepositTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="queryNonPaymentOrderDepositJobDetail"/>
+        <property name="cronExpression" value="${quartz.job.kuandao.queryNonPaymentOrderDepositJob.cron}"/>
+    </bean>
+
+    <bean id="queryNonPaymentOrderDepositJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="queryNonPaymentOrderDepositJob"/>
+        <property name="targetMethod" value="execute"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+
+    <bean id="queryNonPaymentOrderDepositJob" class="com.prcsteel.platform.kuandao.web.job.QueryNonPaymentOrderDepositJob"/>
+
+	<bean id="queryMclsRefundTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="queryMclsRefundJobDetail"/>
+        <property name="cronExpression" value="${quartz.job.kuandao.queryMclsRefundJob.cron}"/>
+    </bean>
+
+    <bean id="queryMclsRefundJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="queryMclsRefundJob"/>
+        <property name="targetMethod" value="execute"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+
+    <bean id="queryMclsRefundJob" class="com.prcsteel.platform.kuandao.web.job.QueryMclsRefundJob"/>
+    
+    <bean id="queryDailyBillTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="queryDailyBillJobDetail"/>
+        <property name="cronExpression" value="${quartz.job.kuandao.queryDailyBillJob.cron}"/>
+    </bean>
+
+    <bean id="queryDailyBillJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="queryDailyBillJob"/>
+        <property name="targetMethod" value="execute"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+
+    <bean id="queryDailyBillJob" class="com.prcsteel.platform.kuandao.web.job.QueryDailyBillJob"/>
+
+</beans>

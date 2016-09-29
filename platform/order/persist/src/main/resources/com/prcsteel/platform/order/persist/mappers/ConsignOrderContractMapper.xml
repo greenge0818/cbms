@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.order.persist.dao.ConsignOrderContractDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.order.model.model.ConsignOrderContract" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <id column="customer_id" property="customerId" jdbcType="BIGINT" />
+    <result column="consign_order_id" property="consignOrderId" jdbcType="BIGINT" />
+    <result column="change_order_id" property="changeOrderId" jdbcType="INTEGER" />
+    <result column="contract_code_auto" property="contractCodeAuto" jdbcType="VARCHAR" />
+    <result column="contract_code_cust" property="contractCodeCust" jdbcType="VARCHAR" />
+    <result column="bank_name_main" property="bankNameMain" jdbcType="VARCHAR" />
+    <result column="bank_name_branch" property="bankNameBranch" jdbcType="VARCHAR" />
+    <result column="bank_account_code" property="bankAccountCode" jdbcType="VARCHAR" />
+    <result column="customer_name" property="customerName" jdbcType="VARCHAR" />
+    <result column="customer_department_id" property="customerDepartmentId" jdbcType="VARCHAR" />
+    <result column="customer_department_name" property="customerDepartmentName" jdbcType="VARCHAR" />
+    <result column="customer_addr" property="customerAddr" jdbcType="VARCHAR" />
+    <result column="customer_tel" property="customerTel" jdbcType="VARCHAR" />
+    <result column="order_amount" property="orderAmount" jdbcType="DECIMAL" />
+    <result column="balance_second_settlement" property="balanceSecondSettlement" jdbcType="DECIMAL" />
+    <result column="apply_pay_amount" property="applyPayAmount" jdbcType="DECIMAL" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+    <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+    <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, customer_id, consign_order_id,change_order_id, contract_code_auto, contract_code_cust, bank_name_main, bank_name_branch,
+    bank_account_code, customer_name, customer_department_id, customer_department_name, customer_addr, customer_tel,
+    order_amount, balance_second_settlement,apply_pay_amount, status, created, created_by, last_updated,
+    last_updated_by, modification_number, row_id, parent_row_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from busi_consign_order_contract
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="countUnUploadByOrderId" resultType="int"  parameterType="java.lang.Long">
+    select count(*) from busi_consign_order_contract where consign_order_id=#{orderId,jdbcType=BIGINT} and status=0 and change_order_id is null
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from busi_consign_order_contract
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.prcsteel.platform.order.model.model.ConsignOrderContract" >
+    insert into busi_consign_order_contract (id,customer_id, consign_order_id,change_order_id, contract_code_auto,
+      contract_code_cust, bank_name_main, bank_name_branch, 
+      bank_account_code, customer_name, customer_department_id, customer_department_name, customer_addr,
+      customer_tel, order_amount, balance_second_settlement, 
+      apply_pay_amount, status, created, 
+      created_by, last_updated, last_updated_by, 
+      modification_number, row_id, parent_row_id
+      )
+    values (#{id,jdbcType=BIGINT},#{customerId,jdbcType=BIGINT}, #{consignOrderId,jdbcType=BIGINT}, #{changeOrderId,jdbcType=INTEGER}, #{contractCodeAuto,jdbcType=VARCHAR},
+      #{contractCodeCust,jdbcType=VARCHAR}, #{bankNameMain,jdbcType=VARCHAR}, #{bankNameBranch,jdbcType=VARCHAR}, 
+      #{bankAccountCode,jdbcType=VARCHAR}, #{customerName,jdbcType=VARCHAR}, #{customerDepartmentId}, #{customerDepartmentName},#{customerAddr,jdbcType=VARCHAR},
+      #{customerTel,jdbcType=VARCHAR}, #{orderAmount,jdbcType=DECIMAL}, #{balanceSecondSettlement,jdbcType=DECIMAL}, 
+      #{applyPayAmount,jdbcType=DECIMAL}, #{status,jdbcType=INTEGER}, #{created,jdbcType=TIMESTAMP}, 
+      #{createdBy,jdbcType=VARCHAR}, #{lastUpdated,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}, 
+      #{modificationNumber,jdbcType=INTEGER}, #{rowId,jdbcType=VARCHAR}, #{parentRowId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.order.model.model.ConsignOrderContract" >
+    insert into busi_consign_order_contract
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="customerId != null" >
+        customer_id,
+      </if>
+      <if test="consignOrderId != null" >
+        consign_order_id,
+      </if>
+      <if test="changeOrderId != null" >
+        change_order_id,
+      </if>
+      <if test="contractCodeAuto != null" >
+        contract_code_auto,
+      </if>
+      <if test="contractCodeCust != null" >
+        contract_code_cust,
+      </if>
+      <if test="bankNameMain != null" >
+        bank_name_main,
+      </if>
+      <if test="bankNameBranch != null" >
+        bank_name_branch,
+      </if>
+      <if test="bankAccountCode != null" >
+        bank_account_code,
+      </if>
+      <if test="customerName != null" >
+        customer_name,
+      </if>
+      <if test="customerDepartmentId != null" >
+        customer_department_id,
+      </if>
+      <if test="customerDepartmentName != null" >
+        customer_department_name,
+      </if>
+      <if test="customerAddr != null" >
+        customer_addr,
+      </if>
+      <if test="customerTel != null" >
+        customer_tel,
+      </if>
+      <if test="orderAmount != null" >
+        order_amount,
+      </if>
+      <if test="balanceSecondSettlement != null" >
+        balance_second_settlement,
+      </if>
+      <if test="applyPayAmount != null" >
+        apply_pay_amount,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by,
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number,
+      </if>
+      <if test="rowId != null" >
+        row_id,
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="customerId != null" >
+        #{customerId,jdbcType=BIGINT},
+      </if>
+      <if test="consignOrderId != null" >
+        #{consignOrderId,jdbcType=BIGINT},
+      </if>
+      <if test="changeOrderId != null" >
+        #{changeOrderId,jdbcType=INTEGER},
+      </if>
+      <if test="contractCodeAuto != null" >
+        #{contractCodeAuto,jdbcType=VARCHAR},
+      </if>
+      <if test="contractCodeCust != null" >
+        #{contractCodeCust,jdbcType=VARCHAR},
+      </if>
+      <if test="bankNameMain != null" >
+        #{bankNameMain,jdbcType=VARCHAR},
+      </if>
+      <if test="bankNameBranch != null" >
+        #{bankNameBranch,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccountCode != null" >
+        #{bankAccountCode,jdbcType=VARCHAR},
+      </if>
+      <if test="customerName != null" >
+        #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerDepartmentId != null" >
+        #{customerDepartmentId},
+      </if>
+      <if test="customerDepartmentName != null" >
+        #{customerDepartmentName},
+      </if>
+      <if test="customerAddr != null" >
+        #{customerAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="customerTel != null" >
+        #{customerTel,jdbcType=VARCHAR},
+      </if>
+      <if test="orderAmount != null" >
+        #{orderAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="balanceSecondSettlement != null" >
+        #{balanceSecondSettlement,jdbcType=DECIMAL},
+      </if>
+      <if test="applyPayAmount != null" >
+        #{applyPayAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        #{parentRowId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.order.model.model.ConsignOrderContract" >
+    update busi_consign_order_contract
+    <set >
+      <if test="consignOrderId != null" >
+        consign_order_id = #{consignOrderId,jdbcType=BIGINT},
+      </if>
+      <if test="changeOrderId != null" >
+        change_order_id = #{changeOrderId,jdbcType=INTEGER},
+      </if>
+      <if test="customerId != null" >
+        customer_id = #{customerId,jdbcType=BIGINT},
+      </if>
+      <if test="contractCodeAuto != null" >
+        contract_code_auto = #{contractCodeAuto,jdbcType=VARCHAR},
+      </if>
+      <if test="contractCodeCust != null" >
+        contract_code_cust = #{contractCodeCust,jdbcType=VARCHAR},
+      </if>
+      <if test="bankNameMain != null" >
+        bank_name_main = #{bankNameMain,jdbcType=VARCHAR},
+      </if>
+      <if test="bankNameBranch != null" >
+        bank_name_branch = #{bankNameBranch,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccountCode != null" >
+        bank_account_code = #{bankAccountCode,jdbcType=VARCHAR},
+      </if>
+      <if test="customerName != null" >
+        customer_name = #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerDepartmentId != null" >
+        customer_department_id = #{customerDepartmentId},
+      </if>
+      <if test="customerDepartmentName != null" >
+        customer_department_name = #{customerDepartmentName},
+      </if>
+      <if test="customerAddr != null" >
+        customer_addr = #{customerAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="customerTel != null" >
+        customer_tel = #{customerTel,jdbcType=VARCHAR},
+      </if>
+      <if test="orderAmount != null" >
+        order_amount = #{orderAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="balanceSecondSettlement != null" >
+        balance_second_settlement = #{balanceSecondSettlement,jdbcType=DECIMAL},
+      </if>
+      <if test="applyPayAmount != null" >
+        apply_pay_amount = #{applyPayAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+        modification_number = ifnull(modification_number,0)+1,
+      <if test="rowId != null" >
+        row_id = #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.order.model.model.ConsignOrderContract" >
+    update busi_consign_order_contract
+    set consign_order_id = #{consignOrderId,jdbcType=BIGINT},
+       change_order_id = #{changeOrderId,jdbcType=INTEGER},
+      customer_id = #{customerId,jdbcType=BIGINT},
+      contract_code_auto = #{contractCodeAuto,jdbcType=VARCHAR},
+      contract_code_cust = #{contractCodeCust,jdbcType=VARCHAR},
+      bank_name_main = #{bankNameMain,jdbcType=VARCHAR},
+      bank_name_branch = #{bankNameBranch,jdbcType=VARCHAR},
+      bank_account_code = #{bankAccountCode,jdbcType=VARCHAR},
+      customer_name = #{customerName,jdbcType=VARCHAR},
+      customer_department_id = #{customerDepartmentId},
+      customer_department_name = #{customerDepartmentName},
+      customer_addr = #{customerAddr,jdbcType=VARCHAR},
+      customer_tel = #{customerTel,jdbcType=VARCHAR},
+      order_amount = #{orderAmount,jdbcType=DECIMAL},
+      balance_second_settlement = #{balanceSecondSettlement,jdbcType=DECIMAL},
+      apply_pay_amount = #{applyPayAmount,jdbcType=DECIMAL},
+      status = #{status,jdbcType=INTEGER},
+      created = #{created,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      modification_number = #{modificationNumber,jdbcType=INTEGER},
+      row_id = #{rowId,jdbcType=VARCHAR},
+      parent_row_id = #{parentRowId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="queryByOrderId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from busi_consign_order_contract
+    where consign_order_id = #{orderId,jdbcType=BIGINT}
+    <!--去掉变更的合同 -->
+    and change_order_id is null
+  </select>
+
+  <select id="queryByOrderIdAndCustomerId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from busi_consign_order_contract
+    where consign_order_id = #{orderId,jdbcType=BIGINT}
+    and customer_id = #{customerId,jdbcType=BIGINT}
+    <!--去掉变更的合同 -->
+    and change_order_id is null
+    order by id desc
+    limit 0,1
+  </select>
+
+  <!--  通过订单id查询最新一笔合同号 -->
+  <select id="queryMaxContract" resultType="String" parameterType="java.lang.Long">
+    SELECT ifnull(max(right(contract_code_auto,3)),0)
+    FROM busi_consign_order_contract WHERE
+     consign_order_id=#{orderId,jdbcType=BIGINT} and change_order_id is not null
+  </select>
+  <!--  根据变更订单号查询合同信息集 -->
+  <select id="queryByChangeOrderId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from busi_consign_order_contract
+    where change_order_id = #{changeOrderId,jdbcType=INTEGER}
+  </select>
+  <!--  根据订单id查询变更合同是否上传 -->
+  <select id="countUnChangeUploadByOrderId" resultType="int">
+    select count(1) from busi_consign_order_contract where consign_order_id=#{orderId,jdbcType=BIGINT}
+    and change_order_id =  #{orderChangId,jdbcType=INTEGER} and status=0
+  </select>
+</mapper>

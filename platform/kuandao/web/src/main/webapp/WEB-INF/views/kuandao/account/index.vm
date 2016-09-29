@@ -1,0 +1,103 @@
+<!-- 全部-->
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+    <style >
+        .menuContent{
+            overflow: auto;
+            height: 350px;
+            overflow-x:hidden;
+        }
+    </style>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            	款道支付
+        </li>
+        <li>
+				开户管理 
+        </li>
+        <li class="active">已开户</li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+   
+    <!-- /.nav-search -->
+</div>
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <!--TAPBAR-->
+            <!-- tapbar S -->
+            #parse("/kuandao/account/tapbar.vm")
+            <!-- tapbar E -->
+
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="clearfix">
+                        <div class="input-group pull-right col-md-12 col-sm-12 col-lg-12 search-bar">
+                            <form class="form-inline">
+                                <label>客户名称：</label><input id="memeberName" class="ipt-text" type="text" value=""/>
+                                <label>浦发会员号：</label><input id="memeberCode" class="ipt-text" type="text" value=""/>
+                                <label>浦发虚拟账号：</label><input id="virAcctNo" class="ipt-text" type="text" value=""/>
+                                <label>状态：</label>
+                                <select id="status">
+									<option value ="">全部</option> 
+									<option value ="1">已开户</option>
+									<option value ="0">已绑定</option>
+									<option value ="2">异常</option>
+								</select>
+								<button id="queryBtn" class="btn btn-sm btn-default" type="button" title="搜索">
+										<i class="aace-icon fa fa-search bigger-110"></i>
+                                </button>
+								&nbsp;&nbsp;&nbsp;
+                                <button id="queryAllBtn" class="btn btn-sm btn-default" type="button" title="会员查询">
+										会员查询
+                                </button>
+								<button id="synchronizeAllBtn" class="btn btn-sm btn-default" type="button" title="同步所有">
+										同步所有
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+					
+                    <!-- div.dataTables_borderWrap -->
+                    <div class="dataTable-overflow">
+                        <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>客户名称</th>
+                                <th>浦发会员号</th>
+                                <th>浦发虚拟账号</th>
+                                <th>绑定账号</th>
+                                <th>组织机构代码证号</th>
+                                <th>款道电话</th>
+								<th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+							<tfoot>
+                            <tr>
+                                <td colspan="8" style="text-align:right"></td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+<script src="$link.getContextPath()/js/views/kuandao/commonquery.js"></script>
+<script src="$link.getContextPath()/js/views/kuandao/account/index.js"></script>
+
+

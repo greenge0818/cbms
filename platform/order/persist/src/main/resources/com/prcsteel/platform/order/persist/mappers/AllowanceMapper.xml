@@ -1,0 +1,657 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.order.persist.dao.AllowanceDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.order.model.model.Allowance" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="allowance_code" property="allowanceCode" jdbcType="VARCHAR" />
+    <result column="allowance_type" property="allowanceType" jdbcType="VARCHAR" />
+    <result column="allowance_id" property="allowanceId" jdbcType="BIGINT" />
+    <result column="org_id" property="orgId" jdbcType="BIGINT" />
+    <result column="org_name" property="orgName" jdbcType="VARCHAR" />
+    <result column="account_id" property="accountId" jdbcType="BIGINT" />
+    <result column="account_name" property="accountName" jdbcType="VARCHAR" />
+    <result column="total_quantity" property="totalQuantity" jdbcType="INTEGER" />
+    <result column="total_weight" property="totalWeight" jdbcType="DECIMAL" />
+    <result column="total_amount" property="totalAmount" jdbcType="DECIMAL" />
+    <result column="actual_total_weight" property="actualTotalWeight" jdbcType="DECIMAL" />
+    <result column="actual_total_amount" property="actualTotalAmount" jdbcType="DECIMAL" />
+    <result column="allowance_total_weight" property="allowanceTotalWeight" jdbcType="DECIMAL" />
+    <result column="allowance_total_amount" property="allowanceTotalAmount" jdbcType="DECIMAL" />
+    <result column="allowance_manner" property="allowanceManner" jdbcType="VARCHAR" />
+    <result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="audit_date" property="auditDate" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="is_deleted" property="isDeleted" jdbcType="TINYINT" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+    <result column="note" property="note" jdbcType="VARCHAR" />
+    <result column="department_id" property="departmentId" jdbcType="BIGINT" />
+    <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="AllowanceList" type="com.prcsteel.platform.order.model.dto.AllowanceDto" extends="BaseResultMap">
+    <result column="buyerGenerate" property="buyerGenerate" jdbcType="BOOLEAN" />
+    <result column="departmentCount" property="departmentCount" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, allowance_code, allowance_type, allowance_id, org_id, org_name, account_id, account_name, total_quantity,
+    total_weight, total_amount, actual_total_weight, actual_total_amount, allowance_total_weight,
+    allowance_total_amount, allowance_manner, img_url, status, audit_date, remark, is_deleted, created,
+    created_by, last_updated, last_updated_by, modification_number, note,department_id,department_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from reb_allowance
+    where id = #{id,jdbcType=BIGINT}
+    AND is_deleted = 0
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from reb_allowance
+    where id = #{id,jdbcType=BIGINT}
+    AND is_deleted = 0
+  </delete>
+  <insert id="insert" parameterType="com.prcsteel.platform.order.model.model.Allowance" >
+    insert into reb_allowance (id, allowance_code, allowance_type,
+      allowance_id, org_id, org_name, account_id, account_name,
+      total_quantity, total_weight, total_amount,
+      actual_total_weight, actual_total_amount, allowance_total_weight,
+      allowance_total_amount, allowance_manner,
+      img_url, status, audit_date, remark,
+      is_deleted, created, created_by,
+      last_updated, last_updated_by, modification_number, note,department_id,department_name
+      )
+    values (#{id,jdbcType=BIGINT}, #{allowanceCode,jdbcType=VARCHAR}, #{allowanceType,jdbcType=VARCHAR},
+      #{allowanceId,jdbcType=BIGINT},  #{orgId,jdbcType=BIGINT}, #{orgName,jdbcType=VARCHAR},
+      #{accountId,jdbcType=BIGINT}, #{accountName,jdbcType=VARCHAR},
+      #{totalQuantity,jdbcType=INTEGER}, #{totalWeight,jdbcType=DECIMAL}, #{totalAmount,jdbcType=DECIMAL},
+      #{actualTotalWeight,jdbcType=DECIMAL}, #{actualTotalAmount,jdbcType=DECIMAL}, #{allowanceTotalWeight,jdbcType=DECIMAL},
+      #{allowanceTotalAmount,jdbcType=DECIMAL}, #{allowanceManner,jdbcType=VARCHAR},
+      #{imgUrl,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{auditDate,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR},
+      #{isDeleted,jdbcType=TINYINT}, #{created,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR},
+      #{lastUpdated,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}, #{modificationNumber,jdbcType=INTEGER}
+      , #{note,jdbcType=VARCHAR},#{departmentId,jdbcType=BIGINT}, #{departmentName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.order.model.model.Allowance" useGeneratedKeys="true" keyProperty="id">
+    insert into reb_allowance
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="allowanceCode != null" >
+        allowance_code,
+      </if>
+      <if test="allowanceType != null" >
+        allowance_type,
+      </if>
+      <if test="allowanceId != null" >
+        allowance_id,
+      </if>
+      <if test="orgId != null" >
+        org_id,
+      </if>
+      <if test="orgName != null" >
+        org_name,
+      </if>
+      <if test="accountId != null" >
+        account_id,
+      </if>
+      <if test="accountName != null" >
+        account_name,
+      </if>
+      <if test="totalQuantity != null" >
+        total_quantity,
+      </if>
+      <if test="totalWeight != null" >
+        total_weight,
+      </if>
+      <if test="totalAmount != null" >
+        total_amount,
+      </if>
+      <if test="actualTotalWeight != null" >
+        actual_total_weight,
+      </if>
+      <if test="actualTotalAmount != null" >
+        actual_total_amount,
+      </if>
+      <if test="allowanceTotalWeight != null" >
+        allowance_total_weight,
+      </if>
+      <if test="allowanceTotalAmount != null" >
+        allowance_total_amount,
+      </if>
+      <if test="allowanceManner != null" >
+        allowance_manner,
+      </if>
+      <if test="imgUrl != null" >
+        img_url,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="auditDate != null" >
+        audit_date,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by,
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number,
+      </if>
+      <if test="note != null" >
+      	note,
+      </if>
+      <if test="departmentId != null" >
+        department_id,
+      </if>
+      <if test="departmentName != null" >
+        department_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="allowanceCode != null" >
+        #{allowanceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="allowanceType != null" >
+        #{allowanceType,jdbcType=VARCHAR},
+      </if>
+      <if test="allowanceId != null" >
+        #{allowanceId,jdbcType=BIGINT},
+      </if>
+      <if test="orgId != null" >
+        #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="orgName != null" >
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="accountId != null" >
+        #{accountId,jdbcType=BIGINT},
+      </if>
+      <if test="accountName != null" >
+        #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="totalQuantity != null" >
+        #{totalQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="totalWeight != null" >
+        #{totalWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="totalAmount != null" >
+        #{totalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="actualTotalWeight != null" >
+        #{actualTotalWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="actualTotalAmount != null" >
+        #{actualTotalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="allowanceTotalWeight != null" >
+        #{allowanceTotalWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="allowanceTotalAmount != null" >
+        #{allowanceTotalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="allowanceManner != null" >
+        #{allowanceManner,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUrl != null" >
+        #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="auditDate != null" >
+        #{auditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="note != null" >
+      	#{note,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null" >
+        #{departmentId,jdbcType=BIGINT},
+      </if>
+      <if test="departmentName != null" >
+        #{departmentName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.order.model.model.Allowance" >
+    update reb_allowance
+    <set >
+      <if test="allowanceCode != null" >
+        allowance_code = #{allowanceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="allowanceType != null" >
+        allowance_type = #{allowanceType,jdbcType=VARCHAR},
+      </if>
+      <if test="allowanceId != null" >
+        allowance_id = #{allowanceId,jdbcType=BIGINT},
+      </if>
+      <if test="orgId != null" >
+        org_id = #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="orgName != null" >
+        org_name = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="accountId != null" >
+        account_id = #{accountId,jdbcType=BIGINT},
+      </if>
+      <if test="accountName != null" >
+        account_name = #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="totalQuantity != null" >
+        total_quantity = #{totalQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="totalWeight != null" >
+        total_weight = #{totalWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="totalAmount != null" >
+        total_amount = #{totalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="actualTotalWeight != null" >
+        actual_total_weight = #{actualTotalWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="actualTotalAmount != null" >
+        actual_total_amount = #{actualTotalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="allowanceTotalWeight != null" >
+        allowance_total_weight = #{allowanceTotalWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="allowanceTotalAmount != null" >
+        allowance_total_amount = #{allowanceTotalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="allowanceManner != null" >
+        allowance_manner = #{allowanceManner,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUrl != null" >
+        img_url = #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="auditDate != null" >
+        audit_date = #{auditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number = #{modificationNumber,jdbcType=INTEGER},
+      </if>
+       <if test="note != null" >
+      	note = #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null" >
+        department_id = #{departmentId,jdbcType=BIGINT},
+      </if>
+      <if test="departmentName != null" >
+        department_name = #{departmentName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+    AND is_deleted = 0
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.order.model.model.Allowance" >
+    update reb_allowance
+    set allowance_code = #{allowanceCode,jdbcType=VARCHAR},
+      allowance_type = #{allowanceType,jdbcType=VARCHAR},
+      allowance_id = #{allowanceId,jdbcType=BIGINT},
+      org_id = #{orgId,jdbcType=BIGINT},
+      org_name = #{orgName,jdbcType=VARCHAR},
+      account_id = #{accountId,jdbcType=BIGINT},
+      account_name = #{accountName,jdbcType=VARCHAR},
+      total_quantity = #{totalQuantity,jdbcType=INTEGER},
+      total_weight = #{totalWeight,jdbcType=DECIMAL},
+      total_amount = #{totalAmount,jdbcType=DECIMAL},
+      actual_total_weight = #{actualTotalWeight,jdbcType=DECIMAL},
+      actual_total_amount = #{actualTotalAmount,jdbcType=DECIMAL},
+      allowance_total_weight = #{allowanceTotalWeight,jdbcType=DECIMAL},
+      allowance_total_amount = #{allowanceTotalAmount,jdbcType=DECIMAL},
+      allowance_manner = #{allowanceManner,jdbcType=VARCHAR},
+      img_url = #{imgUrl,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      audit_date = #{auditDate,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR},
+      is_deleted = #{isDeleted,jdbcType=TINYINT},
+      created = #{created,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      modification_number = #{modificationNumber,jdbcType=INTEGER},
+      note = #{note,jdbcType=VARCHAR},
+      department_id = #{departmentId,jdbcType=BIGINT},
+      department_name = #{departmentName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+    AND is_deleted = 0
+  </update>
+
+  <update id="updateByCondition" parameterType="com.prcsteel.platform.order.model.dto.AllowanceForUpdateDto" >
+    update reb_allowance
+    <set >
+      <if test="allowanceCode != null" >
+        allowance_code = #{allowanceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="allowanceType != null" >
+        allowance_type = #{allowanceType,jdbcType=VARCHAR},
+      </if>
+      <if test="allowanceId != null and allowanceId > 0" >
+        allowance_id = #{allowanceId,jdbcType=BIGINT},
+      </if>
+      <if test="orgId != null" >
+        org_id = #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="orgName != null" >
+        org_name = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="accountId != null" >
+        account_id = #{accountId,jdbcType=BIGINT},
+      </if>
+      <if test="accountName != null" >
+        account_name = #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="totalQuantity != null" >
+        total_quantity = #{totalQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="totalWeight != null" >
+        total_weight = #{totalWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="totalAmount != null" >
+        total_amount = #{totalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="actualTotalWeight != null" >
+        actual_total_weight = #{actualTotalWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="actualTotalAmount != null" >
+        actual_total_amount = #{actualTotalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="allowanceTotalWeight != null" >
+        allowance_total_weight = #{allowanceTotalWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="allowanceTotalAmount != null" >
+        allowance_total_amount = #{allowanceTotalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="allowanceManner != null" >
+        allowance_manner = #{allowanceManner,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUrl != null" >
+        img_url = #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="auditDate != null" >
+        audit_date = #{auditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number = #{modificationNumber,jdbcType=INTEGER},
+      </if>
+       <if test="note != null" >
+       	note = #{note,jdbcType=VARCHAR},
+       </if>
+      <if test="departmentId != null" >
+        department_id = #{departmentId,jdbcType=BIGINT},
+      </if>
+      <if test="departmentName != null" >
+        department_name = #{departmentName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+    AND is_deleted = 0
+    <if test="oldStatus != null and oldStatus != '' ">
+    AND status = #{oldStatus,jdbcType=VARCHAR}
+    </if>
+  </update>
+
+  <select id="queryMaxAllowanceCode" resultType="java.lang.String" parameterType="java.lang.String" >
+    SELECT 
+	allowance_code
+	FROM reb_allowance
+	WHERE allowance_code LIKE CONCAT('%',#{allowanceCode,jdbcType=VARCHAR},'%')
+	ORDER BY id DESC
+	LIMIT   0,1;
+  </select>
+
+  <update id="updateRebateState" parameterType="com.prcsteel.platform.order.model.query.AllowanceUpdate">
+  	UPDATE reb_allowance
+  	<if test="status != null">
+       set status = #{status,jdbcType=VARCHAR}
+    </if>
+    <if test="remark != null">
+       ,remark = #{remark,jdbcType=VARCHAR}
+    </if>
+     ,audit_date = #{auditDate,jdbcType=TIMESTAMP}
+     ,last_updated = #{lastUpdated,jdbcType=TIMESTAMP}
+     ,last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR}
+     ,modification_number = (modification_number + 1)
+     WHERE id = #{id,jdbcType=BIGINT}
+     <if test="state =='' and state == null">
+     	AND status = 'to_audit'
+     </if>
+     <if test="state !='' and state != null">
+     	AND status = 'approved'
+     </if>
+      AND is_deleted = 0
+  </update>
+
+  <select id="countAllowanceList" resultType="int" parameterType="com.prcsteel.platform.order.model.query.AllowanceListQuery">
+    select count(id) from reb_allowance
+    <where>
+      is_deleted=0
+      <if test="orgIdList != null and orgIdList.size > 0 ">
+        AND org_id in
+        <foreach item="orgid" index="index" collection="orgIdList" open="(" separator="," close=")">
+          #{orgid}
+        </foreach>
+      </if>
+      <if test="allowanceCode!=null and allowanceCode!=''">
+        AND allowance_Code like concat('%',#{allowanceCode},'%')
+      </if>
+      <if test="allowanceType!=null and allowanceType!=''">
+        AND allowance_Type=#{allowanceType}
+      </if>
+      <if test="accountId!=null and accountId!=0">
+        AND account_Id=#{accountId}
+      </if>
+      <if test="beginTime!=null">
+        AND <![CDATA[date_format(created,'%Y-%m-%d')>=str_to_date(#{beginTime},'%Y-%m-%d') ]]>
+      </if>
+      <if test="endTime!=null">
+        AND <![CDATA[date_format(created,'%Y-%m-%d')<=str_to_date(#{endTime},'%Y-%m-%d') ]]>
+      </if>
+      <if test="statusList != null and statusList.size > 0 ">
+        AND status in
+        <foreach item="status" index="index" collection="statusList" open="(" separator="," close=")">
+          #{status}
+        </foreach>
+      </if>
+    </where>
+  </select>
+  <select id="queryAllowanceList" resultMap="AllowanceList"
+          parameterType="com.prcsteel.platform.order.model.query.AllowanceListQuery">
+    select
+    <include refid="Base_Column_List"/>
+    ,(SELECT COUNT(t2.id) FROM cust_account t2 WHERE t2.parent_id = t1.account_id) AS departmentCount
+    ,(case when allowance_Type='seller' and (SELECT COUNT(1) FROM reb_allowance WHERE allowance_id = t1.id)=0 then 0
+    else 1 end ) as buyerGenerate
+    from reb_allowance t1
+    <where>
+      is_deleted=0
+      <if test="orgIdList != null and orgIdList.size > 0 ">
+        AND org_id in
+        <foreach item="orgid" index="index" collection="orgIdList" open="(" separator="," close=")">
+          #{orgid}
+        </foreach>
+      </if>
+      <if test="allowanceCode!=null and allowanceCode!=''">
+        AND allowance_Code like concat('%',#{allowanceCode},'%')
+      </if>
+      <if test="allowanceType!=null and allowanceType!=''">
+        AND allowance_Type=#{allowanceType}
+      </if>
+      <if test="accountId!=null and accountId!=0">
+        AND account_Id=#{accountId}
+      </if>
+      <if test="beginTime!=null">
+        AND <![CDATA[date_format(created,'%Y-%m-%d')>=str_to_date(#{beginTime},'%Y-%m-%d') ]]>
+      </if>
+      <if test="endTime!=null">
+        AND <![CDATA[date_format(created,'%Y-%m-%d')<=str_to_date(#{endTime},'%Y-%m-%d') ]]>
+      </if>
+      <if test="statusList != null and statusList.size > 0 ">
+        AND status in
+        <foreach item="status" index="index" collection="statusList" open="(" separator="," close=")">
+          #{status}
+        </foreach>
+      </if>
+    </where>
+    order by created desc
+    limit #{start},#{length}
+  </select>
+
+  <select id="queryByAllowanceId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select
+    <include refid="Base_Column_List" />
+    from reb_allowance
+    where allowance_id = #{allowanceId,jdbcType=BIGINT}
+    AND is_deleted = 0
+  </select>
+
+  <update id="deleteAllowanceByIds">
+    update reb_allowance
+    set is_deleted = 1,modification_Number=modification_Number+1,
+        last_updated = CURRENT_TIMESTAMP,
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR}
+    where
+    is_deleted = 0
+    <if test="allowanceIds != null">
+      AND id IN
+      <foreach item="id" index="index" collection="allowanceIds" open="(" separator="," close=")">
+        #{id}
+      </foreach>
+    </if>
+  </update>
+  
+  <select id="selectAllNeedToClose" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM reb_allowance
+    WHERE
+    status = 'not_through'
+    AND DATE_ADD(audit_date,INTERVAL 3 DAY)<![CDATA[ <= now()]]>
+    AND is_deleted = 0 
+  </select>
+
+  <update id="updateStatusByAllowanceId" parameterType="com.prcsteel.platform.order.model.dto.AllowanceForUpdateDto">
+    update reb_allowance
+    set status = #{status,jdbcType=VARCHAR},
+    last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+    last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+    modification_number = (modification_number + 1)
+    where  allowance_id = #{allowanceId,jdbcType=BIGINT}
+    AND is_deleted = 0
+    AND status = #{oldStatus,jdbcType=VARCHAR}
+  </update>
+	
+  <select id="selectAllowanceByOrderId" resultType="java.lang.Integer" parameterType="java.lang.Long">
+  	SELECT COUNT(t1.id) FROM 
+	reb_allowance t1
+	INNER JOIN reb_allowance_order_item t2 ON t2.allowance_id = t1.id
+	WHERE t2.order_id = #{orderId,jdbcType=BIGINT}
+	AND t1.status NOT IN ('closed')
+	AND t2.is_deleted = 0
+  </select>
+
+  <select id="queryByAllowanceCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM reb_allowance
+    WHERE
+    allowance_code = #{allowanceCode,jdbcType=VARCHAR}
+    AND is_deleted = 0
+  </select>
+  
+  <resultMap id="accountMap" type="com.prcsteel.platform.order.model.dto.CustAccountDto" extends="BaseResultMap">
+    <result column="departmentId" property="departmentId" jdbcType="BIGINT" />
+    <result column="departmentName" property="departmentName" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <select id="queryDepartmentByAccoutId" resultMap="accountMap" parameterType="java.lang.Long">
+  	SELECT t1.id AS departmentId, t1.name AS departmentName FROM cust_account t1
+  	WHERE t1.parent_id = #{accountId} AND t1.is_deleted = 0
+  </select>
+</mapper>

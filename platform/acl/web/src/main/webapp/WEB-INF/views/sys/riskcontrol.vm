@@ -1,0 +1,364 @@
+#set($layout="/sys/default.vm")
+<!--迁移风控代码，增加5个字段 add by zhoucai@prcsteel.com 2016-5-6-->
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li><i class="ace-icon fa fa-home home-icon"></i>系统管理</li>
+        <li>系统设置</li>
+        <li class="active">风控设置</li>
+    </ul>
+    <!-- /.breadcrumb -->
+    #parse("layout/topbtn.vm")
+    <!-- /.nav-search -->
+</div>
+<div class="page-content">
+
+    <div class="row">
+        <div class="col-xs-12">
+            <!--TAPBAR-->
+            #parse("sys/systemmenu.vm")
+            <!-- PAGE CONTENT BEGINS -->
+            <form method="post" id="savaRisk" action="$link.getContextPath()/sys/savaRisk.html">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- div.dataTables_borderWrap -->
+                        <div class="table-bar" id="first-table">
+
+                            <div class="recordbar  text-left col-xs-12">
+                                <span class="bolder">客户身份标示设置：</span>
+                            </div>
+                            <table id="" class="contable table"   style="">
+                                <thead> <tr>
+                                    <th class="text-center">客户标示</th>
+                                    <th class="text-center marking"colspan="2">标示名称</th>
+                                    <th class="text-center" >操作</th>
+                                </tr></thead> <tbody class="text-center">
+                                #foreach( $customer in $customerLabel)
+                                <tr class="bolder-b-dashed">
+                                    <input type="hidden" name="clientIdentifying" value="$!customer.description"/>
+                                    <input type="hidden" name="sellerBuyer" value="$!customer.settingName"/>
+									 <input type="hidden" name="defaultValue"  value="$!customer.defaultValue"/>
+                                    <td>$!customer.description</td>
+                                    </td><td style="display: none"><input type="hidden" name="identifyingName" value="$!customer.settingValue"/></td>
+                                    <td colspan="2" class="identifying">$!customer.settingValue</td>
+                                    <td><a href="javascript:void(0);"  onclick="editVoucher(this)">编辑</a></td>
+                                </tr>
+                                #end
+                            </tbody> </table>
+                            <!--.clientType-->
+                            <div class="recordbar  text-left col-xs-12">
+                                <span class="bolder">设置需要审核的交易凭证：</span>
+                            </div>
+                            <br>
+                            <table id="clientType" class="contable table"   style="">
+                                <thead> <tr>
+                                    <th class="text-center">卖家客户标示</th>
+                                    <th class="text-center">交易凭证</th>
+                                    <th  class="text-center" colspan="2">是否需要审核通过才能开票</th>
+                                    <th  class="text-center marking" colspan="2">凭证名称</th>
+                                    <th class="text-center" >操作</th>
+                                </tr></thead> <tbody id="clientTd" class="text-center">
+
+                                #foreach( $client in $clientType)
+                                <tr class="bolder-b-dashed">
+                                    <td class="clientTypeName">$client.settingName</td>
+                                    <td class="dealEvidence">$client.displayName</td>
+                                    <input type="hidden" name="clientNature" class="clientTypeNameDB" value="$!client.settingName"/>
+                                    <input type="hidden" name="dealProof" value="$!client.displayName"/>
+                                    <td colspan="2">
+                                        #if($client.settingValue==0)
+                                            <label><input type="radio" name="yesPass$client.sequence" class="check" value="1">需要审核通过</label>
+                                            <label><input type="radio" name="yesPass$client.sequence" class="check" value="0" checked="true">不需要审核通过</label>
+                                        #else
+                                            <label><input type="radio" name="yesPass$client.sequence"  class="check" value="1" checked="true">需要审核通过</label>
+                                            <label><input type="radio" name="yesPass$client.sequence"  class="check" value="0" >不需要审核通过</label>
+                                        #end
+
+                                    </td><td style="display: none"><input type="hidden" name="proofName" value="$!client.description"/></td>
+                                    <td colspan="2" class="voucher">$!client.description</td>
+
+                                    <td><a href="javascript:void(0);"  onclick="editVoucher(this)">编辑</a></td>
+
+                                </tr>
+                                #end
+                            </tbody> </table>
+                            <!--.exceedtime-->
+                            <div class="recordbar  text-left col-xs-12">
+                                <span class="bolder">超期时间设置：</span>
+                            </div><br>
+                            <div class="print-finfo">
+                                <label>超期时间：<input type="text" value="$!exceedtime.defaultValue" class="d-text" name="exceedtime"/>&nbsp;天</label>
+                            </div>
+							   <!--.exceedtime-->
+                            <div class="recordbar  text-left col-xs-12">
+                                <span class="bolder">设置名称：</span>
+                            </div><br>
+                            <div class="print-finfo">
+								#foreach($!settings in $!ControlPinSettings)
+									<input type="hidden" name="ControlPinSettingsName" value="$!settings.displayName"/>
+									<input type="hidden" name="ControlPinSettingsType" value="$!settings.settingName"/>
+                                <label>$!settings.displayName：   #if($!settings.settingValue==1)
+                                        <label><input type="radio" name="$!settings.settingName" class="check" value="1" checked>开启</label>
+                                        <label><input type="radio" name="$!settings.settingName" class="check" value="0" >不开启</label>
+                                    #else
+                                        <label><input type="radio" name="$!settings.settingName"  class="check" value="1" >开启</label>
+                                        <label><input type="radio" name="$!settings.settingName"  class="check" value="0" checked>不开启</label>
+                                    #end</label><br>
+									#end
+                            </div>
+                        </div>
+                        <!--.billSetting-->
+                        <div class="recordbar  text-left col-xs-12">
+                            <span class="bolder">能否开单设置：</span>
+                        </div>
+                        <div class="table-bar">  <table  class="contable table"   style="">
+                            <thead> <tr>
+                                <th class="text-center">客户性质</th>
+                                <th class="text-center "colspan="2" >标示名称</th>
+                                <th class="text-center" >能否开单</th>
+                            </tr></thead> <tbody id="whetherTd" class="text-center">
+                        <tr class="bolder-b-dashed">
+                            <td rowspan="$!billSetting.size()" >卖家客户</td>
+                            #foreach( $bill in $billSetting)
+                                <td class="whetherName">$!bill.settingName</td>
+                                <input type="hidden" name="whetherName" class="whetherNameDB" value="$!bill.settingName"/>
+                                <td colspan="2">
+                                    #if($!bill.settingValue==0)
+                                        <label><input type="radio" name="whether$!bill.sequence" class="check" value="1">能</label>
+                                        <label><input type="radio" name="whether$!bill.sequence" class="check" value="0" checked>不能</label>
+                                    #else
+                                        <label><input type="radio" name="whether$!bill.sequence"  class="check" value="1" checked>能</label>
+                                        <label><input type="radio" name="whether$!bill.sequence"  class="check" value="0" >不能</label>
+                                    #end
+                                </td>
+                            </tr>
+                            #end
+                        </tbody> </table></div>
+
+                        <div class="recordbar  text-left col-xs-12">
+                            <span class="bolder">付款申请是否需要上传合同设置：</span>
+                        </div>
+                        <div class="table-bar">  <table  class="contable table"   style="">
+                            <thead> <tr>
+                                <th class="text-center">客户性质</th>
+                                <th class="text-center "colspan="2" >标示名称</th>
+                                <th class="text-center" >付款申请是否需要上传合同</th>
+                            </tr></thead> <tbody id="whetherTd" class="text-center">
+                        <tr class="bolder-b-dashed">
+                            <td rowspan="$!applyPaymentContractSetting.size()" >卖家客户</td>
+                            #foreach( $applyPaymentContract in $applyPaymentContractSetting)
+                                <td class="whetherName">$!applyPaymentContract.settingName</td>
+                                <input type="hidden" name="whetherContractName" class="whetherNameDB" value="$!applyPaymentContract.settingName"/>
+                                <td colspan="2">
+                                    #if($!applyPaymentContract.settingValue==0)
+                                        <label><input type="radio" name="whetherContract$!applyPaymentContract.sequence" class="check" value="1">需要</label>
+                                        <label><input type="radio" name="whetherContract$!applyPaymentContract.sequence" class="check" value="0" checked>不需要</label>
+                                    #else
+                                        <label><input type="radio" name="whetherContract$!applyPaymentContract.sequence"  class="check" value="1" checked>需要</label>
+                                        <label><input type="radio" name="whetherContract$!applyPaymentContract.sequence"  class="check" value="0" >不需要</label>
+                                    #end
+                                </td>
+                            </tr>
+                            #end
+                        </tbody> </table></div>
+
+                        <!--.dealParameter-->
+                        <div class="recordbar  text-left col-xs-12">
+                            <span class="bolder">交易参数设置：</span>
+                        </div>
+						 #foreach( $deal in $dealParameter)
+                        <div class="table-bar">  <table id="" class="contable table"   style="">
+                            <thead> <tr>
+								<th class="text-center">服务中心</th>
+                                <th class="text-center">客户性质</th>
+                                <th class="text-center">标示名称</th>
+                                <th class="text-center" colspan="2">是否开启上限控制</th>
+                                <th class="text-center">月交易吨位上限（吨）</th>
+                                <th class="text-center">月交易笔数上限（笔）</th>
+								 <th class="text-center">单笔交易吨位上限（吨）</th>
+                                <th class="text-center">总交易笔数上限（笔）</th>
+								<th class="text-center">总交易吨位上限（吨）</th>
+                                <th class="text-center" >与目标交易量占比上限（%）</th>
+                            </tr></thead> <tbody  id="dealParameterTd" class="text-center dealParameterTd">
+                        <tr class="bolder-b-dashed">
+                        #if($!dealParameter.size()>0)
+							<td rowspan="$!deal.allOrgReward.size()" >$!deal.orgName</td>
+                            <td rowspan="$!deal.allOrgReward.size()" >卖家客户</td>
+                            #foreach( $para in $deal.allOrgReward)
+                                
+                                <td class="parameterName">$!para.rewardType</td>
+                                <input type="hidden" name="parameterName" class="parameterNameDB" value="$!para.rewardType"/>
+                                <td colspan="2">
+                                    #if($!para.categoryUuid==0)
+                                        <label><input type="radio" name="$!{para.orgId}yesParameter$!para.seq"  value="1">是</label>
+                                        <label><input type="radio" name="$!{para.orgId}yesParameter$!para.seq"  value="0" checked>否</label>
+                                    #else
+                                        <label><input type="radio" name="$!{para.orgId}yesParameter$!para.seq"   value="1" checked>是</label>
+                                        <label><input type="radio" name="$!{para.orgId}yesParameter$!para.seq"   value="0" >否</label>
+                                    #end
+                                </td>
+                                <td><input type="text"   value="$!para.rewardRole" class="ipt-text" id="" name="tonnage" size="14"/></td>
+                                <td><input type="text"   value="$!para.sellerLimit" class="ipt-text" id="" name="count" size="14"/></td>
+								
+							   <td><input type="text"   value="$!para.singleTradeWeight" class="ipt-text" id="" name="singleTradeWeight" size="14"/></td>
+								<td><input type="text"   value="$!para.allTradeQuality" class="ipt-text" id="" name="allTradeQuality" size="14"/></td>
+								<td><input type="text"   value="$!para.allTradeWeight" class="ipt-text" id="" name="allTradeWeight" size="14"/></td>
+								
+                                <td><input type="text"   value="$!para.buyRadio" class="ipt-text" id="" name="percent" size="14"/></td>
+								<input type="hidden" name="orgId" value="$!{deal.orgId}"/>
+								<input type="hidden" name="orgName" value="$!{deal.orgName}"/>
+                            </tr>
+                            #end
+                        #end
+                        </tbody> </table></div>
+						 #end
+
+                        <!--.recordbar-->
+                        <div class="recordbar  text-left col-xs-12">
+                            <span class="bolder">提示信息设置：</span>
+                        </div>
+                        <div class="table-bar"> <table id="" class="contable border1"   style="">
+                            <tbody id="newOrderTd" class="text-center">
+                            <tr>
+                            #if($new_order.size()>0)
+                                <td rowspan="$new_order.size()" >$new_order[0].settingName</td>
+                                #foreach($hint in $new_order)
+                                    </td><td style="display: none"><input type="hidden" name="whetherStart" value="$!hint.settingValue"/></td>
+                                    #if($hint.settingValue==0)
+                                        <td> <label><input type="checkbox" class="checked" name="whetherStart$hint.sequence" value="$!hint.settingValue" >启用</label></td>
+                                    #else
+                                        <td> <label><input type="checkbox" class="checked"  name="whetherStart$hint.sequence" value="$!hint.settingValue" checked>启用</label></td>
+                                    #end
+
+                                    <td><span class="newOrder">$!{hint.defaultValue}</span>卖家提示信息：</td>
+                                    <td><input type="text" must="1" verify="numeric" msg="" value="$!hint.description" class="ipt-text" id="" name="message" size="60"/></td>
+                                    </td><td style="display: none"><input type="hidden" name="messageName" value="new_order"/></td>
+                                    </td><td style="display: none"><input type="hidden" name="messageType" value="$!hint.displayName"/></td>
+                                    </td><td style="display: none"><input type="hidden" name="messageNameEng" class="newOrderDB" value="$!hint.defaultValue"/></td>
+
+                                </tr>
+                                #end
+                            #end</tbody></table></div> <div class="table-bar">
+                        <table id="" class="contable border1"   style="">
+                            <tbody id="auditOrderTd" class="text-center">
+                            <tr>
+                                    #if($audit_order.size()>0)
+                                <td rowspan="$audit_order.size()" >$!audit_order[0].settingName</td>
+                                #foreach($hint in $audit_order)
+                                    </td><td style="display: none"><input type="hidden" name="whetherStart" value="$!hint.settingValue"/></td>
+                                    #if($hint.settingValue==0)
+                                        <td> <label><input type="checkbox" class="checked" name="whetherStart$hint.sequence" value="$!hint.settingValue" >启用</label></td>
+                                    #else
+                                        <td> <label><input type="checkbox" class="checked" name="whetherStart$hint.sequence" value="$!hint.settingValue" checked>启用</label></td>
+                                    #end
+                                    <td><span class="auditOrder">$!{hint.defaultValue}</span>卖家提示信息：</td>
+                                    <td><input type="text" must="1" verify="numeric" msg="" value="$!hint.description" class="ipt-text" id="" name="message" size="60"/></td>
+                                    </td><td style="display: none"><input type="hidden" name="messageName" value="audit_order"/></td>
+                                    </td><td style="display: none"><input type="hidden" name="messageType" value="$!hint.displayName"/></td>
+                                    </td><td style="display: none"><input type="hidden" name="messageNameEng" class="auditOrderDB" value="$!hint.defaultValue"/></td>
+                                </tr>
+                                #end
+                                    #end</tbody></table></div> <div class="table-bar">
+                        <table id="applyPaymentTd" class="contable border1"   style="">
+                            <tbody id="applyPaymentTd" class="text-center">
+                            <tr>
+                                        #if($apply_payment.size()>0)
+                                <td rowspan="$apply_payment.size()" >$apply_payment[0].settingName</td>
+                                #foreach($hint in $apply_payment)
+                                    </td><td style="display: none"><input type="hidden" name="whetherStart" value="$hint.settingValue"/></td>
+                                    #if($hint.settingValue==0)
+                                        <td> <label><input type="checkbox" class="checked"  name="whetherStart$hint.sequence" value="$hint.settingValue" >启用</label></td>
+                                    #else
+                                        <td> <label><input type="checkbox" class="checked" name="whetherStart$hint.sequence" value="$hint.settingValue" checked>启用</label></td>
+                                    #end
+                                    <td><span class="applyPayment">$!{hint.defaultValue}</span>卖家提示信息：</td>
+                                    <td><input type="text" must="1" verify="numeric" msg="" value="$!hint.description" class="ipt-text" id="" name="message" size="60"/></td>
+                                    </td><td style="display: none"><input type="hidden" name="messageName" value="apply_payment"/></td>
+                                    </td><td style="display: none"><input type="hidden" name="messageType" value="$!hint.displayName"/></td>
+                                    </td><td style="display: none"><input type="hidden" name="messageNameEng" class="applyPaymentDB" value="$!hint.defaultValue"/></td>
+                                </tr>
+                                #end
+                                        #end</tbody></table></div> <div class="table-bar">
+                        <table class="contable border1"   style="">
+                            <tbody id="pendingPaymentTd" class="text-center">
+                            <tr>
+                            #if($pending_payment.size()>0)
+                                <td rowspan="$pending_payment.size()" >$!pending_payment[0].settingName</td>
+                                #foreach($hint in $pending_payment)
+                                    </td><td style="display: none"><input type="hidden" name="whetherStart" value="$!hint.settingValue"/></td>
+                                    #if($hint.settingValue==0)
+                                        <td> <label><input type="checkbox" class="checked" name="whetherStart$hint.sequence" value="$!hint.settingValue" >启用</label></td>
+                                    #else
+                                        <td> <label><input type="checkbox" class="checked" name="whetherStart$hint.sequence" value="$!hint.settingValue" checked>启用</label></td>
+                                    #end
+                                    <td><span class="pendingPayment">$!{hint.defaultValue}</span>卖家提示信息：</td>
+                                    <td><input type="text" must="1" verify="numeric" msg="" value="$!hint.description" class="ipt-text" id="" name="message" size="60"/></td>
+                                    </td><td style="display: none"><input type="hidden" name="messageName" value="pending_payment"/></td>
+                                    </td><td style="display: none"><input type="hidden" name="messageType" value="$!hint.displayName"/></td>
+                                    </td><td style="display: none"><input type="hidden" name="messageNameEng" class="pendingPaymentDB" value="$!hint.defaultValue"/></td>
+                                </tr>
+                                #end
+                            #end</tbody></table></div> <div class="table-bar">
+                        <table  class="contable border1" style="">
+                            <tbody id="printFloatLayerTd"class="text-center">
+                            <tr>
+                            #if($print_float_layer.size()>0)
+                                <td rowspan="$print_float_layer.size()" >$!print_float_layer[0].settingName</td>
+                                #foreach($hint in $print_float_layer)
+                                    </td><td style="display: none"><input type="hidden" name="whetherStart" value="$!hint.settingValue"/></td>
+                                    #if($hint.settingValue==0)
+                                        <td> <label><input type="checkbox" class="checked" name="whetherStart$hint.sequence" value="$!hint.settingValue" >启用</label></td>
+                                    #else
+                                        <td> <label><input type="checkbox" class="checked" name="whetherStart$hint.sequence" value="$!hint.settingValue" checked>启用</label></td>
+                                    #end
+                                    <td><span class="printFloatLayer">$!{hint.defaultValue}</span>卖家提示信息：</td>
+                                    <td><input type="text" must="1" verify="numeric" msg="" value="$!hint.description" class="ipt-text" id="" name="message" size="60"/></td>
+                                    </td><td style="display: none"><input type="hidden" name="messageName" value="print_float_layer"/></td>
+                                    </td><td style="display: none"><input type="hidden" name="messageType" value="$!hint.displayName"/></td>
+                                    </td><td style="display: none"><input type="hidden" name="messageNameEng" class="printFloatLayerDB" value="$!hint.defaultValue"/></td>
+                                </tr>
+                                #end
+                            #end</tbody></table></div> <div class="table-bar">
+                        <table id="" class="contable border1"   style="">
+                            <tbody id="printTransInterfaceTd" class="text-center">
+                            <tr>
+                            #if($print_trans_interface.size()>0)
+                                <td rowspan="$print_trans_interface.size()" >$!print_trans_interface[0].settingName</td>
+                                #foreach($hint in $print_trans_interface)
+                                    </td><td style="display: none"><input type="hidden" name="whetherStart" value="$!hint.settingValue"/></td>
+                                    #if($hint.settingValue==0)
+                                        <td> <label><input type="checkbox" class="checked" name="whetherStart$hint.sequence" value="$!hint.settingValue" >启用</label></td>
+                                    #else
+                                        <td> <label><input type="checkbox" class="checked" name="whetherStart$hint.sequence" value="$!hint.settingValue" checked>启用</label></td>
+                                    #end
+                                    <td><span class="printTransInterface">$!{hint.defaultValue}</span>卖家提示信息：</td>
+                                    <td><input type="text" must="1" verify="numeric" msg="" value="$!hint.description" class="ipt-text" id="" name="message" size="60"/></td>
+                                    </td><td style="display: none"><input type="hidden" name="messageName" value="print_trans_interface"/></td>
+                                    </td><td style="display: none"><input type="hidden" name="messageType" value="$!hint.displayName"/></td>
+                                    </td><td style="display: none"><input type="hidden" name="messageNameEng" class="printTransInterfaceDB" value="$!hint.defaultValue"/></td>
+                                </tr>
+                                #end
+                            #end</tbody></table></div>
+
+                        <div class="btn-bar">
+                            <button type="button" id="submit" class="btn btn-info btn-sm">保存</button>
+                        </div>
+
+                        <!--/.recordbar-->
+                    </div>
+
+                </div>
+            </form>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+<!-- /.page-content -->
+<script type="text/javascript" src="$link.getContextPath()/js/views/sys/riskcontrol.js"></script>

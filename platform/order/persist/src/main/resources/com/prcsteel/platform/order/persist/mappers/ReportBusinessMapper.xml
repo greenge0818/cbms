@@ -1,0 +1,660 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.order.persist.dao.ReportBusinessDao">
+    <!-- 公共字段 start-->
+    <resultMap id="BuyerData" type="com.prcsteel.platform.order.model.dto.TradeStatisticsDto">
+        <result column="orderCount" property="orderCount" jdbcType="INTEGER"/>
+        <result column="consignOrderCount" property="consignOrderCount" jdbcType="INTEGER"/>
+        <result column="buyerCount" property="buyerCount" jdbcType="INTEGER"/>
+    </resultMap>
+    <resultMap id="FrequentData" type="com.prcsteel.platform.order.model.dto.TradeStatisticsDto">
+        <result column="frequentTradeCurMonthCount" property="frequentTradeCurMonthCount" jdbcType="INTEGER"/>
+        <result column="frequentTradePrevMonthCount" property="frequentTradePrevMonthCount" jdbcType="INTEGER"/>
+    </resultMap>
+    <resultMap id="ConsignData" type="com.prcsteel.platform.order.model.dto.TradeStatisticsDto">
+        <result column="sellerTradeTotalAmount" property="sellerTradeTotalAmount" jdbcType="INTEGER"/>
+        <result column="tradeSellerCount" property="tradeSellerCount" jdbcType="INTEGER"/>
+        <result column="sellerTradeCount" property="sellerTradeCount" jdbcType="INTEGER"/>
+        <result column="sellerTradeTotalWeight" property="sellerTradeTotalWeight" jdbcType="DECIMAL"/>
+    </resultMap>
+    <resultMap id="TempData" type="com.prcsteel.platform.order.model.dto.TradeStatisticsDto">
+        <result column="sellerTradeTotalAmount" property="sellerTradeTotalAmount" jdbcType="INTEGER"/>
+        <result column="tempTradeSellerCount" property="tempTradeSellerCount" jdbcType="INTEGER"/>
+        <result column="tempSellerTradeCount" property="tempSellerTradeCount" jdbcType="INTEGER"/>
+        <result column="tempSellerTradeTotalWeight" property="tempSellerTradeTotalWeight" jdbcType="DECIMAL"/>
+    </resultMap>
+    <!-- 公共字段 end-->
+    <resultMap id="queryTradeStatisticsMainData" type="com.prcsteel.platform.order.model.dto.TradeStatisticsWithDetailDto">
+        <result column="id" property="orgId" jdbcType="BIGINT"/>
+        <result column="orgName" property="orgName" jdbcType="VARCHAR"/>
+        <result column="credit_limit" property="creditLimit" jdbcType="DECIMAL"/>
+        <result column="credit_limit_used" property="creditLimitUsed" jdbcType="DECIMAL"/>
+        <result column="traderCount" property="traderCount" jdbcType="INTEGER"/>
+        <result column="buyerInCreaseCount" property="buyerInCreaseCount" jdbcType="INTEGER"/>
+        <result column="sellerInCreaseCount" property="sellerInCreaseCount" jdbcType="INTEGER"/>
+    </resultMap>
+    <resultMap id="TradeStatisticsBuyerData" type="com.prcsteel.platform.order.model.dto.TradeStatisticsWithDetailDto"
+               extends="BuyerData">
+        <result column="org_id" property="orgId" jdbcType="BIGINT"/>
+    </resultMap>
+    <resultMap id="TradeStatisticsFrequentData" type="com.prcsteel.platform.order.model.dto.TradeStatisticsWithDetailDto"
+               extends="FrequentData">
+        <result column="org_id" property="orgId" jdbcType="BIGINT"/>
+    </resultMap>
+    <resultMap id="TradeStatisticsConsignData" type="com.prcsteel.platform.order.model.dto.TradeStatisticsWithDetailDto"
+               extends="ConsignData">
+        <result column="org_id" property="orgId" jdbcType="BIGINT"/>
+    </resultMap>
+    <resultMap id="TradeStatisticsTempData" type="com.prcsteel.platform.order.model.dto.TradeStatisticsWithDetailDto"
+               extends="TempData">
+        <result column="org_id" property="orgId" jdbcType="BIGINT"/>
+    </resultMap>
+    <resultMap id="queryTradeStatisticsDetailMainData" type="com.prcsteel.platform.order.model.dto.TradeStatisticsDetailDto">
+        <result column="id" property="userId" jdbcType="BIGINT"/>
+        <result column="org_id" property="orgId" jdbcType="BIGINT"/>
+        <result column="name" property="userName" jdbcType="VARCHAR"/>
+        <result column="credit_limit" property="creditLimit" jdbcType="DECIMAL"/>
+        <result column="credit_limit_used" property="creditLimitUsed" jdbcType="DECIMAL"/>
+        <result column="traderCount" property="traderCount" jdbcType="INTEGER"/>
+        <result column="buyerInCreaseCount" property="buyerInCreaseCount" jdbcType="INTEGER"/>
+        <result column="sellerInCreaseCount" property="sellerInCreaseCount" jdbcType="INTEGER"/>
+    </resultMap>
+    <resultMap id="TradeStatisticsDetailBuyerData" type="com.prcsteel.platform.order.model.dto.TradeStatisticsDetailDto"
+               extends="BuyerData">
+        <result column="traderId" property="userId" jdbcType="BIGINT"/>
+    </resultMap>
+    <resultMap id="TradeStatisticsDetailFrequentData" type="com.prcsteel.platform.order.model.dto.TradeStatisticsDetailDto"
+               extends="FrequentData">
+        <result column="traderId" property="userId" jdbcType="BIGINT"/>
+    </resultMap>
+    <resultMap id="TradeStatisticsDetailConsignData" type="com.prcsteel.platform.order.model.dto.TradeStatisticsDetailDto"
+               extends="ConsignData">
+        <result column="traderId" property="userId" jdbcType="BIGINT"/>
+    </resultMap>
+    <resultMap id="TradeStatisticsDetailTempData" type="com.prcsteel.platform.order.model.dto.TradeStatisticsDetailDto"
+               extends="TempData">
+        <result column="traderId" property="userId" jdbcType="BIGINT"/>
+    </resultMap>
+    <select id="queryTradeStatisticsMainData" resultMap="queryTradeStatisticsMainData"
+            parameterType="com.prcsteel.platform.order.model.query.TradeStatisticsQuery">
+        select tb1.id,tb1.name as orgName,tb1.credit_limit,tb1.credit_limit_used,
+        (select count(*) from acl_user t1 inner join acl_role t2 on t1.role_id=t2.id where t1.org_id=tb1.id and t2.role_type='Trader') as traderCount,
+        (select count(*) from cust_account t1 INNER JOIN acl_user t2 on t1.manager_id=t2.id
+        inner join acl_role t3 on t2.role_id=t3.id
+        where t2.org_id=tb1.id and t3.role_type='Trader'
+        and t1.type IN ('buyer','both') and Extract(YEAR_MONTH from t1.created)=#{curMonth,jdbcType=VARCHAR}) as buyerInCreaseCount,
+        (select count(*) from cust_account t1 INNER JOIN acl_user t2 on t1.manager_id=t2.id
+        inner join acl_role t3 on t2.role_id=t3.id
+        where t2.org_id=tb1.id and t3.role_type='Trader'
+        and t1.type IN ('seller','both') and Extract(YEAR_MONTH from t1.created)=#{curMonth,jdbcType=VARCHAR}) as sellerInCreaseCount
+        from base_organization tb1
+        where name like '%服务中心'
+        <if test="orgId!=null">
+            AND tb1.id=#{orgId}
+        </if>
+        limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+    </select>
+    <select id="queryTradeStatisticsBuyerData" resultMap="TradeStatisticsBuyerData"
+            parameterType="com.prcsteel.platform.order.model.query.TradeStatisticsQuery">
+        select t3.org_id,count(*) as orderCount,
+        count(DISTINCT t1.account_id) as buyerCount,sum(case when t1.consign_type='consign' then 1 else 0 end) as
+        consignOrderCount
+        from busi_consign_order t1
+        inner join acl_user t3 on t1.owner_id=t3.id
+        inner join acl_role t4 on t3.role_id=t4.id
+        where Extract(YEAR_MONTH from t1.created)=#{curMonth,jdbcType=VARCHAR}
+        <if test="statusList != null and statusList.size > 0 ">
+            and t1.status in
+            <foreach item="status" index="index" collection="statusList" open="(" separator="," close=")">
+                #{status}
+            </foreach>
+        </if>
+        and t4.role_type='Trader'
+        group by t3.org_id
+    </select>
+    <select id="queryTradeStatisticsFrequentData" resultMap="TradeStatisticsFrequentData"
+            parameterType="com.prcsteel.platform.order.model.query.TradeStatisticsQuery">
+        select t4.org_id,sum(case when t4.tradeMonth=#{curMonth,jdbcType=VARCHAR} then 1 else 0
+        end)as frequentTradeCurMonthCount,
+        sum(case when t4.tradeMonth=#{curMonth,jdbcType=VARCHAR} then 0 else 1 end)as
+        frequentTradePrevMonthCount
+        from (
+        select t3.org_id,Extract(YEAR_MONTH from t1.created)as
+        tradeMonth
+        from busi_consign_order t1
+        inner join acl_user t3 on t1.owner_id=t3.id
+        inner join acl_role t4 on t3.role_id=t4.id
+        where Extract(YEAR_MONTH from t1.created) in(#{curMonth,jdbcType=VARCHAR},#{prevMonth,jdbcType=VARCHAR})
+        <if test="statusList != null and statusList.size > 0 ">
+            and t1.status in
+            <foreach item="status" index="index" collection="statusList" open="(" separator="," close=")">
+                #{status}
+            </foreach>
+        </if>
+        and t4.role_type='Trader'
+        group by t3.org_id,Extract(YEAR_MONTH from t1.created),t1.account_id having <![CDATA[count(*)>=3]]>
+        ) as t4 group by t4.org_id
+    </select>
+    <select id="queryTradeStatisticsConsignData" resultMap="TradeStatisticsConsignData"
+            parameterType="com.prcsteel.platform.order.model.query.TradeStatisticsQuery">
+        select t4.org_id,count(DISTINCT t2.seller_id)as tradeSellerCount,
+        count(DISTINCT t1.id) as sellerTradeCount,
+        sum(t2.actual_pick_weight_server*t2.deal_price) as sellerTradeTotalAmount,
+        sum(t2.actual_pick_weight_server) as sellerTradeTotalWeight
+        from busi_consign_order t1
+        inner join busi_consign_order_items t2 on t1.id=t2.order_id
+        inner join acl_user t4 on t1.owner_id=t4.id
+        inner join acl_role t5 on t4.role_id=t5.id
+        where t1.consign_type='consign' and Extract(YEAR_MONTH from t1.created)=#{curMonth,jdbcType=VARCHAR}
+        <if test="statusList != null and statusList.size > 0 ">
+            and t1.status in
+            <foreach item="status" index="index" collection="statusList" open="(" separator="," close=")">
+                #{status}
+            </foreach>
+        </if>
+        and t5.role_type='Trader'
+        group by t4.org_id
+    </select>
+    <select id="queryTradeStatisticsTempData" resultMap="TradeStatisticsTempData"
+            parameterType="com.prcsteel.platform.order.model.query.TradeStatisticsQuery">
+        select t4.org_id,count(DISTINCT t2.seller_id)as tempTradeSellerCount,
+        count(DISTINCT t1.id) as tempSellerTradeCount,
+        sum(t2.actual_pick_weight_server*t2.deal_price) as tempSellerTradeTotalAmount,
+        sum(t2.actual_pick_weight_server) as tempSellerTradeTotalWeight
+        from busi_consign_order t1
+        inner join busi_consign_order_items t2 on t1.id=t2.order_id
+        inner join acl_user t4 on t1.owner_id=t4.id
+        inner join acl_role t5 on t4.role_id=t5.id
+        where t1.consign_type='temp' and Extract(YEAR_MONTH from t1.created)=#{curMonth,jdbcType=VARCHAR}
+        <if test="statusList != null and statusList.size > 0 ">
+            and t1.status in
+            <foreach item="status" index="index" collection="statusList" open="(" separator="," close=")">
+                #{status}
+            </foreach>
+        </if>
+        and t5.role_type='Trader'
+        group by t4.org_id
+    </select>
+    <select id="queryTradeStatisticsCount" resultType="int"
+            parameterType="com.prcsteel.platform.order.model.query.TradeStatisticsQuery">
+        select count(*) from base_organization
+        <where>
+            name like '%服务中心'
+            <if test="orgId!=null and orgId!=0">
+                and id=#{orgId}
+            </if>
+        </where>
+    </select>
+    <select id="queryTradeStatisticsDetailMainData" resultMap="queryTradeStatisticsDetailMainData"
+            parameterType="com.prcsteel.platform.order.model.query.TradeStatisticsQuery">
+        select tb1.id,tb1.name,tb1.org_id,
+        (select count(*) from cust_account t1 INNER JOIN acl_user t2 on t1.manager_id=t2.id where t2.id=tb1.id
+        and t1.type IN ('buyer','both') and Extract(YEAR_MONTH from t1.created)=#{curMonth,jdbcType=VARCHAR}) as
+        buyerInCreaseCount,
+        (select count(*) from cust_account t1 INNER JOIN acl_user t2 on t1.manager_id=t2.id where t2.id=tb1.id
+        and t1.type IN ('seller','both') and Extract(YEAR_MONTH from t1.created)=#{curMonth,jdbcType=VARCHAR}) as
+        sellerInCreaseCount
+        from acl_user tb1
+        inner join acl_role tb2 on tb1.role_id=tb2.id
+        where tb1.org_id in(
+        select * from (
+        select id from base_organization where name like '%服务中心'
+        <if test="orgId!=null">
+            AND id=#{orgId}
+        </if>
+        limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+        ) as t) and tb2.role_type='Trader'
+    </select>
+    <select id="queryTradeStatisticsDetailBuyerData" resultMap="TradeStatisticsDetailBuyerData"
+            parameterType="com.prcsteel.platform.order.model.query.TradeStatisticsQuery">
+        select t1.owner_id as traderId,count(*) as orderCount,
+        count(DISTINCT t1.account_id) as buyerCount,sum(case when t1.consign_type='consign' then 1 else 0 end) as
+        consignOrderCount
+        from busi_consign_order t1
+        inner join acl_user t3 on t1.owner_id=t3.id
+        where Extract(YEAR_MONTH from t1.created)=#{curMonth,jdbcType=VARCHAR}
+        <if test="statusList != null and statusList.size > 0 ">
+            and t1.status in
+            <foreach item="status" index="index" collection="statusList" open="(" separator="," close=")">
+                #{status}
+            </foreach>
+        </if>
+        <if test="orgId!=null">
+            AND t3.org_id=#{orgId}
+        </if>
+        group by t1.owner_id
+    </select>
+    <select id="queryTradeStatisticsDetailFrequentData" resultMap="TradeStatisticsDetailFrequentData"
+            parameterType="com.prcsteel.platform.order.model.query.TradeStatisticsQuery">
+        select t3.owner_id as traderId,sum(case when t3.tradeMonth=#{curMonth,jdbcType=VARCHAR} then
+        1 else 0 end)as frequentTradeCurMonthCount,
+        sum(case when t3.tradeMonth=#{curMonth,jdbcType=VARCHAR} then 0 else 1 end)as
+        frequentTradePrevMonthCount
+        from (
+        select t1.owner_id,Extract(YEAR_MONTH from t1.created)as
+        tradeMonth
+        from busi_consign_order t1
+        inner join acl_user t3 on t3.id=t1.owner_id
+        where Extract(YEAR_MONTH from t1.created) in(#{curMonth,jdbcType=VARCHAR},#{prevMonth,jdbcType=VARCHAR})
+        <if test="orgId!=null">
+            AND t3.org_id=#{orgId}
+        </if>
+        <if test="statusList != null and statusList.size > 0 ">
+            and t1.status in
+            <foreach item="status" index="index" collection="statusList" open="(" separator="," close=")">
+                #{status}
+            </foreach>
+        </if>
+        group by t1.owner_id,Extract(YEAR_MONTH from t1.created),t1.account_id having <![CDATA[count(*)>=3]]>
+        ) as t3 group by t3.owner_id
+    </select>
+    <select id="queryTradeStatisticsDetailConsignData" resultMap="TradeStatisticsDetailConsignData"
+            parameterType="com.prcsteel.platform.order.model.query.TradeStatisticsQuery">
+        select t4.id as traderId,count(DISTINCT t2.seller_id)as tradeSellerCount,
+        count(DISTINCT t1.id) as sellerTradeCount,
+        sum(t2.actual_pick_weight_server*t2.deal_price) as sellerTradeTotalAmount,
+        sum(t2.actual_pick_weight_server) as sellerTradeTotalWeight
+        from busi_consign_order t1
+        inner join busi_consign_order_items t2 on t1.id=t2.order_id
+        inner join acl_user t4 on t1.owner_id=t4.id
+        where t1.consign_type='consign' and Extract(YEAR_MONTH from t1.created)=#{curMonth,jdbcType=VARCHAR}
+        <if test="statusList != null and statusList.size > 0 ">
+            and t1.status in
+            <foreach item="status" index="index" collection="statusList" open="(" separator="," close=")">
+                #{status}
+            </foreach>
+        </if>
+        <if test="orgId!=null">
+            AND t4.org_id=#{orgId}
+        </if>
+        group by t4.id
+    </select>
+    <select id="queryTradeStatisticsDetailTempData" resultMap="TradeStatisticsDetailTempData"
+            parameterType="com.prcsteel.platform.order.model.query.TradeStatisticsQuery">
+        select t4.id as traderId,count(DISTINCT t2.seller_id)as tempTradeSellerCount,
+        count(DISTINCT t1.id) as tempSellerTradeCount,
+        sum(t2.actual_pick_weight_server*t2.deal_price) as tempSellerTradeTotalAmount,
+        sum(t2.actual_pick_weight_server) as tempSellerTradeTotalWeight
+        from busi_consign_order t1
+        inner join busi_consign_order_items t2 on t1.id=t2.order_id
+        inner join acl_user t4 on t1.owner_id=t4.id
+        where t1.consign_type='temp' and Extract(YEAR_MONTH from t1.created)=#{curMonth,jdbcType=VARCHAR}
+        <if test="orgId!=null">
+            AND t4.org_id=#{orgId}
+        </if>
+        <if test="statusList != null and statusList.size > 0 ">
+            AND t1.status in
+            <foreach item="status" index="index" collection="statusList" open="(" separator="," close=")">
+                #{status}
+            </foreach>
+        </if>
+        group by t4.id
+    </select>
+    <resultMap id="UninvoicedInData" type="com.prcsteel.platform.order.model.dto.UninvoicedInDto">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="seller_name" property="sellerName" jdbcType="VARCHAR"/>
+        <result column="tax_code" property="taxCode" jdbcType="VARCHAR"/>
+        <result column="nsort_name" property="nsortName" jdbcType="VARCHAR"/>
+        <result column="material" property="material" jdbcType="VARCHAR"/>
+        <result column="spec" property="spec" jdbcType="VARCHAR"/>
+        <result column="weight" property="weight" jdbcType="DECIMAL"/>
+        <result column="cost_price" property="costPrice" jdbcType="DECIMAL"/>
+        <result column="amount" property="amount" jdbcType="DECIMAL"/>
+        <result column="code" property="orderCode" jdbcType="VARCHAR"/>
+        <result column="org_name" property="orgName" jdbcType="VARCHAR"/>
+        <result column="departmentName" property="departmentName" jdbcType="VARCHAR"/>
+        <result column="departmentCount" property="departmentCount" jdbcType="BIGINT"/>
+    </resultMap>
+    <select id="queryUninvoicedInList" resultMap="UninvoicedInData" parameterType="map">
+        SELECT a.id AS id, a.seller_name AS seller_name, a.department_name AS departmentName, e.tax_code AS tax_code, a.nsort_name AS nsort_name, a.material AS material, a.spec AS spec,
+        <!--加上折让重量allowance_weight-->
+        ROUND((a.actual_pick_weight_server - ifnull(t.weight, 0)  + ifnull(a.allowance_weight,0)),6) AS weight,
+        a.cost_price AS cost_price,
+        <!--加上折让金额allowance_amount-->
+        (round(a.actual_pick_weight_server*a.cost_price, 2) - ifnull(t.amount, 0) + ifnull(a.allowance_amount,0)) AS amount,
+        (SELECT COUNT(t2.id) FROM cust_account t2 WHERE t2.parent_id = f.id) AS departmentCount,
+        b.code AS code,b.order_org_name as org_name
+        FROM busi_consign_order_items a
+        LEFT JOIN busi_consign_order b ON a.order_id = b.id
+        LEFT JOIN cust_account f ON f.id = a.seller_id
+        LEFT JOIN cust_account_ext e ON e.cust_account_id = f.id
+        LEFT JOIN acl_user u ON u.id = f.manager_id
+        LEFT JOIN (SELECT c.orderitem_id item_id, SUM(c.weight) weight, SUM(round(c.amount, 2)) amount
+        FROM inv_invoice_in_detail_orderitem c
+        LEFT JOIN inv_invoice_in_detail d ON d.id = c.invoice_detail_id
+        LEFT JOIN inv_invoice_in e ON e.id = d.invoice_in_id
+        WHERE e.status IN ('WAIT', 'ALREADY') AND e.relation_status = 'hasrelation' AND c.active = 1
+        GROUP BY c.orderitem_id) AS t ON a.id = t.item_id
+        WHERE b.status IN (7,8) AND (<![CDATA[ ifnull(t.amount, 0) < round(a.actual_pick_weight_server*a.cost_price, 2) OR ifnull(t.weight, 0) < a.actual_pick_weight_server) ]]>
+        <if test="timeFrom != null">
+            <![CDATA[ AND str_to_date(b.created,'%Y-%m-%d') >= #{timeFrom}]]>
+        </if>
+        <if test="timeTo != null">
+            <![CDATA[ AND str_to_date(b.created,'%Y-%m-%d') <= #{timeTo}]]>
+        </if>
+        <if test="sellerName != null">
+            AND a.seller_name = #{sellerName}
+        </if>
+        <if test="organization != null">
+            AND u.org_id = #{organization}
+        </if>
+        <if test="userIds != null">
+            AND u.id IN
+            <foreach item="id" index="index" collection="userIds" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
+        <if test="selectIds != null">
+            AND a.id IN
+            <foreach item="id" index="index" collection="selectIds" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
+        <if test="start != null and length != null">
+            limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+        </if>
+    </select>
+
+    <select id="countUninvoicedInList" resultType="java.lang.Integer" parameterType="map">
+        select count(t2.count) from (
+        SELECT 1 as count
+        FROM busi_consign_order_items a
+        LEFT JOIN busi_consign_order b ON a.order_id = b.id
+        LEFT JOIN cust_account f ON f.id = a.seller_id
+        LEFT JOIN cust_account_ext e ON e.cust_account_id = f.id
+        LEFT JOIN acl_user u ON u.id = f.manager_id
+        LEFT JOIN (SELECT c.orderitem_id item_id, SUM(c.weight) weight, SUM(round(c.amount, 2)) amount
+        FROM inv_invoice_in_detail_orderitem c
+        LEFT JOIN inv_invoice_in_detail d ON d.id = c.invoice_detail_id
+        LEFT JOIN inv_invoice_in e ON e.id = d.invoice_in_id
+        WHERE e.status IN ('WAIT', 'ALREADY') AND e.relation_status = 'hasrelation' AND c.active = 1
+        GROUP BY c.orderitem_id) AS t ON a.id = t.item_id
+        WHERE b.status IN (7,8) AND (<![CDATA[ ifnull(t.amount, 0) < round(a.actual_pick_weight_server*a.cost_price, 2) OR ifnull(t.weight, 0) < a.actual_pick_weight_server) ]]>
+        <if test="timeFrom != null">
+            <![CDATA[ AND str_to_date(b.created,'%Y-%m-%d') >= #{timeFrom}]]>
+        </if>
+        <if test="timeTo != null">
+            <![CDATA[ AND str_to_date(b.created,'%Y-%m-%d') <= #{timeTo}]]>
+        </if>
+        <if test="sellerName != null">
+            AND a.seller_name = #{sellerName}
+        </if>
+        <if test="organization != null">
+            AND u.org_id = #{organization}
+        </if>
+        <if test="userIds != null">
+            AND u.id IN
+            <foreach item="id" index="index" collection="userIds" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
+        <if test="selectIds != null">
+            AND a.id IN
+            <foreach item="id" index="index" collection="selectIds" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
+        ) as t2
+    </select>
+
+    <resultMap id="InvoiceInBordereauxData" type="com.prcsteel.platform.order.model.dto.InvoiceInBordereauxDto">
+        <result column="orderitem_id" property="orderitemId" jdbcType="BIGINT"/>
+        <result column="order_id" property="orderId" jdbcType="BIGINT"/>
+        <result column="order_time" property="orderTime" jdbcType="TIMESTAMP" />
+        <result column="order_code" property="orderCode" jdbcType="VARCHAR"/>
+        <result column="seller_id" property="sellerId" jdbcType="BIGINT"/>
+        <result column="seller_name" property="sellerName" jdbcType="VARCHAR"/>
+        <result column="nsort_name" property="nsortName" jdbcType="VARCHAR"/>
+        <result column="material" property="material" jdbcType="VARCHAR"/>
+        <result column="spec" property="spec" jdbcType="VARCHAR"/>
+        <result column="actual_weight" property="actualWeight" jdbcType="DECIMAL"/>
+        <result column="actual_amount" property="actualAmount" jdbcType="DECIMAL"/>
+        <result column="allowance_amount" property="allowanceAmount" jdbcType="DECIMAL"/>
+        <result column="allowance_weight" property="allowanceWeight" jdbcType="DECIMAL"/>
+        <result column="amount" property="amount" jdbcType="DECIMAL"/>
+        <result column="weight" property="weight" jdbcType="DECIMAL"/>
+        <result column="un_amount" property="unAmount" jdbcType="DECIMAL"/>
+        <result column="un_weight" property="unWeight" jdbcType="DECIMAL"/>
+        <result column="total_no_weight" property="totalNoWeight" jdbcType="DECIMAL"/>
+        <result column="total_no_amount" property="totalNoAmount" jdbcType="DECIMAL"/>
+        <result column="departmentName" property="departmentName" jdbcType="VARCHAR"/>
+        <result column="departmentCount" property="departmentCount" jdbcType="BIGINT"/>
+    </resultMap>
+    <select id="queryInvoiceInBordereauxCount" resultType="int"
+            parameterType="com.prcsteel.platform.order.model.query.InvoiceInBordereauxQuery">
+        SELECT
+        COUNT(1)
+        FROM(
+        SELECT
+        bcoi.id AS orderitem_id,
+        bco.id AS order_id,
+        bco.created AS order_time,
+        bco.code AS order_code,
+        bcoi.seller_id,bcoi.seller_name,
+        bcoi.nsort_name,bcoi.material,bcoi.spec,
+        bcoi.actual_pick_weight_server AS actual_weight,
+        ROUND(bcoi.actual_pick_weight_server*bcoi.cost_price,2) AS actual_amount,
+        bcoi.allowance_weight,bcoi.allowance_amount,
+        bcoi.actual_pick_weight_server+bcoi.allowance_weight AS un_weight,
+        ROUND(bcoi.actual_pick_weight_server*bcoi.cost_price,2)+bcoi.allowance_amount AS un_amount,
+        IFNULL(SUM(temp.weight),0) AS weight,
+        IFNULL(SUM(temp.amount),0) AS amount
+        FROM busi_consign_order bco
+        LEFT JOIN busi_consign_order_items bcoi ON bcoi.order_id = bco.id
+        LEFT JOIN (SELECT ido.orderitem_id,ido.weight,ido.amount+IFNULL(ido.allowance_amount,0) AS amount FROM inv_invoice_in i
+        RIGHT JOIN inv_invoice_in_detail id ON i.id = id.invoice_in_id AND i.status IN ('WAIT','ALREADY')
+        RIGHT JOIN inv_invoice_in_detail_orderitem ido ON id.id = ido.invoice_detail_id
+        WHERE ido.active = 1) temp ON temp.orderitem_id = bcoi.id
+        WHERE bco.status IN (7,8,10) AND bcoi.actual_pick_weight_server <![CDATA[ <> ]]> 0
+        <if test="orgId!=null">
+            AND bcoi.seller_org_id = #{orgId,jdbcType=BIGINT}
+        </if>
+        <if test="sellerId!=null">
+            AND bcoi.seller_id = #{sellerId,jdbcType=BIGINT}
+        </if>
+        <if test="sellerName!=null">
+            AND bcoi.seller_name LIKE CONCAT('%',#{sellerName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="orderCode!=null">
+            AND bco.code LIKE CONCAT('%',#{orderCode,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="startTime!=null">
+            AND <![CDATA[DATE_FORMAT(bco.created,'%Y-%m-%d')>=STR_TO_DATE(#{startTime},'%Y-%m-%d') ]]>
+        </if>
+        <if test="endTime!=null">
+            AND <![CDATA[DATE_FORMAT(bco.created,'%Y-%m-%d')<=STR_TO_DATE(#{endTime},'%Y-%m-%d') ]]>
+        </if>
+        GROUP BY bcoi.id
+        )t
+        <if test="status!=null">
+            WHERE
+            <foreach item="st" index="index" collection="status" open="(" separator="OR" close=")">
+                <if test="st==1">
+                    (t.weight = 0
+                    AND t.amount = 0)
+                </if>
+                <if test="st==2">
+                    <![CDATA[ 
+				(t.weight > 0
+				AND t.weight < t.un_weight)
+				OR(t.amount > 0
+				AND t.amount < t.un_amount)
+				]]>
+                </if>
+                <if test="st==3">
+                    (t.weight <![CDATA[>=]]> t.un_weight
+                    AND t.amount <![CDATA[>=]]> t.un_amount)
+                </if>
+            </foreach>
+        </if>
+    </select>
+    <select id="queryInvoiceInBordereauxSum" resultMap="InvoiceInBordereauxData"
+            parameterType="com.prcsteel.platform.order.model.query.InvoiceInBordereauxQuery">
+        SELECT
+        SUM(ROUND(t.un_weight,6)) AS total_no_weight,
+        SUM(ROUND(t.un_amount,2)) AS total_no_amount
+        FROM(
+        SELECT
+        bcoi.id AS orderitem_id,
+        bco.id AS order_id,
+        bco.created AS order_time,
+        bco.code AS order_code,
+        bcoi.seller_id,bcoi.seller_name,
+        bcoi.nsort_name,bcoi.material,bcoi.spec,
+        bcoi.actual_pick_weight_server AS actual_weight,
+        ROUND(bcoi.actual_pick_weight_server*bcoi.cost_price,2) AS actual_amount,
+        bcoi.allowance_weight,bcoi.allowance_amount,
+        bcoi.actual_pick_weight_server+bcoi.allowance_weight AS un_weight,
+        ROUND(bcoi.actual_pick_weight_server*bcoi.cost_price,2)+bcoi.allowance_amount AS un_amount,
+        IFNULL(SUM(temp.weight),0) AS weight,
+        IFNULL(SUM(temp.amount),0) AS amount
+        FROM busi_consign_order bco
+        LEFT JOIN busi_consign_order_items bcoi ON bcoi.order_id = bco.id
+        LEFT JOIN (SELECT ido.orderitem_id,ido.weight,ido.amount+IFNULL(ido.allowance_amount,0) AS amount FROM inv_invoice_in i
+        RIGHT JOIN inv_invoice_in_detail id ON i.id = id.invoice_in_id AND i.status IN ('WAIT','ALREADY')
+        RIGHT JOIN inv_invoice_in_detail_orderitem ido ON id.id = ido.invoice_detail_id
+        WHERE ido.active = 1) temp ON temp.orderitem_id = bcoi.id
+        WHERE bco.status IN (7,8,10) AND bcoi.actual_pick_weight_server <![CDATA[ <> ]]> 0
+        <if test="orgId!=null">
+            AND bcoi.seller_org_id = #{orgId,jdbcType=BIGINT}
+        </if>
+        <if test="sellerId!=null">
+            AND bcoi.seller_id = #{sellerId,jdbcType=BIGINT}
+        </if>
+        <if test="sellerName!=null">
+            AND bcoi.seller_name LIKE CONCAT('%',#{sellerName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="orderCode!=null">
+            AND bco.code LIKE CONCAT('%',#{orderCode,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="startTime!=null">
+            AND <![CDATA[DATE_FORMAT(bco.created,'%Y-%m-%d')>=STR_TO_DATE(#{startTime},'%Y-%m-%d') ]]>
+        </if>
+        <if test="endTime!=null">
+            AND <![CDATA[DATE_FORMAT(bco.created,'%Y-%m-%d')<=STR_TO_DATE(#{endTime},'%Y-%m-%d') ]]>
+        </if>
+        GROUP BY bcoi.id
+        )t
+        <if test="status!=null">
+            WHERE
+            <foreach item="st" index="index" collection="status" open="(" separator="OR" close=")">
+                <if test="st==1">
+                    (t.weight = 0
+                    AND t.amount = 0)
+                </if>
+                <if test="st==2">
+                    <![CDATA[ 
+				(t.weight > 0
+				AND t.weight < t.un_weight)
+				OR(t.amount > 0
+				AND t.amount < t.un_amount)
+				]]>
+                </if>
+                <if test="st==3">
+                    (t.weight <![CDATA[>=]]> t.un_weight
+                    AND t.amount <![CDATA[>=]]> t.un_amount)
+                </if>
+            </foreach>
+        </if>
+    </select>
+    <select id="queryOrderItems" resultMap="InvoiceInBordereauxData"
+            parameterType="com.prcsteel.platform.order.model.query.InvoiceInBordereauxQuery">
+        SELECT (SELECT COUNT(t3.id) FROM cust_account t3 WHERE t3.parent_id = f.seller_id) AS departmentCount,
+        f.orderitem_id, f.departmentName, f.order_id, f.order_time, f.order_code, f.seller_id,f.seller_name,
+        f.nsort_name,f.material,f.spec, f.actual_weight, f.actual_amount,
+        f.allowance_weight,f.allowance_amount, f.un_weight, f.un_amount, f.weight,
+        f.amount, f.status FROM
+        (
+        SELECT
+        t.orderitem_id,
+        t.departmentName,
+        t.order_id,
+        t.order_time,
+        t.order_code,
+        t.seller_id,t.seller_name,
+        t.nsort_name,t.material,t.spec,
+        t.actual_weight,
+        t.actual_amount,
+        t.allowance_weight,t.allowance_amount,
+        (t.un_weight - t.weight) AS un_weight,
+        (t.un_amount - t.amount) AS un_amount,
+        t.weight,
+        t.amount,
+        <![CDATA[
+			(CASE WHEN (t.weight = 0 AND t.amount = 0) THEN '未到票' 
+			WHEN (t.weight > 0 AND t.weight < t.un_weight) OR (t.amount > 0 AND t.amount < t.un_amount) THEN '部分到票' 
+			WHEN (t.weight = t.un_weight AND t.amount = t.un_amount) THEN '已到票' END) AS status
+			]]>
+        FROM(
+        SELECT
+        bcoi.id AS orderitem_id,
+        bcoi.department_name AS departmentName,
+        bco.id AS order_id,
+        bco.created AS order_time,
+        bco.code AS order_code,
+        bcoi.seller_id,bcoi.seller_name,
+        bcoi.nsort_name,bcoi.material,bcoi.spec,
+        bcoi.actual_pick_weight_server AS actual_weight,
+        ROUND(bcoi.actual_pick_weight_server*bcoi.cost_price,2) AS actual_amount,
+        bcoi.allowance_weight,bcoi.allowance_amount,
+        bcoi.actual_pick_weight_server+bcoi.allowance_weight AS un_weight,
+        ROUND(bcoi.actual_pick_weight_server*bcoi.cost_price,2)+bcoi.allowance_amount AS un_amount,
+        IFNULL(SUM(temp.weight),0) AS weight,
+        IFNULL(SUM(temp.amount),0) AS amount
+        FROM busi_consign_order bco
+        LEFT JOIN busi_consign_order_items bcoi ON bcoi.order_id = bco.id
+        LEFT JOIN (SELECT ido.orderitem_id,ido.weight,ido.amount+IFNULL(ido.allowance_amount,0) AS amount FROM inv_invoice_in i
+        RIGHT JOIN inv_invoice_in_detail id ON i.id = id.invoice_in_id AND i.status IN ('WAIT','ALREADY')
+        RIGHT JOIN inv_invoice_in_detail_orderitem ido ON id.id = ido.invoice_detail_id
+        WHERE ido.active = 1) temp ON temp.orderitem_id = bcoi.id
+        WHERE bco.status IN (7,8,10) AND bcoi.actual_pick_weight_server <![CDATA[ <> ]]> 0
+        <if test="orgId!=null">
+            AND bcoi.seller_org_id = #{orgId,jdbcType=BIGINT}
+        </if>
+        <if test="sellerId!=null">
+            AND bcoi.seller_id = #{sellerId,jdbcType=BIGINT}
+        </if>
+        <if test="sellerName!=null">
+            AND bcoi.seller_name LIKE CONCAT('%',#{sellerName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="orderCode!=null">
+            AND bco.code LIKE CONCAT('%',#{orderCode,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="startTime!=null">
+            AND <![CDATA[DATE_FORMAT(bco.created,'%Y-%m-%d')>=STR_TO_DATE(#{startTime},'%Y-%m-%d') ]]>
+        </if>
+        <if test="endTime!=null">
+            AND <![CDATA[DATE_FORMAT(bco.created,'%Y-%m-%d')<=STR_TO_DATE(#{endTime},'%Y-%m-%d') ]]>
+        </if>
+        GROUP BY bcoi.id
+        )t
+        <if test="status!=null">
+            WHERE
+            <foreach item="st" index="index" collection="status" open="(" separator="OR" close=")">
+                <if test="st==1">
+                    (t.weight = 0
+                    AND t.amount = 0)
+                </if>
+                <if test="st==2">
+                    <![CDATA[ 
+				(t.weight > 0
+				AND t.weight < t.un_weight)
+				OR(t.amount > 0
+				AND t.amount < t.un_amount)
+				]]>
+                </if>
+                <if test="st==3">
+                    (t.weight <![CDATA[>=]]> t.un_weight
+                    AND t.amount <![CDATA[>=]]> t.un_amount)
+                </if>
+            </foreach>
+        </if>
+        ORDER BY t.order_time
+        <if test="start != null and length != null">
+            LIMIT #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+        </if>
+        )f
+    </select>
+
+
+</mapper>

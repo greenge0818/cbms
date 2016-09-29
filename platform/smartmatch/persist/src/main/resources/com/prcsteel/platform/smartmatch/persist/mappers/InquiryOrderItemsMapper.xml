@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.smartmatch.persist.dao.InquiryOrderItemsDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.smartmatch.model.model.InquiryOrderItems" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="purchase_order_items_id" property="purchaseOrderItemsId" jdbcType="BIGINT" />
+    <result column="inquiry_order_seller_id" property="inquiryOrderSellerId" jdbcType="BIGINT" />
+    <result column="resource_id" property="resourceId" jdbcType="BIGINT" />
+    <result column="category_uuid" property="categoryUuid" jdbcType="VARCHAR" />
+    <result column="material_uuid" property="materialUuid" jdbcType="VARCHAR" />
+    <result column="spec" property="spec" jdbcType="VARCHAR" />
+    <result column="factory_id" property="factoryId" jdbcType="BIGINT" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="BIGINT" />
+    <result column="abnormal_warehouse" property="abnormalWarehouse" jdbcType="VARCHAR" />
+    <result column="quantity" property="quantity" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="weight" property="weight" jdbcType="DECIMAL" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+    <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+    <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+    <result column="ext1" property="ext1" jdbcType="VARCHAR" />
+    <result column="ext2" property="ext2" jdbcType="VARCHAR" />
+    <result column="ext3" property="ext3" jdbcType="VARCHAR" />
+    <result column="ext4" property="ext4" jdbcType="INTEGER" />
+    <result column="ext5" property="ext5" jdbcType="INTEGER" />
+    <result column="ext6" property="ext6" jdbcType="INTEGER" />
+    <result column="ext7" property="ext7" jdbcType="TIMESTAMP" />
+    <result column="ext8" property="ext8" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, purchase_order_items_id, inquiry_order_seller_id, resource_id, category_uuid, material_uuid, 
+    spec, factory_id, warehouse_id, abnormal_warehouse, quantity, price, weight, remark, created, created_by, 
+    last_updated, last_updated_by, modification_number, row_id, parent_row_id, ext1, 
+    ext2, ext3, ext4, ext5, ext6, ext7, ext8
+  </sql>
+  
+  <delete id="deleteByInquiryOrderId" parameterType="java.lang.Long" >
+	DELETE FROM busi_inquiry_order_items 
+	WHERE inquiry_order_seller_id in (SELECT b.id FROM busi_inquiry_order a,busi_inquiry_order_sellers b 
+	WHERE b.inquiry_order_id = a.id and a.id = #{inquiryOrderId,jdbcType=BIGINT} )
+  </delete>
+  
+  <select id="getPurchaseOrderItemsNum" resultType="int" parameterType="java.lang.Long" >
+    SELECT
+	count(DISTINCT x.purchase_order_items_id)
+	FROM busi_inquiry_order_items x
+	JOIN busi_purchase_order_items y ON x.purchase_order_items_id = y.id
+	JOIN busi_purchase_order po ON y.purchase_order_id = po.id 
+	where not(x.warehouse_id is null and x.abnormal_warehouse is null)
+	and po.id = #{purchaseOrderId,jdbcType=BIGINT}
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from busi_inquiry_order_items
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from busi_inquiry_order_items
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.prcsteel.platform.smartmatch.model.model.InquiryOrderItems" >
+    insert into busi_inquiry_order_items (id, purchase_order_items_id, inquiry_order_seller_id, resource_id,
+      category_uuid, material_uuid, spec, 
+      factory_id, warehouse_id, abnormal_warehouse, quantity, 
+      price, weight, remark, 
+      created, created_by, last_updated, 
+      last_updated_by, modification_number, row_id, 
+      parent_row_id, ext1, ext2, 
+      ext3, ext4, ext5, ext6, 
+      ext7, ext8)
+    values (#{id,jdbcType=BIGINT}, #{purchaseOrderItemsId,jdbcType=BIGINT}, #{inquiryOrderSellerId,jdbcType=BIGINT}, #{resourceId,jdbcType=BIGINT}, 
+      #{categoryUuid,jdbcType=VARCHAR}, #{materialUuid,jdbcType=VARCHAR}, #{spec,jdbcType=VARCHAR}, 
+      #{factoryId,jdbcType=BIGINT}, #{warehouseId,jdbcType=BIGINT}, #{abnormalWarehouse,jdbcType=VARCHAR}, #{quantity,jdbcType=INTEGER}, 
+      #{price,jdbcType=DECIMAL}, #{weight,jdbcType=DECIMAL}, #{remark,jdbcType=VARCHAR}, 
+      #{created,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, #{lastUpdated,jdbcType=TIMESTAMP}, 
+      #{lastUpdatedBy,jdbcType=VARCHAR}, #{modificationNumber,jdbcType=INTEGER}, #{rowId,jdbcType=VARCHAR}, 
+      #{parentRowId,jdbcType=VARCHAR}, #{ext1,jdbcType=VARCHAR}, #{ext2,jdbcType=VARCHAR}, 
+      #{ext3,jdbcType=VARCHAR}, #{ext4,jdbcType=INTEGER}, #{ext5,jdbcType=INTEGER}, #{ext6,jdbcType=INTEGER}, 
+      #{ext7,jdbcType=TIMESTAMP}, #{ext8,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.smartmatch.model.model.InquiryOrderItems" >
+    insert into busi_inquiry_order_items
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="purchaseOrderItemsId != null" >
+        purchase_order_items_id,
+      </if>
+      <if test="inquiryOrderSellerId != null" >
+        inquiry_order_seller_id,
+      </if>
+      <if test="resourceId != null" >
+        resource_id,
+      </if>
+      <if test="categoryUuid != null" >
+        category_uuid,
+      </if>
+      <if test="categoryName != null" >
+        category_name,
+      </if>
+      <if test="materialUuid != null" >
+        material_uuid,
+      </if>
+      <if test="materialName != null" >
+        material_name,
+      </if>
+      <if test="spec != null" >
+        spec,
+      </if>
+      <if test="factoryId != null" >
+        factory_id,
+      </if>
+      <if test="factoryName != null" >
+        factory_name,
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id,
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name,
+      </if>
+      <if test="abnormalWarehouse != null" >
+        abnormal_warehouse,
+      </if>
+      <if test="quantity != null" >
+        quantity,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="weight != null" >
+        weight,
+      </if>
+      <if test="weightConcept != null" >
+        weight_concept,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by,
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number,
+      </if>
+      <if test="rowId != null" >
+        row_id,
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id,
+      </if>
+      <if test="ext1 != null" >
+        ext1,
+      </if>
+      <if test="ext2 != null" >
+        ext2,
+      </if>
+      <if test="ext3 != null" >
+        ext3,
+      </if>
+      <if test="ext4 != null" >
+        ext4,
+      </if>
+      <if test="ext5 != null" >
+        ext5,
+      </if>
+      <if test="ext6 != null" >
+        ext6,
+      </if>
+      <if test="ext7 != null" >
+        ext7,
+      </if>
+      <if test="ext8 != null" >
+        ext8,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="purchaseOrderItemsId != null" >
+        #{purchaseOrderItemsId,jdbcType=BIGINT},
+      </if>
+      <if test="inquiryOrderSellerId != null" >
+        #{inquiryOrderSellerId,jdbcType=BIGINT},
+      </if>
+      <if test="resourceId != null" >
+        #{resourceId,jdbcType=BIGINT},
+      </if>
+      <if test="categoryUuid != null" >
+        #{categoryUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryName != null" >
+        #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="materialUuid != null" >
+        #{materialUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="materialName != null" >
+        #{materialName,jdbcType=VARCHAR},
+      </if>
+      <if test="spec != null" >
+        #{spec,jdbcType=VARCHAR},
+      </if>
+      <if test="factoryId != null" >
+        #{factoryId,jdbcType=BIGINT},
+      </if>
+      <if test="factoryName != null" >
+        #{factoryName,jdbcType=BIGINT},
+      </if>
+      <if test="warehouseId != null" >
+        #{warehouseId,jdbcType=BIGINT},
+      </if>
+      <if test="warehouseName != null" >
+        #{warehouseName,jdbcType=BIGINT},
+      </if>
+      <if test="abnormalWarehouse != null" >
+        #{abnormalWarehouse,jdbcType=VARCHAR},
+      </if>
+      <if test="quantity != null" >
+        #{quantity,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="weight != null" >
+        #{weight,jdbcType=DECIMAL},
+      </if>
+      <if test="weightConcept != null" >
+        #{weightConcept,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        #{parentRowId,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null" >
+        #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3 != null" >
+        #{ext3,jdbcType=VARCHAR},
+      </if>
+      <if test="ext4 != null" >
+        #{ext4,jdbcType=INTEGER},
+      </if>
+      <if test="ext5 != null" >
+        #{ext5,jdbcType=INTEGER},
+      </if>
+      <if test="ext6 != null" >
+        #{ext6,jdbcType=INTEGER},
+      </if>
+      <if test="ext7 != null" >
+        #{ext7,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ext8 != null" >
+        #{ext8,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+   <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.smartmatch.model.model.InquiryOrderItems" >
+    update busi_inquiry_order_items
+    <set >
+      <if test="purchaseOrderItemsId != null" >
+        purchase_order_items_id = #{purchaseOrderItemsId,jdbcType=BIGINT},
+      </if>
+      <if test="inquiryOrderSellerId != null" >
+        inquiry_order_seller_id = #{inquiryOrderSellerId,jdbcType=BIGINT},
+      </if>
+      <if test="resourceId != null" >
+        resource_id = #{resourceId,jdbcType=BIGINT},
+      </if>
+      <if test="categoryUuid != null" >
+        category_uuid = #{categoryUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryName != null" >
+        category_name = #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="materialUuid != null" >
+        material_uuid = #{materialUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="materialName != null" >
+        material_name = #{materialName,jdbcType=VARCHAR},
+      </if>
+      <if test="spec != null" >
+        spec = #{spec,jdbcType=VARCHAR},
+      </if>
+      <if test="factoryId != null" >
+        factory_id = #{factoryId,jdbcType=BIGINT},
+      </if>
+      <if test="factoryName != null" >
+        factory_name = #{factoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id = #{warehouseId,jdbcType=BIGINT},
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="abnormalWarehouse != null" >
+        abnormal_warehouse = #{abnormalWarehouse,jdbcType=VARCHAR},
+      </if>
+      <if test="quantity != null" >
+        quantity = #{quantity,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="weight != null" >
+        weight = #{weight,jdbcType=DECIMAL},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      last_updated = now(),
+      <if test="lastUpdatedBy != null" >
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      modification_number = modification_number +1,
+      <if test="rowId != null" >
+        row_id = #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null" >
+        ext1 = #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        ext2 = #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3 != null" >
+        ext3 = #{ext3,jdbcType=VARCHAR},
+      </if>
+      <if test="ext4 != null" >
+        ext4 = #{ext4,jdbcType=INTEGER},
+      </if>
+      <if test="ext5 != null" >
+        ext5 = #{ext5,jdbcType=INTEGER},
+      </if>
+      <if test="ext6 != null" >
+        ext6 = #{ext6,jdbcType=INTEGER},
+      </if>
+      <if test="ext7 != null" >
+        ext7 = #{ext7,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ext8 != null" >
+        ext8 = #{ext8,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.smartmatch.model.model.InquiryOrderItems" >
+    update busi_inquiry_order_items
+    set purchase_order_items_id = #{purchaseOrderItemsId,jdbcType=BIGINT},
+      inquiry_order_seller_id = #{inquiryOrderSellerId,jdbcType=BIGINT},
+      resource_id = #{resourceId,jdbcType=BIGINT},
+      category_uuid = #{categoryUuid,jdbcType=VARCHAR},
+      material_uuid = #{materialUuid,jdbcType=VARCHAR},
+      spec = #{spec,jdbcType=VARCHAR},
+      factory_id = #{factoryId,jdbcType=BIGINT},
+      warehouse_id = #{warehouseId,jdbcType=BIGINT},
+      abnormal_warehouse = #{abnormalWarehouse,jdbcType=VARCHAR},
+      quantity = #{quantity,jdbcType=INTEGER},
+      price = #{price,jdbcType=DECIMAL},
+      weight = #{weight,jdbcType=DECIMAL},
+      remark = #{remark,jdbcType=VARCHAR},
+      created = #{created,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      modification_number = #{modificationNumber,jdbcType=INTEGER},
+      row_id = #{rowId,jdbcType=VARCHAR},
+      parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      ext1 = #{ext1,jdbcType=VARCHAR},
+      ext2 = #{ext2,jdbcType=VARCHAR},
+      ext3 = #{ext3,jdbcType=VARCHAR},
+      ext4 = #{ext4,jdbcType=INTEGER},
+      ext5 = #{ext5,jdbcType=INTEGER},
+      ext6 = #{ext6,jdbcType=INTEGER},
+      ext7 = #{ext7,jdbcType=TIMESTAMP},
+      ext8 = #{ext8,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="getInquiryOrderItems" resultMap="com.prcsteel.platform.smartmatch.persist.dao.PurchaseOrderItemsDao.SearchResultItemsDto" parameterType="java.lang.Long">
+    select *,LENGTH(purchase_spec) - LENGTH( REPLACE(REPLACE(REPLACE(purchase_spec,'*',''),',',''),'-',''))+1 purchase_spec_length,
+		LENGTH(common_spec) - LENGTH( REPLACE(common_spec,'*',''))+1 common_spec_length
+		from(
+    select o.purchase_order_id, ii.id inquiry_order_item_id,ccw.single_weight, ii.category_name, ii.category_uuid,
+	 ii.factory_id, ii.factory_name, ii.material_name, ii.material_uuid,  ii.price price,
+	ii.quantity result_quantity, ii.weight result_weight, ii.spec spec, ii.warehouse_id, ii.warehouse_name,
+	 ii.abnormal_warehouse abnormalWarehouse, city.id warehouse_city_id,city.name warehouse_city_name,
+	 ii.weight_concept weight_concept, ii.purchase_order_items_id purchase_order_item_id,ii.resource_id,cr.status,
+	 pi.factory_ids purchase_factory_ids, pi.material_uuid purchase_material_uuids, pi.weight purchase_weight,pi.quantity purchase_quantity,
+	(select GROUP_CONCAT(name order by FIND_IN_SET(id, pi.factory_ids)) from base_factory where FIND_IN_SET(id,pi.factory_ids)) purchase_factory_names,
+	(select GROUP_CONCAT(name order by FIND_IN_SET(id, pi.material_uuid)) from common_materials where FIND_IN_SET(uuid,pi.material_uuid)) purchase_material_names,
+	CONCAT(pi.spec1,if(ifnull(pi.spec2,'')='','','*'),ifnull(pi.spec2,''),if(ifnull(pi.spec3,'')='','','*'),ifnull(pi.spec3,'')) purchase_spec,
+	(select GROUP_CONCAT(norms_uuid SEPARATOR '*') from common_category_norms where category_uuid=pi.category_uuid) common_spec
+	from busi_inquiry_order_items ii
+	left join busi_inquiry_order_sellers s on s.id = ii.inquiry_order_seller_id
+	left join busi_inquiry_order o on o.id = s.inquiry_order_id
+	join busi_purchase_order_items pi on pi.id = ii.purchase_order_items_id
+	left join base_warehouse w on w.id = ii.warehouse_id
+	left join base_city city on w.city_id = city.id
+	left join cust_resource cr on cr.id = ii.resource_id
+	left join common_category_weight ccw on ccw.factory_id = ii.factory_id 
+	and ccw.category_uuid = ii.category_uuid
+	and ccw.norms_name = ii.spec
+	
+	where ii.inquiry_order_seller_id = #{inquiryOrderSellerId,jdbcType=BIGINT} 
+	order by ii.purchase_order_items_id
+	) x
+  </select>
+  
+  
+  <resultMap id="inquiryOrderSatisfactionMap" type="com.prcsteel.platform.smartmatch.model.dto.InquiryOrderSatisfactionDto" >
+    <result column="purchase_order_items_id" property="purchaseOrderItemId" jdbcType="BIGINT" />
+    <result column="inquiry_total_count" property="totalInquiryCount" jdbcType="INTEGER" />
+    <result column="total_weight" property="totalWeight" jdbcType="DECIMAL" />
+  </resultMap>
+ 
+ 	<select id="getPurchaseOrderItemsSatisfaction" resultMap="inquiryOrderSatisfactionMap" parameterType="java.lang.Long">
+ 	select  sum(1) inquiry_total_count ,sum(weight) total_weight,purchase_order_items_id 
+ 	from busi_inquiry_order_items 
+ 	where purchase_order_items_id in 
+ 	 (
+ 	 	select id 
+ 	 	from  busi_purchase_order_items  
+ 	 	where purchase_order_id = #{inquiryOrderSellerId,jdbcType=BIGINT} 
+ 	 )
+	group by purchase_order_items_id
+ 	</select>
+ 
+ 
+ 
+</mapper>

@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
+<!-- 2015-08-10T18:45:42 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="OrderDetails" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="71c210ac-83b5-42f4-8ae1-f452bb1c1847">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#E8F1FA"/>
+		</conditionalStyle>
+	</style>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="orderNumber" class="java.lang.String"/>
+	<field name="buyerFullName" class="java.lang.String"/>
+	<field name="orderDateTime" class="java.util.Date"/>
+	<field name="buyerTrader" class="java.lang.String"/>
+	<field name="orderStatus" class="java.lang.Integer"/>
+	<field name="sellerFullName" class="java.lang.String"/>
+	<field name="sellerTrader" class="java.lang.String"/>
+	<field name="nsortName" class="java.lang.String"/>
+	<field name="norms" class="java.lang.String"/>
+	<field name="materials" class="java.lang.String"/>
+	<field name="factory" class="java.lang.String"/>
+	<field name="dealPrice" class="java.math.BigDecimal"/>
+	<field name="weight" class="java.math.BigDecimal"/>
+	<field name="amount" class="java.math.BigDecimal"/>
+	<field name="actualWeight" class="java.math.BigDecimal"/>
+	<field name="actualAmount" class="java.math.BigDecimal"/>
+	<group name="orderNumberGroup">
+		<groupExpression><![CDATA[$F{orderNumber}]]></groupExpression>
+		<groupHeader>
+			<band height="27">
+				<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				<textField>
+					<reportElement x="0" y="2" width="110" height="20" uuid="0e49dcd5-c8fa-4f03-b453-d5837bda7108"/>
+					<textFieldExpression><![CDATA[CONCATENATE("时间：",DATEFORMAT($F{orderDateTime}, "yyyy-MM-dd hh:mm:ss"))]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="244" y="2" width="130" height="20" uuid="b4dc8bb0-1860-4e85-9f08-55ffb9b37024"/>
+					<textFieldExpression><![CDATA[CONCATENATE("买家全称：",$F{buyerFullName})]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="377" y="2" width="95" height="20" uuid="54c63397-f8ef-4ebf-be4f-0df53f9c8388"/>
+					<textFieldExpression><![CDATA[CONCATENATE("买家交易员：",$F{buyerTrader})]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="476" y="2" width="95" height="20" uuid="8f28fb42-d5f2-4e10-9414-bf999820dc95"/>
+					<textFieldExpression><![CDATA[CONCATENATE("交易状态：",TEXT($F{orderStatus},""))]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="112" y="2" width="130" height="20" uuid="bd42bbc7-4192-4552-82ca-976b1e7f4c13"/>
+					<textFieldExpression><![CDATA[CONCATENATE("代运营交易单号：",$F{orderNumber})]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="50"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="30" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<staticText>
+				<reportElement x="190" y="3" width="100" height="20" uuid="9f7b61df-1ebc-4e9b-963c-bf1e04152a5a">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[ 交易单明细表]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="50" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<staticText>
+				<reportElement mode="Transparent" x="1" y="1" width="50" height="20" uuid="ffdea7aa-05eb-44f4-b285-15bf1e2b3a7f">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="宋体"/>
+				</textElement>
+				<text><![CDATA[卖家全称]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="51" y="1" width="50" height="20" uuid="989427a7-1871-4b29-8ce1-1abad4f95f98">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="宋体"/>
+				</textElement>
+				<text><![CDATA[卖家交易员]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="1" width="50" height="20" uuid="ec588b1e-5fdf-44f4-b66e-4e58a7bf245e">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="宋体"/>
+				</textElement>
+				<text><![CDATA[品名]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="152" y="1" width="50" height="20" uuid="f27e9c58-39c7-45d1-9059-558cfd697305">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="宋体"/>
+				</textElement>
+				<text><![CDATA[规格]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="1" width="50" height="20" uuid="ae2640b7-57e2-4dea-9133-1d28b9820dfa">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="宋体"/>
+				</textElement>
+				<text><![CDATA[材质]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="250" y="1" width="50" height="20" uuid="6e194715-66ac-4994-8405-85e9daedb405">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="宋体" size="16"/>
+				</textElement>
+				<text><![CDATA[厂家]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="1" width="50" height="20" uuid="7eee0431-de2e-411c-8470-1315dc1a17d6">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[单价（元/吨）]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="350" y="1" width="50" height="20" uuid="1e984c7a-ce51-4832-aeee-06614b4186b3">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[重量（吨）]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="400" y="1" width="50" height="20" uuid="42b2fb59-5c2b-4d4b-97f9-373dfe3d91a8">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[金额（元）]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="450" y="1" width="50" height="20" uuid="75ce6364-fb7c-428b-ae5b-30cd4d868db7">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[实提重量（吨）]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="500" y="1" width="50" height="20" uuid="e4f9d923-51c9-459c-93b5-dff9ac72fd13">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[实提金额（元）]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<textField>
+				<reportElement x="0" y="1" width="50" height="20" uuid="69ec239f-ec45-4164-89fd-26bd9dd5d91a">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{sellerFullName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="50" y="1" width="50" height="20" uuid="74cb7657-35c8-4d9d-a21d-9346ba50578a">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{sellerTrader}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="450" y="1" width="50" height="20" uuid="0e56ca3a-6a31-4ece-8e9f-23a1decd5840">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{actualWeight}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="400" y="1" width="50" height="20" uuid="cb4fb854-c257-4873-bcab-ca357da46bf9">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="350" y="1" width="50" height="20" uuid="1c7920e4-db88-4578-a51f-ebc76779d128">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{weight}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="300" y="1" width="50" height="20" uuid="22f3223e-ecf6-4801-b1a4-fefec399af52">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{dealPrice}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="250" y="1" width="50" height="20" uuid="0203768c-52f8-4b84-99a5-beda0d0965a3">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{factory}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="1" width="50" height="20" uuid="e8d7d3a3-2fb9-48d4-bd19-4dc0c6855987">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{materials}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="1" width="50" height="20" uuid="3cc5e985-de45-4d5a-8b02-337a2a5efc3a">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{norms}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="1" width="50" height="20" uuid="2abb9013-7d2f-4113-aca7-2d672fd83ddc">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{nsortName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="500" y="1" width="50" height="20" uuid="0cd46d2f-0ce9-4c62-86c9-744d5b63c0f2">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{actualAmount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

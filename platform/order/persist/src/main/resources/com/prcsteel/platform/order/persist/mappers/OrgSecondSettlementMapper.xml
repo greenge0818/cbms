@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.order.persist.dao.OrgSecondSettlementDao">
+    <resultMap id="TransLogResultMap" type="com.prcsteel.platform.order.model.dto.OrgSecondSettlementDto">
+        <result column="id" property="baseId" jdbcType="BIGINT"/>
+        <result column="amount" property="amount" jdbcType="DECIMAL"/>
+        <result column="apply_type" property="applyType" jdbcType="VARCHAR"/>
+    </resultMap>
+    
+    <resultMap id="OrgResultMap" type="com.prcsteel.platform.order.model.dto.OrganizationsDto">
+    	<result column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="credit_limit" property="creditLimit" jdbcType="DECIMAL"/>
+        <result column="credit_limit_used" property="creditLimitUsed" jdbcType="DECIMAL"/>
+    </resultMap>
+    
+    <select id="queryByOrg" resultMap="OrgResultMap" parameterType="com.prcsteel.platform.order.model.query.OrgSecondSettlementQuery">
+    	SELECT distinct base.id,base.name,base.credit_limit,base.credit_limit_used
+		FROM base_organization base
+		LEFT JOIN acl_user u ON u.org_id = base.id
+		WHERE base.status = 1 AND is_org = 1
+		<if test="userIds != null ">
+        	AND u.id in
+	        <foreach item="userId" index="index" collection="userIds" open="(" separator="," close=")">
+	            #{userId}
+	        </foreach>
+   		</if>
+     	ORDER BY base.id
+      	limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+    </select>
+    
+    <select id="queryByOrgCount" resultType="java.lang.Integer" parameterType="com.prcsteel.platform.order.model.query.OrgSecondSettlementQuery">
+    	SELECT COUNT(1) FROM(SELECT distinct base.id,base.name,base.credit_limit,base.credit_limit_used
+		FROM base_organization base
+		LEFT JOIN acl_user u ON u.org_id = base.id
+		WHERE base.status = 1 AND is_org = 1
+		<if test="userIds != null ">
+        	AND u.id in
+	        <foreach item="userId" index="index" collection="userIds" open="(" separator="," close=")">
+	            #{userId}
+	        </foreach>
+   		</if>
+     	)f
+    </select>
+    
+    <select id="queryByOrgId" resultMap="TransLogResultMap" parameterType="com.prcsteel.platform.order.model.query.OrgSecondSettlementQuery">
+        SELECT SUM(log.amount) as amount,u.org_id as baseId,log.apply_type
+		FROM cust_account_trans_log log
+		INNER JOIN cust_account c ON log.account_id = c.id
+		INNER JOIN acl_user u ON u.id = c.manager_id
+		WHERE 
+		log.apply_type in 
+		<foreach item="t" collection="applyTypes" open="(" separator="," close=")">
+            #{t}
+        </foreach>
+		<if test="serialTimeStart != null" >
+			<![CDATA[
+				AND log.serial_time >= #{serialTimeStart,jdbcType=TIMESTAMP} 
+			]]> 
+		</if>
+		<if test="serialTimeEnd != null">
+			<![CDATA[
+				AND log.serial_time < #{serialTimeEnd,jdbcType=TIMESTAMP}	
+			]]> 
+		</if>
+		<if test="orgIds != null ">
+         	AND u.org_id in
+         <foreach item="orgId" index="index" collection="orgIds" open="(" separator="," close=")">
+            #{orgId}
+         </foreach>
+     	</if>
+     	GROUP BY u.org_id,log.apply_type
+    </select>
+    
+</mapper>

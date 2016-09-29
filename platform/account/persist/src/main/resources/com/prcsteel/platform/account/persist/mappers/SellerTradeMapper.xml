@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.account.persist.dao.SellerTradeDao">
+     <!-- 代运营卖家销售列表 add by zhoucai@prcsteel.com 2016-3-26 -->
+    <resultMap id="BaseResultMap" type="com.prcsteel.platform.account.model.dto.SellerTradeDto">
+    	<id column="id" property="id" jdbcType="BIGINT" />
+    	<result column="account_name" property="accountName" jdbcType="VARCHAR"/>
+        <result column="seller_name" property="sellerName" jdbcType="VARCHAR"/>        
+        <result column="department_name" property="departName" jdbcType="VARCHAR"/>
+        <result column="department_id" property="departId" jdbcType="VARCHAR"/>
+        <result column="created" property="creatTime" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="total_quantity" property="quantity" jdbcType="INTEGER"/>
+        <result column="total_amount" property="sumAmount" jdbcType="DECIMAL"/>
+        <result column="total_weight" property="sumWeight" jdbcType="DECIMAL"/>
+        <result column="pickup_total_weight" property="weight" jdbcType="DECIMAL"/>
+        <result column="pickup_total_amount" property="amount" jdbcType="DECIMAL"/>
+        <result column="code" property="orderId" jdbcType="VARCHAR"/>
+         <result column="owner_name" property="userName" jdbcType="VARCHAR"/>
+		<result column="project_id" property="projectId" jdbcType="BIGINT"/>
+		<result column="project_name" property="projectName" jdbcType="VARCHAR"/>
+		<result column="project_name" property="sellerDepartName" jdbcType="VARCHAR"/>
+    </resultMap>     
+    <!-- add add by zhoucai@prcsteel.com 2016-3-26-->
+    <!-- 查询卖家客户的采购记录/销售记录 -->
+    <select id="querySellerTradeListByDto" parameterType="com.prcsteel.platform.account.model.query.SellerTradeQuery" resultMap="BaseResultMap">
+        select
+			t1.id AS  id,
+	        t1.code AS orderId,
+	        date_format(t1.created,'%Y-%m-%d %H:%i:%s') as creatTime,
+	        t1.account_name AS accountName,
+			/*t.department_name AS sellerDepartName,
+			t1.department_name AS departName,*/
+	        t1.owner_name AS userName,
+	        t.seller_name AS sellerName,
+	        t1.total_quantity AS quantity,
+	        t1.total_weight AS sumWeight,
+	        t.pickup_total_weight AS weight,
+	        t1.total_amount AS sumAmount,
+			t.pickup_total_amount AS amount,
+			t1.project_id AS projectId,
+	        t1.project_name AS projectName,
+	        t1.status   AS status
+        from 
+        	busi_consign_order t1
+        join(
+	        select 
+	        	t3.id,
+				group_concat(distinct t4.seller_name SEPARATOR '&lt;br&gt;') as seller_name,
+				<!--group_concat(t4.department_name SEPARATOR '&lt;br&gt;') as department_name,-->
+	       		sum(case when t3.fillup_status = '2' then t4.actual_pick_weight_salesman else 0 end ) as pickup_total_weight,
+	        	sum(case when t3.fillup_status = '2' then round(t4.actual_pick_weight_salesman * t4.deal_price,2) else 0 end) as pickup_total_amount
+	        from 
+	        	busi_consign_order t3,busi_consign_order_items t4
+	        where 1=1
+			<if test="sellerId != null and sellerId != '' ">
+				and t4.seller_id = #{sellerId,jdbcType=BIGINT}
+				<if test="departId !=null and departId != '' ">
+					and t4.department_id = #{departId,jdbcType=BIGINT}
+				</if>
+			</if>
+			<if test="accountId != null and accountId != '' ">
+				and t3.account_id = #{accountId,jdbcType=BIGINT}
+				<if test="departId !=null and departId != '' ">
+					and t3.department_id = #{departId,jdbcType=BIGINT}
+				</if>
+			</if>
+			<if test="strStartTime != null and strStartTime != '' ">
+				and <![CDATA[date_format(t3.created,'%Y-%m-%d')>=date_format(#{strStartTime,jdbcType=VARCHAR},'%Y-%m-%d') ]]>
+			</if>
+			<if test="strEndTime != null and strEndTime != '' ">
+				and <![CDATA[date_format(t3.created,'%Y-%m-%d')<=date_format(#{strEndTime,jdbcType=VARCHAR},'%Y-%m-%d') ]]>
+			</if>
+			<if test="orderStatusList != null and orderStatusList.size()>0">
+				and (
+				<foreach item="orderStatus" index="index" collection="orderStatusList" open="(" separator=" or " close=")">
+					<if test="orderStatus.orderStatus!=null and orderStatus.orderStatus.size()>0 ">
+						t3.status in
+						<foreach item="statusValue" index="index" collection="orderStatus.orderStatus" open="(" separator="," close=")">
+							#{statusValue}
+						</foreach>
+					</if>
+					<if test="orderStatus.payStatus != null">
+						and t3.pay_status = #{orderStatus.payStatus,jdbcType=VARCHAR}
+					</if>
+				</foreach>
+				)
+			</if>
+			<if test="accountName !=null and accountName != '' ">
+				and t3.account_name like CONCAT('%',#{accountName,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="sellerName !=null and sellerName != '' ">
+				and t4.seller_name like CONCAT('%',#{sellerName,jdbcType=VARCHAR},'%')
+			</if>
+	        and t3.id = t4.order_id
+	        group by t3.id
+        )as t
+        on t.id = t1.id
+		WHERE
+		1=1
+		<if test="projectId !=null and projectId != '' ">
+			and t1.project_id = #{projectId,jdbcType=BIGINT}
+		</if>
+        order by t1.created desc
+        limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+    </select>
+	<!-- 查询卖家客户的销售总数 add by zhoucai@prcsteel.com 2016-3-26 -->
+	<select id="countSellerTradeFlow" parameterType="Map" resultMap="BaseResultMap">
+		select
+		count(t1.code) AS orderId,
+		sum(t1.total_weight) AS sumWeight,
+		sum(t.pickup_total_weight) AS weight,
+		sum(t1.total_amount) AS sumAmount,
+		sum(t.pickup_total_amount) AS amount
+		from
+		busi_consign_order t1
+		join(
+		select
+		t3.id,
+		t4.seller_name,
+		sum(case when t3.fillup_status = '2' then t4.actual_pick_weight_salesman else 0 end ) as pickup_total_weight,
+		sum(case when t3.fillup_status = '2' then round(t4.actual_pick_weight_salesman * t4.deal_price,2) else 0 end) as pickup_total_amount
+		from
+		busi_consign_order t3,busi_consign_order_items t4
+		where 1=1
+		<if test="sellerId != null and sellerId != '' ">
+			and t4.seller_id = #{sellerId,jdbcType=BIGINT}
+			<if test="departId !=null and departId != '' ">
+				and t4.department_id = #{departId,jdbcType=BIGINT}
+			</if>
+		</if>
+		<if test="accountId != null and accountId != '' ">
+			and t3.account_id = #{accountId,jdbcType=BIGINT}
+			<if test="departId !=null and departId != '' ">
+				and t3.department_id = #{departId,jdbcType=BIGINT}
+			</if>
+		</if>
+		<if test="strStartTime != null and strStartTime != '' ">
+			and <![CDATA[date_format(t3.created,'%Y-%m-%d')>=date_format(#{strStartTime,jdbcType=VARCHAR},'%Y-%m-%d') ]]>
+		</if>
+		<if test="strEndTime != null and strEndTime != '' ">
+			and <![CDATA[date_format(t3.created,'%Y-%m-%d')<=date_format(#{strEndTime,jdbcType=VARCHAR},'%Y-%m-%d') ]]>
+		</if>
+		<if test="orderStatusList != null and orderStatusList.size()>0">
+			and (
+			<foreach item="orderStatus" index="index" collection="orderStatusList" open="(" separator=" or " close=")">
+				<if test="orderStatus.orderStatus!=null and orderStatus.orderStatus.size()>0 ">
+					t3.status in
+					<foreach item="statusValue" index="index" collection="orderStatus.orderStatus" open="(" separator="," close=")">
+						#{statusValue}
+					</foreach>
+				</if>
+				<if test="orderStatus.payStatus != null">
+					and t3.pay_status = #{orderStatus.payStatus,jdbcType=VARCHAR}
+				</if>
+			</foreach>
+			)
+		</if>
+		<if test="accountName !=null and accountName != '' ">
+			and t3.account_name like CONCAT('%',#{accountName,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="sellerName !=null and sellerName != '' ">
+			and t4.seller_name like CONCAT('%',#{sellerName,jdbcType=VARCHAR},'%')
+		</if>
+		and t3.id = t4.order_id
+		group by t3.id
+		)as t
+		on t.id = t1.id
+		WHERE
+		1=1
+		<if test="projectId !=null and projectId != '' ">
+			and t1.project_id = #{projectId,jdbcType=BIGINT}
+		</if>
+	</select>
+	<!-- 查询卖家客户的销售统计信息 add by zhoucai@prcsteel.com 2016-3-26 -->
+    <select id="countSellerFlow" parameterType="com.prcsteel.platform.account.model.query.SellerTradeQuery" resultType="java.lang.Integer">
+        select
+	       count(t1.code)
+        from
+        	busi_consign_order t1
+        join(
+	        select
+	        	t3.id,
+	        	t4.seller_name,
+	       		sum(case when t3.fillup_status = '2' then t4.actual_pick_weight_salesman else 0 end ) as pickup_total_weight,
+	        	sum(case when t3.fillup_status = '2' then round(t4.actual_pick_weight_salesman * t4.deal_price,2) else 0 end) as pickup_total_amount
+	        from
+	        	busi_consign_order t3,busi_consign_order_items t4
+	        where 1=1
+			<if test="sellerId != null and sellerId != '' ">
+				and t4.seller_id = #{sellerId,jdbcType=BIGINT}
+				<if test="departId !=null and departId != '' ">
+					and t4.department_id = #{departId,jdbcType=BIGINT}
+					</if>
+				</if>
+			<if test="accountId != null and accountId != '' ">
+				and t3.account_id = #{accountId,jdbcType=BIGINT}
+				<if test="departId !=null and departId != '' ">
+					and t3.department_id = #{departId,jdbcType=BIGINT}
+				</if>
+			</if>
+			<if test="strStartTime != null and strStartTime != '' ">
+				and <![CDATA[date_format(t3.created,'%Y-%m-%d')>=date_format(#{strStartTime,jdbcType=VARCHAR},'%Y-%m-%d') ]]>
+			</if>
+			<if test="strEndTime != null and strEndTime != '' ">
+				and <![CDATA[date_format(t3.created,'%Y-%m-%d')<=date_format(#{strEndTime,jdbcType=VARCHAR},'%Y-%m-%d') ]]>
+			</if>
+
+			<if test="statusList != null and statusList.size > 0 ">
+				and t3.status in
+				<foreach item="status" index="index" collection="statusList" open="(" separator="," close=")">
+					#{status,jdbcType=VARCHAR}
+				</foreach>
+			</if>
+			<if test="accountName !=null and accountName != '' ">
+				and t3.account_name like CONCAT('%',#{accountName,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="sellerName !=null and sellerName != '' ">
+				and t4.seller_name like CONCAT('%',#{sellerName,jdbcType=VARCHAR},'%')
+			</if>
+	        and t3.id = t4.order_id
+	        group by t3.id
+        )as t
+        on t.id = t1.id
+		WHERE
+		1=1
+		<if test="projectId !=null and projectId != '' ">
+			and t1.project_id = #{projectId,jdbcType=BIGINT}
+		</if>
+    </select>
+	<!-- 修改客户默认银行信息 -->
+	<update id="changeOrderProject" parameterType="com.prcsteel.platform.account.model.query.SellerTradeQuery">
+		UPDATE
+			busi_consign_order
+		SET
+		 project_id = #{projectId,jdbcType=BIGINT},
+		 project_name = #{projectName,jdbcType=VARCHAR}
+
+		WHERE
+		 1=1
+		<if test="orderList != null and orderList.size > 0 ">
+			and code in
+			<foreach item="order" index="index" collection="orderList" open="(" separator="," close=")">
+				#{order,jdbcType=VARCHAR}
+			</foreach>
+		</if>
+		<if test="beforeId != null and beforeId!='' ">
+			and project_id =#{beforeId,jdbcType=BIGINT}
+		</if>
+	</update>
+</mapper>

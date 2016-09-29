@@ -1,0 +1,59 @@
+#set($layout="layout/blank.vm")
+<div id="settingDialog">
+    #if($sysSetting)
+        <div style='width:300px;'>
+            <form id='editSetting'>
+                <table class="table">
+                    <tr>
+                        <td class="text-right"><label>设置名称：</label></td>
+                        <td>
+                            <input placeholder="请输入设置名称" id="settingName" type="text" value="$!{sysSetting.settingName}"
+                                   class="ipt-text" must="1" maxlength="100" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><label>设置类型：</label></td>
+                        <td>
+                            <input placeholder="请输入设置类型" id="settingType" type="text" value="$!{sysSetting.settingType}"
+                                   class="ipt-text"  must="1" maxlength="45"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><label>设置值：</label></td>
+                        <td>
+                            <input placeholder="请输入设置值" id="settingValue" type="text"
+                                   value="$!{sysSetting.settingValue}" class="ipt-text" must="1" maxlength="100"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><label>默认设置值：</label></td>
+                        <td>
+                            <input placeholder="请输入默认设置值" id="defaultValue" type="text"
+                                   value="$!{sysSetting.defaultValue}" class="ipt-text" maxlength="100"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><label>设置显示名称：</label></td>
+                        <td>
+                            <input placeholder="请输入设置显示名称" id="displayName" type="text"
+                                   value="$!{sysSetting.displayName}" class="ipt-text" maxlength="100"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><label>描述：</label></td>
+                        <td>
+                            <textarea id="description" class="ipt-text"
+                                      maxlength="100">$!{sysSetting.description}</textarea>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+            <p align='center'>
+                <input type="hidden" id="settingId" value="$!{sysSetting.id}">
+                <button type="button" class='btn btn-info' id='submit'>提交</button>
+            </p>
+        </div>
+    #else
+        <label class="red">不存在对应的设置项！</label>
+    #end
+</div>

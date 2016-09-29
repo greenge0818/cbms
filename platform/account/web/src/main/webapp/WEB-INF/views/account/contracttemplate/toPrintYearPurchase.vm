@@ -1,0 +1,157 @@
+<!-- 打印 买家年度采购协议 界面 -->
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch(e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="#">客户管理</a>
+        </li>
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="$link.getContextPath()/company/list.html">我的客户</a>
+        </li>
+        <li class="active">
+            打印买家年度采购协议
+        </li>
+    </ul><!-- /.breadcrumb -->
+</div>
+
+<div class="page-content print-page" id="exportthis">
+			<div class="row">
+				<div class="col-xs-12">
+
+					<!-- PAGE CONTENT BEGINS -->
+					<!-- table-bar-->
+					<div > <!-- 打印、导出内容-->
+						<div id="print1" class="table-bar tab-pane in active">
+							<input type="hidden" name="barCode" value="$!{info.barCode}" id="barCode"/>
+							<div style="width:auto; height:40px;">
+			                    <span class="logo-bar print-logo pull-left" style="float:left;"><img src="$link.getContextPath()/img/print-logo.png"" />
+			                    </span><span style="width:142px; height:39px; float:right; background-color:#CCC; color:#FFF; font-size:12px; font-weight: normal;">
+			                    <span id="barCodeNo" style="float:right">$!{info.barCode}</span></span>
+			                </div>
+						
+							<h1 class="bolder text-center clearfix"><span style="margin-right:100px">钢材销售协议</span></h1>
+							<table class="contable print-table border0 mg-t-35">
+								<tbody class="border0">
+									<tr>
+										<td colspan="5">需方(甲方)： $!{contractInfo.companyName}</td>
+										<td colspan="5">合同编号：  </td>
+									</tr>
+									<tr>
+										<td colspan="5">供方(乙方)： 杭州钢为网络科技有限公司</td>
+										<td colspan="5">签订时间： $!{contractInfo.year}年$!{contractInfo.month}月$!{contractInfo.date}日</td>
+									</tr>
+									<tr>
+										<td colspan="5"></td>
+										<td colspan="5">签订地点： 杭州市下城区</td>
+									</tr>
+								</tbody>
+							</table>
+					      
+					      	$!{info.content}
+									 							
+							<table class="contable print-table border0">
+								<tbody>
+									<tr>
+										<td width="90">需方（章）：</td><td colspan="5" width="200"></td><td width="90">供方（章）：</td><td colspan="3" width="200">杭州钢为网络科技有限公司</td>
+									</tr>
+	
+									<tr>
+										<td>签约代表人：</td><td colspan="5"></td><td>签约代表人：</td><td colspan="3"></td>
+									</tr>
+									<tr>
+										<td class="lh-25">日期：</td><td colspan="5" class="lh-25">2016年　　　月　　　日</td>
+										<td class="lh-25">日期：</td><td colspan="3" class="lh-25">2016年　　　月　　　日</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div><!-- /.table-bar -->
+							
+						<div class="text-center">
+							<span>已打印<em id="printTimes" class="red">$!{info.printTimes}</em>次，上次打印时间：
+                				<em id="lastPrintDate">$!date.format("yyyy-MM-dd HH:mm:ss",$!{info.lastPrintDate})</em></span>
+							
+							<button id="btnBack" class="btn btn-info" title="返回">返回</button>
+			                <button id="prints" class="btn btn-primary"><i class="fa fa-print"></i>打印</button>
+			                <button id="exports" class="btn btn-info" title="导出PDF">导出PDF</button>
+			            </div>
+					        
+															
+				</div><!-- /.col -->
+			</div><!-- /.row -->
+			
+		
+            
+		</div><!-- /.page-content -->
+	</div>
+</div><!-- /.main-content -->
+
+<script type="text/javascript" src="$link.getContextPath()/js/views/contracttemplate/jquery.min.js"></script>
+<script type="text/javascript" src="$link.getContextPath()/js/views/contracttemplate/html2canvas.min.js"></script>
+<script type="text/javascript" src="$link.getContextPath()/js/views/contracttemplate/pdfmake.min.js"></script>
+<script type="text/javascript" src="$link.getContextPath()/js/views/contracttemplate/jquery-barcode.js"></script>			
+<script type="text/javascript" src="$link.getContextPath()/js/views/jquery.print.js"></script>
+<script type="application/javascript">
+    $(document).ready(function() {
+    	$("#barCodeNo").barcode($("#barCodeNo").text(), "code128",{barWidth:1, barHeight:30,showHRI:true});
+    	$(document).on("click", "#btnBack", function() {
+            window.history.go(-1);
+        });
+        $(document).on("click", "#prints", function() {
+            $('#print1').print();
+            //记录打印次数、时间等
+            $.ajax({
+                type : "POST",
+                url : Context.PATH + "/agreementTemplate/doprintyearpurchase.html?barCode=" + $("#barCode").val(),
+                success : function(result) {
+                    if (result) {
+                       if (result.success) {
+                            var data = result.data;
+                            $("#printTimes").text(data.printTimes);
+                            $("#lastPrintDate").text(formatDay(data.lastPrintDate));
+                        } else {
+                            cbms.alert(result.data);
+                        }
+                    }
+                },
+                error : function(xhr, textStatus, errorThrown) {
+
+                }
+            });
+        });
+
+        $(document).on("click", "#exports", function() {
+			$("div").css("font-size","14px");
+            html2canvas($('#print1'), {
+                onrendered: function (canvas) {
+                    var data = canvas.toDataURL();
+                    var docDefinition = {
+                        content: [{
+                            image: data,
+                            width: 500,
+                        }]
+                    };
+                    pdfMake.createPdf(docDefinition).download("钢为网年度采购委托协议.pdf");
+                }
+            });
+        });
+    });
+    
+     function formatDay(data) {
+        var dt = new Date(data);
+        var time = dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate() + " " +
+                ((dt.getHours()/1)<10?("0"+dt.getHours()):dt.getHours()) + ":" + ((dt.getMinutes()/1)<10?("0"+dt.getMinutes()):dt.getMinutes()) + ":"
+                + ((dt.getSeconds()/1)<10?("0"+dt.getSeconds()):dt.getSeconds());
+        return time;
+    }
+
+</script>
+			

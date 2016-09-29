@@ -1,0 +1,35 @@
+<div class="breadcrumbs" id="breadcrumbs">
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            	基础管理
+        </li>
+        <li>刷新缓存</li>
+    </ul>
+    <!-- /.breadcrumb -->
+</div>
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="clearfix">
+                        <div class="input-group pull-left col-md-9 col-sm-9 col-lg-9  text-left">
+                            <form class="form-inline">
+                                <label>缓存key值：<input id="memKey" class="ipt-text" type="text" maxlength='50'
+                                                  value=""/></label>
+                                <button id="freshBtn" class="btn btn-sm btn-default" type="button" title="刷新">刷新
+                                </button>
+                            </form>
+                        </div>
+                    </div>  
+                </div>
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+
+<script src="$link.getContextPath()/js/views/smartmatch/memReFresh/index.js"></script>

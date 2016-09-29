@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:amq="http://activemq.apache.org/schema/core"
+       xmlns:jms="http://www.springframework.org/schema/jms"
+       xmlns:websocket="http://www.springframework.org/schema/websocket"
+       xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd
+
+        http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-2.5.xsd">
+
+
+
+    <!--JMS broker, sample for CLUSTER URL: 'failover:(tcp://12.13.14.100:61616,tcp://12.13.14.101:61616)?randomize=true'-->
+    <amq:connectionFactory id="amqConnectionFactory" brokerURL="${ecUrl}"/>
+
+    <!-- ConnectionFactory Definition -->
+    <bean id="connectionFactory" class="org.springframework.jms.connection.CachingConnectionFactory">
+        <constructor-arg ref="amqConnectionFactory"/>
+    </bean>
+    <!-- JMS channel -->
+    <bean id="activemq" class="org.apache.activemq.camel.component.ActiveMQComponent">
+        <property name="connectionFactory" ref="amqConnectionFactory"/>
+    </bean>
+
+    <!-- 监听kuangdao -->
+    <bean id="kdRequirementListener" class="com.prcsteel.platform.account.web.mq.KuanDaoRequirementListener"/>
+    <!-- 监听kuangdao -->
+    <bean id="kdPaymentListener" class="com.prcsteel.platform.account.web.mq.KuanDaoPaymentListener"/>
+    <!-- 监听超市新增用户成功后的消息 -->
+    <bean id="marketAddUserListener" class="com.prcsteel.platform.account.web.mq.MarketAddUserListener"/>
+    
+    <!-- cbms新增联系人后，推送到超市系统 -->	
+    <bean id="marketAddUserSender" class="com.prcsteel.platform.account.web.mq.MarketAddUserSender">
+    	<property name="jmsTemplate" ref="djmsTemplate" />  
+        <property name="queue" value="${jms.marketAddUser}" />  
+    </bean>
+    
+    <!-- CBMS禁用/启用联系人，推送到超市系统 -->	
+    <bean id="marketDisableUserSender" class="com.prcsteel.platform.account.web.mq.MarketDisableUserSender">
+    	<property name="jmsTemplate" ref="djmsTemplate" />  
+        <property name="queue" value="${jms.marketDisableUser}" />  
+    </bean>
+    
+    <!-- CBMS修改用户同步到超市 当修改手机号和联系人姓名时才同步-->	
+    <bean id="marketUpdateUserSender" class="com.prcsteel.platform.account.web.mq.MarketUpdateUserSender">
+    	<property name="jmsTemplate" ref="djmsTemplate" />  
+        <property name="queue" value="${jms.marketUpdateUser}" />  
+    </bean>
+    
+    <!-- 监听超市新增联系人 -->
+    <bean id="eCCustContactAddListener" class="com.prcsteel.platform.account.web.mq.ECCustContactAddListener"/>
+    
+    <!-- 监听超市修改联系人 -->
+    <bean id="eCCustContactUpdateListener" class="com.prcsteel.platform.account.web.mq.ECCustContactUpdateListener"/>
+    
+    <!-- send repeatedly permitting  -->
+    <bean id="djmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name= "sessionAcknowledgeMode" value="3"/>
+    </bean>
+    
+    <jms:listener-container
+            container-type="default"
+            connection-factory="connectionFactory"
+            acknowledge="auto">
+        <jms:listener destination="${jms.kuangdaoRequirement}" ref="kdRequirementListener" method="onMessage" />
+        <jms:listener destination="${jms.kuangdaoPayment}" ref="kdPaymentListener" method="onMessage" />
+        <jms:listener destination="${jms.marketAddUserRes}" ref="marketAddUserListener" method="onMessage" />
+        
+        <jms:listener destination="${jms.ecCustContactAddRequirement}" ref="eCCustContactAddListener" method="doProcess" />
+        <jms:listener destination="${jms.ecCustContactUpdateRequirement}" ref="eCCustContactUpdateListener" method="doProcess" />
+    </jms:listener-container>
+    
+</beans>

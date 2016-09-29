@@ -1,0 +1,359 @@
+<div class="main-content-inner" xmlns="http://www.w3.org/1999/html">
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try {
+                ace.settings.check('breadcrumbs', 'fixed')
+            } catch (e) {
+            }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                交易管理
+            </li>
+            <li>
+                <a href="$link.getContextPath()/common/menu/order-view/order-query-index-page.html">交易单管理</a>
+            </li>
+            <li>
+                <a  #if($shiro.hasPermission("order:query:changelist:page"))
+                        href="$link.getContextPath()/order/changecontract/changelist.html"
+                #elseif($shiro.hasPermission("order:query:auditlist:page"))
+                        href="$link.getContextPath()/order/changecontract/auditlist.html"
+                #elseif($shiro.hasPermission("order:query:relatelist:page"))
+                        href="$link.getContextPath()/order/changecontract/relatelist.html"
+                #elseif($shiro.hasPermission("order:query:payapplylist:page"))
+                        href="$link.getContextPath()/order/changecontract/payapplylist.html"
+                #end>合同变更</a>
+            </li>
+
+            <li>
+                <a href="$link.getContextPath()/order/changecontract/changelist.html">可变更交易单</a>
+            </li>
+        #* 面包屑 *#
+            #parse("/layout/order/breadcrumbdetail.vm")
+            <li class="active">变更操作详情</li>
+        </ul>
+        <!-- /.breadcrumb -->
+
+        #parse("layout/topbtn.vm")
+        <!-- /.nav-search -->
+    </div>
+    <div class="page-content">
+        <div class="row">
+            <div class="table-bar">
+                <span class="pull-left">
+                    <h5 class="h5 bolder">
+                        订单信息
+                        #if(${menu} == 'applypayment' || ${menu} == 'payment')
+                            (<em class="orange">初次付款</em>)
+                        #end
+                    </h5>
+                </span>
+                <!-- 增加合同查看页链接(待审核除外) -->
+                #if($!{order.status} != 1)
+                    <span class="pull-right">
+                        <a href="$link.getContextPath()/order/contract.html?id=$!{order.id}">查看合同</a>
+                    </span>
+                #end
+                <span id="order_id" class="none">$!{order.id}</span>
+                <span id="order_id" class="none">$!{order.id}</span>
+                <span id="account_id" class="none">$!{order.accountId}</span>
+                <table class="contable">
+                    <tbody>
+                    <tr>
+                        <td class="bg-gray">交易单号：</td>
+                        <td>$!{order.code}</td>
+                        <td class="bg-gray">来源：</td>
+                        <td>网站</td>
+                        <td class="bg-gray">开单时间：</td>
+                        <td>
+                            #if($order && $order.created)
+                                ${date.format("yyyy-MM-dd HH:mm:ss",$order.created)}
+                            #end
+                        </td>
+                        <td class="bg-gray">备注：</td>
+                        <td width="200">$!{order.note}</td>
+                    </tr>
+                    <tr>
+                        <td class="bg-gray">买家全称：</td>
+                        <td>$!{order.accountName}</td>
+                        <td class="bg-gray">买家部门：</td>
+                        <td>$!{order.departmentName}</td>
+                        <td class="bg-gray">买方联系人：</td>
+                        <td>$!{order.contactName}</td>
+                        <td class="bg-gray">买家联系电话：</td>
+                        <td>$!{order.contactTel}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!--/table-bar  1-->
+            <div class="table-bar">
+                <form id="changeForm">
+                    #set($Integer=0)
+                    <h5 class="h5 bolder">资源信息</h5>
+                    <table class="table table-striped table-bordered table-hover orderItemsTable" id="orderItemsTable">
+                        <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>卖家全称</th>
+                            <th>部门</th>
+                            <th>联系人</th>
+                            <th>品名</th>
+                            <th>材质</th>
+                            <th>规格</th>
+                            <th>厂家</th>
+                            <th>城市</th>
+                            <th>仓库</th>
+                            <th>数量</th>
+                            <th>重量<br/>（吨）</th>
+                            <th>计重<br>方式</th>
+                            <th>销售价<br>（元/吨）</th>
+                            <th>采购价<br>（元/吨）</th>
+                            <th>销售金额<br>（元）</th>
+                            <th>采购金额<br>（元）</th>
+                            <th>捆包号</th>
+                            <th>银票支付</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody id="itemsdatabody" class="itemsdatabody">
+                            #set($totalCostAmount = 0)
+                            #if($orderItems)
+                                #set ($i=0)
+                                #foreach($item in $orderItems)
+                                    #set($i=$i+1)
+                                <tr itemid="$!{item.id}">
+                                    <td>$i</td>
+                                    <td style="width:120px">
+                                    <span>
+                                    #if(${order.consignType} == 'temp')
+                                        <em class='label-orange white'>临</em>
+                                    #end
+                                        <label name="sellerName">$item.sellerName</label>
+                                    </span>
+                                        <input type="hidden" name="sellerId" value="$item.sellerId"/>
+                                    </td>
+                                    <td>
+                                        <label name="departmentName">$!item.departmentName</label>
+                                        <input type="hidden" name="departmentId" value="$item.departmentId"/>
+                                    </td>
+                                    <td>
+                                        <label name="contactName">$!item.contactName</label>
+                                        <input type="hidden" name="contactId" value="$item.contactId"/>
+                                    </td>
+                                    <td>
+                                        #if($shiro.hasPermission("order:changecontract:change:editnsortname"))
+                                            <input type="text" name="nsortName" maxlength="20" must="1" search='nsort'
+                                                   readonly="readonly" value="$!{item.nsortName}" class="d-text"/>
+                                        #else
+                                            $!{item.nsortName}
+                                            <input type="hidden" name="nsortName" value="$!{item.nsortName}" />
+                                        #end
+                                    </td>
+                                    <td><input type="text" name="material" maxlength="20" must="1" class="d-text"
+                                               value="$!{item.material}"/></td>
+                                    <td><input type="text" name="spec" maxlength="30" must="1" class="d-text"
+                                               value="$!{item.spec}"/></td>
+                                    <td><input type="text" name="factory" maxlength="20" must="1" class="d-text"
+                                               value="$!{item.factory}"/></td>
+                                    <td style="width:80px">
+                                        <select name="province" class="d-text"></select>
+                                        <select name="city" class="d-text" city="$!{item.city}"></select>
+                                    </td>
+                                    <td><input type="text" name="warehouse" value="$!{item.warehouse}" maxlength="20"
+                                               must="1"
+                                               class="d-text"/></td>
+                                    <td><input type="text" name="quantity" value="$!{item.quantity}" maxlength="20"
+                                               must="1" verify="number" class="sd-text"
+                                        #if($isSecondCount=="1") readonly="readonly" #end />
+                                    </td>
+                                    <td><input type="text" name="weight"
+                                               value="$!{NumberTool.format("#0.000000",$!{item.weight})}" must="1"
+                                               verify="numeric" class="d-text"
+                                        #if($isSecondCount=="1") readonly="readonly" #end/>
+                                    </td>
+                                    <td>
+                                        <select name="weightConcept" val="$!{item.weightConcept}">
+                                            <option value="理计">理计</option>
+                                            <option value="磅计">磅计</option>
+                                            <option value="抄码">抄码</option>
+                                        </select>
+                                    </td>
+                                    <td><input type="text" name="dealPrice"
+                                               value="$!{NumberTool.format("#0.00",$!{item.dealPrice})}" must="1"
+                                               verify="numeric" class="d-text"
+                                        #if($isSecondCount=="1") readonly="readonly" #end/>
+                                    </td>
+                                    <td><input type="text" name="costPrice" verify="numeric" class="d-text"
+                                               value="$!{NumberTool.format("#0.00",$!{item.costPrice})}" must="1"
+                                        #if($isSecondCount=="1") readonly="readonly" #end/>
+                                    </td>
+                                    <td><input type="hidden" name="amount" value="$!{item.amount}"><span
+                                            name="amounttext">$!{NumberTool.toThousandth($!{item.amount})}</span>
+                                    </td>
+                                    <td>
+                                        #set($costAmount=${item.costPrice} * ${item.weight})
+                                        <input type="hidden" name="costamount" value="$!{costAmount}">
+                                        <span name="costamounttext">$!{NumberTool.toThousandth($!{costAmount})}</span>
+                                    </td>
+                                    <td>
+                                        <input type="text" name="strappingNum" class="d-text" value="$!{item.strappingNum}">
+                                    </td>
+                                    <td>
+                                        <select name="isPayedByAcceptDraft" #if($isSecondCount=="1") disabled="disabled" #end>
+                                            #if($!{item.isPayedByAcceptDraft}==false)
+                                                <option value="0" selected="selected">无</option>
+                                            #else
+                                                #if($!{item.acceptDraftId} && $!{item.acceptDraftId}>0)
+                                                    #if($acceptDraftList)
+                                                        #foreach($acceptDraft in $acceptDraftList)
+                                                            <option value='$!{acceptDraft.id}'
+                                                            #if($item.acceptDraftId==$!{acceptDraft.id}) selected="selected" #end >$!{acceptDraft.code}</option>
+                                                        #end
+                                                    #end
+                                                #else
+                                                    <option value="-1">银票支付</option>
+                                                #end
+                                            #end
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <!--二结以后不能删除资源-->
+                                        #if($isSecondCount=="0")
+                                            <div class="hidden-sm hidden-xs action-buttons">
+                                                <a href="javascript:" copy="copy" title="复制"><i
+                                                        class="ace-icon fa fa-copy bigger-130 blue"></i></a>
+                                                <a href='javascript:' delete='delete' title="删除">
+                                                    <i class="ace-icon fa fa-trash-o bigger-130 red"></i>
+                                                </a>
+                                            </div>
+                                            <div class="hidden-md hidden-lg">
+                                                <div class="inline pos-rel">
+                                                    <button class="btn btn-minier btn-yellow dropdown-toggle"
+                                                            data-toggle="dropdown"
+                                                            data-position="auto">
+                                                        <i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                                                        <li>
+                                                            <a href="javascript:" copy="copy" title="复制"><i
+                                                                    class="ace-icon fa fa-copy bigger-130 blue"></i></a>
+                                                        </li>
+                                                        <li>
+                                                            <a href='javascript:' delete='delete' title="删除">
+                                                                <i class="ace-icon fa fa-trash-o bigger-130 red"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        #end
+                                    </td>
+                                </tr>
+                                #end
+                            #end
+                        </tbody>
+                        <tbody class="tbody-border0">
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td class="text-right">
+                                #if($orderItems&&$orderItems.size()>0)
+                                    总计:
+                                #else
+                                    暂无卖家信息
+                                #end
+                            </td>
+                            <td><span id="totalQuantity">$!{totalItem.quantity}</span></td>
+                            <td class="text-left">
+                                <input type="hidden" id="totalWeight" value="$!{totalItem.weight}"/>
+                                <span id="totalWeightText">$!NumberTool.format("#0.000000",$!{totalItem.weight})</span>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td class="text-right">
+                                <em dt="money" id="totalDealAmountText">$NumberTool.format(
+                                    "#0.00",$!{totalItem.amount})</em>
+                                <input type="hidden" id="totalDealAmount" value="$!{totalItem.amount}">
+                            </td>
+                            <td class="text-right">
+                                <em dt="money" id="totalCostAmountText">$NumberTool.format(
+                                    "#0.00",$totalCostAmount)</em>
+                                <input type="hidden" id="totalCostAmount" value="$!{totalItem.amount}">
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+
+            <div class="bot-info row">
+                <span class="h5Tit bolder">交（提）货信息：</span>
+                <label>交货方式：
+                    <select id="deliveryType" text="$!{order.deliveryType}">
+                        <option value="SELFPICK">自提</option>
+                        <option value="DISPATCH">配送</option>
+                    </select>
+                </label>
+                <label>交货地址：
+                   <input id="transArea" type="text" value="$!{order.transArea}" style="width:85px;" />
+                </label>
+                <label>交货时间：
+                    <input id="endTime" type="text" readonly="readonly" style="width: 85px !important;"
+                           value="$!date.format('yyyy-MM-dd',$!{order.deliveryEndDate})"
+                           onFocus="WdatePicker({minDate:'2015-01-01',maxDate:'2020-10-01'}) "/>
+                </label>
+                <label>运费：由
+                    <select id="feeTaker" text="$!{order.feeTaker}">
+                        <option value="buyer">买家</option>
+                        <option value="seller">卖家</option>
+                    </select>承担
+                    <input type="text" id="shipFee" value="0" must="1" verify="number" class="sd-text" readonly="readonly"/>元</label>
+                </label>
+                <label>出库费：由
+                    <select id="outboundTaker" text="$!{order.outboundTaker}">
+                        <option value="buyer">买家</option>
+                        <option value="seller">卖家</option>
+                    </select>
+                    承担
+                    <input type="text" id="outboundFee" value="0" must="1" verify="number" class="sd-text" readonly="readonly"/>元
+                </label>
+                <label>合同签订地：
+                    <input type="text" id="contractAddress" must="1" class="c-text" value="$!{order.contractAddress}"/>
+                </label>
+            </div>
+        </div>
+
+        #if($!{hint})
+            <div class="settlement-info bg-yellow-style row " id="new_order_hint">
+                <div class="clearfix">
+                    <span class="bolder red" >$!{hint.description}</span>
+                    <input type="hidden"  id="print_float_layer" value="$!{print_float_layer.description}"/>
+                </div>
+            </div>
+        #end
+    </div>
+    <div class="bot-info row clearfix text-center">
+        #if(($shiro.hasPermission("order:changecontract:change:secondedit") && $isSecondCount=="1")||$isSecondCount=="0")
+            <button type="button" id="submit" class="ok-btn btn btn-info">提交</button>
+        #end
+        <a href="javascript:history.go(-1);" class="btn btn-default">返回</a>
+    </div>
+</div>
+<input type="hidden" id="orderId" value="$!{order.id}">
+<script src="$link.getContextPath()/js/views/common/regionallinkage.js"></script>
+<script src="$link.getContextPath()/js/views/order/searchnsort.js"></script>
+<script src="$link.getContextPath()/js/views/order/changecontract/change.js"></script>

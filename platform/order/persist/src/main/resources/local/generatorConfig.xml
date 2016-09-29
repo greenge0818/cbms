@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+
+    <context id="context1" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <property name="suppressAllComments" value="true" />
+        </commentGenerator>
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/steel_cbms?useUnicode=true&amp;characterEncoding=utf-8"
+                        userId="root" password="root"/>
+        <javaModelGenerator targetPackage="com.prcsteel.platform.order.model.model"
+                            targetProject="MAVEN"/>
+        <sqlMapGenerator targetPackage="com.prcsteel.cbms.persist.mappers"
+                         targetProject="MAVEN"/>
+        <javaClientGenerator targetPackage="com.prcsteel.platform.order.persist.dao" targetProject="MAVEN"
+                             type="XMLMAPPER"/>
+
+        <!-- 基本 
+        <table schema="steel_cbms" tableName="base_system_opration_log" domainObjectName="SystemOprationLog" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
+        <table schema="steel_cbms" tableName="base_organization" domainObjectName="Organization" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
+        <table schema="steel_cbms" tableName="base_province" domainObjectName="Province" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
+        <table schema="steel_cbms" tableName="base_city" domainObjectName="City" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
+        <table schema="steel_cbms" tableName="base_district" domainObjectName="District" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
+        -->
+        <!-- 系统管理 
+        <table schema="steel_cbms" tableName="acl_permission" domainObjectName="Permission" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
+        <table schema="steel_cbms" tableName="acl_role" domainObjectName="Role" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
+        <table schema="steel_cbms" tableName="acl_role_permission" domainObjectName="RolePermission" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
+        <table schema="steel_cbms" tableName="acl_user" domainObjectName="User" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
+       -->
+        <!--客户管理 -->
+        <!--<table schema="steel_cbms" tableName="cust_account" domainObjectName="Account" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />-->
+        <!--<table schema="steel_cbms" tableName="cust_account_assign_logs" domainObjectName="AccountAssignLog" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />-->
+        <!--<table schema="steel_cbms" tableName="cust_account_attachment" domainObjectName="AccountAttachment" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />-->
+        <!--<table schema="steel_cbms" tableName="cust_account_bank" domainObjectName="AccountBank" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />-->
+        <!--<table schema="steel_cbms" tableName="cust_account_contact" domainObjectName="AccountContact" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />-->
+        <!--<table schema="steel_cbms" tableName="cust_account_contract_template" domainObjectName="AccountContractTemplate" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />-->
+        <!--<table schema="steel_cbms" tableName="cust_account_trans_log" domainObjectName="AccountTransLog" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />-->
+        <!--&lt;!&ndash;Add more here &ndash;&gt;-->
+        <!--<table schema="steel_cbms" tableName="busi_refund_request" domainObjectName="RefundRequest" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />-->
+        <!--<table schema="steel_cbms" tableName="busi_bill_sequence" domainObjectName="BusiBillSequence" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />-->
+
+        <!--<table schema="steel_cbms" tableName="busi_consign_order" domainObjectName="ConsignOrder" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />-->
+        <!--<table schema="steel_cbms" tableName="busi_consign_order_items" domainObjectName="ConsignOrderItems" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />-->
+
+        <!--发票 -->
+        <!--<table schema="steel_cbms" tableName="inv_invoice_in_owner_transition" domainObjectName="InvoiceInOwnerTransition" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />-->
+        <!--<table schema="steel_cbms" tableName="inv_invoice_in_owner_transition_detail" domainObjectName="InvoiceInOwnerTransitionDetail" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />-->
+        <!--<table schema="steel_cbms" tableName="inv_pool_in" domainObjectName="PoolIn" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />-->
+        <!--<table schema="steel_cbms" tableName="inv_pool_in_detail" domainObjectName="PoolInDetail" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />-->
+        <!--<table schema="steel_cbms" tableName="inv_invoice_in" domainObjectName="InvoiceIn" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />-->
+        <!--<table schema="steel_cbms" tableName="inv_invoice_in_detail" domainObjectName="InvoiceInDetail" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />-->
+        <!--<table schema="steel_cbms" tableName="inv_express" domainObjectName="Express" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />-->
+        <!--<table schema="steel_cbms" tableName="inv_invoice_pool" domainObjectName="InvoicePool" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />-->
+
+        <!--common -->
+        <!-- <table schema="steel_cbms" tableName="common_category" domainObjectName="Category" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" /> -->
+        <!-- <table schema="steel_cbms" tableName="common_group_for_category" domainObjectName="GroupForCategory" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" /> -->
+		
+		<!--销项票 -->
+		<!-- <table schema="steel_cbms" tableName="inv_invoice_out_apply" domainObjectName="InvoiceOutApply" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" /> -->
+		<!-- <table schema="steel_cbms" tableName="inv_invoice_out_apply_detail" domainObjectName="GroupForCategory" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" /> -->
+		<!-- <table schema="steel_cbms" tableName="inv_invoice_out_item_detail" domainObjectName="GroupForCategory" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" /> -->
+		<!-- <table schema="steel_cbms" tableName="inv_invoice_out_checklist" domainObjectName="GroupForCategory" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" /> -->
+		<!-- <table schema="steel_cbms" tableName="inv_invoice_out_checklist_detail" domainObjectName="GroupForCategory" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" /> -->
+
+		<!--折让-->
+        <!-- <table schema="steel_cbms" tableName="reb_allowance" domainObjectName="Allowance" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" /> -->
+        <!-- <table schema="steel_cbms" tableName="reb_allowance_order_item" domainObjectName="AllowanceOrderItem" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" /> -->
+        <!-- <table schema="steel_cbms" tableName="reb_allowance_order_detail_item" domainObjectName="AllowanceOrderDetailItem" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" /> -->
+
+        <!-- <table schema="steel_cbms" tableName="inv_invoice_in_allowance" domainObjectName="InvoiceInAllowance" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" /> -->
+        <!-- <table schema="steel_cbms" tableName="inv_invoice_in_allowance_item" domainObjectName="InvoiceInAllowanceItem" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" /> -->
+
+        <!-- <table schema="steel_cbms" tableName="report_seller_invoice_in" domainObjectName="ReportSellerInvoiceIn" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" /> -->
+        <!-- <table schema="steel_cbms" tableName="report_buyer_invoice_out" domainObjectName="ReportBuyerInvoiceOut" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" /> -->
+
+        <!--合同变更-->
+        <table schema="steel_cbms" tableName="busi_consign_order_change" domainObjectName="ConsignOrderChange" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
+        <table schema="steel_cbms" tableName="busi_consign_order_items_change" domainObjectName="ConsignOrderItemsChange" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
+        <table schema="steel_cbms" tableName="busi_consign_order_items_changedrecord" domainObjectName="ConsignOrderItemsChangedrecord" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
+        <table schema="steel_cbms" tableName="busi_consign_order_items_operatedrecord" domainObjectName="ConsignOrderItemsOperatedrecord" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
+
+    </context>
+</generatorConfiguration>

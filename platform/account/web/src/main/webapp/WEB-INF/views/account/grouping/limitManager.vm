@@ -1,0 +1,84 @@
+<div class="main-content">
+    <div class="main-content-inner">
+        <div class="breadcrumbs" id="breadcrumbs">
+            <script type="text/javascript">
+                try {
+                    ace.settings.check('breadcrumbs', 'fixed')
+                } catch (e) {
+                }
+            </script>
+
+            <ul class="breadcrumb">
+                <li>
+                    <i class="ace-icon fa fa-home home-icon"></i>
+                    客户管理
+                </li>
+                <li>
+                    <i class="ace-icon"></i>
+                    <a href="$link.getContextPath()/account/grouping/querylimitgrouping.html">额度管理</a>
+                </li>
+            </ul>
+            <!-- /.breadcrumb -->
+        </div>
+		<input type='hidden' id='permission_audit' value='$!{PERMISSION_AUDIT}'/>
+		<input type='hidden' id='permission_update' value='$!{PERMISSION_UPDATE}'/>
+	<from id="createForm">
+        <div class="page-content">
+            #parse("commonQuery.vm")
+            <table class="table ">
+	            <tr>
+	                <td class="tabletd">
+	                    <div class="department-box clearfix">
+	                        <table class="table table-striped table-bordered table-hover alp sTWidth" id="dynamic-table">
+	                            <thead>
+	                            <tr>
+	                                <th>序号</th>
+	                                <th>组名称</th>
+	                                <th>组信用额度（元）</th>
+	                                <th>客户数</th>
+	                                <th>状态</th>
+	                                <th>操作</th>
+	                            </tr>
+	                            </thead>
+	                            <tbody id="databody">
+	                            </tbody>
+	                        </table>
+	                    </div>
+	                </td>
+	            </tr>
+        	</table>
+        	<!-- /.page-content -->
+    	</div>
+		    <table class="hideBlock table table-striped table-bordered table-hover dataTable no-footer dataTable-overflow none leftWidth" id="account_group" style="margin-left:46px;">
+		    	<thead>
+                    <tr id="templateheader">
+                        <th>序号</th>
+                        <th>客户名称</th>
+                        <th>信用额度</th>
+                        <th>申请人</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                    ##<tr id="templatetr" class="groupid"><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                </thead>
+		    </table>
+	</from>
+</div><!-- /.main-content -->
+
+
+<div id="determine" class='well' style='margin-top:25px;display: none;'>
+	<div style='margin-top:25px;width: 400px; margin-bottom: 25px;'>
+	    <form id='form-horizontal' class='form-horizontal' role='form'>
+	        <div class="clearfix  text-center">
+	        	<p><span class="bolder" id="span_text"></span></p>
+	        </div>
+	        <div class="table-bar text-center"><button id="btncommit" data-bb-handler="success" type="button" class="btn btn-sm btn-primary"><i class="ace-icon fa fa-check"></i>确认</button>
+	            <button id="btnClose" data-bb-handler="button" type="button" class="btn btn-sm">取消</button>
+	        </div>
+	    </form>
+	</div>
+</div>
+
+
+
+<script src="$link.getContextPath()/js/views/account/grouping/limitManager.js"></script>

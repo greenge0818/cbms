@@ -1,0 +1,304 @@
+#set($account=$accountdto.account)
+<div class="main-content">
+    <div class="main-content-inner">
+        <div class="breadcrumbs" id="breadcrumbs">
+            <script type="text/javascript">
+                try {
+                    ace.settings.check('breadcrumbs', 'fixed')
+                } catch (e) {
+                }
+            </script>
+
+            <ul class="breadcrumb">
+                <li>
+                    <i class="ace-icon fa fa-home home-icon"></i>
+                    客户管理
+                </li>
+                <li>
+                    <i class="ace-icon"></i>
+                    <a href="$link.getContextPath()/company/list.html">我的客户</a>
+                </li>
+                <li>
+                    <i class="ace-icon"></i>
+                    <a href="$link.getContextPath()/accountinfo/$!{account.id}/accountinfo.html">$!{account.name}</a>
+                </li>
+                <li class="active">修改客户
+                </li>
+            </ul>
+            <!-- /.breadcrumb -->
+        </div>
+
+        <div class="page-content">
+            #parse("baseinfo.vm")
+            <div class="customer">
+                <form action="$link.getContextPath()/company/$!{account.id}/edit.html" method="POST"
+                      id="editForm">
+                    <div id="step1">
+                        <!--TAPBAR-->
+                        <div class="tableOne" id="step_one_div">
+                            <h1>公司基本信息<span>（带 * 号为必填）</span></h1>
+
+                            <div class="row row-marginbottom">
+                                <div class="col-md-6">
+                                    <span class="xo"><label>*</label>公司名称：</span>
+                                    <input type="text" class="l-text" value="$!{account.name}" id="acountName"
+                                           must="1" #if($totalTransLog != "0" ) readonly="readonly" #end />
+                                    <input type="hidden" class="l-text" value="$!{account.name}" id="acountNameHidden"/>
+                                </div>
+                                <div class="col-md-6">
+                                    <span class="pull-left xo"><label>*</label>选择客户性质：</span>
+                                    <ul class="checkinput pull-left">
+                                        #foreach( $elem in $accountTag)
+                                            #if($!{elem.code}!="4" && $!{elem.code}!= "8")
+                                                <li>
+                                                    <label>
+                                                        <input name="nature" value="$!{elem.code}" type="checkbox">
+                                                        $!{elem.name}
+                                                    </label>
+                                                </li>
+                                            #end
+                                        #{end}
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row row-marginbottom">
+                                <div class="col-md-6">
+                                    <span class="xo">客户类型：</span>
+                                    <label>
+                                        <select class=" select-middle" name="businessType" id="businessType">
+                                            #foreach( $elem in $businessTypes)
+                                                <option value="$elem" #if($elem == $!{account.businessType})
+                                                        selected="selected" #{end}>$elem.name</option>
+                                            #{end}
+                                        </select>
+                                    </label>
+                                </div>
+                                <div class="col-md-6 orgtd" style="display: none;">
+                                    <span class="xo"><label>*</label>归属服务中心：</span>
+                                    <label>
+                                        <select class=" select-middle" id="org">
+                                            <option value="">-选择服务中心-</option>
+                                            #foreach( $elem in $orgList)
+                                                <option value="$elem.id" #if($elem.id == $!{account.orgId})
+                                                        selected #{end}>
+                                                    $elem.name</option>
+                                            #{end}
+                                        </select>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row row-marginbottom">
+                                <div class="col-md-6">
+ <!--迁移风控代码，增加5个字段 add by zhoucai@prcsteel.com 2016-5-6-->
+                                    <span class="xo">注册资金：</span>
+                                   <input verify="rmb" id="registerCapital" class="ipt-text" type="text" value="$!NumberTool.format("#0.00", $!{account.registerCapital})"
+                                                                     name="registerCapital" />&nbsp;&nbsp;万元
+                                </div>
+                                <div class="col-md-6">
+                                    <span class="xo">成立日期：</span>
+                                   <input id="registerDate" class="ipt-text" name="registerDate" type="text" value="$!{account.registerDate}"
+                                                                     onFocus="WdatePicker()" />
+                                </div>
+                            </div>
+                            <div class="row row-marginbottom">
+                                <div class="col-md-6">
+                                    <span class="xo">买家客户标示：</span>
+                                    #if($!hasQualificate)
+	                                <label>
+	                                    <select name="buyerLabel" class="choiceshow" id="buyerLabel">
+                                            #if($!buyerLabel)
+                                                #foreach($label in $buyerLabel)
+                                                    <option value="$label" #if($label == $!{account.buyerLabel}) selected #end>$label</option>
+                                                #end
+                                            #end
+                                        </select>
+	                                </label>
+                                    #else
+                                        $!{account.buyerLabel}
+                                        <input type="hidden" name="buyerLabel" id="buyerLabel" value="$!{account.buyerLabel}"/>
+                                    #end
+                                </div>
+                                <div class="col-md-6">
+                                    <span class="xo">卖家客户标示：</span>
+                                    #if($!hasQualificate)
+                                    <label>
+	                                        <select name="supplierLabel" class="choiceshow" id="supplierLabel">
+                                                #if($!sellerLabel)
+                                                    #foreach($label in $sellerLabel)
+                                                        <option value="$label" #if($label == $!{account.supplierLabel}) selected #end>$label</option>
+                                                    #end
+                                                #end
+                                            </select>
+                                    </label>
+                                    #else
+                                        $!{account.supplierLabel}
+                                        <input type="hidden" name="supplierLabel" id="supplierLabel" value="$!{account.supplierLabel}"/>
+                                    #end
+                                </div>
+                            </div>
+                            <div class="row row-marginbottom">
+                                <div class="col-md-12">
+                                    <span class="xo">预付款标示：</span>
+                                    #if($!hasQualificate)
+                                    <label>
+	                                        <select name="paymentLabel" id="paymentLabel">
+                                               <option value="1" #if("1" == $!{account.paymentLabel}) selected #end>银票预付</option>
+                                               <option value="2" #if("2" == $!{account.paymentLabel}) selected #end>现金预付</option>
+                                               <option value="3" #if("3" == $!{account.paymentLabel}) selected #end>无预付</option>
+                                            </select>
+                                    </label>
+                                    #else
+                            				#if($!{account.paymentLabel}==1)银票预付 #end
+                                            #if($!{account.paymentLabel}==2)现金预付 #end
+                                            #if($!{account.paymentLabel}==3)无预付 #end
+                                            <input type="hidden" id="paymentLabel" name="paymentLabel" value="$!{account.paymentLabel}"/>
+
+                                    #end
+                                </div>
+                            </div>
+                                <div class="row row-marginbottom">
+                                    <div class="col-md-6">
+
+                                            <span >卖家客户单笔交易吨位上限：</span>
+                                        #if($!hasQualificate)
+                                            <input type="text" value="$!{account.sellerSingleTradeWeight}"
+                                                   id="sellerSingleTradeWeight"  name="sellerSingleTradeWeight" verify="numeric"/> &nbsp;&nbsp;吨
+                                        #else
+                                            $!{account.sellerSingleTradeWeight}
+                                        #end
+                                    </div>
+                                    <div class="col-md-6">
+
+                                            <span>卖家客户总交易笔数上限：</span>
+                                        #if($!hasQualificate)
+                                            <input type="text" value="$!{account.sellerAllTradeQuality}"
+                                                   id="sellerAllTradeQuality"  name="sellerAllTradeQuality" verify="numeric"/>&nbsp;&nbsp;笔
+                                        #else
+                                            $!{account.sellerAllTradeQuality}
+                                        #end
+                                    </div>
+                                </div>
+
+                                <div class="row row-marginbottom">
+                                    <div class="col-md-6">
+
+                                            <span>卖家客户总交易吨位上限：</span>
+                                        #if($!hasQualificate)
+                                            <input type="text" value="$!{account.sellerAllTradeWeight}"
+                                                   id="sellerAllTradeWeight"  name="sellerAllTradeWeight" verify="numeric"/>&nbsp;&nbsp;吨
+                                        #else
+                                            $!{account.sellerAllTradeWeight}
+                                        #end
+                                    </div>
+                                    <div class="col-md-6">
+
+                                            <span>卖家客户计入所属标示类型百分比上限：</span>
+                                        #if($!hasQualificate)
+                                            #if($!account.isSellerPercent==1)
+                                                <label><input type="radio" name="isSellerPercent" class="check" value="1" checked="true">是</label>
+                                                <label><input type="radio" name="isSellerPercent" class="check" value="0" >否</label>
+                                            #else
+                                                <label><input type="radio" name="isSellerPercent" class="check" value="1" >是</label>
+                                                <label><input type="radio" name="isSellerPercent" class="check" value="0" checked="true" >否</label>
+                                            #end
+                                        #else
+                                            #if($!account.isSellerPercent==1)
+                                                <span>是</span>
+                                                <input type="hidden" name="isSellerPercent" value="1"/>
+                                            #else
+                                                <span>否</span>
+                                                <input type="hidden" name="isSellerPercent" value="0"/>
+                                            #end
+                                        #end
+                                    </div>
+                                </div>
+                            <div class="row row-marginbottom">
+                                <div class="col-md-6">
+                                    <span class="xo">法人姓名：</span>
+                                    <input type="text" value="$!{account.legalPersonName}" class="l-text"
+                                           id="legalPersonName" name="legalPersonName"/>
+                                </div>
+                                <div class="col-md-6">
+                                    <span class="xo">公司网址：</span>
+                                    <input type="text" value="$!{account.webSiteUrl}" class="l-text" id="webSiteUrl"
+                                           name="webSiteUrl"/>
+                                </div>
+                            </div>
+                            <div class="row row-marginbottom">
+                                <div class="col-md-6">
+                                    <span class="xo">手机：</span>
+                                    <input type="text" value="$!{account.mobil}" class="l-text"
+                                           id="mobile" name="mobile" verify="mobile"/>
+                                </div>
+                                <div class="col-md-6">
+                                    <span class="xo">传真：</span>
+                                    <input type="text" value="$!{account.fax}" class="l-text" id="fax" name="fax"/>
+                                </div>
+                            </div>
+                            <div class="row row-marginbottom">
+                                <div class="col-md-6">
+                                    <span class="xo">邮编：</span>
+                                    <input type="text" value="$!{account.zip}" class="l-text" id="zip" name="zip"/>
+                                </div>
+                                <div class="col-md-6">
+                                    <span class="xo">邮寄地址：</span>
+                                    <input type="text" value="$!{account.mailAddr}" class="l-text" id="mailAddr"
+                                           name="mailAddr"/>
+                                </div>
+                            </div>
+                            <div class="row row-marginbottom borderbottom">
+                                <div class="col-md-6">
+                                    <span class="xo">城市：</span>
+                                    <label>
+                                        <select id="province" class=" select-middlehalf">
+                                            <option value="">-请选择-</option>
+                                        </select>
+                                    </label>
+                                    <label>
+                                        <select id="city" class=" select-middlehalf">
+                                        </select>
+                                    </label>
+                                    <label>
+                                        <select id="district" class=" select-middlehalf">
+                                        </select>
+                                    </label>
+                                </div>
+                                <div class="col-md-6">
+                                    <span class="xo">公司电话：</span>
+                                    <input type="text" value="$!{account.tel}" class="l-text" id="tel" verify="phone"
+                                           name="tel"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="btnBar" class="text-center clearfix">
+                        <button class="btn btn-primary" id="saveInfoBtn" type="button">保存</button>
+                        <a href="$link.getContextPath()/company/$!{account.id}/credentialsinfo.html">返回</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- /.page-content -->
+    </div>
+</div><!-- /.main-content -->
+<input type="hidden" id="accountId" value="$!{account.id}">
+<script src="$link.getContextPath()/js/views/common/regionallinkage.js"></script>
+<script src="$link.getContextPath()/js/views/account/edit.js"></script>
+<script type="text/javascript">
+    var _isSeller = false;      // 是否是卖家
+    $().ready(function () {
+        var accountTag = $!{account.accountTag};
+        $("input[name='nature']").each(function () {
+            var val = parseInt($(this).val());
+            if ((accountTag & val) == val) {
+                $(this).prop("checked", true);
+                if (val == 2) {
+                    $(".orgtd").show();
+                    _isSeller = true;
+                }
+            }
+        });
+
+        bindRegionData($("#province"), $("#city"), $("#district"),#if(${account.provinceId})$!{account.provinceId}#else ""#{end},#if(${account.cityId})$!{account.cityId}#else ""#{end},#if(${account.districtId})$!{account.districtId}#else ""#{end});
+    });
+</script>

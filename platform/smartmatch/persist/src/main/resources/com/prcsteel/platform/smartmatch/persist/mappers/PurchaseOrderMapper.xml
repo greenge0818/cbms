@@ -1,0 +1,848 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.smartmatch.persist.dao.PurchaseOrderDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.smartmatch.model.model.PurchaseOrder" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="requirement_code" property="requirementCode" jdbcType="VARCHAR" />
+    <result column="org_id" property="orgId" jdbcType="BIGINT" />
+    <result column="owner_id" property="ownerId" jdbcType="BIGINT" />
+    <result column="pre_owner_id" property="preOwnerId" jdbcType="BIGINT" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="contact" property="contact" jdbcType="VARCHAR" />
+    <result column="buyer_name" property="buyerName" jdbcType="VARCHAR" />
+    <result column="delivery_city_id" property="deliveryCityId" jdbcType="BIGINT" />
+    <result column="purchase_city_ids" property="purchaseCityIds" jdbcType="VARCHAR" />
+    <result column="purchase_city_other_id" property="purchaseCityOtherId" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="total_weight" property="totalWeight" jdbcType="DECIMAL" />
+    <result column="specific_seller_id" property="specificSellerId" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="origin_status" property="originStatus" jdbcType="VARCHAR" /> <!-- add by rabbit for issue #6974, used to reactive this order -->
+    <result column="close_reason" property="closeReason" jdbcType="VARCHAR" />
+    <result column="user_ids" property="userIds" jdbcType="VARCHAR"></result>
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+    <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+    <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+    <result column="ext1" property="ext1" jdbcType="VARCHAR" />
+    <result column="ext2" property="ext2" jdbcType="VARCHAR" />
+    <result column="ext3" property="ext3" jdbcType="VARCHAR" />
+    <result column="ext4" property="ext4" jdbcType="INTEGER" />
+    <result column="ext5" property="ext5" jdbcType="INTEGER" />
+    <result column="ext6" property="ext6" jdbcType="INTEGER" />
+    <result column="ext7" property="ext7" jdbcType="TIMESTAMP" />
+    <result column="ext8" property="ext8" jdbcType="BIGINT" />
+  </resultMap>
+  <resultMap id="PurchaseListBaseResultMap" type="com.prcsteel.platform.smartmatch.model.dto.PurchaseOrderDto">
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="code" property="code" jdbcType="VARCHAR"></result>
+    <result column="createdTime" property="createdTime" jdbcType="TIMESTAMP"></result>
+    <result column="buyerName" property="buyerName" jdbcType="VARCHAR"></result>
+    <result column="deliveryName" property="deliveryName" jdbcType="VARCHAR"></result>
+    <result column="categoryName" property="categoryName" jdbcType="VARCHAR"></result>
+    <result column="totalWeight" property="totalWeight" jdbcType="DECIMAL"></result>
+    <result column="status" property="status" jdbcType="VARCHAR"></result>
+    <result column="user_ids" property="userIds" jdbcType="VARCHAR"></result>
+    <result column="contact" property="contact" jdbcType="VARCHAR"></result>
+    <result column="tel" property="tel" jdbcType="VARCHAR"></result>
+    <result column="ownerName" property="ownerName" jdbcType="VARCHAR"></result>
+    <result column="remark" property="remark" jdbcType="VARCHAR"></result>
+    <result column="accepter" property="accepter" jdbcType="VARCHAR"></result>
+    <result column="accepterId" property="accepterId" jdbcType="BIGINT"></result>
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR"></result>
+    <result column="orgName" property="orgName" jdbcType="VARCHAR"></result>
+    <result column="materialName" property="materialName" jdbcType="VARCHAR"></result>
+    <result column="pre_owner_id" property="preOwnerId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, code, requirement_code, org_id, owner_id, pre_owner_id, tel, contact, buyer_name, delivery_city_id, purchase_city_ids,
+    purchase_city_other_id, remark, total_weight, specific_seller_id, status, origin_status, close_reason, user_ids, created,
+    created_by, last_updated, last_updated_by, modification_number, row_id, parent_row_id,
+    ext1, ext2, ext3, ext4, ext5, ext6, ext7, ext8
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from busi_purchase_order
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from busi_purchase_order
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.prcsteel.platform.smartmatch.model.model.PurchaseOrder" >
+    insert into busi_purchase_order (id, code, org_id,
+      owner_id, tel, contact,
+      buyer_name, delivery_city_id, purchase_city_ids,
+      purchase_city_other_id, remark, total_weight,
+      specific_seller_id, status, origin_status, close_reason, created,
+      created_by, last_updated, last_updated_by,
+      modification_number, row_id, parent_row_id,
+      ext1, ext2, ext3, ext4,
+      ext5, ext6, ext7,
+      ext8)
+    values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{orgId,jdbcType=BIGINT},
+      #{ownerId,jdbcType=BIGINT}, #{tel,jdbcType=VARCHAR}, #{contact,jdbcType=VARCHAR},
+      #{buyerName,jdbcType=VARCHAR}, #{deliveryCityId,jdbcType=BIGINT}, #{purchaseCityIds,jdbcType=VARCHAR},
+      #{purchaseCityOtherId,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{totalWeight,jdbcType=DECIMAL},
+      #{specificSellerId,jdbcType=BIGINT}, #{status,jdbcType=VARCHAR}, #{originStatus}, #{closeReason}, #{created,jdbcType=TIMESTAMP},
+      #{createdBy,jdbcType=VARCHAR}, #{lastUpdated,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR},
+      #{modificationNumber,jdbcType=INTEGER}, #{rowId,jdbcType=VARCHAR}, #{parentRowId,jdbcType=VARCHAR},
+      #{ext1,jdbcType=VARCHAR}, #{ext2,jdbcType=VARCHAR}, #{ext3,jdbcType=VARCHAR}, #{ext4,jdbcType=INTEGER},
+      #{ext5,jdbcType=INTEGER}, #{ext6,jdbcType=INTEGER}, #{ext7,jdbcType=TIMESTAMP},
+      #{ext8,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.smartmatch.model.model.PurchaseOrder" useGeneratedKeys="true" keyProperty="id">
+    insert into busi_purchase_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="requirementCode != null" >
+        requirement_code,
+      </if>      
+      <if test="orgId != null" >
+        org_id,
+      </if>
+      <if test="ownerId != null" >
+        owner_id,
+      </if>
+      <if test="tel != null" >
+        tel,
+      </if>
+      <if test="contact != null" >
+        contact,
+      </if>
+      <if test="buyerId != null" >
+        buyer_id,
+      </if>
+      <if test="buyerName != null" >
+        buyer_name,
+      </if>
+      <if test="deliveryCityId != null" >
+        delivery_city_id,
+      </if>
+      <if test="deliveryCityName != null" >
+        delivery_city_name,
+      </if>
+      <if test="purchaseCityIds != null" >
+        purchase_city_ids,
+      </if>
+      <if test="purchaseCityOtherId != null" >
+        purchase_city_other_id,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="totalWeight != null" >
+        total_weight,
+      </if>
+      <if test="specificSellerId != null" >
+        specific_seller_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="originStatus != null" >
+        origin_status,
+      </if>
+      <if test="closeReason != null">
+        close_reason,
+      </if>
+      <if test="userIds != null" >
+        user_ids,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by,
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number,
+      </if>
+      <if test="rowId != null" >
+        row_id,
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id,
+      </if>
+      <if test="ext1 != null" >
+        ext1,
+      </if>
+      <if test="ext2 != null" >
+        ext2,
+      </if>
+      <if test="ext3 != null" >
+        ext3,
+      </if>
+      <if test="ext4 != null" >
+        ext4,
+      </if>
+      <if test="ext5 != null" >
+        ext5,
+      </if>
+      <if test="ext6 != null" >
+        ext6,
+      </if>
+      <if test="ext7 != null" >
+        ext7,
+      </if>
+      <if test="ext8 != null" >
+        ext8,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+       <if test="requirementCode != null" >
+        #{requirementCode,jdbcType=VARCHAR},
+      </if>     
+      <if test="orgId != null" >
+        #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="ownerId != null" >
+        #{ownerId,jdbcType=BIGINT},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="contact != null" >
+        #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerId != null" >
+        #{buyerId,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerName != null" >
+        #{buyerName,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryCityId != null" >
+        #{deliveryCityId,jdbcType=BIGINT},
+      </if>
+      <if test="deliveryCityName != null" >
+        #{deliveryCityName,jdbcType=BIGINT},
+      </if>
+      <if test="purchaseCityIds != null" >
+        #{purchaseCityIds,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseCityOtherId != null" >
+        #{purchaseCityOtherId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="totalWeight != null" >
+        #{totalWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="specificSellerId != null" >
+        #{specificSellerId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="originStatus != null" >
+        #{originStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="closeReason != null">
+        #{closeReason},
+      </if>
+      <if test="userIds != null" >
+        #{userIds,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        #{parentRowId,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null" >
+        #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3 != null" >
+        #{ext3,jdbcType=VARCHAR},
+      </if>
+      <if test="ext4 != null" >
+        #{ext4,jdbcType=INTEGER},
+      </if>
+      <if test="ext5 != null" >
+        #{ext5,jdbcType=INTEGER},
+      </if>
+      <if test="ext6 != null" >
+        #{ext6,jdbcType=INTEGER},
+      </if>
+      <if test="ext7 != null" >
+        #{ext7,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ext8 != null" >
+        #{ext8,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.smartmatch.model.model.PurchaseOrder" >
+    update busi_purchase_order
+    <set >
+    
+      <if test="orgId != null" >
+        org_id = #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="ownerId != null" >
+        owner_id = #{ownerId,jdbcType=BIGINT},
+      </if>
+      <if test="ownerId != null" >
+        pre_owner_id = #{preOwnerId,jdbcType=BIGINT},
+      </if>
+      <if test="tel != null" >
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="contact != null" >
+        contact = #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerId != null" >
+        buyer_id = #{buyerId,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerId == null" >
+        buyer_id = null,
+      </if>
+      <if test="buyerName != null" >
+        buyer_name = #{buyerName,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryCityId != null" >
+        delivery_city_id = #{deliveryCityId,jdbcType=BIGINT},
+      </if>
+      <if test="deliveryCityName != null" >
+        delivery_city_name = #{deliveryCityName,jdbcType=BIGINT},
+      </if>
+      <if test="purchaseCityIds != null" >
+        purchase_city_ids = #{purchaseCityIds,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseCityOtherId != null" >
+        purchase_city_other_id = #{purchaseCityOtherId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="totalWeight != null" >
+        total_weight = #{totalWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="specificSellerId != null" >
+        specific_seller_id = #{specificSellerId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="originStatus != null" >
+        origin_status = #{originStatus,jdbcType=VARCHAR},
+      </if>
+      
+        close_reason = #{closeReason},
+      
+      <if test="userIds != null" >
+        user_ids = #{userIds,jdbcType=VARCHAR},
+      </if>
+
+        last_updated = now(),
+
+      <if test="lastUpdatedBy != null" >
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="accepter != null" >
+        accepter = #{accepter,jdbcType=VARCHAR},
+      </if>
+
+        modification_number = modification_number+1,
+
+      <if test="rowId != null" >
+        row_id = #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null" >
+        ext1 = #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        ext2 = #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3 != null" >
+        ext3 = #{ext3,jdbcType=VARCHAR},
+      </if>
+      <if test="ext4 != null" >
+        ext4 = #{ext4,jdbcType=INTEGER},
+      </if>
+      <if test="ext5 != null" >
+        ext5 = #{ext5,jdbcType=INTEGER},
+      </if>
+      <if test="ext6 != null" >
+        ext6 = #{ext6,jdbcType=INTEGER},
+      </if>
+      <if test="ext7 != null" >
+        ext7 = #{ext7,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ext8 != null" >
+        ext8 = #{ext8,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.smartmatch.model.model.PurchaseOrder" >
+    update busi_purchase_order
+    set 
+      org_id = #{orgId,jdbcType=BIGINT},
+      owner_id = #{ownerId,jdbcType=BIGINT},
+      pre_owner_id = #{preOwnerId,jdbcType=BIGINT},
+      tel = #{tel,jdbcType=VARCHAR},
+      contact = #{contact,jdbcType=VARCHAR},
+      buyer_name = #{buyerName,jdbcType=VARCHAR},
+      delivery_city_id = #{deliveryCityId,jdbcType=BIGINT},
+      purchase_city_ids = #{purchaseCityIds,jdbcType=VARCHAR},
+      purchase_city_other_id = #{purchaseCityOtherId,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      total_weight = #{totalWeight,jdbcType=DECIMAL},
+      specific_seller_id = #{specificSellerId,jdbcType=BIGINT},
+      status = #{status,jdbcType=VARCHAR},
+      origin_status = #{originStatus},
+      close_reason = #{closeReason},
+      created = #{created,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      modification_number = #{modificationNumber,jdbcType=INTEGER},
+      row_id = #{rowId,jdbcType=VARCHAR},
+      parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      ext1 = #{ext1,jdbcType=VARCHAR},
+      ext2 = #{ext2,jdbcType=VARCHAR},
+      ext3 = #{ext3,jdbcType=VARCHAR},
+      ext4 = #{ext4,jdbcType=INTEGER},
+      ext5 = #{ext5,jdbcType=INTEGER},
+      ext6 = #{ext6,jdbcType=INTEGER},
+      ext7 = #{ext7,jdbcType=TIMESTAMP},
+      ext8 = #{ext8,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateCodeById" parameterType="map" >
+    update busi_purchase_order
+    set code = #{code,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <resultMap id="BaseDataDto" type="com.prcsteel.platform.core.model.dto.BaseDataDto">
+    <id column="id" property="uuid" jdbcType="VARCHAR"/>
+    <result column="name" property="name" jdbcType="VARCHAR"/>
+  </resultMap>
+<!--modify by gelizhong  modify by wangxianjun 修改效率问题-->
+  <select id="getAllAccount" parameterType="map" resultMap="BaseDataDto">
+   SELECT t.id, t.name
+    FROM (
+     SELECT ca.id AS id, ca.name FROM cust_account ca
+     UNION ALL
+     SELECT ca2.id, bpo.buyer_name as name FROM busi_purchase_order bpo LEFT JOIN cust_account ca2 on ca2.name = bpo.buyer_name
+    ) t
+    GROUP BY t.name
+  </select>
+
+  <resultMap id="AccountResultMap" type="com.prcsteel.platform.account.model.model.Account">
+    <id column="id" property="id" jdbcType="BIGINT"/>
+    <result column="name" property="name" jdbcType="VARCHAR"/>
+  </resultMap>
+  <select id="queryAccount" parameterType="map" resultMap="AccountResultMap">
+	select * from (
+		-- 根据客户id查询客户名称
+		select t.`name` from cust_account t 
+		right join
+		(
+			-- 根据部门id查询客户id
+			select t.parent_id  from cust_account t 
+			right join 
+			-- 查询关联关系表的部门id
+			(select t.account_id from cust_account_contact t 
+				LEFT JOIN cust_contact t1 on t1.id = t.contact_id
+				<where>
+			      <if test="tel != null and tel!=''">
+			        and t1.tel like concat(#{tel}, '%')
+			      </if>
+			      <if test="name != null and name != ''">
+			        and t1.name like concat(#{name}, '%')
+			      </if>
+			    </where>
+			) as temp
+			on temp.account_id = t.id
+		) as temp1
+		on t.id = temp1.parent_id
+		UNION
+		SELECT t.buyer_name as name FROM busi_purchase_order t 
+		<where>
+			<if test="tel != null and tel!=''">
+			  and t.tel like concat(#{tel}, '%')
+			</if>
+			<if test="name != null and name != ''">
+			  and t.contact like concat(#{name}, '%')
+			</if>
+    	</where>
+	) tempTab where tempTab.name != '' GROUP BY tempTab.`name`
+  </select>
+
+  <resultMap id="AccountContactResultMap" type="com.prcsteel.platform.account.model.model.AccountContact">
+    <id column="id" property="id" jdbcType="BIGINT"/>
+    <result column="name" property="name" jdbcType="VARCHAR"/>
+    <result column="tel" property="tel" jdbcType="VARCHAR"/>
+  </resultMap>
+
+	<select id="queryAccountContact" parameterType="map" resultMap="AccountContactResultMap">
+	  SELECT (CASE WHEN T.ID IS NULL THEN 0 ELSE T.ID END) AS ID, T.NAME, T.TEL
+	  FROM (
+	         select cac.id as id, con.tel, con.name from cust_account_contact cac left join
+	         cust_contact con on con.id = cac.contact_id
+	         UNION ALL
+	         SELECT 0 AS id, bpo.tel, bpo.contact AS name FROM busi_purchase_order bpo
+	       ) t
+	  <where>
+	    <if test="tel != null and tel!=''">
+	      and t.tel LIKE CONCAT(#{tel}, '%')
+	    </if>
+	    <if test="name != null and name != ''">
+	      and t.name LIKE CONCAT(#{name}, '%')
+	    </if>
+	  </where>
+	
+	  <if test="tel != null and tel!=''">
+	    GROUP BY t.tel
+	  </if>
+	  <if test="name != null and name != ''">
+	    GROUP BY t.name
+	  </if>
+	  LIMIT 0, 50
+	</select>
+
+  <select id="selectPurchaseList" resultMap="PurchaseListBaseResultMap" parameterType="map">
+    select pur.id id,pur.code code,pur.created createdTime,pur.buyer_name buyerName,pur.delivery_city_name deliveryName,group_concat(distinct(item.category_name)) categoryName,
+    pur.total_weight totalWeight,pur.pre_owner_id,
+    USER1.name as last_updated_by,
+    user.id as accepterId,
+    user.name as accepter,
+    pur.contact,pur.tel,pur.requirement_code as requestCode,
+    org.name orgName,CASE pur.status
+    WHEN 'QUOTED' THEN '已报价'
+    WHEN 'PENDING_QUOTE' THEN '待报价'
+    WHEN 'BILLED ' THEN '已开单'
+    WHEN 'CLOSED ' THEN '已关闭'
+    WHEN 'PENDING_ACCEPTE ' THEN '待受理'
+    WHEN 'PENDING_CLERK_ACCEPTE ' THEN '待业务员处理'
+    WHEN 'PENDING_DIRECTOR_ASSIGNED ' THEN '待网销主管分配'
+    WHEN 'PENDING_SERVER_MANAGER_ASSIGNED ' THEN '待服总分配'
+    WHEN 'PENDING_OPEN_BILL ' THEN '待开单'
+    END AS status
+    from busi_purchase_order pur
+    left join busi_purchase_order_items item on pur.id=item.purchase_order_id
+    left join base_organization org on pur.org_id=org.id
+    left join acl_user user on pur.accepter=user.login_id
+    LEFT JOIN acl_user USER1 ON  USER1 .login_id = pur.last_updated_by
+    <where>
+      <if test="code != null and code != ''">
+        and code LIKE '%' #{code} '%'
+      </if>
+      <if test="buyerName != null and buyerName != ''">
+        and pur.buyer_name LIKE '%' #{buyerName} '%'
+      </if>
+      <if test="deliveryName != null and deliveryName != ''">
+        and pur.delivery_city_name LIKE '%' #{deliveryName} '%'
+      </if>
+      <if test="orgName != null and orgName != ''">
+        and org.name LIKE '%' #{orgName} '%'
+      </if>
+      <if test="categoryName != null and categoryName != ''">
+        and item.category_name LIKE '%' #{categoryName} '%'
+      </if>
+      <if test="statusList !=null and statusList.size > 0 ">
+        and pur.status IN
+        <foreach item="s" index="index" collection="statusList" open="(" separator="," close=")">
+          #{s}
+        </foreach>
+      </if>
+      <if test="startTime != null">
+        <![CDATA[ AND str_to_date(pur.created,'%Y-%m-%d') >= #{startTime}]]>
+      </if>
+      <if test="endTime != null">
+        <![CDATA[ AND str_to_date(pur.created,'%Y-%m-%d') <= #{endTime}]]>
+      </if>
+      <if test="userIds != null">
+            AND (
+            <foreach item="id" index="index" collection="userIds" open="(" separator="or" close=")">
+                FIND_IN_SET(#{id},pur.user_ids)
+            </foreach>
+             or pur.created_by =#{user.loginId}
+             
+             or pur.owner_id =#{user.id}
+            )
+        </if>
+      <if test="requirementCode !=null and requirementCode != ''">
+          and pur.requirement_code  like '%' #{requirementCode} '%'
+      </if>        
+    </where>
+    group by pur.id
+    order by pur.created desc,pur.last_updated DESC
+    limit
+    #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+  </select>
+ <select id="searchPurchaseOrderByrequrimentCode" resultType="long" >
+  	select pur.id from busi_purchase_order pur where pur.requirement_code=#{requirementCode}
+  </select>
+  <!--modify by zhoucai@prcsteel.com 2016-8-23 统计询价单条数与查询列表做同步-->
+  <select id="countPurchaseOrder" resultType="int" parameterType="com.prcsteel.platform.smartmatch.model.query.PurchaseOrderQuery">
+    select count(DISTINCT (pur.id))
+    from busi_purchase_order pur
+    left join busi_purchase_order_items item on pur.id=item.purchase_order_id
+    left join common_category cate on item.category_uuid=cate.uuid
+    left join base_city city on pur.delivery_city_id=city.id
+    left join base_organization org on pur.org_id=org.id
+    left join acl_user user on pur.accepter=user.login_id
+    LEFT JOIN acl_user USER1 ON  USER1 .login_id = pur.last_updated_by
+    <where>
+      <if test="code != null and code != ''">
+        and code LIKE '%' #{code} '%'
+      </if>
+      <if test="buyerName != null and buyerName != ''">
+        and pur.buyer_name LIKE '%' #{buyerName} '%'
+      </if>
+      <if test="deliveryName != null and deliveryName != ''">
+        and city.name LIKE '%' #{deliveryName} '%'
+      </if>
+      <if test="orgName != null and orgName != ''">
+        and org.name LIKE '%' #{orgName} '%'
+      </if>
+      <if test="categoryName != null and categoryName != ''">
+        and cate.name LIKE '%' #{categoryName} '%'
+      </if>
+      <if test="statusList !=null and statusList.size > 0">
+        and pur.status IN
+        <foreach item="s" index="index" collection="statusList" open="(" separator="," close=")">
+          #{s}
+        </foreach>
+      </if>
+      <if test="startTime != null">
+        <![CDATA[ AND str_to_date(pur.created,'%Y-%m-%d') >= #{startTime}]]>
+      </if>
+      <if test="endTime != null">
+        <![CDATA[ AND str_to_date(pur.created,'%Y-%m-%d') <= #{endTime}]]>
+      </if>
+      <if test="userIds != null">
+        AND (
+        <foreach item="id" index="index" collection="userIds" open="(" separator="or" close=")">
+          FIND_IN_SET(#{id},pur.user_ids)
+        </foreach>
+        or pur.created_by =#{user.loginId}
+
+        or pur.owner_id =#{user.id}
+        )
+      </if>
+      <if test="requirementCode !=null and requirementCode != ''">
+          and pur.requirement_code  like '%' #{requirementCode} '%'
+      </if>      
+    </where>
+  </select>
+
+  <resultMap id="PurchaseOrderDtoForShowMap" type="com.prcsteel.platform.smartmatch.model.dto.PurchaseOrderDtoForShow" extends="BaseResultMap">
+    <result column="delivery_city" property="deliveryCity" jdbcType="VARCHAR"></result>
+    <result column="owner_name" property="ownerName" jdbcType="VARCHAR"></result>
+    <result column="purchase_other_city" property="purchaseOtherCity" jdbcType="VARCHAR"></result>
+    <result column="purchaseStatus" property="purchaseStatus" jdbcType="VARCHAR"></result>
+  </resultMap>
+  <select id="queryByIdForShow" resultMap="PurchaseOrderDtoForShowMap" parameterType="java.lang.Long" >
+    select  <include refid="Base_Column_List" />,
+    	CASE po.status
+		WHEN 'QUOTED' THEN '已报价'
+	    WHEN 'PENDING_QUOTE' THEN '待报价'
+	    WHEN 'BILLED ' THEN '已开单'
+	    WHEN 'CLOSED ' THEN '已关闭'
+		END AS purchaseStatus,
+    (select name from acl_user where id = po.owner_id) owner_name,
+    (select name from base_city where id = po.delivery_city_id) delivery_city,
+    (select GROUP_CONCAT(name order by FIND_IN_SET(id,CONCAT(ifnull(po.purchase_city_ids,''), if(po.purchase_city_ids is null,'',','), ifnull(po.purchase_city_other_id,'')))) from base_city where FIND_IN_SET(id,CONCAT(ifnull(po.purchase_city_ids,''), if(po.purchase_city_ids is null,'',','), ifnull(po.purchase_city_other_id,'')))) purchase_other_city
+    from busi_purchase_order po
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <resultMap id="PurchaseOrderDtoBaseOnBaseResultMap" type="com.prcsteel.platform.smartmatch.model.dto.PurchaseOrderDto" extends="BaseResultMap">
+  </resultMap>
+
+  <select id="queryByPurchaseOrderId" resultMap="PurchaseOrderDtoBaseOnBaseResultMap" parameterType="java.lang.Long" >
+    SELECT
+      bpo.id, bpo.code, bpo.org_id, bpo.owner_id, bpo.tel, bpo.contact, bpo.buyer_name, bpo.delivery_city_id, bpo.purchase_city_ids,
+      bpo.purchase_city_other_id, bpo.remark, bpo.total_weight, bpo.specific_seller_id, bpo.status, bpo.created,
+      bpo.created_by, bpo.last_updated, bpo.last_updated_by, bpo.modification_number, bpo.row_id, bpo.parent_row_id,
+      bpo.ext1, bpo.ext2, bpo.ext3, bpo.ext4, bpo.ext5, bpo.ext6, bpo.ext7, bpo.ext8,
+      bo.name orgName, au.name ownerName, bpo.delivery_city_name deliveryName,
+      (select GROUP_CONCAT(name separator '/') from base_city where FIND_IN_SET(id,bpo.purchase_city_other_id)) otherPurchaseCityName, ca.id buyerId
+    FROM busi_purchase_order bpo
+    LEFT JOIN cust_account ca ON ca.name = bpo.buyer_name
+    LEFT JOIN base_organization bo ON bo.id = bpo.org_id
+    LEFT JOIN acl_user au ON au.id = bpo.owner_id
+    WHERE bpo.id = #{id,jdbcType=BIGINT}
+    limit 1
+  </select>
+
+  <update id="updateStatusById" parameterType="map">
+    UPDATE busi_purchase_order
+    SET status = #{status,jdbcType=VARCHAR},
+      last_updated = NOW(),
+      last_updated_by = #{loginId,jdbcType=VARCHAR},
+      modification_number = (modification_number+1)
+    WHERE id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <update id="updatePurchaseOrderStatusByQuotataionItemId" parameterType="map">
+  	set @qid = (select quotation_order_id from busi_quotation_order_items where id = #{id,jdbcType=BIGINT});
+	set @pid = (select purchase_order_id from busi_quotation_order where id = @qid);
+    UPDATE busi_purchase_order
+    SET status = #{status,jdbcType=VARCHAR},
+      last_updated = NOW(),
+      last_updated_by = #{loginId,jdbcType=VARCHAR},
+      modification_number = (modification_number+1)
+    WHERE id = @pid
+  </update>
+
+  <select id="selectMinIdByDate" resultType="java.lang.Long" parameterType="java.lang.String" >
+    SELECT min(id)
+    FROM busi_purchase_order
+    WHERE str_to_date(created,'%Y-%m-%d') = #{date}
+  </select>
+
+  <resultMap id="BillHistoryDataDto" type="com.prcsteel.platform.smartmatch.model.dto.BillHistoryDataDto">
+    <result column="time" property="time" jdbcType="VARCHAR"></result>
+    <result column="nsort_name" property="nsortName" jdbcType="VARCHAR"></result>
+    <result column="weight" property="weight" jdbcType="DECIMAL"></result>
+  </resultMap>
+  <select id="selectBillHistoryByAccountId" resultMap="BillHistoryDataDto" parameterType="java.lang.Long">
+    select DATE_FORMAT(i.created,'%m月%d日') time, GROUP_CONCAT(nsort_name SEPARATOR '、') nsort_name, SUM(i.weight) weight
+    from busi_consign_order o
+    left join busi_consign_order_items i on i.order_id = o.id
+    where i.seller_id = #{accountId} and o.created <![CDATA[ >= ]]> date_sub(now(), interval 1 month) and o.status > 2
+    group by i.order_id
+    order by i.created
+    limit 0, 5
+  </select>
+  
+  <resultMap id="InquiryDetailMap" type="com.prcsteel.platform.smartmatch.model.dto.InquiryDetailDto">
+    <result column="inquiry_order_id" property="inquiryOrderId" jdbcType="BIGINT"></result>
+    <result column="category_name" property="categoryName" jdbcType="VARCHAR"></result>
+    <result column="material_name" property="materialName" jdbcType="VARCHAR"></result>
+    <result column="spec" property="spec" jdbcType="VARCHAR"></result>
+    <result column="factory_name" property="factoryName" jdbcType="VARCHAR"></result>
+    <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR"></result>
+    <result column="weight" property="weight" jdbcType="DECIMAL"></result>
+    <result column="price" property="price" jdbcType="DECIMAL"></result>
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="account_name" property="accountName" jdbcType="DECIMAL"></result>
+    <result column="account_id" property="accountId" jdbcType="BIGINT"></result>
+    <result column="contactNames" property="contactNames" jdbcType="VARCHAR"></result>
+    <result column="contactTels" property="contactTels" jdbcType="VARCHAR"></result>
+  </resultMap>
+  <!-- 根据采购单Id获取询价详情列表 -->
+  <select id="selectInquiryHistoryByPurchaseId" resultMap="InquiryDetailMap" parameterType="java.lang.Long">
+	select t.inquiry_order_id,t.category_name,t.material_name,t.spec,t.factory_name,t.warehouse_name,t.weight,t.price,t.created,
+	t2.account_name,t2.account_id,group_concat(t5.name) as contactNames,group_concat(t5.tel) as contactTels
+	from busi_inquiry_history t 
+	-- 关联询价单
+	left join busi_inquiry_order t1 on t1.id = t.inquiry_order_id 
+	-- 关联采购单卖家表
+	left join busi_inquiry_order_sellers t2 on t2.inquiry_order_id = t.inquiry_order_id
+	-- 关联客户表
+	left join cust_account t3 on t3.parent_id = t2.account_id
+	-- 关联客户联系人关系表
+	left join cust_account_contact t4 on t4.account_id = t3.id
+	-- 关联联系人表
+	left join cust_contact t5 on t5.id = t4.contact_id
+	where t.purchase_order_id = #{purchaseOrderId}
+	group by t.id order by t.created desc 
+  </select>
+  <insert id="insertInquiryMsg" parameterType="com.prcsteel.platform.smartmatch.model.model.PurchaseOrder" useGeneratedKeys="true" keyProperty="id">
+    insert into message_queue_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="pushBy != null" >
+        push_by,
+      </if>      
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="reqSource != null" >
+        req_Source,
+      </if>
+      <if test="ext1 != null" >
+        ext1,
+      </if>
+      <if test="ext2 != null" >
+        ext2,
+      </if>
+      <if test="ext3 != null" >
+        ext3,
+      </if>
+      <if test="ext4 != null" >
+        ext4,
+      </if>
+      <if test="ext5 != null" >
+        ext5
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code},
+      </if>
+      <if test="pushBy != null" >
+        #{pushBy},
+      </if>      
+      <if test="created != null" >
+        #{created},
+      </if>
+      <if test="reqSource != null" >
+        #{reqSource},
+      </if>
+      <if test="ext1 != null" >
+        #{ext1},
+      </if>
+      <if test="ext2 != null" >
+        #{ext2},
+      </if>
+      <if test="ext3 != null" >
+        #{ext3},
+      </if>
+      <if test="ext4 != null" >
+        #{ext4},
+      </if>
+      <if test="ext5 != null" >
+        #{ext5}
+      </if>
+    </trim>
+  </insert> 
+</mapper>

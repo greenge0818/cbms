@@ -1,0 +1,142 @@
+<style>
+    .clause{
+        height: 100px;
+        width: 100%;
+    }
+</style>
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            客户管理
+        </li>
+        <li>
+            <i class="ace-icon"></i>
+            <a href="$link.getContextPath()/company/list.html">我的客户</a>
+        </li>
+        <li>
+            <i class="ace-icon"></i>
+            <a href="$link.getContextPath()/accountinfo/$!{actOprt.companyId}/accountinfo.html">$!{actOprt.companyName}</a>
+        </li>
+        <li class="active">模板设置</li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+    #parse("layout/topbtn.vm")
+    <!-- /.nav-search -->
+</div>
+
+<div class="page-content">
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div  class="text">
+				<p>
+					<span>#if($actOprt.action=="add")添加 #elseif($actOprt.action=="edit")编辑 #elseif($actOprt.action=="view")查看 #end</span>
+					<span>#if($actOprt.type=="seller")卖家 #elseif($actOprt.type=="buyer")买家#elseif($actOprt.type=="channel")款道#elseif($actOprt.type=="frame")框架 #end 合同模板</span>
+					<span>：</span>
+				</p>
+			</div>
+			模板名称：<input value="$!{actOprt.name}" id="templateName" size="25" #if($actOprt.action!="edit" && $actOprt.action!="add") readOnly #end />
+			<hr/>
+            <div class="row ">
+				<div class="col-xs-3">
+					<span class="logo-bar">
+						<img src="$link.getContextPath()/img/print-logo.png" />
+                	</span>
+                 </div>
+                <div class="col-xs-6">
+                    <h1 class="center">
+                         #if($actOprt.type=="buyer")
+                            销售合同
+                        #elseif($actOprt.type=="seller")
+                            采购合同
+                        #end
+                    </h1>
+					
+                </div>
+				<div class="col-xs-3">
+					<span id="contractNo" style="overflow: auto;width: 270px !important;height: 86px;
+					position: relative;left: 50%;margin-left: -135px;display: inline-block;">$!templateNo</span>
+                 </div>
+            </div>
+           $!{detail}
+
+            <div class="row ">
+                <div class="col-xs-10">
+                    <button id="btnBack" class="btn btn-sm btn-primary" onclick="location.href='$link.getContextPath()/contracttemplate/${actOprt.companyId}/list.html'">返回</button>
+                    #if($actOprt.action !="view")
+                    <button id="btnSave" class="btn btn-sm btn-primary">保存</button>
+                    #end
+                </div>
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+
+<script src="$link.getContextPath()/js/views/contracttemplate/jquery-barcode.js"></script>
+<script type="text/javascript">
+    var TEMPLATE_DETAIL ={
+        id : "$!{actOprt.id}"==-1?"":"$!{actOprt.id}",
+        accountId : "$!{actOprt.accountId}",
+		companyId:"$!{actOprt.companyId}",
+		type:"$!{actOprt.type}"
+    }
+    $(document).ready(function() {
+        $(document).on("click", "#btnSave", function(){
+            save();
+        });
+		
+		$("#contractNo").barcode($("#contractNo").text(), "code128",{barWidth:1, barHeight:30,showHRI:true});
+		$("#contractNo").css("padding-left","60px").css("width","270px");
+		
+		 #if($actOprt.action!="edit" && $actOprt.action!="add")
+		 	$(".clause").attr("readOnly",true);
+		 #end
+    });
+
+    function save(){
+		var name=$.trim($("#templateName").val());
+		if(!name){
+			cbms.alert("合同模板名称不能为空!");
+			return;
+		}
+        cbms.loading();
+        $.ajax({
+            type : "POST",
+            url : Context.PATH + "/contracttemplate/save.html",
+            data : {
+                "id" : TEMPLATE_DETAIL.id,
+				"accountId":TEMPLATE_DETAIL.accountId,
+				"name":$("#templateName").val(),
+				"contentType":"application/json",
+				"type":TEMPLATE_DETAIL.type,
+                "content" : $("textarea").val()
+            },
+            success : function(result) {
+                cbms.closeLoading();
+                if (result) {
+                    if (result.success) {
+                        cbms.alert("操作成功！",function(){
+                            location.href="$link.getContextPath()/contracttemplate/"+TEMPLATE_DETAIL.companyId+"/list.html";
+                        });
+                    } else {
+                        cbms.alert(result.data);
+                    }
+                }
+            },
+            error : function(xhr, textStatus, errorThrown) {
+                cbms.closeLoading();
+            }
+        });
+    }
+</script>

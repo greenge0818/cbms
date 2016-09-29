@@ -1,0 +1,25 @@
+<!--待确认的进项票（已申请开销项票相应的进项票未确认，确认后才能开销项票）-->
+#set($layout="layout/blank.vm")
+<div class="page-content dialog-m" style="width:800px;">
+    <div class="table-bar">
+        <table id="tobeconfirmedTable" class="table">
+            <thead>
+            <th>发票号</th>
+            <th>卖家全称</th>
+            <th>发票金额</th>
+            <th>录入人员</th>
+            <th>联系电话</th>
+            <th>时间</th>
+            <th>快递单号</th>
+            <th>发票状态</th>
+            <th>操作</th>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <div class="btn-bar text-center">
+        <button type="button" id="closeInDialog" class="btn btn-sm btn-info">我知道了</button>
+    </div>
+</div>
+<script src="$link.getContextPath()/js/views/invoice/out/tobeconfirmedinvin.js"></script>

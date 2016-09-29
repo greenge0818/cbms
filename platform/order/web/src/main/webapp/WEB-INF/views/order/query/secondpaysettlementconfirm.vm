@@ -1,0 +1,90 @@
+<div class="breadcrumbs" id="breadcrumbs">
+	<script type="text/javascript">
+		try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+	</script>
+
+	<ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            	交易管理
+        </li>
+        <li>
+            <a href="$link.getContextPath()/common/menu/order-view/order-query-index-page.html">交易单管理</a>
+        </li>
+		<li>
+			<a href="$link.getContextPath()/order/query/secondpaysettlement.html">待确认已付款</a>
+		</li>
+		<li class="active">
+			二次结算确认已付款详情
+		</li>
+
+	</ul><!-- /.breadcrumb -->
+
+		#parse("layout/topbtn.vm")<!-- /.nav-search -->
+</div>
+
+<form id="createForm">
+<div class="page-content">
+	
+	<div class="row">
+		<form class="form-inline">
+			<div class="col-sm-12">
+				<h5 class="h5 bolder pull-left" id="account_name">$!busiPayRequest.buyerName</h5>
+				#if($!busiPayRequest.departmentCount > 1)
+					<h5 class="h5 bolder pull-left" id="account_name">&nbsp;-&nbsp$!busiPayRequest.departmentName</h5>
+				#end
+				<div class="pull-right">
+					<label>时间：</label>
+					<input id="startTime" class="ipt-text" type="text" value="$!startTime"
+		                   onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')||\'2020-10-01\'}'})"/> -
+		            <input id="endTime" class="ipt-text" type="text" value="$!endTime"
+		                   onFocus="WdatePicker({minDate:'#F{$dp.$D(\'startTime\')}',maxDate:'2020-10-01'})"/>
+		            <button id="dateBtn" class="btn btn-sm btn-default" type="button" title="搜索">
+		                <i class="aace-icon fa fa-search bigger-110"></i>搜索
+		            </button>
+				</div>
+			</div>	
+		</form>
+	</div>
+	
+	<div class="row">
+		<div class="col-xs-12">
+			<input type="hidden" id="account_id" value="$!{busiPayRequest.departmentId}"/>
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="table-bar">
+						  <input type="hidden" id="request_id" value="$!{busiPayRequest.id}"/>
+						  <input type="hidden" id="requester_id" value="$!{busiPayRequest.requesterId}"/>	
+						  <span class="bolder">申请支付金额：<span class="red" id="">$!NumberTool.toThousandth($!{busiPayRequest.totalAmount})</span>元<input type="hidden" value="$!{busiPayRequest.totalAmount}" id="total_amount"/>
+						  <span class="bolder"><a href="$link.getContextPath()/order/query/payrequest.html?requestId=$!{busiPayRequest.id}&status">查看付款申请</a></span>
+						  #if($shiro.hasPermission("order:query:secondpaysettlement:confirm"))
+							<span><button type="button" class="btn btn-info btn-sm payBtnCofirm" vtype="SPD" id="payBtnCofirm">确认已付款(浦发)</button></span>
+						  #end
+						  #if($shiro.hasPermission("order:query:secondpaysettlement:confirmicbc"))
+							<span><button type="button" class="btn btn-info btn-sm payBtnCofirm" vtype="ICBC" id="payBtnCofirm">确认已付款(工行)</button></span>
+						  #end
+						 &nbsp;&nbsp;&nbsp;&nbsp;
+						 <label>银行出账时间：
+                             <input id="bankAccountTime" class="ipt-text" type="text" value="$!{bankAccountStartTime}" style="width: 85px"
+                                    onFocus="WdatePicker({minDate:'#F{$dp.$D(\'bankAccountTime\')}',maxDate:'2020-10-01'})"/>
+						 </label>
+						<table id="dynamic-table" class="table table-striped table-bordered table-hover">
+							<thead><tr><th>结算时间</th><th>关联类型</th><th>关联单号</th><th>类型</th><th>二次结算账户发生额</th><th>二次结算账户余额</th><th>交易员</th></thead>
+						
+						</table>
+						<a href="javascript:history.back(-1);">返回</a>
+					</div><!--/table-bar 2-->
+					
+				</div>
+			</div>
+		</div><!-- /.col -->
+
+	</div><!-- /.row -->
+		
+
+</div><!-- /.page-content -->
+<input type="hidden" name="id" id="order_id" value="$id"/>
+</form>
+
+<script src="$link.getContextPath()/js/views/order/updconfirm.js"></script>
+<script src="$link.getContextPath()/js/views/order/secondpaysettlementconfirm.js"></script>

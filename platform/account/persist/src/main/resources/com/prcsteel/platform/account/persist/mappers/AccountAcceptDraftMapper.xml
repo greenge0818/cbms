@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.account.persist.dao.AccountAcceptDraftDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.account.model.model.AccountAcceptDraft" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="account_id" property="accountId" jdbcType="BIGINT" />
+    <result column="accept_draft_id" property="acceptDraftId" jdbcType="BIGINT" />
+    <result column="amount" property="amount" jdbcType="DECIMAL" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+    <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+    <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, account_id, accept_draft_id, amount, created, created_by,
+    last_updated, last_updated_by, modification_number, row_id, parent_row_id
+  </sql>
+
+  <insert id="insert" parameterType="com.prcsteel.platform.account.model.model.AccountAcceptDraft" >
+    insert into cust_account_accept_draft (id, account_id, accept_draft_id, amount,
+      created, created_by, last_updated,
+      last_updated_by, modification_number, row_id, 
+      parent_row_id)
+    values (#{id,jdbcType=BIGINT}, #{accountId,jdbcType=BIGINT}, #{acceptDraftId,jdbcType=BIGINT}, #{amount,jdbcType=DECIMAL},
+      #{created,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, #{lastUpdated,jdbcType=TIMESTAMP},
+      #{lastUpdatedBy,jdbcType=VARCHAR}, #{modificationNumber,jdbcType=INTEGER}, #{rowId,jdbcType=VARCHAR}, 
+      #{parentRowId,jdbcType=VARCHAR})
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.account.model.model.AccountAcceptDraft" useGeneratedKeys="true"
+          keyProperty="id">
+    insert into cust_account_accept_draft
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="accountId != null" >
+        account_id,
+      </if>
+      <if test="acceptDraftId != null" >
+        accept_draft_id,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by,
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number,
+      </if>
+      <if test="rowId != null" >
+        row_id,
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="accountId != null" >
+        #{accountId,jdbcType=BIGINT},
+      </if>
+      <if test="acceptDraftId != null" >
+        #{acceptDraftId,jdbcType=BIGINT},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        #{parentRowId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.account.model.model.AccountAcceptDraft" >
+    update cust_account_accept_draft
+    <set >
+      <if test="accountId != null" >
+        account_id = #{accountId,jdbcType=BIGINT},
+      </if>
+      <if test="acceptDraftId != null" >
+        accept_draft_id = #{acceptDraftId,jdbcType=BIGINT},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="created != null" >
+        created = #{created},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated = CURRENT_TIMESTAMP,
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number = #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        row_id = #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT} and modification_number + 1 = #{modificationNumber,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.account.model.model.AccountAcceptDraft" >
+    update cust_account_accept_draft
+    set account_id = #{accountId,jdbcType=BIGINT},
+      accept_draft_id = #{acceptDraftId,jdbcType=BIGINT},
+      amount = #{amount,jdbcType=DECIMAL},
+      created = #{created},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      last_updated = CURRENT_TIMESTAMP,
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      modification_number = #{modificationNumber,jdbcType=INTEGER},
+      row_id = #{rowId,jdbcType=VARCHAR},
+      parent_row_id = #{parentRowId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT} and modification_number + 1 = #{modificationNumber,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByAccountIdAndAcceptDraftId" parameterType="com.prcsteel.platform.account.model.model.AccountAcceptDraft" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from cust_account_accept_draft
+    where account_id = #{accountId,jdbcType=BIGINT} and accept_draft_id = #{acceptDraftId,jdbcType=BIGINT}
+  </select>
+  
+  <select id="queryBydepartmentIdAndAcceptDraftId" parameterType="com.prcsteel.platform.account.model.model.AccountAcceptDraft" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM cust_account_accept_draft
+    WHERE account_id IN
+    <foreach item="departmentId" index="index" collection="departmentIds" open="(" separator="," close=")">
+    	#{departmentId}
+    </foreach>
+    AND accept_draft_id = #{acceptDraftId,jdbcType=BIGINT}
+  </select>
+
+  <update id="updateAmountByAcceptDraftId">
+    update cust_account_accept_draft
+    <set>
+      amount = 0.000000
+    </set>
+    where accept_draft_id = #{acceptDraftId,jdbcType=BIGINT}
+  </update>
+
+</mapper>

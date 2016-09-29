@@ -1,0 +1,138 @@
+#set($account=$accountdto.account)
+#set($accountExt=$accountdto.accountExt)
+#set($attachmentList=$accountdto.attachments)
+<div class="main-content">
+    <div class="main-content-inner">
+        <div class="breadcrumbs" id="breadcrumbs">
+            <script type="text/javascript">
+                try {
+                    ace.settings.check('breadcrumbs', 'fixed')
+                } catch (e) {
+                }
+            </script>
+
+            <ul class="breadcrumb">
+                <li>
+                    <i class="ace-icon fa fa-home home-icon"></i>
+                    	客户管理
+                </li>
+                <li>
+                    <i class="ace-icon"></i>
+                    <a href="javascript:void(0)">我的客户</a>
+                </li>
+                <li>
+                    <i class="ace-icon"></i>
+                    <a href="$link.getContextPath()/account/flow/cardinfo/list.html">$!{account.name}</a>
+                </li>
+                <li class="active">客户资料
+                </li>
+            </ul>
+        </div>
+
+        <div class="page-content">
+            <div class="customer">
+	            <div class="topbottom10">
+	            <span>
+	                                        公司全称：$!{accountdto.account.name}
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;客户性质：$!{accountdto.customerProperty}
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;服务中心 ：$!{account.orgName}</span>
+	            </div>
+	            <div class="tableFour">
+	                <h1>证件资料<span></span>
+	                    <label>
+	                    	<input name="cardRadio" type="radio" value="threeCard" checked="checked" onclick="showCardInfo(3)">三证
+	                    </label>
+	                    <label>
+	                    	<input name="cardRadio" type="radio" value="fiveCard" onclick="showCardInfo(5)">五证合一
+	                    </label>
+	                </h1>
+	                <div id="cardInfo">
+	                    <div id="threeCard">
+	                        <div class="row row-marginbottom">
+	                            <div class="col-md-6">
+	                                <span class="xo edo">营业执照注册号：</span>
+	                                <span class="view">$!{accountExt.licenseCode}</span>
+	                            </div>
+	                            <div class="col-md-6">
+	                                <span class="xo edo">组织机构代码：</span>
+	                                <span class="view">$!{accountExt.orgCode}</span>
+	                            </div>
+	                        </div>
+	                        <div class="row row-marginbottom borderbottom">
+	                            <div class="col-md-6">
+	                                <div class="row-marginbottom">
+	                                    <span class="xo edo">企业注册地址：</span>
+	                                    <span class="view">$!{accountExt.regAddress}</span>
+	                                </div>
+	                                <div>
+	                                    <div class="pull-left">
+	                                        <span class="xo edo">营业执照：</span>
+	                                    </div>
+	                                    <a rel="lightbox" style="display:#if($!{attachmentList.license.url}) block #else none #end;">
+	                                        <img class="imgbigger imgo" src="$link.getContextPath()/common/getfile.html?key=$!{attachmentList.license.url}"/>
+	                                    </a>
+	                                </div>
+	                            </div>
+	                            <div class="col-md-6">
+	                                <div class="pull-left">
+	                                    <span class="xo edo">组织机构代码证：</span>
+	                                </div>
+	                                <div class=" pull-left">
+	                                    <a rel="lightbox" style="display:#if($!{attachmentList.org_code.url}) block #else none #end;">
+	                                        <img class="imgbigger imgo" src="$link.getContextPath()/common/getfile.html?key=$!{attachmentList.org_code.url}"/></a>
+	                                </div>
+	                            </div>
+	                        </div>
+	                        <div class="row">
+	                            <div class="col-md-12">
+	                                <div class="pull-left">
+	                                    <span class="xo edo">税务登记本(副本)：</span>
+	                                </div>
+	                                <div class=" pull-left">
+	                                    <a rel="lightbox" style="display:#if($!{attachmentList.tax_reg.url}) block #else none #end;">
+	                                        <img class="imgbigger imgo" src="$link.getContextPath()/common/getfile.html?key=$!{attachmentList.tax_reg.url}"/></a>
+	                                </div>
+	                            </div>
+	                        </div>
+	                	</div>
+                        <div id="fiveCard" style="display: none;">
+                            <div class="row row-marginbottom borderbottom">
+                                <div class="col-md-6">
+                                    <div class="row-marginbottom">
+                                        <span class="xo edo">统一社会信用代码号：</span>
+                                        <span class="view">$!{accountExt.creditCode}</span>
+                                    </div>
+                                    <div>
+                                        <div class="pull-left">
+                                            <span class="xo edo">统一社会信用代码：</span>
+                                        </div>
+                                        <a rel="lightbox" style="display:#if($!{attachmentList.credit_code.url}) block #else none #end;">
+                                            <img class="imgbigger imgo" src="$link.getContextPath()/common/getfile.html?key=$!{attachmentList.credit_code.url}"/></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                	
+                        <div id="audit" class="row row-marginbottom">
+                            <div class="col-md-6">
+                            </div>
+                            <div class="col-md-6">
+								<label><input name="auditOp" type="radio" value="threeCard" checked="true" onclick="isShowAuditDesc(false)"/>通过</label>
+								<label><input id="disagree"name="auditOp" type="radio" value="threeCard" onclick="isShowAuditDesc(true)"/>不通过</label>
+								<input id="auditDesc" type="text" style="display: none"/>
+                            </div>
+                        </div>							
+	                </div>
+	           	</div>
+	           	<div>
+		           	<div style="padding-left: 100px">
+						<a  href="$accountDomain/flow/cardinfo/list.html">返回</a>		           	
+		           	</div>
+		           	<div style="padding-left: 600px">
+		           		<input id="auditBtn" type="button" value="审核" onclick="doAudit($account.id,$accountExt.id)"/>   
+		           	</div>	           	
+	           	</div>
+	        </div>
+	     </div>
+	</div>
+</div>
+<script src="$link.getContextPath()/js/views/company/workflow/cardInfo.js"></script>

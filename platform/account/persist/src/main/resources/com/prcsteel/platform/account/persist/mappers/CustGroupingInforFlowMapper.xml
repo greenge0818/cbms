@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.account.persist.dao.CustGroupingInforFlowDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.account.model.model.CustGroupingInforFlow" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="serial" property="serial" jdbcType="VARCHAR" />
+    <result column="ower_type" property="owerType" jdbcType="VARCHAR" />
+    <result column="grouping_infor_id" property="groupingInforId" jdbcType="BIGINT" />
+    <result column="grouping_infor_name" property="groupingInforName" jdbcType="VARCHAR" />
+    <result column="grouping_infor_name_before" property="groupingInforNameBefore" jdbcType="VARCHAR" />
+    <result column="grouping_infor_name_after" property="groupingInforNameAfter" jdbcType="VARCHAR" />
+    <result column="account_id" property="accountId" jdbcType="BIGINT" />
+    <result column="account_name" property="accountName" jdbcType="VARCHAR" />
+    <result column="department_id" property="departmentId" jdbcType="BIGINT" />
+    <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="before_limit" property="beforeLimit" jdbcType="DECIMAL" />
+    <result column="after_limit" property="afterLimit" jdbcType="DECIMAL" />
+    <result column="final_limit" property="finalLimit" jdbcType="DECIMAL" />
+    <result column="grouping_infor_status" property="groupingInforStatus" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+    <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+    <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, serial, ower_type, grouping_infor_id, grouping_infor_name, grouping_infor_name_before, 
+    grouping_infor_name_after, account_id, account_name, department_id, department_name, 
+    user_id, user_name, before_limit, after_limit, final_limit, grouping_infor_status,remark,
+    created, created_by, last_updated, last_updated_by, modification_number, row_id, 
+    parent_row_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from cust_grouping_infor_flow
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from cust_grouping_infor_flow
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.prcsteel.platform.account.model.model.CustGroupingInforFlow" >
+    insert into cust_grouping_infor_flow (id, serial, ower_type, 
+      grouping_infor_id, grouping_infor_name, grouping_infor_name_before, 
+      grouping_infor_name_after, account_id, account_name, 
+      department_id, department_name, user_id, 
+      user_name, before_limit, after_limit, 
+      final_limit, grouping_infor_status, remark, created,
+      created_by, last_updated, last_updated_by, 
+      modification_number, row_id, parent_row_id
+      )
+    values (#{id,jdbcType=BIGINT}, #{serial,jdbcType=VARCHAR}, #{owerType,jdbcType=VARCHAR}, 
+      #{groupingInforId,jdbcType=BIGINT}, #{groupingInforName,jdbcType=VARCHAR}, #{groupingInforNameBefore,jdbcType=VARCHAR}, 
+      #{groupingInforNameAfter,jdbcType=VARCHAR}, #{accountId,jdbcType=BIGINT}, #{accountName,jdbcType=VARCHAR}, 
+      #{departmentId,jdbcType=BIGINT}, #{departmentName,jdbcType=VARCHAR}, #{userId,jdbcType=BIGINT}, 
+      #{userName,jdbcType=VARCHAR}, #{beforeLimit,jdbcType=DECIMAL}, #{afterLimit,jdbcType=DECIMAL}, 
+      #{finalLimit,jdbcType=DECIMAL}, #{groupingInforStatus,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP},
+      #{createdBy,jdbcType=VARCHAR}, #{lastUpdated,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}, 
+      #{modificationNumber,jdbcType=INTEGER}, #{rowId,jdbcType=VARCHAR}, #{parentRowId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.account.model.model.CustGroupingInforFlow" >
+    insert into cust_grouping_infor_flow
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="serial != null" >
+        serial,
+      </if>
+      <if test="owerType != null" >
+        ower_type,
+      </if>
+      <if test="groupingInforId != null" >
+        grouping_infor_id,
+      </if>
+      <if test="groupingInforName != null" >
+        grouping_infor_name,
+      </if>
+      <if test="groupingInforNameBefore != null" >
+        grouping_infor_name_before,
+      </if>
+      <if test="groupingInforNameAfter != null" >
+        grouping_infor_name_after,
+      </if>
+      <if test="accountId != null" >
+        account_id,
+      </if>
+      <if test="accountName != null" >
+        account_name,
+      </if>
+      <if test="departmentId != null" >
+        department_id,
+      </if>
+      <if test="departmentName != null" >
+        department_name,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="beforeLimit != null" >
+        before_limit,
+      </if>
+      <if test="afterLimit != null" >
+        after_limit,
+      </if>
+      <if test="finalLimit != null" >
+        final_limit,
+      </if>
+      <if test="groupingInforStatus != null" >
+        grouping_infor_status,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by,
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number,
+      </if>
+      <if test="rowId != null" >
+        row_id,
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="serial != null" >
+        #{serial,jdbcType=VARCHAR},
+      </if>
+      <if test="owerType != null" >
+        #{owerType,jdbcType=VARCHAR},
+      </if>
+      <if test="groupingInforId != null" >
+        #{groupingInforId,jdbcType=BIGINT},
+      </if>
+      <if test="groupingInforName != null" >
+        #{groupingInforName,jdbcType=VARCHAR},
+      </if>
+      <if test="groupingInforNameBefore != null" >
+        #{groupingInforNameBefore,jdbcType=VARCHAR},
+      </if>
+      <if test="groupingInforNameAfter != null" >
+        #{groupingInforNameAfter,jdbcType=VARCHAR},
+      </if>
+      <if test="accountId != null" >
+        #{accountId,jdbcType=BIGINT},
+      </if>
+      <if test="accountName != null" >
+        #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null" >
+        #{departmentId,jdbcType=BIGINT},
+      </if>
+      <if test="departmentName != null" >
+        #{departmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="beforeLimit != null" >
+        #{beforeLimit,jdbcType=DECIMAL},
+      </if>
+      <if test="afterLimit != null" >
+        #{afterLimit,jdbcType=DECIMAL},
+      </if>
+      <if test="finalLimit != null" >
+        #{finalLimit,jdbcType=DECIMAL},
+      </if>
+      <if test="groupingInforStatus != null" >
+        #{groupingInforStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        #{parentRowId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.account.model.model.CustGroupingInforFlow" >
+    update cust_grouping_infor_flow
+    <set >
+      <if test="serial != null" >
+        serial = #{serial,jdbcType=VARCHAR},
+      </if>
+      <if test="owerType != null" >
+        ower_type = #{owerType,jdbcType=VARCHAR},
+      </if>
+      <if test="groupingInforId != null" >
+        grouping_infor_id = #{groupingInforId,jdbcType=BIGINT},
+      </if>
+      <if test="groupingInforName != null" >
+        grouping_infor_name = #{groupingInforName,jdbcType=VARCHAR},
+      </if>
+      <if test="groupingInforNameBefore != null" >
+        grouping_infor_name_before = #{groupingInforNameBefore,jdbcType=VARCHAR},
+      </if>
+      <if test="groupingInforNameAfter != null" >
+        grouping_infor_name_after = #{groupingInforNameAfter,jdbcType=VARCHAR},
+      </if>
+      <if test="accountId != null" >
+        account_id = #{accountId,jdbcType=BIGINT},
+      </if>
+      <if test="accountName != null" >
+        account_name = #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null" >
+        department_id = #{departmentId,jdbcType=BIGINT},
+      </if>
+      <if test="departmentName != null" >
+        department_name = #{departmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="beforeLimit != null" >
+        before_limit = #{beforeLimit,jdbcType=DECIMAL},
+      </if>
+      <if test="afterLimit != null" >
+        after_limit = #{afterLimit,jdbcType=DECIMAL},
+      </if>
+      <if test="finalLimit != null" >
+        final_limit = #{finalLimit,jdbcType=DECIMAL},
+      </if>
+      <if test="groupingInforStatus != null" >
+        grouping_infor_status = #{groupingInforStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number = #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        row_id = #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.account.model.model.CustGroupingInforFlow" >
+    update cust_grouping_infor_flow
+    set serial = #{serial,jdbcType=VARCHAR},
+      ower_type = #{owerType,jdbcType=VARCHAR},
+      grouping_infor_id = #{groupingInforId,jdbcType=BIGINT},
+      grouping_infor_name = #{groupingInforName,jdbcType=VARCHAR},
+      grouping_infor_name_before = #{groupingInforNameBefore,jdbcType=VARCHAR},
+      grouping_infor_name_after = #{groupingInforNameAfter,jdbcType=VARCHAR},
+      account_id = #{accountId,jdbcType=BIGINT},
+      account_name = #{accountName,jdbcType=VARCHAR},
+      department_id = #{departmentId,jdbcType=BIGINT},
+      department_name = #{departmentName,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=BIGINT},
+      user_name = #{userName,jdbcType=VARCHAR},
+      before_limit = #{beforeLimit,jdbcType=DECIMAL},
+      after_limit = #{afterLimit,jdbcType=DECIMAL},
+      final_limit = #{finalLimit,jdbcType=DECIMAL},
+      grouping_infor_status = #{groupingInforStatus,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      created = #{created,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      modification_number = #{modificationNumber,jdbcType=INTEGER},
+      row_id = #{rowId,jdbcType=VARCHAR},
+      parent_row_id = #{parentRowId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <!--add by zhoucai@prcsteel.com 回滚插入操作根据流水号-->
+  <delete id="deleteLimitFlowByFlowNo" parameterType="java.lang.Long" >
+    delete from cust_grouping_infor_flow
+    where serial IN (#{serial,jdbcType=BIGINT})
+  </delete>
+</mapper>

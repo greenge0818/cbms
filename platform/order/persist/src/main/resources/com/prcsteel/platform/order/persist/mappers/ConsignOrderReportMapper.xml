@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.order.persist.dao.ConsignOrderReportDao" >
+  
+  <select id="queryOrderDetail" 
+  	resultType="com.prcsteel.platform.order.model.dto.ConsignOrderDetailsDto"
+  	parameterType="com.prcsteel.platform.order.model.query.ConsignOrderDetailQuery" >
+    select 
+	o.created orderDateTime,
+	o.code orderNumber,
+	o.contact_name buyerFullName, 
+    o.owner_name buyerTrader,
+    o.status orderStatus,
+    i.seller_name sellerFullName,
+    i.seller_id sellerId,
+    i.nsort_name nsortName,
+    i.spec norms,
+    i.material materials,
+    i.factory  factory,
+    i.deal_price dealPrice,
+    i.weight weight,
+    i.amount amount,
+    i.actual_pick_quantity_server actualWeight,
+    i.actual_pick_weight_server actualAmount
+    from busi_consign_order o inner join busi_consign_order_items i on o.id = i.order_id
+    <where>
+    	<if test="buyerTrader!=null">
+    		o.owner_id=#{buyerTrader}#
+    	</if>
+    	<if test="buyerFullName!=null and buyerFullName!=''">
+    		AND o.contact_name=#{buyerFullName}#
+    	</if>
+    	<if test="beginTime!=null">
+    		AND <![CDATA[ o.created>=#{beginTime}# ]]>
+    	</if>
+    	<if test="beginTime!=null">
+    		AND <![CDATA[ o.created<#{endTime}# ]]>
+    	</if>
+    	<if test="status!=null">
+    		o.status=#{status}#
+    	</if>
+    </where>
+    order by o.id desc
+  </select>
+  
+  <select id="countOrderDetail" 
+  	resultType="java.lang.Long" 
+  	parameterType="com.prcsteel.platform.order.model.query.ConsignOrderDetailQuery" >
+    select 
+	count(*)
+    from busi_consign_order o
+    <where>
+    	<if test="buyerTrader!=null">
+    		o.owner_id=#{buyerTrader}#
+    	</if>
+    	<if test="buyerFullName!=null and buyerFullName!=''">
+    		AND o.contact_name=#{buyerFullName}#
+    	</if>
+    	<if test="beginTime!=null">
+    		AND <![CDATA[ o.created>=#{beginTime}# ]]>
+    	</if>
+    	<if test="beginTime!=null">
+    		AND <![CDATA[ o.created<#{endTime}# ]]>
+    	</if>
+    	<if test="status!=null">
+    		o.status=#{status}#
+    	</if>
+    </where>
+  </select>
+</mapper>

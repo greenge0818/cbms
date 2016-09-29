@@ -1,0 +1,63 @@
+<!--TABBAR-->
+<div class="tabbar">
+    <ul class="nav nav-tabs padding-12 tab-color-blue" id="myTab4">
+        <li
+            #if($!{status} == 'AWAITS')
+                    class="active"
+            #end>
+            <a
+                #if($!{status} == 'AWAITS')
+                        href="javascript:;"
+                #else
+                        href="$link.getContextPath()/invoice/in/awaits.html"
+                #end
+                    >待收票<span class="red bolder">
+                $!{receiveTotal}
+            </span>
+            </a>
+        </li>
+        <li
+            #if($!{status} == 'RECEIVED')
+                    class="active"
+            #end>
+            <a
+                #if($!{status} == 'RECEIVED')
+                        href="javascript:;"
+                #else
+                        href="$link.getContextPath()/invoice/in/send.html"
+                #end
+                    >待寄出<span class="red bolder">
+                $!{sendTotal}
+            </span>
+            </a>
+        </li>
+        <li
+            #if($!{status} == 'SENT')
+                    class="active"
+            #end>
+            <a
+                #if($!{status} == 'SENT')
+                        href="javascript:;"
+                #else
+                        href="$link.getContextPath()/invoice/in/confirm.html"
+                #end
+                    >待确认<span class="red bolder">
+                $!{confirmTotal}
+            </span>
+            </a>
+        </li>
+        <li
+            #if($!{status} == 'CONFIRMED')
+                    class="active"
+            #end>
+            <a
+                #if($!{status} == 'CONFIRMED')
+                        href="javascript:;"
+                #else
+                        href="$link.getContextPath()/invoice/in/confirmed.html"
+                #end
+                    >已确认
+            </a>
+        </li>
+    </ul>
+</div>

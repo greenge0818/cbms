@@ -1,0 +1,143 @@
+<!-- 全部-->
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+    <style >
+        .menuContent{
+            overflow: auto;
+            height: 350px;
+            overflow-x:hidden;
+        }
+    </style>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            	款道支付
+        </li>
+        <li>
+            <a href="$link.getContextPath()/kuandao/setting/index.html">基础设置</a>
+        </li>
+        <li class="active">参数设置</li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+    <!-- /.nav-search -->
+</div>
+
+<div class="page-content">
+            <!-- PAGE CONTENT BEGINS -->
+    <div class="row">
+        <div class="col-xs-12">
+            <!--TAPBAR-->
+            <!-- tapbar S -->
+			#parse("/kuandao/setting/tapbar.vm")
+			<!-- tapbar E -->
+			
+            <div class="table-bar">
+            	<form id="basesetForm" method="post" onsubmit="javascript:return false;" >
+            	<div style="margin-left:10px"><h5 class="bolder">款道信息修改</h5></div>
+            	<table id="basesetTable" class="contable table">
+            		<tbody>
+            			<tr>
+            				<td width="140px">汇入流水轮询时间</td>
+            				<td>
+            					<ul class="forwarder-ul">
+            						<li><input name="depositJournalQueryTime" type="text" value="$!{baseset.jobCron.depositJobCron.minute}">分钟/次</li>
+            					</ul>
+            				</td>
+            			</tr>
+            			<tr>
+            				<td>会员信息同步更新</td>
+            				<td>
+            					<ul class="forwarder-ul">
+            						<li><input name="memberInfoUpdateTime" type="text" value="$!{baseset.jobCron.accountSyncJobCron.hour}">时<input type="text" value="$!{baseset.jobCron.accountSyncJobCron.minute}">分</li>
+            					</ul>
+            				</td>
+            			</tr>
+            			<tr>
+            				<td>日终对账单查询时间</td>
+            				<td>
+            					<ul class="forwarder-ul">
+            						<li><input name="dailyBillQueryTime" type="text" value="$!{baseset.jobCron.dailyBillJobCron.hour}">时<input type="text" value="$!{baseset.jobCron.dailyBillJobCron.minute}">分</li>
+            					</ul>
+            				</td>
+            			</tr>
+            			<tr>
+            				<td>异常情况收件人邮箱</td>
+            				<td>
+            						<ul class="forwarder-ul">
+            							<li><label>邮箱:</label></li>
+										<li>
+            								<label><input type="text" name="email" value=""></label>
+            								<a href="javascript:void(0);" title="添加" id="addForwarder"><i class="ace-icon glyphicon glyphicon-plus"></i></a>
+            							</li>
+										#foreach( $email in $baseset.emailList)
+            							<li>
+            								<label><input type="text" name="email" value="$!{email.settingValue}">
+												</label>
+            							</li>
+										#end
+            						</ul>
+            				</td>
+            			</tr>
+						<tr>
+            				<td>异常情况短信接收号码</td>
+            				<td>
+            						<ul class="forwarder-ul">
+            							<li><label>电话:</label></li>
+										<li>
+            								<label><input type="text" name="phonenumber" value=""></label>
+            								<a href="javascript:;" title="添加" id="addForwarder1"><i class="ace-icon glyphicon glyphicon-plus"></i></a>
+            							</li>
+										#foreach( $mobile in $baseset.mobileList)
+            							<li>
+            								<label><input type="text" name="phonenumber" value="$!{mobile.settingValue}">
+													</label>
+            							</li>
+										#end
+            						</ul>
+            				</td>
+            			</tr>
+						<tr>
+            				<td>受限银行配置</td>
+            				<td>
+            						<ul class="forwarder-ul">
+            							<li><label>受限银行：</label></li>
+										<li>
+            								<label><input type="text" name="limitBankName" value="" placeholder="请输入名称">&nbsp;&nbsp;
+													<input type="text" name="limitBankId" value="" placeholder="请输入ID号"></label>
+            								<a href="javascript:;" title="添加" id="addForwarder2"><i class="ace-icon glyphicon glyphicon-plus"></i></a>
+            							</li>
+										#foreach( $limitBank in $baseset.limitBankList)
+            							<li>
+            								<label><input type="text" name="limitBankName" value="$!{limitBank.settingName}" placeholder="请输入名称">&nbsp;&nbsp;
+													<input type="text" name="limitBankId" value="$!{limitBank.settingValue}" placeholder="请输入ID号">
+													</label>
+            							</li>
+										#end
+            						</ul>
+            				</td>
+            			</tr>
+            			<tr><td colspan="2"><div style="margin-left:30px"><input id="submitBtn" type="submit" value="保存"></div></td></tr>
+            		</tbody>
+            	</table>
+            	</form>
+            </div>
+                        
+				
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+
+
+<script src="$link.getContextPath()/js/views/kuandao/commonquery.js"></script>
+<script src="$link.getContextPath()/js/views/kuandao/setting/baseset.js"></script>
+
+

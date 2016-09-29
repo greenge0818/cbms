@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.order.persist.dao.RebateDao">
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.acl.model.model.Rebate" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="category_UUID" property="categoryUuid" jdbcType="VARCHAR" />
+    <result column="rebate_role" property="rebateRole" jdbcType="DECIMAL" />
+    <result column="rebate_status" property="rebateStatus" jdbcType="VARCHAR" />
+    <result column="effective_time" property="effectiveTime" jdbcType="TIMESTAMP" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+    <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+    <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, category_UUID, rebate_role, rebate_status, effective_time, created, created_by, 
+    last_updated, last_updated_by, modification_number, row_id, parent_row_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from base_rebate
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from base_rebate
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.prcsteel.platform.acl.model.model.Rebate" >
+    insert into base_rebate (id, category_UUID, rebate_role, 
+      rebate_status, effective_time, created, 
+      created_by, last_updated, last_updated_by, 
+      modification_number, row_id, parent_row_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{categoryUuid,jdbcType=VARCHAR}, #{rebateRole,jdbcType=DECIMAL}, 
+      #{rebateStatus,jdbcType=VARCHAR}, #{effectiveTime,jdbcType=TIMESTAMP}, #{created,jdbcType=TIMESTAMP}, 
+      #{createdBy,jdbcType=VARCHAR}, #{lastUpdated,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}, 
+      #{modificationNumber,jdbcType=INTEGER}, #{rowId,jdbcType=VARCHAR}, #{parentRowId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.acl.model.model.Rebate" >
+    insert into base_rebate
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="categoryUuid != null" >
+        category_UUID,
+      </if>
+      <if test="rebateRole != null" >
+        rebate_role,
+      </if>
+      <if test="rebateStatus != null" >
+        rebate_status,
+      </if>
+      <if test="effectiveTime != null" >
+        effective_time,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by,
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number,
+      </if>
+      <if test="rowId != null" >
+        row_id,
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="categoryUuid != null" >
+        #{categoryUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="rebateRole != null" >
+        #{rebateRole,jdbcType=DECIMAL},
+      </if>
+      <if test="rebateStatus != null" >
+        #{rebateStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="effectiveTime != null" >
+        #{effectiveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        #{parentRowId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.acl.model.model.Rebate" >
+    update base_rebate
+    <set >
+      <if test="categoryUuid != null" >
+        category_UUID = #{categoryUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="rebateRole != null" >
+        rebate_role = #{rebateRole,jdbcType=DECIMAL},
+      </if>
+      <if test="rebateStatus != null" >
+        rebate_status = #{rebateStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="effectiveTime != null" >
+        effective_time = #{effectiveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number = #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        row_id = #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.acl.model.model.Rebate" >
+    update base_rebate
+    set category_UUID = #{categoryUuid,jdbcType=VARCHAR},
+      rebate_role = #{rebateRole,jdbcType=DECIMAL},
+      rebate_status = #{rebateStatus,jdbcType=VARCHAR},
+      effective_time = #{effectiveTime,jdbcType=TIMESTAMP},
+      created = #{created,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      modification_number = #{modificationNumber,jdbcType=INTEGER},
+      row_id = #{rowId,jdbcType=VARCHAR},
+      parent_row_id = #{parentRowId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+   <update id="cancelRebateEffect" parameterType="java.lang.String" >
+    update base_rebate
+    set  rebate_status = 'INVALID'     
+    where rebate_status = 'EFFECT_NEXT_MONTH'
+  </update>
+  
+  <update id="expireOldRebate" >
+    update base_rebate
+    set  rebate_status = 'INVALID'     
+    where rebate_status = 'EFFECT'
+  </update>
+  
+  <update id="startNewRebate" >
+    update base_rebate
+    set  rebate_status = 'EFFECT'     
+    where rebate_status = 'EFFECT_NEXT_MONTH'
+    and effective_time &lt;= NOW()
+  </update> 
+  
+  <!-- 统计已经到期的还未生效的返利条数 -->
+   <select id="countNextMonthEffectRecord" resultType="java.lang.Integer" >
+     select count(1) from  base_rebate
+     where rebate_status = 'EFFECT_NEXT_MONTH'
+    and effective_time &lt;= NOW()
+  </select>
+  
+  
+   <select id="queryAll" resultMap="BaseResultMap" parameterType="com.prcsteel.platform.acl.model.model.Rebate">
+        select
+        <include refid="Base_Column_List"/>
+        from base_rebate
+        where 1=1
+        <if test="name != null">
+            and rebate_status = #{rebate_status,jdbcType=VARCHAR}
+        </if>
+       
+    </select>
+    
+     <!--返利-->
+    <resultMap id="RebateCategoryMap" type="com.prcsteel.platform.order.model.dto.RebateDto">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="category_name" property="categoryName" jdbcType="VARCHAR"/>
+        <result column="rebate_role" property="rebateRole" jdbcType="DECIMAL"/>
+        <result column="category_UUID" property="categoryUuid" jdbcType="VARCHAR" />
+    </resultMap>
+     <select id="queryRebateDto" resultMap="RebateCategoryMap" parameterType="map">
+        select t1.id as id,t2.name as category_name,t1.rebate_role as rebate_role, 
+        t2.uuid as category_UUID
+        from base_rebate t1
+        right join common_category_group t2 on t1.category_UUID=t2.uuid
+        <where>
+            1=1
+            <if test="rebateStatus!=null and rebateStatus!='' ">
+                and t1.rebate_status=#{rebateStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="categoryUUID!=null and categoryUUID!='' ">
+                and t1.category_UUID=#{categoryUUID,jdbcType=VARCHAR}
+            </if>
+          and   t2.is_deleted=0 and t2.site_uuid = 'inner_cbms'
+        </where>       
+    </select>
+</mapper>

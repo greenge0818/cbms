@@ -1,0 +1,97 @@
+<!-- 待认证 -->
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="#">发票管理</a>
+        </li>
+        <li>
+            <a href="$link.getContextPath()/invoice/in/awaits.html">进项票管理</a>
+        </li>
+        <li class="active">待认证</li>
+    </ul>
+    <!-- /.breadcrumb -->
+</div>
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <!--TAPBAR-->
+            <!-- tapbar S -->
+            #set($tabNeedRelationStatus="hasrelation")
+            #invoiceTabBar
+            <!-- tapbar E -->
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="clearfix">
+                        <div class="input-group pull-right col-md-12 col-sm-12 col-lg-12 search-bar text-left">
+                            <form class="form-inline">
+                                <label>进项发票号：<input id="invoiceCode" class="ipt-text" type="text" maxlength='50'
+                                                    value=""/></label>
+                                <label>卖家全称：<input id="seller" class="ipt-text" type="text" maxlength='50'
+                                                   search="account" accounttype="seller" value=""/></label>
+                                <label>寄出时间：</label>
+                                <input id="startTime" class="Wdate" type="text" value="$!{startTime}"
+                                       readonly="readonly"
+                                       onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')||\'%y-%M-%d\'}'})"/> -
+                                <input id="endTime" class="Wdate" type="text" value="$!{endTime}" readonly="readonly"
+                                       onFocus="WdatePicker({minDate:'#F{$dp.$D(\'startTime\')}',maxDate:'%y-%M-%d'})"/>
+                                <button id="queryBtn" class="btn btn-sm btn-default" type="button" title="搜索">
+                                    <i class="aace-icon fa fa-search bigger-110"></i>搜索
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- div.dataTables_borderWrap -->
+                    <div id="printeare">
+                        <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th><label class="pos-rel"><input type="checkbox" class="ace" name="check" id="allCheck"><span class="lbl"></span></label></th>
+                                <th>开票时间</th>
+                                <th>进项发票号</th>
+                                <th>卖家全称</th>
+                                <th>发票金额</th>
+                                <th>录入人员</th>
+                                <th>联系电话</th>
+                                <th>寄回总部时间</th>
+                                <th>确认人员</th>
+                                <th>确认时间</th>
+                                <th>发票状态</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            #if($shiro.hasPermission("invoice:in:authentication:inauthentication"))
+                                <tfoot>
+                                <tr>
+                                    <td colspan="12">
+                                        <label>一共选择了 <span class="red" id="checkCount">0</span> 条发票</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <button type="button" id="pass" class="btn btn-sm btn-primary">通过认证</button>
+                                        <button type="button" id="refuse" class="btn btn-sm btn-primary">不通过认证</button>
+                                        <button type="button" id="roollback" class="btn btn-sm btn-primary">打回</button>
+                                    </td>
+                                </tr>
+                                </tfoot>
+                            #end
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+<input type="hidden" id="status" value="$!{status}"/>
+<script src="$link.getContextPath()/js/views/invoice/invoiceUtils.js"></script>
+<script src="$link.getContextPath()/js/views/invoice/authentication.js?v=1"></script>
+<script src="$link.getContextPath()/js/views/account/searchaccount.js"></script>

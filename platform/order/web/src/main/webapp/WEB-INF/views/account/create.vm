@@ -1,0 +1,523 @@
+<div class="main-content">
+    <div class="main-content-inner">
+        <div class="breadcrumbs" id="breadcrumbs">
+            <script type="text/javascript">
+                try {
+                    ace.settings.check('breadcrumbs', 'fixed')
+                } catch (e) {
+                }
+            </script>
+
+            <ul class="breadcrumb">
+                <li>
+                    <i class="ace-icon fa fa-home home-icon"></i>
+                    	客户管理
+                </li>
+                <li>
+                    <i class="ace-icon"></i>
+                    <a href="$link.getContextPath()/account/$!{type}.html">我的#if($type=="buyer")买#else卖#{end}家客户</a>
+                </li>
+                <li class="active">添加#if($type=="buyer")买#else卖#{end}家客户
+                </li>
+            </ul>
+            <!-- /.breadcrumb -->
+
+            <div class="nav-search none" id="nav-search">
+                <form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input"
+                                           id="nav-search-input" autocomplete="off"/>
+									<i class="ace-icon fa fa-search nav-search-icon"></i>
+								</span>
+                </form>
+            </div>
+            <!-- /.nav-search -->
+        </div>
+
+        <div class="page-content">
+            <div style="background-color: #f3c17a">
+                <ul class="breadcrumb">
+                    <li><span id="step_one_span">1、 添加#if($type=="buyer")买#else卖#{end}家客户</span></li>
+                    <li><span id="step_two_span">2、 添加联系人</span></li>
+                    <li>3、 完成</li>
+                </ul>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <!--TAPBAR-->
+                    <div class="table-bar" id="step_one_div">
+                        <form action="$link.getContextPath()/account/save.html" method="POST"
+                              enctype="multipart/form-data" id="form1">
+                            <table class="contable">
+                                <tbody>
+                                <input id="type" name="type" type="hidden" value="$type"/>
+                                <tr>
+                                    <td class="bg-gray"><span class="red">*</span>公司全称：</td>
+                                    <td>
+                                        <span class="vendor-edit"><input type="text" value="$!{account.name}"
+                                                                      id="acount_name" name="name" must="1"/></span>
+                                    </td>
+                                    <td class="bg-gray">公司代码：</td>
+                                    <td>
+                                        <span class="vendor-edit"></span>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td class="bg-gray">开票地址：</td>
+                                    <td>
+                                        <span class="vendor-edit"><input type="text" value="$!{account.addr}"
+                                                                        id="addr" name="addr"/></span>
+                                    </td>
+                                    <td class="bg-gray">邮编：</td>
+                                    <td>
+                                        <span class="vendor-edit"><input type="text" value="$!{account.zip}"
+                                                                        id="zip" name="zip"/></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-gray">公司电话：</td>
+                                    <td>
+                                        <span class="vendor-edit"><input type="text" value="$!{account.tel}"
+                                                                        id="tel" maxlength="15" name="tel"/></span>
+                                    </td>
+                                    <td class="bg-gray">传真：</td>
+                                    <td>
+                                        <span class="vendor-edit"><input type="text" value="$!{account.fax}"
+                                                                         id="fax" name="fax"/></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-gray">法人姓名：</td>
+                                    <td>
+                                        <span class="vendor-edit"><input type="text" value="$!{account.legalPersonName}"
+                                                                        id="legalPersonName" name="legalPersonName"/></span>
+                                    </td>
+                                    <td class="bg-gray">手机：</td>
+                                    <td>
+                                        <span class="vendor-edit"><input type="text" value="$!{account.mobil}"
+                                                                        id="mobil" name="mobil" verify="mobile"/></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-gray">经营品种：</td>
+                                    <td>
+                                        <span class="vendor-edit"><input type="text" value="$!{account.business}"
+                                                                         id="business" name="business"/></span>
+                                    </td>
+                                    <td class="bg-gray">公司网址：</td>
+                                    <td>
+                                        <span class="vendor-edit"><input type="text" value="$!{account.webSiteUrl}"
+                                                                        id="webSiteUrl" name="webSiteUrl"/></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-gray">客户类型：</td>
+                                    <td>
+                                        <span class="vendor-edit">
+                                            <select name="businessType" id="businessType">
+                                                <option value="">==请选择==</option>
+                                                #foreach( $elem in $businessTypes)
+                                                    <option value="$elem" #if($elem == $!{account.businessType})
+                                                            selected #{end}>$elem.name</option>
+                                                #{end}
+                                            </select>
+                                        </span>
+                                    </td>
+                                    <td class="bg-gray">城市：</td>
+                                    <td class=>
+                                        <span class="vendor-edit">
+                                        	<select id="province" name="provinceId">
+                                                <option value="">==请选择==</option>
+                                            </select>
+			                                <select id="city" name="cityId">
+
+                                            </select>
+			                                <select id="district" name="districtId">
+                                            </select>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-gray">代理钢厂：</td>
+                                    <td>
+                                        <span class="vendor-edit"><input type="text" value="$!{account.proxyFactory}"
+                                                                        id="proxyFactory" name="proxyFactory"/></span>
+                                    </td>
+                                    <td class="bg-gray">代理量：</td>
+                                    <td>
+                                        <span class="vendor-edit"><input type="text" value="$!{account.proxyQty}"
+                                                                       id="proxyQty"  name="proxyQty" verify="numeric"/></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-gray">#if($type=="seller") <span class="red">*</span> #{end}
+                                        营业执照注册号：
+                                    </td>
+                                    <td colspan="1">
+                                        <span class="vendor-edit"><input type="text" value="$!{account.licenseCode}"
+                                                                       id="licenseCode"  name="licenseCode" #if($type=="seller")
+                                                                         must="1" #{end}/>企业营业执照上的注册号</span>
+                                    </td>
+                                    <td class="bg-gray">成立日期：</td>
+                                    <td>
+                                        <span class="vendor-edit"><input id="registerDate" class="ipt-text" name="registerDate" type="text" value="$!{account.registerDate}"
+                                                                         onFocus="WdatePicker()" /></span>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td class="bg-gray">#if($type=="seller") <span class="red">*</span> #{end}
+                                        企业注册地址：
+                                    </td>
+                                    <td colspan="1">
+                                        <span class="vendor-edit"><input type="text" value="$!{account.regAddress}"
+                                                                        id="regAddress" name="regAddress" #if($type=="seller")
+                                                                         must="1" #{end}/>企业营业执照上的注册地址</span>
+                                    </td>
+                                    <td class="bg-gray">注册资金：</td>
+                                    <td>
+                                        <span class="vendor-edit"><input id="registerCapital" class="ipt-text" type="text" value="$!{account.registerCapital}"
+                                                                         name="registerCapital" />&nbsp;&nbsp;万元</span>
+                                </td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-gray">#if($type=="seller") <span class="red">*</span> #{end}营业执照：
+                                    </td>
+                                    <td colspan="1">
+                                        <span class="vendor-edit"><input name="pic_license" type="file"
+                                                                         value="" #if($type=="seller") must="1" #{end}/>盖章扫描件或数码照，支持jpeg、jpg、png、gif 图片格式，小于2M；</span>
+                                    </td>
+                                    <td class="bg-gray">卖家客户标示：</td>
+                                    <td>
+										#if($!hasQualificate)
+                                        <span class="vendor-edit">
+                                            <select name="supplierLabel" class="choiceshow" id="supplierLabel">
+												<option  value="$!{defaultSellerLabel}">$!{defaultSellerLabel}</option>
+                                                #if($!sellerLabel)
+                                                #foreach($label in $sellerLabel)
+                                                    <option value="$label">$label</option>
+                                                #end
+                                                #end
+                                            </select>
+                                        </span>
+										#else
+											 <span>$!{defaultSellerLabel}</span>	
+											 <input type="hidden" name="supplierLabel" value="$!{defaultSellerLabel}"/>
+											#end
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-gray">#if($type=="seller") <span class="red">*</span> #{end}
+                                        组织机构代码：
+                                    </td>
+                                    <td colspan="1">
+                                        <span class="vendor-edit"><input type="text" value="$!{account.orgCode}"
+                                                                       id="orgCode"  name="orgCode" #if($type=="seller")
+                                                                         must="1" #{end}/>企业组织机构代码证的代码</span>
+                                    </td>
+                                    <td class="bg-gray">买家客户标示：</td>
+                                    <td>
+										#if($!hasQualificate)
+                                        <span class="vendor-edit">
+                                            <select name="buyerLabel" class="choiceshow" id="buyerLabel">
+												<option  value="$!{defaultBuyerLabel}">$!{defaultBuyerLabel}</option>
+                                                #if($!buyerLabel)
+                                                    #foreach($label in $buyerLabel)
+                                                        <option value="$label">$label</option>
+                                                    #end
+                                                #end
+                                            </select>
+                                        </span>
+										#else
+                                        <span>$!{defaultBuyerLabel}</span>	
+										<input type="hidden" name="buyerLabel" value="$!{defaultBuyerLabel}"/>
+											#end
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-gray">#if($type=="seller") <span class="red">*</span> #{end}
+                                        组织机构代码证：
+                                    </td>
+                                    <td colspan="1">
+                                        <span class="vendor-edit"><input name="pic_org_code" type="file"
+                                                                         value="" #if($type=="seller") must="1" #{end}/>盖章扫描件或数码照，支持jpeg、jpg、png、gif 图片格式，小于2M；</span>
+                                    </td>
+                                    <td class="bg-gray">预付款标示：</td>
+                                    <td>
+										#if($!hasQualificate)
+                                        <span class="vendor-edit">
+                                            <select name="paymentLabel" id="paymentLabel">
+												 <option value="3">无预付</option>
+                                                <option value="1">银票预付</option>
+                                                <option value="2">现金预付</option>
+                                            </select>
+                                        </span>
+									#else
+                            		<span>无预付</span>
+									<input type="hidden" name="paymentLabel" value="3"/>
+                            	       #end
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-gray">#if($type=="seller") <span class="red">*</span> #{end}
+                                        税务登记证（副本）：
+                                    </td>
+                                    <td colspan="1">
+                                        <span class="vendor-edit"><input name="pic_tax_reg" type="file"
+                                                                         value="" #if($type=="seller") must="1" #{end}/>盖章扫描件或数码照，支持jpeg、jpg、png、gif 图片格式，小于2M；</span>
+                                    </td>
+									 <td class="bg-gray">卖家客户单笔交易吨位上限：</td>
+                                    <td>
+                                        <span class="vendor-edit"> #if($!hasQualificate)<input type="text" value="$!{account.sellerSingleTradeWeight}"
+                                                                       id="proxyQty"  name="sellerSingleTradeWeight" verify="numeric"/> &nbsp;&nbsp;吨#end</span>
+                                    </td>
+                                </tr>
+                                    #if($type=="buyer")
+                                    <tr>
+                                        <td class="bg-gray">一般纳税人证明：</td>
+                                        <td colspan="1">
+                                            <span class="vendor-edit"><input name="pic_taxpayer_evidence" type="file"
+                                                                             value=""/>盖章扫描件或数码照，支持jpeg、jpg、png、gif 图片格式，小于2M；</span>
+                                        </td>
+										 <td class="bg-gray">卖家客户总交易吨位上限：</td>
+                                       <td>
+                                        <span class="vendor-edit">#if($!hasQualificate)<input type="text" value="$!{account.sellerAllTradeWeight}"
+                                                                       id="proxyQty"  name="sellerAllTradeWeight" verify="numeric"/>&nbsp;&nbsp;吨#end</span>
+                                    </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bg-gray">开票资料：</td>
+                                        <td colspan="1">
+                                            <span class="vendor-edit"><input name="pic_invoice_data" type="file"
+                                                                             value=""/>盖章扫描件或数码照，支持jpeg、jpg、png、gif 图片格式，小于2M；</span>
+                                        </td>
+										 <td class="bg-gray">卖家客户总交易笔数上限：</td>
+                                       <td>
+                                        <span class="vendor-edit">#if($!hasQualificate)<input type="text" value="$!{account.sellerAllTradeQuality}"
+                                                                       id="proxyQty"  name="sellerAllTradeQuality" verify="numeric"/>&nbsp;&nbsp;笔#end</span>
+                                    </td>
+                                    </tr>
+                                    #else
+                                    <tr>
+                                        <td class="bg-gray">法人身份证：</td>
+                                        <td colspan="1">
+                                            <span class="vendor-edit"><input name="pic_legal_ID" type="file"
+                                                                             value="$!{account.code}"/>盖章扫描件或数码照，支持jpeg、jpg、png、gif 图片格式，小于2M；</span>
+                                        </td>
+										#if($type=="seller")
+										 <td class="bg-gray">卖家客户总交易吨位上限：</td>
+                                       <td>
+                                        <span class="vendor-edit">#if($!hasQualificate)<input type="text" value="$!{account.sellerAllTradeWeight}"
+                                                                       id="proxyQty"  name="sellerAllTradeWeight" verify="numeric"/>&nbsp;&nbsp;吨#end</span>
+                                       </td>
+									#{end}
+										
+                                    </tr>
+                                    <tr>
+                                        <td class="bg-gray">合同：</td>
+                                        <td colspan="1">
+                                            <span class="vendor-edit"><input name="pic_consign_contract" type="file"
+                                                                             value="$!{account.code}"
+                                                                             multiple="multiple"/>盖章扫描件或数码照，支持jpeg、jpg、png、gif 图片格式，小于2M；</span>
+                                        </td>
+										#if($type=="seller")
+											 <td class="bg-gray">卖家客户总交易笔数上限：</td>
+                                       <td>
+                                        <span class="vendor-edit">#if($!hasQualificate)<input type="text" value="$!{account.sellerAllTradeQuality}"
+                                                                       id="proxyQty"  name="sellerAllTradeQuality" verify="numeric"/>&nbsp;&nbsp;笔#end</span>
+                                    </td>
+									#{end}
+                                    </tr>
+                                    <tr>
+                                        <td class="bg-gray">企业调查表：</td>
+                                        <td colspan="1">
+
+                                            <span class="vendor-edit"><input name="pic_enterprise_survey" type="file"
+                                                                             value="$!{account.code}"/>盖章扫描件或数码照，支持jpeg、jpg、png、gif 图片格式，小于2M；</span>
+                                        </td>
+										#if($type=="seller")
+										<td class="bg-gray">卖家客户计入所属标示类型百分比上限：</td>
+                                      <td>
+										#if($!hasQualificate)
+										     <label><input type="radio" name="isSellerPercent" class="check" value="1">是</label>
+                                            <label><input type="radio" name="isSellerPercent" class="check" value="0" checked="true">否</label>#else
+													<span>是</span>
+									            <input type="hidden" name="isSellerPercent" value="1"/>
+												#end 
+                                    </td> #{end}
+                                    </tr>
+
+                                    #{end}
+                                <tr>
+                                    <td class="bg-gray">打款资料：</td>
+                                    <td colspan="1">
+                                        <span class="vendor-edit"><input name="pic_payment_data" type="file"
+                                                 value="$!{account.code}"/>盖章扫描件或数码照，支持jpeg、jpg、png、gif 图片格式，小于2M；</span>
+                                    </td>
+									#if($type!="seller")
+										<td class="bg-gray">卖家客户计入所属标示类型百分比上限：</td>
+                                      <td>
+										#if($!hasQualificate)
+										     <label><input type="radio" name="isSellerPercent" class="check" value="1">是</label>
+                                            <label><input type="radio" name="isSellerPercent" class="check" value="0" checked="true">否</label>#else
+													<span>是</span>
+									            <input type="hidden" name="isSellerPercent" value="1"/>
+												#end
+                                    </td> #{end}
+                                </tr>
+                                <tr>
+                                    <td class="bg-gray">银行开户许可证：</td>
+                                    <td colspan="3">
+
+                                        <span class="vendor-edit"><input name="pic_open_account_license" type="file"
+                                                                         value="$!{account.code}"/>盖章扫描件或数码照，支持jpeg、jpg、png、gif 图片格式，小于2M；</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-gray">#if($type=="seller") <span class="red">*</span> #{end}开户银行：
+                                    </td>
+                                    <td colspan="3">
+
+                                        <span class="vendor-edit">
+                                        	<input type="text" placeholder="开户行" value="$!{account.bankNameMain}"
+                                                   id="bankNameMain" name="bankNameMain" #if($type=="seller") must="1" #{end}/>
+                                        	<input type="text" placeholder="支行" value="$!{account.bankNameBranch}"
+                                                   id="bankNameBranch" name="bankNameBranch" #if($type=="seller") must="1" #{end}/>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-gray">开户银行所在城市：</td>
+                                    <td colspan="3">
+                                        <span class="vendor-edit">
+                                        	<select id="bankProvince" name="bankProvinceId">
+                                                <option value="">==请选择==</option>
+                                            </select>
+			                                <select id="bankCity" name="bankCityId">
+                                            </select>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-gray">#if($type=="seller") <span class="red">*</span> #{end}行号：
+                                    </td>
+                                    <td colspan="3">
+                                        <span class="vendor-edit"><input type="text" value="$!{account.bankCode}"
+                                                                        id="bankCode" name="bankCode" #if($type=="seller")
+                                                                         must="1" #{end}/></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-gray">#if($type=="seller") <span class="red">*</span> #{end}银行帐号：
+                                    </td>
+                                    <td colspan="3">
+                                        <span class="vendor-edit"><input type="text" value="$!{account.accountCode}"
+                                                                       id="accountCode" name="accountCode" #if($type=="seller")
+                                                                         must="1" #{end}/></span>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td class="bg-gray">税号：</td>
+                                    <td colspan="3">
+                                        <span class="vendor-edit"><input type="text" value="$!{account.taxCode}"
+                                                                        id="taxCode" name="taxCode"  maxlength="20"/></span>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td class="bg-gray">发票类型：</td>
+                                    <td colspan="3">
+                                    	<span class="vendor-edit">
+                                        	<select id="invoiceType" name="invoiceType">
+                                                <option value="PRIVATE">增值税专用发票</option>
+                                                <option value="NORMAL">增值税普通发票</option>
+                                            </select>
+                                        </span>
+                                    </td>
+                                </tr>
+                                
+                                <input type="hidden" name="contactName" value=""/>
+                                <input type="hidden" name="contactTel" value=""/>
+                                <input type="hidden" name="contactDeptName" value=""/>
+                                <input type="hidden" name="contactQq" value=""/>
+                                <input type="hidden" name="contactEmail" value=""/>
+                                <input type="hidden" name="contactNote" value=""/>                                
+                                <input type="hidden" name="isconfirm" value=""/>
+                                <input type="hidden" name="id" id="account_id" value=""/>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                    <div class="table-bar" id="step_two_div">
+                        <form id="form2">
+                            <table class="contable">
+                                <tr>
+                                    <td class="bg-gray"><span class="red">*</span>姓名：</td>
+                                    <td>
+                                        <input type="text" id="contactName" placeholder="请输入姓名" must="1"
+                                               data-original-title="不能为空">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-gray"><span class="red">*</span>手机号：</td>
+                                    <td>
+                                        <input type="text" id="contactTel" placeholder="请输入手机号" must="1"
+                                               verify="mobile">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-gray">部门：</td>
+                                    <td>
+                                        <input type="text" id="contactDeptName" placeholder="请输入部门">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-gray">QQ：</td>
+                                    <td>
+                                        <input type="text" id="contactQq" placeholder="请输入QQ" verify="qq">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-gray">邮箱：</td>
+                                    <td>
+                                        <input type="text" id="contactEmail" placeholder="请输入邮箱"
+                                               verify="email">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-gray">备注：</td>
+                                    <td>
+                                        <input type="text" id="contactNote" placeholder="请输入备注">
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-bar">
+                <button class="btn btn-primary" id="nextStepBtn" type="button">下一步</button>
+                <button class="btn btn-primary" id="preStepBtn" type="button">上一步</button>
+                <button class="btn btn-primary" id="saveInfoBtn" type="button">保存</button>
+            </div>
+        </div>
+        <!-- /.page-content -->
+    </div>
+</div><!-- /.main-content -->
+<script src="$link.getContextPath()/js/views/common/regionallinkage.js"></script>
+<script src="$link.getContextPath()/js/views/account/createaccount.js"></script>
+<script type="text/javascript">
+	var moduleType = "$type";
+    $().ready(function () {
+        $("#saveInfoBtn").css("display", "none");
+        $("#preStepBtn").css("display", "none");
+        $("#step_two_div").css("display", "none");
+        $("#step_one_span").css("color", "red");
+
+        bindRegionData($("#province"), $("#city"), $("#district"),#if(${account.provinceId})$!{account.provinceId}#else ""#{end},#if(${account.cityId})$!{account.cityId}#else ""#{end},#if(${account.districtId})$!{account.districtId}#else ""#{end});
+        bindRegionData($("#bankProvince"), $("#bankCity"), null,#if(${account.bankProvinceId})$!{account.bankProvinceId}#else ""#{end},#if(${account.bankCityId})$!{account.bankCityId}#else ""#{end}, null);
+    });
+</script>

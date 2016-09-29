@@ -1,0 +1,103 @@
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+                      交易管理
+        </li>
+        <li class="active">疑似支付错误</li>
+    </ul><!-- /.breadcrumb -->
+
+        #parse("layout/topbtn.vm")<!-- /.nav-search -->
+</div>
+
+<div class="page-content" style="padding-bottom:0;">
+    <div class="row">
+        <div class="col-xs-12">
+            <!--TAPBAR-->
+            <!-- tapbar S -->
+            #parse("/layout/order/tapbar.vm")
+            <!-- tapbar E -->
+        </div>
+    </div>
+</div>
+<input type="hidden" id="payerrorProcess" value="$shiro.hasPermission("order:banktransaction:payerror:process")">
+<div class="page-content"> 
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="clearfix">
+                <div class="input-group pull-right col-md-12 col-sm-12 col-lg-12 search-bar" style="margin-bottom:20px">
+                    <form class="form-inline" id="searchForm">
+                        <label>付款银行：</label><select id="spayee_bank_name"><option value="">全部</option><option value="浦发">浦发银行</option><option value="工商">工商银行</option><option value="建设">建设银行</option></select>
+                        <label>到账金额：</label><input id="stransaction_amount" class="ipt-text" type="text" style="width:70px;"/>
+                        <label>到账银行：</label><select id="bank_type"><option value="">全部</option><option value="SPDB">浦发银行</option><option value="ICBC">工商银行</option></select>
+                        <label>状态：</label>
+                            <select id="sstatus">
+                                #if($!{error} == "error")
+                                    <option value="error">全部</option>
+                                    <option value="pending" selected="selected">待处理</option>
+                                    <option value="chargeman">已处理人工处理</option>
+                                    <option value="chargehand">已处理手动充值</option>
+                                #else
+                                    <option value="transfer">全部</option>
+                                    <option value="unprocessed" selected="selected">未处理</option>
+                                    <option value="processed">已处理</option>
+                                    <option value="normal">正常</option>
+                                #end
+                            </select>
+                        <label>客户名称：</label><input id="spayee_name" class="ipt-text" type="text" />
+                        <label>时间：</label>
+                        <input id="stransaction_timefrom" class="Wdate" type="text" onFocus="WdatePicker()" style="width:90px;"/> -
+                        <input id="stransaction_timeto" class="Wdate" type="text" onFocus="WdatePicker()"style="width:90px;"/>
+
+                        <button class="btn btn-sm btn-default" type="button" title="搜索" id="search" style="height:28px;margin-top:4px">
+                            <i class="aace-icon fa fa-search bigger-110"></i>搜索
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <!--second tab start-->
+            <div class="">
+                <ul class="nav nav-tabs" id="secTab">
+                    <li class="" rel="sec-table">
+                        <a href="$link.getContextPath()/order/banktransaction/list.html" aria-expanded="false">
+                            到账查询<span class="red bolder">$!{banktransaction_transfer}</span>
+                        </a>
+                    </li>
+                    #if($shiro.hasPermission("order:banktransaction:payerror:view"))
+                    <li class="active" rel="sec-table">
+                        <a href="$link.getContextPath()/order/banktransaction/payerror.html" aria-expanded="false">
+                           疑似支付错误<span class="red bolder">$!{banktransaction_error}</span>
+                        </a>
+                    </li>
+                    #end
+                </ul>
+            </div>
+            <!--second tab end-->
+            <!-- div.dataTables_borderWrap -->
+            <div>
+                <table id="dynamicTable" class="table table-striped table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th>银行流水</th>
+                        <th>付款银行</th>
+                        <th>客户名称</th>
+                        <th>银行账号</th>
+                        <th>到账金额</th>
+                        <th>到账银行</th>
+                        <th>到账时间</th>
+                        <th>状态</th>
+                        <th>备注</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                </table>
+            </div>
+            <!--/.recordbar-->
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+</div>
+<script src="$link.getContextPath()/js/views/order/payerror.js"></script>

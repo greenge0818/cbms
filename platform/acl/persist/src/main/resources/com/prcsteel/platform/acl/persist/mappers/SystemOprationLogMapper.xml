@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.acl.persist.dao.SystemOperationLogDao" >
+  
+  <insert id="insert" parameterType="com.prcsteel.platform.acl.model.model.SystemOperationLog" >
+    INSERT INTO base_system_opration_log (operator_id, operator_name,
+    operation_key, operation_name, operation_level,
+    operation_level_value, parameters, created,
+    created_by, last_updated, last_updated_by,modification_number)
+    VALUES(#{operatorId}, #{operatorName},
+    #{operationKey}, #{operationName}, #{operationLevel},
+    #{operationLevelValue}, #{parameters}, now(),
+    #{createdBy}, now(), #{lastUpdatedBy},1)
+  </insert>
+  
+  <sql id="query_OpLogQuery">
+  	<where>
+ 		<if test="userName != null and userName != ''">
+ 			operator_name = #{userName}
+ 		</if>
+ 		<if test="opType != null and opType != ''">
+ 			AND operation_key = #{opType}
+ 		</if>
+ 		<if test="opLevel != null and opLevel != ''">
+ 			AND operation_level = #{opLevel}
+ 		</if>
+ 		<if test="beginDate != null">
+ 			<![CDATA[
+ 			AND created >= #{beginDate}
+ 			]]>
+ 		</if>
+ 		<if test="endDate != null">
+ 			<![CDATA[
+ 			AND created < #{endDate}
+ 			]]>
+ 		</if>
+ 	</where>
+  </sql>
+  
+  <select id="queryByOpLogQuery" resultType="com.prcsteel.platform.acl.model.dto.SystemOperationLogDto"
+  	parameterType="com.prcsteel.platform.acl.model.query.OpLogQuery">
+  	SELECT 
+		operator_id operatorId,
+		operator_name operatorName,
+		operation_key operationKey,
+		operation_name operationName,
+		operation_level operationLevel,
+		operation_level_value operationLevelValue,
+		parameters parameters,
+		created created,
+		created_by createdBy,
+		last_updated lastUpdated,
+		last_updated_by lastUpdatedBy,
+		modification_number modificationNumber
+ 	FROM base_system_opration_log 
+ 	<include refid="query_OpLogQuery"/>
+ 	<if test="orderBy != null">
+ 	order by ${orderBy} ${orderDirection}
+ 	</if>
+ 	LIMIT ${start},${length}
+  </select>
+  <select id="countByOpLogQuery" resultType="long" parameterType="com.prcsteel.platform.acl.model.query.OpLogQuery">
+  	SELECT COUNT(*)
+ 	FROM base_system_opration_log 
+ 	<include refid="query_OpLogQuery"/>
+  </select>
+</mapper>

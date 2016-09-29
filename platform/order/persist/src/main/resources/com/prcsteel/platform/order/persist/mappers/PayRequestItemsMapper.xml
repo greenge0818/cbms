@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prcsteel.platform.order.persist.dao.PayRequestItemsDao">
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.order.model.model.PayRequestItems">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="pay_code" jdbcType="VARCHAR" property="payCode" />
+    <result column="request_id" jdbcType="BIGINT" property="requestId" />
+    <result column="receiver_id" jdbcType="BIGINT" property="receiverId" />
+    <result column="receiver_name" jdbcType="VARCHAR" property="receiverName" />
+    <result column="receiver_department_id" jdbcType="BIGINT" property="receiverDepartmentId" />
+    <result column="receiver_department_name" jdbcType="VARCHAR" property="receiverDepartmentName" />
+    <result column="receiver_bank_code" jdbcType="VARCHAR" property="receiverBankCode" />
+    <result column="receiver_bank_name" jdbcType="VARCHAR" property="receiverBankName" />
+    <result column="receiver_bank_city" jdbcType="VARCHAR" property="receiverBankCity" />
+    <result column="receiver_branch_bank_name" jdbcType="VARCHAR" property="receiverBranchBankName" />
+    <result column="receiver_account_code" jdbcType="VARCHAR" property="receiverAccountCode" />
+    <result column="receiver_tel" jdbcType="VARCHAR" property="receiverTel" />
+    <result column="receiver_reg_addr" jdbcType="VARCHAR" property="receiverRegAddr" />
+    <result column="pay_amount" jdbcType="DECIMAL" property="payAmount" />
+    <result column="second_balance_takeout" property="secondBalanceTakeout" jdbcType="DECIMAL" />
+    <result column="payment_bank" jdbcType="VARCHAR" property="paymentBank" />
+    <result column="created" jdbcType="TIMESTAMP" property="created" />
+    <result column="created_by" jdbcType="VARCHAR" property="createdBy" />
+    <result column="last_updated" jdbcType="TIMESTAMP" property="lastUpdated" />
+    <result column="last_updated_by" jdbcType="VARCHAR" property="lastUpdatedBy" />
+    <result column="modification_number" jdbcType="INTEGER" property="modificationNumber" />
+    <result column="row_id" jdbcType="VARCHAR" property="rowId" />
+    <result column="parent_row_id" jdbcType="VARCHAR" property="parentRowId" />
+    <result column="ext1" jdbcType="VARCHAR" property="ext1" />
+    <result column="ext2" jdbcType="VARCHAR" property="ext2" />
+    <result column="ext3" jdbcType="VARCHAR" property="ext3" />
+    <result column="ext4" jdbcType="INTEGER" property="ext4" />
+    <result column="ext5" jdbcType="INTEGER" property="ext5" />
+    <result column="ext6" jdbcType="INTEGER" property="ext6" />
+    <result column="ext7" jdbcType="TIMESTAMP" property="ext7" />
+    <result column="ext8" jdbcType="BIGINT" property="ext8" />
+    <result column="credit_used_repay" property="creditUsedRepay" jdbcType="DECIMAL" />
+    <result column="bank_account_time" jdbcType="TIMESTAMP" property="bankAccountTime" />
+  </resultMap>
+  <resultMap id="PayRequestItemInfo" type="com.prcsteel.platform.order.model.dto.PayRequestItemsInfoDto" extends="BaseResultMap">
+    <result column="contractid" jdbcType="BIGINT" property="contractId" />
+    <result column="change_order_id" property="changeOrderId" jdbcType="INTEGER"/>
+    <result column="type" property="type" jdbcType="VARCHAR"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, pay_code, request_id, receiver_id, receiver_name,receiver_department_id, receiver_department_name, receiver_bank_code, receiver_bank_name, receiver_bank_city,
+    receiver_branch_bank_name, receiver_account_code, receiver_tel, receiver_reg_addr, 
+    pay_amount,second_balance_takeout,payment_bank, created, created_by, last_updated, last_updated_by, modification_number,
+    row_id, parent_row_id, ext1, ext2, ext3, ext4, ext5, ext6, ext7, ext8,credit_used_repay,bank_account_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from busi_pay_request_items
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from busi_pay_request_items
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.prcsteel.platform.order.model.model.PayRequestItems">
+    insert into busi_pay_request_items (id, pay_code, request_id, receiver_id, 
+      receiver_name, receiver_department_id, receiver_department_name, receiver_bank_code, receiver_bank_name, receiver_bank_city,
+      receiver_branch_bank_name, receiver_account_code, 
+      receiver_tel, receiver_reg_addr, pay_amount, second_balance_takeout,payment_bank,
+      created, created_by, last_updated, 
+      last_updated_by, modification_number, row_id, 
+      parent_row_id, ext1, ext2, 
+      ext3, ext4, ext5, ext6, 
+      ext7, ext8,credit_used_repay,bank_account_time)
+    values (#{id,jdbcType=BIGINT}, #{payCode,jdbcType=VARCHAR}, #{requestId,jdbcType=BIGINT}, #{receiverId,jdbcType=BIGINT}, 
+      #{receiverName,jdbcType=VARCHAR}, #{receiverDepartmentId,jdbcType=BIGINT}, #{receiverDepartmentName,jdbcType=VARCHAR},
+      #{receiverBankCode,jdbcType=VARCHAR},#{receiverBankName,jdbcType=VARCHAR}, #{receiverBankCity,jdbcType=VARCHAR},
+      #{receiverBranchBankName,jdbcType=VARCHAR}, #{receiverAccountCode,jdbcType=VARCHAR}, 
+      #{receiverTel,jdbcType=VARCHAR}, #{receiverRegAddr,jdbcType=VARCHAR}, #{payAmount,jdbcType=DECIMAL}, #{secondBalanceTakeout,jdbcType=DECIMAL},
+      #{paymentBank,jdbcType=VARCHAR},
+      #{created,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, #{lastUpdated,jdbcType=TIMESTAMP}, 
+      #{lastUpdatedBy,jdbcType=VARCHAR}, #{modificationNumber,jdbcType=INTEGER}, #{rowId,jdbcType=VARCHAR}, 
+      #{parentRowId,jdbcType=VARCHAR}, #{ext1,jdbcType=VARCHAR}, #{ext2,jdbcType=VARCHAR}, 
+      #{ext3,jdbcType=VARCHAR}, #{ext4,jdbcType=INTEGER}, #{ext5,jdbcType=INTEGER}, #{ext6,jdbcType=INTEGER}, 
+      #{ext7,jdbcType=TIMESTAMP}, #{ext8,jdbcType=BIGINT},#{creditUsedRepay,jdbcType=DECIMAL},#{bankAccountTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.order.model.model.PayRequestItems">
+    insert into busi_pay_request_items
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="payCode != null">
+        pay_code,
+      </if>
+      <if test="requestId != null">
+        request_id,
+      </if>
+      <if test="receiverId != null">
+        receiver_id,
+      </if>
+      <if test="receiverName != null">
+        receiver_name,
+      </if>
+      <if test="receiverDepartmentId != null">
+        receiver_department_id,
+      </if>
+      <if test="receiverName != null">
+        receiver_department_name,
+      </if>
+      <if test="receiverBankCode != null">
+        receiver_bank_code,
+      </if>
+      <if test="receiverBankName != null">
+        receiver_bank_name,
+      </if>
+      <if test="receiverBankCity != null">
+        receiver_bank_city,
+      </if>
+      <if test="receiverBranchBankName != null">
+        receiver_branch_bank_name,
+      </if>
+      <if test="receiverAccountCode != null">
+        receiver_account_code,
+      </if>
+      <if test="receiverTel != null">
+        receiver_tel,
+      </if>
+      <if test="receiverRegAddr != null">
+        receiver_reg_addr,
+      </if>
+      <if test="payAmount != null">
+        pay_amount,
+      </if>
+      <if test="secondBalanceTakeout != null" >
+        second_balance_takeout,
+      </if>
+      <if test="paymentBank != null" >
+        payment_bank,
+      </if>
+      <if test="created != null">
+        created,
+      </if>
+      <if test="createdBy != null">
+        created_by,
+      </if>
+      <if test="lastUpdated != null">
+        last_updated,
+      </if>
+      <if test="lastUpdatedBy != null">
+        last_updated_by,
+      </if>
+      <if test="modificationNumber != null">
+        modification_number,
+      </if>
+      <if test="rowId != null">
+        row_id,
+      </if>
+      <if test="parentRowId != null">
+        parent_row_id,
+      </if>
+      <if test="ext1 != null">
+        ext1,
+      </if>
+      <if test="ext2 != null">
+        ext2,
+      </if>
+      <if test="ext3 != null">
+        ext3,
+      </if>
+      <if test="ext4 != null">
+        ext4,
+      </if>
+      <if test="ext5 != null">
+        ext5,
+      </if>
+      <if test="ext6 != null">
+        ext6,
+      </if>
+      <if test="ext7 != null">
+        ext7,
+      </if>
+      <if test="ext8 != null">
+        ext8,
+      </if>
+      <if test="creditUsedRepay != null">
+        credit_used_repay,
+      </if>
+      <if test="bankAccountTime != null">
+        bank_account_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="payCode != null">
+        #{payCode,jdbcType=VARCHAR},
+      </if>
+      <if test="requestId != null">
+        #{requestId,jdbcType=BIGINT},
+      </if>
+      <if test="receiverId != null">
+        #{receiverId,jdbcType=BIGINT},
+      </if>
+      <if test="receiverName != null">
+        #{receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverDepartmentId != null">
+        #{receiverDepartmentId,jdbcType=BIGINT},
+      </if>
+      <if test="receiverDepartmentName != null">
+        #{receiverDepartmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverBankCode != null">
+        #{receiverBankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverBankName != null">
+        #{receiverBankName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverBankCity != null">
+        #{receiverBankCity,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverBranchBankName != null">
+        #{receiverBranchBankName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverAccountCode != null">
+        #{receiverAccountCode,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverTel != null">
+        #{receiverTel,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverRegAddr != null">
+        #{receiverRegAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="payAmount != null">
+        #{payAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="secondBalanceTakeout != null" >
+        #{secondBalanceTakeout,jdbcType=DECIMAL},
+      </if>
+      <if test="paymentBank != null" >
+        #{paymentBank,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null">
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null">
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null">
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null">
+        #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null">
+        #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null">
+        #{parentRowId,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null">
+        #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null">
+        #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3 != null">
+        #{ext3,jdbcType=VARCHAR},
+      </if>
+      <if test="ext4 != null">
+        #{ext4,jdbcType=INTEGER},
+      </if>
+      <if test="ext5 != null">
+        #{ext5,jdbcType=INTEGER},
+      </if>
+      <if test="ext6 != null">
+        #{ext6,jdbcType=INTEGER},
+      </if>
+      <if test="ext7 != null">
+        #{ext7,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ext8 != null">
+        #{ext8,jdbcType=BIGINT},
+      </if>
+      <if test="creditUsedRepay != null" >
+        #{creditUsedRepay,jdbcType=DECIMAL},
+      </if>
+      <if test="bankAccountTime != null" >
+        #{bankAccountTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.order.model.model.PayRequestItems">
+    update busi_pay_request_items
+    <set>
+      <if test="requestId != null">
+        request_id = #{requestId,jdbcType=BIGINT},
+      </if>
+      <if test="payCode != null">
+        pay_code = #{payCode,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverId != null">
+        receiver_id = #{receiverId,jdbcType=BIGINT},
+      </if>
+      <if test="receiverName != null">
+        receiver_name = #{receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverDepartmentId != null">
+        receiver_department_id = #{receiverDepartmentId,jdbcType=BIGINT},
+      </if>
+      <if test="receiverDepartmentName != null">
+        receiver_department_name = #{receiverDepartmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverBankCode != null">
+        receiver_bank_code = #{receiverBankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverBankName != null">
+        receiver_bank_name = #{receiverBankName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverBankCity != null">
+        receiver_bank_city = #{receiverBankCity,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverBranchBankName != null">
+        receiver_branch_bank_name = #{receiverBranchBankName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverAccountCode != null">
+        receiver_account_code = #{receiverAccountCode,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverTel != null">
+        receiver_tel = #{receiverTel,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverRegAddr != null">
+        receiver_reg_addr = #{receiverRegAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="payAmount != null">
+        pay_amount = #{payAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="secondBalanceTakeout != null" >
+        second_balance_takeout = #{secondBalanceTakeout,jdbcType=DECIMAL},
+      </if>
+      <if test="paymentBank != null" >
+       	payment_bank = #{paymentBank,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null">
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null">
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null">
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null">
+        modification_number = #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null">
+        row_id = #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null">
+        parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null">
+        ext1 = #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null">
+        ext2 = #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3 != null">
+        ext3 = #{ext3,jdbcType=VARCHAR},
+      </if>
+      <if test="ext4 != null">
+        ext4 = #{ext4,jdbcType=INTEGER},
+      </if>
+      <if test="ext5 != null">
+        ext5 = #{ext5,jdbcType=INTEGER},
+      </if>
+      <if test="ext6 != null">
+        ext6 = #{ext6,jdbcType=INTEGER},
+      </if>
+      <if test="ext7 != null">
+        ext7 = #{ext7,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ext8 != null">
+        ext8 = #{ext8,jdbcType=BIGINT},
+      </if>
+      <if test="creditUsedRepay != null" >
+        credit_used_repay = #{creditUsedRepay,jdbcType=DECIMAL},
+      </if>
+      <if test="bankAccountTime != null" >
+        bank_account_time = #{bankAccountTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.order.model.model.PayRequestItems">
+    update busi_pay_request_items
+    set pay_code = #{payCode,jdbcType=VARCHAR}, 
+      request_id = #{requestId,jdbcType=BIGINT},
+      receiver_id = #{receiverId,jdbcType=BIGINT},
+      receiver_name = #{receiverName,jdbcType=VARCHAR},
+      receiver_department_id = #{receiverDepartmentId,jdbcType=BIGINT},
+      receiver_department_name = #{receiverDepartmentName,jdbcType=VARCHAR},
+      receiver_bank_code = #{receiverBankCode,jdbcType=VARCHAR},
+      receiver_bank_name = #{receiverBankName,jdbcType=VARCHAR},
+      receiver_bank_city = #{receiverBankCity,jdbcType=VARCHAR},
+      receiver_branch_bank_name = #{receiverBranchBankName,jdbcType=VARCHAR},
+      receiver_account_code = #{receiverAccountCode,jdbcType=VARCHAR},
+      receiver_tel = #{receiverTel,jdbcType=VARCHAR},
+      receiver_reg_addr = #{receiverRegAddr,jdbcType=VARCHAR},
+      pay_amount = #{payAmount,jdbcType=DECIMAL},
+      second_balance_takeout = #{secondBalanceTakeout,jdbcType=DECIMAL},
+      payment_bank = #{paymentBank,jdbcType=VARCHAR},
+      created = #{created,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      modification_number = #{modificationNumber,jdbcType=INTEGER},
+      row_id = #{rowId,jdbcType=VARCHAR},
+      parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      ext1 = #{ext1,jdbcType=VARCHAR},
+      ext2 = #{ext2,jdbcType=VARCHAR},
+      ext3 = #{ext3,jdbcType=VARCHAR},
+      ext4 = #{ext4,jdbcType=INTEGER},
+      ext5 = #{ext5,jdbcType=INTEGER},
+      ext6 = #{ext6,jdbcType=INTEGER},
+      ext7 = #{ext7,jdbcType=TIMESTAMP},
+      ext8 = #{ext8,jdbcType=BIGINT},
+      credit_used_repay = #{creditUsedRepay,jdbcType=DECIMAL},
+      bank_account_time = #{bankAccountTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="queryByOrderId" resultMap="BaseResultMap">
+    select a.*
+    from busi_pay_request_items a, busi_pay_request b
+    where b.consign_order_id = #{0} and a.request_id = b.id and b.status in ("CONFIRMEDPAY", "APPROVED", "APPLYPRINTED")
+  </select>
+
+  <!--根据支付ID查找支付详情-->
+  <select id="selectByRequestId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from busi_pay_request_items
+    where request_id = #{requestId,jdbcType=BIGINT}
+  </select>
+
+  <!--根据支付ID查找支付详情-->
+  <select id="selectPayInfoByRequestId" parameterType="java.lang.Long" resultMap="PayRequestItemInfo">
+    select t2.type,t2.change_order_id,
+    t1.id,t1.request_id,t1.receiver_id,concat(t1.receiver_name, t1.receiver_department_name) receiver_name,t1.receiver_department_id,t1.receiver_department_name,t1.receiver_bank_name,t1.receiver_bank_city,t1.
+    receiver_branch_bank_name,t1.receiver_account_code,t1.receiver_tel,t1.receiver_reg_addr,t1.
+    pay_amount,t1.second_balance_takeout,t1.created,t1.created_by,t1.last_updated,t1.last_updated_by,t1.modification_number,t1.
+    row_id,t1.parent_row_id,t1.ext1,t1.ext2,t1.ext3,t1.ext4,t1.ext5,t1.ext6,t1.ext7,t1.ext8
+    ,t3.id as contractid  from busi_pay_request_items t1 inner join busi_pay_request t2 on t1.request_id=t2.id
+    inner join busi_consign_order_contract t3
+    on t1.receiver_department_id=t3.customer_department_id and t2.consign_order_id=t3.consign_order_id
+    <!-- 去掉变更合同-->
+    and t3.change_order_id is null
+    where t1.request_id = #{requestId,jdbcType=BIGINT}
+  </select>
+  
+  <select id="selectAllPayInfoByRequestId" resultMap="PayRequestItemInfo">
+    select t2.type,t2.change_order_id,
+    t1.id,t1.request_id,t1.receiver_id,concat(t1.receiver_name, t1.receiver_department_name) receiver_name,t1.receiver_department_id,t1.receiver_department_name,t1.receiver_bank_name,t1.receiver_bank_city,t1.
+    receiver_branch_bank_name,t1.receiver_account_code,t1.receiver_tel,t1.receiver_reg_addr,t1.
+    pay_amount,t1.second_balance_takeout,t1.created,t1.created_by,t1.last_updated,t1.last_updated_by,t3.id as contractid  
+    from busi_pay_request_items t1 inner join busi_pay_request t2 on t1.request_id=t2.id
+    inner join busi_consign_order_contract t3
+    on t1.receiver_department_id=t3.customer_department_id and t2.consign_order_id=t3.consign_order_id
+    where t1.request_id IN 
+  	 <foreach item="requestId" index="index" collection="requestIds" open="(" separator="," close=")">
+       	#{requestId}
+   	 </foreach>
+   	GROUP BY t1.id
+  </select>
+  
+  <!--修改付款申请详情支付的银行-->
+  <update id="updatePaymentBank">
+  	 UPDATE busi_pay_request_items
+     SET
+  	 payment_bank = #{paymentBank,jdbcType=VARCHAR},
+     bank_account_time = #{bankAccountTime,jdbcType=TIMESTAMP}
+  	 WHERE id IN 
+  	 <foreach item="itemsId" index="index" collection="itemsIds" open="(" separator="," close=")">
+       	#{itemsId}
+   	 </foreach>
+  </update>
+  <!--add by wangxianjun 查询变更流程付款信息-->
+  <select id="selectChangePayInfoByRequestId" parameterType="java.lang.Long" resultMap="PayRequestItemInfo">
+    select t2.type,t2.change_order_id,
+    t1.id,t1.request_id,t1.receiver_id,concat(t1.receiver_name, t1.receiver_department_name) receiver_name,t1.receiver_department_id,t1.receiver_department_name,t1.receiver_bank_name,t1.receiver_bank_city,t1.
+    receiver_branch_bank_name,t1.receiver_account_code,t1.receiver_tel,t1.receiver_reg_addr,t1.
+    pay_amount,t1.second_balance_takeout,t1.created,t1.created_by,t1.last_updated,t1.last_updated_by,t1.modification_number,t1.
+    row_id,t1.parent_row_id,t1.ext1,t1.ext2,t1.ext3,t1.ext4,t1.ext5,t1.ext6,t1.ext7,t1.ext8
+    ,t3.id as contractid  from busi_pay_request_items t1 inner join busi_pay_request t2 on t1.request_id=t2.id
+    inner join busi_consign_order_contract t3
+    on t1.receiver_department_id=t3.customer_department_id and t2.change_order_id=t3.change_order_id
+    where t1.request_id = #{requestId,jdbcType=BIGINT}
+  </select>
+</mapper>

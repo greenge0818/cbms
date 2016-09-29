@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>market-admin</title>
+        <meta http-equiv="content-type" content="text/html;charset=utf-8">
+        <meta content="width=device-width" name="viewport">
+       <link rel="stylesheet" href="../../theme/default/css/artdialog.css" class="ace-main-stylesheet" />
+		<link rel="stylesheet" href="../../css/batch.css" />
+    </head>
+    <body>
+
+        <div class="main">
+            <div class="com-bar">
+                <h1 class="t1"><em class="icon icon-t1">1</em>下载资源模版</h1>
+                <p class="grayF">请根据您经营的品类选择下载相应资源表格标准模板</p>
+                <div class="module-bar">
+                    <div class="module-p-bar">
+                        <p>
+                            <a href="#"><em class="icon icon-excel"></em>板卷类</a>
+                            <a href="#"><em class="icon icon-excel"></em>建材类</a>
+                            <a href="#"><em class="icon icon-excel"></em>方矩管</a>
+                            <a href="#"><em class="icon icon-excel"></em>管材类</a>
+                            <a href="#"><em class="icon icon-excel"></em>优钢类</a>
+                        </p>
+                        <p>
+                            <a href="#"><em class="icon icon-excel"></em>板卷类</a>
+                            <a href="#"><em class="icon icon-excel"></em>建材类</a>
+                            <a href="#"><em class="icon icon-excel"></em>方矩管</a>
+                            <a href="#"><em class="icon icon-excel"></em>管材类</a>
+                            <a href="#"><em class="icon icon-excel"></em>工字钢、槽钢、矿工钢、异型钢、锚杆钢</a>
+                        </p>
+                    </div>
+
+                </div>
+                <h1 class="t1"><em class="icon icon-t1">2</em>编辑资源清单</h1>
+                <p class="grayF">根据模板格式，在您的电脑上制作上传资源清单</p>
+                <h1 class="t1"><em class="icon icon-t1">3</em>上传资源清单</h1>
+                <!--选择文件上传 S-->
+                <div class="form-bar clearfix">
+                    <div class="form-item fl">
+                        <div class="item-text pointer">
+                            <div class="item-text-wrap">
+                                <label style="color: rgb(153, 153, 153);" class="f-label">请选择类</label>
+                                <input type="text" value="" class="f-text" id="">
+                                <input type="hidden" value="" class="f-text" id="_hide">
+                            </div>
+                            <span class="icon down-arr-icon"></span>
+                        </div>
+                        <div class="show-layer excel-layer none">
+                            <a class="layer-del absoluteP">×</a>
+                            <div class="excel-box">
+                                <p>
+                                    <a href="javascript:;"><em class="icon icon-excel"></em>板卷类</a>
+                                    <a href="javascript:;"><em class="icon icon-excel"></em>建材类</a>
+                                    <a href="javascript:;"><em class="icon icon-excel"></em>方矩管</a>
+                                    <a href="javascript:;"><em class="icon icon-excel"></em>管材类</a>
+                                    <a href="javascript:;"><em class="icon icon-excel"></em>优钢类</a>
+                                </p>
+                                <p>
+                                    <a href="javascript:;"><em class="icon icon-excel"></em>板卷类</a>
+                                    <a href="javascript:;"><em class="icon icon-excel"></em>建材类</a>
+                                    <a href="javascript:;"><em class="icon icon-excel"></em>方矩管</a>
+                                    <a href="javascript:;"><em class="icon icon-excel"></em>管材类</a>
+
+                                </p>
+                                <p><a href="javascript:;"><em class="icon icon-excel"></em>工字钢、槽钢、矿工钢、异型钢、锚杆钢</a></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <span class="upfile-box">
+                         <span class="upload-excel grayF">选择Excel文件：</span>
+                         <input type="text" name="copyFile" id="copyFile" class="textbox" />
+                         <a href="javascript:void(0);"  class="link">上传</a>
+                         <input type="file" class="uploadFile" id="uploadFile" name="upload" />
+                    </span>
+                </div>
+                <!--选择文件上传 E-->
+                <p class="grayF">
+                    提示：选中行后，按'E'键修改该行，按'Delete'键删除该行。当选中行处于编辑状态时，按'Esc'键取消该行的编辑，按'Enter'键保存该行的修改。
+                </p>
+            </div>
+            <!--table-bar S-->
+            <div class="table-bar">
+                <table class="tableList grid">
+                    <thead>
+                        <tr>
+                            <td class="batch-err-td"></td>
+                            <td>大类</td>
+                            <td>品名</td>
+                            <td>规格</td>
+                            <td>材质</td>
+                            <td>厂家</td>
+                            <td>交货地</td>
+                            <td>仓库</td>
+                            <td>库存（吨）</td>
+                            <td>记重方式</td>
+                            <td>价格</td>
+                            <td>操作</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="icon err-batch-icon"></span></td>
+                            <td>板卷</td>
+                            <td>品名</td>
+                            <td>规格</td>
+                            <td>材质</td>
+                            <td>厂家</td>
+                            <td>交货地</td>
+                            <td>仓库</td>
+                            <td>库存（吨）</td>
+                            <td>记重方式</td>
+                            <td>价格</td>
+                            <td class="last">
+                                <a href="javascript:;" title="撤回">保存</a>&nbsp;
+                                <a href="javascript:;" title="删除">删除</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="icon err-batch-icon"></span></td>
+                            <td>板卷</td>
+                            <td>品名</td>
+                            <td>规格</td>
+                            <td>材质</td>
+                            <td>厂家</td>
+                            <td>交货地</td>
+                            <td>仓库</td>
+                            <td>库存（吨）</td>
+                            <td>记重方式</td>
+                            <td>状态</td>
+                            <td class="last">
+                                <a href="javascript:;" title="撤回">保存</a>&nbsp;
+                                <a href="javascript:;" title="删除">删除</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="icon err-batch-icon"></span></td>
+                            <td>板卷</td>
+                            <td>品名</td>
+                            <td>规格</td>
+                            <td>材质</td>
+                            <td>厂家</td>
+                            <td>交货地</td>
+                            <td>仓库</td>
+                            <td>库存（吨）</td>
+                            <td>记重方式</td>
+                            <td>价格</td>
+                            <td class="last">
+                                <a href="javascript:;" title="撤回">保存</a>&nbsp;
+                                <a href="javascript:;" title="删除">删除</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>板卷</td>
+                            <td>品名</td>
+                            <td>规格</td>
+                            <td>材质</td>
+                            <td>厂家</td>
+                            <td>交货地</td>
+                            <td>仓库</td>
+                            <td>库存（吨）</td>
+                            <td>记重方式</td>
+                            <td>价格</td>
+                            <td class="last">
+                                <a href="javascript:;" title="撤回">保存</a>&nbsp;
+                                <a href="javascript:;" title="删除">删除</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="tableTool clearfix">
+                    <label>一共解析出&nbsp;<em class="redF">200</em>&nbsp;条正确数据</label>
+                    <button class="com-btn pink-btn" type="button" name="" value="">导入资源不挂牌</button>
+                    <button class="com-btn pink-btn" type="button" name="" value="">导入资源并挂牌</button>
+                    <span class="page-bar fr">
+                        <a class="prev" href="javascript:;">&lt;</a>
+                        <span>1<em>/</em>100</span>
+                        <a class="next" href="javascript:;">&gt;</a>
+                    </span>
+                </div>
+            </div>
+            <!--table-bar E-->
+        </div>
+        <script src="../../theme/default/js/artdialog.min.js"></script>
+        <script src="../../theme/default/js/jquery.2.1.1.min.js"></script>
+        <script type="text/javascript" src="../../js/global.js"></script>
+        <script type="text/javascript">
+
+            $(function(){
+                $(".f-text").inputFocus();
+                //global.getDialog("标题","fadfadsfasdf");
+                $(".item-text").click(function (){
+                    $(this).closest(".form-item").find(".show-layer").show();
+                });
+
+                $(".excel-box").on("click", "a", function(){
+                    var v = $(this).text();
+                    $(this).closest(".form-item").find(".f-text").val(v);
+                    $(this).closest(".form-item").find(".f-text").inputFocus();
+                    $(this).closest(".show-layer").hide();
+                });
+
+                $("#uploadFile").change(function(){
+                    var v = $(this).val();
+                    $("#copyFile").val(v);
+                });
+
+                $(".show-layer").on("click", ".layer-del", function(){
+                    $(this).closest(".show-layer").hide();
+                });
+            });
+
+        </script>
+    </body>
+</html>

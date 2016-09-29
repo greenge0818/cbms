@@ -1,0 +1,124 @@
+<!-- 交易完成 -->
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            交易管理
+        </li>
+        <li>
+            <a href="$link.getContextPath()/common/menu/order-view/order-query-index-page.html">交易单管理</a>
+        </li>
+        <li class="active">合同变更</li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+    #parse("layout/topbtn.vm")
+    <!-- /.nav-search -->
+</div>
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <!--TAPBAR-->
+            <!-- tapbar S -->
+            #parse("/layout/order/tapbar.vm")
+            <!-- tapbar E -->
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="clearfix">
+                        <div class="input-group pull-right col-md-12 col-sm-12 col-lg-12 search-bar">
+                            <form class="form-inline">
+                                <label>交易单号：</label><input id="code" class="ipt-text" type="text" value=""/>
+                                <label>买家全称：</label><input id="accountName" search='account' class="ipt-text" type="text" value=""/>
+                                <label>卖家全称：</label><input id="sellerName" accounttype="seller" search='account' class="ipt-text" type="text" value=""/>
+                                <label>交易员：</label><input id="ownerName" class="ipt-text" type="text" value="" />
+                                <!--<label>支付类型：</label>
+                                <select id="select_pay_style">
+                                    <option value ="">全部</option>
+                                    <option value ="0">现金支付</option>
+                                    <option value ="1">银票支付</option>
+                                </select>-->
+                                <label>开单时间：</label>
+                                <input id="startTime" class="Wdate" type="text" value="$!{startTime}"
+                                       onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')||\'2020-10-01\'}'})"/> -
+                                <input id="endTime" class="Wdate" type="text" value="$!{endTime}"
+                                       onFocus="WdatePicker({minDate:'#F{$dp.$D(\'startTime\')}',maxDate:'2020-10-01'})"/>
+
+                                <button id="queryBtn" class="btn btn-sm btn-default" type="button" title="搜索">
+                                    <i class="aace-icon fa fa-search bigger-110"></i>搜索
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="">
+                        <ul class="nav nav-tabs" id="secTab">
+                        #if($shiro.hasPermission("order:query:changelist:page"))
+                            <li class="" rel="first-table">
+                                <a href="$link.getContextPath()/order/changecontract/changelist.html" aria-expanded="false">
+                                    可变更交易单
+                                </a>
+                            </li>
+                            #end
+                            #if($shiro.hasPermission("order:query:auditlist:page"))
+                            <li class="" rel="second-table">
+                                <a  href="$link.getContextPath()/order/changecontract/auditlist.html" aria-expanded="false">
+                                    待审核变更交易单
+                                </a>
+                            </li>
+                            #end
+                            #if($shiro.hasPermission("order:query:relatelist:page"))
+                            <li class="" rel="third-table">
+                                <a  href="$link.getContextPath()/order/changecontract/relatelist.html" aria-expanded="false">
+                                    待关联变更交易单
+                                </a>
+                            </li>
+                             #end
+                            <li class="active" rel="fouth-table">
+                                <a   href="javascript:;" aria-expanded="true">
+                                    待申请付款变更交易单
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- div.dataTables_borderWrap -->
+                    <div>
+                        <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>交易单号</th>
+                                <th>开单时间</th>
+                                <th>买家全称</th>
+                                <th>交易员</th>
+                                <th>卖家全称</th>
+                                <th>件数<br/>(件)</th>
+                                <th>总重量<br/>(吨)</th>
+                                <th>总金额<br/>(元)</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+<input type="hidden" id="permission_payapply" value="$!{permission_payapply}"/>
+<input type="hidden" id="permission_print" value="$!{permission_print}"/>
+<script src="$link.getContextPath()/js/views/order/commonquery.js"></script>
+<script src="$link.getContextPath()/js/views/order/changecontract/payapplylist.js"></script>
+<script src='$link.getContextPath()/js/views/account/searchaccount.js'></script>

@@ -1,0 +1,100 @@
+<!-- 发票预警 -->
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+                    <i class="ace-icon fa fa-home home-icon"></i>
+                    <a href="#">发票管理</a>
+                </li>
+                <li>
+                   <a href="$link.getContextPath()/invoice/in/awaits.html">进项票管理</a>
+                </li>
+        <li class="active">发票预警</li>
+    </ul>
+    <!-- /.breadcrumb -->
+</div>
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <!--TAPBAR-->
+            <!-- tapbar S -->
+            #invoiceTabBar
+            <!-- tapbar E -->
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="clearfix">
+                        <div class="input-group pull-right col-md-12 col-sm-12 col-lg-12 search-bar text-left">
+                            <form class="form-inline">
+                                <label id="sorganization">服务中心：
+                                <span class="pos-rel"><a id="sorganizationBtn" href="javascript:void(0);">选择</a>
+                                <div id="sorganizationList" class='pos-abs none' style="z-index:10;top:15px;left:0px;width:185px;background:#fff;border:1px solid #ccc">
+                                <ul>
+                                    <li class="text-left" style="padding:5px;">
+                                        <label class="pos-rel">
+                                            <input type="checkbox"  class="ace" value="">
+                                            <span class="lbl">全部</span>
+                                            <input type = "hidden" name = "index" value="0">
+                                        </label>
+                                    </li>
+                                    #foreach($elem in $orgList)
+                                    <li class="text-left" style="padding:5px;">
+                                        <label class="pos-rel">
+                                            <input type="checkbox"  class="ace" value="$elem.id">
+                                            <span class="lbl">$elem.name</span>
+                                            <input type = "hidden" name = "index" value="$velocityCount">
+                                        </label>
+                                    </li>
+                                    #end
+                                    </ul>
+                                    </div>
+                                    </span>
+                                <span class="show_options" id="show_options" style="display: none"></span>
+                                </label>
+                                <label>买家全称：</label><input id="accountid" search="account" accounttype="buyer"
+                                                           class="ipt-text" type="text" value=""/>
+                                <label>开票资料：</label>
+                                <select id="invoiceData">
+                                    <option value ="">全部</option>
+                                    <option value ="2">待审核</option>
+                                    <option value ="1">审核已通过</option>
+                                    <option value ="4">审核未通过</option>
+                                </select>
+                                <button id="queryBtn" class="btn btn-sm btn-default" type="button" title="搜索">
+                                    <i class="aace-icon fa fa-search bigger-110"></i>搜索
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- div.dataTables_borderWrap -->
+                    <div id="printeare">
+                        <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>买家全称</th>
+                                <th>服务中心</th>
+                                <th>开票资料</th>
+                                <th>开票申请</th>
+                                <th>买家欠款金额（元）</th>
+                                <th>可申请销项金额（元）</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+<script src="$link.getContextPath()/js/views/account/searchaccount.js"></script>
+<script src="$link.getContextPath()/js/views/invoice/invoicewarn.js"></script>

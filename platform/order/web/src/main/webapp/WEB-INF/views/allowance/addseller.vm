@@ -1,0 +1,161 @@
+<div class="breadcrumbs" id="breadcrumbs">
+	<script type="text/javascript">
+		try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+	</script>
+
+	<ul class="breadcrumb">
+		<li>
+			<i class="ace-icon fa fa-home home-icon"></i>
+            <a href="$link.getContextPath()/allowance/list/seller.html">折让单管理</a>
+		</li>
+		<li class="active">添加卖家折让单</li>
+	</ul><!-- /.breadcrumb -->
+
+		#parse("layout/topbtn.vm")<!-- /.nav-search -->
+</div>
+
+<div class="page-content">
+	
+	<div style="background-color: #f3c17a">
+        <ul class="breadcrumb">
+            <li><span id="step_one_span">1、选择交易单</span></li>
+            <li class="red"><span id="step_two_span">2、添加折扣金额、上传折让单</span></li>
+        </ul>
+    </div>
+	</br>
+	
+	<form id="allowanceFrom">
+	<div>
+	卖家全称：<span>$!{sellerName}</span>&nbsp;&nbsp;#if($sellerInfo.isShowSellerDept)【$!{sellerInfo.sellerDepartmentName}】
+    #end&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	折让方式：
+	<select id="allowanceManner">
+		#if(${allowance_add_type_amount})
+			<option value="amount">折让金额</option>
+		#end
+		#if(${allowance_add_type_weight})
+			<option value="weight">折让重量</option>
+        #end
+		#if(${allowance_add_type_all})
+			<option value="all">折让金额和重量</option>
+        #end
+    </select>
+	</div>
+	<div class="table-bar col-sm-12">
+        <table id="list-table" class="table table-bordered table-hover">
+            <thead>
+            <tr>
+               <th>开单时间</th>
+               <th>寄售交易单号</th>
+               <th>买家全称</th>
+               <th>品名</th>
+               <th>材质</th>
+               <th>规格</th>
+               <th>实提重量</th>
+               <th class="allowanceMannerWeight">折扣重量</th>
+               <th class="allowanceMannerWeight">折后重量</th>
+               <th>实提金额</th>
+               <th class="allowanceMannerAmount">折扣金额</th>
+               <th class="allowanceMannerAmount">折后金额</th>
+            </tr>
+            </thead>
+            <tbody class="orderList-tbody">
+            #foreach($order in $!{orderList})
+                <tr orderdetailid='$!{order.orderDetailId}' orderid='$!{order.orderId}' contractcode='$!{order.contractCode}' 
+                buyerid='$!{order.buyerId}' sellerid='$!{order.sellerId}' sellername='$!{order.sellerName}' 
+                totalweight='$!{order.totalWeight}' totalamount='$!{order.totalAmount}' totalquantity='$!{order.totalQuantity}'
+                totalactualweight='$!{order.totalActualWeight}' totalactualamount='$!{order.totalActualAmount}'
+                    buyername="$!{order.buyerName}"
+                    buyerdeptid="$!{order.buyerDepartmentId}" buyerdeptname="$!{order.buyerDepartmentName}"
+                    sellerdeptid="$!{order.sellerDepartmentId}" sellerdeptname="$!{order.sellerDepartmentName}">
+                    <td><span class="orderTime">$!date.format('yyyy-MM-dd HH:mm:ss',$!{order.orderTime})</span></td>
+                    <td><span class="orderCode">$!{order.orderCode}</span></td>
+                    <td><span class="buyerName">$!{order.buyerName}#if($!{order.isShowBuyerDept})【$!{order.buyerDepartmentName}】
+                    #end</span></td>
+                    <td><span class="nsortName">$!{order.nsortName}</span></td>
+                    <td><span class="material">$!{order.material}</span></td>
+                    <td><span class="spec">$!{order.spec}</span></td>
+                    <td><span class="actualWeight">$!{order.actualWeight}</span></td>
+                    <td class="allowanceMannerWeight"><span class="allowanceWeight" style="display:none"></span>
+                    <select class="weightSymbol">
+						<option value="-">-</option>
+						<option value="">+</option>
+		            </select>
+                    <input class="weightValue" type="text" style="width:70px" value=""
+						maxlength="16" must="1" verify="weight" msg="仅支持大于0，小于实提重量的纯数字，小数点最多6位">
+                    </td>
+                    <td class="allowanceMannerWeight"><span class="unAllowanceWeight"></span></td>
+                    <td><span class="actualAmount">$!{order.actualAmount}</span></td>
+                    <td class="allowanceMannerAmount"><span class="allowanceAmount" style="display:none"></span>
+                    <select class="amountSymbol">
+						<option value="-">-</option>
+						<option value="">+</option>
+		            </select>
+                    <input class="amountValue" type="text" style="width:70px" value=""
+						maxlength="16" must="1" verify="rmb" msg="仅支持大于0，小于实提金额的纯数字，小数点最多2位">
+                    </td>
+                    <td class="allowanceMannerAmount"><span class="unAllowanceAmount"></span></td>
+                </tr>
+            #end
+            </tbody>
+            <tfoot>
+            <tr>
+            	<td></td><td></td><td></td><td></td><td></td>
+            	<td>合计</td>
+            	<td><span id="totalActualWeight"></span></td>
+            	<td class="allowanceMannerWeight"><span id="totalAllowanceWeight"></span></td>
+            	<td class="allowanceMannerWeight"><span id="totalUnAllowanceWeight"></span></td>
+            	<td><span id="totalActualAmount"></span></td>
+            	<td class="allowanceMannerAmount"><span id="totalAllowanceAmount"></span></td>
+            	<td class="allowanceMannerAmount"><span id="totalUnAllowanceAmount"></span></td>
+            </tr>
+            <tr>
+                <td colspan="12">
+                	<a href="javascript:history.back(-1);"
+                    	aria-expanded="true" >返回</a>
+                	<span class="pull-right">
+                    <button type="button" id="allowanceSave" class="btn btn-sm btn-primary">保存</button>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <button type="button" id="allowanceSubmit" class="btn btn-sm btn-primary">提交审核</button>
+                    </span>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+	</form>
+	<form action="$link.getContextPath()/allowance/saveallowance.html" method="POST" enctype="multipart/form-data"
+      id="sellerForm">
+	<div class= " col-xs-12 text-left clearfix">
+                        <em class="bolder">上传折让单：</em>
+                    <span class="vendor-text"><img id="turnImg" src="" width="200" height="200">
+                    </span>
+                    <span>
+                        <input id="allowanceImg" name="allowanceImg" type="file" onchange="preImg(this.id,'turnImg');" value="" must="1" />
+                        盖章扫描件或数码照，支持jpeg、jpg、png、gif 图片格式，小于2M；
+                    </span>
+                 </div>
+	</form>
+	<div id="buyerAllowance" class="none">
+		<div class="info-bar" style="padding:10px;height:150px;width:350px;overflow:auto;overflow-x:hidden;">
+			<span style="font-family:'Applied Font Bold', 'Applied Font';">勾选上可直接给该买家生成折让单</span>
+			<br/>
+				<div id="buyerList"></div>
+			<br/>
+			<span class="pull-right">
+				<button type="button" id="buyerConfirm" class="btn btn-sm btn-primary">确定</button>
+				<button type="button" id="buyerCancel" class="btn btn-sm btn-primary">取消</button>
+			</span>
+		</div>
+	</div>
+	<div class="pull-left" style="padding:10px;height:150px;width:350px;overflow:auto;overflow-x:hidden;">
+		<td class="bg-gray" rowspan="2">备注：</td>
+		<td rowspan="2" width="200">
+		    <textarea class="remarks-textarea" placeholder="可输入备注信息"
+		              id="allowance_note"></textarea>
+		</td>
+	</div>
+</div>
+
+
+<script src="$link.getContextPath()/js/views/allowance/addseller.js"></script>

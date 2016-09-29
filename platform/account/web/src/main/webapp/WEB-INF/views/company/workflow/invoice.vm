@@ -1,0 +1,119 @@
+#set($account=$accountdto.account)
+#set($accountExt=$accountdto.accountExt)
+#set($attachmentList=$accountdto.attachments)
+<div class="main-content">
+    <div class="main-content-inner">
+        <div class="breadcrumbs" id="breadcrumbs">
+            <script type="text/javascript">
+                try {
+                    ace.settings.check('breadcrumbs', 'fixed')
+                } catch (e) {
+                }
+            </script>
+
+            <ul class="breadcrumb">
+                <li>
+                    <i class="ace-icon fa fa-home home-icon"></i>
+                    	客户管理
+                </li>
+                <li>
+                    <i class="ace-icon"></i>
+                    <a href="javascript:void(0)">我的客户</a>
+                </li>
+                <li>
+                    <i class="ace-icon"></i>
+                    <a href="$link.getContextPath()/account/flow/invoice/list.html">$!{account.name}</a>
+                </li>
+                <li class="active">客户资料
+                </li>
+            </ul>
+        </div>
+
+        <div class="page-content">
+            <div class="customer">
+	            <div class="topbottom10">
+	            <span>
+	                                        公司全称：$!{accountdto.account.name}
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;客户性质：$!{accountdto.customerProperty}
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;服务中心 ：$!{account.orgName}</span>
+	            </div>
+	            <div class="tableFour">
+	                <h1>开票资料<span></span></h1>
+	                <div id="billingInfo">
+	                    <div class="row row-marginbottom">
+	                        <div class="col-md-6">
+	                            <div class=" row-marginbottom">
+	                                <span class="xo edo">税号：</span>
+	                                <span class="view">$!{accountExt.taxCode}</span>
+	                            </div>
+	                            <div class=" row-marginbottom">
+	                                <span class="xo edo">开票地址：</span>
+	                                <span class="view">$!{accountExt.addr}</span>
+	                            </div>
+	                            <div>
+	                                <span class="xo edo">电话号码：</span>
+	                                <span class="view">$!{accountExt.taxTel}</span>
+	                            </div>
+	                        </div>
+	                        <div class="col-md-6">
+	                            <div class="pull-left">
+	                                <span class="xo edo">开票资料：</span>
+	                            </div>
+	                            <div class=" pull-left">
+	                                <a rel="lightbox" style="display:#if($!{attachmentList.invoice_data.url}) block #else none #end;">
+	                                    <img class="imgbigger imgo" src="$link.getContextPath()/common/getfile.html?key=$!{attachmentList.invoice_data.url}"/></a>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="row row-marginbottom">
+	                        <div class="col-md-12">
+	                            <span class="xo edo">开户银行：</span>
+	                            <span class="view">$!{accountExt.taxBankNameMain}</span>
+	                            <span class="view">$!{accountExt.taxBankNameBranch}</span>
+	                        </div>
+	                    </div>
+	                    <div class="row row-marginbottom">
+	                        <div class="col-md-12">
+	                            <span class="xo edo">银行账号：</span>
+	                            <span class="view">$!{accountExt.bankNumber}</span>
+	                        </div>
+	                    </div>
+	                    <div class="row row-marginbottom">
+	                        <div class="col-md-12">
+	                            <div class="pull-left">
+	                                <span class="xo edo">开票类型：</span>
+	                                <span id="invoiceTypeText" class="view"></span>
+	                            </div>
+	                            #if($!{accountExt.invoiceType} == 'PRIVATE')
+	                            	<label class="input">增值税专用发票</label>
+	                            #end
+	                            #if($!{accountExt.invoiceType} == 'NORMAL')
+	                            	<label class="input">增值税普通发票</label>
+	                            #end	                            
+	                        </div>
+	                    </div>	            
+                        <div id="audit" class="row row-marginbottom">
+                            <div class="col-md-6">
+                            </div>
+                            <div class="col-md-6">
+								<label><input name="auditOp" type="radio" value="threeCard" checked="true" onclick="isShowAuditDesc(false)"/>通过</label>
+								<label><input id="disagree"name="auditOp" type="radio" value="threeCard" onclick="isShowAuditDesc(true)"/>不通过</label>
+								<input id="auditDesc" type="text" style="display: none"/>
+								</br>
+                            </div>
+                        </div>							
+	                </div>
+	           	</div>
+	           	<div>
+		           	<div style="padding-left: 100px">
+						<a  href="$accountDomain/flow/invoice/list.html">返回</a>		           	
+		           	</div>
+		           	<div style="padding-left: 600px">
+						<input id="auditBtn" type="button" value="审核" onclick="doAudit($account.id,$accountExt.id)"/>
+		           	</div>	           	
+	           	</div>	           	
+	        </div>
+	     </div>
+	</div>
+</div>
+<script src="$link.getContextPath()/js/views/company/workflow/invoice.js"></script>

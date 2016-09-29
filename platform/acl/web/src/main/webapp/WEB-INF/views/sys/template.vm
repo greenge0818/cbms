@@ -1,0 +1,157 @@
+#set($layout="layout/default.vm")
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li><i class="ace-icon fa fa-home home-icon"></i>系统管理</li>
+        <li>系统设置</li>
+        <li class="active">模板设置</li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+    #parse("layout/topbtn.vm")
+    <!-- /.nav-search -->
+</div>g
+
+<div class="page-content">
+
+    <div class="row">
+        <div class="col-xs-12">
+            <!--TAPBAR-->
+            #parse("sys/systemmenu.vm")
+            #foreach($template in $templates)
+                <div class="row height-b ">
+					<div class="col-md-8">
+						<span class="blue"> $template.name </span>
+					</div>
+					<div class="col-md-4">
+						#if(${template.sysTemplateStatus} == 0)
+						<button id="btnPublish" class="btn btn-sm btn-primary" templateId="${template.id}" templateType="${template.type}">发布
+						</button>
+						#elseif(${template.sysTemplateStatus} == 1)
+							<button class="btn btn-link"><a class="red">已发布</a></button>
+						#end
+                        <button id ="btnView" class="btn btn-link">
+                            <a target="_blank" href="$link.getContextPath()/sys/template/detail.html?id=${template.id}&type=${template.type}&action=view">查看</a>
+                        </button>
+                        <button id="btnEdit" class="btn btn-link"><a href="$link.getContextPath()/sys/template/detail.html?id=${template.id}&type=${template.type}&action=edit">编辑</a></button>
+					</div>
+				</div>
+				
+				#if(${template.type} == "buyer")
+    				<div class="row buyerspaydrafts" id="${template.id}">
+    					<div class="col-md-3">
+    						<p class="font14 marginbottom pull-left">买家银票支付方式：</p>
+        					<input #if(${template.enabled} == 1) checked="true" #end type="radio" name='check' value="开启" class="pull-left"/><span class="pull-left">开启</span>
+        					<input #if(${template.enabled} == 0) checked="true" #end type="radio" name='check' value="关闭" class="pull-left"/><span class="pull-left">关闭</span>
+						</div>
+    				</div>
+				#end
+
+                <div class="hr hr-dotted hr12"></div>
+            #end
+            <!--新增上传凭证打印图片入口-->
+            <form class="form" id="pickupForm" action="$link.getContextPath()/sys/template/uploadPic.html" method="post" enctype="multipart/form-data">
+                <table>
+            <tr>
+                <td>
+                    <input  id="pic"   style="margin-top:5px;opacity: 1;height: 20px;" type="file" name="file" onchange="uploadImg();"/>
+                    <span class="inline-block pd-t-5">上传凭证图片支持jpeg、jpg、png、gif 图片格式，小于2M</span>；
+                    <div id="img_pics">
+                        #if($!{attachment})
+                            <span class="pull-left pos-rel" style="margin-right:10px;margin-top:10px;"><a href="javascript:;" class="img-box">
+                                <img   src="$orderDomain/common/getfile.html?key=$attachment" alt="" width="100px" height="70px" style="border: 2px solid rgb(51, 122, 183);"/>
+                            </a>
+							</span>
+                        #end
+
+                    </div>
+                </td>
+            </tr>
+            </table>
+            </form>
+
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+
+<!-- /.page-content -->
+
+<script src="$link.getContextPath()/js/views/sys/template.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(document).on("click", "#btnEdit", function(){
+
+        });
+    });
+    /**
+     * 上传图片 显示到浏览器上
+     */
+    function uploadImg() {
+        var imgEle = "", loadingspan1 = "";
+        var options = {
+            type: "POST",
+            success: function (re) {
+                if (re) {
+                    if (re.success) {
+                        var appendImg = "";
+                        var rootbase =  '$orderDomain/common/getfile.html?key=';
+                        var data = re.data;
+                        appendImg += '<span class="pull-left pos-rel" style="margin-right:10px;margin-top:10px"><a href="javascript:;" class="img-box"><img src="'+rootbase+data.settingValue+'" alt="" width="100px" height="70px" style="border: 2px solid rgb(51, 122, 183);"/></a></span>';
+                        $("#img_pics").html(appendImg);
+
+
+                    }
+                    else {
+
+                        cbms.alert("上传失败:" + re.data);
+                    }
+                }
+                else {
+
+                    cbms.alert("上传失败，服务器异常");
+                }
+            },
+            error: function (re) {
+
+                cbms.alert("上传失败，服务器异常");
+            }
+        };
+        $("#pickupForm").ajaxSubmit(options);
+
+    }
+    function save(){
+        cbms.loading();
+        $.ajax({
+            type : "POST",
+            url : Context.PATH + "/sys/template/save.html",
+            data : {
+                "id" : "",
+                "content" : ""
+            },
+            success : function(result) {
+                cbms.closeLoading();
+                if (result) {
+                    if (result.success) {
+                        cbms.alert("操作成功！",function(){
+                            location.reload(true);
+                        });
+                    } else {
+                        cbms.alert(result.data);
+                    }
+                }
+            },
+            error : function(xhr, textStatus, errorThrown) {
+                cbms.closeLoading();
+            }
+        });
+    }
+</script>

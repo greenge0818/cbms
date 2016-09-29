@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="com.prcsteel.platform.smartmatch.persist.dao.BusiQuotaionCommonSearchDao">
+	<resultMap id="BaseResultMap"
+		type="com.prcsteel.platform.smartmatch.model.model.BusiQuotaionCommonSearch">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="spc" property="spc" jdbcType="VARCHAR" />
+		<result column="category_uuid" property="categoryUuid"
+			jdbcType="VARCHAR" />
+		<result column="category_name" property="categoryName"
+			jdbcType="VARCHAR" />
+		<result column="material_uuid" property="materialUuid"
+			jdbcType="VARCHAR" />
+		<result column="material_name" property="materialName"
+			jdbcType="VARCHAR" />
+		<result column="factory_id" property="factoryId" jdbcType="BIGINT" />
+		<result column="factory_name" property="factoryName" jdbcType="VARCHAR" />
+		<result column="city_id" property="cityId" jdbcType="BIGINT" />
+		<result column="city_name" property="cityName" jdbcType="VARCHAR" />
+		<result column="created" property="created" jdbcType="TIMESTAMP" />
+		<result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="DtoResultMap"
+		type="com.prcsteel.platform.smartmatch.model.dto.BusiQuotaionCommonSearchDto">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="spc" property="spc" jdbcType="VARCHAR" />
+		<result column="category_uuid" property="categoryUuid"
+			jdbcType="VARCHAR" />
+		<result column="category_name" property="categoryName"
+			jdbcType="VARCHAR" />
+		<result column="material_uuid" property="materialUuid"
+			jdbcType="VARCHAR" />
+		<result column="material_name" property="materialName"
+			jdbcType="VARCHAR" />
+		<result column="factory_id" property="factoryId" jdbcType="BIGINT" />
+		<result column="factory_name" property="factoryName" jdbcType="VARCHAR" />
+		<result column="city_id" property="cityId" jdbcType="BIGINT" />
+		<result column="city_name" property="cityName" jdbcType="VARCHAR" />
+		<result column="created" property="created" jdbcType="TIMESTAMP" />
+		<result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, spc, category_uuid, category_name, material_uuid,
+		material_name,
+		factory_id,
+		factory_name, city_id, city_name, created,
+		created_by
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from busi_quotaion_common_search
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		busi_quotaion_common_search
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert"
+		parameterType="com.prcsteel.platform.smartmatch.model.model.BusiQuotaionCommonSearch">
+		insert into busi_quotaion_common_search (id, spc,
+		category_uuid,
+		category_name, material_uuid, material_name,
+		factory_id,
+		factory_name, city_id,
+		city_name, created, created_by
+		)
+		values
+		(#{id,jdbcType=BIGINT}, #{spc,jdbcType=VARCHAR},
+		#{categoryUuid,jdbcType=VARCHAR},
+		#{categoryName,jdbcType=VARCHAR},
+		#{materialUuid,jdbcType=VARCHAR}, #{materialName,jdbcType=VARCHAR},
+		#{factoryId,jdbcType=BIGINT}, #{factoryName,jdbcType=VARCHAR},
+		#{cityId,jdbcType=BIGINT},
+		#{cityName,jdbcType=VARCHAR},
+		#{created,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.prcsteel.platform.smartmatch.model.model.BusiQuotaionCommonSearch">
+		insert into busi_quotaion_common_search
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="spc != null">
+				spc,
+			</if>
+			<if test="categoryUuid != null">
+				category_uuid,
+			</if>
+			<if test="categoryName != null">
+				category_name,
+			</if>
+			<if test="materialUuid != null">
+				material_uuid,
+			</if>
+			<if test="materialName != null">
+				material_name,
+			</if>
+			<if test="factoryId != null">
+				factory_id,
+			</if>
+			<if test="factoryName != null">
+				factory_name,
+			</if>
+			<if test="cityId != null">
+				city_id,
+			</if>
+			<if test="cityName != null">
+				city_name,
+			</if>
+			<if test="created != null">
+				created,
+			</if>
+			<if test="createdBy != null">
+				created_by,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="spc != null">
+				#{spc,jdbcType=VARCHAR},
+			</if>
+			<if test="categoryUuid != null">
+				#{categoryUuid,jdbcType=VARCHAR},
+			</if>
+			<if test="categoryName != null">
+				#{categoryName,jdbcType=VARCHAR},
+			</if>
+			<if test="materialUuid != null">
+				#{materialUuid,jdbcType=VARCHAR},
+			</if>
+			<if test="materialName != null">
+				#{materialName,jdbcType=VARCHAR},
+			</if>
+			<if test="factoryId != null">
+				#{factoryId,jdbcType=BIGINT},
+			</if>
+			<if test="factoryName != null">
+				#{factoryName,jdbcType=VARCHAR},
+			</if>
+			<if test="cityId != null">
+				#{cityId,jdbcType=BIGINT},
+			</if>
+			<if test="cityName != null">
+				#{cityName,jdbcType=VARCHAR},
+			</if>
+			<if test="created != null">
+				#{created,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createdBy != null">
+				#{createdBy,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.prcsteel.platform.smartmatch.model.model.BusiQuotaionCommonSearch">
+		update busi_quotaion_common_search
+		<set>
+			<if test="spc != null">
+				spc = #{spc,jdbcType=VARCHAR},
+			</if>
+			<if test="categoryUuid != null">
+				category_uuid = #{categoryUuid,jdbcType=VARCHAR},
+			</if>
+			<if test="categoryName != null">
+				category_name = #{categoryName,jdbcType=VARCHAR},
+			</if>
+			<if test="materialUuid != null">
+				material_uuid = #{materialUuid,jdbcType=VARCHAR},
+			</if>
+			<if test="materialName != null">
+				material_name = #{materialName,jdbcType=VARCHAR},
+			</if>
+			<if test="factoryId != null">
+				factory_id = #{factoryId,jdbcType=BIGINT},
+			</if>
+			<if test="factoryName != null">
+				factory_name = #{factoryName,jdbcType=VARCHAR},
+			</if>
+			<if test="cityId != null">
+				city_id = #{cityId,jdbcType=BIGINT},
+			</if>
+			<if test="cityName != null">
+				city_name = #{cityName,jdbcType=VARCHAR},
+			</if>
+			<if test="created != null">
+				created = #{created,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createdBy != null">
+				created_by = #{createdBy,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.prcsteel.platform.smartmatch.model.model.BusiQuotaionCommonSearch">
+		update busi_quotaion_common_search
+		set spc =
+		#{spc,jdbcType=VARCHAR},
+		category_uuid =
+		#{categoryUuid,jdbcType=VARCHAR},
+		category_name =
+		#{categoryName,jdbcType=VARCHAR},
+		material_uuid =
+		#{materialUuid,jdbcType=VARCHAR},
+		material_name =
+		#{materialName,jdbcType=VARCHAR},
+		factory_id =
+		#{factoryId,jdbcType=BIGINT},
+		factory_name =
+		#{factoryName,jdbcType=VARCHAR},
+		city_id = #{cityId,jdbcType=BIGINT},
+		city_name = #{cityName,jdbcType=VARCHAR},
+		created =
+		#{created,jdbcType=TIMESTAMP},
+		created_by =
+		#{createdBy,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<select id="selectByAllCondition" resultMap="BaseResultMap"
+		parameterType="com.prcsteel.platform.smartmatch.model.dto.BusiQuotaionCommonSearchDto">
+		select
+		<include refid="Base_Column_List" />
+		from busi_quotaion_common_search
+		<where>
+			<if test="spc != null">
+				and spc = #{spc,jdbcType=VARCHAR}
+			</if>
+			<if test="categoryUuid != null">
+				and category_uuid = #{categoryUuid,jdbcType=VARCHAR}
+			</if>
+			<if test="categoryName != null">
+				and category_name = #{categoryName,jdbcType=VARCHAR}
+			</if>
+			<if test="materialUuid != null">
+				and material_uuid = #{materialUuid,jdbcType=VARCHAR}
+			</if>
+			<if test="materialName != null">
+				and material_name = #{materialName,jdbcType=VARCHAR}
+			</if>
+			<if test="factoryId != null">
+				and factory_id = #{factoryId,jdbcType=BIGINT}
+			</if>
+			<if test="factoryName != null">
+				and factory_name = #{factoryName,jdbcType=VARCHAR}
+			</if>
+			<if test="cityId != null">
+				and city_id = #{cityId,jdbcType=BIGINT}
+			</if>
+			<if test="cityName != null">
+				and city_name = #{cityName,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+
+	<select id="selectAllDataByUser" resultMap="DtoResultMap"
+		parameterType="com.prcsteel.platform.smartmatch.model.dto.BusiQuotaionCommonSearchDto">
+		select
+		<include refid="Base_Column_List" />
+		from busi_quotaion_common_search
+		where created_by = #{createdBy,jdbcType=VARCHAR}
+		order by created desc
+	</select>
+</mapper>

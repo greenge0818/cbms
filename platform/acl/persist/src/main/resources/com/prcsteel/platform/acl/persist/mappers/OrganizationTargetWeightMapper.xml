@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.acl.persist.dao.OrganizationTargetWeightDao" >
+    <!--Created by zhoucai@prcsteel.com 移植风控上线代码 on 2016/5/6.-->
+    <resultMap id="BaseResultMap" type="com.prcsteel.platform.acl.model.model.OrganizationTargetWeight" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="org_id" property="orgId" jdbcType="BIGINT" />
+        <result column="org_name" property="orgName" jdbcType="VARCHAR" />
+        <result column="target_weight_one" property="targetWeightOne" jdbcType="DECIMAL" />
+        <result column="target_weight_two" property="targetWeightTwo" jdbcType="DECIMAL" />
+        <result column="target_weight_three" property="targetWeightThree" jdbcType="DECIMAL" />
+        <result column="target_weight_four" property="targetWeightFour" jdbcType="DECIMAL" />
+        <result column="target_weight_five" property="targetWeightFive" jdbcType="DECIMAL" />
+        <result column="target_weight_six" property="targetWeightSix" jdbcType="DECIMAL" />
+        <result column="target_weight_seven" property="targetWeightSeven" jdbcType="DECIMAL" />
+        <result column="target_weight_eight" property="targetWeightEight" jdbcType="DECIMAL" />
+        <result column="target_weight_nine" property="targetWeightNine" jdbcType="DECIMAL" />
+        <result column="target_weight_ten" property="targetWeightTen" jdbcType="DECIMAL" />
+        <result column="target_weight_eleven" property="targetWeightEleven" jdbcType="DECIMAL" />
+        <result column="target_weight_twelve" property="targetWeightTwelve" jdbcType="DECIMAL" />
+        <result column="years" property="years" jdbcType="VARCHAR" />
+        <result column="created" property="created" jdbcType="TIMESTAMP" />
+        <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+        <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+        <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+        <result column="is_deleted" property="isDeleted" jdbcType="BIT" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        id, org_id, org_name, target_weight_one, target_weight_two, target_weight_three,
+        target_weight_four, target_weight_five, target_weight_six, target_weight_seven, target_weight_eight,
+        target_weight_nine, target_weight_ten, target_weight_eleven, target_weight_twelve,
+        years, created, created_by, last_updated, last_updated_by, is_deleted
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+        select
+        <include refid="Base_Column_List" />
+        from base_organization_target_weight
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+        delete from base_organization_target_weight
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.prcsteel.platform.acl.model.model.OrganizationTargetWeight" >
+        insert into base_organization_target_weight (id, org_id, org_name,
+        target_weight_one, target_weight_two, target_weight_three,
+        target_weight_four, target_weight_five, target_weight_six,
+        target_weight_seven, target_weight_eight, target_weight_nine,
+        target_weight_ten, target_weight_eleven, target_weight_twelve,
+        years, created, created_by,
+        last_updated, last_updated_by, is_deleted
+        )
+        values (#{id,jdbcType=BIGINT}, #{orgId,jdbcType=BIGINT}, #{orgName,jdbcType=VARCHAR},
+        #{targetWeightOne,jdbcType=DECIMAL}, #{targetWeightTwo,jdbcType=DECIMAL}, #{targetWeightThree,jdbcType=DECIMAL},
+        #{targetWeightFour,jdbcType=DECIMAL}, #{targetWeightFive,jdbcType=DECIMAL}, #{targetWeightSix,jdbcType=DECIMAL},
+        #{targetWeightSeven,jdbcType=DECIMAL}, #{targetWeightEight,jdbcType=DECIMAL}, #{targetWeightNine,jdbcType=DECIMAL},
+        #{targetWeightTen,jdbcType=DECIMAL}, #{targetWeightEleven,jdbcType=DECIMAL}, #{targetWeightTwelve,jdbcType=DECIMAL},
+        #{years,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR},
+        #{lastUpdated,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}, #{isDeleted,jdbcType=BIT}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.prcsteel.platform.acl.model.model.OrganizationTargetWeight" >
+        insert into base_organization_target_weight
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="orgId != null" >
+                org_id,
+            </if>
+            <if test="orgName != null" >
+                org_name,
+            </if>
+            <if test="targetWeightOne != null" >
+                target_weight_one,
+            </if>
+            <if test="targetWeightTwo != null" >
+                target_weight_two,
+            </if>
+            <if test="targetWeightThree != null" >
+                target_weight_three,
+            </if>
+            <if test="targetWeightFour != null" >
+                target_weight_four,
+            </if>
+            <if test="targetWeightFive != null" >
+                target_weight_five,
+            </if>
+            <if test="targetWeightSix != null" >
+                target_weight_six,
+            </if>
+            <if test="targetWeightSeven != null" >
+                target_weight_seven,
+            </if>
+            <if test="targetWeightEight != null" >
+                target_weight_eight,
+            </if>
+            <if test="targetWeightNine != null" >
+                target_weight_nine,
+            </if>
+            <if test="targetWeightTen != null" >
+                target_weight_ten,
+            </if>
+            <if test="targetWeightEleven != null" >
+                target_weight_eleven,
+            </if>
+            <if test="targetWeightTwelve != null" >
+                target_weight_twelve,
+            </if>
+            <if test="years != null" >
+                years,
+            </if>
+            <if test="created != null" >
+                created,
+            </if>
+            <if test="createdBy != null" >
+                created_by,
+            </if>
+            <if test="lastUpdated != null" >
+                last_updated,
+            </if>
+            <if test="lastUpdatedBy != null" >
+                last_updated_by,
+            </if>
+            <if test="isDeleted != null" >
+                is_deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="orgId != null" >
+                #{orgId,jdbcType=BIGINT},
+            </if>
+            <if test="orgName != null" >
+                #{orgName,jdbcType=VARCHAR},
+            </if>
+            <if test="targetWeightOne != null" >
+                #{targetWeightOne,jdbcType=DECIMAL},
+            </if>
+            <if test="targetWeightTwo != null" >
+                #{targetWeightTwo,jdbcType=DECIMAL},
+            </if>
+            <if test="targetWeightThree != null" >
+                #{targetWeightThree,jdbcType=DECIMAL},
+            </if>
+            <if test="targetWeightFour != null" >
+                #{targetWeightFour,jdbcType=DECIMAL},
+            </if>
+            <if test="targetWeightFive != null" >
+                #{targetWeightFive,jdbcType=DECIMAL},
+            </if>
+            <if test="targetWeightSix != null" >
+                #{targetWeightSix,jdbcType=DECIMAL},
+            </if>
+            <if test="targetWeightSeven != null" >
+                #{targetWeightSeven,jdbcType=DECIMAL},
+            </if>
+            <if test="targetWeightEight != null" >
+                #{targetWeightEight,jdbcType=DECIMAL},
+            </if>
+            <if test="targetWeightNine != null" >
+                #{targetWeightNine,jdbcType=DECIMAL},
+            </if>
+            <if test="targetWeightTen != null" >
+                #{targetWeightTen,jdbcType=DECIMAL},
+            </if>
+            <if test="targetWeightEleven != null" >
+                #{targetWeightEleven,jdbcType=DECIMAL},
+            </if>
+            <if test="targetWeightTwelve != null" >
+                #{targetWeightTwelve,jdbcType=DECIMAL},
+            </if>
+            <if test="years != null" >
+                #{years,jdbcType=VARCHAR},
+            </if>
+            <if test="created != null" >
+                #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdBy != null" >
+                #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdated != null" >
+                #{lastUpdated,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdatedBy != null" >
+                #{lastUpdatedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="isDeleted != null" >
+                #{isDeleted,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.acl.model.model.OrganizationTargetWeight" >
+        update base_organization_target_weight
+        <set >
+            <if test="orgId != null" >
+                org_id = #{orgId,jdbcType=BIGINT},
+            </if>
+            <if test="orgName != null" >
+                org_name = #{orgName,jdbcType=VARCHAR},
+            </if>
+            <if test="targetWeightOne != null" >
+                target_weight_one = #{targetWeightOne,jdbcType=DECIMAL},
+            </if>
+            <if test="targetWeightTwo != null" >
+                target_weight_two = #{targetWeightTwo,jdbcType=DECIMAL},
+            </if>
+            <if test="targetWeightThree != null" >
+                target_weight_three = #{targetWeightThree,jdbcType=DECIMAL},
+            </if>
+            <if test="targetWeightFour != null" >
+                target_weight_four = #{targetWeightFour,jdbcType=DECIMAL},
+            </if>
+            <if test="targetWeightFive != null" >
+                target_weight_five = #{targetWeightFive,jdbcType=DECIMAL},
+            </if>
+            <if test="targetWeightSix != null" >
+                target_weight_six = #{targetWeightSix,jdbcType=DECIMAL},
+            </if>
+            <if test="targetWeightSeven != null" >
+                target_weight_seven = #{targetWeightSeven,jdbcType=DECIMAL},
+            </if>
+            <if test="targetWeightEight != null" >
+                target_weight_eight = #{targetWeightEight,jdbcType=DECIMAL},
+            </if>
+            <if test="targetWeightNine != null" >
+                target_weight_nine = #{targetWeightNine,jdbcType=DECIMAL},
+            </if>
+            <if test="targetWeightTen != null" >
+                target_weight_ten = #{targetWeightTen,jdbcType=DECIMAL},
+            </if>
+            <if test="targetWeightEleven != null" >
+                target_weight_eleven = #{targetWeightEleven,jdbcType=DECIMAL},
+            </if>
+            <if test="targetWeightTwelve != null" >
+                target_weight_twelve = #{targetWeightTwelve,jdbcType=DECIMAL},
+            </if>
+            <if test="years != null" >
+                years = #{years,jdbcType=VARCHAR},
+            </if>
+            <if test="created != null" >
+                created = #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdBy != null" >
+                created_by = #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdated != null" >
+                last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdatedBy != null" >
+                last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="isDeleted != null" >
+                is_deleted = #{isDeleted,jdbcType=BIT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.acl.model.model.OrganizationTargetWeight" >
+        update base_organization_target_weight
+        set org_id = #{orgId,jdbcType=BIGINT},
+          org_name = #{orgName,jdbcType=VARCHAR},
+          target_weight_one = #{targetWeightOne,jdbcType=DECIMAL},
+          target_weight_two = #{targetWeightTwo,jdbcType=DECIMAL},
+          target_weight_three = #{targetWeightThree,jdbcType=DECIMAL},
+          target_weight_four = #{targetWeightFour,jdbcType=DECIMAL},
+          target_weight_five = #{targetWeightFive,jdbcType=DECIMAL},
+          target_weight_six = #{targetWeightSix,jdbcType=DECIMAL},
+          target_weight_seven = #{targetWeightSeven,jdbcType=DECIMAL},
+          target_weight_eight = #{targetWeightEight,jdbcType=DECIMAL},
+          target_weight_nine = #{targetWeightNine,jdbcType=DECIMAL},
+          target_weight_ten = #{targetWeightTen,jdbcType=DECIMAL},
+          target_weight_eleven = #{targetWeightEleven,jdbcType=DECIMAL},
+          target_weight_twelve = #{targetWeightTwelve,jdbcType=DECIMAL},
+          years = #{years,jdbcType=VARCHAR},
+          created = #{created,jdbcType=TIMESTAMP},
+          created_by = #{createdBy,jdbcType=VARCHAR},
+          last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+          last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+          is_deleted = #{isDeleted,jdbcType=BIT}
+        where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <!-- 根据年份查询在用服务中心目标交易量-->
+    <select id="getWeightByYears" resultMap="BaseResultMap" >
+        SELECT
+          bo.id org_id,bo.name org_name,botw.target_weight_one, botw.target_weight_two, botw.target_weight_three,
+          botw.target_weight_four, botw.target_weight_five, botw.target_weight_six, botw.target_weight_seven, botw.target_weight_eight,
+          botw.target_weight_nine, botw.target_weight_ten, botw.target_weight_eleven, botw.target_weight_twelve
+        FROM base_organization_target_weight botw
+        RIGHT JOIN base_organization bo on bo.id=botw.org_id
+        WHERE  bo.name LIKE '%服务中心' AND bo.is_org = '1' AND bo.enabled = '1'
+        AND botw.years = #{years,jdbcType=VARCHAR}
+    </select>
+
+    <!--批量更新交易量-->
+    <update id="doBatchUpdateWeight" parameterType="java.util.List">
+        <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+            <if test="item.weight != null and item.weight != '' ">
+            UPDATE base_organization_target_weight
+            SET
+                ${item.month} = ${item.weight},
+                last_updated=NOW()
+            WHERE
+            org_id = #{item.orgId,jdbcType=BIGINT} AND years = #{item.years,jdbcType=VARCHAR}
+            </if>
+        </foreach>
+    </update>
+    
+       <select id="selectByUserId" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from base_organization_target_weight where years = ${years} 
+        and org_id=(select org_id from acl_user where  id=${userId})
+    </select>
+</mapper>

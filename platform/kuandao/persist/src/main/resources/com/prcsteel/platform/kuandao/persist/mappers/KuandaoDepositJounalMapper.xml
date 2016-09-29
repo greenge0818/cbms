@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.kuandao.persist.dao.KuandaoDepositJounalDao">
+	<resultMap type="com.prcsteel.platform.kuandao.model.model.KuandaoDepositJournal" id="depositMap">
+		<id column="id" property="id" jdbcType="INTEGER"/>
+		<result column="imp_acq_ssn" property="impAcqSsn" jdbcType="VARCHAR"/>
+		<result column="payee_virtual_acct_no" property="payeeVirtualAcctNo" jdbcType="VARCHAR"/>
+		<result column="payee_virtual_acct_name" property="payeeVirtualAcctName" jdbcType="VARCHAR"/>
+		<result column="pay_mer_acct_no" property="payMerAcctNo" jdbcType="VARCHAR"/>
+		<result column="pay_mer_name" property="payMerName" jdbcType="VARCHAR"/>
+		<result column="pay_mer_branch_id" property="payMerBranchId" jdbcType="VARCHAR"/>
+		<result column="imp_date" property="impDate" jdbcType="VARCHAR"/>
+		<result column="transaction_amount" property="transactionAmount" jdbcType="DECIMAL"/>
+		<result column="imp_status" property="impStatus" jdbcType="VARCHAR"/>
+		<result column="lastImpStatus" property="lastImpStatus" jdbcType="VARCHAR"/>
+		<result column="purpose" property="purpose" jdbcType="VARCHAR"/>
+		<result column="remit_details" property="remitDetails" jdbcType="VARCHAR"/>
+		<result column="warn_type" property="warnType" jdbcType="INTEGER"/>
+		<result column="created" property="created" jdbcType="TIMESTAMP"/>
+		<result column="created_by" property="createdBy" jdbcType="VARCHAR"/>
+		<result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP"/>
+		<result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR"/>
+		<result column="modification_number" property="modificationNumber" jdbcType="INTEGER"/>
+		<result column="row_id" property="rowId" jdbcType="VARCHAR"/>
+		<result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR"/>
+	</resultMap>
+	<resultMap id="depositAndOrderMap" type="com.prcsteel.platform.kuandao.model.dto.KuandaoDepositJournalDto" extends="depositMap">
+		<result column="payment_order_code" property="paymentOrderCode" jdbcType="VARCHAR"/>
+		<result column="acq_ssn" property="acqSsn" jdbcType="VARCHAR"/>
+		<result column="settDate" property="settDate" jdbcType="VARCHAR"/>
+		<result column="paymentOrderId" property="paymentOrderId" jdbcType="INTEGER"/>
+	</resultMap>
+	<insert id="insertDepositJournal" useGeneratedKeys="true" parameterType="com.prcsteel.platform.kuandao.model.model.KuandaoDepositJournal"
+			keyProperty="id">
+		INSERT INTO kuandao_deposit_journal
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="impAcqSsn!=null">imp_acq_ssn,</if>
+			<if test="payeeVirtualAcctNo!=null">payee_virtual_acct_no,</if>
+			<if test="payeeVirtualAcctName!=null">payee_virtual_acct_name,</if>
+			<if test="payMerAcctNo!=null">pay_mer_acct_no,</if>
+			<if test="payMerName!=null">pay_mer_name,</if>
+			<if test="payMerBranchId!=null">pay_mer_branch_id,</if>
+			<if test="impDate!=null">imp_date,</if>
+			<if test="transactionAmount!=null">transaction_amount,</if>
+			<if test="impStatus!=null">imp_status,</if>
+			<if test="purpose!=null">purpose,</if>
+			<if test="remitDetails!=null">remit_details,</if>
+			<if test="created!=null">created,</if>
+			<if test="createdBy!=null">created_by,</if>
+			<if test="lastUpdated!=null">last_updated,</if>
+			<if test="lastUpdatedBy!=null">last_updated_by,</if>
+			<if test="modificationNumber!=null">modification_number,</if>
+			<if test="rowId!=null">row_id,</if>
+			<if test="parentRowId!=null">parent_row_id,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="impAcqSsn!=null">#{impAcqSsn,jdbcType=VARCHAR},</if>
+			<if test="payeeVirtualAcctNo!=null">#{payeeVirtualAcctNo,jdbcType=VARCHAR},</if>
+			<if test="payeeVirtualAcctName!=null">#{payeeVirtualAcctName,jdbcType=VARCHAR},</if>
+			<if test="payMerAcctNo!=null">#{payMerAcctNo,jdbcType=VARCHAR},</if>
+			<if test="payMerName!=null">#{payMerName,jdbcType=VARCHAR},</if>
+			<if test="payMerBranchId!=null">#{payMerBranchId,jdbcType=VARCHAR},</if>
+			<if test="impDate!=null">#{impDate,jdbcType=VARCHAR},</if>
+			<if test="transactionAmount!=null">#{transactionAmount,jdbcType=DECIMAL},</if>
+			<if test="impStatus!=null">#{impStatus,jdbcType=VARCHAR},</if>
+			<if test="purpose!=null">#{purpose,jdbcType=VARCHAR},</if>
+			<if test="remitDetails!=null">#{remitDetails,jdbcType=VARCHAR},</if>
+			<if test="created!=null">#{created,jdbcType=TIMESTAMP},</if>
+			<if test="createdBy!=null">#{createdBy,jdbcType=VARCHAR},</if>
+			<if test="lastUpdated!=null">#{lastUpdated,jdbcType=TIMESTAMP},</if>
+			<if test="lastUpdatedBy!=null">#{lastUpdatedBy,jdbcType=VARCHAR},</if>
+			<if test="modificationNumber!=null">#{modificationNumber,jdbcType=INTEGER},</if>
+			<if test="rowId!=null">#{rowId,jdbcType=VARCHAR},</if>
+			<if test="parentRowId!=null">#{parentRowId,jdbcType=VARCHAR},</if>
+		</trim>
+		
+	</insert>
+	<select id="queryDepositByCondition" parameterType="com.prcsteel.platform.kuandao.model.dto.KuandaoDepositJournalDto" resultMap="depositMap">
+		SELECT deposit.*,deposit.imp_status as lastImpStatus FROM kuandao_deposit_journal deposit
+		<where>
+			<if test="id != null">
+				AND id=#{id,jdbcType=INTEGER}
+			</if>
+			<if test="impAcqSsn != null and impAcqSsn != '' ">
+				AND imp_acq_ssn=#{impAcqSsn,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+	
+	<update id="update" parameterType="com.prcsteel.platform.kuandao.model.model.KuandaoDepositJournal">
+		UPDATE kuandao_deposit_journal
+		<set>
+			<if test="impAcqSsn!=null">imp_acq_ssn=#{impAcqSsn,jdbcType=VARCHAR},</if>
+			<if test="payeeVirtualAcctNo!=null">payee_virtual_acct_no=#{payeeVirtualAcctNo,jdbcType=VARCHAR},</if>
+			<if test="payeeVirtualAcctName!=null">payee_virtual_acct_name=#{payeeVirtualAcctName,jdbcType=VARCHAR},</if>
+			<if test="payMerAcctNo!=null">pay_mer_acct_no=#{payMerAcctNo,jdbcType=VARCHAR},</if>
+			<if test="payMerName!=null">pay_mer_name=#{payMerName,jdbcType=VARCHAR},</if>
+			<if test="payMerBranchId!=null">pay_mer_branch_id=#{payMerBranchId,jdbcType=VARCHAR},</if>
+			<if test="impDate!=null">imp_date=#{impDate,jdbcType=VARCHAR},</if>
+			<if test="transactionAmount!=null">transaction_amount=#{transactionAmount,jdbcType=DECIMAL},</if>
+			<if test="impStatus!=null">imp_status=#{impStatus,jdbcType=VARCHAR},</if>
+			<if test="purpose!=null">purpose=#{purpose,jdbcType=VARCHAR},</if>
+			<if test="remitDetails!=null">remit_details=#{remitDetails,jdbcType=VARCHAR},</if>
+			<if test="warnType!=null">warn_type=#{warnType,jdbcType=INTEGER},</if>
+			<if test="created!=null">created=#{created,jdbcType=TIMESTAMP},</if>
+			<if test="createdBy!=null">created_by=#{createdBy,jdbcType=VARCHAR},</if>
+			<if test="lastUpdated!=null">last_updated=#{lastUpdated,jdbcType=TIMESTAMP},</if>
+			<if test="lastUpdatedBy!=null">last_updated_by=#{lastUpdatedBy,jdbcType=VARCHAR},</if>
+			 modification_number =ifnull(modification_number,0)+1,
+			<if test="rowId!=null">row_id=#{rowId,jdbcType=VARCHAR},</if>
+			<if test="parentRowId!=null">parent_row_id=#{parentRowId,jdbcType=VARCHAR},</if>
+		</set>
+		<where>
+			<if test="id != null">
+				id = #{id,jdbcType=BIGINT}
+			</if>
+			<if test="impAcqSsn != null">
+				AND imp_acq_ssn=#{impAcqSsn,jdbcType=VARCHAR}
+			</if>
+			<if test="lastImpStatus != null and lastImpStatus != ''">
+				AND imp_status=#{lastImpStatus,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</update>
+	<!-- 半小时未匹配汇入流水 状态是未匹配并且没有生成支付单的 -->
+	<select id="queryNonPaymentOrderDeposit" resultMap="depositMap">
+		select * from kuandao_deposit_journal deposit  
+		<where>
+			<![CDATA[deposit.created > date_sub(now(),interval 1 hour) and deposit.created <= date_sub(now(),interval 30 minute)]]>
+			and not exists (select 1 from kuandao_payment_order po where po.imp_acq_ssn = deposit.imp_acq_ssn)
+			and deposit.imp_status = '00'
+		</where>
+	</select>
+	
+	<select id="queryTestDataByCondition"  parameterType="com.prcsteel.platform.kuandao.model.dto.KuandaoDepositJournalDto" resultMap="depositMap">
+		select * from kuandao_deposit_journal_test dj  
+		<where>
+			<if test="impDate != null and impDate != ''">
+				dj.imp_date=#{impDate,jdbcType=VARCHAR}
+			</if>
+			<if test="payeeVirtualAcctNo != null and payeeVirtualAcctNo != ''">
+				and dj.payee_virtual_acct_no=#{payeeVirtualAcctNo,jdbcType=VARCHAR}
+			</if>
+			<if test="impStatus != null and impStatus != ''">
+				and dj.imp_status=#{impStatus,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+	
+	
+	<!-- 汇入流水查询条件 -->
+   <sql id="DepositAndOrderQueryCondition">
+   		<if test="impDate != null and impDate != ''">
+			AND deposit.imp_date=#{impDate,jdbcType=VARCHAR}
+		</if>
+		<if test="payeeVirtualAcctNo!= null and payeeVirtualAcctNo != ''">
+			AND deposit.payee_virtual_acct_no LIKE concat('%',#{payeeVirtualAcctNo,jdbcType=VARCHAR},'%') 
+		</if>
+		<if test="impStatus != null and impStatus != '' ">
+			AND deposit.imp_status=#{impStatus,jdbcType=VARCHAR}
+		</if>
+		<if test="payMerName!= null and payMerName != ''">
+			AND deposit.pay_mer_name LIKE concat('%',#{payMerName,jdbcType=VARCHAR},'%') 
+		</if>
+   </sql>
+   
+	<select id="queryDepositAndOrder" parameterType="map" resultMap="depositAndOrderMap">
+		SELECT deposit.*,payment.payment_order_code
+		FROM kuandao_deposit_journal deposit
+		LEFT JOIN kuandao_payment_order payment 
+		ON deposit.imp_acq_ssn = payment.imp_acq_ssn
+		<where>
+			<include refid="DepositAndOrderQueryCondition"></include>
+		</where>
+		ORDER BY deposit.imp_date DESC,deposit.imp_acq_ssn DESC
+		LIMIT #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER}
+	</select>
+	<select id="queryToTalDeposit" parameterType="com.prcsteel.platform.kuandao.model.dto.KuandaoDepositJournalDto" resultType="int">
+		SELECT count(deposit.id) FROM kuandao_deposit_journal deposit
+		<where>
+			<include refid="DepositAndOrderQueryCondition"></include>
+		</where>
+	</select>
+	
+	<select id="queryDepositAndOrderByCondition" parameterType="com.prcsteel.platform.kuandao.model.dto.KuandaoDepositJournalDto" resultMap="depositAndOrderMap">
+		SELECT deposit.*,payment.payment_order_code,payment.acq_ssn,payment.settDate,payment.id as paymentOrderId
+		FROM kuandao_deposit_journal deposit
+		LEFT JOIN kuandao_payment_order payment 
+		ON deposit.imp_acq_ssn = payment.imp_acq_ssn
+		<where>
+			<if test="impAcqSsn != null and impAcqSsn != ''">
+			AND deposit.imp_acq_ssn = #{impDate,jdbcType=VARCHAR}
+		</if>
+		<if test="id != null ">
+			AND deposit.id = #{id,jdbcType=VARCHAR}
+		</if>
+		<if test="impStatus != null and impStatus != '' ">
+			AND deposit.imp_status=#{impStatus,jdbcType=VARCHAR}
+		</if>
+		</where>
+	</select>
+	
+	
+	<select id="queryDepositWithoutOrder" parameterType="com.prcsteel.platform.kuandao.model.dto.KuandaoDepositJournalDto" resultMap="depositMap">
+		select * from kuandao_deposit_journal deposit 
+		<where>
+			 not exists (select 1 from kuandao_payment_order payment where payment.imp_acq_ssn = deposit.imp_acq_ssn)
+			 and deposit.imp_status = '00'
+			 <if test="impDate != null and impDate != ''">
+				AND deposit.imp_date=#{impDate,jdbcType=VARCHAR}
+			 </if>
+		</where>
+	</select>
+	
+</mapper>
+
+
+

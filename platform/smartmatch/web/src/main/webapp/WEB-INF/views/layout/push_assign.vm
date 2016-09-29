@@ -1,0 +1,35 @@
+<div class="row none" id="assign_dialog">
+    <div class="col-md-12">
+        <div class="row"  id="assignto_manager_panel" style="margin: 20px auto;">
+            <div class=" f-fl text-left" style="width: 80px">
+                <div style="display: inline-block;"><input type="radio" name="assignto" value="1" id="assignto_manager">服总
+                </div>
+            </div>
+            <div class="f-fl" style="width: 260px">
+                <select class="select-left" id="assign_manager_org">
+                    <option value="0">-选择服务中心-</option>
+                </select></div>
+        </div>
+        <div class="row" id="assignto_user_panel"  style="margin: 20px auto;">
+            <div class="f-fl text-left"  style="width: 80px">
+                <div style="display: inline-block;"><input type="radio" name="assignto" value="2" id="assignto_trader">业务员
+                </div>
+            </div>
+            <div class="f-fl" style="width: 260px">
+                <select class="select-left" id="sorganizationHidden">
+                    <option value="-1">-选择服务中心-</option>
+                </select>
+                <input id="assign_user" search="userorg" class="ipt-text" type="text"
+                       value="" userid="0" readonly="true" style="width: 100px"/>
+            </div>
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="col-md-12">
+            <input type="hidden" value="" id="quotation_orderid"/>
+            <input type="button" value="确定" class="btn btn-primary btn-sm" id="btnassign"/>
+            <input type="button" value="取消" class="btn btn-default btn-sm" id="assign_cancel"/>
+        </div>
+    </div>
+</div>
+<script src="$link.getContextPath()/js/views/smartmatch/quotation/purchaseorder.js"></script>

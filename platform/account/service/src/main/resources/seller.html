@@ -1,0 +1,188 @@
+<table class="contable print-table border0">
+	<tbody class="border0">
+	<tr>
+		<td colspan="5">
+			甲方（需方）：杭州钢为网络科技有限公司
+		</td>
+		<td colspan="5">
+			合同编号：#contractNo#
+		</td>
+	</tr>
+	<tr>
+		<td colspan="5">
+			乙方（供方）：#companyName#
+		</td>
+		<td colspan="5">
+			签订时间：#year#年#month#月#date#日
+		</td>
+	</tr>
+	<tr>
+		<td colspan="5">
+		</td>
+		<td colspan="5">
+			签订地点：#contractAddress#
+		</td>
+	</tr>
+	<tr>
+		<td colspan="10">
+			甲乙双方就现货销售事宜，经平等、自愿协商，达成如下一致意见：
+		</td>
+	</tr>
+	<tr>
+		<td colspan="10">
+			一、产品信息
+		</td>
+	</tr>
+	</tbody>
+</table>
+<table class="contable print-table">
+	<tbody>
+	<tr>
+		<td  width="90">货物名称</td><td >规格</td><td >材质</td><td >厂家</td><td >仓库</td>
+		<td class="text-center">件数<br />(件)</td><td class="text-right">重量<br />(吨)</td><td class="text-center">计重<br />方式</td><td class="text-right">单价(含税)<br />(元/吨)</td><td class="text-right">金额<br />(元)</td>
+	</tr>
+	</tbody>
+	<tbody id="items">
+	</tbody>
+	<tbody>
+	<tr>
+		<td colspan="5" align="center">
+			合计
+		</td>
+		<td class='text-center'>
+			#totalQuantity#
+		</td>
+		<td class="text-right">
+			#totalWeight#
+		</td>
+		<td class='text-center'>
+			/
+		</td>
+		<td class='text-center'>
+			/
+		</td>
+		<td class="text-right">
+			#totalAmount#
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+			金额大写
+		</td>
+		<td colspan="8">
+			人民币：#totalCapital#
+		</td>
+	</tr>
+	</tbody>
+</table>
+
+<div>
+	<ul>
+		<li>
+			二、付款及交（提）货信息：
+		</li>
+		<li class="print-indent">
+			1.付款方式：<span  style="#payTypeFirst#">当日内通过<em class="line-under"> 现款 </em>全额支付货款</span><span  style="#payTypeSecond#">甲方先提货后付款，最迟于提货后<em class="line-under"> #delayDays#  </em>个工作日内<em class="line-under"> 现款 </em>全额支付货款；
+		</li>
+		<li class="print-indent">
+			2.交（提）货地点： <em class="line-under"> 货物所在仓库 </em>；
+			交（提）货时间： <em class="line-under">#deliveryYear#年#deliveryMonth#月#deliveryDate#日</em>；
+		</li>
+		<li class="print-indent">
+			3.运输方式： <em class="line-under">#deliveryType#</em>；
+		</li>
+		<li class="print-indent">
+			4.相关费用承担：出库费由<em class="line-under">&nbsp;#outboundTaker#&nbsp;</em>承担，运费由<em class="line-under">&nbsp;#feeTaker#&nbsp;</em>承担。
+		</li>
+		<li>
+			三、数量和质量要求及技术标准：供货方所提供的产品须符合国家行业的标准。合理损耗不超过千分之三。
+		</li>
+		<li>
+			四、乙方对质量负责的条件和期限：如有数量异议在收到货物当日内提出。如发生质量异议，在甲方收货后<em class="line-under"> 7 </em>个工作日内通知乙方，双方协商解决,最终以钢厂的处理意见为准。
+		</li>
+		<li>
+			五、违约责任： <em class="line-under"> 依据《中华人民共和国合同法》相关规定处理。 </em>
+		</li>
+		<li>
+			六、合同争议的解决方式：本合同在履行过程中发生的争议由双方当事人协商解决，协商或调节不成的在合同签定所在地法院诉讼解决。因诉讼发生的一切费用，包括但不限于法院受理费、律师费、差旅费等由败诉方承担。
+		</li>
+		<li>
+			七、本合同自双方盖章之日起生效，本合同一式二份，双方各执一份。传真件与原件具有同等法律效力。
+		</li>
+		#clause#
+	</ul>
+</div>
+<table class="contable print-table">
+	<tbody>
+	<tr>
+		<td width="90">
+			甲方：
+		</td>
+		<td colspan="5" width="200">
+			杭州钢为网络科技有限公司
+		</td>
+		<td width="90">
+			乙方：
+		</td>
+		<td colspan="3" width="200">
+			#companyName#
+		</td>
+	</tr>
+	<tr>
+		<td>
+			地址：
+		</td>
+		<td colspan="5">
+			#orgAddr# #orgName#
+		</td>
+		<td>
+			地址：
+		</td>
+		<td colspan="3">
+			#addr#
+		</td>
+	</tr>
+	<tr>
+		<td>
+			传真号码：
+		</td>
+		<td colspan="5">
+			#orgFax#
+		</td>
+		<td>
+			传真号码：
+		</td>
+		<td colspan="3">
+			#fax#
+		</td>
+	</tr>
+	<tr>
+		<td>
+			法定代表人<br />
+			(授权代表)：
+		</td>
+		<td colspan="5">
+
+		</td>
+		<td>
+			法定代表人<br />
+			(授权代表)：
+		</td>
+		<td colspan="3">
+			#legalPersonName#
+		</td>
+	</tr>
+	<tr>
+		<td>
+			日期：
+		</td>
+		<td colspan="5">
+		</td>
+		<td>
+			日期：
+		</td>
+		<td colspan="3">
+		</td>
+	</tr>
+	</tbody>
+</table>

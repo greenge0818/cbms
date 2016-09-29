@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.account.persist.dao.CustGroupingInforDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.account.model.model.CustGroupingInfor" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="name_audit" property="nameAudit" jdbcType="VARCHAR" />
+    <result column="credit_limit" property="creditLimit" jdbcType="DECIMAL" />
+    <result column="credit_limit_audit" property="creditLimitAudit" jdbcType="DECIMAL" />
+    <result column="serial" property="serial" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="ower_type" property="owerType" jdbcType="VARCHAR" />
+    <result column="is_delete" property="isDelete" jdbcType="BIT" />
+    <result column="note" property="note" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+    <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+    <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, name_audit, credit_limit, credit_limit_audit, serial, user_id, user_name, 
+    status, ower_type, is_delete, note, created, created_by, last_updated, last_updated_by, modification_number,
+    row_id, parent_row_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from cust_grouping_infor
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from cust_grouping_infor
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.prcsteel.platform.account.model.model.CustGroupingInfor" >
+    insert into cust_grouping_infor (id, name, name_audit, 
+      credit_limit, credit_limit_audit, serial, 
+      user_id, user_name, status, ower_type,
+      is_delete, note, created, 
+      created_by, last_updated, last_updated_by, 
+      modification_number, row_id, parent_row_id
+      )
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{nameAudit,jdbcType=VARCHAR}, 
+      #{creditLimit,jdbcType=DECIMAL}, #{creditLimitAudit,jdbcType=DECIMAL}, #{serial,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{owerType,jdbcType=VARCHAR},
+      #{isDelete,jdbcType=BIT}, #{note,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, 
+      #{createdBy,jdbcType=VARCHAR}, #{lastUpdated,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}, 
+      #{modificationNumber,jdbcType=INTEGER}, #{rowId,jdbcType=VARCHAR}, #{parentRowId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.account.model.model.CustGroupingInfor" keyProperty="id" useGeneratedKeys="true">
+    insert into cust_grouping_infor
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="nameAudit != null" >
+        name_audit,
+      </if>
+      <if test="creditLimit != null" >
+        credit_limit,
+      </if>
+      <if test="creditLimitAudit != null" >
+        credit_limit_audit,
+      </if>
+      <if test="serial != null" >
+        serial,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="owerType != null" >
+        ower_type,
+      </if>
+      <if test="isDelete != null" >
+        is_delete,
+      </if>
+      <if test="note != null" >
+        note,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by,
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number,
+      </if>
+      <if test="rowId != null" >
+        row_id,
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="nameAudit != null" >
+        #{nameAudit,jdbcType=VARCHAR},
+      </if>
+      <if test="creditLimit != null" >
+        #{creditLimit,jdbcType=DECIMAL},
+      </if>
+      <if test="creditLimitAudit != null" >
+        #{creditLimitAudit,jdbcType=DECIMAL},
+      </if>
+      <if test="serial != null" >
+        #{serial,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="owerType != null" >
+        #{owerType,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=BIT},
+      </if>
+      <if test="note != null" >
+        #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        #{parentRowId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.account.model.model.CustGroupingInfor" >
+    update cust_grouping_infor
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="nameAudit != null" >
+        name_audit = #{nameAudit,jdbcType=VARCHAR},
+      </if>
+      <if test="creditLimit != null" >
+        credit_limit = #{creditLimit,jdbcType=DECIMAL},
+      </if>
+      <if test="creditLimitAudit != null" >
+        credit_limit_audit = #{creditLimitAudit,jdbcType=DECIMAL},
+      </if>
+      <if test="serial != null" >
+        serial = #{serial,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="owerType != null" >
+        ower_type = #{owerType,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null" >
+        is_delete = #{isDelete,jdbcType=BIT},
+      </if>
+      <if test="note != null" >
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number = #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        row_id = #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.account.model.model.CustGroupingInfor" >
+    update cust_grouping_infor
+    set name = #{name,jdbcType=VARCHAR},
+      name_audit = #{nameAudit,jdbcType=VARCHAR},
+      credit_limit = #{creditLimit,jdbcType=DECIMAL},
+      credit_limit_audit = #{creditLimitAudit,jdbcType=DECIMAL},
+      serial = #{serial,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=BIGINT},
+      user_name = #{userName,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      ower_type = #{owerType,jdbcType=VARCHAR},
+      is_delete = #{isDelete,jdbcType=BIT},
+      note = #{note,jdbcType=VARCHAR},
+      created = #{created,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      modification_number = #{modificationNumber,jdbcType=INTEGER},
+      row_id = #{rowId,jdbcType=VARCHAR},
+      parent_row_id = #{parentRowId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <!--add by zhoucai@prcsteel.com 回滚插入操作根据流水号-->
+  <delete id="deleteGroupLimitByFlowNo" parameterType="java.lang.Long" >
+    delete from cust_grouping_infor
+    where serial in (#{serial,jdbcType=BIGINT})
+  </delete>
+  <update id="deleteLimitGroup" parameterType="java.lang.Long" >
+    update cust_grouping_infor  set is_delete=1
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="queryAccountNumByGroupId" resultType="int" parameterType="java.lang.Long">
+     select count(*) from cust_grouping_infor_account where grouping_infor_id=#{id,jdbcType=BIGINT} and is_delete=0
+  </select>
+  <select id="queryGroupLimitByDeptId" parameterType="java.lang.Long"
+          resultType="com.prcsteel.platform.account.model.model.CustGroupingInfor">
+    SELECT t1.id,t1.credit_limit as creditLimit
+    FROM cust_grouping_infor t1,cust_grouping_infor_account t2
+    <where>
+    AND t2.department_id = #{deptId,jdbcType=BIGINT}
+    AND t1.is_delete = 0 AND t2.is_delete = 0
+    AND t1.id = t2.grouping_infor_id
+    </where>
+    GROUP BY t1.id
+  </select>
+  <select id="groupIsExistByName" resultType="int">
+    select count(*) from cust_grouping_infor where (case when status='APPROVED' and name=#{groupName,jdbcType=VARCHAR} or
+     (name_audit=#{groupName,jdbcType=VARCHAR} or name=#{groupName,jdbcType=VARCHAR}) then 1 else 0 end)=1  and is_delete=0
+  </select>
+  <select id="queryGroupUsedById" parameterType="java.lang.Long" resultType="BigDecimal">
+     SELECT IFNULL(SUM(credit_amount_used),0) FROM cust_account WHERE id IN(
+    SELECT department_id FROM cust_grouping_infor_account WHERE grouping_infor_id=#{groupId} AND is_delete=0 ) and is_deleted=0
+  </select>
+  <select id="groupIsExistByNameExceptId" resultType="int">
+    select count(*) from cust_grouping_infor where (case when status='APPROVED' and name=#{groupName,jdbcType=VARCHAR} or
+     (name_audit=#{groupName,jdbcType=VARCHAR} or name=#{groupName,jdbcType=VARCHAR}) then 1 else 0 end)=1  and is_delete=0
+     and id!=#{groupId,jdbcType=VARCHAR}
+  </select>
+</mapper>

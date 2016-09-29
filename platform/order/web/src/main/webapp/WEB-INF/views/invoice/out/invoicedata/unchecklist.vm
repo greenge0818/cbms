@@ -1,0 +1,76 @@
+<div class="main-content">
+		<div class="main-content-inner">
+			<div class="breadcrumbs" id="breadcrumbs">
+				<script type="text/javascript">
+					try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+				</script>
+
+				<ul class="breadcrumb">
+					<li>
+    					<i class="ace-icon fa fa-home home-icon"></i>发票管理
+    				</li>
+    				<li>销项票管理</li>
+					<li class="active">待审核开票资料</li>
+				</ul><!-- /.breadcrumb -->
+
+				<div class="nav-search none" id="nav-search">
+					<form class="form-search">
+						<span class="input-icon">
+							<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+							<i class="ace-icon fa fa-search nav-search-icon"></i>
+						</span>
+					</form>
+				</div><!-- /.nav-search -->
+			</div>
+
+			<div class="page-content">
+                <form>
+                <div class="row">
+                    <div class="col-xs-12">
+						<!--TAPBAR-->
+						#invoiceTopBar(1, 0)
+                        <!-- div.table-bar -->
+                    	<div class="col-sm-12 print-finfo">
+							<label >
+                    		服务中心：<input placeholder="请选择上级服务中心" id="sorganization" type="text" class="ipt-text" readonly="" value="" onclick="showMenu();">
+                    		<input type='hidden' id='sorganizationHidden' value='0'/>
+							</label>
+							<label>
+                    			买家全称：<input type="text" value="" id="buyerName" name="" class="" />
+                    		</label>
+                    		<button type="button" class="btn-sm btn btn-info">搜索</button>
+                    	</div>
+                    	
+                        <div class="table-bar col-sm-8">
+                            <table class="table table-bordered table-hover">
+                            	<thead>
+                            		<tr>
+                                		<th>买家全称</th>
+                                		<th>操作</th>
+                            		</tr>
+                            	</thead>
+                                <tbody>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                </form>
+
+			</div><!-- /.page-content -->
+		</div>
+	</div><!-- /.main-content -->
+
+	<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+		<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+	</a>
+</div><!-- /.main-container -->
+<div id="menuContent" class="menuContent" style="display:none; position: absolute;">
+    <ul id="orgTree" class="ztree" style="margin-top:0; width:160px;"></ul>
+</div>
+
+<input type="hidden" id="allowChecked" value="$shiro.hasPermission("invoice:out:unchecklist:checked")"/>
+
+<script src="$link.getContextPath()/js/views/invoice/out/invoicedata/unchecklist.js"></script>

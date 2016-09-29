@@ -1,0 +1,79 @@
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li><i class="ace-icon fa fa-home home-icon"></i>系统管理</li>
+        <li>系统设置</li>
+        <li class="active">系统配置设置</li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+    #parse("layout/topbtn.vm")
+    <!-- /.nav-search -->
+</div>
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <!--TAPBAR-->
+            <div class="tabbar order-tab">
+                <ul class="nav nav-tabs padding-12 tab-color-blue" id="myTab4">
+                    <li><a href="$link.getContextPath()/reward/showreward.html">提成设置</a></li>
+                    <li><a href="$link.getContextPath()/rebate/showrebate.html">返利设置</a></li>
+                    <li><a href="$link.getContextPath()/sys/filterClient.html">客户过滤设置</a></li>
+                    <li><a href="$link.getContextPath()/sys/setInvoice.html">发票设置</a></li>
+                    <li><a href="$link.getContextPath()/category/showcategory.html">品类归属设置</a></li>
+                    <li><a href="$link.getContextPath()/sys/template.html">模板设置</a></li>
+                    <li><a href="$link.getContextPath()/sys/toleranceamountsetting.html">金额容差设置</a></li>
+                    <li><a href="$link.getContextPath()/sys/smartweightwarningsetting.html">智能匹配重量容差报警设置</a></li>
+                    <li class="active"><a href="$link.getContextPath()/sys/settinglist.html">系统配置设置</a></li>
+                    <li><a href="$link.getContextPath()/sys/creditlimit.html">信用额度设置</a></li>
+               		<li><a href="$link.getContextPath()/sys/reportmail.html">邮件设置</a></li>
+               		<li><a href="$link.getContextPath()/sys/createdate.html">服务中心日报时间节点设置</a></li>
+                    <li><a href="$link.getContextPath()/sys/expresstime.html">服务中心快递时间表</a></li>
+                    <li><a href="$link.getContextPath()/sys/expressfirmset.html">快递公司设置</a></li>
+                    <li><a href="$link.getContextPath()/category/categoryalias.html">进项票品名映射设置</a></li>
+                </ul>
+            </div>
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="clearfix">
+                        <div class="input-group pull-left" col-md-12 col-sm-12 col-lg-12 search-bar">
+                        <form class="form-inline">
+                            <label>名称：</label>
+                            <input id="name" type="text" />
+                            <label>类型：</label>
+                            <input id="type" type="text" />
+                            <button class="btn btn-sm btn-default ok-btn" type="button" id="queryBtn">
+                                <i class="aace-icon fa fa-search bigger-110"></i>搜索
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <!-- div.dataTables_borderWrap -->
+                <div>
+                    <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>设置名称</th>
+                            <th>设置类型</th>
+                            <th>设置值</th>
+                            <th>最后设置时间</th>
+                            <th>最后设置人</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.col -->
+</div><!-- /.row -->
+</div><!-- /.page-content -->
+<input type="hidden" id="settingEdit" value="$shiro.hasPermission("sys:settinglist:edit")">
+<script type="text/javascript" src="$link.getContextPath()/js/views/sys/settinglist.js"></script>

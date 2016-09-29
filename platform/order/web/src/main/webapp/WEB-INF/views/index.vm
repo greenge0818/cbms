@@ -1,0 +1,204 @@
+
+<div class="main-content">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+    <div class="main-content-inner">
+        <!-- content S -->
+        <div class="breadcrumbs" id="breadcrumbs">
+            <ul class="breadcrumb">
+                <li>
+                    <i class="ace-icon fa fa-home home-icon"></i>
+                    <a class="active">控制台</a>
+                </li>
+                <li class="active">主页</li>
+            </ul>
+            <div class="page-content">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <!-- div.dataTables_borderWrap -->
+                                #if($shiro.hasPermission("order:secondapplyforpayment:page") ||
+                                    $shiro.hasPermission("order:secondapplyforpayment:view"))
+                                    <div class="settlement-info col-xs-12 col-md-12 bg-yellow-style text-left">
+                                        <span>二次结算<em class="bolder">应付金额合计：#if($!positiveBalanceSecond)$NumberTool.toThousandth($!positiveBalanceSecond)#else$NumberTool.toThousandth(0)#end</em>元</span>
+                                        <span>二次结算<em class="bolder">应收金额合计：#if($!minusBalanceSecond)$NumberTool.toThousandth($math.abs($!minusBalanceSecond))#else$NumberTool.toThousandth(0)#end</em>元</span>
+                                    </div>
+                                #end
+                                <div class="clearfix"></div>
+                                #if($shiro.hasPermission("resource:sort:index:page"))
+                                    <div class="step-bar">
+                                        <h1 class="h5 bolder">资源管理</h1>
+                                        <div class="link-bar">
+                                            <a href="$smartmatchDomain/resource/templet/index.html">批量导入</a>
+                                            <a href="$smartmatchDomain/resource/sort/index.html">我的资源</a>
+                                            #if($shiro.hasPermission("smartmatch:inventory:info:page"))
+                                                <a href="$smartmatchDomain/resource/tostatisres.html">资源更新统计</a>
+                                            #end
+                                        </div>
+                                    </div>
+                                #end
+                                #if($shiro.hasPermission("smartmatch:menu"))
+                                    <div class="step-bar">
+                                        <h1 class="h5 bolder">智能找货</h1>
+                                        <div class="link-bar">
+                                            #if($shiro.hasPermission("smartmatch:purchaseorder:created:page"))
+                                                <a href="$smartmatchDomain/smartmatch/purchaseorder/created.html">新增采购</a>
+											#end
+											#if($shiro.hasPermission("smartmatch:purchaseorder:pending_accepte"))
+                                                <a href="$smartmatchDomain/smartmatch/purchaseorder/list.html?tabIndex=0">待处理<em class="red">$!purchaseorder</em></a>
+											#end
+											#if($shiro.hasPermission("smartmatch:purchaseorder:p1"))
+												<input id="smartmat" class="" type="hidden" value="$smartmatchDomain">
+												<a href="$smartmatchDomain/smartmatch/purchaseorder/list.html?tabIndex=1">待指派<em class="red">$!appointed</em></a>
+											#end
+                                            #if($shiro.hasPermission("smartmatch:purchaseorder:p3"))
+                                                <input id="smartmat" class="" type="hidden" value="$smartmatchDomain">
+                                                <a href="$smartmatchDomain/smartmatch/purchaseorder/list.html?tabIndex=3">待开单<em class="red">$!prebilling</em></a>
+                                            #end
+                                        </div>
+                                    </div>
+                                #end
+                                <div class="step-bar">
+                                    #if($shiro.hasPermission("order:view"))
+                                        <h1 class="h5 bolder">交易单管理</h1>
+                                    #end
+                                    <div class="link-bar">
+										
+                                            <a href="$smartmatchDomain/smartmatch/quote/businesslook.html">业务找货</a>
+										
+                                            <a href="$smartmatchDomain/smartmatch/quote/baseprice.html#idx=1">基价管理</a>
+                                        
+                                        #if($shiro.hasPermission("order:query:approval:page"))
+                                            <a href="$orderDomain/order/query/approval.html">待审核<em class="red">$!approval</em></a>
+                                        #end
+                                        #if($shiro.hasPermission("order:banktransaction:list:page"))
+                                            <a href="$orderDomain/order/banktransaction/list.html">到账查询<em class="red">$!banktransaction</em></a>
+                                        #end
+                                        #if($shiro.hasPermission("order:query:associate:page"))
+                                            <a href="$orderDomain/order/query/associate.html">待关联<em class="red">$!associate</em></a>
+                                        #end
+                                        #if($shiro.hasPermission("order:query:applypayment:page"))
+                                            <a href="$orderDomain/order/query/applypayment.html">待申请付款<em class="red">$!applypayment</em></a>
+                                        #end
+                                        #if($shiro.hasPermission("order:query:payment:page"))
+                                            <a href="$orderDomain/order/query/payment.html">待审核付款<em class="red">$!payment</em></a>
+                                        #end
+                                        #if($shiro.hasPermission("order:query:printpendingpayapply:page"))
+                                            <a href="$orderDomain/order/query/printpendingpayapply.html">待打印付款申请<em class="red">$!printpendingpayapply</em></a>
+                                        #end
+                                        #if($shiro.hasPermission("order:query:confirmpayment:page"))
+                                            <a href="$orderDomain/order/query/confirmpayment.html">待确认已付款<em class="red">$!confirmpayment</em></a>
+                                        #end
+                                        #if($shiro.hasPermission("order:query:secondsettlement:page"))
+                                            <a href="$orderDomain/order/query/secondsettlement.html">待二次结算<em class="red">$!secondsettlement</em></a>
+                                        #end
+                                        #if($shiro.hasPermission("order:query:tradecloseapproval:page"))
+                                            <a href="$orderDomain/order/query/tradecloseapproval.html">交易关闭待审核<em class="red">$!tradecloseapproval</em></a>
+                                        #end
+                                    </div>
+                                </div>
+
+                                <div class="step-bar">
+                                    #if($shiro.hasPermission("invoice:in:index"))
+                                        <h1 class="h5 bolder">进项票管理</h1>
+                                    #end
+
+                                    <div class="link-bar">
+                                        #if($shiro.hasPermission("invoice:in:pages"))
+                                            <a href="$orderDomain/common/menu/invoice-in-pages/invoice-in-awaits-page.html">待收票<em class="red">#if($!receiveTotal>0)($!receiveTotal)#end</em></a>
+                                        #end
+                                        #if($shiro.hasPermission("invoice:in:send:page"))
+                                            <a href="$orderDomain/invoice/in/send.html">待寄出<em class="red">#if($!sendTotal>0)($!sendTotal)#end</em></a>
+                                        #end
+                                        #if($shiro.hasPermission("invoice:in:confirm:page"))
+                                            <a href="$orderDomain/invoice/in/confirm.html">待确认<em class="red">#if($!confirmTotal>0)($!confirmTotal)#end</em></a>
+                                        #end
+                                    </div>
+                                </div>
+                                <div class="step-bar">
+                                    #if($shiro.hasPermission("invoice:out:index"))
+                                        <h1 class="h5 bolder">销项票管理</h1>
+                                    #end
+
+                                    <div class="link-bar">
+                                        #if($shiro.hasPermission("invoice:out:unchecklist:page"))
+                                            <a href="$orderDomain/invoice/out/invoicedata/unchecklist.html">开票资料待审核<em class="red">(0)</em></a>
+                                        #end
+                                        #if($shiro.hasPermission("invoice:out:apply:page"))
+                                            <a href="$orderDomain/invoice/apply/index.html">待申请开票<em class="red">(0)</em></a>
+                                        #end
+                                        #if($shiro.hasPermission("invoice:out:waitinginvoice:page"))
+                                            <a href="$orderDomain/invoice/out/waitinginvoice.html">待开票<em class="red">(0)</em></a>
+                                        #end
+                                        #if($shiro.hasPermission("invoice:out:inputinvoicelist:page"))
+                                            <a href="$orderDomain/invoice/out/inputinvoicelist.html">待录入<em class="red">(0)</em></a>
+                                        #end
+                                        #if($shiro.hasPermission("invoice:out:express:page"))
+                                            <a href="$orderDomain/invoice/express/index.html">待寄出<em class="red">#if($!express>0)($!express)#end</em></a>
+                                        #end
+                                        #if($shiro.hasPermission("invoice:out:confirm:page"))
+                                            <a href="$orderDomain/invoice/out/confirm.html">待确认<em class="red">#if($!confirm>0)($!confirm)#end</em></a>
+                                        #end
+                                    </div>
+                                </div>
+                                <div class="step-bar">
+                                    <h1 class="h5 bolder">我的待办事项</h1>
+                                    <div class="link-bar">
+                                        #if($shiro.hasPermission("account:audit:cardinfo"))
+                                            <a href="$accountDomain/flow/cardinfo/list.html">审核证件资料<em class="red">($cardInfoCount)</em></a>
+                                        #end
+                                        #if($shiro.hasPermission("account:audit:invoice"))
+                                            <a href="$accountDomain/flow/invoice/list.html">审核开票资料<em class="red">($invoiceCount)</em></a>
+                                        #end
+                                        #if($shiro.hasPermission("account:audit:bank"))
+                                            <a href="$accountDomain/flow/bank/list.html">审核打款资料<em class="red">($backCount)</em></a>
+                                        #end
+                                        #if($shiro.hasPermission("account:audit:annual_purchase_manager"))
+                                            <a href="$accountDomain/flow/annual/10003/list.html">一审年度采购协议<em class="red">($annualCount)</em></a>
+                                        #end
+                                        #if($shiro.hasPermission("account:audit:annual_purchase_finance"))
+                                            <a href="$accountDomain/flow/annual/10004/list.html">二审年度采购协议<em class="red">($annualFinanceCount)</em></a>
+                                        #end
+                                        #if($shiro.hasPermission("account:audit:annual_purchase_service"))
+                                            <a href="$accountDomain/flow/annual/10005/list.html">审核年度采购协议<em class="red">($annualServiceCount)</em></a>
+                                        #end
+                                        #if($shiro.hasPermission("account:audit:seller_manager"))
+                                            <a href="$accountDomain/flow/consignagreement/10006/list.html">一审代运营协议<em class="red">($consignCount)</em></a>
+                                        #end
+                                        #if($shiro.hasPermission("account:audit:seller_finance"))
+                                            <a href="$accountDomain/flow/consignagreement/10007/list.html">二审代运营协议<em class="red">($consignFinanceCount)</em></a>
+                                        #end
+                                        #if($shiro.hasPermission("account:audit:seller_service"))
+                                            <a href="$accountDomain/flow/consignagreement/10008/list.html">审核代运营协议<em class="red">($consignServiceCount)</em></a>
+                                        #end
+                                        #if($shiro.hasPermission("account:audit:contract_template"))
+                                            <a href="$accountDomain/flow/contracttemplate/list.html">审核合同模板<em class="red">($contractTemplateCount)</em></a>
+                                        #end
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.page-content -->
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    jQuery(function ($) {
+        var vendor = navigator.vendor; //取得浏览器的userAgent字符串
+        //console.log(vendor);
+        if (vendor.indexOf("Google") < 0) {
+            cbms.alert("为了更好地体验，建议使用chrome浏览器登录！");
+        }
+    });
+</script>

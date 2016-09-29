@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.core.persist.dao.CategoryDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.core.model.model.Category" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="alias_name" property="aliasName" jdbcType="VARCHAR" />
+    <result column="priority" property="priority" jdbcType="INTEGER" />
+	<result column="variety_quantity" property="varietyQuantity"
+		jdbcType="INTEGER" />
+	<result column="price_deviation" property="priceDeviation"
+		jdbcType="DECIMAL" />
+	<result column="is_ec_show" property="isEcShow" jdbcType="VARCHAR" />
+    <result column="price_min" property="priceMin" jdbcType="DECIMAL" />
+    <result column="price_max" property="priceMax" jdbcType="DECIMAL" />
+    <result column="is_deleted" property="isDeleted" jdbcType="BIT" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+    <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+    <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, uuid, name,alias_name, priority, variety_quantity, price_deviation, is_ec_show, price_min, price_max, is_deleted, created, created_by, last_updated, last_updated_by,
+    modification_number, row_id, parent_row_id
+  </sql>
+	<!-- 查询品名总数 -->
+	<select id="totalCategory" resultType="int" parameterType="com.prcsteel.platform.smartmatch.model.query.CategoryNameQuery">
+		SELECT count(t1.id)
+		FROM common_category t1
+		where 1=1
+		<if test="categoryName != null and categoryName != ''">
+			and t1.name like concat('%',TRIM(#{categoryName,jdbcType=VARCHAR}),'%')
+		</if>
+        <if test="aliasName != null and aliasName != ''">
+            and t1.alias_name like concat('%',#{aliasName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="ecDisplay != null and ecDisplay != ''">
+            and t1.is_ec_show = #{ecDisplay,jdbcType=VARCHAR}
+        </if>
+	</select>
+  <select id="queryAllCategoryModel" resultMap="BaseResultMap">
+  	select
+    <include refid="Base_Column_List" />
+    from common_category
+  </select>
+	<!-- 根据品名 分页模糊查询品名信息列表 -->
+	<select id="selectByCategoryName" resultMap="BaseResultMap"
+		parameterType="com.prcsteel.platform.smartmatch.model.query.CategoryNameQuery">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM common_category t1
+		where 1=1
+		<if test="categoryName != null and categoryName != ''">
+			and t1.name like concat('%',#{categoryName,jdbcType=VARCHAR},'%')
+		</if>
+        <if test="aliasName != null and aliasName != ''">
+            and t1.alias_name like concat('%',#{aliasName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="ecDisplay != null and ecDisplay != ''">
+            and t1.is_ec_show = #{ecDisplay,jdbcType=VARCHAR}
+        </if>
+		order by t1.id desc
+		limit
+		#{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+	</select>
+	
+	<select id="selectByName" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM common_category
+		where name=#{name,jdbcType=VARCHAR}
+	</select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from common_category
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from common_category
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  	<insert id="insert" parameterType="com.prcsteel.platform.core.model.model.Category">
+		insert into common_category
+		(id, uuid, name,
+		priority, variety_quantity, price_deviation, is_ec_show, price_min, price_max, is_deleted, created,
+		created_by,
+		last_updated, last_updated_by,
+		modification_number, row_id,
+		parent_row_id
+		)
+		values (#{id,jdbcType=INTEGER},
+		#{uuid,jdbcType=VARCHAR},
+		#{name,jdbcType=VARCHAR},
+		#{priority,jdbcType=INTEGER},
+		#{varietyQuantity,jdbcType=INTEGER},
+		#{priceDeviation,jdbcType=DECIMAL},
+		#{isEcShow,jdbcType=VARCHAR},
+		#{priceMin,jdbcType=DECIMAL},
+		#{priceMax,jdbcType=DECIMAL},
+		#{isDeleted,jdbcType=BIT},
+		#{created,jdbcType=TIMESTAMP},
+		#{createdBy,jdbcType=VARCHAR},
+		#{lastUpdated,jdbcType=TIMESTAMP},
+		#{lastUpdatedBy,jdbcType=VARCHAR},
+		#{modificationNumber,jdbcType=INTEGER}, #{rowId,jdbcType=VARCHAR},
+		#{parentRowId,jdbcType=VARCHAR}
+		)
+	</insert>
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.core.model.model.Category" >
+    insert into common_category
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="uuid != null" >
+        uuid,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="priority != null" >
+        priority,
+      </if>
+      <if test="varietyQuantity != null">
+      	variety_quantity,
+      </if>
+      <if test="priceDeviation != null">
+      	price_deviation,
+      </if>
+      <if test="isEcShow != null">
+        is_ec_show,
+      </if>
+      <if test="priceMin != null">
+        price_min,
+      </if>
+      <if test="priceMax != null">
+        price_max,
+      </if>
+      	is_deleted,
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by,
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number,
+      </if>
+      <if test="rowId != null" >
+        row_id,
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="uuid != null" >
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="priority != null" >
+        #{priority,jdbcType=INTEGER},
+      </if>
+      <if test="varietyQuantity != null">
+	    #{varietyQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="priceDeviation != null">
+	    #{priceDeviation,jdbcType=DECIMAL},
+      </if>
+      <if test="isEcShow != null" >
+        #{isEcShow,jdbcType=VARCHAR},
+      </if>
+      <if test="priceMin != null" >
+        #{priceMin,jdbcType=DECIMAL},
+      </if>
+      <if test="priceMax != null" >
+        #{priceMax,jdbcType=DECIMAL},
+      </if>
+	    0,
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        #{parentRowId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.core.model.model.Category" >
+    update common_category
+    <set >
+      <if test="uuid != null" >
+        uuid = #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="aliasName != null" >
+          alias_name = #{aliasName,jdbcType=VARCHAR},
+      </if>
+      <if test="isEcShow != null" >
+          is_ec_show = #{isEcShow,jdbcType=VARCHAR},
+      </if>
+      <if test="priceMin != null" >
+          price_min = #{priceMin,jdbcType=DECIMAL},
+      </if>
+      <if test="priceMax != null" >
+          price_max = #{priceMax,jdbcType=DECIMAL},
+      </if>
+      <if test="priority != null" >
+        priority = #{priority,jdbcType=INTEGER},
+      </if>
+      <if test="varietyQuantity != null">
+	    variety_quantity = #{varietyQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="priceDeviation != null">
+	    price_deviation = #{priceDeviation,jdbcType=DECIMAL},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      last_updated = now(),
+      <if test="lastUpdatedBy != null" >
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number = #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        row_id = #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.core.model.model.Category" >
+    update common_category
+    set uuid = #{uuid,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      priority = #{priority,jdbcType=INTEGER},
+      is_deleted = #{isDeleted,jdbcType=BIT},
+      created = #{created,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      modification_number = #{modificationNumber,jdbcType=INTEGER},
+      row_id = #{rowId,jdbcType=VARCHAR},
+      parent_row_id = #{parentRowId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <resultMap id="CategoryDtoResultMap" type="com.prcsteel.platform.core.model.dto.CategoryDto" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="priority" property="priority" jdbcType="INTEGER" />
+  </resultMap>
+
+  <select id="getAllCategory" resultMap="CategoryDtoResultMap"  >
+    select
+    id,uuid,name,priority
+    from common_category
+    where is_deleted = 0;
+  </select>
+	
+  <resultMap id="CategoryInfoDtoResultMap" type="com.prcsteel.platform.core.model.dto.CategoryInfoDto" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="group_uuid" property="groupUuid" jdbcType="VARCHAR" />
+    <result column="is_ec_show" property="isEcShow" jdbcType="VARCHAR" />
+    
+  </resultMap>
+  <select id="queryAllCategoryAndGroup" resultMap="CategoryInfoDtoResultMap"  >
+    select a.id,a.uuid,a.name,a.is_ec_show , c.uuid group_uuid
+    from common_category a
+    inner join common_group_for_category b on b.category_uuid = a.uuid
+    inner join common_category_group c on b.category_group_uuid = c.uuid
+    where a.is_deleted = 0 and b.is_deleted = 0 and c.is_deleted = 0
+    and c.site_uuid = 'outer_market'
+    order by a.id asc
+  </select>
+
+
+  <select id="queryByCategoryUuid" resultMap="BaseResultMap" parameterType="String" >
+    select
+    <include refid="Base_Column_List" />
+    from common_category
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </select>
+  <resultMap id="CategoryResultMap" type="com.prcsteel.platform.order.model.wechat.dto.Category" >
+    <result column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="queryCategoryByGroupUuid" resultMap="CategoryResultMap" parameterType="String" >
+   SELECT a.uuid as uuid,a.name as name
+     FROM common_category a
+   LEFT JOIN common_group_for_category c ON a.uuid = c.category_uuid and c.is_deleted = 0
+   WHERE c.category_group_uuid = #{uuid,jdbcType=VARCHAR} and a.is_deleted = 0
+  </select>
+  
+  <select id="selectByCategory" resultMap="BaseResultMap">
+  	SELECT * FROM common_category
+    WHERE name = #{category,jdbcType=VARCHAR}
+  </select>
+    <select id="queryCategoryByAliasNameList" resultType="com.prcsteel.platform.core.model.model.Category" parameterType="java.util.List">
+      select
+        <include refid="Base_Column_List" />
+        from common_category
+        where is_deleted=0
+        <if test="list !=null and list.size > 0" >
+            and
+            <foreach item="aliasName" index="index" collection="list" open="(" separator=" or " close=")">
+                 name=#{aliasName} or FIND_IN_SET(#{aliasName},alias_name)
+            </foreach>
+        </if>
+        limit 0,1
+    </select>
+
+    <!--查询所有品名材质信息-->
+    <select id="selectAllCategoryMaterials" resultType="com.prcsteel.platform.core.model.model.CategoryMaterials">
+        SELECT cc.`name` categoryName, cc.uuid categoryUuid,
+        cm.`name` materialsName, cm.uuid materialsUuid
+        FROM common_category cc
+        JOIN common_category_materials ccm ON cc.uuid=ccm.category_uuid
+        JOIN common_materials cm ON ccm.materials_uuid=cm.uuid
+        WHERE cc.is_ec_show='TRUE'
+    </select>
+
+</mapper>

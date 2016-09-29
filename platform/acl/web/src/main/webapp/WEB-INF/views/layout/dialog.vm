@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <title>品牌店代运营系统</title>
+    <!-- meta S -->
+    #parse("layout/meta.vm")
+    <!-- meta E -->
+
+    <script src="$link.getContextPath()/theme/default/js/jquery.form.min.js"></script>
+
+    <!-- context S -->
+    #parse("layout/context.vm")
+    <!-- context E -->
+</head>
+
+<body class="no-skin">
+    $screen_content
+</body>
+</html>

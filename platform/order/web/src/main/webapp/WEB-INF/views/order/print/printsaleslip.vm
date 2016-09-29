@@ -1,0 +1,372 @@
+
+<div class="main-content">
+    <div class="main-content-inner">
+        <div class="breadcrumbs" id="breadcrumbs">
+            <script type="text/javascript">
+                try {
+                    ace.settings.check('breadcrumbs', 'fixed')
+                } catch (e) {
+                }
+            </script>
+
+            <ul class="breadcrumb">
+                <li>
+                    <i class="ace-icon fa fa-home home-icon"></i>
+                    交易管理
+                </li>
+                <li>
+                    <a href="$link.getContextPath()/common/menu/order-view/order-query-index-page.html">交易单管理</a>
+                </li>
+                 <li>
+                     <a href="$link.getContextPath()/order/query/tradecertificate.html?accountType=seller">交易凭证</a>
+                </li>
+				 <li> 
+					#if($!type =='1' || $!type == '2')
+						<a href="$link.getContextPath()/order/query/tradecertificate.html?accountType=seller">打印卖家凭证
+					#elseif($!type =='3' || $!type == '4')
+						<a href="$link.getContextPath()/order/query/tradecertificate.html?accountType=buyer">打印买家凭证	
+					#elseif($!type =='5' || $!type == '6')
+						<a  href="$link.getContextPath()/order/certificate/uploadcertificatelist/seller.html" >上传卖家凭证	
+					#else
+						<a  href="$link.getContextPath()/order/certificate/uploadcertificatelist/buyer.html" >上传买家凭证	
+					#end	
+					</a>	
+                </li>
+                <li class="active">
+               		 打印销售单
+                </li>
+            </ul>
+            <!-- /.breadcrumb -->
+			#parse("layout/topbtn.vm")
+			#parse("layout/context.vm")
+        </div>
+		<style type="text/css">
+			.print{font-family:'microsoft yahei';}
+			.print table{font-size:10pt;}
+			.letter-title{position: relative; left:-50px; font-size:22pt;}
+			.letter-head{font-size:10pt; margin-top:30px;}
+			.print table tr td, .print table tr th{
+				border:1px solid #333;
+				padding: 5px 0px;
+			}
+			.print .none-padding{padding-left:1px;padding-right:1px;}
+			.letter-bottom{font-size:10pt; margin-top:15px; width:100%;}
+			.letter-bottom .inline{display:inline-block; width:309px;text-align:left; overflow:hidden;white-space:nowrap;}
+			
+		</style>
+        <div class="page-content">
+            <div class="row">
+                <div class="col-xs-12 page-padding">
+					<table class="print" style="width:1049px; "><tr><td>
+						#set($tableCount = ($items.size()+2+13)/14+(-1))	
+						#set($pageCount = ($items.size()+2+13)/14)		##这个2，表示：最后的需要单加两行，总计和合计，
+						#set($count = 0)    ##页码
+						
+						#set($totalQuantity = 0)  ##总数量
+						#set($totalWeight = 0)    ##总重量
+						#set($totalAmount = 0)    ##总金额
+						
+						
+						#foreach($count in [0 .. $!tableCount])
+							#if($count > 0)
+							<div style="page-break-before:always;height:1px; width:100px;">&nbsp;</div>
+							#end
+							<!--start 头信息-->
+							<br/>
+							<div class="clearfix">
+								<span class="pull-left"><img src="../../img/print-logo.png"></span>
+								<div  class="letter-title text-center bolder">销售单<div class="qrcode pos-abs pull-right" style="right:0px;top:-30px"></div></div>
+							</div>
+							<div class="letter-head">
+								<span>杭州钢为网络科技有限公司：</span>
+								<p style="line-height:150%; margin-top:10px; text-indent:2em;">我司已发出于 $!saleDate向贵司销售的货物，货权已转至贵司名下，我司对货物数量无任何异议，特此确认，货物明细如下：</p>
+							</div><!--end 头信息-->
+							<table class="zprint contable" style="width:100%; border:none;">
+								<thead>
+									<tr>
+										<th class="text-center" style="width:90px;">日期</th>
+										<th class="text-center" style="width:90px;">货物名称</th>
+										<th class="text-center" style="width:110px;">规格</th>
+										<th class="text-center" style="width:110px;">材质</th>
+										<th class="text-center" style="width:90px;">厂家</th>
+										<th class="text-center" style="width:90px;">仓库</th>
+										<th class="text-center" style="width:50px;">件数</th>
+										<th class="text-center" style="width:90px;">重量（吨）</th>
+										<th class="text-center" style="width:90px;">单价（元/吨）</th>
+										<th class="text-center" style="width:110px;">金额（元）</th>
+									</tr>
+								</thead>
+								<tbody>
+								<!--这个是最悲观的测试数据 -->
+								<!--
+									<tr>
+										<td class="text-center none-padding">2015-07-02</td>
+										<td class="text-center none-padding">热轧带肋钢筋</td>
+										<td class="text-center none-padding">16*1200*11300</td>
+										<td class="text-center none-padding">23MnNiMoCr54</td>
+										<td class="text-center none-padding">新兴铸管</td>
+										<td class="text-center none-padding">杭州仓库</td>
+										<td class="text-center none-padding">
+											$NumberTool.format("#0", 100)
+										</td> 
+										<td class="text-right">
+											$NumberTool.format("#0.000000", 23.901)&nbsp;
+										</td>
+										<td  class="text-right">
+											$NumberTool.format("#0,000.00",200000)&nbsp;
+										</td> 
+										<td  class="text-right">
+											$NumberTool.format("#0,000.00",4780200)&nbsp;
+										</td> 
+									</tr>
+									-->
+									#set($endCount = ($count+1)*14)   ##14， 38
+									#set($startCount = $count*14)   ##0,14
+									#set($elemCount = 0)
+									
+									#set($ptotalQuantity = 0)    ##每页总数量
+									#set($ptotalWeight = 0)      ##每页总重量
+									#set($ptotalAmount = 0)   	 ##每页总金额
+									#set($pageFlag = 0)   	 ##当前页有数据显示的时候不为0
+									
+								 	#foreach($elem in $items)
+										#if($elemCount >= $startCount and $elemCount < $endCount)
+											#set($pageFlag = 1)
+										<tr>
+											<td class="text-center none-padding">$NumberTool.dateToStr($!elem.created, "yyyy-MM-dd")&nbsp;</td>
+											<td class="text-center none-padding">$!elem.nsortName</td>
+											<td class="text-center none-padding">$!elem.spec</td>
+											<td class="text-center none-padding">$!elem.material</td>
+											<td class="text-center none-padding">$!elem.factory</td>
+											<td class="text-center none-padding">$!elem.warehouse</td>
+											<td class="text-center none-padding">
+												#set($style = "#0")
+												#if($!elem.actualPickQuantityServer>=1000) #set($style = "#0,000") #end
+												#set($totalQuantity = ($totalQuantity + $!elem.actualPickQuantityServer))
+												#set($ptotalQuantity = ($ptotalQuantity + $!elem.actualPickQuantityServer))
+												$NumberTool.format($style, $!elem.actualPickQuantityServer)
+											</td>  <!--件数-->
+											<td class="text-right">
+												#set($style = "#0.000000")
+												#if($!elem.actualPickWeightServer>=1000) #set($style = "#0,000.000000") #end
+												#set($totalWeight = ($totalWeight + $!elem.actualPickWeightServer))
+												#set($ptotalWeight = ($ptotalWeight + $!elem.actualPickWeightServer))
+												$NumberTool.format($style, $!elem.actualPickWeightServer)&nbsp;
+											</td>  <!--重量-->
+											<td  class="text-right">
+												#set($style = "#0.00")
+												#if($!elem.costPrice>=1000) #set($style = "#0,000.00") #end
+												$NumberTool.format($style,$!elem.costPrice)&nbsp;
+											</td>  <!--单价-->
+											<td  class="text-right">
+												#set($style = "#0.00")
+												#if($!elem.amount>=1000) #set($style = "#0,000.00") #end
+												#set($totalAmount = ($totalAmount + $!elem.allowanceAmount))
+												#set($ptotalAmount = ($ptotalAmount + $!elem.allowanceAmount))
+												$NumberTool.format($style, $!elem.allowanceAmount)&nbsp;
+											</td>  <!--金额-->
+										</tr>
+										#end
+										#set($elemCount = $elemCount+1)
+									#end
+									
+									#if($!elemCount < $endCount)
+										#set($loopNum = $endCount - $elemCount - 1)
+										
+										## 如果是最后的一页，则少打印两行空白
+										#if(($count+1) == $pageCount)
+											#set($loopNum = ($loopNum - 2))
+										#end
+										
+										##说明本页没有数据，就没有小计，空白页面多一行。
+										#if($pageFlag == 0 )
+											#set($loopNum = ($loopNum + 1))
+										#end
+										
+										#if($loopNum >=0)
+											#foreach($i in [0 .. $!loopNum])
+												<tr>
+													<td class="text-center none-padding">
+														#if($velocityCount==1)
+															<span class="bolder">以下为空白</span>
+														#end
+													</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+												</tr>
+											#end ##end foreach
+										#end
+									#end
+									#set($rowSpanSize = $delivery.persons.size() + 1)
+									
+									##这里添加每页小计
+									#if($pageFlag == 1 )
+										<tr>
+											<td colspan="2" class="text-center">
+												小计
+											</td>
+											<td class="text-center">&nbsp; - &nbsp;</td>
+											<td class="text-center">&nbsp; - &nbsp;</td>
+											<td class="text-center">&nbsp; - &nbsp;</td>
+											<td class="text-center">&nbsp; - &nbsp;</td>
+											<td class="text-center">
+												#set($style = "#0")
+												#if($ptotalQuantity>=1000) #set($style = "#0,000") #end
+												$NumberTool.format($style, $ptotalQuantity)&nbsp;
+											</td>
+											<td class="text-right">
+												#set($style = "#0.000000")
+												#if($ptotalWeight>=1000) #set($style = "#0,000.000000") #end
+												$NumberTool.format($style, $ptotalWeight)&nbsp;
+											
+											</td>
+											<td class="text-center">&nbsp; - &nbsp;</td>
+											<td class="text-right">
+												#set($style = "#0.00")
+												#if($ptotalAmount>=1000) #set($style = "#0,000.00") #end
+												$NumberTool.format($style, $ptotalAmount)&nbsp;
+											</td>
+										</tr>
+									#end
+									
+									#if(($count+1) == $pageCount)
+										<tr>
+											<td colspan="2" class="text-bold text-center">
+												总计
+											</td>
+											<td class="text-bold text-center">&nbsp; - &nbsp;</td>
+											<td class="text-bold text-center">&nbsp; - &nbsp;</td>
+											<td class="text-bold text-center">&nbsp; - &nbsp;</td>
+											<td class="text-bold text-center">&nbsp; - &nbsp;</td>
+											<td class="text-bold text-center">
+												#set($style = "#0")
+												#if($totalQuantity>=1000) #set($style = "#0,000") #end
+												$NumberTool.format($style, $totalQuantity)&nbsp;
+											</td>
+											<td class="text-bold text-right">
+												#set($style = "#0.000000")
+												#if($totalWeight>=1000) #set($style = "#0,000.000000") #end
+												$NumberTool.format($style, $$totalWeight)&nbsp;
+											
+											</td>
+											<td class="text-bold text-center">&nbsp; - &nbsp;</td>
+											<td class="text-bold text-right">
+												#set($style = "#0.00")
+												#if($totalAmount>=1000) #set($style = "#0,000.00") #end
+												$NumberTool.format($style, $totalAmount)&nbsp;
+											</td>
+										</tr>
+										<tr>
+											<td colspan="2" class="text-bold text-center">
+												合计金额（大写）
+											</td>
+											<td colspan="8" class="text-left">
+												<div style="width:100%;">
+													&nbsp;&nbsp;人民币：$NumberTool.number2CNMontray($!total)
+												</div>
+											</td>
+										</tr>
+
+									#end
+									
+								</tbody>
+							</table>
+							<div class="letter-bottom" style="margin-top:#if(($count+1) == $pageCount) 2px; #else 10px; #end">
+								<span style="font-size:12px;">
+									#set($currCount = ($count+1))
+                           	 		第<span>$currCount</span>页，共 <span>$pageCount</span> 页
+                       	 		</span>
+                       	 		<div class="pull-right inline">
+                       	 			#if(($count+1) == $pageCount)
+										<span>$!accountName（盖章）</span><br/>
+										<span>日期：$!currDate</span>
+									#end
+                       	 		</div>
+							</div>
+							#set($count = $count+1)
+						#end
+					</td></tr></table>
+					
+					<div class="btn-bar text-center">
+					<br/><br/>
+                        <button id="prints" class="btn btn-info"><i class="fa fa-print"></i>打印</button>
+                        <button id="printCode" class="none btn btn-info"><i class="fa fa-print"></i>打印卖家凭证条码</button>
+                        &nbsp;
+                        <button id="back" type="button" class="btn btn-default">返回</button>
+                    </div>
+                </div><!--end col-xs-12-->
+            </div><!--end row-->
+        </div><!--end page-content-->
+    </div><!--end main-content-inner -->
+</div><!--end main-content -->
+
+<script type="application/javascript">
+    var deliveryType = "PICKUPFORBUYER";
+
+    $(document).ready(function () {
+        $(document).on("click", "#prints", function () {
+		    cbms.loading();
+            var d = {};
+            d.credentialType = "seller";
+			
+			#if($needPage==false)
+				d.needPage = false;
+			#end
+						
+			#set($i = 0)
+			#foreach($orderid in $orderIds)
+            d['orderIds[$i]'] = "$orderid";
+			#set($i =$i + 1)
+			#end
+            d.sellerId 	 = "$!sellerId";
+            d.credentialNum = $pageCount;
+            $.ajax({
+                type: "POST",
+                url: Context.PATH + '/order/certificate/saveprintinfo.html',
+                data: d,
+                success:function(re){
+				 cbms.closeLoading();
+                    if (re) {
+                        if (re.success) {
+						$(".qrcode").html('<img src="'+ re.data.split('|')[1] +'" /><span class="font12" style="font-size:12px;display:block">'+re.data.split('|')[0]+'<span>');
+						 setTimeout(1000);
+                            $(".print").print();
+                        }
+                        else {
+                            cbms.alert("保存打印信息失败:"+re.data);
+                        }
+                    }
+                    else {
+                        cbms.alert("保存打印信息失败");
+                    }
+                }
+                ,
+                error: function (re) {
+                    cbms.alert("保存打印信息失败");
+                }
+            });
+
+        });
+        
+        $(document).on("click", "#back", function () {
+		    var backurl;
+					#if($!type =='1' || $!type == '2')
+						backurl= "$link.getContextPath()/order/query/tradecertificate.html?accountType=seller";
+					#elseif($!type =='3' || $!type == '4')
+						backurl= "$link.getContextPath()/order/query/tradecertificate.html?accountType=buyer";
+					#elseif($!type =='5' || $!type == '6')
+						backurl= "$link.getContextPath()/order/certificate/uploadcertificatelist/seller.html";
+					#else
+					    backurl = "$link.getContextPath()/order/certificate/uploadcertificatelist/buyer.html";
+					#end	
+            location.href = backurl;
+        });
+    });
+</script>

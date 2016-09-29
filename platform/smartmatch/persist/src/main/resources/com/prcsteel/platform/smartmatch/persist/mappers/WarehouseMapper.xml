@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.smartmatch.persist.dao.WarehouseDao">
+    <resultMap id="BaseResultMap" type="com.prcsteel.platform.smartmatch.model.model.Warehouse">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="alias" property="alias" jdbcType="VARCHAR"/>
+        <result column="province_id" property="provinceId" jdbcType="BIGINT"/>
+        <result column="city_id" property="cityId" jdbcType="BIGINT"/>
+        <result column="district_id" property="districtId" jdbcType="BIGINT"/>
+        <result column="addr" property="addr" jdbcType="VARCHAR"/>
+        <result column="longitude" property="longitude" jdbcType="DECIMAL"/>
+        <result column="latitude" property="latitude" jdbcType="DECIMAL"/>
+        <result column="contact" property="contact" jdbcType="VARCHAR"/>
+        <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
+        <result column="exit_fee" property="exitFee" jdbcType="DECIMAL"/>
+        <result column="lift_fee" property="liftFee" jdbcType="DECIMAL"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="created" property="created" jdbcType="TIMESTAMP"/>
+        <result column="created_by" property="createdBy" jdbcType="VARCHAR"/>
+        <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP"/>
+        <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+		id, name,alias, province_id, city_id, district_id, addr, longitude, latitude,
+		contact,
+		mobile, exit_fee, lift_fee, type, remark, created, created_by, last_updated,
+		last_updated_by
+	</sql>
+
+    <resultMap id="WarehouseForPuzzyMatchDto" type="com.prcsteel.platform.smartmatch.model.dto.WarehouseForPuzzyMatchDto">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+    </resultMap>
+    <!-- 获取所有的仓库用于首字母查找 -->
+    <select id="getAllWarehouseForPuzzyMatch" resultMap="WarehouseForPuzzyMatchDto">
+        SELECT w.id, CONCAT(w.name, ifnull(concat("-", c.name), "")) name
+        FROM base_warehouse w
+        LEFT JOIN base_city c ON w.city_id = c.id
+    </select>
+
+    <!-- 查询所有的仓库 -->
+    <select id="getAllWarehouse" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM base_warehouse
+    </select>
+
+    <!-- 根据ID查询仓库信息 -->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap"
+            parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from base_warehouse
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <!-- 删除仓库 -->
+    <delete id="deleteById" parameterType="java.lang.Long">
+		delete from base_warehouse
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	
+	<!-- 根据仓库Id获取仓库所在城市 -->
+	<select id="getCityByWarehouseId" resultType="string" parameterType="java.lang.Long">
+		select ct.name cityName
+		from base_warehouse wh 
+		join base_city ct on ct.id = wh.city_id
+		where wh.id = #{warehouseId,jdbcType=BIGINT}
+	</select>
+
+    <insert id="insert" parameterType="com.prcsteel.platform.smartmatch.model.model.Warehouse"
+            useGeneratedKeys="true" keyProperty="id">
+		insert into base_warehouse (name, province_id,
+		city_id, district_id, addr,
+		longitude, latitude, contact,
+		mobile, exit_fee, lift_fee, type,
+		remark, created, created_by,
+		last_updated, last_updated_by)
+		values (#{name,jdbcType=VARCHAR}, #{provinceId,jdbcType=BIGINT},
+		#{cityId,jdbcType=BIGINT}, #{districtId,jdbcType=BIGINT},
+		#{addr,jdbcType=VARCHAR},
+		#{longitude,jdbcType=DECIMAL}, #{latitude,jdbcType=DECIMAL}, #{contact,jdbcType=VARCHAR},
+		#{mobile,jdbcType=VARCHAR}, #{exitFee,jdbcType=DECIMAL},
+		#{liftFee,jdbcType=DECIMAL},#{type,jdbcType=VARCHAR},
+		#{remark,jdbcType=VARCHAR}, #{created,jdbcType=DECIMAL}, #{createdBy,jdbcType=VARCHAR},
+		NOW(), #{lastUpdatedBy,jdbcType=VARCHAR})
+	</insert>
+
+
+    <insert id="insertSelective" parameterType="com.prcsteel.platform.smartmatch.model.model.Warehouse" useGeneratedKeys="true" keyProperty="id">
+        insert into base_warehouse
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="alias != null">
+                alias,
+            </if>
+            <if test="provinceId != null">
+                province_id,
+            </if>
+            <if test="cityId != null">
+                city_id,
+            </if>
+            <if test="districtId != null">
+                district_id,
+            </if>
+            <if test="addr != null">
+                addr,
+            </if>
+            <if test="longitude != null">
+                longitude,
+            </if>
+            <if test="latitude != null">
+                latitude,
+            </if>
+            <if test="contact != null">
+                contact,
+            </if>
+            <if test="mobile != null">
+                mobile,
+            </if>
+            <if test="exitFee != null">
+                exit_fee,
+            </if>
+            <if test="liftFee != null">
+                lift_fee,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+
+            created,
+
+            <if test="createdBy != null">
+                created_by,
+            </if>
+
+            last_updated,
+
+            <if test="lastUpdatedBy != null">
+                last_updated_by,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                replace(#{name,jdbcType=VARCHAR},' ',''),
+            </if>
+            <if test="alias != null">
+                replace(#{alias,jdbcType=VARCHAR},' ',''),
+            </if>
+            <if test="provinceId != null">
+                #{provinceId,jdbcType=BIGINT},
+            </if>
+            <if test="cityId != null">
+                #{cityId,jdbcType=BIGINT},
+            </if>
+            <if test="districtId != null">
+                #{districtId,jdbcType=BIGINT},
+            </if>
+            <if test="addr != null">
+                #{addr,jdbcType=VARCHAR},
+            </if>
+            <if test="longitude != null">
+                #{longitude,jdbcType=DECIMAL},
+            </if>
+            <if test="latitude != null">
+                #{latitude,jdbcType=DECIMAL},
+            </if>
+            <if test="contact != null">
+                replace(#{contact,jdbcType=VARCHAR},' ',''),
+            </if>
+            <if test="mobile != null">
+                replace(#{mobile,jdbcType=VARCHAR},' ',''),
+            </if>
+            <if test="exitFee != null">
+                #{exitFee,jdbcType=DECIMAL},
+            </if>
+            <if test="liftFee != null">
+                #{liftFee,jdbcType=DECIMAL},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+
+            NOW(),
+
+            <if test="createdBy != null">
+                #{createdBy,jdbcType=VARCHAR},
+            </if>
+
+            NOW(),
+
+            <if test="lastUpdatedBy != null">
+                #{lastUpdatedBy,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 根据获取到的ID修改仓库信息 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.smartmatch.model.model.Warehouse">
+        update base_warehouse
+        <set>
+            <if test="name != null">
+                name = replace(#{name,jdbcType=VARCHAR},' ',''),
+            </if>
+            <if test="alias != null">
+                alias = replace(#{alias,jdbcType=VARCHAR},' ',''),
+            </if>
+            <if test="provinceId != null">
+                province_id = #{provinceId,jdbcType=BIGINT},
+            </if>
+            <if test="cityId != null">
+                city_id = #{cityId,jdbcType=BIGINT},
+            </if>
+
+                district_id = #{districtId,jdbcType=BIGINT},
+
+            <if test="addr != null">
+                addr = #{addr,jdbcType=VARCHAR},
+            </if>
+            <if test="longitude != null">
+                longitude = #{longitude,jdbcType=DECIMAL},
+            </if>
+            <if test="latitude != null">
+                latitude = #{latitude,jdbcType=DECIMAL},
+            </if>
+            <if test="contact != null">
+                contact = replace(#{contact,jdbcType=VARCHAR},' ',''),
+            </if>
+            <if test="mobile != null">
+                mobile = replace(#{mobile,jdbcType=VARCHAR},' ',''),
+            </if>
+            <if test="exitFee != null">
+                exit_fee = #{exitFee,jdbcType=DECIMAL},
+            </if>
+            <if test="liftFee != null">
+                lift_fee = #{liftFee,jdbcType=DECIMAL},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="created != null">
+                created = #{created,jdbcType=DECIMAL},
+            </if>
+            <if test="createdBy != null">
+                created_by = #{createdBy,jdbcType=VARCHAR},
+            </if>
+
+            last_updated = NOW(),
+
+            <if test="lastUpdatedBy != null">
+                last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="update" parameterType="com.prcsteel.platform.smartmatch.model.model.Warehouse">
+		update base_warehouse
+		set name = #{name,jdbcType=VARCHAR},
+		province_id = #{provinceId,jdbcType=BIGINT},
+		city_id = #{cityId,jdbcType=BIGINT},
+		district_id = #{districtId,jdbcType=BIGINT},
+		addr = #{addr,jdbcType=VARCHAR},
+		longitude = #{longitude,jdbcType=DECIMAL},
+		latitude = #{latitude,jdbcType=DECIMAL},
+		contact = #{contact,jdbcType=VARCHAR},
+		mobile = #{mobile,jdbcType=VARCHAR},
+		exit_fee = #{exitFee,jdbcType=DECIMAL},
+		lift_fee = #{liftFee,jdbcType=DECIMAL},
+		type = #{type,jdbcType=VARCHAR},
+		remark = #{remark,jdbcType=VARCHAR},
+		created = #{created,jdbcType=DECIMAL},
+		created_by = #{createdBy,jdbcType=VARCHAR},
+		last_updated = NOW(),
+		last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+
+    <!-- 根据仓库名，区域查询仓库信息 -->
+    <select id="queryByConditions" resultType="map"
+            parameterType="map">
+        select
+        DISTINCT
+        ware.id,ware.name,ware.alias alias,city.name city,concat(pro.name,',',city.name,',',ifnull(dis.name,''),ware.addr) addr,ware.contact,ware.exit_fee exitFee,ware.lift_fee liftFee,ware.remark,
+        case(ware.type) when 'normal' then '正常' when 'other' then '其他' end as type,ware.mobile mobile
+        from base_warehouse ware
+        left join base_city city on ware.city_id=city.id
+        left join base_province pro on ware.province_id=pro.id
+        left join base_district dis on ware.district_id=dis.id
+        <where>
+            <!--modify by zhoucai@prcsteel.com  根据别名模糊查询仓库-->
+            <if test="name != null and name != ''">
+                (ware.name LIKE '%' #{name} '%'  OR ware.alias LIKE '%' #{name} '%')
+            </if>
+
+            <if test="city != null and city != ''">
+                and city.name LIKE '%' #{city} '%'
+            </if>
+        </where>
+        order by ware.created desc
+        limit
+        #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+    </select>
+
+    <!-- 查询仓库总数 -->
+    <select id="countByWarehouseNameAndAera" resultType="int"
+            parameterType="com.prcsteel.platform.smartmatch.model.query.WarehouseQuery">
+        SELECT count(DISTINCT ware.id)
+        FROM base_warehouse ware
+        left join base_city city on city.id=ware.city_id
+        left join base_province pro on ware.province_id=pro.id
+        left join base_district dis on ware.district_id=dis.id
+        <where>
+            <!--modify by zhoucai@prcsteel.com  根据别名模糊查询仓库-->
+            <if test="name != null and name != ''">
+                (ware.name LIKE '%' #{name} '%'  OR ware.alias LIKE '%' #{name} '%')
+            </if>
+            <if test="city != null and city != ''">
+                and city.name LIKE '%' #{city,jdbcType=VARCHAR} '%'
+            </if>
+        </where>
+    </select>
+    <select id="queryByName" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        from base_warehouse
+        <where>
+            <if test="name!=null and name!=''">
+                concat(',',#{name,jdbcType=VARCHAR}, ',')  regexp
+                concat(',(',replace(alias,',','|'),'),')
+                or name = #{name,jdbcType=VARCHAR}
+            </if>
+            <if test="id!=null">
+                and id != #{id,jdbcType=BIGINT}
+            </if>
+        </where>
+    </select>
+
+    <!-- 根据别名查询别名存在重复的仓库-->
+    <select id="selectByAlias" resultMap="BaseResultMap" parameterType="map">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM base_warehouse
+        where concat(',', ifnull(alias,''),',',name, ',')  regexp
+        concat(',(',replace(#{alias,jdbcType=VARCHAR},',','|'),'),')
+        <if test="id!=null">
+        and id != #{id,jdbcType=BIGINT}
+        </if>
+    </select>
+</mapper>

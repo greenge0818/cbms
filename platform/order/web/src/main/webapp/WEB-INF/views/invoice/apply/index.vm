@@ -1,0 +1,145 @@
+#set($layout="layout/blank.vm")
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <title>品牌店代运营系统</title>
+    <!-- meta S -->
+    #parse("layout/meta.vm")
+    <!-- meta E -->
+    <!-- meta S -->
+    #parse("layout/context.vm")
+    <!-- meta E -->
+</head>
+
+<body class="no-skin">
+<!-- Header S-->
+    #parse("layout/header.vm")
+<!-- Header E -->
+
+<div class="main-container" id="main-container">
+    <script type="text/javascript">
+        try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+    </script>
+
+    <!-- Sidebar S-->
+    #parse("layout/sidebar.vm")
+    <!-- Sidebar E -->
+
+    <div class="main-content">
+        <div class="main-content-inner">
+            <div class="breadcrumbs" id="breadcrumbs">
+                <ul class="breadcrumb">
+                    <li><i class="ace-icon fa fa-home home-icon"></i>发票管理</li>
+                    <li>销项票管理</li>
+                    <li class="active">待开票</li>
+                </ul><!-- /.breadcrumb -->
+                    #parse("layout/topbtn.vm")<!-- /.nav-search -->
+            </div>
+            <!-- content S -->
+
+            <div class="page-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <!--TAPBAR-->
+                            #invoiceTopBar(2, 0)
+                            <!-- div.table-bar -->
+                            <div class="col-sm-12 print-finfo">
+
+
+                                <label>服务中心：
+                                    <input placeholder="请选择服务中心" id="sorganization" type="text" class=""
+                                           readonly value="" style="width:120px;" onclick="showMenu();"/>
+                                    <input type="hidden" id="hidOrgId" value="0"/>
+                                </label>
+                                <label>
+                                    买家全称：<input type="text" id="iptBuyerName" value="$!{buyerName}" class="" />
+                                </label>
+                                <button id="btnSearch" type="button" class="btn-sm btn btn-info">搜索</button>
+                            </div>
+
+                            <div class="table-bar col-sm-12">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>买家全称</th>
+                                        <th>本次已申请开票金额</br>（元）</th>
+                                        <th>未开票金额</br>（元）</th>
+                                        <th>可开票金额上限</br>（元）</th>
+                                        <th>二次结算</br>应收金额</th>
+                                        <th>未开发票</br>超期月数</th>
+                                        <th>开票资料审核是否通过</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    #foreach($i in $list)
+                                    <tr>
+                                        <td><span class="enterName">$!{i.buyerName}</span></td>
+                                        <td class="text-right">$!NumberTool.format("#0.00", $!{i.totalAppliedAmount})</td>
+                                        <td class="text-right"><span class="unopen-amount">$!NumberTool.format("#0.00", $!{i.totalUnAppliedAmount})</span></td>
+                                        <td class="text-right"><span class="open-amount">$!{i.maxAmount}</span></td>
+                                        <td class="text-right">
+                                            <span class="second-amount" data-orgId="$!i.orgId" data-orgName="$!i.orgName" data-buyerId="$!i.buyerId"  data-buyerName="$!i.buyerName" data-ownerId="$!i.ownerId" data-ownerName="$!i.ownerName" data-amount="$!NumberTool.format("#0.00", $i.balanceSecondSettlement)">
+                                            #if(!$i.balanceSecondSettlement || $i.balanceSecondSettlement!=0)
+                                                <a target='_blank' class="red" href='$link.getContextPath()/order/secondapplyforpaymentorder.html?id=$!{i.buyerId}&balanceSecondSettlement=-$!NumberTool.format("#0.00", $i.balanceSecondSettlement)'>$!NumberTool.format("#0.00", $i.balanceSecondSettlement)</a>
+                                            #else
+                                                $!NumberTool.format("#0.00", $i.balanceSecondSettlement)
+                                            #end
+                                            </span>
+                                        </td>
+                                        <td>$!{i.countMonth}</td>
+                                        <td>
+
+                                            #if(!$i.accountStatus || $i.accountStatus==2)
+                                                <span class="red">否</span>
+                                            #else
+                                                是
+                                            #end
+                                        </td>
+                                        <td>
+                                            #if(!$i.accountStatus || $i.accountStatus==2)
+                                                <a target='_blank' href='$link.getContextPath()/invoice/out/invoicedata/account/$!{i.buyerId}/show.html'>录入开票资料</a>
+                                            #else
+                                                #if(${i.hasApplied}==true)
+                                                    已申请开票
+                                                #else
+                                                    <a class="amount-invoice" href="javascript:;">录入开票金额</a>
+                                                #end
+                                            #end
+                                        </td>
+                                    </tr>
+                                    #end
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="btn-bar col-sm-12">
+                        <button class="btn btn-primary btn-sm" type="button" id="" title="提交申请">提交申请</button>
+                    </div>
+
+            </div><!-- /.page-content -->
+            <!-- content E -->
+        </div>
+    </div><!-- /.main-content -->
+
+    <!-- Footer S -->
+    #parse("layout/footer.vm")
+    <!-- Footer E -->
+
+    <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+        <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+    </a>
+</div><!-- /.main-container -->
+
+<!-- basic scripts S -->
+    #parse("layout/scripts.vm")
+<!-- basic scripts E -->
+#*<input type="hidden" id="account_type" value="$!{type}"/>*#
+<script src="$link.getContextPath()/js/views/invoice/apply/index.js"></script>
+<div id="menuContent" class="menuContent" style="display:none; position: absolute;">
+    <ul id="orgTree" class="ztree" style="margin-top:0; width:160px;"></ul>
+</div>
+</body>
+</html>

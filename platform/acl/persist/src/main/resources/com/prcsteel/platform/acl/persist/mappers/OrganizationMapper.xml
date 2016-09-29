@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.acl.persist.dao.OrganizationDao">
+    <resultMap id="BaseResultMap" type="com.prcsteel.platform.acl.model.model.Organization">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="province_id" property="provinceId" jdbcType="BIGINT"/>
+        <result column="city_id" property="cityId" jdbcType="BIGINT"/>
+        <result column="city_name" property="cityName" jdbcType="VARCHAR"/>
+        <result column="district_id" property="districtId" jdbcType="BIGINT"/>
+        <result column="seq_code" property="seqCode" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="parent_id" property="parentId" jdbcType="BIGINT"/>
+        <result column="charger" property="charger" jdbcType="BIGINT"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="telphone" property="tel" jdbcType="VARCHAR"/>
+        <result column="fax" property="fax" jdbcType="VARCHAR"/>
+        <result column="created" property="created" jdbcType="TIMESTAMP"/>
+        <result column="created_by" property="createdBy" jdbcType="VARCHAR"/>
+        <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP"/>
+        <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR"/>
+        <result column="modification_number" property="modificationNumber" jdbcType="INTEGER"/>
+        <result column="row_id" property="rowId" jdbcType="VARCHAR"/>
+        <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="credit_limit" property="creditLimit" jdbcType="DECIMAL"/>
+        <result column="credit_limit_used" property="creditLimitUsed" jdbcType="DECIMAL"/>
+        <result column="contract_address" property="contractAddress" jdbcType="VARCHAR"/>
+        <result column="is_org" property="isOrg" jdbcType="INTEGER" />
+        <result column="enabled" property="enabled" jdbcType="INTEGER" />
+        <result column="invoiced_host" property="invoicedHost" jdbcType="VARCHAR"/>
+        <result column="is_draft_accepted" property="isDraftAccepted" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, seq_code, name, parent_id, charger, address, fax,telphone, city_id, created, created_by, last_updated,
+    last_updated_by, modification_number, row_id, parent_row_id, status, credit_limit, credit_limit_used,contract_address,invoiced_host,is_draft_accepted
+  </sql>
+
+    <select id="queryById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from base_organization
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="queryByParentId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from base_organization
+        where parent_id = #{parentId,jdbcType=BIGINT}
+    </select>
+
+    <insert id="insert"  useGeneratedKeys="true" keyProperty="id" parameterType="com.prcsteel.platform.acl.model.model.Organization">
+    insert into base_organization (id,province_id,city_id,district_id,seq_code, name,
+    parent_id, charger, address, fax,telphone,
+    created, created_by, last_updated,
+    last_updated_by, modification_number, row_id,
+    parent_row_id, status, credit_limit, credit_limit_used, contract_address, invoiced_host,is_org, enabled,is_draft_accepted)
+    values (#{id,jdbcType=BIGINT},#{provinceId,jdbcType=BIGINT},#{cityId,jdbcType=BIGINT},#{districtId,jdbcType=BIGINT},#{seqCode}, #{name,jdbcType=VARCHAR},
+    #{parentId,jdbcType=BIGINT}, #{charger,jdbcType=BIGINT}, #{address}, #{fax},#{tel},
+    #{created,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, #{lastUpdated,jdbcType=TIMESTAMP},
+    #{lastUpdatedBy,jdbcType=VARCHAR}, #{modificationNumber,jdbcType=INTEGER}, #{rowId,jdbcType=VARCHAR},
+    #{parentRowId,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{creditLimit}, #{creditLimitUsed}, #{contractAddress,jdbcType=VARCHAR}, #{invoicedHost,jdbcType=VARCHAR},#{isOrg,jdbcType=INTEGER},#{enabled,jdbcType=INTEGER},
+    #{isDraftAccepted,jdbcType=INTEGER})
+  </insert>
+
+    <insert id="insertSelective" parameterType="com.prcsteel.platform.acl.model.model.Organization" >
+        insert into base_organization
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="seqCode != null" >
+                seq_code,
+            </if>
+            <if test="name != null" >
+                name,
+            </if>
+            <if test="parentId != null" >
+                parent_id,
+            </if>
+            <if test="charger != null" >
+                charger,
+            </if>
+            <if test="address != null" >
+                address,
+            </if>
+            <if test="fax != null" >
+                fax,
+            </if>
+            <if test="tel != null" >
+                telphone,
+            </if>
+            <if test="status != null" >
+                status,
+            </if>
+            <if test="creditLimit != null" >
+                credit_limit,
+            </if>
+            <if test="creditLimitUsed != null" >
+                credit_limit_used,
+            </if>
+            <if test="contractAddress != null" >
+                contract_address,
+            </if>
+            <if test="invoicedHost != null" >
+                invoiced_host,
+            </if>
+            <if test="provinceId != null" >
+                province_id,
+            </if>
+            <if test="cityId != null" >
+                city_id,
+            </if>
+            <if test="districtId != null" >
+                district_id,
+            </if>
+            <if test="created != null" >
+                created,
+            </if>
+            <if test="createdBy != null" >
+                created_by,
+            </if>
+            <if test="lastUpdated != null" >
+                last_updated,
+            </if>
+            <if test="lastUpdatedBy != null" >
+                last_updated_by,
+            </if>
+            <if test="modificationNumber != null" >
+                modification_number,
+            </if>
+            <if test="rowId != null" >
+                row_id,
+            </if>
+            <if test="parentRowId != null" >
+                parent_row_id,
+            </if>
+            <if test="isOrg != null" >
+                is_org,
+            </if>
+            <if test="enabled != null" >
+                enabled,
+            </if>
+            <if test="isDraftAccepted != null" >
+                is_draft_accepted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="seqCode != null" >
+                #{seqCode,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null" >
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId != null" >
+                #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="charger != null" >
+                #{charger,jdbcType=BIGINT},
+            </if>
+            <if test="address != null" >
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="fax != null" >
+                #{fax,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null" >
+                #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null" >
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="creditLimit != null" >
+                #{creditLimit,jdbcType=DECIMAL},
+            </if>
+            <if test="creditLimitUsed != null" >
+                #{creditLimitUsed,jdbcType=DECIMAL},
+            </if>
+            <if test="contractAddress != null" >
+                #{contractAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="invoicedHost != null" >
+                #{invoicedHost,jdbcType=VARCHAR},
+            </if>
+            <if test="provinceId != null" >
+                #{provinceId,jdbcType=BIGINT},
+            </if>
+            <if test="cityId != null" >
+                #{cityId,jdbcType=BIGINT},
+            </if>
+            <if test="districtId != null" >
+                #{districtId,jdbcType=BIGINT},
+            </if>
+            <if test="created != null" >
+                #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdBy != null" >
+                #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdated != null" >
+                #{lastUpdated,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdatedBy != null" >
+                #{lastUpdatedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modificationNumber != null" >
+                #{modificationNumber,jdbcType=INTEGER},
+            </if>
+            <if test="rowId != null" >
+                #{rowId,jdbcType=VARCHAR},
+            </if>
+            <if test="parentRowId != null" >
+                #{parentRowId,jdbcType=VARCHAR},
+            </if>
+            <if test="isOrg != null" >
+                #{isOrg,jdbcType=INTEGER},
+            </if>
+            <if test="enabled != null" >
+                #{enabled,jdbcType=INTEGER},
+            </if>
+            <if test="isDraftAccepted != null" >
+                #{isDraftAccepted,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>,
+        (select name from base_city where id=org.city_id) city_name
+        from base_organization org
+    </select>
+
+    <update id="update" parameterType="com.prcsteel.platform.acl.model.model.Organization">
+        update base_organization
+        <set>
+            <if test="seqCode != null">
+                seq_code = #{seqCode,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="provinceId != null">
+                province_id = #{provinceId,jdbcType=BIGINT},
+            </if>
+            <if test="cityId != null">
+                city_id = #{cityId,jdbcType=BIGINT},
+            </if>
+            <if test="districtId != null">
+                district_id = #{districtId,jdbcType=BIGINT},
+            </if>
+            <if test="parentId != null">
+                parent_id = #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="charger != null">
+                charger = #{charger,jdbcType=BIGINT},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=BIGINT},
+            </if>
+            <if test="fax != null">
+                fax = #{fax,jdbcType=BIGINT},
+            </if>
+            <if test="tel != null">
+                telphone = #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="creditLimit != null">
+                credit_limit = #{creditLimit,jdbcType=DECIMAL},
+            </if>
+            <if test="creditLimitUsed != null">
+                credit_limit_used = #{creditLimitUsed,jdbcType=DECIMAL},
+            </if>
+            <if test="contractAddress != null">
+                contract_address = #{contractAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="created != null">
+                created = #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdBy != null">
+                created_by = #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdated != null">
+                last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdatedBy != null">
+                last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modificationNumber != null">
+                modification_number = #{modificationNumber,jdbcType=INTEGER},
+            </if>
+            <if test="rowId != null">
+                row_id = #{rowId,jdbcType=VARCHAR},
+            </if>
+            <if test="parentRowId != null">
+                parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+            </if>
+            <if test="invoicedHost != null and invoicedHost !=''">
+                invoiced_host = #{invoicedHost,jdbcType=VARCHAR},
+            </if>
+            <if test="enabled != null" >
+                enabled = #{enabled,jdbcType=VARCHAR},
+            </if>
+            <if test="isDraftAccepted != null" >
+                is_draft_accepted = #{isDraftAccepted,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateStatusById" parameterType="com.prcsteel.platform.acl.model.model.Organization">
+    update base_organization
+    set  last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+    last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+    modification_number = #{modificationNumber,jdbcType=INTEGER},
+    status = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <select id="queryByName" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from base_organization
+        where name = #{name}
+    </select>
+
+    <select id="queryByCode" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from base_organization
+        where seq_code = #{code}
+    </select>
+
+
+    <resultMap id="showMap" type="com.prcsteel.platform.acl.model.dto.OrganizationDto">
+        <result column="province_id" property="provinceId" jdbcType="BIGINT"/>
+        <result column="city_id" property="cityId" jdbcType="BIGINT"/>
+        <result column="district_id" property="districtId" jdbcType="BIGINT"/>
+        <result column="seq_code" property="seqCode" jdbcType="VARCHAR"/>
+        <result column="org_name" property="orgName" jdbcType="VARCHAR"/>
+        <result column="credit_limit" property="creditLimit" jdbcType="DECIMAL"/>
+        <result column="charger" property="chargerName" jdbcType="VARCHAR"/>
+        <result column="userCount" property="userCount" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="parent_org_name" property="parentOrgName" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="contract_address" property="contractAddress" jdbcType="VARCHAR"/>
+        <result column="fax" property="fax" jdbcType="VARCHAR"/>
+        <result column="telphone" property="tel" jdbcType="VARCHAR"/>
+        <result column="org_id" property="orgId" jdbcType="BIGINT"/>
+        <result column="charger_id" property="chargerId" jdbcType="BIGINT"/>
+        <result column="parent_org_id" property="parentOrgId" jdbcType="BIGINT"/>
+        <result column="invoiced_host" property="invoicedHost" jdbcType="VARCHAR"/>
+        <result column="is_org" property="isOrg" jdbcType="INTEGER"/>
+        <result column="enabled" property="enabled" jdbcType="INTEGER"/>
+    </resultMap>
+    <select id="selectOrgInfoByParam" resultMap="showMap" parameterType="java.lang.Long">
+       select o.seq_code as seq_code,
+       o.name as org_name,
+       o.credit_limit as credit_limit,
+       u.name as charger,
+        o.is_org as is_org,
+        (select count(u2.id) from acl_user u2 where u2.org_id in
+        <foreach item="id" index="index" collection="orgIds" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        or u2.id in(
+        select o4.charger from base_organization o4
+        where o4.id in
+        <foreach item="id" index="index" collection="orgIds" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        )) as userCount,
+       o.status as status,
+       o2.name as parent_org_name,
+       o.address as address,
+       o.fax as fax,
+        o.telphone as tel,
+       o.contract_address as contract_address,
+       o.id as org_id,
+        u.id as charger_id,
+        o2.id as parent_org_id,
+        o.invoiced_host,
+        o.province_id as provinceId,
+        o.city_id as cityId,
+        o.district_id as districtId,
+        o.enabled  as enabled,
+        o.is_draft_accepted as isDraftAccepted
+       from base_organization o
+       LEFT JOIN acl_user u on o.charger = u.id
+        LEFT JOIN base_organization o2 on o2.id = o.parent_id
+       where o.id = #{orgId}
+    </select>
+    <select id="countAll" resultType="java.lang.Integer">
+        select count(id)
+        from base_organization
+    </select>
+
+    <select id="getAllSecendOrg" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+         from base_organization where parent_id in
+         (select id from base_organization where parent_id = 0)
+    </select>
+
+    <select id="getOrgByParentID" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from base_organization where parent_id=#{parent_id,jdbcType=BIGINT}
+    </select>
+
+    <select id="queryAllBusinessOrg" resultType="com.prcsteel.platform.acl.model.model.Organization">
+        SELECT id,name FROM base_organization WHERE name LIKE '%服务中心' AND is_org = '1' AND enabled = '1' AND status='1' ORDER BY id;
+    </select>
+    <select id="queryAllOrg" resultType="com.prcsteel.platform.acl.model.model.Organization" parameterType="com.prcsteel.platform.acl.model.query.ReportOrgQuery" >
+        SELECT id,name FROM base_organization b WHERE b.name LIKE '%服务中心' AND b.is_org = '1' AND b.enabled = '1'
+        <if test="orgName != null and orgName != ''">
+            and b.name =#{orgName,jdbcType=VARCHAR}
+        </if>
+        <if test="orgId != null and orgId > 0">
+            AND b.id = #{orgId,jdbcType=BIGINT}
+        </if>
+        AND EXISTS (
+        SELECT 1 FROM acl_user t WHERE 1=1
+        <if test="userIdList != null">
+            AND t.id IN
+            <foreach collection="userIdList" item="userId" open="(" separator="," close=")">
+                #{userId}
+            </foreach>
+        </if>  AND b.id = t.org_id
+        )
+        ORDER BY b.id;
+    </select>
+    <select id="queryBusinessOrgToWeChat" resultType="com.prcsteel.platform.acl.model.dto.Organization">
+        SELECT id,left(name,2) as name FROM base_organization WHERE name LIKE '%服务中心' AND is_org = '1' AND enabled = '1' ORDER BY id;
+    </select>
+    
+	<select id="queryDraftedOrg" resultType="com.prcsteel.platform.acl.model.model.Organization">
+        SELECT id,name FROM base_organization WHERE is_org = 1 AND enabled = 1 and is_draft_accepted = 1 ORDER BY id;
+    </select>
+</mapper>

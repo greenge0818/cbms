@@ -1,0 +1,28 @@
+<div class="tabbar order-tab">
+    <ul class="nav nav-tabs padding-12 tab-color-blue" id="myTab4">
+        #if($shiro.hasPermission("smartmatch:quotation:businessbook:page"))
+            <li tab="0"><a href="$link.getContextPath()/smartmatch/quote/businesslook.html#idx=0">业务找货</a></li>
+        #end
+        #if($shiro.hasPermission("smartmatch:quotation:baseprice:page"))
+            <li tab="1"><a href="$link.getContextPath()/smartmatch/quote/baseprice.html#idx=1">基价管理</a></li>
+        #end
+        #if($shiro.hasPermission("smartmatch:quotation:basepricesub:page"))
+            <li tab="2"><a href="$link.getContextPath()/smartmatch/quote/basepricesub.html#idx=2">买家订阅设置</a></li>
+        #end
+        #if($shiro.hasPermission("smartmatch:quotation:historicalmsg:page"))
+            <li tab="3"><a href="$link.getContextPath()/smartmatch/quote/historicalmsg.html#idx=3">历史短信查询</a></li>
+        #end
+    </ul>
+</div>
+<script type="text/javascript">
+    jQuery(function ($) {
+        //绑定确认方法
+        var hashIdx=location.hash;
+        var  idx = hashIdx.split("="),index = parseInt(idx[1]);
+        if (hashIdx==""){
+            index=0;
+        }
+        $("#myTab4").children("li[tab='" + index + "']").addClass("active");
+        // $(".active").removeClass("active")
+    });
+</script>

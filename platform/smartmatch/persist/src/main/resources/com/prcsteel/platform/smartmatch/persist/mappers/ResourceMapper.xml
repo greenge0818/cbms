@@ -1,0 +1,2739 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.smartmatch.persist.dao.ResourceDao" >
+<!--将cust_account 替换成查询cust_account_ext modify by zhoucai 2016-5-17  整合smartmatch代码 -->
+<resultMap id="BaseResultMap" type="com.prcsteel.platform.smartmatch.model.model.Resource" >
+  <id column="id" property="id" jdbcType="BIGINT" />
+  <result column="account_id" property="accountId" jdbcType="BIGINT" />
+  <result column="account_name" property="accountName" jdbcType="VARCHAR" />
+  <result column="category_uuid" property="categoryUuid" jdbcType="VARCHAR" />
+  <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+  <result column="material_uuid" property="materialUuid" jdbcType="VARCHAR" />
+  <result column="material_name" property="materialName" jdbcType="VARCHAR" />
+  <result column="factory_id" property="factoryId" jdbcType="BIGINT" />
+  <result column="factory_name" property="factoryName" jdbcType="VARCHAR" />
+  <result column="city_id" property="cityIdxz" jdbcType="BIGINT" />
+  <result column="city_name" property="cityName" jdbcType="VARCHAR" />
+  <result column="weight" property="weight" jdbcType="DECIMAL" />
+  <result column="warehouse_id" property="warehouseId" jdbcType="BIGINT" />
+  <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+  <result column="weight_concept" property="weightConcept" jdbcType="VARCHAR" />
+  <result column="price" property="price" jdbcType="DECIMAL" />
+  <result column="price_change" property="priceChange" jdbcType="DECIMAL" />
+  <result column="quantity" property="quantity" jdbcType="INTEGER" />
+  <result column="remark" property="remark" jdbcType="VARCHAR" />
+  <result column="status" property="status" jdbcType="VARCHAR" />
+  <result column="is_exception" property="isException" jdbcType="VARCHAR" />
+  <result column="source_type" property="sourceType" jdbcType="VARCHAR" />
+  <result column="user_ids" property="userIds" jdbcType="VARCHAR" />
+  <result column="created" property="created" jdbcType="TIMESTAMP" />
+  <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+  <result column="mgt_last_updated" property="mgtLastUpdated" jdbcType="TIMESTAMP" />
+  <result column="mgt_last_updated_by" property="mgtLastUpdatedBy" jdbcType="VARCHAR" />
+  <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+  <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+  <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+  <result column="ext1" property="ext1" jdbcType="VARCHAR" />
+  <result column="ext2" property="ext2" jdbcType="VARCHAR" />
+  <result column="ext3" property="ext3" jdbcType="VARCHAR" />
+  <result column="ext4" property="ext4" jdbcType="INTEGER" />
+  <result column="ext5" property="ext5" jdbcType="INTEGER" />
+  <result column="ext6" property="ext6" jdbcType="INTEGER" />
+  <result column="ext7" property="ext7" jdbcType="TIMESTAMP" />
+  <result column="ext8" property="ext8" jdbcType="BIGINT" />
+</resultMap>
+<resultMap id="ResourceBaseResultMap" type="com.prcsteel.platform.smartmatch.model.dto.ResourceDto" >
+  <id column="id" property="id" jdbcType="BIGINT" />
+  <result column="accountId" property="accountId" jdbcType="BIGINT"/>
+  <result column="accountName" property="accountName" jdbcType="VARCHAR" />
+  <result column="categoryUuid" property="categoryUuid" jdbcType="VARCHAR" />
+  <result column="categoryName" property="categoryName" jdbcType="VARCHAR" />
+  <result column="materialUuid" property="materialUuid" jdbcType="VARCHAR" />
+  <result column="materialName" property="materialName" jdbcType="VARCHAR" />
+  <result column="spec" property="spec" jdbcType="VARCHAR" />
+  <result column="factoryId" property="factoryId" jdbcType="BIGINT"/>
+  <result column="factoryName" property="factoryName" jdbcType="VARCHAR" />
+
+  <result column="warehouseId" property="warehouseId" jdbcType="BIGINT"/>
+  <result column="warehouseName" property="warehouseName" jdbcType="VARCHAR" />
+  <result column="area" property="area" jdbcType="VARCHAR" />
+
+  <result column="weight" property="weight" jdbcType="DECIMAL" />
+  <result column="weightConpect" property="weightConpect" jdbcType="VARCHAR" />
+  <result column="price" property="price" jdbcType="DECIMAL" />
+  <result column="quantity" property="quantity" jdbcType="INTEGER" />
+  <result column="remark" property="remark" jdbcType="VARCHAR" />
+  <result column="status" property="status" jdbcType="VARCHAR" />
+  <result column="sourceType" property="sourceType" jdbcType="VARCHAR" />
+  <result column="statusNum" property="statusNum" jdbcType="VARCHAR" />
+  <result column="userIds" property="userIds" jdbcType="VARCHAR" />
+  <result column="total" property="total" jdbcType="BIGINT" />
+
+  <result column="mgt_last_updated" property="mgtLastUpdated" jdbcType="TIMESTAMP" />
+
+  <!-- add by caosulin 2016.6.2 增加3个前台显示的字段 -->
+  <result column="is_exception" property="isException" jdbcType="VARCHAR" />
+  <result column="cityName" property="cityName" jdbcType="VARCHAR" />
+  <result column="priceChange" property="priceChange" jdbcType="VARCHAR" />
+  <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+</resultMap>
+
+<resultMap id="ResourceDailyResultMap" type="com.prcsteel.platform.smartmatch.model.dto.ResourceDailyDtoResult" >
+  <id column="id" property="id" jdbcType="BIGINT" />
+  <result column="categoryUuid" property="categoryUuid" jdbcType="VARCHAR" />
+  <result column="categoryName" property="categoryName" jdbcType="VARCHAR" />
+  <result column="materialUuid" property="materialUuid" jdbcType="VARCHAR" />
+  <result column="materialName" property="materialName" jdbcType="VARCHAR" />
+  <result column="spec" property="spec" jdbcType="VARCHAR" />
+  <result column="factoryId" property="factoryId" jdbcType="BIGINT"/>
+  <result column="factoryName" property="factoryName" jdbcType="VARCHAR" />
+  <result column="warehouseId" property="warehouseId" jdbcType="BIGINT"/>
+  <result column="warehouseName" property="warehouseName" jdbcType="VARCHAR" />
+  <result column="price" property="price" jdbcType="DECIMAL" />
+  <result column="cityName" property="cityName" jdbcType="VARCHAR" />
+  <result column="cityId" property="cityId" jdbcType="BIGINT" />
+  <result column="mgt_last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+</resultMap>
+
+<resultMap id="HistoryResultMap" type="com.prcsteel.platform.smartmatch.model.dto.HistoryResourceDto">
+  <result column="accountId" property="accountId" jdbcType="BIGINT"/>
+  <result column="accountName" property="accountName" jdbcType="VARCHAR" />
+  <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+  <result column="mgt_last_updated" property="mgtLastUpdated" jdbcType="TIMESTAMP" />
+</resultMap>
+
+<!--缺失资源返回数据类型  -->
+<resultMap id="LostResourceMap" type="com.prcsteel.platform.smartmatch.model.dto.LostResourceDto">
+  <result column="no" property="no" jdbcType="VARCHAR"/>
+  <result column="total" property="total" jdbcType="BIGINT"/>
+  <result column="purchase_date" property="purchaseDate" jdbcType="VARCHAR" />
+  <result column="purchase_city_ids" property="purchaseCityIds" jdbcType="VARCHAR" />
+  <result column="purchase_city_names" property="purchaseCityNames" jdbcType="VARCHAR" />
+  <result column="category_uuid" property="categoryUuid" jdbcType="VARCHAR" />
+  <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+  <result column="material_uuid" property="materialUuid" jdbcType="VARCHAR" />
+  <result column="purchase_material_names" property="purchaseMaterialNames" jdbcType="VARCHAR" />
+  <result column="purchase_spec" property="purchaseSpec" jdbcType="VARCHAR" />
+  <result column="factory_ids" property="factoryIds" jdbcType="VARCHAR" />
+  <result column="purchase_factory_names" property="purchaseFactoryNames" jdbcType="VARCHAR" />
+</resultMap>
+
+<!--资源更新统计返回数据类型 -->
+<resultMap id="ResourecStatisMap" type="com.prcsteel.platform.smartmatch.model.dto.ResourceStatisDto">
+  <result column="accountId" property="accountId" jdbcType="VARCHAR"/>
+  <result column="dailyCount" property="dailyCount" jdbcType="VARCHAR"/>
+  <result column="inquiryCount" property="inquiryCount" jdbcType="VARCHAR"/>
+  <result column="historyCount" property="historyCount" jdbcType="VARCHAR"/>
+</resultMap>
+
+<!--资源历史价格返回数据类型 -->
+<resultMap id="ResourceHistoryPriceMap" type="com.prcsteel.platform.smartmatch.model.dto.ResourceHistoryPriceDto">
+  <result column="version_date" property="versionDate" jdbcType="TIMESTAMP"/>
+  <result column="price" property="price" jdbcType="DECIMAL"/>
+</resultMap>
+
+
+<sql id="Base_Column_List" >
+  id, account_id,account_name,city_name, category_uuid,category_name,material_uuid,material_name, factory_id, factory_name, weight, warehouse_id, warehouse_name, weight_concept,
+  price, price_change, quantity, remark, status,source_type,user_ids, created, created_by, mgt_last_updated,mgt_last_updated_by, modification_number,
+  row_id, parent_row_id, ext1, ext2, ext3, ext4, ext5, ext6, ext7, ext8
+</sql>
+
+<update id="updateByDto" parameterType="com.prcsteel.platform.smartmatch.model.dto.ResourceDto" >
+  update cust_resource
+  <set >
+    <if test="weightConcept != null" >
+      weight_concept = #{weightConcept,jdbcType=VARCHAR},
+    </if>
+    <if test="price != null" >
+      price = #{price,jdbcType=DECIMAL},
+    </if>
+    <if test="lastUpdatedBy != null" >
+      mgt_last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+    </if>
+    <if test="sourceType != null" >
+      source_type = #{sourceType,jdbcType=VARCHAR},
+    </if>
+    <if test="status != null" >
+      status = #{status,jdbcType=VARCHAR},
+    </if>
+    <if test="userIds != null" >
+      user_ids = #{userIds,jdbcType=VARCHAR},
+    </if>
+    modification_number=modification_number+1,
+
+  </set>
+  where id = #{id,jdbcType=BIGINT}
+</update>
+<select id="getColumnValue" resultType="java.lang.String" >
+  SELECT ${expect}
+  FROM ${tableName}
+  WHERE  ${tableCoumn} = #{value,jdbcType=VARCHAR}
+</select>
+<select id="getDataByAlias" resultType="java.util.HashMap" >
+  SELECT uuid,alias_name
+  FROM common_category
+  WHERE  alias_name like '%' #{aliasName,jdbcType=VARCHAR} '%'
+</select>
+<select id="selectAllWeightConcept" resultType="String">
+  select distinct weight_concept from cust_resource;
+</select>
+<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  select
+  <include refid="Base_Column_List" />
+  from cust_resource
+  where id = #{id,jdbcType=BIGINT}
+</select>
+<delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+  delete from cust_resource
+  where id = #{id,jdbcType=BIGINT}
+</delete>
+<insert id="insert" parameterType="com.prcsteel.platform.smartmatch.model.model.Resource" >
+  insert into cust_resource (id, account_id, account_name, category_uuid, category_name,
+  material_uuid,material_name, factory_id, factory_name, weight,
+  warehouse_id, warehouse_name, weight_concept, price, quantity,
+  remark, status, source_type, user_ids, created,
+  created_by, mgt_last_updated, mgt_last_updated_by,
+  modification_number, row_id, parent_row_id,
+  ext1, ext2, ext3, ext4,
+  ext5, ext6, ext7,
+  ext8)
+  values e(#{id,jdbcTyp=BIGINT}, #{accountId,jdbcType=BIGINT}, #{accountName,jdbcType=VARCHAR}, #{categoryUuid,jdbcType=VARCHAR},#{categoryName,jdbcType=VARCHAR},
+  #{materialUuid,jdbcType=VARCHAR},#{materialName,jdbcType=VARCHAR}, #{factoryId,jdbcType=BIGINT}, #{factoryName,jdbcType=VARCHAR}, #{weight,jdbcType=DECIMAL},
+  #{warehouseId,jdbcType=BIGINT}, #{warehouseName,jdbcType=VARCHAR}, #{weightConcept,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{quantity,jdbcType=INTEGER},
+  #{remark,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR},#{sourceType,jdbcType=VARCHAR}, #{userIds,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP},
+  #{createdBy,jdbcType=VARCHAR}, #{mgtLastUpdated,jdbcType=TIMESTAMP}, #{mgtLastUpdatedBy,jdbcType=VARCHAR},
+  #{modificationNumber,jdbcType=INTEGER}, #{rowId,jdbcType=VARCHAR}, #{parentRowId,jdbcType=VARCHAR},
+  #{ext1,jdbcType=VARCHAR}, #{ext2,jdbcType=VARCHAR}, #{ext3,jdbcType=VARCHAR}, #{ext4,jdbcType=INTEGER},
+  #{ext5,jdbcType=INTEGER}, #{ext6,jdbcType=INTEGER}, #{ext7,jdbcType=TIMESTAMP},
+  #{ext8,jdbcType=BIGINT})
+</insert>
+<insert id="insertSelective" parameterType="com.prcsteel.platform.smartmatch.model.model.Resource" useGeneratedKeys="true"
+        keyProperty="id">
+  insert into cust_resource
+  <trim prefix="(" suffix=")" suffixOverrides="," >
+    <if test="id != null" >
+      id,
+    </if>
+    <if test="accountId != null" >
+      account_id,
+    </if>
+    <if test="accountName != null" >
+      account_name,
+    </if>
+    <if test="categoryUuid != null" >
+      category_uuid,
+    </if>
+    <if test="categoryName != null" >
+      category_name,
+    </if>
+    <if test="materialUuid != null" >
+      material_uuid,
+    </if>
+    <if test="materialName != null" >
+      material_name,
+    </if>
+    <if test="factoryId != null" >
+      factory_id,
+    </if>
+    <if test="factoryName != null" >
+      factory_name,
+    </if>
+    <if test="weight != null" >
+      weight,
+    </if>
+    <if test="cityId != null" >
+      city_id,
+    </if>
+    <if test="cityName != null" >
+      city_name,
+    </if>
+    <if test="warehouseId != null" >
+      warehouse_id,
+    </if>
+    <if test="warehouseName != null" >
+      warehouse_name,
+    </if>
+    <if test="weightConcept != null" >
+      weight_concept,
+    </if>
+    <if test="price != null" >
+      price,
+    </if>
+    <if test="priceChange != null" >
+      price_change,
+    </if>
+    <if test="quantity != null" >
+      quantity,
+    </if>
+    <if test="remark != null" >
+      remark,
+    </if>
+    <if test="status != null" >
+      status,
+    </if>
+    <if test="isException != null" >
+      is_exception,
+    </if>
+    <if test="sourceType != null" >
+      source_type,
+    </if>
+    <if test="userIds != null" >
+      user_ids,
+    </if>
+    <if test="created != null" >
+      created,
+    </if>
+    <if test="createdBy != null" >
+      created_by,
+    </if>
+    <if test="mgtLastUpdated != null" >
+      mgt_last_updated,
+    </if>
+    <if test="mgtLastUpdatedBy != null" >
+      mgt_last_updated_by,
+    </if>
+    <if test="modificationNumber != null" >
+      modification_number,
+    </if>
+    <if test="rowId != null" >
+      row_id,
+    </if>
+    <if test="parentRowId != null" >
+      parent_row_id,
+    </if>
+    <if test="ext1 != null" >
+      ext1,
+    </if>
+    <if test="ext2 != null" >
+      ext2,
+    </if>
+    <if test="ext3 != null" >
+      ext3,
+    </if>
+    <if test="ext4 != null" >
+      ext4,
+    </if>
+    <if test="ext5 != null" >
+      ext5,
+    </if>
+    <if test="ext6 != null" >
+      ext6,
+    </if>
+    <if test="ext7 != null" >
+      ext7,
+    </if>
+    <if test="ext8 != null" >
+      ext8,
+    </if>
+  </trim>
+  <trim prefix="values (" suffix=")" suffixOverrides="," >
+    <if test="id != null" >
+      #{id,jdbcType=BIGINT},
+    </if>
+    <if test="accountId != null" >
+      #{accountId,jdbcType=BIGINT},
+    </if>
+    <if test="accountName != null" >
+      #{accountName,jdbcType=VARCHAR},
+    </if>
+    <if test="categoryUuid != null" >
+      #{categoryUuid,jdbcType=VARCHAR},
+    </if>
+    <if test="categoryName != null" >
+      #{categoryName,jdbcType=VARCHAR},
+    </if>
+    <if test="materialUuid != null" >
+      #{materialUuid,jdbcType=VARCHAR},
+    </if>
+    <if test="materialName != null" >
+      #{materialName,jdbcType=VARCHAR},
+    </if>
+    <if test="factoryId != null" >
+      #{factoryId,jdbcType=BIGINT},
+    </if>
+    <if test="factoryName != null" >
+      #{factoryName,jdbcType=VARCHAR},
+    </if>
+    <if test="weight != null" >
+      #{weight,jdbcType=DECIMAL},
+    </if>
+    <if test="cityId != null" >
+      #{cityId,jdbcType=BIGINT},
+    </if>
+    <if test="cityName != null" >
+      #{cityName,jdbcType=VARCHAR},
+    </if>
+    <if test="warehouseId != null" >
+      #{warehouseId,jdbcType=BIGINT},
+    </if>
+    <if test="warehouseName != null" >
+      #{warehouseName,jdbcType=VARCHAR},
+    </if>
+    <if test="weightConcept != null" >
+      #{weightConcept,jdbcType=VARCHAR},
+    </if>
+    <if test="price != null" >
+      #{price,jdbcType=DECIMAL},
+    </if>
+    <if test="priceChange != null" >
+      #{priceChange,jdbcType=DECIMAL},
+    </if>
+    <if test="quantity != null" >
+      #{quantity,jdbcType=INTEGER},
+    </if>
+    <if test="remark != null" >
+      #{remark,jdbcType=VARCHAR},
+    </if>
+    <if test="status != null" >
+      #{status,jdbcType=VARCHAR},
+    </if>
+    <if test="isException != null" >
+      #{isException,jdbcType=VARCHAR},
+    </if>
+    <if test="sourceType != null" >
+      #{sourceType,jdbcType=VARCHAR},
+    </if>
+    <if test="userIds != null" >
+      #{userIds,jdbcType=VARCHAR},
+    </if>
+    <if test="created != null" >
+      #{created,jdbcType=TIMESTAMP},
+    </if>
+    <if test="createdBy != null" >
+      #{createdBy,jdbcType=VARCHAR},
+    </if>
+
+    <if test="mgtLastUpdated != null" >
+      #{mgtLastUpdated,jdbcType=TIMESTAMP},
+    </if>
+    <if test="mgtLastUpdatedBy != null" >
+      #{mgtLastUpdatedBy,jdbcType=VARCHAR},
+    </if>
+    <if test="modificationNumber != null" >
+      #{modificationNumber,jdbcType=INTEGER},
+    </if>
+    <if test="rowId != null" >
+      #{rowId,jdbcType=VARCHAR},
+    </if>
+    <if test="parentRowId != null" >
+      #{parentRowId,jdbcType=VARCHAR},
+    </if>
+    <if test="ext1 != null" >
+      #{ext1,jdbcType=VARCHAR},
+    </if>
+    <if test="ext2 != null" >
+      #{ext2,jdbcType=VARCHAR},
+    </if>
+    <if test="ext3 != null" >
+      #{ext3,jdbcType=VARCHAR},
+    </if>
+    <if test="ext4 != null" >
+      #{ext4,jdbcType=INTEGER},
+    </if>
+    <if test="ext5 != null" >
+      #{ext5,jdbcType=INTEGER},
+    </if>
+    <if test="ext6 != null" >
+      #{ext6,jdbcType=INTEGER},
+    </if>
+    <if test="ext7 != null" >
+      #{ext7,jdbcType=TIMESTAMP},
+    </if>
+    <if test="ext8 != null" >
+      #{ext8,jdbcType=BIGINT},
+    </if>
+  </trim>
+</insert>
+<update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.smartmatch.model.model.Resource" >
+  update cust_resource
+  <set >
+    <if test="accountId != null" >
+      account_id = #{accountId,jdbcType=BIGINT},
+    </if>
+    <if test="accountName != null" >
+      account_name = #{accountName,jdbcType=BIGINT},
+    </if>
+    <if test="categoryUuid != null" >
+      category_uuid = #{categoryUuid,jdbcType=VARCHAR},
+    </if>
+    <if test="categoryName != null" >
+      category_name = #{categoryName,jdbcType=VARCHAR},
+    </if>
+    <if test="materialUuid != null" >
+      material_uuid = #{materialUuid,jdbcType=VARCHAR},
+    </if>
+    <if test="materialName != null" >
+      material_name = #{materialName,jdbcType=VARCHAR},
+    </if>
+    <if test="factoryId != null" >
+      factory_id = #{factoryId,jdbcType=BIGINT},
+    </if>
+    <if test="factoryName != null" >
+      factory_name = #{factoryName,jdbcType=VARCHAR},
+    </if>
+    <if test="weight != null" >
+      weight = #{weight,jdbcType=DECIMAL},
+    </if>
+    <if test="cityId != null" >
+      city_id = #{cityId,jdbcType=BIGINT},
+    </if>
+    <if test="cityName != null" >
+      city_name = #{cityName,jdbcType=VARCHAR},
+    </if>
+    <if test="warehouseId != null" >
+      warehouse_id = #{warehouseId,jdbcType=BIGINT},
+    </if>
+    <if test="warehouseName != null" >
+      warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+    </if>
+    <if test="weightConcept != null" >
+      weight_concept = #{weightConcept,jdbcType=VARCHAR},
+    </if>
+    <if test="price != null" >
+      price = #{price,jdbcType=DECIMAL},
+    </if>
+   	<!-- modify by caosulin 涨跌值可以被清空 -->
+     price_change = #{priceChange,jdbcType=DECIMAL},
+
+    <if test="quantity != null" >
+      quantity = #{quantity,jdbcType=INTEGER},
+    </if>
+    <if test="remark != null" >
+      remark = #{remark,jdbcType=VARCHAR},
+    </if>
+    <if test="status != null" >
+      status = #{status,jdbcType=VARCHAR},
+    </if>
+    <if test="isException != null" >
+      is_exception = #{isException,jdbcType=VARCHAR},
+    </if>
+    <if test="sourceType != null" >
+      source_type = #{sourceType,jdbcType=VARCHAR},
+    </if>
+    <if test="userIds != null" >
+      user_ids = #{userIds,jdbcType=VARCHAR},
+    </if>
+    <if test="created != null" >
+      created = #{created,jdbcType=TIMESTAMP},
+    </if>
+    <if test="createdBy != null" >
+      created_by = #{createdBy,jdbcType=VARCHAR},
+    </if>
+
+    <if test="mgtLastUpdated != null" >
+      mgt_last_updated = #{mgtLastUpdated,jdbcType=TIMESTAMP},
+    </if>
+    <if test="mgtLastUpdatedBy != null" >
+      mgt_last_updated_by = #{mgtLastUpdatedBy,jdbcType=VARCHAR},
+    </if>
+
+    modification_number=modification_number+1,
+
+    <if test="rowId != null" >
+      row_id = #{rowId,jdbcType=VARCHAR},
+    </if>
+    <if test="parentRowId != null" >
+      parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+    </if>
+    <if test="ext1 != null" >
+      ext1 = #{ext1,jdbcType=VARCHAR},
+    </if>
+    <if test="ext2 != null" >
+      ext2 = #{ext2,jdbcType=VARCHAR},
+    </if>
+    <if test="ext3 != null" >
+      ext3 = #{ext3,jdbcType=VARCHAR},
+    </if>
+    <if test="ext4 != null" >
+      ext4 = #{ext4,jdbcType=INTEGER},
+    </if>
+    <if test="ext5 != null" >
+      ext5 = #{ext5,jdbcType=INTEGER},
+    </if>
+    <if test="ext6 != null" >
+      ext6 = #{ext6,jdbcType=INTEGER},
+    </if>
+    <if test="ext7 != null" >
+      ext7 = #{ext7,jdbcType=TIMESTAMP},
+    </if>
+    <if test="ext8 != null" >
+      ext8 = #{ext8,jdbcType=BIGINT},
+    </if>
+  </set>
+  where id = #{id,jdbcType=BIGINT}
+</update>
+<update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.smartmatch.model.model.Resource" >
+  update cust_resource
+  set account_id = #{accountId,jdbcType=BIGINT},
+  account_name = #{accountName,jdbcType=VARCHAR},
+  category_uuid = #{categoryUuid,jdbcType=VARCHAR},
+  category_name = #{categoryName,jdbcType=VARCHAR},
+  material_uuid = #{materialUuid,jdbcType=VARCHAR},
+  material_name = #{materialName,jdbcType=VARCHAR},
+  factory_id = #{factoryId,jdbcType=BIGINT},
+  factory_name = #{factoryName,jdbcType=VARCHAR},
+  weight = #{weight,jdbcType=DECIMAL},
+  warehouse_id = #{warehouseId,jdbcType=BIGINT},
+  warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+  city_id=#{cityId,jdbcType=BIGINT},
+  city_name = #{cityName,jdbcType=VARCHAR},
+  weight_concept = #{weightConcept,jdbcType=VARCHAR},
+  price = #{price,jdbcType=DECIMAL},
+  quantity = #{quantity,jdbcType=INTEGER},
+  remark = #{remark,jdbcType=VARCHAR},
+  status = #{status,jdbcType=VARCHAR},
+  source_type = #{sourceType,jdbcType=VARCHAR},
+  created = #{created,jdbcType=TIMESTAMP},
+  created_by = #{createdBy,jdbcType=VARCHAR},
+  mgt_last_updated = #{mgtLastUpdated,jdbcType=TIMESTAMP},
+  mgt_last_updated_by = #{mgtLastUpdatedBy,jdbcType=VARCHAR},
+  modification_number = #{modificationNumber,jdbcType=INTEGER},
+  row_id = #{rowId,jdbcType=VARCHAR},
+  parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+  ext1 = #{ext1,jdbcType=VARCHAR},
+  ext2 = #{ext2,jdbcType=VARCHAR},
+  ext3 = #{ext3,jdbcType=VARCHAR},
+  ext4 = #{ext4,jdbcType=INTEGER},
+  ext5 = #{ext5,jdbcType=INTEGER},
+  ext6 = #{ext6,jdbcType=INTEGER},
+  ext7 = #{ext7,jdbcType=TIMESTAMP},
+  ext8 = #{ext8,jdbcType=BIGINT}
+  where id = #{id,jdbcType=BIGINT}
+</update>
+
+<select id="getAvailableAccountListByCityId" resultMap="com.prcsteel.platform.account.persist.dao.AccountDao.BaseResultMap" parameterType="String">
+  select
+  <include refid="com.prcsteel.platform.account.persist.dao.AccountDao.Base_Column_List" />
+  <!-- modify by zhoucai 查询客户信息修改，从查询cust_account变更为连表查询，2016-5.17 -->
+  from cust_account t1
+  left join cust_account_ext t2 on t1.id = t2.cust_account_id
+  <where>
+    <if test="cityIds!=null and cityIds!=''">
+      (t1.id in
+      <!-- 资源仓库及客户所在地在采购地的卖家 -->
+      <!-- 资源 -->
+      (
+      select a.account_id from cust_resource a,base_warehouse b
+      where warehouse_id=b.id and FIND_IN_SET(b.city_id,#{cityIds,jdbcType=BIGINT})
+      )
+      or
+      <!-- 客户 -->
+      FIND_IN_SET(city_id,#{cityIds,jdbcType=BIGINT}))
+    </if>
+    and t1.id not in (SELECT distinct
+    y.account_id
+    FROM
+    busi_inquiry_order x
+    JOIN busi_inquiry_order_sellers y ON x.id = y.inquiry_order_id
+    join busi_inquiry_order_items ii on y.id = ii.inquiry_order_seller_id
+    join busi_purchase_order_items pi on pi.id = ii.purchase_order_items_id
+    WHERE
+    x.purchase_order_id =#{purchaseOrderId})
+  </where>
+</select>
+
+<!--  资源列表查询，采用 SQL_CALC_FOUND_ROWS和FOUND_ROWS() 方式优化加载分页 -->
+<select id="selectResourceList" resultMap="ResourceBaseResultMap" parameterType="map">
+  SELECT SQL_CALC_FOUND_ROWS * FROM (select * from (  SELECT
+  x.resid id,
+  x.account_name as accountName,
+  x.account_id accountId,
+  x.category_name categoryName,
+  x.category_uuid categoryUuid,
+  ifnull(mat. NAME,ifnull(x.material_name,'')) materialName,
+  mat.uuid materialUuid,
+  x.spec,
+  ifnull(fac. NAME, ifnull(x.factory_name,'')) factoryName,
+  ifnull(fac.id,x.factory_id) factoryId,
+  x.quantity,
+  ifnull(ware. NAME,ifnull(x.warehouse_name,'')) warehouseName,
+  ifnull(ware.id,x.warehouse_id) warehouseId,
+  weight,
+  weight_concept weightConcept,
+  price,
+  x.remark remark,
+  x. STATUS statusNum,
+  x.mgt_last_updated,
+
+  x.is_exception,
+  x.city_name cityName,
+  ifnull(x.price_change,'-') as priceChange,
+  user.name as last_updated_by,
+  x.source_type sourceType,
+  x.status,
+  NULL AS TOTAL
+  FROM
+  (
+  SELECT
+  y.*
+  FROM
+  (
+  SELECT
+  res.id resid,
+  res.account_id,
+  res.account_name,
+  res.category_uuid,
+  res.category_name,
+  res.city_name,
+  res.material_uuid,
+  res.material_name,
+  res.warehouse_id,
+  res.warehouse_name,
+  res.factory_id,
+  res.factory_name,
+  res.quantity,
+  res.weight,
+  res.weight_concept,
+  res.price,
+  res.price_change,
+  res.remark,
+  res.user_ids,
+  res.status,
+  res.mgt_last_updated_by as last_updated_by,
+
+  res.mgt_last_updated,
+  res.source_type,
+  res.is_exception,
+  group_concat(norm. VALUE order by norm.priority SEPARATOR '*') spec
+  FROM
+  cust_resource res
+  LEFT JOIN cust_resource_norms norm ON res.id = norm.resource_id
+  <where>
+    <!--0: 待审核 1：日常资源 2：询价资源 3：历史成交 4：异常资源 5：缺失资源 空是全部资源 -->
+    <if test='statusNum =="5"'>
+      <!--0: 待审核 资源 全部资源，不包括待审核资源 -->
+      and res.status = 'approved'
+    </if>
+    <if test='statusNum != null and statusNum =="0"'>
+      <!--0: 待审核 资源 -->
+      and res.status ='declined'
+      and res.source_type ='daily_common'
+      and res.is_exception = 'normal'
+    </if>
+    <if test='statusNum != null and statusNum =="1"'>
+      <!--1：日常资源 -->
+      <!--modify by zhoucai 16-6-20 如果为日常资源，新增资源城市判断，掌柜App需求 -->
+      <if test='cityName != null and cityName!=""'>
+        and res.city_name =cityName
+      </if>
+      and res.status ='approved'
+      and res.source_type ='daily_common'
+      and res.is_exception = 'normal'
+    </if>
+    <if test='statusNum != null and statusNum =="2"'>
+      <!--2: 询价资源 -->
+      and res.status ='approved'
+      and res.source_type ='inquiry'
+      and res.is_exception = 'normal'
+    </if>
+    <if test='statusNum != null and statusNum =="3"'>
+      <!-- 3：历史成交 -->
+      and res.status ='approved'
+      and res.source_type ='history_transaction'
+      and res.is_exception = 'normal'
+    </if>
+    <if test='statusNum != null and statusNum =="4"'>
+      <!-- 4：异常资源 -->
+      and res.is_exception = 'exception'
+    </if>
+    <if test='statusNum != null and statusNum =="8"'>
+      <!-- 6：超市资源 -->
+      and res.is_exception = 'normal' and status='approved'
+    </if>
+    <if test="upStart !=null and upStart !=''">
+      <![CDATA[	AND DATE_FORMAT(res.mgt_last_updated,'%Y-%m-%d %H:%i')>=#{upStart} ]]>
+    </if>
+    <if test="upEnd !=null and upEnd !=''">
+      <![CDATA[	AND DATE_FORMAT(res.mgt_last_updated,'%Y-%m-%d %H:%i')<=#{upEnd} ]]>
+    </if>
+    <if test="priceMin !=null and priceMin !=''">
+      <![CDATA[	AND res.price>=#{priceMin} ]]>
+    </if>
+    <if test="priceMax !=null and priceMax !=''">
+      <![CDATA[	AND res.price<=#{priceMax} ]]>
+    </if>
+  </where>
+  GROUP BY
+  res.id
+  ) y
+  <where>
+    <if test="spec != null and spec != ''">
+      and y.spec LIKE '%' #{spec} '%'
+    </if>
+  </where>
+  ) x
+  LEFT JOIN common_materials mat ON x.material_uuid = mat.uuid
+  LEFT JOIN base_factory fac ON x.factory_id = fac.id
+  LEFT JOIN base_warehouse ware ON x.warehouse_id = ware.id
+  LEFT JOIN base_city city ON city.id = ware.city_id
+  LEFT JOIN acl_user user ON x.last_updated_by = user.login_id
+  <where>
+    <if test="orgId != null and orgId > 0">
+      and user.org_id = #{orgId}
+    </if>
+    <if test="accountName != null and accountName != ''">
+      and x.account_name LIKE '%' #{accountName} '%'
+    </if>
+    <if test="warehouseName != null and warehouseName != ''">
+      and (concat(city.name,'-',ware.name) LIKE '%' #{warehouseName} '%'  or x.warehouse_name LIKE '%' #{warehouseName} '%' )
+    </if>
+    <if test="lastUpdatedBy != null and lastUpdatedBy != ''">
+      and user.name LIKE '%' #{lastUpdatedBy} '%'
+    </if>
+    <if test="categoryName != null and categoryName != ''">
+      and x.category_name LIKE '%' #{categoryName} '%'
+    </if>
+    <if test="materialName != null and materialName != ''">
+      and mat.name LIKE '%' #{materialName} '%'
+    </if>
+    <if test="factoryName != null and factoryName != ''">
+      and (fac.name LIKE '%' #{factoryName} '%' or x.factory_name LIKE '%' #{factoryName} '%')
+    </if>
+    <if test="area != null and area != ''">
+      and city.name LIKE '%' #{area} '%'
+    </if>
+    <if test="updateType !=null and updateType != ''">
+      and x.source_type = #{updateType}
+    </if>
+    <!-- 排除历史资源 -->
+    <if test="statusNum != null">
+      <if test="userIds != null">
+        and
+        <foreach item="id" index="index" collection="userIds" open="(" separator="or" close=")">
+          FIND_IN_SET(#{id},user_ids)
+        </foreach>
+      </if>
+    </if>
+  </where>
+  order by mgt_last_updated desc
+  ) t
+  <if test='statusNum != null and statusNum =="8"'>
+    <!-- 8：超市资源 -->
+    GROUP BY t.categoryUUid,t.materialUUid,t.spec,t.factoryid,t.warehouseName
+    order by t.mgt_last_updated desc
+  </if>
+  ) t2
+  limit
+  #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+  UNION
+  SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,FOUND_ROWS() TOTAL
+</select>
+
+<select id="selectByQueryForUpdate" resultMap="ResourceBaseResultMap">
+  select *from (
+  select res.id id,res.account_id accountId,res.account_name accountName,
+  res.category_uuid as categoryUuid,res.category_name as categoryName,
+  mat.uuid materialUuid,mat.name materialName,
+  fac.id factoryId,ifnull(fac.name,res.factory_name) factoryName,
+  ware.id warehouseId,ifnull(ware.name,res.warehouse_name) warehouseName,
+  weight,weight_concept weightConcept,price,quantity,source_type sourceType,
+  group_concat(norm.value order by res.id,norm.priority separator '*'  ) spec,res.user_ids userIds
+  from cust_resource res
+  left join cust_resource_norms norm on res.id=norm.resource_id
+  left join common_materials mat on res.material_uuid=mat.uuid
+  left join base_factory fac on res.factory_id=fac.id
+  left join base_warehouse ware on res.warehouse_id=ware.id
+  left join common_category_norms ccn on ccn.norms_uuid=norm.norm_uuid and ccn.category_uuid=res.category_uuid
+  <where>
+    <if test="accountId != null and accountId != ''">
+      and res.account_Id = #{accountId}
+    </if>
+    <if test="warehouseId != null and warehouseId != ''">
+      and res.warehouse_Id = #{warehouseId}
+    </if>
+    <if test="weightConcept !=null and weightConcept!=''">
+      and res.weight_concept = #{weightConcept}
+    </if>
+    <if test="cityName !=null and cityName!=''">
+      and res.city_name = #{cityName}
+    </if>
+    <if test="warehouseId == null and warehouseName != null">
+      and res.warehouse_name = #{warehouseName}
+    </if>
+    <if test="categoryUuid != null and categoryUuid != ''">
+      and res.category_uuid = #{categoryUuid}
+    </if>
+    <if test="materialUuid != null and materialUuid != ''">
+      and res.material_Uuid = #{materialUuid}
+    </if>
+    <if test="materialUuid == null">
+      <if test="materialName != null and materialName != ''">
+        and res.material_name = #{materialName}
+      </if>
+    </if>
+    <if test="factoryId != null and factoryId != ''">
+      and res.factory_Id = #{factoryId}
+    </if>
+    <if test="factoryId == null and factoryName != null">
+      and res.factory_name = #{factoryName}
+    </if>
+    <if test="sourceType != null">
+      and res.source_type = #{sourceType}
+    </if>
+    <!-- 资源状态不为历史资源-->
+    <if test="status == null or status ==''">
+      and res.status !='2'
+    </if>
+    <!-- 资源状态为历史资源-->
+    <if test="status != null and status ==2">
+      and res.status =#{status}
+    </if>
+    <if test="id != null">
+      and res.id =#{id}
+    </if>
+  </where>
+  group by res.id
+  ORDER BY res.created desc) y
+  <if test="spec != null and spec != ''">
+    where spec = #{spec}
+  </if>
+</select>
+
+<resultMap id="resultMapDailyResourceDto" type="com.prcsteel.platform.smartmatch.model.dto.CategoryInResourceDto" >
+  <result column="id" property="id" jdbcType="BIGINT" />
+  <result column="group_name" property="categoryGroupName" jdbcType="VARCHAR" />
+  <result column="group_uuid" property="categoryGroupUuid" jdbcType="VARCHAR" />
+  <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+  <result column="category_uuid" property="categoryUuid" jdbcType="VARCHAR" />
+  <result column="weight" property="weight" jdbcType="DECIMAL" />
+  <result column="city_id" property="cityId" jdbcType="BIGINT" />
+  <result column="spec" property="spec" jdbcType="VARCHAR" />
+  <result column="variety_quantity" property="varietyQuantity" jdbcType="INTEGER" />
+  <result column="price_deviation" property="priceDeviation" jdbcType="DECIMAL" />
+  <result column="price" property="price" jdbcType="DECIMAL" />
+  <result column="material_name" property="materialName" jdbcType="VARCHAR" />
+  <result column="factory_name" property="factoryName" jdbcType="VARCHAR" />
+  <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+  <result column="seller_name" property="sellerName" jdbcType="VARCHAR" />
+</resultMap>
+
+<select id="queryCategoryInResource" resultMap="resultMapDailyResourceDto" parameterType="com.prcsteel.platform.smartmatch.model.query.DailyResourceQuery">
+  SELECT res.id, ifnull(cg2.name,cg.name) AS group_name, ifnull(cg2.uuid,cg.uuid) AS group_uuid, c.name AS category_name, c.uuid AS category_uuid,
+  res.weight, bw.city_id, group_concat(rn.value separator '*') AS spec, c.variety_quantity, c.price_deviation, res.price,
+  cm.name AS material_name,bf.name AS factory_name, bw.name AS warehouse_name, res.account_name AS seller_name
+  FROM cust_resource res
+  LEFT JOIN base_warehouse bw ON bw.id = res.warehouse_id
+  LEFT JOIN common_category c ON c.uuid = res.category_uuid
+  LEFT JOIN common_group_for_category gfc ON gfc.category_uuid = res.category_uuid
+  LEFT JOIN common_category_group cg ON cg.uuid = gfc.category_group_uuid
+  LEFT JOIN common_category_group cg2 ON cg.parent_uuid = cg2.uuid
+  LEFT JOIN cust_resource_norms rn ON rn.resource_id=res.id
+  LEFT JOIN common_materials cm ON cm.uuid=res.material_uuid
+  LEFT JOIN base_factory bf ON bf.id=res.factory_id
+  <where>
+    cg.site_uuid = 'outer_market' AND res.status='1'
+    <if test="areaId != null and areaId != ''">
+      AND bw.city_id = #{areaId, jdbcType=BIGINT}
+    </if>
+    <!--       <if test="dt != null and dt != ''"> -->
+    <!--         AND date_format(res.last_updated,'%Y-%m-%d') = #{dt, jdbcType=VARCHAR} -->
+    <!--       </if> -->
+  </where>
+  GROUP BY res.id
+</select>
+
+<!-- 修改资源状态：挂牌至未挂牌，未挂牌至挂牌-->
+<update id="changeStatus"  >
+  UPDATE  cust_resource
+  SET status = #{toStatus,jdbcType=VARCHAR}
+  <where>
+    status = #{oriStatus,jdbcType=VARCHAR}
+    <if test="ids != null and ids.size>0 ">
+      and  id in
+      <foreach item="id" index="index" collection="ids" open="(" separator="," close=")">
+        #{id}
+      </foreach>
+    </if>
+    <if test="userIds != null">
+      and
+      <foreach item="id" index="index" collection="userIds" open="(" separator="or" close=")">
+        FIND_IN_SET(#{id},user_ids)
+      </foreach>
+    </if>
+  </where>
+</update>
+
+<!-- 资源列表批量更新: 批量改价格和批量改库存-->
+<update id="batchUpdate"  parameterType="com.prcsteel.platform.smartmatch.model.dto.ResourceBatchDto" >
+  UPDATE  cust_resource
+  <set>
+    <if test="adjustWay == 'APPOINT'" >
+      ${column} = ${adjustValue},
+    </if>
+    <if test="adjustWay == 'PLUS'" >
+      ${column} = ${column}+${adjustValue},
+    </if>
+    <if test="adjustWay == 'MINUS'" >
+      ${column} = ${column}-${adjustValue},
+    </if>
+
+    <if test="mgtLastUpdated != null" >
+      mgt_last_updated = #{mgtLastUpdated,jdbcType=TIMESTAMP},
+    </if>
+    <if test="mgtLastUpdatedBy != null" >
+      mgt_last_updated_by = #{mgtLastUpdatedBy,jdbcType=VARCHAR},
+    </if>
+  </set>
+  WHERE  id in
+  <foreach item="id" index="index" collection="ids" open="(" separator="," close=")">
+    #{id}
+  </foreach>
+  <if test="column == 'price'" >
+    and  price !=99999
+  </if>
+  <if test="column == 'weight'" >
+    and  weight is not null
+  </if>
+</update>
+
+<!-- 根据资源id集删除记录-->
+<delete id="batchDelResourceByIds" >
+  DELETE FROM  cust_resource
+  WHERE id in
+  <foreach item="id" index="index" collection="ids" open="(" separator="," close=")">
+    #{id}
+  </foreach>
+</delete>
+
+<!-- 根据状态查询记录总数-->
+<select id="selecCountResourceByStatus" resultType="java.util.HashMap" >
+  SELECT
+  ifnull(sum(case when status ='approved' then 1 else 0 end),0) allCount,
+  ifnull(sum(case when status ='approved' and source_type ='daily_common' and  is_exception = 'normal' then 1 else 0 end ),0) listedCount,
+  ifnull(sum(case when status ='declined' and source_type ='daily_common' and  is_exception = 'normal' then 1 else 0 end ),0) unListedCount,
+  ifnull(sum(case when is_exception = 'exception' then 1 else 0 end ),0) exceptionCount,
+  ifnull(sum(case when status ='approved' and source_type ='history_transaction' and is_exception = 'normal'  then 1 else 0 end ),0) historyTransactionCount,
+  ifnull(sum(case when status ='approved' and source_type ='inquiry' and is_exception = 'normal' then 1 else 0 end ),0) inqueryCount
+  FROM cust_resource
+  <where>
+    <if test="userIds != null">
+      <foreach item="id" index="index" collection="userIds" open="(" separator="or" close=")">
+        FIND_IN_SET(#{id},user_ids)
+      </foreach>
+    </if>
+  </where>
+</select>
+
+<!-- 根据钢厂Id查询资源记录 -->
+<select id="selectByFactoryId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+  select
+  <include refid="Base_Column_List" />
+  from cust_resource
+  where factory_id = #{factoryId,jdbcType=BIGINT}
+</select>
+
+<!-- 根据仓库Id查询资源记录 -->
+<select id="selectByWarehouseId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+  select
+  <include refid="Base_Column_List" />
+  from cust_resource
+  where warehouse_id = #{warehouseId,jdbcType=BIGINT}
+</select>
+
+<!-- 异常资源刷新 -->
+<update id="refreshException" parameterType="java.lang.String">
+  update cust_resource cr set
+  factory_id = ifnull(factory_id,
+  case when cr.factory_name = '' then null else (select id from base_factory where  FIND_IN_SET(cr.factory_name,CONCAT(name,',',ifnull(alias,'')))) end),
+  factory_name=
+  case when ifnull(factory_id,
+  case when cr.factory_name = '' then null else (select id from base_factory where  FIND_IN_SET(cr.factory_name,CONCAT(name,',',ifnull(alias,'')))) end) is not null
+  then null ELSE factory_name end,
+  warehouse_id = ifnull(case when warehouse_id =-1 then null else warehouse_id end,case when trim(cr.warehouse_name)='' then null else (select id from base_warehouse where FIND_IN_SET(cr.warehouse_name,CONCAT(name,',',ifnull(alias,'')))) end),
+  warehouse_name=
+  case when ifnull(case when warehouse_id =-1 then null else warehouse_id end,case when trim(cr.warehouse_name)='' then null else (select id from base_warehouse where FIND_IN_SET(cr.warehouse_name,CONCAT(name,',',ifnull(alias,'')))) end) is not null
+  then null ELSE warehouse_name end
+  ,is_exception =
+  case when ifnull(cr.factory_id,(select id from base_factory where FIND_IN_SET(cr.factory_name,CONCAT(name,',',ifnull(alias,''))))) is not null
+  and ifnull(cr.warehouse_id,(select id from base_warehouse where FIND_IN_SET(cr.warehouse_name,CONCAT(name,',',ifnull(alias,''))))) is not null
+  then 'normal'   else 'exception' end
+  where  is_exception= 'exception'
+</update>
+
+<!-- 根据名称获取钢厂或仓库id(名称在名称+别名的组合里即可)-->
+<select id="getIdForWarehouseOrFactoryByNameOrAlias" resultType="java.lang.Long" >
+  SELECT id
+  FROM ${tableName} t
+  WHERE  FIND_IN_SET(#{value,jdbcType=VARCHAR},CONCAT(t.name,',',ifnull(t.alias,'')))
+</select>
+
+<!--一键挂、撤牌操作  -->
+<update id="oneKeyOprt"  parameterType="com.prcsteel.platform.smartmatch.model.query.OneKeyOprtResourceQuery">
+  UPDATE cust_resource  x
+  LEFT JOIN (select res.id id,group_concat(norm.value order by res.id,norm.priority separator '*'  ) spec
+  from cust_resource res
+  left join cust_resource_norms norm on res.id=norm.resource_id
+  group by res.id  ) norms on norms.id=x.id
+  LEFT JOIN common_materials mat ON x.material_uuid = mat.uuid
+  LEFT JOIN base_factory fac ON x.factory_id = fac.id
+  LEFT JOIN base_warehouse ware ON x.warehouse_id = ware.id
+  LEFT JOIN base_city city ON city.id = ware.city_id
+  LEFT JOIN acl_user user ON x.last_updated_by = user.login_id
+  SET x.status = #{toStatus,jdbcType=VARCHAR}
+  <where>
+    x.status = #{oriStatus,jdbcType=VARCHAR}
+    <if test="accountName != null and accountName != ''">
+      and x.account_name LIKE '%' #{accountName} '%'
+    </if>
+    <if test="warehouseName != null and warehouseName != ''">
+      and (concat(city.name,'-',ware.name) LIKE '%' #{warehouseName} '%'  or x.warehouse_name LIKE '%' #{warehouseName} '%' )
+    </if>
+    <if test="lastUpdatedBy != null and lastUpdatedBy != ''">
+      and user.name LIKE '%' #{lastUpdatedBy} '%'
+    </if>
+    <if test="categoryName != null and categoryName != ''">
+      and x.category_name LIKE '%' #{categoryName} '%'
+    </if>
+    <if test="materialName != null and materialName != ''">
+      and mat.name LIKE '%' #{materialName} '%'
+    </if>
+    <if test="factoryName != null and factoryName != ''">
+      and (fac.name LIKE '%' #{factoryName} '%' or x.factory_name LIKE '%' #{factoryName} '%')
+    </if>
+    <if test="spec != null and spec != ''">
+      and  norms.spec LIKE '%' #{spec} '%'
+    </if>
+    <if test="updateType !=null and updateType =='inqueryUpdate' ">
+      <if test="upStart !=null and upStart !=''">
+        <![CDATA[ AND DATE_FORMAT(x.mgt_last_updated,'%Y-%m-%d %H:%i')>= #{upStart} ]]>
+      </if>
+      <if test="upEnd !=null and upEnd !=''">
+        <![CDATA[ AND DATE_FORMAT(x.mgt_last_updated,'%Y-%m-%d %H:%i')<= #{upEnd}  ]]>
+      </if>
+    </if>
+    <if test="updateType !=null and updateType =='normalUpdate' ">
+      <if test="upStart !=null and upStart !=''">
+        <![CDATA[ AND DATE_FORMAT(x.mgt_last_updated,'%Y-%m-%d %H:%i')>= #{upStart} ]]>
+      </if>
+      <if test="upEnd !=null and upEnd !=''">
+        <![CDATA[ AND DATE_FORMAT(x.mgt_last_updated,'%Y-%m-%d %H:%i')<= #{upEnd} ]]>
+      </if>
+    </if>
+    <if test="updateType !=null and updateType =='' ">
+      <if test="upStart !=null and upStart !=''">
+        <![CDATA[	AND DATE_FORMAT(x.mgt_last_updated,'%Y-%m-%d %H:%i')>=#{upStart} ]]>
+      </if>
+      <if test="upEnd !=null and upEnd !=''">
+        <![CDATA[	AND  DATE_FORMAT(x.mgt_last_updated,'%Y-%m-%d %H:%i')<=#{upEnd} ]]>
+      </if>
+    </if>
+    <if test="updateType !=null and updateType =='unUpdate' ">
+      AND (
+      <if test="upStart !=null and upStart !=''">
+        <![CDATA[	  (IFNULL(DATE_FORMAT(x.mgt_last_updated,'%Y-%m-%d %H:%i'),'')<#{upStart})) ]]>
+      </if>
+      <if test="upEnd !=null and upEnd !=''">
+        <![CDATA[AND (IFNULL(DATE_FORMAT(x.mgt_last_updated,'%Y-%m-%d %H:%i'),'')>#{upEnd}) ) ]]>
+      </if>
+      )
+    </if>
+    <if test="userIds != null">
+      and
+      <foreach item="id" index="index" collection="userIds" open="(" separator="or" close=")">
+        FIND_IN_SET(#{id},user_ids)
+      </foreach>
+    </if>
+  </where>
+</update>
+
+<!-- 复制资源表数据至历史表 -->
+<insert id="doCopyResource">
+  INSERT INTO  cust_resource_history
+  SELECT a.*,NOW() version_date
+  FROM cust_resource a
+</insert>
+
+<!-- 根据日期和区域ID获取历史资源数据 -->
+<select id="queryHistoryDataByDateAndAreaId" resultMap="HistoryResultMap">
+  SELECT crh.account_name as accountName,crh.account_id accountId,crh.last_updated,crh.mgt_last_updated
+  FROM cust_resource_history crh
+  LEFT JOIN base_warehouse bw on crh.warehouse_id=bw.id
+  <where>
+    <if test="dt != null and dt != ''">
+      DATE_FORMAT(crh.version_date,'%Y-%m-%d')=#{dt}
+    </if>
+    <if test="areaId != null and areaId != ''">
+      and bw.city_id=#{areaId}
+    </if>
+    <if test="rType != null and rType != ''">
+      <if test="rType != 2">
+        and crh.status !=2
+      </if>
+      <if test="rType == 2">
+        and crh.status =2
+      </if>
+    </if>
+    AND crh.account_id IS NOT NULL
+  </where>
+</select>
+
+<!--查询当天历史成交(订单状态大于等4)的资源明细  -->
+<select id="queryHistoryTransactionResourceItem" resultMap="ResourceBaseResultMap">
+  SELECT bcoi.seller_id accountId,bcoi.seller_name accountName,cc.uuid categoryUuid,
+  bcoi.nsort_name categoryName,cm.uuid materialUuid,bcoi.material materialName,
+  bcoi.spec,bf.id factoryId,bcoi.factory factoryName,bw.id warehouseId,bcoi.warehouse warehouseName,
+  bcoi.weight,bcoi.weight_concept weightConcept,bcoi.quantity,bcoi.cost_price price
+  FROM busi_consign_order  bco
+  LEFT JOIN busi_consign_order_items bcoi on bco.id=bcoi.order_id
+  LEFT JOIN common_category cc on cc.name=bcoi.nsort_name
+  LEFT JOIN common_materials cm on cm.`name`=bcoi.material
+  LEFT JOIN base_factory bf on bf.`name`=bcoi.factory
+  LEFT JOIN base_warehouse bw on bw.`name`=bcoi.warehouse
+  LEFT JOIN busi_consign_order_audit_trail bcoat on bco.id=bcoat.order_id
+  WHERE bco.`status`>=4 and bcoat.set_to_status=4
+  GROUP BY bcoi.id
+  HAVING DATE_FORMAT(max(bcoat.created),'%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d')
+</select>
+
+<!-- 查询时间段内采购单物资明细不在当前挂牌资源中的缺失资源数据 -->
+<select id="searchForLostResource" resultMap="LostResourceMap" parameterType="com.prcsteel.platform.smartmatch.model.query.LostResourceQuery">
+  <![CDATA[
+  	set @num=0;
+	select SQL_CALC_FOUND_ROWS '' total, @num:=@num+1 as no,y.* 
+	FROM
+	(
+	select 
+	a.id,
+	DATE_FORMAT(a.created,'%Y-%m-%d %H:%i') purchase_date,
+	CONCAT(
+		a.purchase_city_ids,
+		case when a.purchase_city_ids is null or trim(a.purchase_city_ids) ='' or a.purchase_city_other_id is null or trim(a.purchase_city_other_id) =''
+		then '' else ',' end,
+		a.purchase_city_other_id ) purchase_city_ids,
+	(select 
+	GROUP_CONCAT(name order by find_in_set(id,CONCAT(
+		a.purchase_city_ids,
+		case when a.purchase_city_ids is null or trim(a.purchase_city_ids) ='' or a.purchase_city_other_id is null or trim(a.purchase_city_other_id) =''
+		then '' else ',' end,
+		a.purchase_city_other_id ))) from base_city 
+	where 
+	find_in_set(id,CONCAT(
+		a.purchase_city_ids,
+		case when a.purchase_city_ids is null or trim(a.purchase_city_ids) ='' or a.purchase_city_other_id is null or trim(a.purchase_city_other_id) =''
+		then '' else ',' end,
+		a.purchase_city_other_id )) 
+	) purchase_city_names,
+	x.category_uuid as category_uuid,
+	x.category_name as category_name,
+	b.material_uuid,
+	(select GROUP_CONCAT(name order by FIND_IN_SET(id, b.material_uuid)) from common_materials where FIND_IN_SET(uuid,b.material_uuid)) purchase_material_names,
+	CONCAT(b.spec1,if(ifnull(b.spec2,'')='','','*'),ifnull(b.spec2,''),if(ifnull(b.spec3,'')='','','*'),ifnull(b.spec3,'')) purchase_spec,
+	b.factory_ids,
+	(select GROUP_CONCAT(name order by FIND_IN_SET(id, b.factory_ids)) from base_factory where FIND_IN_SET(id,b.factory_ids)) purchase_factory_names
+	from 
+	busi_purchase_order a
+	join busi_purchase_order_items b on a.id=b.purchase_order_id
+	left join (
+	select res.*,w.city_id AS warehouse_city_id,
+		(select value from cust_resource_norms where resource_id= res.id and priority=1 order by id desc limit 0,1) spec1,
+		(select value from cust_resource_norms where resource_id= res.id and priority=2 order by id desc limit 0,1) spec2,
+		(select value from cust_resource_norms where resource_id= res.id and priority=3 order by id desc limit 0,1) spec3
+		from cust_resource res 
+		join base_warehouse w on res.warehouse_id = w.id
+		where status=1
+		) x
+	on find_in_set(x.warehouse_city_id,CONCAT(
+		a.purchase_city_ids,
+		case when a.purchase_city_ids is null or trim(a.purchase_city_ids) ='' or a.purchase_city_other_id is null or trim(a.purchase_city_other_id) =''
+		then '' else ',' end,
+		a.purchase_city_other_id ))
+	
+	and b.category_uuid = x.category_uuid
+	and FIND_IN_SET(x.material_uuid,b.material_uuid)
+	and case when b.factory_ids is null or trim(b.factory_ids) = '' then true else FIND_IN_SET(x.factory_id,b.factory_ids) end
+	and case when trim(ifnull(b.spec1,''))!='C' and trim(ifnull(b.spec1,''))!='L' then FIND_IN_SET (x.spec1,b.spec1) else true end
+		and case when trim(ifnull(b.spec2,''))!='' and trim(ifnull(b.spec2,''))!='C' and trim(ifnull(b.spec2,''))!='L' and x.spec2 is not null then
+			case when INSTR(b.spec2,'-')=0 then
+				x.spec2 like concat('%',b.spec2,'%')
+			else
+				x.spec2>=SUBSTR(b.spec2,0,INSTR(b.spec2,'-'))*1.0
+				and
+				x.spec2<=SUBSTR(b.spec2,INSTR(b.spec2,'-')+1)*1.0
+			end
+		else true end
+		and case when trim(ifnull(b.spec3,''))!='' and trim(ifnull(b.spec3,''))!='C' and trim(ifnull(b.spec3,''))!='L' and x.spec3 is not null then
+			case when INSTR(b.spec3,'-')=0 then
+				x.spec3 like concat ('%',b.spec3,'%')
+			else
+				x.spec3>=SUBSTR(b.spec3,0,INSTR(b.spec3,'-'))*1.0
+				and
+				x.spec3<=SUBSTR(b.spec3,INSTR(b.spec3,'-')+1)*1.0
+			end
+		else true end
+	where x.id is null
+	ORDER BY  purchase_date desc
+	) y
+	where 1=1 
+	]]>
+  <if test="areaId !=null and areaId !=''">
+    and FIND_IN_SET(#{areaId},y.purchase_city_ids)
+  </if>
+  <if test="tStart !=null and tStart !=''">
+    and DATE_FORMAT(y.purchase_date,'%Y-%m-%d') <![CDATA[ >= ]]> #{tStart}
+  </if>
+  <if test="tEnd !=null and tEnd !=''">
+    and DATE_FORMAT(y.purchase_date,'%Y-%m-%d') <![CDATA[ <= ]]> #{tEnd}
+  </if>
+  limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+  UNION
+  SELECT FOUND_ROWS(),NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL
+</select>
+
+<!-- 资源更新统计总数 -->
+<select id="queryStatisResTotal" resultType="com.prcsteel.platform.smartmatch.model.dto.ResourceStatisTotal" parameterType="com.prcsteel.platform.smartmatch.model.query.ResourceStatisQuery">
+  select count(tempTotal.account_id) as total,
+  sum(tempTotal.dailyCount) as dailyTotalCount,
+  sum(tempTotal.inquiryCount) as inquiryTotalCount,
+  sum(tempTotal.historyCount) as historyTotalCount from(
+  select temp.* from (
+  select t.account_id,t.city_name,t.source_type,t.mgt_last_updated,t.mgt_last_updated_by,
+  <choose>
+    <when test="sourceType == 'daily_common'">
+      t1.dailyCount,0 as inquiryCount, 0 as historyCount from cust_resource t
+      right join
+      -- 日常资源统计
+      (select t.account_id,count(t.account_id) as dailyCount from cust_resource t
+      <if test="(userId !=null and userId !='') or (orgId != null and orgId > 0)">
+        -- 关联用户
+        left join acl_user temp1 ON temp1.login_id = t.mgt_last_updated_by
+      </if>
+      where t.source_type = 'daily_common'
+      <if test="cityName !=null and cityName !=''">
+        and t.city_name = #{cityName}
+      </if>
+      <if test="userId !=null and userId !=''">
+        and temp1.id = #{userId}
+      </if>
+      <if test="orgId != null and orgId > 0">
+        and temp1.org_id = #{orgId}
+      </if>
+      <if test="beginDate !=null and beginDate !=''">
+        and date_format(t.mgt_last_updated,'%Y-%m-%d %H:%i') &gt;= #{beginDate}
+      </if>
+      <if test="endDate !=null and endDate !=''">
+        and date_format(t.mgt_last_updated,'%Y-%m-%d %H:%i') &lt;= #{endDate}
+      </if>
+      group by t.account_id) t1 on t1.account_id = t.account_id
+    </when>
+    <when test="sourceType == 'inquiry'">
+      t2.inquiryCount,0 as dailyCount, 0 as historyCount from cust_resource t
+      right join
+      -- 询价资源统计
+      (select t.account_id,count(t.account_id) as inquiryCount from cust_resource t
+      <if test="(userId !=null and userId !='') or (orgId != null and orgId > 0)">
+        -- 关联用户
+        left join acl_user temp1 ON temp1.login_id = t.mgt_last_updated_by
+      </if>
+      where t.source_type = 'inquiry' and t.status = 'approved'
+      <if test="cityName !=null and cityName !=''">
+        and t.city_name = #{cityName}
+      </if>
+      <if test="userId !=null and userId !=''">
+        and temp1.id = #{userId}
+      </if>
+      <if test="orgId != null and orgId > 0">
+        and temp1.org_id = #{orgId}
+      </if>
+      <if test="beginDate !=null and beginDate !=''">
+        and date_format(t.mgt_last_updated,'%Y-%m-%d %H:%i') &gt;= #{beginDate}
+      </if>
+      <if test="endDate !=null and endDate !=''">
+        and date_format(t.mgt_last_updated,'%Y-%m-%d %H:%i') &lt;= #{endDate}
+      </if>
+      group by t.account_id) t2 on t2.account_id = t.account_id
+    </when>
+    <when test="sourceType == 'history_transaction'">
+      t3.historyCount,0 as dailyCount, 0 as inquiryCount from cust_resource t
+      right join
+      -- 历史成交资源统计
+      (select t.account_id,count(t.account_id) as historyCount from cust_resource t
+      <if test="(userId !=null and userId !='') or (orgId != null and orgId > 0)">
+        -- 关联用户
+        left join acl_user temp1 ON temp1.login_id = t.mgt_last_updated_by
+      </if>
+      where t.source_type = 'history_transaction' and t.status = 'approved'
+      <if test="cityName !=null and cityName !=''">
+        and t.city_name = #{cityName}
+      </if>
+      <if test="userId !=null and userId !=''">
+        and temp1.id = #{userId}
+      </if>
+      <if test="orgId != null and orgId > 0">
+        and temp1.org_id = #{orgId}
+      </if>
+      <if test="beginDate !=null and beginDate !=''">
+        and date_format(t.mgt_last_updated,'%Y-%m-%d %H:%i') &gt;= #{beginDate}
+      </if>
+      <if test="endDate !=null and endDate !=''">
+        and date_format(t.mgt_last_updated,'%Y-%m-%d %H:%i') &lt;= #{endDate}
+      </if>
+      group by t.account_id) t3 on t3.account_id = t.account_id
+    </when>
+    <otherwise>
+      t1.dailyCount,t2.inquiryCount,t3.historyCount
+      from cust_resource t
+      left join
+      -- 日常资源统计
+      (select t.account_id,count(t.account_id) as dailyCount from cust_resource t
+      <if test="(userId !=null and userId !='') or (orgId != null and orgId > 0)">
+        -- 关联用户
+        left join acl_user temp1 ON temp1.login_id = t.mgt_last_updated_by
+      </if>
+      where t.source_type = 'daily_common'
+      <if test="cityName !=null and cityName !=''">
+        and t.city_name = #{cityName}
+      </if>
+      <if test="userId !=null and userId !=''">
+        and temp1.id = #{userId}
+      </if>
+      <if test="orgId != null and orgId > 0">
+        and temp1.org_id = #{orgId}
+      </if>
+      <if test="beginDate !=null and beginDate !=''">
+        and date_format(t.mgt_last_updated,'%Y-%m-%d %H:%i') &gt;= #{beginDate}
+      </if>
+      <if test="endDate !=null and endDate !=''">
+        and date_format(t.mgt_last_updated,'%Y-%m-%d %H:%i') &lt;= #{endDate}
+      </if>
+      group by t.account_id) t1 on t1.account_id = t.account_id
+      left join
+      -- 询价资源统计
+      (select t.account_id,count(t.account_id) as inquiryCount from cust_resource t
+      <if test="(userId !=null and userId !='') or (orgId != null and orgId > 0)">
+        -- 关联用户
+        left join acl_user temp1 ON temp1.login_id = t.mgt_last_updated_by
+      </if>
+      where t.source_type = 'inquiry' and t.status = 'approved'
+      <if test="cityName !=null and cityName !=''">
+        and t.city_name = #{cityName}
+      </if>
+      <if test="userId !=null and userId !=''">
+        and temp1.id = #{userId}
+      </if>
+      <if test="orgId != null and orgId > 0">
+        and temp1.org_id = #{orgId}
+      </if>
+      <if test="beginDate !=null and beginDate !=''">
+        and date_format(t.mgt_last_updated,'%Y-%m-%d %H:%i') &gt;= #{beginDate}
+      </if>
+      <if test="endDate !=null and endDate !=''">
+        and date_format(t.mgt_last_updated,'%Y-%m-%d %H:%i') &lt;= #{endDate}
+      </if>
+      group by t.account_id) t2 on t2.account_id = t.account_id
+      left join
+      -- 历史成交资源统计
+      (select t.account_id,count(t.account_id) as historyCount from cust_resource t
+      <if test="(userId !=null and userId !='') or (orgId != null and orgId > 0)">
+        -- 关联用户
+        left join acl_user temp1 ON temp1.login_id = t.mgt_last_updated_by
+      </if>
+      where t.source_type = 'history_transaction' and t.status = 'approved'
+      <if test="cityName !=null and cityName !=''">
+        and t.city_name = #{cityName}
+      </if>
+      <if test="userId !=null and userId !=''">
+        and temp1.id = #{userId}
+      </if>
+      <if test="orgId != null and orgId > 0">
+        and temp1.org_id = #{orgId}
+      </if>
+      <if test="beginDate !=null and beginDate !=''">
+        and date_format(t.mgt_last_updated,'%Y-%m-%d %H:%i') &gt;= #{beginDate}
+      </if>
+      <if test="endDate !=null and endDate !=''">
+        and date_format(t.mgt_last_updated,'%Y-%m-%d %H:%i') &lt;= #{endDate}
+      </if>
+      group by t.account_id) t3 on t3.account_id = t.account_id
+    </otherwise>
+  </choose>
+  ) temp where temp.dailyCount > 0 or temp.inquiryCount > 0 or temp.historyCount > 0
+  group by temp.account_id) tempTotal
+</select>
+
+<!-- 资源更新统计列表 -->
+<select id="queryStatisRes" resultMap="ResourecStatisMap" parameterType="com.prcsteel.platform.smartmatch.model.query.ResourceStatisQuery">
+  select temp.* from (
+  select t.account_id,t.city_name,t.source_type,t.mgt_last_updated,t.mgt_last_updated_by,
+  <choose>
+    <when test="sourceType == 'daily_common'">
+      t1.dailyCount,t.account_name as name,0 as inquiryCount, 0 as historyCount from cust_resource t
+      right join
+      -- 日常资源统计
+      (select t.account_id,count(t.account_id) as dailyCount from cust_resource t
+      <if test="(userId !=null and userId !='') or (orgId != null and orgId > 0)">
+        -- 关联用户
+        left join acl_user temp1 ON temp1.login_id = t.mgt_last_updated_by
+      </if>
+      where t.source_type = 'daily_common'
+      <if test="cityName !=null and cityName !=''">
+        and t.city_name = #{cityName}
+      </if>
+      <if test="userId !=null and userId !=''">
+        and temp1.id = #{userId}
+      </if>
+      <if test="orgId != null and orgId > 0">
+        and temp1.org_id = #{orgId}
+      </if>
+      <if test="beginDate !=null and beginDate !=''">
+        and date_format(t.mgt_last_updated,'%Y-%m-%d %H:%i') &gt;= #{beginDate}
+      </if>
+      <if test="endDate !=null and endDate !=''">
+        and date_format(t.mgt_last_updated,'%Y-%m-%d %H:%i') &lt;= #{endDate}
+      </if>
+      group by t.account_id) t1 on t1.account_id = t.account_id
+    </when>
+    <when test="sourceType == 'inquiry'">
+      t2.inquiryCount,t.accountname as name,0 as dailyCount, 0 as historyCount from cust_resource t
+      right join
+      -- 询价资源统计
+      (select t.account_id,count(t.account_id) as inquiryCount from cust_resource t
+      <if test="(userId !=null and userId !='') or (orgId != null and orgId > 0)">
+        -- 关联用户
+        left join acl_user temp1 ON temp1.login_id = t.mgt_last_updated_by
+      </if>
+      where t.source_type = 'inquiry' and t.status = 'approved'
+      <if test="cityName !=null and cityName !=''">
+        and t.city_name = #{cityName}
+      </if>
+      <if test="userId !=null and userId !=''">
+        and temp1.id = #{userId}
+      </if>
+      <if test="orgId != null and orgId > 0">
+        and temp1.org_id = #{orgId}
+      </if>
+      <if test="beginDate !=null and beginDate !=''">
+        and date_format(t.mgt_last_updated,'%Y-%m-%d %H:%i') &gt;= #{beginDate}
+      </if>
+      <if test="endDate !=null and endDate !=''">
+        and date_format(t.mgt_last_updated,'%Y-%m-%d %H:%i') &lt;= #{endDate}
+      </if>
+      group by t.account_id) t2 on t2.account_id = t.account_id
+    </when>
+    <when test="sourceType == 'history_transaction'">
+      t3.historyCount,t.account_name as name,0 as dailyCount, 0 as inquiryCount from cust_resource t
+      right join
+      -- 历史成交资源统计
+      (select t.account_id,count(t.account_id) as historyCount from cust_resource t
+      <if test="(userId !=null and userId !='') or (orgId != null and orgId > 0)">
+        -- 关联用户
+        left join acl_user temp1 ON temp1.login_id = t.mgt_last_updated_by
+      </if>
+      where t.source_type = 'history_transaction' and t.status = 'approved'
+      <if test="cityName !=null and cityName !=''">
+        and t.city_name = #{cityName}
+      </if>
+      <if test="userId !=null and userId !=''">
+        and temp1.id = #{userId}
+      </if>
+      <if test="orgId != null and orgId > 0">
+        and temp1.org_id = #{orgId}
+      </if>
+      <if test="beginDate !=null and beginDate !=''">
+        and date_format(t.mgt_last_updated,'%Y-%m-%d %H:%i') &gt;= #{beginDate}
+      </if>
+      <if test="endDate !=null and endDate !=''">
+        and date_format(t.mgt_last_updated,'%Y-%m-%d %H:%i') &lt;= #{endDate}
+      </if>
+      group by t.account_id) t3 on t3.account_id = t.account_id
+    </when>
+    <otherwise>
+      t1.dailyCount,t2.inquiryCount,t3.historyCount,t.account_name as name
+      from cust_resource t
+      left join
+      -- 日常资源统计
+      (select t.account_id,count(t.account_id) as dailyCount from cust_resource t
+      <if test="(userId !=null and userId !='') or (orgId != null and orgId > 0)">
+        -- 关联用户
+        left join acl_user temp1 ON temp1.login_id = t.mgt_last_updated_by
+      </if>
+      where t.source_type = 'daily_common'
+      <if test="cityName !=null and cityName !=''">
+        and t.city_name = #{cityName}
+      </if>
+      <if test="userId !=null and userId !=''">
+        and temp1.id = #{userId}
+      </if>
+      <if test="orgId != null and orgId > 0">
+        and temp1.org_id = #{orgId}
+      </if>
+      <if test="beginDate !=null and beginDate !=''">
+        and date_format(t.mgt_last_updated,'%Y-%m-%d %H:%i') &gt;= #{beginDate}
+      </if>
+      <if test="endDate !=null and endDate !=''">
+        and date_format(t.mgt_last_updated,'%Y-%m-%d %H:%i') &lt;= #{endDate}
+      </if>
+      group by t.account_id) t1 on t1.account_id = t.account_id
+      left join
+      -- 询价资源统计
+      (select t.account_id,count(t.account_id) as inquiryCount from cust_resource t
+      <if test="(userId !=null and userId !='') or (orgId != null and orgId > 0)">
+        -- 关联用户
+        left join acl_user temp1 ON temp1.login_id = t.mgt_last_updated_by
+      </if>
+      where t.source_type = 'inquiry' and t.status = 'approved'
+      <if test="cityName !=null and cityName !=''">
+        and t.city_name = #{cityName}
+      </if>
+      <if test="userId !=null and userId !=''">
+        and temp1.id = #{userId}
+      </if>
+      <if test="orgId != null and orgId > 0">
+        and temp1.org_id = #{orgId}
+      </if>
+      <if test="beginDate !=null and beginDate !=''">
+        and date_format(t.mgt_last_updated,'%Y-%m-%d %H:%i') &gt;= #{beginDate}
+      </if>
+      <if test="endDate !=null and endDate !=''">
+        and date_format(t.mgt_last_updated,'%Y-%m-%d %H:%i') &lt;= #{endDate}
+      </if>
+      group by t.account_id) t2 on t2.account_id = t.account_id
+      left join
+      -- 历史成交资源统计
+      (select t.account_id,count(t.account_id) as historyCount from cust_resource t
+      <if test="(userId !=null and userId !='') or (orgId != null and orgId > 0)">
+        -- 关联用户
+        left join acl_user temp1 ON temp1.login_id = t.mgt_last_updated_by
+      </if>
+      where t.source_type = 'history_transaction' and t.status = 'approved'
+      <if test="cityName !=null and cityName !=''">
+        and t.city_name = #{cityName}
+      </if>
+      <if test="userId !=null and userId !=''">
+        and temp1.id = #{userId}
+      </if>
+      <if test="orgId != null and orgId > 0">
+        and temp1.org_id = #{orgId}
+      </if>
+      <if test="beginDate !=null and beginDate !=''">
+        and date_format(t.mgt_last_updated,'%Y-%m-%d %H:%i') &gt;= #{beginDate}
+      </if>
+      <if test="endDate !=null and endDate !=''">
+        and date_format(t.mgt_last_updated,'%Y-%m-%d %H:%i') &lt;= #{endDate}
+      </if>
+      group by t.account_id) t3 on t3.account_id = t.account_id
+    </otherwise>
+  </choose>
+  ) temp where temp.dailyCount > 0 or temp.inquiryCount > 0 or temp.historyCount > 0
+  group by temp.account_id
+  limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+</select>
+
+<!-- 批量查询资源 -->
+<select id="betchQueryResourceByIds" resultMap="BaseResultMap">
+  select
+  <include refid="Base_Column_List" />
+  FROM cust_resource
+  WHERE id in
+  <foreach item="id" index="index" collection="ids" open="("
+           separator="," close=")">
+    #{id}
+  </foreach>
+</select>
+<!-- 获取资源的规格 -->
+<select id = "getResourceSpecByResourceId" resultType="java.lang.String"  parameterType ="java.lang.Long">
+  select group_concat(noo.VALUE order by noo.priority SEPARATOR '*') spec
+  from cust_resource_norms noo
+  where noo.resource_id = #{resourceId}
+  group by noo.resource_id
+</select>
+
+<select id="queryHistoryPrice" resultMap="ResourceHistoryPriceMap"
+        parameterType="com.prcsteel.platform.smartmatch.model.query.ResourceHistoryQuery">
+	select y.price,y.mgt_last_updated as version_date 
+	from (select res.*, (SELECT GROUP_CONCAT(n.`VALUE` ORDER BY n.priority SEPARATOR '*') 
+	                FROM cust_resource_norms_base n WHERE n.resource_id = res.id GROUP BY n.resource_id) spec
+    	 from cust_resource_base res 
+  <where>
+    <if test="accountId !=null and accountId !=''">
+      res.account_id= #{accountId,jdbcType=VARCHAR}
+    </if>
+    <if test="sourceType !=null and sourceType !=''">
+      and res.source_type=#{sourceType,jdbcType=VARCHAR}
+    </if>
+    <if test="warehouseId !=null and warehouseId !=''">
+      and res.warehouse_id=#{warehouseId,jdbcType=VARCHAR}
+    </if>
+    <if test="versionDate !=null and versionDate !=''">
+      and
+      DATE_FORMAT(res.mgt_last_updated,'%Y-%m-%d')=#{versionDate,jdbcType=VARCHAR}
+    </if>
+    <if test="factoryId !=null and factoryId !=''">
+      and res.factory_id= #{factoryId,jdbcType=VARCHAR}
+    </if>
+    <if test="categoryUuid !=null and categoryUuid !=''">
+      and res.category_uuid=#{categoryUuid,jdbcType=VARCHAR}
+    </if>
+    <if test="materialUuid !=null and materialUuid !=''">
+      and res.material_uuid=#{materialUuid,jdbcType=VARCHAR}
+    </if>
+    <if test="warehouseName !=null and warehouseName !=''">
+      and res.warehouse_name=#{warehouseName,jdbcType=VARCHAR}
+    </if>
+    <if test="factoryName !=null and factoryName !=''">
+      and res.factory_name= #{factoryName,jdbcType=VARCHAR}
+    </if>
+    <if test="weightConcept !=null and weightConcept !=''">
+      and res.weight_concept=#{weightConcept,jdbcType=VARCHAR}
+    </if>
+  </where>
+  order by res.mgt_last_updated desc)y 
+  <where>
+    <if test="spec !=null and spec !=''"> y.spec = #{spec,jdbcType=VARCHAR} </if> 
+  </where>
+  limit 1
+</select>
+<!-- 根据仓库ID获取城市名称 -->
+<select id="getCityNameByWarehouseId" resultType="java.lang.String">
+  select t.name
+  cityname from base_city t
+  left join base_warehouse w on t.id =
+  w.city_id
+  where w.id = #{warehouseId,jdbcType=VARCHAR}
+</select>
+
+<!-- 根据仓库ID获取城市名称 -->
+<select id="getCityByWarehouseId" resultType="com.prcsteel.platform.core.model.model.City" parameterType="java.lang.Long">
+  select w.city_id id,t.name
+  from base_warehouse w
+  left join base_city t on t.id =
+  w.city_id
+  where w.id = #{warehouseId,jdbcType=VARCHAR}
+</select>
+<!-- 获取异常资源列表 -->
+<select id="selectExceptionResources" resultMap="BaseResultMap">
+  SELECT  <include refid="Base_Column_List" />
+  FROM cust_resource
+  WHERE is_exception = 'exception'
+</select>
+<!-- 资源列表批量更新: 批量刷新异常-->
+<update id="batchUpdateExceptionRes"  parameterType="map" >
+  <foreach collection="list" item="item" index="index" separator=";">
+    UPDATE cust_resource
+    SET factory_id = #{item.factoryId},
+    warehouse_id = #{item.warehouseId},
+    is_exception = 'normal',
+    city_id = #{item.cityId},
+    city_name = #{item.cityName},
+    mgt_last_updated=#{item.mgtLastUpdated},
+    mgt_last_updated_by =#{item.mgtLastUpdatedBy}
+    WHERE id = #{item.id}
+  </foreach>
+</update>
+
+<select id="queryResourceDetailByIds" resultMap="BaseResultMap" parameterType="java.util.List">
+  SELECT
+  t1.id, t1.account_id, t1.account_name, city_name, t1.category_uuid, t1.category_name, t1.material_uuid,
+  (SELECT `NAME` FROM common_materials WHERE `uuid`=t1.material_uuid) AS material_name,
+  t1.factory_id, t1.factory_name, t1.weight, t1.warehouse_id, t1.warehouse_name, t1.weight_concept,
+  price, t1.price_change, t1.quantity, t1.remark, t1.STATUS,source_type,user_ids, t1.created, t1.created_by,
+  t1.mgt_last_updated,t1.mgt_last_updated_by, t1.modification_number,
+  t1.row_id, t1.parent_row_id,
+  (SELECT GROUP_CONCAT(`VALUE` ORDER BY priority SEPARATOR '*') FROM cust_resource_norms WHERE resource_id=t1.id GROUP
+  BY resource_id) AS ext2
+  FROM cust_resource t1
+  WHERE t1.id in
+  <foreach item="id" index="index" collection="list" open="(" separator="," close=")">
+    #{id}
+  </foreach>
+</select>
+
+<!-- 根据条件查询资源信息 -->
+<select id="getResourceListByConditions" parameterType="com.prcsteel.platform.smartmatch.model.query.ResourceQuery"
+        resultType="com.prcsteel.platform.smartmatch.model.dto.ResourceBaseDto">
+  select t.factory_name as factoryName,t.category_uuid as categoryUuid,
+  t.material_uuid as materialUuid,t1.spec,t.category_name as categoryName,t3.name as materialName
+  from cust_resource t
+  right join(
+  select t.resource_id,group_concat(t.value order by t.priority separator '*') as spec from cust_resource_norms t
+  group by t.resource_id)  t1 on t1.resource_id =  t.id
+  right join common_materials t3 on t3.uuid = t.material_uuid
+  <where>
+    <if test="cityName != null and cityName != '' ">
+      and t.city_name like  #{cityName} '%'
+    </if>
+    <if test="spec != null and spec != '' ">
+      and t1.spec like '%' #{spec} '%'
+    </if>
+    <if test="categoryName != null and categoryName != '' ">
+      and  t.category_name = #{categoryName}
+    </if>
+    <if test="materialName != null and materialName != '' ">
+      and t3.name = #{materialName}
+    </if>
+    <if test="conditionName == 'factory'">
+      and t.factory_name is not null
+    </if>
+    <if test="conditionName == 'spec'">
+      and t1.spec is not null
+    </if>
+    <if test="conditionName == 'category'">
+      and t.category_name is not null
+    </if>
+    <if test="conditionName == 'material'">
+      and t3.name is not null
+    </if>
+  </where>
+  <if test="conditionName == 'factory'">
+    group by t.factory_name
+  </if>
+  <if test="conditionName == 'spec'">
+    group by t1.spec
+  </if>
+  <if test="conditionName == 'category'">
+    group by t.category_name
+  </if>
+  <if test="conditionName == 'material'">
+    group by t3.name
+  </if>
+</select>
+<resultMap id="ResourceBusinessMap" type="com.prcsteel.platform.smartmatch.model.dto.ResourceBusinessDto">
+  <result column="id" property="id" jdbcType="BIGINT"/>
+  <result column="account_id" property="accountId" jdbcType="BIGINT"/>
+  <result column="factory_name" property="factoryName" jdbcType="VARCHAR" />
+  <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+  <result column="city_name" property="cityName" jdbcType="VARCHAR" />
+  <result column="price" property="price" jdbcType="DECIMAL" />
+  <result column="supplier_label" property="supplierLabel" jdbcType="VARCHAR" />
+  <result column="payment_label" property="payMentLaybel" jdbcType="VARCHAR" />
+  <result column="accountName" property="accountName" jdbcType="VARCHAR" />
+  <result column="spec" property="spec" jdbcType="VARCHAR" />
+  <result column="categoryName" property="categoryName" jdbcType="VARCHAR" />
+  <result column="materialName" property="materialName" jdbcType="VARCHAR" />
+  <result column="lastUpdatedBy" property="lastUpdatedBy" jdbcType="VARCHAR" />
+  <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+  <result column="org_name" property="orgName" jdbcType="VARCHAR" />
+  <result column="weight" property="weight" jdbcType="DECIMAL" />
+  <result column="weight_concept" property="weightConcept" jdbcType="VARCHAR" />
+  <result column="categoryUuid" property="categoryUuid" jdbcType="VARCHAR" />
+  <result column="single_weight" property="singleWeight" jdbcType="VARCHAR" />
+</resultMap>
+
+<!-- 业务找货列表 统计-->
+<select id="getSingleBusinessResourceListTotal" parameterType="com.prcsteel.platform.smartmatch.model.query.ResourceBusinessQuery"
+        resultType="java.lang.Integer">
+  select count(t.id) from(
+  select t.id from(
+  select t.id,t.account_id,t.factory_name,t.warehouse_name,t.city_name,t.price,t1.supplier_label,t1.payment_label,t1.name as accountName,t2.spec,
+  t.category_name as categoryName,t4.name as materialName
+  /**,t5.lastUpdatedBy,t5.mgt_last_updated**/
+  from cust_resource t
+  -- 关联客户,获取客户名称
+  LEFT JOIN cust_account t1 on t1.id = t.account_id
+  -- 关联,资源规格关联表,规格合并
+  left join(
+  select t.resource_id,group_concat(t.value order by t.priority separator '*') as spec from cust_resource_norms t
+  group by t.resource_id)  t2 on t2.resource_id =  t.id
+  -- 关联材质名,获取材质名称
+  left join common_materials t4 on t4.uuid = t.material_uuid
+  /**
+  -- 关联资源询价资源,获取最后一次询价信息
+  left join(
+  select t.account_id,t.mgt_last_updated,t.lastUpdatedBy from (select t.account_id,t.mgt_last_updated,t1.name as lastUpdatedBy from cust_resource t
+  left join acl_user t1 on t1.login_id = t.mgt_last_updated_by  where t.status = 'approved' and t.source_type = 'inquiry' order by t.mgt_last_updated desc)
+  t group by t.account_id) t5 on t5.account_id = t.account_id
+  **/
+  left join base_factory t7 on t7.id=t.factory_id
+  left join common_category_weight t6 on t6.category_uuid=t.category_uuid and t2.spec=t6.norms_name and t7.id=t6.factory_id
+  <!-- 规格包含"-"号,表示区间查询-->
+  -- 关联规格
+  <if test="specQueryFlag > 0">
+    left join cust_resource_norms rn1 on rn1.resource_id=t.id and rn1.priority=1
+    left join cust_resource_norms rn2 on rn2.resource_id=t.id and rn2.priority=2
+    left join cust_resource_norms rn3 on rn3.resource_id=t.id and rn3.priority=3
+  </if>
+  <where>
+    <if test="factoryName != null and factoryName !=''">
+      and t.factory_name like '%' #{factoryName} '%'
+    </if>
+    <if test="cityName != null and cityName !=''">
+      and t.city_name like '%' #{cityName} '%'
+    </if>
+    <if test="accountName != null and accountName !=''">
+      and t1.name like '%' #{accountName} '%'
+    </if>
+    <if test="specQueryFlag == 0 and spec != null and spec !=''">
+      and t2.spec like '%' #{spec} '%'
+    </if>
+    <if test="categoryName != null and categoryName !=''">
+      and t.category_name like '%' #{categoryName} '%'
+    </if>
+    <if test="materialName != null and materialName !=''">
+      and t4.name = #{materialName}
+    </if>
+    <if test="beginTime != null and beginTime !=''">
+      and date_format(t.mgt_last_updated,'%Y-%m-%d %H:%i:%s') &gt;= #{beginTime}
+    </if>
+    <if test="endTime != null and endTime !=''">
+      and date_format(t.mgt_last_updated,'%Y-%m-%d %H:%i:%s') &lt;= #{endTime}
+    </if>
+    <if test="specQueryFlag > 0">
+      <!-- 规格1区间查询-->
+      <if test="spec1Flag > 0">
+        <if test="prefixSpec1 != null and prefixSpec1 !=''">
+          and rn1.value &gt;= cast(#{prefixSpec1} as decimal(10,3))
+          <if test="suffixSpec1 != null and suffixSpec1 !=''">
+            and rn1.value &lt;= cast(#{suffixSpec1}  as decimal(10,3))
+          </if>
+        </if>
+      </if>
+      <if test="spec1Flag == 0">
+        <if test="prefixSpec1 != null and prefixSpec1 !=''">
+          and rn1.value = #{prefixSpec1}
+        </if>
+      </if>
+      <!-- 规格2区间查询-->
+      <if test="spec2Flag > 0">
+        <if test="prefixSpec2 != null and prefixSpec2 !=''">
+          and rn2.value &gt;= cast(#{prefixSpec2} as decimal(10,3))
+          <if test="suffixSpec2 != null and suffixSpec2 !=''">
+            and rn2.value &lt;= cast(#{suffixSpec2}  as decimal(10,3))
+          </if>
+        </if>
+      </if>
+      <if test="spec2Flag == 0">
+        <if test="prefixSpec2 != null and prefixSpec2 !=''">
+          and rn2.value = #{prefixSpec2}
+        </if>
+      </if>
+      <!-- 规格3区间查询-->
+      <if test="spec3Flag > 0">
+        <if test="prefixSpec3 != null and prefixSpec3 !=''">
+          and rn3.value &gt;= cast(#{prefixSpec3} as decimal(10,3))
+          <if test="suffixSpec3 != null and suffixSpec3 !=''">
+            and rn3.value &lt;= cast(#{suffixSpec3}  as decimal(10,3))
+          </if>
+        </if>
+      </if>
+      <if test="spec3Flag == 0">
+        <if test="prefixSpec3 != null and prefixSpec3 !=''">
+          and rn3.value = #{prefixSpec3}
+        </if>
+      </if>
+    </if>
+  </where>
+  -- 分组,删选唯一资源
+  )t group by t.spec,t.account_id,t.categoryName,t.materialName,t.factory_name,t.warehouse_name,t.city_name) t
+</select>
+
+<!-- 业务找货列表 -->
+<select id="getSingleBusinessResourceList" parameterType="com.prcsteel.platform.smartmatch.model.query.ResourceBusinessQuery"
+        resultMap="ResourceBusinessMap">
+  select * from(
+  select t.id,t.account_id,t.factory_name,t.warehouse_name,t.city_name,t.price,t.mgt_last_updated as sortLastUpdate,t.mgt_last_updated as sortMgtLastUpdate,
+  if(t1.supplier_label ='白名单',1,3)as supplier_label,t1.payment_label,t1.name as accountName,t2.spec,
+  t.category_uuid AS categoryUuid, t.category_name as categoryName,t4.name as materialName,
+  /** t5.mgt_lastUpdatedBy,t5.mgt_last_updated,**/
+  t6.single_weight
+  from cust_resource t
+  -- 关联客户,获取客户名称
+  LEFT JOIN cust_account t1 on t1.id = t.account_id
+  -- 关联,资源规格关联表,规格合并
+  left join(
+  select t.resource_id,group_concat(t.value order by t.priority separator '*') as spec from cust_resource_norms t
+  group by t.resource_id)  t2 on t2.resource_id =  t.id
+  -- 关联材质名,获取材质名称
+  left join common_materials t4 on t4.uuid = t.material_uuid
+  /**
+  -- 关联资源询价资源,获取最后一次询价信息
+  left join(
+  select t.account_id,t.mgt_last_updated,t.lastUpdatedBy from (select t.account_id,t.mgt_last_updated,t1.name as lastUpdatedBy from cust_resource t
+  left join acl_user t1 on t1.login_id = t.mgt_last_updated_by  where t.status = 'approved' and t.source_type = 'inquiry' order by t.mgt_last_updated desc)
+  t group by t.account_id) t5 on t5.account_id = t.account_id
+  **/
+  left join base_factory t7 on t7.id=t.factory_id
+  left join common_category_weight t6 on t6.category_uuid=t.category_uuid and t2.spec=t6.norms_name and t7.id=t6.factory_id
+  -- 关联规格
+  <if test="specQueryFlag > 0">
+    left join cust_resource_norms rn1 on rn1.resource_id=t.id and rn1.priority=1
+    left join cust_resource_norms rn2 on rn2.resource_id=t.id and rn2.priority=2
+    left join cust_resource_norms rn3 on rn3.resource_id=t.id and rn3.priority=3
+  </if>
+  <where>
+    <if test="factoryName != null and factoryName !=''">
+      and t.factory_name like '%' #{factoryName} '%'
+    </if>
+    <if test="cityName != null and cityName !=''">
+      and t.city_name like '%' #{cityName} '%'
+    </if>
+    <if test="accountName != null and accountName !=''">
+      and t1.name like '%' #{accountName} '%'
+    </if>
+    <if test="specQueryFlag == 0 and spec != null and spec !=''">
+      and t2.spec like '%' #{spec} '%'
+    </if>
+    <if test="categoryName != null and categoryName !=''">
+      and t.category_name like '%' #{categoryName} '%'
+    </if>
+    <if test="materialName != null and materialName !=''">
+      and t4.name = #{materialName}
+    </if>
+    <if test="beginTime != null and beginTime !=''">
+      and date_format(t.mgt_last_updated,'%Y-%m-%d %H:%i:%s') &gt;= #{beginTime}
+    </if>
+    <if test="endTime != null and endTime !=''">
+      and date_format(t.mgt_last_updated,'%Y-%m-%d %H:%i:%s') &lt;= #{endTime}
+    </if>
+    <if test="beginTime != null and beginTime !=''">
+      and date_format(t.mgt_last_updated,'%Y-%m-%d %H:%i:%s') &gt;= #{beginTime}
+    </if>
+    <if test="endTime != null and endTime !=''">
+      and date_format(t.mgt_last_updated,'%Y-%m-%d %H:%i:%s') &lt;= #{endTime}
+    </if>
+    <if test="specQueryFlag > 0">
+      <!-- 规格1区间查询-->
+      <if test="spec1Flag > 0">
+        <if test="prefixSpec1 != null and prefixSpec1 !=''">
+          and rn1.value &gt;= cast(#{prefixSpec1} as decimal(10,3))
+          <if test="suffixSpec1 != null and suffixSpec1 !=''">
+            and rn1.value &lt;= cast(#{suffixSpec1}  as decimal(10,3))
+          </if>
+        </if>
+      </if>
+      <if test="spec1Flag == 0">
+        <if test="prefixSpec1 != null and prefixSpec1 !=''">
+          and rn1.value = #{prefixSpec1}
+        </if>
+      </if>
+      <!-- 规格2区间查询-->
+      <if test="spec2Flag > 0">
+        <if test="prefixSpec2 != null and prefixSpec2 !=''">
+          and rn2.value &gt;= cast(#{prefixSpec2} as decimal(10,3))
+          <if test="suffixSpec2 != null and suffixSpec2 !=''">
+            and rn2.value &lt;= cast(#{suffixSpec2}  as decimal(10,3))
+          </if>
+        </if>
+      </if>
+      <if test="spec2Flag == 0">
+        <if test="prefixSpec2 != null and prefixSpec2 !=''">
+          and rn2.value = #{prefixSpec2}
+        </if>
+      </if>
+      <!-- 规格3区间查询-->
+      <if test="spec3Flag > 0">
+        <if test="prefixSpec3 != null and prefixSpec3 !=''">
+          and rn3.value &gt;= cast(#{prefixSpec3} as decimal(10,3))
+          <if test="suffixSpec3 != null and suffixSpec3 !=''">
+            and rn3.value &lt;= cast(#{suffixSpec3}  as decimal(10,3))
+          </if>
+        </if>
+      </if>
+      <if test="spec3Flag == 0">
+        <if test="prefixSpec3 != null and prefixSpec3 !=''">
+          and rn3.value = #{prefixSpec3}
+        </if>
+      </if>
+    </if>
+  </where>
+  -- 分组,删选唯一资源
+  order by t1.payment_label,t1.supplier_label,t.account_id,t.price)t
+  group by t.account_id,t.spec,t.categoryName,t.materialName,t.factory_name,t.warehouse_name,t.city_name
+  order by t.payment_label,t.supplier_label,t.account_id,t.price
+  limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+</select>
+
+<!--  掌柜行情中心查询日常资源列表查询，add by zhoucai  2016-6-24-->
+<select id="searchResourceList" resultMap="ResourceDailyResultMap" parameterType="com.prcsteel.platform.smartmatch.model.query.ResourceQuery">
+  SELECT id,categoryName,categoryUuid,
+  materialName,materialUuid,spec,factoryName,factoryId,warehouseName,warehouseId
+  ,cityName ,cityId,price,mgt_last_updated FROM (
+  SELECT
+  y.resid id,
+  y.category_name as categoryName,
+  y.category_uuid as categoryUuid,
+  ifnull(mat. NAME, y.material_name) materialName,
+  mat.uuid materialUuid,
+  y.spec spec,
+  ifnull(fac. NAME, y.factory_name) factoryName,
+  fac.id factoryId,
+  y.quantity,
+  y.warehouse_name warehouseName,
+  ware.id warehouseId,
+  weight,
+  weight_concept weightConcept,
+  price,
+  y.remark remark,
+  y. STATUS statusNum,
+  y.mgt_last_updated,
+
+  y.is_exception,
+  y.city_id  cityId,
+  y.city_name cityName,
+  ifnull(y.price_change, '-') AS priceChange,
+  y.source_type sourceType,
+  y. STATUS
+  FROM
+  (
+  SELECT
+  res.id resid,
+  res.account_id,
+  res.category_uuid,
+  res.category_name,
+  res.city_id,
+  res.city_name,
+  res.material_uuid,
+  res.material_name,
+  res.warehouse_id,
+  res.warehouse_name,
+  res.factory_id,
+  res.factory_name,
+  res.quantity,
+  res.weight,
+  res.weight_concept,
+  res.price,
+  res.price_change,
+  res.remark,
+  res.user_ids,
+  res.status,
+  res.mgt_last_updated,
+  res.source_type,
+  res.is_exception,
+  group_concat(norm. VALUE order by norm.priority SEPARATOR '*') spec
+  FROM
+  cust_resource res
+  LEFT JOIN cust_resource_norms norm ON res.id = norm.resource_id
+  <where>
+    res.price!=99999
+    <!--0: 待审核 1：日常资源 2：询价资源 3：历史成交 4：异常资源 5：缺失资源 空是全部资源 -->
+    <if test='statusNum =="5"'>
+      <!--0: 待审核 资源 全部资源，不包括待审核资源 -->
+      and res.status = 'approved'
+    </if>
+    <if test='statusNum != null and statusNum =="0"'>
+      <!--0: 待审核 资源 -->
+      and res.status ='declined'
+      and res.source_type ='daily_common'
+      and res.is_exception = 'normal'
+    </if>
+    <if test='statusNum != null and statusNum =="1"'>
+      <!--1：日常资源 -->
+      <!--modify by zhoucai 16-6-20 如果为日常资源，新增资源城市判断，掌柜App需求 -->
+      <if test='cityName != null and cityName!=""'>
+        and res.city_name LIKE CONCAT('%',#{cityName,jdbcType=VARCHAR},'%')
+
+      </if>
+      and res.status ='approved'
+      and res.source_type ='daily_common'
+      and res.is_exception = 'normal'
+    </if>
+    <if test='statusNum != null and statusNum =="2"'>
+      <!--2: 询价资源 -->
+      and res.status ='approved'
+      and res.source_type ='inquiry'
+      and res.is_exception = 'normal'
+    </if>
+    <if test='statusNum != null and statusNum =="3"'>
+      <!-- 3：历史成交 -->
+      and res.status ='approved'
+      and res.source_type ='history_transaction'
+      and res.is_exception = 'normal'
+    </if>
+    <if test='statusNum != null and statusNum =="4"'>
+      <!-- 4：异常资源 -->
+      and res.is_exception = 'exception'
+    </if>
+    <if test='statusNum != null and statusNum =="8"'>
+      <!-- 6：超市资源 -->
+      and res.is_exception = 'normal' and status='approved'
+    </if>
+    <if test="upStart !=null and upStart !=''">
+      and res.mgt_last_updated>=#{upStart}
+    </if>
+    <if test="upEnd !=null and upEnd !=''">
+      and res.mgt_last_updated <![CDATA[<=]]> #{upEnd}
+    </if>
+  </where>
+  GROUP BY
+  res.id
+  ) y
+  LEFT JOIN common_materials mat ON y.material_uuid = mat.uuid
+  LEFT JOIN base_factory fac ON y.factory_id = fac.id
+  LEFT JOIN base_warehouse ware ON y.warehouse_id = ware.id
+  LEFT JOIN base_city city ON city.id = ware.city_id
+
+  <where>
+
+    <if test="warehouseName != null and warehouseName != ''">
+      and (concat(city.name,'-',ware.name) LIKE '%' #{warehouseName} '%'  or x.warehouse_name LIKE '%' #{warehouseName} '%' )
+    </if>
+    <if test="categoryName != null and categoryName != ''">
+      and y.category_name LIKE '%' #{categoryName} '%'
+    </if>
+    <if test="materialName != null and materialName != ''">
+      and mat.name LIKE '%' #{materialName} '%'
+    </if>
+    <if test="factoryName != null and factoryName != ''">
+      and (fac.name LIKE '%' #{factoryName} '%' or x.factory_name LIKE '%' #{factoryName} '%')
+    </if>
+    <if test="area != null and area != ''">
+      and city.name LIKE '%' #{area} '%'
+    </if>
+    <if test="updateType !=null and updateType != ''">
+      and x.source_type = #{updateType}
+    </if>
+
+    <!-- 排除历史资源 -->
+    <if test="statusNum != null and statusNum !=3 ">
+      <if test="userIds != null">
+        and
+        <foreach item="id" index="index" collection="userIds" open="(" separator="or" close=")">
+          FIND_IN_SET(#{id},user_ids)
+        </foreach>
+      </if>
+    </if>
+  </where>
+  order by cityName,mgt_last_updated desc
+  ) t
+  <if test='statusNum != null and statusNum =="8"'>
+    <!-- 8：超市资源 -->
+    GROUP BY t.categoryUUid,t.materialUUid,t.spec,t.factoryid,t.warehouseName
+  </if>
+</select>
+
+
+<!--超市Rest接口查询审核和历史的资源-->
+<select id="selectRestResource" parameterType="com.prcsteel.platform.smartmatch.model.query.RestNormalResourceQuery" resultType="com.prcsteel.platform.smartmatch.model.dto.ResourceDto">
+  SELECT SQL_CALC_FOUND_ROWS  * FROM ( SELECT * from (SELECT
+  bp.category_uuid categoryUuid,
+  bp.category_name categoryName,
+  bp.material_uuid materialUuid,
+  bp.material_name materialName,
+  bp.spec1,bp.spec2,bp.spec3,
+  bp.spec,
+  bp.factory_id factoryId, bp.factory_name factoryName,
+  bp.city_id cityId,bp.city_name cityName,
+  <if test="type != null and type =='NORMAL' ">
+    bp.warehouse_id warehouseId,
+
+    ifnull(bw.NAME,ifnull(bp.warehouse_name,'')) warehouseName,
+    bp.weight_concept weightConcept,
+  </if>
+  bp.price,
+  bp.last_updated as lastUpdated,null total
+  FROM base_product bp
+  left join base_warehouse bw on bp.warehouse_id = bw.id
+  <where>
+    bp.price!=99999
+    <if test="categoryUuid != null and categoryUuid != ''">
+      AND bp.category_uuid=#{categoryUuid}
+    </if>
+    <if test="(categoryUuid == null or categoryUuid =='') and categoryName !=null and categoryName != ''">
+      AND bp.category_name LIKE  '%' #{categoryName} '%'
+    </if>
+    <if test="materialUuids != null and materialUuids != ''">
+      AND FIND_IN_SET(bp.material_uuid,#{materialUuids})
+    </if>
+    <if test="(materialUuids == null or materialUuids =='') and materialNames !=null and materialNames != ''">
+      AND FIND_IN_SET(bp.material_name,#{materialNames})
+    </if>
+    <if test="purchaseCityIds != null and purchaseCityIds != ''">
+      AND FIND_IN_SET(bp.city_id,#{purchaseCityIds})
+    </if>
+    <if test="(purchaseCityIds == null or purchaseCityIds =='') and purchaseCityNames !=null and purchaseCityNames != ''">
+      AND FIND_IN_SET(bp.city_name,#{purchaseCityNames})
+    </if>
+    <if test="factoryIds != null and factoryIds != ''">
+      AND FIND_IN_SET(bp.factory_id,#{factoryIds})
+    </if>
+    <if test="(factoryIds == null or factoryIds =='') and factoryNames !=null and factoryNames != ''">
+      AND FIND_IN_SET(bp.factory_name,#{factoryNames})
+    </if>
+    <if test="warehouseIds != null and warehouseIds != ''">
+      AND FIND_IN_SET(bp.factory_id,#{warehouseIds})
+    </if>
+    <if test="warehouseNames !=null and warehouseNames != ''">
+      AND FIND_IN_SET(bp.warehouse_name,#{warehouseNames})
+    </if>
+    <if test="specificCityName != null and specificCityName != ''">
+      AND  bp.city_name Like '%' #{specificCityName} '%'
+    </if>
+
+    <if test='spec1 != null and spec1 != "" and spec1 != "C" and spec1 !="L" '>
+      AND FIND_IN_SET ( bp.spec1,#{spec1})
+    </if>
+
+    <if test='spec2 != null and spec2 != "" and spec2 != "C" and spec2 !="L" '>
+      AND CASE WHEN INSTR(#{spec2},'-') = 0 THEN
+      FIND_IN_SET(bp.spec2, #{spec2})
+      ELSE
+      CASE WHEN SUBSTR(#{spec2},0,INSTR(#{spec2},'-')) = '' THEN TRUE ELSE bp.spec2  <![CDATA[ >=  ]]>SUBSTR(#{spec2},0,INSTR(#{spec2},'-'))*1.0 END
+      AND
+      CASE WHEN SUBSTR(#{spec2},INSTR(#{spec2},'-')+1) = '' THEN TRUE ELSE bp.spec2  <![CDATA[ <=  ]]>SUBSTR(#{spec2},INSTR(#{spec2},'-')+1)*1.0 END
+      END
+    </if>
+    <if test='spec3 != null and spec3 != "" and spec3 != "C" and spec3 !="L" '>
+      AND  CASE WHEN INSTR(#{spec3},'-')=0 THEN
+      FIND_IN_SET(bp.spec3, #{spec3})
+      ELSE
+      CASE WHEN SUBSTR(#{spec3},0,INSTR(#{spec3},'-')) = '' THEN TRUE ELSE bp.spec3   <![CDATA[ >=   ]]>SUBSTR(#{spec3},0,INSTR(#{spec3},'-'))*1.0 END
+      AND
+      CASE WHEN SUBSTR(#{spec3},INSTR(#{spec3},'-')+1) = '' THEN TRUE ELSE bp.spec3   <![CDATA[ <=  ]]>SUBSTR(#{spec3},INSTR(#{spec3},'-')+1)*1.0 END
+      END
+    </if>
+    <if test='spec != null and spec != ""'>
+      AND bp.spec like concat('%',#{spec},'%')
+    </if>
+    <if test="startDate !=null and startDate !=''">
+      AND bp.last_updated>=#{startDate}
+    </if>
+    <if test="endDate !=null and endDate !=''">
+      AND bp.last_updated<![CDATA[<=]]>#{endDate}
+    </if>
+    <if test="priceMin !=null and priceMin !=''">
+      <![CDATA[ AND bp.price>=#{priceMin} ]]>
+    </if>
+    <if test="priceMax !=null and priceMax !=''">
+      <![CDATA[ AND bp.price<=#{priceMax} ]]>
+    </if>
+  </where>
+  <if test="type != null and type =='HOT' ">
+    ORDER BY bp.last_updated desc
+  </if>
+  <if test="type != null and type =='NORMAL' ">
+    <choose>
+      <when test="orderBy != null and orderBy != null ">
+        ORDER BY CASE WHEN TIMESTAMPDIFF(SECOND, bp.last_updated,NOW()) > 86400 OR  bp.last_updated IS NULL THEN  999999 ELSE ${orderBy} END
+        <if test="orderWay != null and orderWay != null ">
+          ${orderWay}
+        </if>
+        ,${orderBy}
+        <if test="orderWay != null and orderWay != null ">
+          ${orderWay}
+        </if>
+      </when>
+      <otherwise>
+        ORDER BY bp.last_updated desc
+      </otherwise>
+    </choose>
+  </if>
+  ) t
+  <if test="type != null and type =='HOT' ">
+    GROUP BY categoryUuid,materialUuid,spec,factoryId,cityId
+    ORDER BY lastUpdated desc
+  </if>
+  ) t1
+  <if test="start != null and pageSize != null ">
+    LIMIT #{start}, #{pageSize}
+  </if>
+  UNION
+  SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,
+  <if test="type != null and type =='NORMAL' ">
+    NULL,NULL,NULL,
+  </if>
+  FOUND_ROWS()
+</select>
+
+<resultMap id="ResourceDtoMap" type="com.prcsteel.platform.smartmatch.model.dto.ResourceBaseDto">
+  <result column="id" property="id" jdbcType="BIGINT"/>
+  <result column="factory_name" property="factoryName" jdbcType="VARCHAR" />
+  <result column="city_name" property="cityName" jdbcType="VARCHAR" />
+  <result column="price" property="price" jdbcType="DECIMAL" />
+  <result column="spec" property="spec" jdbcType="VARCHAR" />
+  <result column="categoryName" property="categoryName" jdbcType="VARCHAR" />
+  <result column="materialName" property="materialName" jdbcType="VARCHAR" />
+  <result column="weight_concept" property="weightConcept" jdbcType="VARCHAR" />
+  <result column="categoryUuid" property="categoryUuid" jdbcType="VARCHAR" />
+  <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+</resultMap>
+
+<select id="selectByResourceId" parameterType="java.lang.Long" resultMap="ResourceDtoMap">
+  SELECT t.id,t.factory_name,t.warehouse_name,t.city_name,t.price,t.weight_concept,
+  t2.spec,t.category_name AS categoryName,t4.name AS materialName, t.category_uuid AS categoryUuid
+  FROM cust_resource t
+  LEFT JOIN ( SELECT t.resource_id,group_concat(t.value order by t.priority separator '*') as spec
+  FROM cust_resource_norms t group by t.resource_id) t2 ON t2.resource_id = t.id
+  LEFT JOIN common_materials t4 on t4.uuid = t.material_uuid
+  WHERE t.id = #{resourceId,jdbcType=BIGINT}
+</select>
+
+
+<!-- 业务找货列表 统计(多条查询条件)-->
+<select id="getMultiBusinessResourceListTotal" parameterType="com.prcsteel.platform.smartmatch.model.query.ResourceBusinessQuery"
+        resultType="java.lang.Integer">
+  select count(t.id) from
+  (select t.id from(
+  select t.id,t.account_id,t.factory_name,t.warehouse_name,t.city_name,t.price,t1.supplier_label,t1.payment_label,t1.name as accountName,t2.spec,
+  t.category_name as categoryName,t4.name as materialName
+  /**,t5.mgt_last_updated_by,t5.mgt_last_updated **/
+  from cust_resource t
+  -- 关联客户,获取客户名称
+  LEFT JOIN cust_account t1 on t1.id = t.account_id
+  -- 关联,资源规格关联表,规格合并
+  left join(
+  select t.resource_id,group_concat(t.value order by t.priority separator '*') as spec from cust_resource_norms t
+  group by t.resource_id)  t2 on t2.resource_id =  t.id
+  -- 关联材质名,获取材质名称
+  left join common_materials t4 on t4.uuid = t.material_uuid
+  /**
+  -- 关联资源询价资源,获取最后一次询价信息
+  left join(
+  select t.account_id,t.mgt_last_updated,t.mgt_last_updated_by from (select t.account_id,t.mgt_last_updated,t1.name as lastUpdatedBy from cust_resource t
+  left join acl_user t1 on t1.login_id = t.mgt_last_updated_by  where t.status = 'approved' and t.source_type = 'inquiry' order by t.mgt_last_updated desc)
+  t group by t.account_id) t5 on t5.account_id = t.account_id
+  **/
+  <!-- 规格包含"-"号,表示区间查询-->
+  -- 关联规格
+  <if test="specQueryFlag > 0">
+    left join cust_resource_norms rn1 on rn1.resource_id=t.id and rn1.priority=1
+    left join cust_resource_norms rn2 on rn2.resource_id=t.id and rn2.priority=2
+    left join cust_resource_norms rn3 on rn3.resource_id=t.id and rn3.priority=3
+  </if>
+  <if test="queryDataList != null and queryDataList.size() > 0">
+    <where>
+      (
+      <foreach item="res" index="index" collection="queryDataList" open="" separator="or" close="">
+        (1=1
+        <if test="res.factoryName != null and res.factoryName !=''">
+          and t.factory_name like '%' #{res.factoryName} '%'
+        </if>
+        <if test="res.cityName != null and res.cityName !=''">
+          and t.city_name like '%' #{res.cityName} '%'
+        </if>
+        <if test="specQueryFlag == 0 and res.spec != null and res.spec !=''">
+          and t2.spec like '%' #{res.spec} '%'
+        </if>
+        <if test="res.categoryName != null and res.categoryName !=''">
+          and t.category_name like '%' #{res.categoryName} '%'
+        </if>
+        <if test="res.materialName != null and res.materialName !=''">
+          and t4.name = #{res.materialName}
+        </if>
+        <!-- 规格1区间查询-->
+        <if test="res.spec1Flag > 0">
+          <if test="res.prefixSpec1 != null and res.prefixSpec1 !=''">
+            and rn1.value &gt;= cast(#{res.prefixSpec1} as decimal(10,3))
+            <if test="res.suffixSpec1 != null and res.suffixSpec1 !=''">
+              and rn1.value &lt;= cast(#{res.suffixSpec1}  as decimal(10,3))
+            </if>
+          </if>
+        </if>
+        <if test="specQueryFlag > 0">
+          <!-- 整个查询规格是区间查询,当前规格条件不包含区间,模糊匹配-->
+          <if test="res.spec1Flag == 0 and res.spec2Flag == 0 and res.spec3Flag == 0 ">
+            <if test="res.spec != null and res.spec !=''">
+              and t2.spec like '%' #{res.spec} '%'
+            </if>
+          </if>
+          <!-- 整个查询规格是区间查询,当前规格条件不包含区间,精确匹配-->
+          <if test="res.spec2Flag >0 or res.spec3Flag > 0 ">
+            <if test="res.spec1Flag ==0 and res.prefixSpec1 != null and res.prefixSpec1 !=''">
+              and rn1.value = #{res.prefixSpec1}
+            </if>
+          </if>
+        </if>
+        <!-- 规格2区间查询-->
+        <if test="res.spec2Flag > 0">
+          <if test="res.prefixSpec2 != null and res.prefixSpec2 !=''">
+            and rn2.value &gt;= cast(#{res.prefixSpec2} as decimal(10,3))
+            <if test="res.suffixSpec2 != null and res.suffixSpec2 !=''">
+              and rn2.value &lt;= cast(#{res.suffixSpec2}  as decimal(10,3))
+            </if>
+          </if>
+        </if>
+        <if test="res.spec2Flag == 0">
+          <if test="res.prefixSpec2 != null and res.prefixSpec2 !=''">
+            and rn2.value = #{res.prefixSpec2}
+          </if>
+        </if>
+        <!-- 规格3区间查询-->
+        <if test="res.spec3Flag > 0">
+          <if test="res.prefixSpec3 != null and res.prefixSpec3 !=''">
+            and rn3.value &gt;= cast(#{res.prefixSpec3} as decimal(10,3))
+            <if test="res.suffixSpec3 != null and res.suffixSpec3 !=''">
+              and rn3.value &lt;= cast(#{res.suffixSpec3}  as decimal(10,3))
+            </if>
+          </if>
+        </if>
+        <if test="res.spec3Flag == 0">
+          <if test="res.prefixSpec3 != null and res.prefixSpec3 !=''">
+            and rn3.value = #{res.prefixSpec3}
+          </if>
+        </if>
+        )
+      </foreach>
+      )
+      <if test="accountName != null and accountName !=''">
+        and t1.name like '%' #{accountName} '%'
+      </if>
+      <if test="beginTime != null and beginTime !=''">
+        and date_format(t.mgt_last_updated,'%Y-%m-%d %H:%i:%s') &gt;= #{beginTime}
+      </if>
+      <if test="endTime != null and endTime !=''">
+        and date_format(t.mgt_last_updated,'%Y-%m-%d %H:%i:%s') &lt;= #{endTime}
+      </if>
+    </where>
+  </if>
+  <if test="queryDataList == null or queryDataList.size() == 0">
+    <where>
+      <if test="beginTime != null and beginTime !=''">
+        and date_format(t.mgt_last_updated,'%Y-%m-%d %H:%i:%s') &gt;= #{beginTime}
+      </if>
+      <if test="endTime != null and endTime !=''">
+        and date_format(t.mgt_last_updated,'%Y-%m-%d %H:%i:%s') &lt;= #{endTime}
+      </if>
+    </where>
+  </if>
+  order by t.mgt_last_updated desc) t
+  -- 分组,删选唯一资源
+  group by t.account_id) t
+</select>
+<!-- 业务找货列表 (多条查询条件) -->
+<select id="getMultiBusinessResourceList" parameterType="com.prcsteel.platform.smartmatch.model.query.ResourceBusinessQuery"
+        resultMap="ResourceBusinessMap">
+  select * from(
+  select t.id,t.account_id,t.factory_name,t.warehouse_name,t.city_name,t.price,if(t1.supplier_label ='白名单',1,3)as supplier_label,t1.payment_label,t1.name as accountName,t1.org_name,t2.spec,
+  t.category_uuid as categoryUuid, t.category_name as categoryName,t4.name as materialName
+  /**
+  ,t5.lastUpdatedBy,t5.mgt_last_updated
+  **/
+  from cust_resource t
+  -- 关联客户,获取客户名称
+  LEFT JOIN cust_account t1 on t1.id = t.account_id
+  -- 关联,资源规格关联表,规格合并
+  left join(
+  select t.resource_id,group_concat(t.value order by t.priority separator '*') as spec from cust_resource_norms t
+  group by t.resource_id)  t2 on t2.resource_id =  t.id
+  -- 关联材质名,获取材质名称
+  left join common_materials t4 on t4.uuid = t.material_uuid
+  /**
+  -- 关联资源询价资源,获取最后一次询价信息
+  left join(
+  select t.account_id,t.mgt_last_updated,t.lastUpdatedBy from (select t.account_id,t.mgt_last_updated,t1.name as lastUpdatedBy from cust_resource t
+  left join acl_user t1 on t1.login_id = t.mgt_last_updated_by  where t.status = 'approved' and t.source_type = 'inquiry' order by t.mgt_last_updated desc)
+  t group by t.account_id) t5 on t5.account_id = t.account_id
+  **/
+  <!-- 规格包含"-"号,表示区间查询-->
+  -- 关联规格
+  <if test="specQueryFlag > 0">
+    left join cust_resource_norms rn1 on rn1.resource_id=t.id and rn1.priority=1
+    left join cust_resource_norms rn2 on rn2.resource_id=t.id and rn2.priority=2
+    left join cust_resource_norms rn3 on rn3.resource_id=t.id and rn3.priority=3
+  </if>
+  <if test="queryDataList != null and queryDataList.size() > 0">
+    <where>
+      (
+      <foreach item="res" index="index" collection="queryDataList" open="" separator="or" close="">
+        (1=1
+        <if test="res.factoryName != null and res.factoryName !=''">
+          and t.factory_name like '%' #{res.factoryName} '%'
+        </if>
+        <if test="res.cityName != null and res.cityName !=''">
+          and t.city_name like '%' #{res.cityName} '%'
+        </if>
+        <if test="specQueryFlag == 0 and res.spec != null and res.spec !=''">
+          and t2.spec like '%' #{res.spec} '%'
+        </if>
+        <if test="res.categoryName != null and res.categoryName !=''">
+          and t.category_name like '%' #{res.categoryName} '%'
+        </if>
+        <if test="res.materialName != null and res.materialName !=''">
+          and t4.name = #{res.materialName}
+        </if>
+        <!-- 规格1区间查询-->
+        <if test="res.spec1Flag > 0">
+          <if test="res.prefixSpec1 != null and res.prefixSpec1 !=''">
+            and rn1.value &gt;= cast(#{res.prefixSpec1} as decimal(10,3))
+            <if test="res.suffixSpec1 != null and res.suffixSpec1 !=''">
+              and rn1.value &lt;= cast(#{res.suffixSpec1}  as decimal(10,3))
+            </if>
+          </if>
+        </if>
+        <if test="specQueryFlag > 0">
+          <!-- 整个查询规格是区间查询,当前规格条件不包含区间,模糊匹配-->
+          <if test="res.spec1Flag == 0 and res.spec2Flag == 0 and res.spec3Flag == 0 ">
+            <if test="res.spec != null and res.spec !=''">
+              and t2.spec like '%' #{res.spec} '%'
+            </if>
+          </if>
+          <!-- 整个查询规格是区间查询,当前规格条件不包含区间,精确匹配-->
+          <if test="res.spec2Flag >0 or res.spec3Flag > 0 ">
+            <if test="res.spec1Flag ==0 and res.prefixSpec1 != null and res.prefixSpec1 !=''">
+              and rn1.value = #{res.prefixSpec1}
+            </if>
+          </if>
+        </if>
+        <!-- 规格2区间查询-->
+        <if test="res.spec2Flag > 0">
+          <if test="res.prefixSpec2 != null and res.prefixSpec2 !=''">
+            and rn2.value &gt;= cast(#{res.prefixSpec2} as decimal(10,3))
+            <if test="res.suffixSpec2 != null and res.suffixSpec2 !=''">
+              and rn2.value &lt;= cast(#{res.suffixSpec2}  as decimal(10,3))
+            </if>
+          </if>
+        </if>
+        <if test="res.spec2Flag == 0">
+          <if test="res.prefixSpec2 != null and res.prefixSpec2 !=''">
+            and rn2.value = #{res.prefixSpec2}
+          </if>
+        </if>
+        <!-- 规格3区间查询-->
+        <if test="res.spec3Flag > 0">
+          <if test="res.prefixSpec3 != null and res.prefixSpec3 !=''">
+            and rn3.value &gt;= cast(#{res.prefixSpec3} as decimal(10,3))
+            <if test="res.suffixSpec3 != null and res.suffixSpec3 !=''">
+              and rn3.value &lt;= cast(#{res.suffixSpec3}  as decimal(10,3))
+            </if>
+          </if>
+        </if>
+        <if test="res.spec3Flag == 0">
+          <if test="res.prefixSpec3 != null and res.prefixSpec3 !=''">
+            and rn3.value = #{res.prefixSpec3}
+          </if>
+        </if>
+        )
+      </foreach>
+      )
+      <if test="accountName != null and accountName !=''">
+        and t1.name like '%' #{accountName} '%'
+      </if>
+      <if test="beginTime != null and beginTime !=''">
+        and date_format(t.mgt_last_updated,'%Y-%m-%d %H:%i:%s') &gt;= #{beginTime}
+      </if>
+      <if test="endTime != null and endTime !=''">
+        and date_format(t.mgt_last_updated,'%Y-%m-%d %H:%i:%s') &lt;= #{endTime}
+      </if>
+
+    </where>
+  </if>
+  <if test="queryDataList == null or queryDataList.size() == 0">
+    <where>
+      <if test="beginTime != null and beginTime !=''">
+        and date_format(t.mgt_last_updated,'%Y-%m-%d %H:%i:%s') &gt;= #{beginTime}
+      </if>
+      <if test="endTime != null and endTime !=''">
+        and date_format(t.mgt_last_updated,'%Y-%m-%d %H:%i:%s') &lt;= #{endTime}
+      </if>
+    </where>
+  </if>
+  order by t1.payment_label,t1.supplier_label,t.price,t.account_id) t
+  -- 分组,删选唯一资源
+  group by t.account_id
+  order by t.payment_label,t.supplier_label,t.price,t.account_id
+  limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+</select>
+
+<!-- 业务找货列表 (多条查询条件,子列表) -->
+<select id="getMultiBusinessResourceChildList" parameterType="com.prcsteel.platform.smartmatch.model.query.ResourceBusinessQuery"
+        resultMap="ResourceBusinessMap">
+  select * from(
+  select t.id,t.account_id,t.factory_name,t.warehouse_name,t.city_name,t.price,t.weight,t.weight_concept,t2.spec,
+  t.category_uuid AS categoryUuid, t.category_name as categoryName,t4.name as materialName,
+  /** t5.lastUpdatedBy,t5.mgt_last_updated,**/
+  t6.single_weight
+  from cust_resource t
+  -- 关联,资源规格关联表,规格合并
+  left join(
+  select t.resource_id,group_concat(t.value order by t.priority separator '*') as spec from cust_resource_norms t
+  group by t.resource_id)  t2 on t2.resource_id =  t.id
+  -- 关联材质名,获取材质名称
+  left join common_materials t4 on t4.uuid = t.material_uuid
+  /**
+  -- 关联资源询价资源,获取最后一次询价信息
+  left join(
+  select t.account_id,t.mgt_last_updated,t.lastUpdatedBy from (select t.account_id,t.mgt_last_updated,t1.name as lastUpdatedBy from cust_resource t
+  left join acl_user t1 on t1.login_id = t.mgt_last_updated_by  where t.status = 'approved' and t.source_type = 'inquiry' order by t.mgt_last_updated desc)
+  t group by t.account_id) t5 on t5.account_id = t.account_id
+  **/
+  left join base_factory t7 on t7.id=t.factory_id
+  left join common_category_weight t6 on t6.category_uuid=t.category_uuid and t2.spec=t6.norms_name and t7.id=t6.factory_id
+  <!-- 规格包含"-"号,表示区间查询-->
+  -- 关联规格
+  <if test="specQueryFlag > 0">
+    left join cust_resource_norms rn1 on rn1.resource_id=t.id and rn1.priority=1
+    left join cust_resource_norms rn2 on rn2.resource_id=t.id and rn2.priority=2
+    left join cust_resource_norms rn3 on rn3.resource_id=t.id and rn3.priority=3
+  </if>
+  <if test="queryDataList != null and queryDataList.size() > 0">
+    <where>
+      (
+      <foreach item="res" index="index" collection="queryDataList" open="" separator="or" close="">
+        (1=1
+        <if test="res.factoryName != null and res.factoryName !=''">
+          and t.factory_name like '%' #{res.factoryName} '%'
+        </if>
+        <if test="res.cityName != null and res.cityName !=''">
+          and t.city_name like '%' #{res.cityName} '%'
+        </if>
+        <if test="specQueryFlag == 0 and res.spec != null and res.spec !=''">
+          and t2.spec like '%' #{res.spec} '%'
+        </if>
+        <if test="res.categoryName != null and res.categoryName !=''">
+          and t.category_name like '%' #{res.categoryName} '%'
+        </if>
+        <if test="res.materialName != null and res.materialName !=''">
+          and t4.name = #{res.materialName}
+        </if>
+        <!-- 规格1区间查询-->
+        <if test="res.spec1Flag > 0">
+          <if test="res.prefixSpec1 != null and res.prefixSpec1 !=''">
+            and rn1.value &gt;= cast(#{res.prefixSpec1} as decimal(10,3))
+            <if test="res.suffixSpec1 != null and res.suffixSpec1 !=''">
+              and rn1.value &lt;= cast(#{res.suffixSpec1}  as decimal(10,3))
+            </if>
+          </if>
+        </if>
+        <if test="specQueryFlag > 0">
+          <!-- 整个查询规格是区间查询,当前规格条件不包含区间,模糊匹配-->
+          <if test="res.spec1Flag == 0 and res.spec2Flag == 0 and res.spec3Flag == 0 ">
+            <if test="res.spec != null and res.spec !=''">
+              and t2.spec like '%' #{res.spec} '%'
+            </if>
+          </if>
+          <!-- 整个查询规格是区间查询,当前规格条件不包含区间,精确匹配-->
+          <if test="res.spec2Flag >0 or res.spec3Flag > 0 ">
+            <if test="res.spec1Flag ==0 and res.prefixSpec1 != null and res.prefixSpec1 !=''">
+              and rn1.value = #{res.prefixSpec1}
+            </if>
+          </if>
+        </if>
+        <!-- 规格2区间查询-->
+        <if test="res.spec2Flag > 0">
+          <if test="res.prefixSpec2 != null and res.prefixSpec2 !=''">
+            and rn2.value &gt;= cast(#{res.prefixSpec2} as decimal(10,3))
+            <if test="res.suffixSpec2 != null and res.suffixSpec2 !=''">
+              and rn2.value &lt;= cast(#{res.suffixSpec2}  as decimal(10,3))
+            </if>
+          </if>
+        </if>
+        <if test="res.spec2Flag == 0">
+          <if test="res.prefixSpec2 != null and res.prefixSpec2 !=''">
+            and rn2.value = #{res.prefixSpec2}
+          </if>
+        </if>
+        <!-- 规格3区间查询-->
+        <if test="res.spec3Flag > 0">
+          <if test="res.prefixSpec3 != null and res.prefixSpec3 !=''">
+            and rn3.value &gt;= cast(#{res.prefixSpec3} as decimal(10,3))
+            <if test="res.suffixSpec3 != null and res.suffixSpec3 !=''">
+              and rn3.value &lt;= cast(#{res.suffixSpec3}  as decimal(10,3))
+            </if>
+          </if>
+        </if>
+        <if test="res.spec3Flag == 0">
+          <if test="res.prefixSpec3 != null and res.prefixSpec3 !=''">
+            and rn3.value = #{res.prefixSpec3}
+          </if>
+        </if>
+        )
+      </foreach>
+      )
+    </where>
+  </if>
+  <if test="queryDataList == null or queryDataList.size() == 0">
+    <where>
+      <if test="beginTime != null and beginTime !=''">
+        and date_format(t.mgt_last_updated,'%Y-%m-%d %H:%i:%s') &gt;= #{beginTime}
+      </if>
+      <if test="endTime != null and endTime !=''">
+        and date_format(t.mgt_last_updated,'%Y-%m-%d %H:%i:%s') &lt;= #{endTime}
+      </if>
+    </where>
+  </if>
+  order by t.mgt_last_updated desc) t
+  where t.account_id in
+  <foreach item="accountId" index="index" collection="accountIdList" open="(" separator="," close=")">
+    #{accountId}
+  </foreach>
+  order by t.account_id,t.price
+</select>
+</mapper>

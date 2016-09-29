@@ -1,0 +1,301 @@
+<!--TAPBAR-->
+<div class="tabbar">
+    <ul class="nav nav-tabs tab-color-blue" id="myTab4">
+        #if($shiro.hasPermission("order:query:index:page"))
+            <li
+                #if(${tab} == 'index')
+                        class="active"
+                #end>
+                <a
+                    #if(${tab} == 'index')
+                            href="javascript:;"
+                    #else
+                            href="$link.getContextPath()/order/query/index.html"
+                    #end>全部</a>
+
+            </li>
+        #end
+        #if($shiro.hasPermission("order:query:approval:page"))
+            <li
+                #if(${tab} == 'approval')
+                        class="active"
+                #end>
+                <a
+                    #if(${tab} == 'approval')
+                            href="javascript:;"
+                    #else
+                            href="$link.getContextPath()/order/query/approval.html"
+                    #end
+                        >待审核<span class="red bolder">
+                    $!{approval}
+                </span>
+                </a>
+            </li>
+        #end
+
+        #if($shiro.hasPermission("order:banktransaction:list:page"))
+            <li
+                #if(${tab} == 'banktransaction')
+                        class="active"
+                #end>
+                <a
+                    #if(${tab} == 'banktransaction')
+                            href="javascript:;"
+                    #else
+                            href="$link.getContextPath()/order/banktransaction/list.html"
+                    #end
+                        >到账查询<span class="red bolder">
+                    $!{banktransaction}
+                </span></a>
+            </li>
+        #end
+
+        #if($shiro.hasPermission("order:query:associate:page"))
+            <li
+                #if(${tab} == 'associate')
+                        class="active"
+                #end>
+                <a
+                    #if(${tab} == 'associate')
+                            href="javascript:;"
+                    #else
+                            href="$link.getContextPath()/order/query/associate.html"
+                    #end
+                        >待关联<span class="red bolder">
+                    $!{associate}
+                </span>
+                </a>
+            </li>
+        #end
+
+        #if($shiro.hasPermission("order:query:applypayment:page"))
+            <li
+                #if(${tab} == 'applypayment')
+                        class="active"
+                #end>
+                <a
+                    #if(${tab} == 'applypayment')
+                            href="javascript:;"
+                    #else
+                            href="$link.getContextPath()/order/query/applypayment.html"
+                    #end
+                        >待申请付款<span class="red bolder">
+                    $!{applypayment}
+                </span>
+                </a>
+            </li>
+        #end
+
+        #if($shiro.hasPermission("order:query:payment:page"))
+            <li
+                #if(${tab} == 'payment')
+                        class="active"
+                #end>
+
+                <a
+                    #if(${tab} == 'payment')
+                            href="javascript:;"
+                    #else
+                            href="$link.getContextPath()/order/query/payment.html"
+                    #end
+                        >待审核付款<span
+                        class="red bolder">
+                    $!{payment}
+                </span>
+                </a>
+            </li>
+        #end
+
+        #if($shiro.hasPermission("order:query:printpendingpayapply:page"))
+            <li
+                #if(${tab} == 'printpendingpayapply')
+                        class="active"
+                #end>
+                <a
+                    #if(${tab} == 'printpendingpayapply')
+                            href="javascript:;"
+                    #else
+                            href="$link.getContextPath()/order/query/printpendingpayapply.html"
+                    #end
+                        >待打印付款申请<span class="red bolder">
+                    $!{printpendingpayapply}
+                </span>
+                </a>
+            </li>
+        #end
+
+		#if($shiro.hasPermission("order:query:confirmpayment:page"))
+            <li
+                #if(${tab} == 'confirmpayment')
+                        class="active"
+                #end>
+                <a
+                    #if(${tab} == 'confirmpayment')
+                            href="javascript:;"
+                    #else
+                            href="$link.getContextPath()/order/query/confirmpayment.html"
+                    #end
+                        >待确认已付款<span class="red bolder">
+                    $!{confirmpayment}
+                </span>
+                </a>
+            </li>
+		#end
+		
+        #if($shiro.hasPermission("order:query:pickup:page"))
+            <li
+                #if(${tab} == 'pickup')
+                        class="active"
+                #end>
+                <a
+                    #if(${tab} == 'pickup')
+                            href="javascript:;"
+                    #else
+                            href="$link.getContextPath()/order/query/pickup.html"
+                    #end
+                        >待提货<span class="red bolder">
+                    $!{pickup}
+                </span></a>
+            </li>
+        #end
+
+        #if($shiro.hasPermission("order:query:fillup:page"))
+            <li
+                #if(${tab} == 'fillup')
+                        class="active"
+                #end>
+                <a
+                    #if(${tab} == 'fillup')
+                            href="javascript:;"
+                    #else
+                            href="$link.getContextPath()/order/query/fillup.html"
+                    #end
+                        >待放货<span class="red bolder">
+                    $!{fillup}
+                </span></a>
+            </li>
+        #end
+
+        #if($shiro.hasPermission("order:query:secondsettlement:page"))
+            <li
+                #if(${tab} == 'secondsettlement')
+                        class="active"
+                #end>
+                <a
+                    #if(${tab} == 'secondsettlement')
+                            href="javascript:;"
+                    #else
+                            href="$link.getContextPath()/order/query/secondsettlement.html"
+                    #end
+                        >待二次结算<span
+                        class="red bolder">
+                    $!{secondsettlement}
+                </span>
+                </a>
+            </li>
+        #end
+
+         #if($shiro.hasPermission("order:query:invoice:page"))
+             <li
+                 #if(${tab} == 'invoice')
+                         class="active"
+                 #end>
+                 <a
+                     #if(${tab} == 'invoice')
+                             href="javascript:;"
+                     #else
+                             href="$link.getContextPath()/order/query/invoice.html"
+                     #end>已二次结算</a>
+             </li>
+         #end
+
+
+        #if($shiro.hasPermission("order:query:tradecomplete:page"))
+            <li
+                #if(${tab} == 'tradecomplete')
+                        class="active"
+                #end>
+                <a
+                    #if(${tab} == 'tradecomplete')
+                            href="javascript:;"
+                    #else
+                            href="$link.getContextPath()/order/query/tradecomplete.html"
+                    #end>交易完成
+                </a>
+            </li>
+        #end
+
+        #if($shiro.hasPermission("order:query:change:page"))
+        <li
+            #if(${tab} == 'changelist' )
+                    class="active"
+            #end>
+            <a
+                #if(${tab} == 'changelist')
+                    href="javascript:;"
+                #else
+                    #if($shiro.hasPermission("order:query:changelist:page"))
+                    href="$link.getContextPath()/order/changecontract/changelist.html"
+                    #elseif($shiro.hasPermission("order:query:auditlist:page"))
+                    href="$link.getContextPath()/order/changecontract/auditlist.html"
+                    #elseif($shiro.hasPermission("order:query:relatelist:page"))
+                    href="$link.getContextPath()/order/changecontract/relatelist.html"
+                    #elseif($shiro.hasPermission("order:query:payapplylist:page"))
+                    href="$link.getContextPath()/order/changecontract/payapplylist.html"
+                    #end
+                #end
+            >合同变更</a>
+        </li>
+        #end
+
+        #if($shiro.hasPermission("order:query:tradecloseapproval:page"))
+            <li
+                #if(${tab} == 'tradecloseapproval')
+                        class="active"
+                #end>
+                <a
+                    #if(${tab} == 'tradecloseapproval')
+                            href="javascript:;"
+                    #else
+                            href="$link.getContextPath()/order/query/tradecloseapproval.html"
+                    #end>交易关闭待审核<span class="red bolder">
+                    $!{tradecloseapproval}
+                </span>
+                </a>
+            </li>
+        #end
+
+        #if($shiro.hasPermission("order:query:tradeclose:page"))
+            <li
+                #if(${tab} == 'tradeclose')
+                        class="active"
+                #end>
+                <a
+                    #if(${tab} == 'tradeclose')
+                            href="javascript:;"
+                    #else
+                            href="$link.getContextPath()/order/query/tradeclose.html"
+                    #end
+                        >交易关闭</a>
+            </li>
+        #end
+        
+        #if($shiro.hasPermission("order:query:tradecertificate:page"))
+            <li
+                #if(${tab} == 'tradecertificate')
+                        class="active"
+                #end>
+                <a
+                    #if(${tab} == 'tradecertificate')
+                            href="javascript:;"
+                    #else
+                            href="$link.getContextPath()/order/query/tradecertificate.html?accountType=seller"
+                    #end
+                        >交易凭证</a>
+            </li>
+        #end
+        
+    </ul>
+</div>
+#* tab,用于订单详情的面包屑 *#
+<input type="hidden" id="pageTab" value="${tab}"/>

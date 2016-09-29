@@ -1,0 +1,36 @@
+#set($layout="layout/blank.vm")
+    <div style='width: 400px;margin-top:25px;'>
+        <form id='attrForm' class='form-horizontal' >
+        	<input type="hidden" name="id" value="$!attribute.id">
+            <div class='form-group'><label class='col-sm-3 control-label no-padding-right' for='txtNewPwd2'>属性名称:</label>
+                <div class='col-sm-9'><input  type='text' must='1' id="attrName" name="name" placeholder='请输入属性名称' class='col-xs-10 col-sm-5'
+					value="$!attribute.name" />
+				</div>
+            </div>
+            <div class='form-group'><label class='col-sm-3 control-label no-padding-right' for='txtNewPwd2'>属性类型:</label>
+                <div class='col-sm-9'>
+                	<select name="type" must="1">
+						<option value="">请选择</option>
+						#foreach( $list in $attrTypeList )
+							<option value="$!list.valEn" 
+								#if($!list.valEn==$!attribute.type)
+								selected="selected"
+								#end
+							 >$!list.valCn</option> 
+						#end
+						</select>
+				</div>
+            </div>
+            <div class='form-group'>
+            	<label class='col-sm-3 control-label no-padding-right' for='txtNewPwd2'>属性值:</label>
+                <div class='col-sm-9'>
+					<input  type='text' name="options" value="$!attribute.options" /><span> ( 以英文逗号隔开 )</span>
+				</div>
+            </div>
+            <div class="modal-footer">
+            	<button  data-bb-handler="success" id="saveBtn" type="button" class="btn btn-sm btn-primary"><i class="ace-icon fa fa-check"></i> 保存</button>
+                <button  data-bb-handler="button"  id="cancelBtn" type="button" class="btn btn-sm">取消</button>
+            </div>
+        </form>
+    </div>
+<script src="$link.getContextPath()/js/views/resource/attribute/edit/create.js"></script>

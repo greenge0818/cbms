@@ -1,0 +1,100 @@
+<div class="page-header search-box clearfix pd-b-5">
+    <span class="eo">公司全称：$!{accountdto.account.name}</span>
+    <span class="eo">公司代码：$!{accountdto.account.code}</span>
+    <span class="eo">客户性质：$!{accountdto.customerProperty}</span>
+    #if(${accountdto.account.orgName}!="")
+        <span class="eo">服务中心：$!{accountdto.account.orgName}</span>
+    #end
+    <a class="left13" href="$link.getContextPath()/company/$!{accountdto.account.id}/edit.html">编辑</a>
+
+    <p class=" updown pull-right" id="switch"></p>
+
+    <div class=" woo">
+        <span class="eo">客户类型：$!{accountdto.businessType.name}</span>
+        <span class="eo">法人姓名：$!{accountdto.account.legalPersonName}</span>
+        <span class="eo">公司电话：$!{accountdto.account.tel}</span>
+        <span class="eo">手机：$!{accountdto.account.mobil}</span>
+        <span class="eo">城市：$!{accountdto.province.name}$!{accountdto.city.name}</span>
+        <span class="eo">邮编：$!{accountdto.account.zip}</span>
+        <span class="eo">邮寄地址：$!{accountdto.account.mailAddr}</span>
+    </div>
+    <div class=" woo">
+        <span class="eo">传真：$!{accountdto.account.fax}</span>
+        <span class="eo">公司网址：$!{accountdto.account.webSiteUrl}</span>
+    </div>
+    <!--add by zhoucai@prcsteel.com 合并迁移风控代码 2016-5-6-->
+    <div class=" woo">
+        <span class="eo">注册资金：$NumberTool.toThousandth($!{accountdto.account.registerCapital})</span>
+        <span class="eo">成立日期：$!{accountdto.account.registerDate}</span>
+        <span class="eo">买家客户标示：$!{accountdto.account.buyerLabel}</span>
+        <span class="eo">卖家客户标示：$!{accountdto.account.supplierLabel}</span>
+        <span class="eo">预付款标示：
+            #if($!{accountdto.account.paymentLabel}==1)银票预付 #end
+            #if($!{accountdto.account.paymentLabel}==2)现金预付 #end
+            #if($!{accountdto.account.paymentLabel}==3)无预付 #end
+        </span>
+    </div>
+    <div class=" woo">
+        <span class="eo">卖家客户单笔交易吨位上限：$!{accountdto.account.sellerSingleTradeWeight}</span>
+        <span class="eo">卖家客户总交易笔数上限：$!{accountdto.account.sellerAllTradeQuality}</span>
+        <span class="eo">卖家客户总交易吨位上限：$!{accountdto.account.sellerAllTradeWeight}</span>
+        <span class="eo">卖家客户计入所属标示类型百分比上限：
+
+            #if($!{accountdto.account.isSellerPercent}==1)是 #end
+            #if($!{accountdto.account.isSellerPercent}==0)否 #end
+        </span>
+    </div>
+    <div class=" woo">
+        <span class="eo">注册时间：$!{date.format("yyyy-MM-dd HH:mm:ss",$accountdto.account.regTime)}</span>
+        <span class="eo">最后资料更新时间：$!{date.format("yyyy-MM-dd HH:mm:ss",$accountdto.account.lastUpdated)}</span>
+        <span class="eo">最后下单时间：$!{date.format("yyyy-MM-dd HH:mm:ss",$accountdto.account.lastBillTime)}</span>
+        <span class="eo">成交次数：
+        #set($dealTotal=$!{accountdto.account.buyerDealTotal} + $!{accountdto.account.sellerDealTotal})
+        $dealTotal
+        </span>
+    </div>
+</div>
+<div class="tab-blue">
+    <ul class="nav nav-tabs-blue padding-12 tab-color-blue">
+        <li id="accountInfo">
+            <a href="$link.getContextPath()/accountinfo/$!{accountdto.account.id}/accountinfo.html">账户信息</a>
+        </li>
+        <li id="buyerRecords">
+            <a href="$link.getContextPath()/company/$!{accountdto.account.id}/buyerrecords.html">采购记录</a>
+        </li>
+        <li id="salesRecords">
+            <a href="$link.getContextPath()/company/$!{accountdto.account.id}/salesrecords.html">销售记录</a>
+        </li>
+        <li id="bankInfo">
+            <a href="$link.getContextPath()/company/$!{accountdto.account.id}/bankinfo.html">银行信息</a>
+        </li>
+        <li id="contactInfo">
+            <a href="$link.getContextPath()/contact/$!{accountdto.account.id}/viewContact.html">联系人</a>
+        </li>
+        <li id="credentialsInfo">
+            <a href="$link.getContextPath()/company/$!{accountdto.account.id}/credentialsinfo.html">证件资料</a>
+        </li>
+        <li id="contracttemplate">
+            <a href="$link.getContextPath()/contracttemplate/$!{accountdto.account.id}/list.html">合同模板</a>
+        </li>
+        <li id="proxyFactory">
+            <a href="$link.getContextPath()/proxyfactory/$!{accountdto.account.id}/list.html">代理钢厂</a>
+        </li>
+    </ul>
+</div>
+<script type="text/javascript">
+    var _accountTag = $!{accountdto.account.accountTag};
+    if ((_accountTag & 1) != 1) { // 非买家不显示采购记录
+        $("#buyerRecords").hide();
+    }
+    else if ((_accountTag & 2) != 2) { // 非卖家不显示代理钢厂
+        $("#proxyFactory,#salesRecords").hide();
+    }
+    $().ready(function () {
+        $("#$!{tabId}").addClass("active").siblings().removeClass("active");
+        $(".updown").click(function () {
+            $(".woo").toggle(500);
+        });
+    });
+</script>
+

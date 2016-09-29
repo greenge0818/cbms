@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prcsteel.platform.smartmatch.persist.dao.CategoryAttributeDao">
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.core.model.model.CategoryAttribute">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="category_uuid" jdbcType="VARCHAR" property="categoryUuid" />
+    <result column="attribute_uuid" jdbcType="VARCHAR" property="attributeUuid" />
+    <result column="priority" jdbcType="INTEGER" property="priority" />
+    <result column="created" jdbcType="TIMESTAMP" property="created" />
+    <result column="created_by" jdbcType="VARCHAR" property="createdBy" />
+    <result column="last_updated" jdbcType="TIMESTAMP" property="lastUpdated" />
+    <result column="last_updated_by" jdbcType="VARCHAR" property="lastUpdatedBy" />
+    <result column="modification_number" jdbcType="INTEGER" property="modificationNumber" />
+  </resultMap>
+  <!--根据品名id查询对应的属性集合 add by zhoucai 2016-6-23-->
+  <resultMap id="CategoryAttributeResultMap" type="com.prcsteel.platform.smartmatch.model.dto.BaseCategoryAttributeDto">
+    <result column="uuid" property="id" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="options" property="options" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, category_uuid, attribute_uuid, priority, created, created_by, last_updated, last_updated_by, 
+    modification_number
+  </sql>
+  <select id="findByUuid" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  	SELECT 
+  		<include refid="Base_Column_List"/>
+  	FROM common_category_attribute
+  	WHERE 	
+  	category_uuid=#{categoryUuid,jdbcType=VARCHAR}
+  </select>
+  
+  <resultMap id="categoryMap" extends="BaseResultMap" type="com.prcsteel.platform.core.model.dto.CategoryAttributeDto">
+  	 <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
+  	 <result column="group_name" jdbcType="VARCHAR" property="groupName" />
+  	 <result column="category_uuid" jdbcType="VARCHAR" property="categoryUuid" />
+  	 <result column="attribute1_name" jdbcType="VARCHAR" property="attribute1Name" />
+  	 <result column="attribute1_type" jdbcType="VARCHAR" property="attribute1Type" />
+  	 <result column="attribute1_options" jdbcType="VARCHAR" property="attribute1Options" />
+  	 <result column="attribute2_name" jdbcType="VARCHAR" property="attribute2Name" />
+  	 <result column="attribute2_type" jdbcType="VARCHAR" property="attribute2Type" />
+  	 <result column="attribute2_options" jdbcType="VARCHAR" property="attribute2Options" />
+  	 <result column="attribute3_name" jdbcType="VARCHAR" property="attribute3Name" />
+  	 <result column="attribute3_type" jdbcType="VARCHAR" property="attribute3Type" />
+  	 <result column="attribute3_options" jdbcType="VARCHAR" property="attribute3Options" />
+  </resultMap> 
+  
+  <select id="searchTotalCategoryAttribute" resultType="java.lang.Integer" parameterType="map">
+  	SET @num=0;
+  	SELECT COUNT(*) FROM (
+  	SELECT group_name,category_name,category_uuid,
+	GROUP_CONCAT(attribute1_type SEPARATOR '') attribute1_type,
+	GROUP_CONCAT(attribute1_name SEPARATOR '') attribute1_name,
+	GROUP_CONCAT(attribute1_options SEPARATOR '') attribute1_options,
+	GROUP_CONCAT(attribute2_type SEPARATOR '') attribute2_type,
+	GROUP_CONCAT(attribute2_name SEPARATOR '') attribute2_name,
+	GROUP_CONCAT(attribute2_options SEPARATOR '') attribute2_options,
+	GROUP_CONCAT(attribute3_type SEPARATOR '') attribute3_type,
+	GROUP_CONCAT(attribute3_name SEPARATOR '') attribute3_name,
+	GROUP_CONCAT(attribute3_options SEPARATOR '') attribute3_options
+	FROM (
+	SELECT group_name,category_name,category_uuid,
+	rank,
+	case rank when 1 then attribute_type else '' end attribute1_type,
+	case rank when 1 then attribute_name else '' end attribute1_name,
+	case rank when 1 then options else '' end attribute1_options ,
+	case rank when 2 then attribute_type else '' end attribute2_type,
+	case rank when 2 then attribute_name else '' end attribute2_name,
+	case rank when 2 then options else '' end attribute2_options ,
+	case rank when 3 then attribute_type else '' end attribute3_type,
+	case rank when 3 then attribute_name else '' end attribute3_name,
+	case rank when 3 then options else '' end attribute3_options 
+	
+	FROM(
+	SELECT group_name,category_uuid,category_name,attribute_type,attribute_name,options,@itemId=null,
+	if(@itemId=x.category_id,@num:=@num+1,@num:=1) as rank,@itemId:=x.category_id
+	from(
+	SELECT b.uuid category_uuid,b.id category_id,c.id attribute_id,if(f.name is null,e.name,f.name) group_name,
+	b.name category_name,c.name attribute_name,c.type attribute_type,
+	c.options as options
+	FROM 
+	common_category_attribute a
+	left join common_category b
+	on a.category_uuid=b.uuid
+	left join common_attribute c
+	on a.attribute_uuid=c.uuid
+	left join common_group_for_category d
+	on d.category_uuid=b.uuid
+	left join common_category_group e
+	on d.category_group_uuid=e.uuid
+	left join common_category_group f
+	on e.parent_uuid=f.uuid
+	WHERE e.site_uuid='outer_market'
+	order by b.id,a.id
+	) x
+	) y 
+	) z
+	WHERE 1=1
+		<if test="groupName != null and groupName !='' ">
+	        and  group_name like CONCAT('%',#{groupName,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="categoryName != null and categoryName !='' ">
+          	and category_name like CONCAT('%',#{categoryName,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="categoryUuid != null and categoryUuid !='' ">
+          	and category_uuid like CONCAT('%',#{categoryUuid,jdbcType=VARCHAR},'%')
+		</if>
+	group by group_name,category_name,category_uuid
+	) t
+  </select>
+  
+  <select id="searchCategoryAttribute" resultMap="categoryMap" parameterType="map">
+  	SET @num=0;
+  	SELECT max(created),group_name,category_name,category_uuid,
+	GROUP_CONCAT(attribute1_type SEPARATOR '') attribute1_type,
+	GROUP_CONCAT(attribute1_name SEPARATOR '') attribute1_name,
+	GROUP_CONCAT(attribute1_options SEPARATOR '') attribute1_options,
+	GROUP_CONCAT(attribute2_type SEPARATOR '') attribute2_type,
+	GROUP_CONCAT(attribute2_name SEPARATOR '') attribute2_name,
+	GROUP_CONCAT(attribute2_options SEPARATOR '') attribute2_options,
+	GROUP_CONCAT(attribute3_type SEPARATOR '') attribute3_type,
+	GROUP_CONCAT(attribute3_name SEPARATOR '') attribute3_name,
+	GROUP_CONCAT(attribute3_options SEPARATOR '') attribute3_options
+	FROM (
+	SELECT created,group_name,category_name,category_uuid,
+	rank,
+	case rank when 1 then attribute_type else '' end attribute1_type,
+	case rank when 1 then attribute_name else '' end attribute1_name,
+	case rank when 1 then options else '' end attribute1_options ,
+	case rank when 2 then attribute_type else '' end attribute2_type,
+	case rank when 2 then attribute_name else '' end attribute2_name,
+	case rank when 2 then options else '' end attribute2_options ,
+	case rank when 3 then attribute_type else '' end attribute3_type,
+	case rank when 3 then attribute_name else '' end attribute3_name,
+	case rank when 3 then options else '' end attribute3_options 
+	
+	FROM(
+	SELECT created,group_name,category_uuid,category_name,attribute_type,attribute_name,options,@itemId=null,
+	if(@itemId=x.category_id,@num:=@num+1,@num:=1) as rank,@itemId:=x.category_id
+	from(
+	SELECT a.created,b.uuid category_uuid,b.id category_id,c.id attribute_id,if(f.name is null,e.name,f.name) group_name,
+	b.name category_name,c.name attribute_name,c.type attribute_type,
+	c.options as options
+	FROM 
+	common_category_attribute a
+	left join common_category b
+	on a.category_uuid=b.uuid
+	left join common_attribute c
+	on a.attribute_uuid=c.uuid
+	left join common_group_for_category d
+	on d.category_uuid=b.uuid
+	left join common_category_group e
+	on d.category_group_uuid=e.uuid
+	left join common_category_group f
+	on e.parent_uuid=f.uuid
+	WHERE e.site_uuid='outer_market'
+	order by b.id,a.id
+	) x
+	) y 
+	) z
+	WHERE 1=1
+		<if test="groupName != null and groupName !='' ">
+	        and  group_name like CONCAT('%',#{groupName,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="categoryName != null and categoryName !='' ">
+          	and category_name like CONCAT('%',#{categoryName,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="categoryUuid != null and categoryUuid !='' ">
+          	and category_uuid like CONCAT('%',#{categoryUuid,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="attrName != null and attrName !='' ">
+          	and ( attribute1_name=#{attrName,jdbcType=VARCHAR} or attribute2_name=#{attrName,jdbcType=VARCHAR} or attribute3_name=#{attrName,jdbcType=VARCHAR})
+		</if>
+	group by group_name,category_name,category_uuid
+	
+	ORDER BY max(created) DESC
+	<if test="start!=null and length !=null">
+            limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+    </if>
+  </select>
+  
+  <delete id="delByUuid"  parameterType="java.lang.String">
+  	DELETE FROM  common_category_attribute
+  	WHERE category_uuid=#{categoryUuid,jdbcType=VARCHAR}
+  </delete>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from common_category_attribute
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from common_category_attribute
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.prcsteel.platform.core.model.model.CategoryAttribute">
+    insert into common_category_attribute (id, category_uuid, attribute_uuid, 
+      priority, created, created_by, 
+      last_updated, last_updated_by, modification_number
+      )
+    values (#{id,jdbcType=BIGINT}, #{categoryUuid,jdbcType=VARCHAR}, #{attributeUuid,jdbcType=VARCHAR}, 
+      #{priority,jdbcType=INTEGER}, #{created,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, 
+      #{lastUpdated,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}, #{modificationNumber,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.core.model.model.CategoryAttribute">
+    insert into common_category_attribute
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="categoryUuid != null">
+        category_uuid,
+      </if>
+      <if test="attributeUuid != null">
+        attribute_uuid,
+      </if>
+      <if test="priority != null">
+        priority,
+      </if>
+      <if test="created != null">
+        created,
+      </if>
+      <if test="createdBy != null">
+        created_by,
+      </if>
+      <if test="lastUpdated != null">
+        last_updated,
+      </if>
+      <if test="lastUpdatedBy != null">
+        last_updated_by,
+      </if>
+      <if test="modificationNumber != null">
+        modification_number,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="categoryUuid != null">
+        #{categoryUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="attributeUuid != null">
+        #{attributeUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="priority != null">
+        #{priority,jdbcType=INTEGER},
+      </if>
+      <if test="created != null">
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null">
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null">
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null">
+        #{modificationNumber,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.core.model.model.CategoryAttribute">
+    update common_category_attribute
+    <set>
+      <if test="categoryUuid != null">
+        category_uuid = #{categoryUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="attributeUuid != null">
+        attribute_uuid = #{attributeUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="priority != null">
+        priority = #{priority,jdbcType=INTEGER},
+      </if>
+      <if test="created != null">
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null">
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null">
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null">
+        modification_number = #{modificationNumber,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.core.model.model.CategoryAttribute">
+    update common_category_attribute
+    set category_uuid = #{categoryUuid,jdbcType=VARCHAR},
+      attribute_uuid = #{attributeUuid,jdbcType=VARCHAR},
+      priority = #{priority,jdbcType=INTEGER},
+      created = #{created,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      modification_number = #{modificationNumber,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <!--根据品名id查询对应的属性集合 add by zhoucai 2016-6-23-->
+  <select id="searchAttributeByCategoryUuid" resultMap="CategoryAttributeResultMap" parameterType="java.lang.String">
+    SELECT
+    t2.uuid AS id,
+    t2.name,
+    t2.type,
+    t2.options
+    FROM
+    common_attribute t2
+    RIGHT JOIN
+    (
+      SELECT
+      attribute_uuid
+      FROM
+      common_category_attribute
+      WHERE category_uuid=#{categoryUuid,jdbcType=VARCHAR}
+      ORDER  BY created desc
+    ) t1 ON t2.uuid=t1.attribute_uuid and is_deleted=0
+  </select>
+</mapper>

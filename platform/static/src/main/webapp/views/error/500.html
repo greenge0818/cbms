@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <meta name="keywords" content="无缝管价格,无缝管行情">
+    <meta name="description" content="钢为网为国内钢厂、钢材贸易商、钢材终端用户提供无缝管价格、行情等信息，在这里您可以免费查看无缝管价格、行情等信息，了解无缝管交易信息请上钢铁市场,钢材交易电商平台。">
+    <link href="css/marketlist.css" rel="stylesheet" />
+    <title>钢为网钢铁超市</title>
+  </head>
+  <body>
+<!--[if lte IE 6]>
+<style>
+body{_padding-top:30px;}
+</style>
+<div style="width:100%;bottom:auto;_top:expression(eval(document.documentElement.scrollTop));z-index:1000;">
+	<div style="width:100%;height:30px;border-bottom:1px solid #ff5a00;background:#ffede3;color:#444;line-height:30px; text-align:center;">
+	系统检测您当前的浏览器为IE6，可能会影响部分功能的使用。为了您有更好的体验。建议您<a href="http://www.microsoft.com/china/windows/internet-explorer/" target="_blank" style="color:#c81624;text-decoration:underline;">升级IE浏览器</a>或者下载安装使用<a href="http://dlsw.baidu.com/sw-search-sp/soft/9d/14744/ChromeStandalone_V43.0.2357.124_Setup.1433905898.exe" target="_blank" style="color:#c81624;text-decoration:underline;">谷歌浏览器chrome</a>
+	</div>
+</div>
+<![endif]-->
+    <!--logo 搜索 S-->
+<div class="header">
+	<a href="javascript:;" target="_blank" class="logo"></a>
+	<span><!--全国服务热线：<i>400-705-9515</i>--></span>
+</div>
+<!--logo 搜索 E-->
+<!--导航 S-->
+<div class="div_nav" style="height:2px;">
+	<div class="menu" style="height:2px;">
+	</div>
+</div>
+<!--导航 E-->
+	<div class="m-main" id="m-main">
+		<dl class="" style="width:380px;margin:100px auto;text-align:center">
+			<dt style="font-size:80px;color:#c81623;font-weight:bold"><img src="css/err500.png" /></dt>
+			<dd style="font-size:14px;font-weight:bold;line-height:30px;text-align:center;">
+				
+				服务器内部错误，
+				请及时与管理员联系或企业群里知会下。
+				
+			</dd>
+		</dl>
+	</div>	
+	<script>
+
+        //获取视口高度
+        var upindex = {
+			getTotalHeight: function () {
+				var isIE=!!window.ActiveXObject;
+				var isIE6=isIE&&!window.XMLHttpRequest;
+				var isIE8=isIE&&!!document.documentMode;
+				var isIE7=isIE&&!isIE6&&!isIE8;
+				if (isIE) {
+					return document.compatMode == 'CSS1Compat'? document.documentElement.clientHeight : document.body.clientHeight;
+				} else {
+					if(self.innerHeight) {
+						 return self.innerHeight;
+					} else {
+						return document.documentElement.clientHeight;
+					}
+				}
+			}
+		}
+
+		function init (){
+		var h =	upindex.getTotalHeight(), m = document.getElementById("m-main");
+			if(h > 550){
+				m.style.height=(h-550) + "px";
+			}
+		}
+		document.onload = init();
+		window.onresize = function(){
+			init();
+		}
+	</script>
+  </body>
+</html>

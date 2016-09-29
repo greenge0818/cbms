@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.order.persist.dao.InvoiceComputeDao" >
+  <resultMap id="PoolOutMap" type="com.prcsteel.platform.order.model.dto.InvoiceComputeDto" >
+    <result column="apply_id" property="applyId" jdbcType="BIGINT" />
+    <result column="pool_out_id" property="poolOutId" jdbcType="BIGINT" />
+    <result column="pool_out_detail_id" property="poolOutDetailId" jdbcType="BIGINT" />
+    <result column="org_id" property="orgId" jdbcType="BIGINT" />
+    <result column="org_name" property="orgName" jdbcType="VARCHAR" />
+    <result column="owner_id" property="ownerId" jdbcType="BIGINT" />
+    <result column="owner_name" property="ownerName" jdbcType="VARCHAR" />
+    <result column="buyer_id" property="buyerId" jdbcType="BIGINT" />
+    <result column="buyer_name" property="buyerName" jdbcType="VARCHAR" />
+    <result column="nsort_name" property="nsortName" jdbcType="VARCHAR" />
+    <result column="material" property="material" jdbcType="VARCHAR" />
+    <result column="spec" property="spec" jdbcType="VARCHAR" />
+    <result column="total_amount" property="totalAmount" jdbcType="DECIMAL" />
+    <result column="total_weight" property="totalWeight" jdbcType="DECIMAL" />
+    <result column="sent_amount" property="sentAmount" jdbcType="DECIMAL" />
+    <result column="sent_weight" property="sentWeight" jdbcType="DECIMAL" />
+    <result column="apply_amount" property="applyAmount" jdbcType="DECIMAL" />
+    <result column="actual_amount" property="actualAmount" jdbcType="DECIMAL" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+  </resultMap>
+    <resultMap id="OrderItemsMap" type="com.prcsteel.platform.order.model.dto.InvoiceOrderItemsDto" >
+        <result column="order_id" property="orderId" jdbcType="BIGINT" />
+        <result column="order_items_id" property="orderItemsId" jdbcType="BIGINT" />
+        <result column="owner_id" property="ownerId" jdbcType="BIGINT" />
+        <result column="owner_name" property="ownerName" jdbcType="VARCHAR" />
+        <result column="account_id" property="buyerId" jdbcType="BIGINT" />
+        <result column="account_name" property="buyerName" jdbcType="VARCHAR" />
+        <result column="nsort_name" property="nsortName" jdbcType="VARCHAR" />
+        <result column="material" property="material" jdbcType="VARCHAR" />
+        <result column="spec" property="spec" jdbcType="VARCHAR" />
+        <result column="amount" property="amount" jdbcType="DECIMAL" />
+        <result column="invoice_amount" property="invoiceAmount" jdbcType="DECIMAL" />
+        <result column="billable_amount" property="billableAmount" jdbcType="DECIMAL" />
+        <result column="weight" property="weight" jdbcType="DECIMAL" />
+        <result column="deal_price" property="dealPrice" jdbcType="DECIMAL" />
+        <result column="created" property="created" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <select id="queryComputePoolByOrgId" resultMap="PoolOutMap" >
+      select c.id AS apply_id,
+              a.pool_out_id,
+              a.id AS pool_out_detail_id,
+              c.org_id,
+              c.org_name,
+              c.owner_id,
+              c.owner_name,
+              c.buyer_id,
+              c.buyer_name,
+              a.nsort_name,
+              a.material,
+              a.spec,
+              a.total_amount,
+              a.total_weight,
+              a.sent_amount,
+              a.sent_weight,
+              c.apply_amount,
+              c.actual_amount,
+              a.created,
+              a.created_by,
+              a.last_updated,
+              a.last_updated_by
+      from inv_invoice_out_apply c
+      left join inv_pool_out b on b.org_id = c.org_id and b.owner_id = c.owner_id
+      left join inv_pool_out_detail a on a.pool_out_id = b.id
+      where c.status = 1
+      AND c.is_deleted = 0
+      and a.total_amount != 0
+      and c.org_id = #{orgId,jdbcType=BIGINT}
+      order by a.created asc
+    </select>
+    <select id="queryPoolOutByOrgId" resultMap="PoolOutMap" >
+      select b.org_id,
+              b.org_name,
+              b.owner_id,
+              b.owner_name,
+              b.buyer_id,
+              b.buyer_name,
+              a.nsort_name,
+              a.material,
+              a.spec,
+              SUM(a.total_amount) AS total_amount,
+              SUM(a.total_weight) AS total_weight,
+              SUM(a.sent_amount) AS sent_amount,
+              SUM(a.sent_weight) AS sent_weight
+      from inv_pool_out_detail a
+      left join inv_pool_out b on a.pool_out_id = b.id
+      where b.org_id = #{orgId,jdbcType=BIGINT}
+      and a.total_amount != 0
+      <if test="ownerId != null" >
+          and b.owner_id = #{ownerId,jdbcType=BIGINT}
+      </if>
+      <if test="buyerId != null" >
+          and b.buyer_id = #{buyerId,jdbcType=BIGINT}
+      </if>
+      <if test="nsortName != null" >
+          and a.nsort_name = #{nsortName,jdbcType=VARCHAR}
+      </if>
+      <if test="material != null" >
+          and a.material = #{material,jdbcType=VARCHAR}
+      </if>
+      <if test="spec != null" >
+          and a.spec = #{spec,jdbcType=VARCHAR}
+      </if>
+      group by b.org_id,b.org_name,b.owner_id,b.owner_name,b.buyer_id,b.buyer_name,a.nsort_name,a.material,a.spec
+  </select>
+  <update id="updateActualAmount" >
+    update inv_invoice_out_apply
+    set actual_amount = #{actualAmount,jdbcType=DECIMAL},
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+        modification_number = ifnull(modification_number,0) + 1
+    where id = #{id,jdbcType=BIGINT}
+    AND is_deleted = 0
+  </update>
+    <select id="queryOrderItems" resultMap="OrderItemsMap" >
+        select a.order_id,
+                a.id AS order_items_id,
+                b.owner_id,
+                b.owner_name,
+                b.account_id,
+                b.account_name,
+                a.nsort_name,
+                a.material,
+                a.spec,
+                ifnull(a.amount, 0) AS amount,
+                ifnull(a.invoice_amount, 0) AS invoice_amount,
+                ifnull((ifnull(a.amount, 0) - ifnull(a.invoice_amount, 0)),0) AS billable_amount,
+                ifnull(a.weight, 0) AS weight,
+                ifnull(a.deal_price, 0) AS deal_price,
+                a.created
+        from busi_consign_order_items a
+        left join busi_consign_order b on a.order_id = b.id
+        where b.owner_id = #{ownerId,jdbcType=BIGINT}
+        <if test="buyerId != null" >
+            and b.account_id = #{buyerId,jdbcType=BIGINT}
+        </if>
+        <if test="nsortName != null" >
+            and a.nsort_name = #{nsortName,jdbcType=VARCHAR}
+        </if>
+        <if test="material != null" >
+            and a.material = #{material,jdbcType=VARCHAR}
+        </if>
+        <if test="spec != null" >
+            and a.spec = #{spec,jdbcType=VARCHAR}
+        </if>
+        order by a.created desc
+    </select>
+
+</mapper>

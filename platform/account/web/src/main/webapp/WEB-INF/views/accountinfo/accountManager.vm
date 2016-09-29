@@ -1,0 +1,47 @@
+#set($layout="layout/blank.vm")
+#if($!groupName)
+<div class="main-content">
+    <div class="main-content-inner">
+        <div class="page-content">
+            <table class="table table-striped table-bordered" style="">
+				<thead></thead>
+  				<tbody>
+			  		<tr>
+			          <td class="bg-gray">信用组：</td>
+			          <td>$!groupName</td>
+			          <td class="bg-gray">信用额度</td>
+			          <td>$!NumberTool.toThousandth($!groupLimit)</td>
+					  <td class="bg-gray">组已使用总额</td>
+			          <td>$!NumberTool.toThousandth($!groupCreditUsed)</td>
+			          <td class="bg-gray">可使用总额</td>
+			          <td>$!NumberTool.toThousandth($!groupCreditBalance)</td>
+			         </tr>
+			  	</tbody>
+			</table>
+            <!-- /.page-content -->
+            <table id="dynamic-table" class="table table-striped table-bordered table-hover" style="margin-bottom: -5px">
+                <thead>
+                <tr>
+                    <th>客户名称</th>
+                    <th>信用额度</th>
+                    <th>已用信用额度（元）</th>
+                    <th>可用信用额度（元）</th>
+                </tr>
+                </thead>
+                <tbody>
+                #foreach($!item in $!list)
+                	<tr>
+	                	<td>$item.accountName#if($item.departmentCount > 1)【$item.departmentName】#end</td>
+	                	<td class="text-right">$!NumberTool.toThousandth($item.creditLimit)</td>
+	                	<td class="text-right">$!NumberTool.toThousandth($item.creditUsed)</td>
+	                	<td class="text-right">$!NumberTool.toThousandth($item.creditBalance)</td>
+                	</tr>
+               	#end
+                </tbody>
+            </table> 
+        </div>
+     </div>
+</div><!-- /.main-content -->
+#else
+<span class="center">所在部门没有分组信息！</span>
+#end

@@ -1,0 +1,24 @@
+<div id="reassign_dialog" class="none text-center" style="width:300px;">
+    <div class="row page-content" >
+
+        <div><label>改派原因：</label><select id="assign_reason_select">
+            <option value="找不到货">找不到货</option>
+            <option value="价格太高">价格太高</option>
+            <option value="货不全">货不全</option>
+            <option value="交货地不合适">交货地不合适</option>
+            <option value="其他">其他</option>
+        </select></div>
+         <p></p>
+        <div id="assign_reason_panel" class="none">
+            <label>输入其他原因：</label>
+            <textarea id="reassign_reason_other_text"></textarea></div>
+            <p></p>
+        <div>
+            <input type="hidden" value="0" id="reassign_purchase_orderid">
+            <input type="button" value="确定" class="btn btn-primary btn-sm" id="btnreassign"/>
+            <input type="button" value="取消" class="btn btn-default btn-sm" id="reassign_cancel"/>
+        </div>
+    </div>
+
+</div>
+<script src="$link.getContextPath()/js/views/smartmatch/inquiryorder/reassignorder.js"></script>

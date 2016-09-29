@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.order.persist.dao.ReportBuyerInvoiceOutDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.order.model.model.ReportBuyerInvoiceOut" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="buyer_id" property="buyerId" jdbcType="BIGINT" />
+    <result column="buy_name" property="buyName" jdbcType="VARCHAR" />
+    <result column="order_id" property="orderId" jdbcType="BIGINT" />
+    <result column="order_code" property="orderCode" jdbcType="VARCHAR" />
+    <result column="contract_code" property="contractCode" jdbcType="VARCHAR" />
+    <result column="order_amount" property="orderAmount" jdbcType="DECIMAL" />
+    <result column="invoice_out_amount" property="invoiceOutAmount" jdbcType="DECIMAL" />
+    <result column="invoice_out_balance" property="invoiceOutBalance" jdbcType="DECIMAL" />
+    <result column="operation_type" property="operationType" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="invoice_no" property="invoiceNo" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+    <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+    <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, buyer_id, buy_name, order_id, order_code, contract_code, order_amount, invoice_out_amount, 
+    invoice_out_balance, operation_type, remark, invoice_no, created, created_by, last_updated, last_updated_by, 
+    modification_number, row_id, parent_row_id
+  </sql>
+   <resultMap id="QueryResultMap" type="com.prcsteel.platform.order.model.dto.ReportBuyerInvoiceOutDto"
+               extends="BaseResultMap">
+   		<result column="startAmount" property="startAmount" jdbcType="DECIMAL" />
+   		<result column="actualOcurAmount" property="actualOcurAmount" jdbcType="DECIMAL" />
+   		<result column="makeOutAmount" property="makeOutAmount" jdbcType="DECIMAL" />
+   		<result column="unmakeOutAmount" property="unmakeOutAmount" jdbcType="DECIMAL" />
+   </resultMap>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from report_buyer_invoice_out
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <select id="selectByBuyer" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from report_buyer_invoice_out
+    where buyer_id = #{buyerId,jdbcType=BIGINT}
+    order by created desc 
+    limit 0,1 
+  </select>
+
+  <select id="selectByParams" resultMap="QueryResultMap" parameterType="com.prcsteel.platform.order.model.query.ReportBuyerInvoiceOutQuery" >
+    select 
+    <include refid="Base_Column_List" />
+    from report_buyer_invoice_out
+    
+    <where>
+    	<if test="buyerId != null" >
+    		and buyer_id =  #{buyerId,jdbcType=BIGINT}
+    	</if>
+    	<if test="buyName != null" >
+    		and buy_name =  #{buyName,jdbcType=VARCHAR}
+    	</if>
+    	<if test="invoiceNo != null" >
+    		and invoice_no =  #{invoiceNo,jdbcType=VARCHAR}
+    	</if>
+    	<if test="startTime != null and endTime!=null">
+    		and created between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+    	</if>
+    </where>
+    order by created asc
+	<if test="start!=null and length!=null">
+		limit #{start}, #{length} 
+	</if>
+  </select>
+  
+  <select id="totalByParams" resultType="Integer" parameterType="com.prcsteel.platform.order.model.query.ReportBuyerInvoiceOutQuery" >
+    select count(id) from report_buyer_invoice_out
+    <where>
+    	<if test="buyerId != null" >
+    		and buyer_id =  #{buyerId,jdbcType=BIGINT}
+    	</if>
+    	<if test="buyName != null" >
+    		and buy_name =  #{buyName,jdbcType=VARCHAR}
+    	</if>
+    	<if test="startTime != null and endTime!=null">
+    		and created between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+    	</if>
+    </where>
+  </select>
+  
+  <!-- 得到客户销项报表列表  -->
+  <select id="selectAllByParams" resultMap="QueryResultMap" parameterType="com.prcsteel.platform.order.model.query.ReportBuyerInvoiceOutQuery" >
+	select
+		t.buyer_id, t.buy_name, 
+		t2.startAmount as startAmount, 
+		t3.actualOcurAmount as actualOcurAmount,
+		t3.makeOutAmount as makeOutAmount,
+		t1.unmakeOutAmount as unmakeOutAmount 
+	from report_buyer_invoice_out as t 
+	left join (
+		<!-- 得到期初余额，即为该买家指定的开始时间的之前的第一条 -->
+		select  k.buyer_id, 
+			SUBSTRING_INDEX(GROUP_CONCAT(k.invoice_out_balance ORDER BY k.created DESC),',',1) AS startAmount,
+			k.created	
+		from report_buyer_invoice_out as k
+		<where>
+			<if test="startTime != null">
+				<![CDATA[k.created < #{startTime,jdbcType=TIMESTAMP}]]> 
+			</if>
+		</where>
+		group by buyer_id	
+	) as t2 on t2.buyer_id = t.buyer_id
+	left join (
+		<!-- 得到销售实提金额，即为该买家指定时间范围内的交易发生额之和 -->
+		<!-- 得到已开销项金额，即为该买家指定时间范围内的销项票发生额之和 -->
+		select  k.buyer_id, sum(k.order_amount) as actualOcurAmount, sum(k.invoice_out_amount) as makeOutAmount
+		from report_buyer_invoice_out as k
+		<where>
+			<if test="startTime != null and endTime!=null">
+				k.created between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+			</if>
+		</where>
+		group by k.buyer_id
+	) as t3 on t3.buyer_id = t.buyer_id
+	left join(
+		<!-- 得到未开销项金额，即为该买家指定的结束时间的之前的第一条 -->  
+		select k.buyer_id, 
+		SUBSTRING_INDEX(GROUP_CONCAT(k.invoice_out_balance ORDER BY k.created DESC),',',1) AS unmakeOutAmount,
+		k.created
+		from report_buyer_invoice_out as k
+		<where>
+			<if test="endTime != null">
+				<![CDATA[k.created < #{endTime,jdbcType=TIMESTAMP}]]> 
+			</if>
+		</where>
+		group by k.buyer_id
+	) as t1 on t1.buyer_id = t.buyer_id 
+	<where>
+    	<if test="buyName != null" >
+    		and t.buy_name =  #{buyName,jdbcType=VARCHAR}
+    	</if>
+    	<if test="buyerId != null" >
+    		and t.buyer_id =  #{buyerId,jdbcType=VARCHAR}
+    	</if>
+	</where>
+	group by t.buyer_id
+	order by t.created desc
+	<if test="start!=null and length!=null">
+		limit #{start}, #{length} 
+	</if>
+  </select>
+  
+  <!-- 统计客户报表列表的总数 -->
+  <select id="totalAllByParams" resultType="Integer" parameterType="com.prcsteel.platform.order.model.query.ReportBuyerInvoiceOutQuery" >
+   	select count(t.buyer_id) from (
+		select buyer_id, buy_name from report_buyer_invoice_out group by buyer_id
+	) as t 
+	<where>
+    	<if test="buyName != null" >
+    		and t.buy_name =  #{buyName,jdbcType=VARCHAR}
+    	</if>
+    	<if test="buyerId != null" >
+    		and t.buyer_id =  #{buyerId,jdbcType=VARCHAR}
+    	</if>
+	</where>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from report_buyer_invoice_out
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.prcsteel.platform.order.model.model.ReportBuyerInvoiceOut" >
+    insert into report_buyer_invoice_out (id, buyer_id, buy_name, 
+      order_id, order_code, contract_code, 
+      order_amount, invoice_out_amount, invoice_out_balance, 
+      operation_type, remark, invoice_no, created, 
+      created_by, last_updated, last_updated_by, 
+      modification_number, row_id, parent_row_id
+      )
+    values (#{id,jdbcType=BIGINT}, #{buyerId,jdbcType=BIGINT}, #{buyName,jdbcType=VARCHAR}, 
+      #{orderId,jdbcType=BIGINT}, #{orderCode,jdbcType=VARCHAR}, #{contractCode,jdbcType=VARCHAR}, 
+      #{orderAmount,jdbcType=DECIMAL}, #{invoiceOutAmount,jdbcType=DECIMAL}, #{invoiceOutBalance,jdbcType=DECIMAL}, 
+      #{operationType,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},#{invoiceNo,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, 
+      #{createdBy,jdbcType=VARCHAR}, #{lastUpdated,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}, 
+      #{modificationNumber,jdbcType=INTEGER}, #{rowId,jdbcType=VARCHAR}, #{parentRowId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.order.model.model.ReportBuyerInvoiceOut" >
+    insert into report_buyer_invoice_out
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="buyerId != null" >
+        buyer_id,
+      </if>
+      <if test="buyName != null" >
+        buy_name,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="orderCode != null" >
+        order_code,
+      </if>
+      <if test="contractCode != null" >
+        contract_code,
+      </if>
+      <if test="orderAmount != null" >
+        order_amount,
+      </if>
+      <if test="invoiceOutAmount != null" >
+        invoice_out_amount,
+      </if>
+      <if test="invoiceOutBalance != null" >
+        invoice_out_balance,
+      </if>
+      <if test="operationType != null" >
+        operation_type,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="invoiceNo != null" >
+        invoice_no,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by,
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number,
+      </if>
+      <if test="rowId != null" >
+        row_id,
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="buyerId != null" >
+        #{buyerId,jdbcType=BIGINT},
+      </if>
+      <if test="buyName != null" >
+        #{buyName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="orderCode != null" >
+        #{orderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="contractCode != null" >
+        #{contractCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orderAmount != null" >
+        #{orderAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="invoiceOutAmount != null" >
+        #{invoiceOutAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="invoiceOutBalance != null" >
+        #{invoiceOutBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="operationType != null" >
+        #{operationType,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceNo != null" >
+        #{invoiceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        #{parentRowId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.order.model.model.ReportBuyerInvoiceOut" >
+    update report_buyer_invoice_out
+    <set >
+      <if test="buyerId != null" >
+        buyer_id = #{buyerId,jdbcType=BIGINT},
+      </if>
+      <if test="buyName != null" >
+        buy_name = #{buyName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="orderCode != null" >
+        order_code = #{orderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="contractCode != null" >
+        contract_code = #{contractCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orderAmount != null" >
+        order_amount = #{orderAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="invoiceOutAmount != null" >
+        invoice_out_amount = #{invoiceOutAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="invoiceOutBalance != null" >
+        invoice_out_balance = #{invoiceOutBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="operationType != null" >
+        operation_type = #{operationType,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceNo != null" >
+        invoice_no = #{invoiceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number = #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        row_id = #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.order.model.model.ReportBuyerInvoiceOut" >
+    update report_buyer_invoice_out
+    set buyer_id = #{buyerId,jdbcType=BIGINT},
+      buy_name = #{buyName,jdbcType=VARCHAR},
+      order_id = #{orderId,jdbcType=BIGINT},
+      order_code = #{orderCode,jdbcType=VARCHAR},
+      contract_code = #{contractCode,jdbcType=VARCHAR},
+      order_amount = #{orderAmount,jdbcType=DECIMAL},
+      invoice_out_amount = #{invoiceOutAmount,jdbcType=DECIMAL},
+      invoice_out_balance = #{invoiceOutBalance,jdbcType=DECIMAL},
+      operation_type = #{operationType,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      invoice_no = #{invoiceNo,jdbcType=VARCHAR},
+      created = #{created,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      modification_number = #{modificationNumber,jdbcType=INTEGER},
+      row_id = #{rowId,jdbcType=VARCHAR},
+      parent_row_id = #{parentRowId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

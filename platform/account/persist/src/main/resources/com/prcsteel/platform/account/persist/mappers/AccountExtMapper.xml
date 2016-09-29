@@ -1,0 +1,892 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.account.persist.dao.AccountExtDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.account.model.model.AccountExt" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="cust_account_id" property="custAccountId" jdbcType="BIGINT" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="addr" property="addr" jdbcType="VARCHAR" />
+    <result column="zip" property="zip" jdbcType="VARCHAR" />
+    <result column="mail_addr" property="mailAddr" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="fax" property="fax" jdbcType="VARCHAR" />
+    <result column="legal_person_name" property="legalPersonName" jdbcType="VARCHAR" />
+    <result column="mobil" property="mobil" jdbcType="VARCHAR" />
+    <result column="web_site_url" property="webSiteUrl" jdbcType="VARCHAR" />
+    <result column="province_id" property="provinceId" jdbcType="BIGINT" />
+    <result column="city_id" property="cityId" jdbcType="BIGINT" />
+    <result column="district_id" property="districtId" jdbcType="BIGINT" />
+    <result column="proxy_factory" property="proxyFactory" jdbcType="VARCHAR" />
+    <result column="proxy_qty" property="proxyQty" jdbcType="DECIMAL" />
+    <result column="license_code" property="licenseCode" jdbcType="VARCHAR" />
+    <result column="reg_address" property="regAddress" jdbcType="VARCHAR" />
+    <result column="credit_code" property="creditCode" jdbcType="VARCHAR" />
+    <result column="org_code" property="orgCode" jdbcType="VARCHAR" />
+    <result column="bank_code" property="bankCode" jdbcType="VARCHAR" />
+    <result column="bank_name_main" property="bankNameMain" jdbcType="VARCHAR" />
+    <result column="bank_name_branch" property="bankNameBranch" jdbcType="VARCHAR" />
+    <result column="bank_province_id" property="bankProvinceId" jdbcType="BIGINT" />
+    <result column="bank_city_id" property="bankCityId" jdbcType="BIGINT" />
+    <result column="account_code" property="accountCode" jdbcType="VARCHAR" />
+    <result column="tax_code" property="taxCode" jdbcType="VARCHAR" />
+    <result column="tax_tel" property="taxTel" jdbcType="VARCHAR" />
+    <result column="tax_bank_name_main" property="taxBankNameMain" jdbcType="VARCHAR" />
+    <result column="tax_bank_name_branch" property="taxBankNameBranch" jdbcType="VARCHAR" />
+    <result column="bank_number" property="bankNumber" jdbcType="VARCHAR" />
+    <result column="reg_time" property="regTime" jdbcType="TIMESTAMP" />
+    <result column="invoice_type" property="invoiceType" jdbcType="VARCHAR" />
+    <result column="invoice_speed" property="invoiceSpeed" jdbcType="VARCHAR" />
+    <result column="invoice_data_status" property="invoiceDataStatus" jdbcType="VARCHAR" />
+    <result column="invoice_data_decline_reason" property="invoiceDataDeclineReason" jdbcType="VARCHAR" />
+    <result column="bank_data_status" property="bankDataStatus" jdbcType="VARCHAR" />
+    <result column="bank_data_reason" property="bankDataReason" jdbcType="VARCHAR" />
+    <result column="bank_data_reminded" property="bankDataReminded" jdbcType="VARCHAR" />
+    <result column="card_info_status" property="cardInfoStatus" jdbcType="VARCHAR" />
+    <result column="card_info_status_reason" property="cardInfoStatusDeclineReason" jdbcType="VARCHAR" />
+    <result column="annual_purchase_agreement_status" property="annualPurchaseAgreementStatus" jdbcType="VARCHAR" />
+    <result column="annual_purchase_agreement_decline_reason" property="annualPurchaseAgreementDeclineReason" jdbcType="VARCHAR" />
+    <result column="seller_consign_agreement_status" property="sellerConsignAgreementStatus" jdbcType="VARCHAR" />
+    <result column="seller_consign_agreement_decline_reason" property="sellerConsignAgreementDeclineReason" jdbcType="VARCHAR" />
+    <result column="annual_purchase_bar_code" property="annualPurchaseBarCode" jdbcType="VARCHAR" />
+    <result column="seller_consign_bar_code" property="sellerConsignBarCode" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+    <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+    <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+    <result column="is_deleted" property="isDeleted" jdbcType="BIT" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, cust_account_id, code, name, addr, zip, mail_addr, tel, fax, legal_person_name,
+    mobil, web_site_url, province_id, city_id, district_id, proxy_factory, proxy_qty,
+    license_code, reg_address, credit_code, org_code, bank_code, bank_name_main, bank_name_branch,
+    bank_province_id, bank_city_id, account_code, tax_code, tax_tel, tax_bank_name_main,
+    tax_bank_name_branch, bank_number, reg_time, invoice_type, invoice_speed, invoice_data_status,
+    invoice_data_decline_reason, bank_data_status, bank_data_reason, bank_data_reminded,
+    card_info_status,card_info_status_reason , annual_purchase_agreement_status, annual_purchase_agreement_decline_reason,
+    seller_consign_agreement_status, seller_consign_agreement_decline_reason, annual_purchase_bar_code,
+    seller_consign_bar_code, created, created_by, last_updated, last_updated_by, modification_number,
+    row_id, parent_row_id, is_deleted
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cust_account_ext
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cust_account_ext
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.prcsteel.platform.account.model.model.AccountExt" >
+    insert into cust_account_ext (id, cust_account_id, code, 
+      name, addr, zip, mail_addr,
+      tel, fax, legal_person_name,
+      mobil, web_site_url, province_id,
+      city_id, district_id, proxy_factory,
+      proxy_qty, license_code, reg_address,
+      credit_code, org_code, bank_code,
+      bank_name_main, bank_name_branch, bank_province_id,
+      bank_city_id, account_code, tax_code,
+      tax_tel, tax_bank_name_main, tax_bank_name_branch,
+      bank_number, reg_time, invoice_type,
+      invoice_speed, invoice_data_status, invoice_data_decline_reason,
+      bank_data_status, bank_data_reason, bank_data_reminded,
+      card_info_status, annual_purchase_agreement_status,
+      annual_purchase_agreement_decline_reason, seller_consign_agreement_status,
+      seller_consign_agreement_decline_reason, annual_purchase_bar_code,
+   	  seller_consign_bar_code, created,
+      created_by, last_updated, last_updated_by,
+      modification_number, row_id, parent_row_id,
+      is_deleted)
+    values (#{id,jdbcType=INTEGER}, #{custAccountId,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR},
+      #{name,jdbcType=VARCHAR}, #{addr,jdbcType=VARCHAR}, #{zip,jdbcType=VARCHAR}, #{mailAddr,jdbcType=VARCHAR},
+      #{tel,jdbcType=VARCHAR}, #{fax,jdbcType=VARCHAR}, #{legalPersonName,jdbcType=VARCHAR},
+      #{mobil,jdbcType=VARCHAR}, #{webSiteUrl,jdbcType=VARCHAR}, #{provinceId,jdbcType=BIGINT},
+      #{cityId,jdbcType=BIGINT}, #{districtId,jdbcType=BIGINT}, #{proxyFactory,jdbcType=VARCHAR},
+      #{proxyQty,jdbcType=DECIMAL}, #{licenseCode,jdbcType=VARCHAR}, #{regAddress,jdbcType=VARCHAR},
+      #{creditCode,jdbcType=VARCHAR}, #{orgCode,jdbcType=VARCHAR}, #{bankCode,jdbcType=VARCHAR},
+      #{bankNameMain,jdbcType=VARCHAR}, #{bankNameBranch,jdbcType=VARCHAR}, #{bankProvinceId,jdbcType=BIGINT},
+      #{bankCityId,jdbcType=BIGINT}, #{accountCode,jdbcType=VARCHAR}, #{taxCode,jdbcType=VARCHAR},
+      #{taxTel,jdbcType=VARCHAR}, #{taxBankNameMain,jdbcType=VARCHAR}, #{taxBankNameBranch,jdbcType=VARCHAR},
+      #{bankNumber,jdbcType=VARCHAR}, #{regTime,jdbcType=TIMESTAMP}, #{invoiceType,jdbcType=VARCHAR},
+      #{invoiceSpeed,jdbcType=VARCHAR}, #{invoiceDataStatus,jdbcType=VARCHAR}, #{invoiceDataDeclineReason,jdbcType=VARCHAR},
+      #{bankDataStatus,jdbcType=VARCHAR}, #{bankDataReason,jdbcType=VARCHAR}, #{bankDataReminded,jdbcType=VARCHAR},
+      #{cardInfoStatus,jdbcType=VARCHAR}, #{annualPurchaseAgreementStatus,jdbcType=VARCHAR},
+      #{annualPurchaseAgreementDeclineReason,jdbcType=VARCHAR}, #{sellerConsignAgreementStatus,jdbcType=VARCHAR},
+      #{sellerConsignAgreementDeclineReason,jdbcType=VARCHAR}, #{annualPurchaseBarCode,jdbcType=VARCHAR},
+      #{sellerConsignBarCode,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP},
+      #{createdBy,jdbcType=VARCHAR}, #{lastUpdated,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR},
+      #{modificationNumber,jdbcType=INTEGER}, #{rowId,jdbcType=VARCHAR}, #{parentRowId,jdbcType=VARCHAR},
+      #{isDeleted,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.account.model.model.AccountExt" >
+    insert into cust_account_ext
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="custAccountId != null" >
+        cust_account_id,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="addr != null" >
+        addr,
+      </if>
+      <if test="zip != null" >
+        zip,
+      </if>
+      <if test="mailAddr != null" >
+        mail_addr,
+      </if>
+      <if test="tel != null" >
+        tel,
+      </if>
+      <if test="fax != null" >
+        fax,
+      </if>
+      <if test="legalPersonName != null" >
+        legal_person_name,
+      </if>
+      <if test="mobil != null" >
+        mobil,
+      </if>
+      <if test="webSiteUrl != null" >
+        web_site_url,
+      </if>
+      <if test="provinceId != null" >
+        province_id,
+      </if>
+      <if test="cityId != null" >
+        city_id,
+      </if>
+      <if test="districtId != null" >
+        district_id,
+      </if>
+      <if test="proxyFactory != null" >
+        proxy_factory,
+      </if>
+      <if test="proxyQty != null" >
+        proxy_qty,
+      </if>
+      <if test="licenseCode != null" >
+        license_code,
+      </if>
+      <if test="regAddress != null" >
+        reg_address,
+      </if>
+      <if test="creditCode != null" >
+        credit_code,
+      </if>
+      <if test="orgCode != null" >
+        org_code,
+      </if>
+      <if test="bankCode != null" >
+        bank_code,
+      </if>
+      <if test="bankNameMain != null" >
+        bank_name_main,
+      </if>
+      <if test="bankNameBranch != null" >
+        bank_name_branch,
+      </if>
+      <if test="bankProvinceId != null" >
+        bank_province_id,
+      </if>
+      <if test="bankCityId != null" >
+        bank_city_id,
+      </if>
+      <if test="accountCode != null" >
+        account_code,
+      </if>
+      <if test="taxCode != null" >
+        tax_code,
+      </if>
+      <if test="taxTel != null" >
+        tax_tel,
+      </if>
+      <if test="taxBankNameMain != null" >
+        tax_bank_name_main,
+      </if>
+      <if test="taxBankNameBranch != null" >
+        tax_bank_name_branch,
+      </if>
+      <if test="bankNumber != null" >
+        bank_number,
+      </if>
+      <if test="regTime != null" >
+        reg_time,
+      </if>
+      <if test="invoiceType != null" >
+        invoice_type,
+      </if>
+      <if test="invoiceSpeed != null" >
+        invoice_speed,
+      </if>
+      <if test="invoiceDataStatus != null" >
+        invoice_data_status,
+      </if>
+      <if test="invoiceDataDeclineReason != null" >
+        invoice_data_decline_reason,
+      </if>
+      <if test="bankDataStatus != null" >
+        bank_data_status,
+      </if>
+      <if test="bankDataReason != null" >
+        bank_data_reason,
+      </if>
+      <if test="bankDataReminded != null" >
+        bank_data_reminded,
+      </if>
+      <if test="cardInfoStatus != null" >
+        card_info_status,
+      </if>
+      <if test="annualPurchaseAgreementStatus != null" >
+        annual_purchase_agreement_status,
+      </if>
+      <if test="annualPurchaseAgreementDeclineReason != null" >
+        annual_purchase_agreement_decline_reason,
+      </if>
+      <if test="sellerConsignAgreementStatus != null" >
+        seller_consign_agreement_status,
+      </if>
+      <if test="sellerConsignAgreementDeclineReason != null" >
+        seller_consign_agreement_decline_reason,
+      </if>
+      <if test="annualPurchaseBarCode != null" >
+        annual_purchase_bar_code,
+      </if>
+      <if test="sellerConsignBarCode != null" >
+        seller_consign_bar_code,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by,
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number,
+      </if>
+      <if test="rowId != null" >
+        row_id,
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="custAccountId != null" >
+        #{custAccountId,jdbcType=BIGINT},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null" >
+        #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="zip != null" >
+        #{zip,jdbcType=VARCHAR},
+      </if>
+      <if test="mailAddr != null" >
+        #{mailAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null" >
+        #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonName != null" >
+        #{legalPersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobil != null" >
+        #{mobil,jdbcType=VARCHAR},
+      </if>
+      <if test="webSiteUrl != null" >
+        #{webSiteUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceId != null" >
+        #{provinceId,jdbcType=BIGINT},
+      </if>
+      <if test="cityId != null" >
+        #{cityId,jdbcType=BIGINT},
+      </if>
+      <if test="districtId != null" >
+        #{districtId,jdbcType=BIGINT},
+      </if>
+      <if test="proxyFactory != null" >
+        #{proxyFactory,jdbcType=VARCHAR},
+      </if>
+      <if test="proxyQty != null" >
+        #{proxyQty,jdbcType=DECIMAL},
+      </if>
+      <if test="licenseCode != null" >
+        #{licenseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="regAddress != null" >
+        #{regAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="creditCode != null" >
+        #{creditCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null" >
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCode != null" >
+        #{bankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bankNameMain != null" >
+        #{bankNameMain,jdbcType=VARCHAR},
+      </if>
+      <if test="bankNameBranch != null" >
+        #{bankNameBranch,jdbcType=VARCHAR},
+      </if>
+      <if test="bankProvinceId != null" >
+        #{bankProvinceId,jdbcType=BIGINT},
+      </if>
+      <if test="bankCityId != null" >
+        #{bankCityId,jdbcType=BIGINT},
+      </if>
+      <if test="accountCode != null" >
+        #{accountCode,jdbcType=VARCHAR},
+      </if>
+      <if test="taxCode != null" >
+        #{taxCode,jdbcType=VARCHAR},
+      </if>
+      <if test="taxTel != null" >
+        #{taxTel,jdbcType=VARCHAR},
+      </if>
+      <if test="taxBankNameMain != null" >
+        #{taxBankNameMain,jdbcType=VARCHAR},
+      </if>
+      <if test="taxBankNameBranch != null" >
+        #{taxBankNameBranch,jdbcType=VARCHAR},
+      </if>
+      <if test="bankNumber != null" >
+        #{bankNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="regTime != null" >
+        #{regTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="invoiceType != null" >
+        #{invoiceType,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceSpeed != null" >
+        #{invoiceSpeed,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceDataStatus != null" >
+        #{invoiceDataStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceDataDeclineReason != null" >
+        #{invoiceDataDeclineReason,jdbcType=VARCHAR},
+      </if>
+      <if test="bankDataStatus != null" >
+        #{bankDataStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="bankDataReason != null" >
+        #{bankDataReason,jdbcType=VARCHAR},
+      </if>
+      <if test="bankDataReminded != null" >
+        #{bankDataReminded,jdbcType=VARCHAR},
+      </if>
+      <if test="cardInfoStatus != null" >
+        #{cardInfoStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="annualPurchaseAgreementStatus != null" >
+        #{annualPurchaseAgreementStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="annualPurchaseAgreementDeclineReason != null" >
+        #{annualPurchaseAgreementDeclineReason,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerConsignAgreementStatus != null" >
+        #{sellerConsignAgreementStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerConsignAgreementDeclineReason != null" >
+        #{sellerConsignAgreementDeclineReason,jdbcType=VARCHAR},
+      </if>
+      <if test="annualPurchaseBarCode != null" >
+         #{annualPurchaseBarCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerConsignBarCode != null" >
+         #{sellerConsignBarCode,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        #{parentRowId,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.account.model.model.AccountExt" >
+    update cust_account_ext
+    <set >
+      <if test="custAccountId != null" >
+        cust_account_id = #{custAccountId,jdbcType=BIGINT},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null" >
+        addr = #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="zip != null" >
+        zip = #{zip,jdbcType=VARCHAR},
+      </if>
+      <if test="mailAddr != null" >
+        mail_addr = #{mailAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null" >
+        fax = #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonName != null" >
+        legal_person_name = #{legalPersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobil != null" >
+        mobil = #{mobil,jdbcType=VARCHAR},
+      </if>
+      <if test="webSiteUrl != null" >
+        web_site_url = #{webSiteUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceId != null" >
+        province_id = #{provinceId,jdbcType=BIGINT},
+      </if>
+      <if test="cityId != null" >
+        city_id = #{cityId,jdbcType=BIGINT},
+      </if>
+      <if test="districtId != null" >
+        district_id = #{districtId,jdbcType=BIGINT},
+      </if>
+      <if test="proxyFactory != null" >
+        proxy_factory = #{proxyFactory,jdbcType=VARCHAR},
+      </if>
+      <if test="proxyQty != null" >
+        proxy_qty = #{proxyQty,jdbcType=DECIMAL},
+      </if>
+      <if test="licenseCode != null" >
+        license_code = #{licenseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="regAddress != null" >
+        reg_address = #{regAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="creditCode != null" >
+        credit_code = #{creditCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null" >
+        org_code = #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCode != null" >
+        bank_code = #{bankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bankNameMain != null" >
+        bank_name_main = #{bankNameMain,jdbcType=VARCHAR},
+      </if>
+      <if test="bankNameBranch != null" >
+        bank_name_branch = #{bankNameBranch,jdbcType=VARCHAR},
+      </if>
+      <if test="bankProvinceId != null" >
+        bank_province_id = #{bankProvinceId,jdbcType=BIGINT},
+      </if>
+      <if test="bankCityId != null" >
+        bank_city_id = #{bankCityId,jdbcType=BIGINT},
+      </if>
+      <if test="accountCode != null" >
+        account_code = #{accountCode,jdbcType=VARCHAR},
+      </if>
+      <if test="taxCode != null" >
+        tax_code = #{taxCode,jdbcType=VARCHAR},
+      </if>
+      <if test="taxTel != null" >
+        tax_tel = #{taxTel,jdbcType=VARCHAR},
+      </if>
+      <if test="taxBankNameMain != null" >
+        tax_bank_name_main = #{taxBankNameMain,jdbcType=VARCHAR},
+      </if>
+      <if test="taxBankNameBranch != null" >
+        tax_bank_name_branch = #{taxBankNameBranch,jdbcType=VARCHAR},
+      </if>
+      <if test="bankNumber != null" >
+        bank_number = #{bankNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="regTime != null" >
+        reg_time = #{regTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="invoiceType != null" >
+        invoice_type = #{invoiceType,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceSpeed != null" >
+        invoice_speed = #{invoiceSpeed,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceDataStatus != null" >
+        invoice_data_status = #{invoiceDataStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceDataDeclineReason != null" >
+        invoice_data_decline_reason = #{invoiceDataDeclineReason,jdbcType=VARCHAR},
+      </if>
+      <if test="bankDataStatus != null" >
+        bank_data_status = #{bankDataStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="bankDataReason != null" >
+        bank_data_reason = #{bankDataReason,jdbcType=VARCHAR},
+      </if>
+      <if test="bankDataReminded != null" >
+        bank_data_reminded = #{bankDataReminded,jdbcType=VARCHAR},
+      </if>
+      <if test="cardInfoStatus != null" >
+        card_info_status = #{cardInfoStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="annualPurchaseAgreementStatus != null" >
+        annual_purchase_agreement_status = #{annualPurchaseAgreementStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="annualPurchaseAgreementDeclineReason != null" >
+        annual_purchase_agreement_decline_reason = #{annualPurchaseAgreementDeclineReason,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerConsignAgreementStatus != null" >
+        seller_consign_agreement_status = #{sellerConsignAgreementStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerConsignAgreementDeclineReason != null" >
+        seller_consign_agreement_decline_reason = #{sellerConsignAgreementDeclineReason,jdbcType=VARCHAR},
+      </if>
+      <if test="annualPurchaseBarCode != null" >
+        annual_purchase_bar_code = #{annualPurchaseBarCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerConsignBarCode != null" >
+        seller_consign_bar_code = #{sellerConsignBarCode,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number = #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        row_id = #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.account.model.model.AccountExt" >
+    update cust_account_ext
+    set cust_account_id = #{custAccountId,jdbcType=BIGINT},
+      code = #{code,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      addr = #{addr,jdbcType=VARCHAR},
+      zip = #{zip,jdbcType=VARCHAR},
+      mail_addr = #{mailAddr,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      fax = #{fax,jdbcType=VARCHAR},
+      legal_person_name = #{legalPersonName,jdbcType=VARCHAR},
+      mobil = #{mobil,jdbcType=VARCHAR},
+      web_site_url = #{webSiteUrl,jdbcType=VARCHAR},
+      province_id = #{provinceId,jdbcType=BIGINT},
+      city_id = #{cityId,jdbcType=BIGINT},
+      district_id = #{districtId,jdbcType=BIGINT},
+      proxy_factory = #{proxyFactory,jdbcType=VARCHAR},
+      proxy_qty = #{proxyQty,jdbcType=DECIMAL},
+      license_code = #{licenseCode,jdbcType=VARCHAR},
+      reg_address = #{regAddress,jdbcType=VARCHAR},
+      credit_code = #{creditCode,jdbcType=VARCHAR},
+      org_code = #{orgCode,jdbcType=VARCHAR},
+      bank_code = #{bankCode,jdbcType=VARCHAR},
+      bank_name_main = #{bankNameMain,jdbcType=VARCHAR},
+      bank_name_branch = #{bankNameBranch,jdbcType=VARCHAR},
+      bank_province_id = #{bankProvinceId,jdbcType=BIGINT},
+      bank_city_id = #{bankCityId,jdbcType=BIGINT},
+      account_code = #{accountCode,jdbcType=VARCHAR},
+      tax_code = #{taxCode,jdbcType=VARCHAR},
+      tax_tel = #{taxTel,jdbcType=VARCHAR},
+      tax_bank_name_main = #{taxBankNameMain,jdbcType=VARCHAR},
+      tax_bank_name_branch = #{taxBankNameBranch,jdbcType=VARCHAR},
+      bank_number = #{bankNumber,jdbcType=VARCHAR},
+      reg_time = #{regTime,jdbcType=TIMESTAMP},
+      invoice_type = #{invoiceType,jdbcType=VARCHAR},
+      invoice_speed = #{invoiceSpeed,jdbcType=VARCHAR},
+      invoice_data_status = #{invoiceDataStatus,jdbcType=VARCHAR},
+      invoice_data_decline_reason = #{invoiceDataDeclineReason,jdbcType=VARCHAR},
+      bank_data_status = #{bankDataStatus,jdbcType=VARCHAR},
+      bank_data_reason = #{bankDataReason,jdbcType=VARCHAR},
+      bank_data_reminded = #{bankDataReminded,jdbcType=VARCHAR},
+      card_info_status = #{cardInfoStatus,jdbcType=VARCHAR},
+      annual_purchase_agreement_status = #{annualPurchaseAgreementStatus,jdbcType=VARCHAR},
+      annual_purchase_agreement_decline_reason = #{annualPurchaseAgreementDeclineReason,jdbcType=VARCHAR},
+      seller_consign_agreement_status = #{sellerConsignAgreementStatus,jdbcType=VARCHAR},
+      seller_consign_agreement_decline_reason = #{sellerConsignAgreementDeclineReason,jdbcType=VARCHAR},
+      annual_purchase_bar_code = #{annualPurchaseBarCode,jdbcType=VARCHAR},
+      seller_consign_bar_code = #{sellerConsignBarCode,jdbcType=VARCHAR},
+      created = #{created,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      modification_number = #{modificationNumber,jdbcType=INTEGER},
+      row_id = #{rowId,jdbcType=VARCHAR},
+      parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      is_deleted = #{isDeleted,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+
+  <select id="selectByAccountId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from cust_account_ext
+    where cust_account_id = #{custAccountId,jdbcType=BIGINT}
+  </select>
+
+  <update id="updateByAccountIdSelective" parameterType="com.prcsteel.platform.account.model.model.AccountExt" >
+    update cust_account_ext
+    <set >
+      <if test="custAccountId != null" >
+        cust_account_id = #{custAccountId,jdbcType=BIGINT},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null" >
+        addr = #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="zip != null" >
+        zip = #{zip,jdbcType=VARCHAR},
+      </if>
+      <if test="mailAddr != null" >
+        mail_addr = #{mailAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null" >
+        fax = #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonName != null" >
+        legal_person_name = #{legalPersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobil != null" >
+        mobil = #{mobil,jdbcType=VARCHAR},
+      </if>
+      <if test="webSiteUrl != null" >
+        web_site_url = #{webSiteUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceId != null" >
+        province_id = #{provinceId,jdbcType=BIGINT},
+      </if>
+      <if test="cityId != null" >
+        city_id = #{cityId,jdbcType=BIGINT},
+      </if>
+      <if test="districtId != null" >
+        district_id = #{districtId,jdbcType=BIGINT},
+      </if>
+      <if test="proxyFactory != null" >
+        proxy_factory = #{proxyFactory,jdbcType=VARCHAR},
+      </if>
+      <if test="proxyQty != null" >
+        proxy_qty = #{proxyQty,jdbcType=DECIMAL},
+      </if>
+      <if test="licenseCode != null" >
+        license_code = #{licenseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="regAddress != null" >
+        reg_address = #{regAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="creditCode != null" >
+        credit_code = #{creditCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null" >
+        org_code = #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCode != null" >
+        bank_code = #{bankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bankNameMain != null" >
+        bank_name_main = #{bankNameMain,jdbcType=VARCHAR},
+      </if>
+      <if test="bankNameBranch != null" >
+        bank_name_branch = #{bankNameBranch,jdbcType=VARCHAR},
+      </if>
+      <if test="bankProvinceId != null" >
+        bank_province_id = #{bankProvinceId,jdbcType=BIGINT},
+      </if>
+      <if test="bankCityId != null" >
+        bank_city_id = #{bankCityId,jdbcType=BIGINT},
+      </if>
+      <if test="accountCode != null" >
+        account_code = #{accountCode,jdbcType=VARCHAR},
+      </if>
+      <if test="taxCode != null" >
+        tax_code = #{taxCode,jdbcType=VARCHAR},
+      </if>
+      <if test="taxTel != null" >
+        tax_tel = #{taxTel,jdbcType=VARCHAR},
+      </if>
+      <if test="taxBankNameMain != null" >
+        tax_bank_name_main = #{taxBankNameMain,jdbcType=VARCHAR},
+      </if>
+      <if test="taxBankNameBranch != null" >
+        tax_bank_name_branch = #{taxBankNameBranch,jdbcType=VARCHAR},
+      </if>
+      <if test="bankNumber != null" >
+        bank_number = #{bankNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="regTime != null" >
+        reg_time = #{regTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="invoiceType != null" >
+        invoice_type = #{invoiceType,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceSpeed != null" >
+        invoice_speed = #{invoiceSpeed,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceDataStatus != null" >
+        invoice_data_status = #{invoiceDataStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceDataDeclineReason != null" >
+        invoice_data_decline_reason = #{invoiceDataDeclineReason,jdbcType=VARCHAR},
+      </if>
+      <if test="bankDataStatus != null" >
+        bank_data_status = #{bankDataStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="bankDataReason != null" >
+        bank_data_reason = #{bankDataReason,jdbcType=VARCHAR},
+      </if>
+      <if test="bankDataReminded != null" >
+        bank_data_reminded = #{bankDataReminded,jdbcType=VARCHAR},
+      </if>
+      <if test="cardInfoStatus != null" >
+        card_info_status = #{cardInfoStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="annualPurchaseAgreementStatus != null" >
+        annual_purchase_agreement_status = #{annualPurchaseAgreementStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="annualPurchaseAgreementDeclineReason != null" >
+        annual_purchase_agreement_decline_reason = #{annualPurchaseAgreementDeclineReason,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerConsignAgreementStatus != null" >
+        seller_consign_agreement_status = #{sellerConsignAgreementStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerConsignAgreementDeclineReason != null" >
+        seller_consign_agreement_decline_reason = #{sellerConsignAgreementDeclineReason,jdbcType=VARCHAR},
+      </if>
+      <if test="annualPurchaseBarCode != null" >
+        annual_purchase_bar_code = #{annualPurchaseBarCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerConsignBarCode != null" >
+        seller_consign_bar_code = #{sellerConsignBarCode,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number = #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        row_id = #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+    </set>
+    where cust_account_id = #{custAccountId,jdbcType=BIGINT}
+  </update>
+
+    <update id="updateAccountExtByType" parameterType="java.lang.String">
+      update cust_account_ext
+      <set>
+        <if test="type != null and type=='consign'" >
+           seller_consign_bar_code = "",
+        </if>
+
+        <if test="type != null and type=='yearPurcharse'" >
+          annual_purchase_bar_code = "",
+        </if>
+      </set>
+      WHERE
+      cust_account_id in(
+      SELECT t1.account_id FROM  cust_account_contract_template_barcode_history t1
+      WHERE
+      NOT EXISTS (
+      SELECT * FROM  cust_account_contract_template t2 WHERE t1.account_id = t2.account_id
+      )
+      AND t1.type  = #{type,jdbcType=VARCHAR}
+      )
+    </update>
+
+</mapper>

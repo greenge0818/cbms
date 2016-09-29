@@ -1,0 +1,11 @@
+#set($layout="layout/blank.vm")
+#if($attachmentlist)
+    <div style="min-width:400px;min-height:230px;max-width:800px">
+    #foreach($attachment in $attachmentlist)
+    <span class="pull-left pos-rel" style="margin-right:10px;margin-top:10px;"><a href="javascript:;" class="img-box">
+        <img   #if($attachment.fileUrl)src="$link.getContextPath()/common/getfile.html?key=$attachment.fileUrl" #end alt="" width="100px" height="70px" style="border: 2px solid rgb(51, 122, 183);"/>
+    </a>
+    </span>
+    #end
+    </div>
+#end

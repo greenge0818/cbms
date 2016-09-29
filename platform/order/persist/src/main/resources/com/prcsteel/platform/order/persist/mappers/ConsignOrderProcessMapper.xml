@@ -1,0 +1,598 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.order.persist.dao.ConsignOrderProcessDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.order.model.model.ConsignOrderProcess" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="org_id" property="orgId" jdbcType="BIGINT" />
+    <result column="org_name" property="orgName" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="order_status_code" property="orderStatusCode" jdbcType="VARCHAR" />
+    <result column="order_status_name" property="orderStatusName" jdbcType="VARCHAR" />
+    <result column="operator_id" property="operatorId" jdbcType="BIGINT" />
+    <result column="operator_name" property="operatorName" jdbcType="VARCHAR" />
+    <result column="operator_mobile" property="operatorMobile" jdbcType="VARCHAR" />
+    <result column="operator_role_name" property="operatorRoleName" jdbcType="VARCHAR" />
+    <result column="operatorOrgId" property="operatorOrgId" jdbcType="BIGINT" />
+    <result column="operatorOrgName" property="operatorOrgName" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+    <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+    <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="OrderProcess" type="com.prcsteel.platform.order.model.dto.ConsignOrderStatusDto" >
+    <result column="operator_name" property="operaterName" jdbcType="VARCHAR" />
+    <result column="order_status_name" property="operationName" jdbcType="VARCHAR" />
+    <result column="operator_mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="operator_role_name" property="roleName" jdbcType="VARCHAR" />
+    <result column="order_status_code" property="status" jdbcType="VARCHAR" />
+    <result column="status_type" property="statusType" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, org_id, org_name, user_id, user_name, type, order_status_code, order_status_name, operator_id, 
+    operator_name, operator_mobile, operator_role_name, created, created_by, last_updated, 
+    last_updated_by, modification_number, row_id, parent_row_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from busi_consign_process
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="getOrderProcessByUserId" resultMap="OrderProcess" parameterType="java.lang.Long">
+    select order_status_code, order_status_name,operator_name,operator_role_name,t2.tel as operator_mobile,
+    case when order_status_code in('REQUESTED','APPROVED','PAYED') then 1 else 0 end as status_type
+    from busi_consign_process t1  inner join acl_user t2 on t1.operator_id=t2.id
+    where order_status_code!='0' and type=0 and user_id=#{userId,jdbcType=BIGINT}
+    order by t1.id asc
+  </select>
+  <select id="getByUserIdAndStatus" resultMap="OrderProcess" >
+    select order_status_code, order_status_name,operator_name,operator_mobile,operator_role_name,
+    case when order_status_code in('REQUESTED','APPROVED','PAYED') then 1 else 0 end as status_type
+    from busi_consign_process
+    where order_status_code!='0' and type=0 and user_id=#{userId,jdbcType=BIGINT} and order_status_code=#{status,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from busi_consign_process
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.prcsteel.platform.order.model.model.ConsignOrderProcess" >
+    insert into busi_consign_process (id, org_id, org_name, 
+      user_id, user_name, type, order_status_code, 
+      order_status_name, operator_id, operator_name, 
+      operator_mobile, operator_role_name, created, 
+      created_by, last_updated, last_updated_by, 
+      modification_number, row_id, parent_row_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{orgId,jdbcType=BIGINT}, #{orgName,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{orderStatusCode,jdbcType=VARCHAR}, 
+      #{orderStatusName,jdbcType=VARCHAR}, #{operatorId,jdbcType=BIGINT}, #{operatorName,jdbcType=VARCHAR}, 
+      #{operatorMobile,jdbcType=VARCHAR}, #{operatorRoleName,jdbcType=VARCHAR}, now(), 
+      #{createdBy,jdbcType=VARCHAR}, now(), #{lastUpdatedBy,jdbcType=VARCHAR}, 
+      0, #{rowId,jdbcType=VARCHAR}, #{parentRowId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.order.model.model.ConsignOrderProcess" >
+    insert into busi_consign_process
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orgId != null" >
+        org_id,
+      </if>
+      <if test="orgName != null" >
+        org_name,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="orderStatusCode != null" >
+        order_status_code,
+      </if>
+      <if test="orderStatusName != null" >
+        order_status_name,
+      </if>
+      <if test="operatorId != null" >
+        operator_id,
+      </if>
+      <if test="operatorName != null" >
+        operator_name,
+      </if>
+      <if test="operatorMobile != null" >
+        operator_mobile,
+      </if>
+      <if test="operatorRoleName != null" >
+        operator_role_name,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by,
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number,
+      </if>
+      <if test="rowId != null" >
+        row_id,
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="orgId != null" >
+        #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="orgName != null" >
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="orderStatusCode != null" >
+        #{orderStatusCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStatusName != null" >
+        #{orderStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorId != null" >
+        #{operatorId,jdbcType=BIGINT},
+      </if>
+      <if test="operatorName != null" >
+        #{operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorMobile != null" >
+        #{operatorMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorRoleName != null" >
+        #{operatorRoleName,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        #{parentRowId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.order.model.model.ConsignOrderProcess" >
+    update busi_consign_process
+    <set >
+      <if test="orgId != null" >
+        org_id = #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="orgName != null" >
+        org_name = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="orderStatusCode != null" >
+        order_status_code = #{orderStatusCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStatusName != null" >
+        order_status_name = #{orderStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorId != null" >
+        operator_id = #{operatorId,jdbcType=BIGINT},
+      </if>
+      <if test="operatorName != null" >
+        operator_name = #{operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorMobile != null" >
+        operator_mobile = #{operatorMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorRoleName != null" >
+        operator_role_name = #{operatorRoleName,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number = #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        row_id = #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.order.model.model.ConsignOrderProcess" >
+    update busi_consign_process
+    set org_id = #{orgId,jdbcType=BIGINT},
+      org_name = #{orgName,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=BIGINT},
+      user_name = #{userName,jdbcType=VARCHAR},
+      order_status_code = #{orderStatusCode,jdbcType=VARCHAR},
+      order_status_name = #{orderStatusName,jdbcType=VARCHAR},
+      operator_id = #{operatorId,jdbcType=BIGINT},
+      operator_name = #{operatorName,jdbcType=VARCHAR},
+      operator_mobile = #{operatorMobile,jdbcType=VARCHAR},
+      operator_role_name = #{operatorRoleName,jdbcType=VARCHAR},
+      last_updated = now(),
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      modification_number = modification_number+1,
+      row_id = #{rowId,jdbcType=VARCHAR},
+      parent_row_id = #{parentRowId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!--查询所有内勤的ID-->
+  <select id="getOfficeStaffIds" resultType="java.lang.Long" >
+    select distinct(operator_id)
+    from busi_consign_process
+    where type=1
+    and order_status_code = "7"
+  </select>
+  <!-- 获取所有已设业务员 -->
+  <select id="getAllBusinessMen" parameterType="map" resultMap="com.prcsteel.platform.acl.persist.dao.UserDao.showMap">
+  	select distinct u.login_id as login_id,
+        u.name as user_name,
+        u.tel as tel,
+        u.status as status,
+        u.id as user_id,
+        r.name as role_name,
+        u.role_id as role_id,
+        o.name as org_name,
+        o.id as org_id 
+        from busi_consign_process a
+        LEFT JOIN acl_user u on a.user_id=u.id
+        LEFT JOIN acl_role r on r.id = u.role_id
+        LEFT JOIN base_organization o on o.id = u.org_id
+  	<where>
+  		<if test="orgName != null and orgName != ''">
+            and o.name like concat('%',TRIM(#{orgName,jdbcType=VARCHAR}),'%')
+        </if>
+        <if test="userName != null and userName != ''">
+            and u.name like concat('%',TRIM(#{userName,jdbcType=VARCHAR}),'%')
+        </if>
+  	</where>
+  	limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+  </select>
+  <!-- 获取所有未设业务员 -->
+  <select id="getUnsetBusinessMen" resultMap="com.prcsteel.platform.acl.persist.dao.UserDao.showMap">
+  	select distinct u.login_id as login_id,
+        u.name as user_name,
+        u.tel as tel,
+        u.status as status,
+        u.id as user_id,
+        r.name as role_name,
+        u.role_id as role_id,
+        o.name as org_name,
+        o.id as org_id 
+        from acl_user u
+        LEFT JOIN busi_consign_process a on a.user_id=u.id
+        LEFT JOIN acl_role r on r.id = u.role_id
+        LEFT JOIN base_organization o on o.id = u.org_id
+  	where a.id is null and u.status=1
+  	order by u.org_id
+  </select>
+  
+  <select id="getAllBusinessMenTotal" resultType="java.lang.Integer">
+  	select count(distinct a.user_id) from busi_consign_process a
+        LEFT JOIN acl_user u on a.user_id=u.id
+        LEFT JOIN acl_role r on r.id = u.role_id
+        LEFT JOIN base_organization o on o.id = u.org_id
+	  	<where>
+	  		<if test="orgName != null and orgName != ''">
+	            and o.name like concat('%',TRIM(#{orgName,jdbcType=VARCHAR}),'%')
+	        </if>
+	        <if test="userName != null and userName != ''">
+	            and u.name like concat('%',TRIM(#{userName,jdbcType=VARCHAR}),'%')
+	        </if>
+	  	</where>
+  </select>
+  
+  <delete id="deleteByUserId" parameterType="java.lang.Long">
+  	delete from busi_consign_process where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  
+  <select id="getSetProcessByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  	select a.*,c.id operatorOrgId,c.name operatorOrgName
+    from busi_consign_process a,acl_user b,base_organization c
+    where a.operator_id=b.id and b.org_id=c.id and a.user_id = #{id,jdbcType=INTEGER}
+    order by a.id
+  </select>
+  
+  <select id="getUnsetProcessByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  	select (select org_id from acl_user where id=#{userId,jdbcType=BIGINT}) org_id,
+			 (select b.name from acl_user a,base_organization b where a.org_id=b.id and a.id=#{userId,jdbcType=BIGINT}) org_name,
+			 #{userId,jdbcType=BIGINT} user_id,
+			 (select name from acl_user where id=#{userId,jdbcType=BIGINT}) user_name,
+			 0 type,
+			 1 order_status_code,
+			 '新开单' order_status_name,
+			 #{userId,jdbcType=BIGINT} operator_id,
+			 (select name from acl_user where id=#{userId,jdbcType=BIGINT}) operator_name,
+			 (select tel from acl_user where id=#{userId,jdbcType=BIGINT}) operator_mobile,
+			 (select b.id from acl_user a,base_organization b where a.org_id=b.id and a.id=#{userId,jdbcType=BIGINT}) operatorOrgId,
+			 (select b.name from acl_user a,base_organization b where a.org_id=b.id and a.id=#{userId,jdbcType=BIGINT}) operatorOrgName,
+			 '业务' operator_role_name
+			<!--  #(select b.name from acl_user a,acl_role b where a.role_id=b.id and a.id=#{userId,jdbcType=BIGINT}) operator_role_name -->
+union all
+			select
+			 (select org_id from acl_user where id=#{userId,jdbcType=BIGINT}) org_id,
+			 (select b.name from acl_user a,base_organization b where a.org_id=b.id and a.id=#{userId,jdbcType=BIGINT}) org_name,
+			 #{userId,jdbcType=BIGINT} user_id,
+			 (select name from acl_user where id=#{userId,jdbcType=BIGINT}) user_name,
+			 0 type,
+			 2 order_status_code,
+			 '待审核' order_status_name,
+			 (select b.charger from acl_user a,base_organization b where a.org_id=b.id and a.id=#{userId,jdbcType=BIGINT}) operator_id,
+			 (select c.name from acl_user a,base_organization b,acl_user c where a.org_id=b.id and b.charger =c.id and a.id=#{userId,jdbcType=BIGINT}) operator_name,
+			 (select c.tel from acl_user a,base_organization b,acl_user c where a.org_id=b.id and b.charger =c.id and a.id=#{userId,jdbcType=BIGINT}) operator_mobile,
+			 (select b.id from acl_user a,base_organization b where a.org_id=b.id and a.id=#{userId,jdbcType=BIGINT}) operatorOrgId,
+			 (select b.name from acl_user a,base_organization b where a.org_id=b.id and a.id=#{userId,jdbcType=BIGINT}) operatorOrgName,
+			 '主任' operator_role_name
+			 <!-- #(select d.name from acl_user a,base_organization b,acl_user c,acl_role d where a.org_id=b.id and b.charger =c.id and c.role_id=d.id and a.id=#{userId,jdbcType=BIGINT}) operator_role_name -->
+
+union all
+			 select
+			 (select org_id from acl_user where id=#{userId,jdbcType=BIGINT}) org_id,
+			 (select b.name from acl_user a,base_organization b where a.org_id=b.id and a.id=#{userId,jdbcType=BIGINT}) org_name,
+			 #{userId,jdbcType=BIGINT} user_id,
+			 (select name from acl_user where id=#{userId,jdbcType=BIGINT}) user_name,
+			 0 type,
+			 4 order_status_code,
+			 '待关联' order_status_name,
+			 #{userId,jdbcType=BIGINT} operator_id,
+			 (select name from acl_user where id=#{userId,jdbcType=BIGINT}) operator_name,
+			 (select tel from acl_user where id=#{userId,jdbcType=BIGINT}) operator_mobile,
+			 (select b.id from acl_user a,base_organization b where a.org_id=b.id and a.id=#{userId,jdbcType=BIGINT}) operatorOrgId,
+			 (select b.name from acl_user a,base_organization b where a.org_id=b.id and a.id=#{userId,jdbcType=BIGINT}) operatorOrgName,
+			 '业务' operator_role_name
+union all
+			 select
+			 (select org_id from acl_user where id=#{userId,jdbcType=BIGINT}) org_id,
+			 (select b.name from acl_user a,base_organization b where a.org_id=b.id and a.id=#{userId,jdbcType=BIGINT}) org_name,
+			 #{userId,jdbcType=BIGINT} user_id,
+			 (select name from acl_user where id=#{userId,jdbcType=BIGINT}) user_name,
+			 0 type,
+			 'PICKEDUP' order_status_code,
+			 '待提货申请' order_status_name,
+			 #{userId,jdbcType=BIGINT} operator_id,
+			 (select name from acl_user where id=#{userId,jdbcType=BIGINT}) operator_name,
+			 (select tel from acl_user where id=#{userId,jdbcType=BIGINT}) operator_mobile,
+			 (select b.id from acl_user a,base_organization b where a.org_id=b.id and a.id=#{userId,jdbcType=BIGINT}) operatorOrgId,
+			 (select b.name from acl_user a,base_organization b where a.org_id=b.id and a.id=#{userId,jdbcType=BIGINT}) operatorOrgName,
+			 '业务' operator_role_name
+union all
+			 select
+			 (select org_id from acl_user where id=#{userId,jdbcType=BIGINT}) org_id,
+			 (select b.name from acl_user a,base_organization b where a.org_id=b.id and a.id=#{userId,jdbcType=BIGINT}) org_name,
+			 #{userId,jdbcType=BIGINT} user_id,
+			 (select name from acl_user where id=#{userId,jdbcType=BIGINT}) user_name,
+			 0 type,
+			 'FILLEDUP' order_status_code,
+			 '待开放货涵' order_status_name,
+			 (select c.id from acl_user a,base_organization b ,acl_user c, acl_role d where a.org_id = b.id and c.org_id=b.id and c.role_id=d.id 
+and a.id = #{userId,jdbcType=BIGINT} and d.name like'%内勤%' limit 0,1) operator_id,
+			 (select c.name from acl_user a,base_organization b ,acl_user c, acl_role d where a.org_id = b.id and c.org_id=b.id and c.role_id=d.id 
+and a.id = #{userId,jdbcType=BIGINT} and d.name like'%内勤%' limit 0,1) operator_name,
+			 (select c.tel from acl_user a,base_organization b ,acl_user c, acl_role d where a.org_id = b.id and c.org_id=b.id and c.role_id=d.id 
+and a.id = #{userId,jdbcType=BIGINT} and d.name like'%内勤%' limit 0,1) operator_mobile,
+			 (select b.id from acl_user a,base_organization b where a.org_id=b.id and a.id=#{userId,jdbcType=BIGINT}) operatorOrgId,
+			 (select b.name from acl_user a,base_organization b where a.org_id=b.id and a.id=#{userId,jdbcType=BIGINT}) operatorOrgName,
+			 '内勤' operator_role_name
+union all
+			 select
+			 (select org_id from acl_user where id=#{userId,jdbcType=BIGINT}) org_id,
+			 (select b.name from acl_user a,base_organization b where a.org_id=b.id and a.id=#{userId,jdbcType=BIGINT}) org_name,
+			 #{userId,jdbcType=BIGINT} user_id,
+			 (select name from acl_user where id=#{userId,jdbcType=BIGINT}) user_name,
+			 0 type,
+			 'REQUESTED' order_status_code,
+			 '待申请付款' order_status_name,
+			 #{userId,jdbcType=BIGINT} operator_id,
+			 (select name from acl_user where id=#{userId,jdbcType=BIGINT}) operator_name,
+			 (select tel from acl_user where id=#{userId,jdbcType=BIGINT}) operator_mobile,
+			 (select b.id from acl_user a,base_organization b where a.org_id=b.id and a.id=#{userId,jdbcType=BIGINT}) operatorOrgId,
+			 (select b.name from acl_user a,base_organization b where a.org_id=b.id and a.id=#{userId,jdbcType=BIGINT}) operatorOrgName,
+			 '业务' operator_role_name
+union all
+			select
+			 (select org_id from acl_user where id=#{userId,jdbcType=BIGINT}) org_id,
+			 (select b.name from acl_user a,base_organization b where a.org_id=b.id and a.id=#{userId,jdbcType=BIGINT}) org_name,
+			 #{userId,jdbcType=BIGINT} user_id,
+			 (select name from acl_user where id=#{userId,jdbcType=BIGINT}) user_name,
+			 0 type,
+			 'APPROVED' order_status_code,
+			 '待审核付款' order_status_name,
+			 (select b.charger from acl_user a,base_organization b where a.org_id=b.id and a.id=#{userId,jdbcType=BIGINT}) operator_id,
+			 (select c.name from acl_user a,base_organization b,acl_user c where a.org_id=b.id and b.charger =c.id and a.id=#{userId,jdbcType=BIGINT}) operator_name,
+			 (select c.tel from acl_user a,base_organization b,acl_user c where a.org_id=b.id and b.charger =c.id and a.id=#{userId,jdbcType=BIGINT}) operator_mobile,
+			 (select b.id from acl_user a,base_organization b where a.org_id=b.id and a.id=#{userId,jdbcType=BIGINT}) operatorOrgId,
+			 (select b.name from acl_user a,base_organization b where a.org_id=b.id and a.id=#{userId,jdbcType=BIGINT}) operatorOrgName,
+			 '主任' operator_role_name
+union all
+			select
+			 (select org_id from acl_user where id=#{userId,jdbcType=BIGINT}) org_id,
+			 (select b.name from acl_user a,base_organization b where a.org_id=b.id and a.id=#{userId,jdbcType=BIGINT}) org_name,
+			 #{userId,jdbcType=BIGINT} user_id,
+			 (select name from acl_user where id=#{userId,jdbcType=BIGINT}) user_name,
+			 0 type,
+			 'PAYED' order_status_code,
+			 '待确认付款' order_status_name,
+			 (select c.id from acl_user c, acl_role d where c.role_id=d.id and d.name like'%出纳%' limit 0,1) operator_id,
+			 (select c.name from acl_user c, acl_role d where c.role_id=d.id and d.name like'%出纳%' limit 0,1) operator_name,
+			 (select c.tel from acl_user c, acl_role d where c.role_id=d.id and d.name like'%出纳%' limit 0,1) operator_mobile,
+			 (select b.id from base_organization b ,acl_user c, acl_role d where c.org_id = b.id and c.role_id=d.id and d.name like'%出纳%' limit 0,1) operatorOrgId,
+			 (select b.name from base_organization b ,acl_user c, acl_role d where c.org_id = b.id and c.role_id=d.id and d.name like'%出纳%' limit 0,1) operatorOrgName,
+			 '出纳' operator_role_name
+union all
+			 select
+			 (select org_id from acl_user where id=#{userId,jdbcType=BIGINT}) org_id,
+			 (select b.name from acl_user a,base_organization b where a.org_id=b.id and a.id=#{userId,jdbcType=BIGINT}) org_name,
+			 #{userId,jdbcType=BIGINT} user_id,
+			 (select name from acl_user where id=#{userId,jdbcType=BIGINT}) user_name,
+			 0 type,
+			 7 order_status_code,
+			 '待二次结算' order_status_name,
+			 #{userId,jdbcType=BIGINT} operator_id,
+			 (select name from acl_user where id=#{userId,jdbcType=BIGINT}) operator_name,
+			 (select tel from acl_user where id=#{userId,jdbcType=BIGINT}) operator_mobile,
+			 (select b.id from acl_user a,base_organization b where a.org_id=b.id and a.id=#{userId,jdbcType=BIGINT}) operatorOrgId,
+			 (select b.name from acl_user a,base_organization b where a.org_id=b.id and a.id=#{userId,jdbcType=BIGINT}) operatorOrgName,
+			 '业务' operator_role_name
+union all
+			 select
+			 (select org_id from acl_user where id=#{userId,jdbcType=BIGINT}) org_id,
+			 (select b.name from acl_user a,base_organization b where a.org_id=b.id and a.id=#{userId,jdbcType=BIGINT}) org_name,
+			 #{userId,jdbcType=BIGINT} user_id,
+			 (select name from acl_user where id=#{userId,jdbcType=BIGINT}) user_name,
+			 0 type,
+			 8 order_status_code,
+			 '待开票申请' order_status_name,
+			 #{userId,jdbcType=BIGINT} operator_id,
+			 (select name from acl_user where id=#{userId,jdbcType=BIGINT}) operator_name,
+			 (select tel from acl_user where id=#{userId,jdbcType=BIGINT}) operator_mobile,
+			 (select b.id from acl_user a,base_organization b where a.org_id=b.id and a.id=#{userId,jdbcType=BIGINT}) operatorOrgId,
+			 (select b.name from acl_user a,base_organization b where a.org_id=b.id and a.id=#{userId,jdbcType=BIGINT}) operatorOrgName,
+			 '业务' operator_role_name
+union all
+			 select
+			 (select org_id from acl_user where id=#{userId,jdbcType=BIGINT}) org_id,
+			 (select b.name from acl_user a,base_organization b where a.org_id=b.id and a.id=#{userId,jdbcType=BIGINT}) org_name,
+			 #{userId,jdbcType=BIGINT} user_id,
+			 (select name from acl_user where id=#{userId,jdbcType=BIGINT}) user_name,
+			 0 type,
+			 '10' order_status_code,
+			 '待开票' order_status_name,
+			 (select c.id from acl_user c, acl_role d where c.role_id=d.id and d.name like'%会计%' limit 0,1) operator_id,
+			 (select c.name from acl_user c, acl_role d where c.role_id=d.id and d.name like'%会计%' limit 0,1) operator_name,
+			 (select c.tel from acl_user c, acl_role d where c.role_id=d.id and d.name like'%会计%' limit 0,1) operator_mobile,
+			 (select b.id from base_organization b ,acl_user c, acl_role d where c.org_id = b.id and c.role_id=d.id and d.name like'%会计%' limit 0,1) operatorOrgId,
+			 (select b.name from base_organization b ,acl_user c, acl_role d where c.org_id = b.id and c.role_id=d.id and d.name like'%会计%' limit 0,1) operatorOrgName,
+			'核算会计' operator_role_name
+union all
+			 select
+			 (select org_id from acl_user where id=#{userId,jdbcType=BIGINT}) org_id,
+			 (select b.name from acl_user a,base_organization b where a.org_id=b.id and a.id=#{userId,jdbcType=BIGINT}) org_name,
+			 #{userId,jdbcType=BIGINT} user_id,
+			 (select name from acl_user where id=#{userId,jdbcType=BIGINT}) user_name,
+			 1 type,
+			 7 order_status_code,
+			 '待二次结算' order_status_name,
+			 (select c.id from acl_user a,base_organization b ,acl_user c, acl_role d where a.org_id = b.id and c.org_id=b.id and c.role_id=d.id 
+and a.id = #{userId,jdbcType=BIGINT} and d.name like'%内勤%' limit 0,1) operator_id,
+			 (select c.name from acl_user a,base_organization b ,acl_user c, acl_role d where a.org_id = b.id and c.org_id=b.id and c.role_id=d.id 
+and a.id = #{userId,jdbcType=BIGINT} and d.name like'%内勤%' limit 0,1) operator_name,
+			 (select c.tel from acl_user a,base_organization b ,acl_user c, acl_role d where a.org_id = b.id and c.org_id=b.id and c.role_id=d.id 
+and a.id = #{userId,jdbcType=BIGINT} and d.name like'%内勤%' limit 0,1) operator_mobile,
+			 (select b.id from acl_user a,base_organization b where a.org_id=b.id and a.id=#{userId,jdbcType=BIGINT}) operatorOrgId,
+			 (select b.name from acl_user a,base_organization b where a.org_id=b.id and a.id=#{userId,jdbcType=BIGINT}) operatorOrgName,
+			 '内勤' operator_role_name
+union all
+			 select
+			 (select org_id from acl_user where id=#{userId,jdbcType=BIGINT}) org_id,
+			 (select b.name from acl_user a,base_organization b where a.org_id=b.id and a.id=#{userId,jdbcType=BIGINT}) org_name,
+			 #{userId,jdbcType=BIGINT} user_id,
+			 (select name from acl_user where id=#{userId,jdbcType=BIGINT}) user_name,
+			 0 type,
+			 0 order_status_code,
+			 '所有' order_status_name,
+			 (select id from acl_user where name like '%管理员%' limit 0,1) operator_id,
+			 (select name from acl_user where name like '%管理员%' limit 0,1) operator_name,
+			 (select tel from acl_user where name like '%管理员%' limit 0,1) operator_mobile,
+			 (select b.id from acl_user a,base_organization b where a.org_id=b.id and a.name like '%管理员%' limit 0,1) operatorOrgId,
+			 (select b.name from acl_user a,base_organization b where a.org_id=b.id and a.name like '%管理员%' limit 0,1) operatorOrgName,
+			 'admin' operator_role_name
+union all
+			 select
+			 (select org_id from acl_user where id=#{userId,jdbcType=BIGINT}) org_id,
+			 (select b.name from acl_user a,base_organization b where a.org_id=b.id and a.id=#{userId,jdbcType=BIGINT}) org_name,
+			 #{userId,jdbcType=BIGINT} user_id,
+			 (select name from acl_user where id=#{userId,jdbcType=BIGINT}) user_name,
+			 0 type,
+			 0 order_status_code,
+			 '所有' order_status_name,
+			 (select id from acl_user where trim(name) ='余凌' limit 0,1) operator_id,
+			 (select name from acl_user where trim(name) ='余凌' limit 0,1) operator_name,
+			 (select tel from acl_user where trim(name) ='余凌' limit 0,1) operator_mobile,
+			 (select b.id from acl_user a,base_organization b where a.org_id=b.id and trim(a.name) ='余凌' limit 0,1) operatorOrgId,
+			 (select b.name from acl_user a,base_organization b where a.org_id=b.id and trim(a.name) ='余凌' limit 0,1) operatorOrgName,
+			 '所有' operator_role_name
+union all
+			 select
+			 (select org_id from acl_user where id=#{userId,jdbcType=BIGINT}) org_id,
+			 (select b.name from acl_user a,base_organization b where a.org_id=b.id and a.id=#{userId,jdbcType=BIGINT}) org_name,
+			 #{userId,jdbcType=BIGINT} user_id,
+			 (select name from acl_user where id=#{userId,jdbcType=BIGINT}) user_name,
+			 0 type,
+			 0 order_status_code,
+			 '所有' order_status_name,
+			 (select id from acl_user where trim(name) ='楼清荷' limit 0,1) operator_id,
+			 (select name from acl_user where trim(name) ='楼清荷' limit 0,1) operator_name,
+			 (select tel from acl_user where trim(name) ='楼清荷' limit 0,1) operator_mobile,
+			 (select b.id from acl_user a,base_organization b where a.org_id=b.id and trim(a.name) ='楼清荷' limit 0,1) operatorOrgId,
+			 (select b.name from acl_user a,base_organization b where a.org_id=b.id and trim(a.name) ='楼清荷' limit 0,1) operatorOrgName,
+			 '所有' operator_role_name
+  </select>
+    <select id="getRelateProcessByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  	select 
+  	 <include refid="Base_Column_List" />
+    from busi_consign_process where  user_id = #{userId,jdbcType=BIGINT}
+    and type=0 and order_status_code=4 and order_status_name='待关联银票'
+  </select>
+</mapper>

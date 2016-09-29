@@ -1,0 +1,407 @@
+<div class="main-content">
+    <div class="main-content-inner">
+        <div class="breadcrumbs" id="breadcrumbs">
+            <script type="text/javascript">
+                try {
+                    ace.settings.check('breadcrumbs', 'fixed')
+                } catch (e) {
+                }
+            </script>
+
+            <ul class="breadcrumb">
+                <li>
+                    <i class="ace-icon fa fa-home home-icon"></i>
+                    交易管理
+                </li>
+                <li>
+                    <a href="$link.getContextPath()/common/menu/order-view/order-query-index-page.html">交易单管理</a>
+                </li>
+                <li class="active">
+                    打印放货单
+                </li>
+            </ul>
+            <!-- /.breadcrumb -->
+
+        </div>
+
+        <div class="page-content">
+            <div class="row">
+                <div class="col-xs-12">
+
+                    <!-- PAGE CONTENT BEGINS -->
+                    <div class="tabbar">
+                        <ul class="nav nav-tabs padding-12 tab-color-blue" id="myTab4">
+                            #foreach($setting in $!{settings})
+                                #if($setting == "DELIVERYLETTER")
+                                    <li>
+                                        <a href="$link.getContextPath()/order/pickup/delivery/order/$orderId/showprint.html">放货函</a>
+                                    </li>
+                                #end
+                                #if($setting == "DELIVERYORDER")
+                                    <li>
+                                        <a href="$link.getContextPath()/order/pickup/delivery/order/$orderId/showprint.html?delivery=DELIVERYORDER">提货单（给仓库）</a>
+                                    </li>
+                                #end
+                                #if($setting == "TRANSFERORDER")
+                                    <li>
+                                        <a href="$link.getContextPath()/order/pickup/delivery/order/$orderId/showprint.html?delivery=TRANSFERORDER">货权转让单（给仓库）</a>
+                                    </li>
+                                #end
+                                #if($setting == "TRANSFERLETTER")
+                                    <li>
+                                        <a href="$link.getContextPath()/order/pickup/delivery/order/$orderId/showprint.html?delivery=TRANSFERLETTER">货权转让函</a>
+                                    </li>
+                                #end
+                                #if($setting == "PICKUPFORBUYER")
+                                    <li class="active">
+                                        <a href="#">提货单（给买家）</a>
+                                    </li>
+                                #end
+                            #end
+                        </ul>
+                    </div>
+                    <div class="tabbable tabs-left">
+                        <ul class="nav nav-tabs" id="myTab3">
+                            #foreach($delivery in $printInfo)
+                                #if($deliveryId)
+                                    <li #if($delivery.head.id == $deliveryId) class="active"#end>
+                                        <a data-toggle="tab" href="#print$velocityCount"> <i
+                                                class="blue ace-icon fa fa-file-word-o bigger-110"></i>
+                                            提货单$NumberTool.format("#00",$velocityCount)
+                                            打印次数:<em>$!{delivery.head.print_times}</em>
+                                            <br/>提货单号:$!delivery.head.code
+                                        </a>
+                                    </li>
+                                #else
+                                    <li #if($velocityCount==1) class="active"#end>
+                                        <a data-toggle="tab" href="#print$velocityCount"> <i
+                                                class="blue ace-icon fa fa-file-word-o bigger-110"></i>
+                                            提货单$NumberTool.format("#00",$velocityCount)
+                                            打印次数:<em>$!{delivery.head.print_times}</em>
+                                            <br/>提货单号:$!delivery.head.code
+                                        </a>
+                                    </li>
+                                #end
+
+                            #end
+                        </ul>
+                        <style type="text/css">
+                            .zprint {
+                                /*width: 241mm;
+                                max-height: 140mm;*/
+                                border: 0 !important;
+                            }
+                            .print-page .text-bold{font-weight:bold;}
+
+                            .contable{margin-left:1px;}
+                            .contable, .contable tr td, .contable tr th{font-family:microsoft yahei; font-size:12px !important;}
+                            .contable tr td{height:32px; }
+                            .contable .none-padding{padding-left:1px; padding-right:1px;}
+                            .contable .head-label{line-height:200%;}
+                            /*
+                            .print{line-height:2}
+                            .contable {border:none;font-family:microsoft yahei; }
+                            .contable tr td{padding:5px;}
+                            .contable tr th{line-height:1.5;}
+                            */
+                            }
+                        </style>
+                        <div class="tab-content print-page">
+                            #foreach($delivery in $printInfo)
+                                #set($head = $delivery.head)
+                                #set($details = $delivery.details)
+                                #if($deliveryId)
+                                <div id="print$velocityCount"
+                                     class="table-bar tab-pane #if($!delivery.head.id == $!deliveryId) in active#end"
+                                     deliveryId="$!{head.id}">
+                                #else
+                                <div id="print$velocityCount"
+                                     class="table-bar tab-pane #if($velocityCount==1) in active#end"
+                                     deliveryId="$!{head.id}">
+                                #end
+                                <div class="print" style="width:772px;">
+                                    #foreach($key in $details.keySet())
+                                        #set($detail = $!details.get($key))
+                                        #set($tableCount = ($detail.size()+5)/6+(-1))
+                                        #set($pageCount = ($detail.size()+5)/6)
+                                        #set($count = 0)    ##页码
+                                        #foreach($count in [0 .. $!tableCount])
+                                        
+	                                        #if($count > 0)
+											 	<div style="page-break-before:always;height:1px; font-size:1px; width:100px;">&nbsp;</div>
+											 #end
+                                        	
+                                            <table class="zprint contable zprint-table " style="width:772px;">
+                                                <thead>
+                                                <tr>
+                                                    <td style="border: none;height:20px;" colspan="10"></td>
+                                                </tr>
+                                                <tr class="text-center">
+                                                    <td style="border:0 !important;" colspan="10">
+                                                        <span class="pull-left"><img src="../../../../../img/print-logo.png"></span>
+                                                        <span class="text-center h1 bolder" style="font-size:24px;font-family:microsoft yahei;">杭州钢为网络科技有限公司（合同）提货单</span>
+                                                        <!--<span class="pull-right">条形码</span>-->
+                                                    </td>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td colspan="10"  class="head-label" style="border:0 !important;padding:5px 0;font-family:microsoft yahei;">
+                                                        <div class=" text-left clearfix">
+                                                            <ul class="pull-left">
+                                                                <li class=""><span class="text-bold">开单日期：</span><span>$date.format("yyyy年MM月dd日",$!head.created)</span></li>
+                                                                <li class=""><span class="text-bold">购货单位：</span><span>$!{head.account_name}</span></li>
+                                                            </ul>
+                                                            <ul class="pull-right">
+                                                                <li><span class="text-bold">提货单号：</span><span>$!head.deliveryOrderCode</span></li>
+                                                                <li style="width:180px;" class="pull-left"><span class="text-bold">提货仓库：</span><span>$!key</span></li>
+                                                            </ul>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="text-center" style="width:110px;">品名</th>
+                                                    <th class="text-center" style="width:92px;">规格</th>
+                                                    <th class="text-center" style="width:80px;">材质</th>
+                                                    <th class="text-center" style="width:64px;">产地</th>
+                                                    <th class="text-center" style="width:47px;">开单<br/>数量</th>
+                                                    <th class="text-center" style="width:91px;">开单重量<br/>（吨）</th>
+                                                    <th class="text-center" style="width:47px;">实提<br/>数量</th>
+                                                    <th class="text-center" style="width:76px;">实提重量<br/>（吨）</th>
+                                                    <th class="text-center" style="width:70px;">含税单价<br/>（元）</th>
+                                                    <th class="text-center" style="width:95px;">含税金额<br/>（元）</th>
+                                                </tr>
+                                                    #set($endCount = ($count+1)*6)   ##6,12
+                                                    #set($startCount = $count*6)   ##0,6
+                                                    #set($elemCount = 0)
+                                                    #set($totalWeight = 0)
+                                                    #set($totalQuantity = 0)
+                                                    #set($amountTotal = 0)
+                                                    #set($totalSum = 0)
+                                                    #foreach($elem in $detail)
+                                                        #if($elemCount >= $startCount and $elemCount < $endCount)
+                                                        <tr>
+                                                            <td class="text-center none-padding" style="font-family:'宋体';">$!elem.nsort_name</td>
+                                                            <td class="text-center none-padding" style="font-family:'宋体';">$!elem.spec</td>
+                                                            <td class="text-center none-padding" style="font-family:'宋体';">$!elem.material</td>
+                                                            <td class="text-center none-padding" style="font-family:'宋体';">$!elem.factory</td>
+                                                            <td class="text-right" style="font-family:'宋体';">
+                                                                #set($style = "#0")
+                                                                #if($!elem.quantity>=1000) #set($style = "#0,000") #end
+                                                                $NumberTool.format($style, $!elem.quantity)
+                                                            </td>  <!--开单数量-->
+                                                            <td class="text-right" style="font-family:'宋体';">
+                                                                #set($style = "#0.000000")
+                                                                #if($!elem.weight>=1000) #set($style = "#0,000.000000") #end
+                                                                $NumberTool.format($style, $!elem.weight)
+                                                            </td>  <!--开单重量-->
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td  class="text-right" style="font-family:'宋体';">
+                                                                #set($style = "#0.00")
+                                                                #if($!elem.amount>=1000) #set($style = "#0,000.00") #end
+                                                                $NumberTool.format($style,$!elem.amount)
+                                                            </td>  <!--含税单价-->
+                                                            <td  class="text-right" style="font-family:'宋体';">
+                                                                #set($style = "#0.00")
+                                                                #if($!elem.total>=1000) #set($style = "#0,000.00") #end
+                                                                $NumberTool.format($style, $!elem.total)
+                                                            </td>  <!--含税金额-->
+
+                                                            #set($totalWeight = $totalWeight + $elem.weight)
+                                                            #set($totalQuantity = $totalQuantity + $elem.quantity)
+                                                            #set($amountTotal = $amountTotal + $elem.amount)
+                                                            #set($totalSum = $totalSum + $elem.total)
+                                                        </tr>
+                                                        #end
+                                                        #set($elemCount = $elemCount+1)
+                                                    #end
+                                                    #if($!elemCount < $endCount)
+                                                        #set($loopNum = $endCount - $elemCount - 1)
+                                                        #foreach($i in [0 .. $!loopNum])
+                                                        <tr>
+                                                            <td class="text-center" style="font-family:'宋体';">
+                                                                #if($velocityCount==1)
+                                                                    <span class="bolder"> 以下为空白</span>
+                                                                #end
+                                                            </td>
+                                                            <td>&nbsp;</td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        #end
+                                                    #end
+                                                    #set($rowSpanSize = $delivery.persons.size() + 1)
+                                                <tr>
+                                                    <td class="bolder text-center"><span>合计</span></td>
+                                                    <td>/</td>
+                                                    <td>/</td>
+                                                    <td>/</td>
+                                                    <td class="text-right" style="font-family:'宋体';">
+                                                        #set($style = "#0")
+                                                        #if($!elem.totalQuantity>=1000) #set($style = "#0,000") #end
+                                                        $NumberTool.format($style, $totalQuantity)
+                                                    </td>  <!--开单总数量-->
+                                                    <td class="text-right" style="font-family:'宋体';">
+                                                        #set($style = "#0.000000")
+                                                        #if($totalWeight>=1000) #set($style = "#0,000.000000") #end
+                                                        $NumberTool.format($style, $totalWeight)
+                                                    </td><!--开单总重量-->
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td class="text-right" style="font-family:'宋体';">
+                                                        #set($style = "#0.00")
+                                                        #if($amountTotal>=1000) #set($style = "#0,000.00") #end
+                                                        $NumberTool.format($style,$amountTotal)
+                                                    </td><!--含税总单价-->
+                                                    <td class="text-right"  style="font-family:'宋体';">
+                                                        #set($style = "#0.00")
+                                                        #if($totalSum>=1000) #set($style = "#0,000.00") #end
+                                                        $NumberTool.format($style, $totalSum)
+                                                    </td><!--含税总金额-->
+                                                </tr>
+                                                <tr>
+                                                    <td class="bolder text-center"><span>注意事项</span></td>
+                                                    <td colspan="9" class="text-left">
+                                                        1.现款或/和银行承兑汇票方式付款，银行承兑汇票按供方当日贴息政策执行；
+                                                        2.质量符合国家质量标准，如有质量异议以钢厂处理结果为准；
+                                                        3.提货人提货时应核对货物件数、重量，结算以实际提货重量为准；
+                                                        4.运费、出库等相关费用由提货方承担；
+                                                        5.本单据手写、涂改无效，传真件具有同等效力，加盖杭州钢为“业务专用章”后生效。
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="10" style="position:relative;">
+                                                        <span class="bolder">本单据一式四联</span> 第一联(白)：留底联&nbsp;&nbsp;第二联(红)：财务联&nbsp;&nbsp;第三联(蓝)：客户联&nbsp;&nbsp;第四联(黄)：仓库联
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="8" class="text-left">
+                                                        <div style="width:100%;">
+                                                            <span class="bolder">地址：</span><span>$!head.owner_address</span>
+                                                            <span class="bolder">掌柜热线：</span><span>$!head.telphone</span>
+                                                            <span class="bolder">传真：</span><span>$!head.owner_fax</span>
+                                                            <!--
+                                                            <div style="position:relative;">
+	                                                        	<div class="marker" style="position: absolute; z-index: 10; right: -113px; bottom: -13px;">
+																	<img style='width:150px; height:150px;' src="$link.getContextPath()/img/cachet.png"/>
+																</div>　
+	                                                        </div>
+	                                                        -->
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-bold">
+                                                        提货人签字
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class="" style="border: none; text-align:right;">
+                                                #set($currCount = ($count+1))
+                                                第<span>$currCount</span>页，共 <span>$pageCount</span> 页
+                                            </div>
+                                            #set($count = $count+1)
+                                        #end
+                                    #end
+                                </div>
+                            </div>
+                            #end
+                            <!-- /.col -->
+                            <div class="btn-bar text-center">
+                                <!-- 有打印权限；且没有“只查看融资订单”权限） -->
+                                #if($shiro.hasPermission("order:query:fillup:print") && !$financeorder)
+                                    <button id="prints" class="btn btn-info"><i class="fa fa-print"></i>打印</button>
+                                #end
+                                &nbsp;
+                                <button id="back" type="button" class="btn btn-default">返回</button>
+
+                                <input id="alterStatus" value="$!{order.alterStatus}" type="hidden"/>
+
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- /.main-content -->
+<script type="application/javascript">
+    var deliveryType = "PICKUPFORBUYER";
+
+    $(document).ready(function () {
+        $(document).on("click", "#prints", function () {
+            if(!showButtons()){
+                return false;
+            }
+
+            var printDiv = $("div.table-bar.active");
+
+            var print_times = $(".nav-tabs li.active a").find("em");
+
+            $.get("$link.getContextPath()/order/pickup/delivery/" + $(printDiv).attr("deliveryId") + "/" + deliveryType + "/print.html", function (data) {
+                if (data.success) {
+                    printDiv.find(".print").print();
+                    print_times.text(print_times.text() * 1 + 1);
+                } else {
+                    cbms.alert(data.data, function () {
+                        location.href = "$link.getContextPath()/order/pickup/delivery/order/$!{orderId}/showprint.html"
+                    });
+                }
+            });
+        });
+        $(document).on("click", "#back", function () {
+            location.href = "$link.getContextPath()/order/query/fillup.html";
+        });
+    });
+
+    /**
+     * 正在进行合同变更的订单，禁止除“返回”外的按钮操作
+     */
+    function showButtons() {
+        //var type = $("#alterStatus").val();
+        var orderId = $!{orderId};
+        var returnFlag = true;
+        /*if(type == "PENDING_APPROVAL" || type == "PENDING_RELATE" || type=="PENDING_APPLY" || type=="PAYED_DISAPPROVE" ||type=="PENDING_APPR_PAY" || type =="PENDING_PRINT_PAY" || type =="PENDING_CONFIRM_PAY"){
+     cbms.alert("该交易单正在进行合同变更，请变更完成后操作！");
+     return false;
+     }else{*/
+        $.ajax({
+            type: 'post',
+            async: false,
+            url: Context.PATH + '/order/changecontract/queryorderpaystatus.html',
+            data: {
+                orderId: orderId,
+                origin:"origin"
+            },
+            error: function (s) {
+                cbms.alert("查询订单信息报错！");
+                returnFlag = false;
+            }
+            , success: function (re) {
+                if (re.success) {
+                    if(re.data == "PENDING_APPROVAL" || re.data == "PENDING_RELATE" || re.data=="PENDING_APPLY" || re.data=="PAYED_DISAPPROVE" || re.data=="PENDING_APPR_PAY" || re.data =="PENDING_PRINT_PAY" || re.data =="PENDING_CONFIRM_PAY"){
+                        cbms.alert("该交易单正在进行合同变更，请变更完成后操作！");
+                        returnFlag = false;
+                    }else{
+                        returnFlag = true;
+                    }
+                }else{
+                    cbms.alert("查询订单信息报错！");
+                    returnFlag = false;
+                }
+            }
+        });
+        //}
+        return returnFlag;
+    }
+</script>

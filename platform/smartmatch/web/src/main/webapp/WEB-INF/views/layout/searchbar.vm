@@ -1,0 +1,185 @@
+<div class="clearfix">
+
+    <div class="input-group pull-right col-md-12 col-sm-12 col-lg-12 text-left">
+        <form class="form-inline">
+            <label id="seller_panel">卖家：<input id="name" class="c-text" type="text" value=""/></label>
+            <label id="warehoure_panel">仓库：<input id="warehouseName" class="c-text" type="text" value=""/></label>
+            <label>品名：<input id="cagetoryName" class="c-text" type="text" value=""/></label>
+            <label>材质：<input id="materialName" class="c-text" type="text" value=""/></label>
+            <label>规格：<input id="spec" class="c-text" type="text" value=""/></label>
+            <label>钢厂：<input id="factoryName" class="c-text" type="text" value=""/></label>
+            <label>地区：<input id="areaName" class="c-text" type="text" value=""/></label>
+            <label id="lab_serviceArea">服务中心：
+                <select id="serviceArea" class="c-text">
+                </select>
+            </label>
+            <label  id="lastupdateBy_panel">操作员：<input id="lastUpdatedBy" class="c-text" type="text" value=""/></label>
+            <label id="lab_sourceType">资源类型：
+                <select id="updateType" >
+                    <option selected value="" >全部</option>
+                    <option value="daily_common" >日常资源</option>
+                    <option value="inquiry" >询价资源</option>
+                    <option value="history_transaction" >历史成交</option>
+                </select>
+            </label>
+            &nbsp;&nbsp;&nbsp;
+            <label>更新时间：
+                <input id="upStart" name="upStart" value="2015-11-1 00:00" class="Wdate" type="text"  readonly onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',maxDate:'%y-%M-%d'})" />
+                -
+                <input id="upEnd" name="upEnd" class="Wdate" type="text"  readonly onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',maxDate:'%y-%M-%d'})" />
+            </label>
+            &nbsp;&nbsp;&nbsp;
+            <label>价格：<input id="pricemin" class="c-text no-margin-right" verify="numeric" type="text" name="pricemin" />-<input id="pricemax" class="c-text" type="text" name="pricemax" verify="numeric"  />
+            </label>
+            &nbsp;&nbsp;&nbsp;
+            <button id="searchList" class="btn btn-sm btn-default" type="button">搜索
+            </button>
+            <button class="btn btn-sm btn-default" type="button" id='cleanSearch'>清空</button>
+        </form>
+    </div>
+</div>
+
+<div class="m-s none" id="m-s" >
+    <div id="m-search" class="m-search m-search-bar clearfix" style="">
+        <form id="resourceForm" >
+            <input type="hidden" id="resourceId">
+            <!--卖家S-->
+            <div class="product-ipt">
+                <span class="in-block f-fl">卖家：</span>
+                <div class="form-item">
+                    <input type="text" autocomplete="off" value="" class="f-text seller-ipt" id="account" placeholder='输入首字母查询' must="1">
+                </div>
+            </div>
+            <!--卖家E-->
+            <div class="product-ipt">
+                <span class="in-block f-fl">品名：</span>
+                <div class="form-item">
+                    <input type="text" autocomplete="off" value="" class="f-text nsortName" id="nsortName" placeholder='请选择品名' readOnly must="1">
+                </div>
+            </div>
+            <div class="product-ipt">
+                <span class="in-block f-fl">材质：</span>
+                <div class="form-item">
+                    <input type="text" autocomplete="off" value="" class="f-text material" id="material" placeholder='请选择材质' readOnly must="1">
+
+                </div>
+            </div>
+            <div id="spec3" type="spec" class="product-ipt focus norms" rel="3">
+                <span class="in-block f-fl">规格：</span>
+                <div class="form-item">
+                    <div class="border-style" style="text-align:center">
+                        <div class="item-text">
+                            <div class="item-text-wrap">
+                                <input type="text" value="" class="f-text inputspec3" id="inputspec3" placeholder='请填写规格' readOnly must="1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--厂家S-->
+            <div id="spec1" type="spec" class="product-ipt focus " rel="0">
+                <span class="in-block f-fl">厂家：</span>
+                <div class="form-item">
+                    <div class="border-style">
+                        <div class="item-text">
+                            <div class="item-text-wrap">
+                                <input type="text" value="" class="f-text changjia" id="facotory" placeholder='请选择厂家' must="1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--厂家E-->
+            <!--仓库S-->
+            <div id="spec1" type="spec" class="product-ipt focus " rel="0">
+                <span class="in-block f-fl">仓库：</span>
+                <div class="form-item">
+                    <div class="border-style">
+                        <div class="item-text">
+                            <div class="item-text-wrap">
+                                <input type="text" value="" class="f-text cangku" id="warehouse" placeholder='请选择仓库' must="1">
+                                <input type="hidden" id="sourceType" value="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button value="" class="btn btn-info btn-sm pull-right" title="保存" id="saveBtn"  type="button" style="margin-left:10px;">
+                    保存
+                </button>
+            </div>
+            <!--仓库E-->
+            <p class="clearfix"></p>
+            <!--库存S-->
+            <div class="pull-left addSource-2">
+                <label>库存：
+                    <input type="text" value="" id="weight" class="d-text"   verify="smartweight" must="1">
+                    &nbsp;吨</label>
+                <label>件数：
+                    <input type="text" value="" id="quantity" class="d-text"   verify="number" must="1">
+                    &nbsp;件</label>
+                <label>计重方式：
+                    <select must="1" id="weightConcept" >
+                        <option>磅计</option>
+                        <option>理计</option>
+                        <option>抄码</option>
+                    </select> </label>
+
+                <label>价格：
+                    <input type="text" value="" id="price" class="d-text"  maxlength="10" verify="rmb" must="1" >
+                    &nbsp;元/吨</label>
+                <label>备注：
+                    <input type="text" id="remark" value="" class="c-text">
+                </label>
+
+            </div>
+            <!--库存E-->
+        </form>
+    </div>
+    <p class="clearfix"></p>
+
+</div>
+
+<div class="toolbar clearfix" style="height:38px;">
+
+						<span class="pull-right">
+                        <button id="addResource" class="btn btn-info btn-sm" title="添加">
+                        <i class="ace-icon glyphicon glyphicon-plus align-top bigger-125"></i>
+                        添加
+                        </button>
+                        <button type="button" id="excelBatch" class="btn btn-info btn-sm" title="批量导入">
+                        批量导入
+                        </button>
+
+						<button type="button" id="bulkPricing" value="" class="btn btn-info btn-sm ">
+							批量调价
+						</button>
+						<button type="button" id="changeCont" value="" class="btn btn-info btn-sm ">
+							批量改库存
+						</button>
+
+						<button type="button" id="selPutUp" value="" class="btn btn-info btn-sm none">
+							批量审核
+						</button>
+						<button type="button" id="putUp" value="" class="btn btn-info btn-sm none">
+							一键审核
+						</button>
+						<button type="button" id="selPutDown" value="" class="btn btn-info btn-sm none">
+							选中撤牌
+						</button>
+						<button type="button" id="putDown" class="btn btn-info btn-sm none">
+							一键撤牌
+						</button>
+						<button type="button" id="selDel" class="btn btn-info btn-sm ">
+							批量删除
+						</button>
+						<button type="button" id="refresh" class="btn btn-info btn-sm none">
+							刷新异常
+						</button>
+						<button type="button" id="exportRes" class="btn btn-info btn-sm ">
+							资源导出
+						</button>
+						<button type="button" id="statisRes" class="btn btn-info btn-sm ">
+							资源更新统计
+						</button>
+						</span>
+</div>

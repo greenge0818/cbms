@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.order.persist.receipt.XsdjHeadDao" >
+
+    <insert id="insert" parameterType="com.prcsteel.platform.order.model.receipt.XsdjHead">
+        INSERT INTO xsdj_head (KHSH, KHMC, KHDZ, KHDH, KHYH, BZ, DJRQ, DJH, DJZL, DUBZ, KPJH)
+        VALUES (#{khsh, jdbcType=VARCHAR},
+                #{khmc, jdbcType=VARCHAR},
+                #{khdz, jdbcType=VARCHAR},
+                #{khdh, jdbcType=INTEGER},
+                #{khyh, jdbcType=VARCHAR},
+                #{bz, jdbcType=VARCHAR},
+                #{djrq, jdbcType=TIMESTAMP},
+                #{djh, jdbcType=VARCHAR},
+                #{djzl, jdbcType=VARCHAR},
+                #{dubz, jdbcType=VARCHAR},
+                #{kpjh, jdbcType=VARCHAR})
+    </insert>
+
+</mapper>

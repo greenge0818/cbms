@@ -1,0 +1,77 @@
+<div class="main-content">
+    <div class="main-content-inner">
+        <div class="breadcrumbs" id="breadcrumbs">
+            <script type="text/javascript">
+                try {
+                    ace.settings.check('breadcrumbs', 'fixed')
+                } catch(e) {
+                }
+            </script>
+
+            <ul class="breadcrumb">
+                <li>
+                    <i class="ace-icon fa fa-home home-icon"></i>
+                    	交易管理
+                </li>
+                <li>
+                    <a href="$link.getContextPath()/common/menu/order-view/order-query-index-page.html">交易单管理</a>
+                </li>
+                <li class="active">
+                    打印合同
+                </li>
+            </ul><!-- /.breadcrumb -->
+
+        </div>
+
+        <div class="page-content print-page">
+            <div class="row">
+                <div class="col-xs-12">
+                    <!-- PAGE CONTENT BEGINS -->
+                    #if(!$msg)
+                    <div class="tabbable tabs-left">
+                        <ul class="nav nav-tabs" id="myTab3">
+                            #foreach($con in $contracts)
+                                <li class="#if($velocityCount==1) active #end ">
+                                    <a data-toggle="tab" href="#print$velocityCount"> <i class="pink ace-icon fa fa-file-word-o bigger-110"></i> #if($con.buyer==true) 销售合同（变更合同） #else 采购合同（变更合同） #end
+                                        </br>#if($con.buyer==true) 买家 #else 卖家 #end ： $con.companyName</a>
+                                </li>
+                            #end
+                        </ul>
+
+                        <div class="tab-content">
+                            #foreach($con in $contracts)
+
+                            <div id="print$velocityCount" class="table-bar tab-pane in #if($velocityCount==1) active #end">
+                                <h1 class="bolder text-center clearfix"><span class="logo-bar pull-left"><img src="$link.getContextPath()/img/print-logo.png" /></span>#if($con.buyer==true) 合同变更补充协议（销售合同） #else 合同变更补充协议（采购合同） #end</h1>
+                                $con.content
+                            </div>
+
+                            #end
+
+                        </div>
+                    </div>
+                    #end
+                    <!-- /.table-bar -->
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+            <div class="btn-bar text-center">
+                #if(!$msg && !$financeorder)
+                <button id="prints" class="btn btn-info"><i class="fa fa-print"></i>打印合同</button>
+                #end
+                <button id="btnBack" class="btn btn-primary" title="返回">返&nbsp;&nbsp;回</button>
+            </div>
+        </div><!-- /.page-content -->
+    </div>
+</div><!-- /.main-content -->
+<script type="application/javascript">
+    $(document).ready(function() {
+        $(document).on("click", "#prints", function() {
+            $(".tab-content").children('div.active').print();
+        });
+
+        $(document).on("click", "#btnBack", function() {
+            window.history.go(-1);
+        });
+    });
+
+</script>

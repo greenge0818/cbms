@@ -1,0 +1,43 @@
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta charset="utf-8" />
+<!--<title>TITLE</title>-->
+
+<meta name="description" content="Static &amp; Dynamic Tables" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+<link rel="icon"rel="shortcut icon" href="$link.getContextPath()/favicon.ico?v=1.0.0">
+
+<!-- bootstrap & fontawesome -->
+<link rel="stylesheet" href="$link.getContextPath()/theme/default/css/bootstrap.min.css" />
+<link rel="stylesheet" href="$link.getContextPath()/theme/default/font-awesome/4.2.0/css/font-awesome.min.css" />
+<!-- page specific plugin styles -->
+<link rel="stylesheet" href="$link.getContextPath()/theme/default/css/artdialog.css" />
+<link rel="stylesheet" href="$link.getContextPath()/theme/default/css/ystep.css" />
+<!-- text fonts -->
+<link rel="stylesheet" href="$link.getContextPath()/theme/default/fonts/fonts.googleapis.com.css" />
+
+<!-- ace styles -->
+<link rel="stylesheet" href="$link.getContextPath()/theme/default/css/jquery.gritter.min.css" />
+<link rel="stylesheet" href="$link.getContextPath()/theme/default/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+
+<!--[if lte IE 9]>
+<link rel="stylesheet" href="$link.getContextPath()/theme/default/css/ace-part2.min.css" class="ace-main-stylesheet"/>
+<![endif]-->
+
+<!--[if lte IE 9]>
+<link rel="stylesheet" href="$link.getContextPath()/theme/default/css/ace-ie.min.css"/>
+<![endif]-->
+<link rel="stylesheet" href="$link.getContextPath()/css/style.css" />
+<!-- inline styles related to this page -->
+
+<!-- ace settings handler -->
+<script src="$link.getContextPath()/theme/default/js/ace-extra.min.js"></script>
+
+<!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+<!--[if lte IE 8]>
+<script src="$link.getContextPath()/theme/default/js/html5shiv.min.js"></script>
+<script src="$link.getContextPath()/theme/default/js/respond.min.js"></script>
+<![endif]-->
+
+<script src="$link.getContextPath()/js/jquery-1.11.1.js"></script>

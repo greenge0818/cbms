@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<style>
+.d-inner{ overflow:visible}
+</style>
+<link rel="stylesheet" href="/smartmatch/css/nav.css">
+<div class="breadcrumbs" id="breadcrumbs">
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            询报价管理
+        </li>
+        <li class="active">历史短信查询</li>
+    </ul>
+    <!-- /.breadcrumb -->
+</div>
+<!-- content S -->
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+        	#parse("quoteQuery.vm")
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="clearfix">
+                        <div class="input-group pull-right col-md-12 col-sm-12 col-lg-12 text-left">
+                            <form class="form-inline">
+                                <div class="pull-left">
+            						<label>时间：</label>
+                                    <input id="startTime" class="ipt-text" type="text" value="$!startTime"
+                                           onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')||\'2020-10-01\'}'})"/> -
+                                    <input id="endTime" class="ipt-text" type="text" value="$!endTime"
+                                           onFocus="WdatePicker({minDate:'#F{$dp.$D(\'startTime\')}',maxDate:'2020-10-01'})"/>
+									<label>电话：<input id="tel" class="" type="text" value=""/>
+									</label>
+                                    <button id="dateBtn" class="btn btn-sm btn-default" type="button" title="搜索">
+                                        <i class="aace-icon fa fa-search bigger-110"></i>搜索
+                                    </button>
+                                </div>
+								
+                            </form>
+                        </div>
+                    </div>
+                    <!-- div.dataTables_borderWrap -->
+                    <div>
+                        <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>时间</th>
+                                <th>公司名称</th>
+                                <th>联系人</th>
+								<th>电话</th>
+                                <th>短信内容</th>
+								<th>状态</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div><!-- /.page-content -->
+
+
+
+
+
+
+<script src="$link.getContextPath()/js/views/smartmatch/quote/historicalmsg.js"></script>
+

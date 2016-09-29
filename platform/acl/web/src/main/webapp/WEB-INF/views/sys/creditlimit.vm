@@ -1,0 +1,85 @@
+#set($layout="layout/default.vm")
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li><i class="ace-icon fa fa-home home-icon"></i>系统管理</li>
+        <li>系统设置</li>
+        <li class="active">信用额度设置</li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+    #parse("layout/topbtn.vm")
+    <!-- /.nav-search -->
+</div>
+
+<div class="page-content">
+
+    <div class="row">
+        <div class="col-xs-12">
+            <!--TAPBAR-->
+            #parse("sys/systemmenu.vm")
+            <!-- PAGE CONTENT BEGINS -->
+            <form id="checkForm">
+                <div class="row">
+                    <div class="col-xs-12">
+
+                        <!--.recordbar-->
+                        <div>|信用额度设置:</div>
+                        <div class="print-finfo">
+                            <label>
+                            	<input type="text" must="1" verify="numeric" msg="必须是数值且是正数" 
+                            			value="$!sysSetting.settingValue"  
+                            			class="ipt-text" id="creditlimit_value" 
+                            			name="creditlimit_value" size="30"
+                            			/>
+                            		&nbsp;元
+                            	</label>
+                            <label><span><em class=""></em></span></label>
+                        </div>
+                        <div class="btn-bar">
+                            <button type="button"  class="btn btn-info btn-sm" id="creditlimit_btn">确定</button>
+                        </div>
+                        <!--/.recordbar-->
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+
+<!-- /.page-content -->
+<script type="text/javascript">
+    $(function(){
+		$("#checkForm").verifyForm();
+    	
+        $("#creditlimit_btn").click(function(){
+        	if (!setlistensSave())return;
+        	
+            var settingvalue=$('#creditlimit_value').val();
+			
+            $.ajax({
+                type:'POST',
+                url:Context.PATH+'/sys/updatecreditlimit.html',
+                data:{
+                    "settingvalue":settingvalue
+                },
+                dataType: "text",
+                success:function(data){
+                    if(data.success==true)
+                    	cbms.alert(cbms.succ);
+                    else
+                    	cbms.alert(data.data);
+                }
+            });
+
+        });
+    });
+</script>

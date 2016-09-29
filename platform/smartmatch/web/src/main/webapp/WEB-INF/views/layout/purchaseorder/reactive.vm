@@ -1,0 +1,49 @@
+<div class="row none" id="reactive_dialog">
+    <div class="col-md-12">
+        <div class="row"  id="reactiveto_manager_panel" style="margin: 20px auto;">
+            <div class=" f-fl text-left" style="width: 80px">
+                <div style="display: inline-block;"><input type="radio" name="reactiveto" value="1" id="reactiveto_manager">服总
+                </div>
+            </div>
+            <div class="f-fl" style="width: 260px">
+                <select class="select-left" id="reactive_manager_org">
+                    <option value="0">-选择服务中心-</option>
+                </select></div>
+        </div>
+        <div class="row" id="reactiveto_user_panel"  style="margin: 20px auto;">
+            <div class="f-fl text-left"  style="width: 80px">
+                <div style="display: inline-block;"><input type="radio" name="reactiveto" value="2" id="reactiveto_trader">业务员
+                </div>
+            </div>
+            <div class="f-fl" style="width: 260px">
+                <select class="select-left" id="reactive_user_org">
+                    <option value="-1">-选择服务中心-</option>
+                </select>
+                <input type="hidden" id="sorganizationHidden" val="-1" />
+                <input id="reactive_user" search="userorg" class="ipt-text" type="text"
+                       value="" userid="0" readonly="true" style="width: 100px"/>
+            </div>
+        </div>
+        <div class="row" id="reactiveto_iseller_panel" style="margin: 20px auto;">
+            <div class="f-fl text-left"  style="width: 80px">
+                <div style="display: inline-block;"><input type="radio" name="reactiveto" value="3"
+                                                           id="reactiveto_iseller">网销
+                </div>
+            </div>
+            <div class="f-fl" style="width: 260px">
+                <select class="select-left" id="reactive_iseller_select">
+                    <option value="0">-选择网销人员-</option>
+                </select>
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="col-md-12">
+            <input type="hidden" value="0" id="reactive_purchase_orderid"/>
+            <input type="button" value="确定" class="btn btn-primary btn-sm" id="btnreactive"/>
+            <input type="button" value="取消" class="btn btn-default btn-sm" id="reactive_cancel"/>
+        </div>
+    </div>
+</div>
+</div>
+
+<script src="$link.getContextPath()/js/views/smartmatch/inquiryorder/reactiveorder.js"></script>

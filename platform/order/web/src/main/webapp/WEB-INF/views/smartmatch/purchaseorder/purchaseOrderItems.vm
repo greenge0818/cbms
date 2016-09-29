@@ -1,0 +1,131 @@
+
+<div>
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="#">智能找货</a>
+        </li>
+
+        <li class="active">采购单明细</li>
+    </ul>
+    <!-- /.breadcrumb -->
+</div>
+
+<div class="page-content">
+    <form class="form-inline find-goods-search" id="search">
+        <!--筛选规则 S-->
+        <div class="input-group">
+            <label>采购单号：$!{dto.getCode()}<span id="poid"></span><input type="hidden" id="id"/></label>
+            <label>生成时间：$!date.format('yyyy-MM-dd HH:mm:ss',$!{dto.getCreatedTime()})<span id="podt"></span></label>
+            <label>服务中心：
+                <span>
+                    <input placeholder="全部" id="sorganization" type="text" class="ipt-text" readonly="" must="1" value="$!{dto.getOrgName()}" onclick="showMenu();">
+                    <input type='hidden' id='sorganizationHidden' value='-1'/>
+                </span>
+            </label>
+            <label>交易员：
+                <input id="traderName" search="userorg" class="ipt-text" type="text" value="$!{dto.getOwnerName()}" userid="0"  must="1" readonly="true"/>
+            </label>
+            <label>联系电话：
+                <input type="text" id="tel" value="$!{dto.getTel()}" class="ipt-dynamic" must="1" dropdown="dropdown"/>
+            </label>
+            <label>买家联系人：
+                <input type="text" id="contact" value="$!{dto.getContact()}" class="ipt-dynamic" must="1" dropdown="dropdown"/>
+            </label>
+            <label>公司名称：
+                <input type="text" id="buyer" value="$!{dto.getBuyerName()}" class="ipt-dynamic" must="1" dropdown="dropdown"/>
+            </label>
+            <label>交货地：
+                <input type="text" id="deliveryGoods" value="$!{dto.getDeliveryName()}" func="getRefCitys" must="1" search='city' citynum="c_delivery_1">
+            </label>
+            <label id="purchasePlace">采购地：
+                <label class="pos-rel" style="margin-left:15px;">
+                    其他 <input type="text" id="otherCity" class="ace" search='city' citynum="c_delivery_rest_1">
+                </label>
+            </label>
+        </div>
+        <div class="">
+            <div class="m-s">
+                <div id="m-search" class="m-search m-search-bar clearfix" style="">
+                    <div class="product-ipt">
+                        <span class="in-block f-fl">品名：</span>
+
+                        <div class="form-item">
+                            <input type="text" id="nsortName" value="$!{dto.getCategoryName()}" search='nsort' must="1" placeholder='输入首字母查询'>
+                            <span class="icon down-arr-icon"></span>
+                            <input type="hidden" id="nsortId" class="f-text" value="">
+                            <input type="hidden" id="sortName" class="f-text" value="">
+                            <input type="hidden" id="sortId" class="f-text" value="">
+                        </div>
+                    </div>
+                    <div class="product-ipt">
+                        <span class="in-block f-fl">材质：</span>
+
+                        <div class="form-item material">
+                            <input type="text" id="material" class="f-text" value="$!{dto.getMaterialName()}" must="1" autocomplete="off" placeholder='单选'
+                                   search='material'>
+                            <span class="icon down-arr-icon"></span>
+                            <!--材质数据层  S-->
+                            <div class="show-layer textures-bar none" id="showLayer_material">
+                                <div class="textures-t">
+                                    <a class="layer-del"></a>
+                                </div>
+                                <div class="textures-con">
+                                </div>
+                            </div>
+                            <!--材质数据层  E-->
+                        </div>
+                    </div>
+                    <div class="spec">
+                    </div>
+                    <div class="product-ipt" type="factory">
+                        <span class="in-block f-fl">厂家：</span>
+
+                        <div class="form-item factory">
+                            <input type="text" id="factory" class="f-text" value="" autocomplete="off" placeholder='单选'>
+                            <span class="icon down-arr-icon"></span>
+                            <!--材质数据层  S-->
+                            <div class="show-layer textures-bar factory_layer none" id="showLayer_factory">
+                                <div class="textures-con">
+                                </div>
+                                <div class="btn-bar f-clrfix">
+                                    <button class="clear-btn">清除</button>
+                                    <button class="confirm-btn">确认</button>
+                                </div>
+                            </div>
+                            <!--材质数据层  E-->
+                        </div>
+                    </div>
+
+                    <p class="clearfix"></p>
+                    <!--选择S-->
+                    <div class="text-left clearfix attribute">
+                        <span class="search-radio-bar craft-bar weight">
+                            重量：<input type="weight" value="$!{dto.getTotalWeight()}" id="weight" must="1" style="width: 105px"/>吨
+                        </span>
+                    </div>
+                </div>
+                <p class="clearfix"></p>
+
+                <div class="pull-left clearfix ">
+                    <lable>备注：
+                        <input id="remark" value="$!{dto.getRemark()}" class="form-control input-xxlarge" type="text">
+                    </lable>
+                </div>
+    </form>
+    <p class="clearfix"></p>
+    <p class="clearfix"></p>
+    <p class="clearfix"></p>
+    <!--匹配卖家 S-->
+    <div class="inquiryOrders">
+
+    </div>
+    <!--匹配卖家 E-->
+</div>
+
+<div id="menuContent" class="menuContent" style="display:none; position: absolute;">
+    <ul id="orgTree" class="ztree" style="margin-top:0; width:160px;"></ul>
+</div>
+
+
+

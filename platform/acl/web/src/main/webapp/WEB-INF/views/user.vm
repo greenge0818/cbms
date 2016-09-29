@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>User Details</title>
+</head>
+<body>
+	<h1>User Details</h1>
+	<p>UserId: ${user.id}</p>
+	<p>Account is ${user.account}</p>
+</body>
+</html>

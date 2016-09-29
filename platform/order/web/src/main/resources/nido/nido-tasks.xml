@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nido
+	xmlns="http://www.prcsteel.com/nido/tasks"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.prcsteel.com/nido/tasks http://192.168.0.205:8090/tasks.xsd">
+	
+	<import resource="nido/tasks/note.xml"/>
+	<import resource="nido/tasks/finance.xml"/>
+	<import resource="nido/tasks/rebate.xml"/>
+	
+</nido>

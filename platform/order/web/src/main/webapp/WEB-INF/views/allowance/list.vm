@@ -1,0 +1,118 @@
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li class="active">
+            <i class="ace-icon fa fa-home home-icon"></i>
+            交易管理
+        </li>
+        <li>
+            折让单管理
+        </li>
+    </ul><!-- /.breadcrumb -->
+
+    <div class="nav-search" id="nav-search">
+        #if(${permission_add})
+            <a href="$link.getContextPath()/allowance/sellerorder.html" class="btn btn-danger btn-sm">添加卖家折让单</a>
+            <a href="$link.getContextPath()/allowance/buyerorder.html" class="btn btn-danger btn-sm">添加买家折让单</a>
+        #end
+    </div>
+</div>
+
+<div class="page-content">
+
+    <input type="hidden" id="list_type" value="$!{type}"/>
+    <input type="hidden" id="permission_generate" value="$!{permission_generate}"/>
+    <input type="hidden" id="permission_approval" value="$!{permission_approval}"/>
+    <input type="hidden" id="permission_cancel" value="$!{permission_cancel}"/>
+    <input type="hidden" id="permission_delete" value="$!{permission_delete}"/>
+    <input type="hidden" id="permission_edit" value="$!{permission_edit}"/>
+
+    <div class="row">
+        <div class="col-xs-12">
+
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="clearfix">
+                        <div class="input-group col-md-12 col-sm-12 col-lg-12 search-bar pull-left">
+                            <label>折让单号：</label><input id="allowance_code" class="ipt-text" type="text" value=""/>
+                            <label>
+                                #if(${type}=='seller')
+                                    卖家全称：
+                                #else
+                                    买家全称：
+                                #end
+                            </label><input id="accountid" search="account" accounttype="$!{type}"
+                                           class="ipt-text" type="text" value=""/>
+                            状态<select id="select_status"><option value="">全部</option>
+                            <option value="to_audit">待审核</option>
+                            <option value="approved">已审核</option>
+                            #if($permission_viewall)
+                                <option value="to_submit">待提交</option>
+                                <option value="not_through">未通过</option>
+                                <option value="closed">已关闭</option>
+                            #end
+                            </select>
+                            <label>时间：</label>
+                            <input id="startTime" class="Wdate" type="text" value=""
+                                   onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')||\'2020-10-01\'}'})" must="1"/>
+                            -
+                            <input id="endTime" class="Wdate" type="text" value=""
+                                   onFocus="WdatePicker({minDate:'#F{$dp.$D(\'startTime\')}',maxDate:'2020-10-01'})"
+                                   must="1"/>
+                            <button id="queryBtn" class="btn btn-sm btn-default" type="button" title="搜索">
+                                <i class="aace-icon fa fa-search bigger-110"></i>搜索
+                            </button>
+                        </div>
+                    </div>
+                    <!--TAPBAR-->
+                    <div class="tabbar">
+                        <ul class="nav nav-tabs padding-12 tab-color-blue" id="myTab4">
+                            <li #if(${type}=='seller') class="active" #end>
+                                <a href="$link.getContextPath()/allowance/list/seller.html">卖家折让单</a>
+                            </li>
+                            <li #if(${type}=='buyer') class="active" #end>
+                                <a href="$link.getContextPath()/allowance/list/buyer.html">买家折让单</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- div.dataTables_borderWrap -->
+                    <div>
+                        <table id="list-table" class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <th>折让单号</th>
+                            <th>时间</th>
+                            <th>#if(${type}=='seller')卖家全称#else买家全称#end</th>
+                            <th>件数(件)</th>
+                            <th>总重量(吨)</th>
+                            <th>实提总重量(吨)</th>
+                            <th>折扣重量(吨)</th>
+                            <th>折后重量(吨)</th>
+                            <th>总金额(元)</th>
+                            <th>实提总金额(元)</th>
+                            <th>折扣金额(元)</th>
+                            <th>折后金额(元)</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                            </thead>
+                            <tbody id="listdatabody">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+
+<script src="$link.getContextPath()/js/views/account/searchaccount.js"></script>
+<script src="$link.getContextPath()/js/views/allowance/indexlist.js"></script>

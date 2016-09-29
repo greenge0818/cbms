@@ -1,0 +1,96 @@
+
+        <div class="breadcrumbs" id="breadcrumbs">
+            <script type="text/javascript">
+                try {
+                    ace.settings.check('breadcrumbs', 'fixed')
+                } catch(e) {
+                }
+            </script>
+
+            <ul class="breadcrumb">
+                <li>
+                    <i class="ace-icon fa fa-home home-icon"></i>
+                    	系统管理
+                </li>
+                <li>
+                    运营处理
+               </li>
+                <li class="active">
+                    返利处理
+                </li>
+            </ul><!-- /.breadcrumb -->
+
+        </div>
+
+        <div class="page-content print-page">
+            <div class="row">
+                <div class="col-xs-12">
+                    <!--TAPBAR-->
+                    <div class="tabbar order-tab">
+                        <ul class="nav nav-tabs padding-12 tab-color-blue" id="myTab4">
+                            <li class="active"><a href="$link.getContextPath()/order/query/modifyordercontact.html">返利处理</a></li>
+                            <li><a href="$link.getContextPath()/sys/maintain/erraccountedit.html">错误客户名称修改</a></li>
+                        </ul>
+                    </div>
+                    <!-- PAGE CONTENT BEGINS -->
+                    <div class="clearfix">
+                        <div class="input-group pull-right col-md-12 col-sm-12 col-lg-12 search-bar">
+                            <form class="form-inline">
+                                <label>交易单号：</label><input id="code" class="ipt-text" type="text" value=""/>
+                                <button id="queryBtn" class="btn btn-sm btn-default" type="button" title="搜索">
+                                    <i class="aace-icon fa fa-search bigger-110"></i>搜索
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    <div id="orderList" style="display: none">
+
+                        <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>买家名称</th>
+                                <th>联系人姓名</th>
+                                <th>联系人手机号码</th>
+                                <th>返利金额</th>
+                            </tr>
+                            </thead>
+                            <tr>
+                                <td><input id="accountName" type="text" value=""/></td>
+                                <td><input id="contactName" type="text" value=""/></td>
+                                <td><input id="oldContactTel" type="text" value=""/></td>
+                                <td><input id="rebateAmount" type="text" value=""/></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="clearfix" id="confirmAmount" style="display: none">
+                               <label>正确返利手机号码：</label>
+                                <select id="tel">
+                                </select>
+                        <span id="newContact" style="display: none">
+                                <label>联系人姓名：</label>
+                                <input id="newContactId" type="hidden" value=""/>
+                                <input id="newContactName"  type="text"  value=""/>
+                                <input id="tradeCode" type="hidden" value=""/>
+                        </span>
+                                <div class="btn-bar text-center">
+                                    <button id="confirmmRebate" class="btn btn-info btn-sm"><i class="fa fa-print"></i>确认返利</button>
+                                    <button id="modifyRebate"   class="btn btn-info btn-sm"><i class="fa fa-print"></i>修改返利</button>
+                                    <button id="rebackRebate"   class="btn btn-info btn-sm"><i class="fa fa-print"></i>回滚返利</button>
+                                </div>
+
+                    </div>
+                    <!-- /.table-bar -->
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+
+        </div><!-- /.page-content -->
+
+<script type="application/javascript">
+    $(document).ready(function() {
+       $(document).on("click", "#btnBack", function() {
+            window.history.go(-1);
+        });
+    });
+
+</script>
+<script src="$link.getContextPath()/js/views/order/modifyordercontact.js"></script>

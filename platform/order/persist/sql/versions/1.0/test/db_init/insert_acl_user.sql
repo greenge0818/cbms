@@ -1,0 +1,10 @@
+INSERT INTO `acl_user` VALUES ('1', 'cbadmin', '测试用户', '1', '13612123121', '7', '1', '2015-06-13 06:13:00', 'admin', '2015-07-31 09:58:43', 'cbadmin', '23', null, null);
+INSERT INTO `acl_user` VALUES ('9', 'testsdd', '测试用户002', '13', '17900000001', '9', '1', '2015-07-28 11:09:19', 'cbadmin', '2015-07-31 09:58:33', 'cbadmin', '4', null, null);
+INSERT INTO `acl_user` VALUES ('10', 'jingke', '荆轲', '21', '15000000001', '8', '1', '2015-07-28 11:50:02', 'cbadmin', '2015-07-28 15:06:17', 'cbadmin', '8', null, null);
+INSERT INTO `acl_user` VALUES ('12', 'wangchao', '王朝', '12', '15000000001', '11', '1', '2015-07-28 15:10:20', 'cbadmin', '2015-07-28 15:10:20', 'cbadmin', '0', null, null);
+INSERT INTO `acl_user` VALUES ('13', 'mahan', '马汉', '13', '15000000003', '12', '1', '2015-07-28 15:14:52', 'cbadmin', '2015-07-28 15:14:52', 'cbadmin', '0', null, null);
+INSERT INTO `acl_user` VALUES ('14', 'zhanglong', '张龙', '13', '15000000004', '11', '1', '2015-07-28 15:48:14', 'cbadmin', '2015-07-31 10:00:04', 'cbadmin', '4', null, null);
+INSERT INTO `acl_user` VALUES ('15', 'zhaohu', '赵虎', '16', '15000000005', '12', '1', '2015-07-28 15:49:54', 'cbadmin', '2015-07-28 17:00:59', 'cbadmin', '1', null, null);
+INSERT INTO `acl_user` VALUES ('16', 'll', 'LL', '22', '13693647583', '14', '1', '2015-07-31 09:15:21', 'cbadmin', '2015-07-31 09:58:23', 'cbadmin', '2', null, null);
+INSERT INTO `acl_user` VALUES ('17', 'gaojianli', '高渐离', '1', '15000000009', '16', '1', '2015-07-31 13:51:15', 'cbadmin', '2015-07-31 13:51:15', 'cbadmin', '0', null, null);
+INSERT INTO `acl_user` VALUES ('18', 'potest', '产品测试账号', '1', '18000000001', '8', '1', '2015-07-31 14:13:10', 'cbadmin', '2015-07-31 14:13:10', 'cbadmin', '0', null, null);

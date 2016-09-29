@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.smartmatch.persist.dao.ReportResourceInventoryDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.smartmatch.model.model.ReportResourceInventory" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="area_id" property="areaId" jdbcType="BIGINT" />
+    <result column="category_group_uuid" property="categoryGroupUuid" jdbcType="VARCHAR" />
+    <result column="category_group_name" property="categoryGroupName" jdbcType="VARCHAR" />
+    <result column="category_uuid" property="categoryUuid" jdbcType="VARCHAR" />
+    <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+    <result column="total_resource" property="totalResource" jdbcType="INTEGER" />
+    <result column="total_account" property="totalAccount" jdbcType="INTEGER" />
+    <result column="total_spec" property="totalSpec" jdbcType="INTEGER" />
+    <result column="total_stock_spec" property="totalStockSpec" jdbcType="INTEGER" />
+    <result column="spec_coverage_rate" property="specCoverageRate" jdbcType="DECIMAL" />
+    <result column="total_transaction" property="totalTransaction" jdbcType="INTEGER" />
+    <result column="transaction_coverage_rate" property="transactionCoverageRate" jdbcType="DECIMAL" />
+    <result column="total_deviation" property="totalDeviation" jdbcType="INTEGER" />
+    <result column="deviation_rate" property="deviationRate" jdbcType="DECIMAL" />
+    <result column="weight" property="weight" jdbcType="DECIMAL" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, area_id, category_group_uuid, category_group_name, category_uuid, category_name, 
+    total_account, total_resource, total_spec, total_stock_spec, spec_coverage_rate, total_transaction, 
+    transaction_coverage_rate, total_deviation, deviation_rate, weight, created, created_by
+  </sql>
+
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.smartmatch.model.model.ReportResourceInventory" useGeneratedKeys="true" keyProperty="id">
+    insert into report_resource_inventory
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="areaId != null" >
+        area_id,
+      </if>
+      <if test="categoryGroupUuid != null" >
+        category_group_uuid,
+      </if>
+      <if test="categoryGroupName != null" >
+        category_group_name,
+      </if>
+      <if test="categoryUuid != null" >
+        category_uuid,
+      </if>
+      <if test="categoryName != null" >
+        category_name,
+      </if>
+      <if test="totalAccount != null" >
+        total_account,
+      </if>
+      <if test="totalResource != null" >
+        total_resource,
+      </if>
+      <if test="totalSpec != null" >
+        total_spec,
+      </if>
+      <if test="totalStockSpec != null" >
+        total_stock_spec,
+      </if>
+      <if test="specCoverageRate != null" >
+        spec_coverage_rate,
+      </if>
+      <if test="totalTransaction != null" >
+        total_transaction,
+      </if>
+      <if test="transactionCoverageRate != null" >
+        transaction_coverage_rate,
+      </if>
+      <if test="totalDeviation != null" >
+        total_deviation,
+      </if>
+      <if test="deviationRate != null" >
+        deviation_rate,
+      </if>
+      <if test="weight != null" >
+        weight,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="areaId != null" >
+        #{areaId,jdbcType=BIGINT},
+      </if>
+      <if test="categoryGroupUuid != null" >
+        #{categoryGroupUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryGroupName != null" >
+        #{categoryGroupName,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryUuid != null" >
+        #{categoryUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryName != null" >
+        #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="totalAccount != null" >
+        #{totalAccount,jdbcType=INTEGER},
+      </if>
+      <if test="totalResource != null" >
+        #{totalResource,jdbcType=INTEGER},
+      </if>
+      <if test="totalSpec != null" >
+        #{totalSpec,jdbcType=INTEGER},
+      </if>
+      <if test="totalStockSpec != null" >
+        #{totalStockSpec,jdbcType=INTEGER},
+      </if>
+      <if test="specCoverageRate != null" >
+        #{specCoverageRate,jdbcType=DECIMAL},
+      </if>
+      <if test="totalTransaction != null" >
+        #{totalTransaction,jdbcType=INTEGER},
+      </if>
+      <if test="transactionCoverageRate != null" >
+        #{transactionCoverageRate,jdbcType=DECIMAL},
+      </if>
+      <if test="totalDeviation != null" >
+        #{totalDeviation,jdbcType=INTEGER},
+      </if>
+      <if test="deviationRate != null" >
+        #{deviationRate,jdbcType=DECIMAL},
+      </if>
+      <if test="weight != null" >
+        #{weight,jdbcType=DECIMAL},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="queryReportResourceInventory" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from report_resource_inventory
+    <where>
+      <if test="areaId != null">
+        AND area_id = #{areaId, jdbcType=BIGINT}
+      </if>
+      <if test="dt != null and dt != ''">
+        AND date_format(created,'%Y-%m-%d') = #{dt, jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+
+</mapper>

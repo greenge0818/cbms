@@ -1,0 +1,128 @@
+<ul class="breadcrumb">
+    <li>
+        <i class="ace-icon fa fa-home home-icon"></i>
+        	客户管理
+    </li>
+<li>
+<a href="$link.getContextPath()/account/$!{type}.html">
+    我的#if($!{type}=="buyer")买#else卖#end家客户
+</a>
+</li>
+    <li>
+        <a href="$link.getContextPath()/account/$!{type}/${account.account.id}.html">$!{account.account.name}</a>
+    </li>
+    <li>
+        <a href="$link.getContextPath()/account/$!{type}/${account.account.id}/translog.html">账户信息</a>
+    </li>
+    <li class="active">申请提现</li>
+</ul>
+<!-- /.breadcrumb -->
+
+<div class="page-content">
+    <form id="applyWithdraw">
+        <div class="row">
+            <div class="col-xs-12">
+                <!--TAPBAR-->
+                <div class="tabbar">
+                    <ul class="nav nav-tabs padding-12 tab-color-blue" id="myTab4">
+                        <li>
+                            <a href="$link.getContextPath()/account/$!{type}/${account.account.id}.html">企业基本信息</a>
+                        </li>
+                        <li>
+                            <a href="$link.getContextPath()/account/$!{type}/${account.account.id}/contactlist.html">联系人信息</a>
+                        </li>
+                        <li>
+                            <a href="$link.getContextPath()/account/$!{type}/${account.account.id}/assignlog.html">客户划转记录</a>
+                        </li>
+                        <li>
+                            #if($account.account.type=="buyer")
+                                <a href="$link.getContextPath()/account/buyer/${account.account.id}/purchaselist.html">采购记录</a>
+                            #else
+                                <a href="$link.getContextPath()/account/seller/${account.account.id}/salelist.html">销售记录</a>
+                            #end
+                        </li>
+                        <li>
+                            <a href="$link.getContextPath()/account/$!{type}/${account.account.id}/contracttemplate.html">合同模板</a>
+                        </li>
+                        <li class="active">
+                            <a id="backUrl"
+                               href="$link.getContextPath()/account/$!{type}/$!{account.account.id}/translog.html">账户信息</a>
+                        </li>
+                        <li>
+                            <a href="$link.getContextPath()/account/$!{type}/${account.account.id}/bankinfo.html">银行信息</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="table-bar col-sm-8">
+                    <table class="contable">
+                        <tbody>
+                        <tr>
+                            <td class="bg-gray text-right">请选择提现的银行：</td>
+                            <td>
+                                <select id="bankList">
+                                    #foreach($item in $list)
+                                        #set($str=$!item.bankAccountCode)
+                                        #set($length=$str.length())
+                                        #if($length>4)
+                                            #set($startIndex=$length - 4)
+                                            #set($str=$item.bankAccountCode.substring($startIndex,$length))
+                                        #end
+                                        #if($!item.isDefault == "1")
+	                                        <option value="$!{item.id}" bankcode="$!{item.bankCode}" code="$!{item.bankAccountCode}" selected ="selected">
+	                                            $!{item.bankName}$!{item.bankNameBranch}（$!{str}）
+	                                        </option>
+                                        #else
+	                                        <option value="$!{item.id}" bankcode="$!{item.bankCode}" code="$!{item.bankAccountCode}">
+	                                            $!{item.bankName}$!{item.bankNameBranch}（$!{str}）
+	                                        </option>
+                                        #end
+                                    #end
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bg-gray text-right">银行帐号：</td>
+                            <td>
+                                <span class="vendor-text" id="bankAccountCode"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bg-gray text-right">银行行号：</td>
+                            <td>
+                                <span class="vendor-text" id="bankCode"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bg-gray text-right">可用金额：</td>
+                            <td colspan="3">
+                                #set($withdrawalAmount=$account.account.balance)
+                                <input type="hidden" id="availableAmount" value="$!{withdrawalAmount}">
+                                <span>
+                                    <em id="availableAmountText" class="red bolder">$!{NumberTool.toThousandth($!{withdrawalAmount})}</em> 元
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bg-gray text-right">提现金额：</td>
+                            <td>
+                                <input class="c-text" id="money" type="text" maxlength="9" must="1" verify="numeric"/></label> 元
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center" colspan="2">
+                                <button class="btn btn-primary btn-sm" type="button" id="submit" title="提交申请">提交申请</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix">
+            <div class="pull-left btn-bar ">
+
+            </div>
+        </div>
+    </form>
+</div>
+<script src="$link.getContextPath()/js/views/payment/applywithdraw.js"></script>

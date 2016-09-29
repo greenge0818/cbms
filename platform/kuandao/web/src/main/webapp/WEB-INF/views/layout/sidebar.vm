@@ -1,0 +1,862 @@
+<div id="sidebar" class="sidebar responsive sidebar-fixed" data-sidebar="true" data-sidebar-scroll="true" data-sidebar-hover="true">
+    <script type="text/javascript">
+        try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
+    </script>
+    <ul class="nav nav-list">
+        <li rel="home">
+            <a href="$orderDomain/index.html">
+                <i class="menu-icon fa fa-tachometer"></i>
+                <span class="menu-text"> 控制台 </span>
+            </a>
+            <b class="arrow"></b>
+        </li>
+        <!-- ass -->
+        #if($shiro.hasPermission("ass:view"))
+            <li class="">
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-sitemap"></i>
+                    <span class="menu-text"> 分检管理 </span>
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
+                <b class="arrow"></b>
+                <ul class="submenu">
+                    #if($shiro.hasPermission("ass:desk:index"))
+                        <li class="">
+                            <a href="$assDomain/desk/index.html">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                工作台
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                    #end
+                    #if($shiro.hasPermission("ass:report:business"))
+                        <li class="">
+                            <a href="$assDomain/report/business/index.html">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                业务报表
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                    #end
+                    #if($shiro.hasPermission("ass:report:summary"))
+                        <li class="">
+                            <a href="$assDomain/report/summary/analysis.html">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                汇总分析
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                    #end
+                    #if($shiro.hasPermission("ass:systemParam:index"))
+                        <li class="">
+                            <a href="$assDomain/systemParam/index.html">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                系统设置
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                    #end
+                </ul>
+            </li>
+        #end
+        <!--smart match-->
+        #if($shiro.hasPermission("smartmatch:menu"))
+        <li class="">
+            <a href="#" class="dropdown-toggle">
+                <i class="menu-icon fa fa-sitemap"></i>
+                <span class="menu-text"> 智能找货</span>
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+            <b class="arrow"></b>
+            <ul class="submenu">
+                #if($shiro.hasPermission("smartmatch:purchaseorder:list:page"))
+                    <li class="">
+                        <a href="$smartmatchDomain/smartmatch/purchaseorder/list.html">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            询价单管理
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                #end
+            </ul>
+        </li>
+        #end
+
+        <!--order-->
+		#if($shiro.hasPermission("order:view"))
+        <li class="">
+            <a href="#" class="dropdown-toggle">
+                <i class="menu-icon fa fa-list-alt"></i>
+                <span class="menu-text"> 交易管理 </span>
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+            <b class="arrow"></b>
+            <ul class="submenu">
+                #if($shiro.hasPermission("smartmatch:quotation:page"))
+                    <li class="">
+                        <a href="$smartmatchDomain/common/menu/smartmatch-quotation-page/smartmatch-quotation-businessbook-page.html">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            询报价管理
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                #end
+				#if($shiro.hasPermission("order:create:page"))
+                <li class="">
+                    <a href="$orderDomain/order/create.html">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        新开交易单
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+				#end
+				#if($shiro.hasPermission("order:query:index:page"))
+                <li class="">
+                    <a href="$orderDomain/common/menu/order-view/order-query-index-page.html">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        交易单管理
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+				#end
+                #if($shiro.hasPermission("allowance:list:page"))
+                    <li class="">
+                        <a href="$orderDomain/allowance/list/seller.html">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            折让单管理
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                #end
+				#if($shiro.hasPermission("order:banktransaction:list:view"))
+                <li class="">
+                    <a href="$orderDomain/order/banktransaction/list.html">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        到账查询
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+				#end
+				#if($shiro.hasPermission("order:paymentmanager:request:page"))
+				<li class="">
+                    <a href="$orderDomain/order/paymentmanager/request.html">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                      支付管理
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+                #end
+                 #if($shiro.hasPermission("order:certificate:view"))
+				<li class="">
+                    <a href="$orderDomain/order/certificate/checklist.html?isAudit=check">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                      风控管理
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+                #end
+            </ul>
+        </li>
+		#end
+
+        <!--settle-->
+		#if($shiro.hasPermission("secondapplyforpayment:view"))
+        <li class="">
+            <a href="#" class="dropdown-toggle">
+                <i class="menu-icon fa fa-calculator"></i>
+                <span class="menu-text"> 结算管理 </span>
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+            <b class="arrow"></b>
+            <ul class="submenu">
+				#if($shiro.hasPermission("order:secondapplyforpayment:page"))
+                <li class="">
+                    <a href="$orderDomain/order/secondapplyforpayment.html">
+                        二次结算应收/付
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+				#end
+            </ul>
+        </li>
+		#end
+
+		#if($shiro.hasPermission("kuandao:view"))
+        <li class="">
+            <a href="#" class="dropdown-toggle">
+                <i class="menu-icon fa fa-calculator"></i>
+                <span class="menu-text"> 款道支付 </span>
+
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+
+            <b class="arrow"></b>
+
+            <ul class="submenu">
+				#if($shiro.hasPermission("kuandao:account:index:view"))
+                <li class="">
+                    <a href="$kuandaoDomain/kuandao/account/index.html">
+                        开户管理
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+				#end
+				#if($shiro.hasPermission("kuandao:payment:index:view"))
+                <li class="">
+                    <a href="$kuandaoDomain/kuandao/payment/index.html">
+                        支付单管理
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+				#end
+				#if($shiro.hasPermission("kuandao:refund:index:view"))
+                <li class="">
+                    <a href="$kuandaoDomain/kuandao/refund/index.html">
+                       退款管理
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+				#end
+				#if($shiro.hasPermission("kuandao:bill:index:view"))
+                <li class="">
+                    <a href="$kuandaoDomain/kuandao/bill/index.html">
+                        日终对账单下载
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+				#end
+				#if($shiro.hasPermission("kuandao:setting:index:view"))
+                <li class="">
+                    <a href="$kuandaoDomain/kuandao/setting/index.html">
+                        基础设置
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+				#end
+            </ul>
+        </li>
+		#end
+        <!--invoice-->
+		#if($shiro.hasPermission("invoice:menu"))
+        <li class="">
+            <a href="#" class="dropdown-toggle">
+                <i class="menu-icon fa fa-file-o"></i>
+                <span class="menu-text"> 发票管理 </span>
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+            <b class="arrow"></b>
+            <ul class="submenu">
+				#if($shiro.hasPermission("invoice:in:index"))
+                <li class="" rel="in">
+                    <a href="$orderDomain/common/menu/invoice-in-index/invoice-in-pages.html">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        进项票管理
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+				#end
+				#if($shiro.hasPermission("invoice:out:index"))
+                <li class="" rel="out">
+                    <a href="$orderDomain/common/menu/invoice-out-index/invoice-out-unchecklist-page.html">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        销项票管理
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+				#end
+            </ul>
+        </li>
+		#end
+
+		<!-- acceptdraft -->
+        #if($shiro.hasPermission("acceptdraft:view"))
+            <li class="">
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-calculator"></i>
+                    <span class="menu-text"> 银票管理 </span>
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
+                <b class="arrow"></b>
+                <ul class="submenu">
+                    #if($shiro.hasPermission("acceptdraft:list:view"))
+                    <li class="">
+                        <a href="$orderDomain/acceptdraft/list.html">
+                            银票管理
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                    #end
+                    #if($shiro.hasPermission("acceptdraft:taelslist:view"))
+                    <li class="">
+                        <a href="$orderDomain/acceptdraft/taelsList.html">
+                            银票清单
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                    #end
+                </ul>
+            </li>
+        #end
+
+        <!--client-->
+        #if($shiro.hasPermission("client:view"))
+        <li class="">
+            <a href="#" class="dropdown-toggle">
+                <i class="menu-icon fa fa-users"></i>
+                <span class="menu-text"> 客户管理 </span>
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+            <b class="arrow"></b>
+            <ul class="submenu">
+                #if($shiro.hasPermission("account:list:view"))
+                    <li class="">
+                        <a href="$accountDomain/company/list.html">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            我的客户
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                #end
+                #if($shiro.hasPermission("account:info:list:page"))
+                    <li class="">
+                        <a href="$accountDomain/company/tocustinfolist.html">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            客户资料
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                #end
+                #if($shiro.hasPermission("account:transfer:customertransfer:view"))
+                <li class="" rel="assignBuyerContact">
+                    <a href="$accountDomain/transfer/customertransfer.html">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        客户划转
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+                #end
+                #if($shiro.hasPermission("account:contact:accountcontact:view"))
+                <li class="" rel="assignBuyerContact">
+                    <a href="$accountDomain/account/contact/accountcontact.html">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        联系人划转
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+                #end
+                #if($shiro.hasPermission("account:grouping:audit:creditlimit:page") ||
+                	$shiro.hasPermission("account:grouping:querylimitgrouping:page"))
+                    <li class="">
+                    	#if($shiro.hasPermission("account:grouping:audit:creditlimit:page"))
+                    		<a href="$accountDomain//account/grouping/limitManager.html">
+                    	#end
+                    	#if($shiro.hasPermission("account:grouping:querylimitgrouping:page"))
+                    		<a href="$accountDomain/account/grouping/querylimitgrouping.html">
+                    	#end
+                    	#if($shiro.hasPermission("account:grouping:audit:creditlimit:page") && 
+                		$shiro.hasPermission("account:grouping:querylimitgrouping:page"))
+                			<a href="$accountDomain/account/grouping/querylimitgrouping.html">
+                		#end
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            额度管理
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                #end
+                #if($shiro.hasPermission("account:potentialcustomer:list:view"))
+                <li class="">
+                    <a href="$accountDomain/accountinfo/potentialcustomer.html">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        入口用户管理
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+                #end
+            </ul>
+        </li>
+        #end
+
+        <!--business report-->
+		#if($shiro.hasPermission("report:business:menu"))
+        <li class="">
+            <a href="#" class="dropdown-toggle">
+                <i class="menu-icon fa fa-table"></i>
+                <span class="menu-text"> 业务报表 </span>
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+            <b class="arrow"></b>
+            <ul class="submenu">
+				#if($shiro.hasPermission("report:business:orderdetails:page"))
+                <li class="">
+                    <a href="$orderDomain/report/business/orderdetails.html">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        交易单明细
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+				#end
+				#if($shiro.hasPermission("report:business:buyerstatistics:page"))
+                <li class="">
+                    <a href="$orderDomain/report/business/buyerstatistics.html">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        买家交易报表
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+				#end
+				#if($shiro.hasPermission("report:business:tradestatistics:page"))
+                <li class="">
+                    <a href="$orderDomain/report/business/tradestatistics.html">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        服务中心交易统计
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+				#end
+				#if($shiro.hasPermission("report:business:nsort:page"))
+                <li class="">
+                    <a href="$orderDomain/report/business/nsort.html">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        品类交易统计
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+				#end
+				#if($shiro.hasPermission("report:business:sellerStatistics:page"))
+                <li class="">
+                    <a href="$orderDomain/report/business/sellerStatistics.html">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        卖家成交统计报表
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+				#end
+				#if($shiro.hasPermission("report:reward:commission:page"))
+				<li class="">
+                    <a href="$orderDomain/report/reward/commission.html">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        服务中心提成统计报表
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+				#end
+				#if($shiro.hasPermission("report:business:buyerRebate:page"))
+                <li class="">
+                    <a href="$orderDomain/report/business/buyerRebate.html">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        买家返利报表
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+				#end
+                #if($shiro.hasPermission("report:business:invoiceInBordereaux:page"))
+                <li class="">
+                    <a href="$orderDomain/report/business/invoiceinbordereaux.html">
+                        <i class="menu-icon fa fa-caret-right"></i>
+		        进项票清单
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+                #end
+                #if($shiro.hasPermission("report:business:ticketlist:page"))
+				<li class="">
+                    <a href="$orderDomain/report/business/ticketlist.html">
+                        <i class="menu-icon fa fa-caret-right"></i>
+           	销项票清单
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+                #end
+                #if($shiro.hasPermission("report:business:orgDayReport:page"))
+                    <li class="">
+                        <a href="$orderDomain/report/business/orgDayReport.html">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            代运营业务日报
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                #end
+                #if($shiro.hasPermission("report:business:orgMonthReport:page"))
+                    <li class="">
+                        <a href="$orderDomain/report/business/orgMonthReport.html">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            代运营业务月报
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                #end
+                #if($shiro.hasPermission("report:business:invoiceout:checkoutlist:page"))
+                    <li class="">
+                        <a href="$orderDomain/report/business/invoiceoutchecklist.html">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            销项票开票清单
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                #end
+				#if($shiro.hasPermission("report:business:contractlist:page"))
+                	<li class="">
+                        <a href="$orderDomain/report/business/contractlist.html">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            合同清单
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                #end     
+                #if($shiro.hasPermission("report:business:unsendinvoiceout:page"))
+                <li class="">
+                        <a href="$orderDomain/report/business/unsendinvoiceout.html">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                        留存销项票报表
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                #end            
+            </ul>
+        </li>
+		#end
+
+        <!--finance report-->
+		#if($shiro.hasPermission("report:financial:menu"))
+        <li class="">
+            <a href="#" class="dropdown-toggle">
+                <i class="menu-icon fa fa-table"></i>
+                <span class="menu-text"> 财务报表 </span>
+
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+
+            <b class="arrow"></b>
+
+            <ul class="submenu">
+				#if($shiro.hasPermission("report:account:fundsinandout:page"))
+                <li class="">
+                    <a href="$orderDomain/report/account/fundsinandout.html">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        货币资金报表
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+				#end
+				#if($shiro.hasPermission("report:finance:uninvoicedIn:page"))
+                <li class="">
+                    <a href="$orderDomain/report/finance/uninvoicedIn.html">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        未收进项发票清单
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+				#end
+				#if($shiro.hasPermission("report:finance:uninvoiced:page"))
+                <li class="">
+                    <a href="$orderDomain/report/finance/uninvoiced.html">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        未开销项发票清单
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+				#end
+				#if($shiro.hasPermission("report:accoutcust:buyerstate:page"))
+                <li class="">
+                    <a href="$orderDomain/report/accoutcust/buyerstate.html">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                                    买家账户报表
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+				#end
+				#if($shiro.hasPermission("report:accoutcust:sellerstate:page"))
+                <li class="">
+                    <a href="$orderDomain/report/accoutcust/sellerstate.html">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                                    卖家账户报表
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+				#end
+				#if($shiro.hasPermission("report:organization:secondsettlementorg:page"))
+                <li class="">
+                    <a href="$orderDomain/report/organization/secondsettlementorg.html">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                                    服务中心二次结算储备金日报
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+				#end
+				#if($shiro.hasPermission("report:finance:invoiceinlist:page"))
+                <li class="">
+                    <a href="$orderDomain/report/finance/invoiceinlist.html">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        进项发票清单
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+				#end
+				#if($shiro.hasPermission("report:finance:buyerinvoiceoutlist:page"))
+                <li class="">
+                    <a href="$orderDomain/report/finance/buyerinvoiceoutlist.html">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                       客户销项报表
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+				#end
+				#if($shiro.hasPermission("report:finance:reportsellerinvoicein:page"))
+                <li class="">
+                    <a href="$orderDomain/report/finance/reportsellerinvoicein.html">
+                        <i class="menu-icon fa fa -caret-right"></i>
+                       供应商进项报表
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+                #end
+                #if($shiro.hasPermission("report:finance:accountFund:page"))
+                    <li class="">
+                        <a href="$orderDomain/report/finance/accountFund.html">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            往来单位账务报表
+                        </a>
+
+                        <b class="arrow"></b>
+                    </li>
+                #end
+                #if($shiro.hasPermission("report:business:invoicekeeping:page"))
+                    <li class="">
+                        <a href="$orderDomain/report/business/invoicekeeping.html">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            进项票记账报表
+                        </a>
+
+                        <b class="arrow"></b>
+                    </li>
+                #end
+                #if($shiro.hasPermission("report:finance:income:summary:page"))
+                    <li class="">
+                        <a href="$orderDomain/report/finance/incomesummary.html">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                         利润报表
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                #end
+                #if($shiro.hasPermission("report:finance:initialpayment:page"))
+                <li class="">
+                        <a href="$orderDomain/report/finance/initialpayment.html">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                        初次付款信息报表
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                #end
+                #if($shiro.hasPermission("report:finance:invoiceInAndOut:page"))
+                <li class="">
+                        <a href="$orderDomain/report/finance/invoiceinandout.html">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                        应收应付发票报表
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                #end
+            </ul>
+        </li>
+		#end
+
+        <!--base-->
+        #if($shiro.hasPermission("basedata:menu"))
+        <li class="">
+            <a href="#" class="dropdown-toggle">
+                <i class="menu-icon fa fa-sitemap"></i>
+                <span class="menu-text"> 基础管理 </span>
+
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+
+            <b class="arrow"></b>
+
+            <ul class="submenu">
+				#if($shiro.hasPermission("resource:sort:index:page"))
+                    <li class="">
+                        <a href="$smartmatchDomain/resource/sort/index.html">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            资源管理
+                        </a>
+
+                        <b class="arrow"></b>
+                    </li>
+				#end
+                #if($shiro.hasPermission("smartmatch:basePriceRelation:page"))
+                    <li class="">
+                        <a href="$smartmatchDomain/common/menu/smartmatch-basePriceRelation-page/smartmatch-basePriceRelation-index-page.html">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            基价关联设置
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                #end
+                #if($shiro.hasPermission("resource:attribute:index:page"))
+				<li class="">
+                    <a href="$smartmatchDomain/resource/attribute/index.html">
+                        <i class="menu-icon fa fa-caret-right"></i>
+          	            品规设置
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+                #end
+             	    #if($shiro.hasPermission("smartmatch:warehouse:index:page"))
+                    <li class="">
+                        <a href="$smartmatchDomain/smartmatch/warehouse/index.html">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            仓库管理
+                        </a>
+
+                        <b class="arrow"></b>
+                    </li>
+             	    #end
+                #if($shiro.hasPermission("smartmatch:factory:list:page"))
+				<li class="">
+                    <a href="$smartmatchDomain/smartmatch/factory/list.html">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        钢厂管理
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+                #end
+                #if($shiro.hasPermission("smartmatch:categoryweight:list:page"))
+				<li class="">
+                    <a href="$smartmatchDomain/smartmatch/categoryweight/list.html">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        单件重量表
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+                #end
+                #if($shiro.hasPermission("smartmatch:area:index:page"))
+                <li class="">
+                    <a href="$smartmatchDomain/smartmatch/area/index.html">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        区域管理
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+                #end
+            </ul>
+        </li>
+        #end
+    	<!--sys-->
+		#if($shiro.hasPermission("sys:view"))
+        <li class="">
+            <a href="#" class="dropdown-toggle">
+                <i class="menu-icon fa fa-sitemap"></i>
+                <span class="menu-text"> 系统管理 </span>
+
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+
+            <b class="arrow"></b>
+
+            <ul class="submenu">
+				#if($shiro.hasPermission("org:index:view"))
+                <li class="">
+                    <a href="$aclDomain/org/index.html">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        服务中心管理
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+				#end
+				#if($shiro.hasPermission("role:index:view"))
+                <li class="">
+                    <a href="$aclDomain/role/index.html">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        角色管理
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+				#end
+				#if($shiro.hasPermission("perm:index:view"))
+                <li class="">
+                    <a href="$aclDomain/perm/index.html">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        设置权限
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+				#end
+				#if($shiro.hasPermission("sys:log:index"))
+                <li class="">
+                    <a href="$aclDomain/sys/oplog/index.html">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        系统日志
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+				#end
+				#if($shiro.hasPermission("sys:child"))
+                <li>
+                    <a href="$aclDomain/reward/showreward.html">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        系统设置
+                    </a>
+                </li>
+				#end
+				#if($shiro.hasPermission("business:process:setting"))
+				<li>
+                    <a href="$orderDomain/sys/busiprocess/index.html">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        业务节点设置
+                    </a>
+                </li>
+				#end
+				#if($shiro.hasPermission("user:org:manage:setting"))
+				<li>
+                    <a href="$aclDomain/sys/userorg/index.html">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        用户-服务中心管理
+                    </a>
+                </li>
+				#end
+                #if($shiro.hasPermission("user:operation:setting"))
+                    <li>
+                        <a href="$orderDomain/order/query/modifyordercontact.html">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            运营处理
+                        </a>
+                    </li>
+                #end
+            </ul>
+        </li>
+		#end
+    </ul><!-- /.nav-list -->
+
+    <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+        <i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+    </div>
+
+    <script type="text/javascript">
+        try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
+    </script>
+</div>

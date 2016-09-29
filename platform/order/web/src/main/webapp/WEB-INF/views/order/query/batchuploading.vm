@@ -1,0 +1,150 @@
+<!-- 全部-->
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+    <style >
+        .menuContent{
+            overflow: auto;
+            height: 350px;
+            overflow-x:hidden;
+        }
+    </style>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            交易管理
+        </li>
+        <li>
+            <a href="$link.getContextPath()/common/menu/order-view/order-query-index-page.html">交易单管理</a>
+        </li>
+        <li>
+            <a href="javascript:;">交易凭证</a>
+        </li>
+        <li class="active crumb-nav">批量上传凭证图片</li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+    #parse("layout/topbtn.vm")
+    <!-- /.nav-search -->
+</div>
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <!--TAPBAR-->
+            <!-- tapbar S -->
+            #parse("/layout/order/tapbar.vm")
+            <!-- tapbar E -->
+
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <!--TAPBAR-->
+                <div class="tabbar order-tab" id="mytabbar">
+                    <ul class="nav nav-tabs padding-12 tab-color-blue">
+                        <li><a href="$link.getContextPath()/order/query/tradecertificate.html?accountType=seller">&nbsp;打印卖家凭证&nbsp;</a></li>
+                        <li><a href="$link.getContextPath()/order/query/tradecertificate.html?accountType=buyer">&nbsp;打印买家凭证&nbsp;</a></li>
+                        <li><a href="$link.getContextPath()/order/certificate/uploadcertificatelist/seller.html">&nbsp;上传卖家凭证&nbsp;</a></li>
+                        <li><a href="$link.getContextPath()/order/certificate/uploadcertificatelist/buyer.html">&nbsp;上传买家凭证&nbsp;</a></li>
+                        <li><a href="$link.getContextPath()/order/certificate/certificateinvoiceorder/seller.html">&nbsp;需补齐卖家凭证的已开票订单&nbsp;</a></li>
+	                    <li><a href="$link.getContextPath()/order/certificate/certificateinvoiceorder/buyer.html">&nbsp;需补齐买家凭证的已开票订单&nbsp;</a></li>
+						 <li class="active"><a href="$link.getContextPath()/order/certificate/batchuploading.html">&nbsp;批量上传凭证图片&nbsp;</a></li>
+					 </ul>
+                </div>
+                <div class="col-xs-12">
+                    <div class="clearfix">
+                        <div class="input-group pull-right col-md-12 col-sm-12 col-lg-12 search-bar">
+                            <form class="form-inline">
+                                <label>凭证号：<input id="credentialCode" class="ipt-text" type="text" value=""/></label>
+                                <label>交易单号：<input id="code" class="ipt-text" type="text" value=""/></label>
+                                <label>卖家全称：<input id="sellerName" class="ipt-text" type="text" value=""/></label>
+                                <label>买家全称：<input id="buyerName" class="ipt-text" type="text" value=""/></label>
+                                <label>交易员：<input id="ownerName" class="ipt-text" type="text" value=""/></label>
+                                    #*<select id="ownerName">
+                                        #foreach($u in $users)
+                                            #if($user.id == $u.id)
+                                                <option selected="selected" value="$u.name">$u.name</option>
+                                            #else
+                                                <option value="$u.name">$u.name</option>
+                                            #end
+                                        #end
+                                    </select>
+                                </label>*#
+                                <label>凭证类型：
+                                    <select id="type">
+										<option value="">全部</option>
+                                        <option value="buyer">买家凭证</option>
+                                      <option value="seller">卖家凭证</option> 
+                                    </select>
+                                </label>
+								<label>上传状态：
+                                    <select id="status">
+										<option value="">全部</option>
+                                        <option value="PENDING_REVISION">待校对</option>
+                                       <option value="PENDING_COLLECT">已校对待集齐</option>
+                                      <option value="ALREADY_COLLECT">已集齐</option> 
+                                    </select>
+                                </label>
+                            
+                            
+                                <button id="queryBtn" class="btn btn-sm btn-default" type="button" title="搜索">
+                                    <i class="aace-icon fa fa-search bigger-110"></i>搜索
+                                </button>
+								 <button id="batchBtn" class="btn btn-info btn-sm browse-files" type="button" title="批量上传凭证图片">
+                                                                                                       批量上传凭证图片
+                                    </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- div.dataTables_borderWrap -->
+                    <div class="dataTable-overflow" id="seller-container">
+                        <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+                            <thead style="text-align:center">
+                            <tr>
+                               	<th style="width:120px;">凭证图片</th>
+									<th style="width:120px;">凭证号码</th>
+	                                <th style="width:120px;">已集齐页数<br/>(页)</th>
+	                                <th style="width:120px;">凭证号总页码</th>
+	                                <th style="width:120px;">交易单号</th>
+	                                <th style="width:70px;">买家全称</th>
+	                                <th style="width:120px;">卖家全称</th>
+	                                <th style="width:50px;">凭证类型</th>
+	                                <th style="width:100px;">状态</th>
+	                                <th style="width:60px;">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody style="text-align:center">
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- div.dataTables_borderWrap -->
+                </div>
+            </div>
+        </div>
+        <!-- /.col display: none -->
+    </div>
+    <!-- /.row -->
+</div>
+<script>
+    /**
+     * 全局变量
+     */
+    var _globalAttr={
+        table:null,
+        accountType:'$!{accountType}'
+
+    }
+</script>
+<input type="button" class="btn btn-info btn-sm browse-files" value=" 浏 览 "/>
+<link rel="stylesheet" href='$link.getContextPath()/css/sliderBar.css'/>
+<script src='$link.getContextPath()/js/sliderBar.js'></script>
+<script src='$link.getContextPath()/js/views/order/certiFileUploads.js'></script>
+
+<script src="$link.getContextPath()/js/views/order/batchuploading.js"></script>
+
+

@@ -1,0 +1,65 @@
+#set($layout="layout/default.vm")
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li><i class="ace-icon fa fa-home home-icon"></i>系统管理</li>
+        <li>系统设置</li>
+        <li class="active">代运营服务中心日报Job设置</li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+    #parse("layout/topbtn.vm")
+    <!-- /.nav-search -->
+</div>
+
+<div class="page-content">
+
+    <div class="row">
+        <div class="col-xs-12">
+            <!--TAPBAR-->
+            #parse("sys/systemmenu.vm")
+            <!-- PAGE CONTENT BEGINS -->
+            <form id="checkForm">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!--.recordbar-->
+                        <input type="hidden" value="$!sysSetting.id" id="sysId"/>
+                        <div>上次Job执行成功时间:</div>
+                        <div class="print-finfo">
+                            <label>
+                            	<input type="text" value="$!sysSetting.defaultValue" readonly="true"/>
+                            </label>
+                            <label><span><em class=""></em></span></label>
+                        </div>
+                        <div class="print-finfo">
+	                        <label>选择配置时间：</label>
+	                        <input type="time" must='1' id="times" value="$!sysSetting.settingValue">
+                        </div>
+                        <div class="print-finfo">
+                        	<label>是否继续执行Job：</label>
+                        	<select id="isdefault" value="">   
+						        <option value="1" #if($!sysSetting.reportOrgDay == "1")  selected="selected" #end>是</option>   
+						        <option value="0" #if($!sysSetting.reportOrgDay == "0")  selected="selected" #end>否</option>   
+						     </select>  
+                        </div>
+                        <div class="btn-bar">
+                            <button type="button"  class="btn btn-info btn-sm" id="confirm">确定</button>
+                        </div>
+                        <!--/.recordbar-->
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+
+<!-- /.page-content -->
+<script type="text/javascript" src="$link.getContextPath()/js/views/sys/createdate.js"></script>

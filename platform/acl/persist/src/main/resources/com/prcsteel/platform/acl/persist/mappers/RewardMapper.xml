@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.acl.persist.dao.RewardDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.acl.model.model.Reward" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+     <result column="org_id" property="orgId" jdbcType="INTEGER" />
+      <result column="org_name" property="orgName" jdbcType="VARCHAR" />
+    <result column="reward_type" property="rewardType" jdbcType="VARCHAR" />
+    <result column="category_UUID" property="categoryUuid" jdbcType="VARCHAR" />
+    <result column="seller_limit" property="sellerLimit" jdbcType="DECIMAL" />
+    <result column="reward_role" property="rewardRole" jdbcType="DECIMAL" />
+    <result column="buy_radio" property="buyRadio" jdbcType="DECIMAL" />
+      <result column="single_trade_weight" property="singleTradeWeight" jdbcType="DECIMAL" />
+    <result column="all_trade_quality" property="allTradeQuality" jdbcType="DECIMAL" />
+    <result column="all_trade_weight" property="allTradeWeight" jdbcType="DECIMAL" />
+    <result column="seq" property="seq" jdbcType="INTEGER" />
+    <result column="reward_status" property="rewardStatus" jdbcType="VARCHAR" />
+    <result column="effective_time" property="effectiveTime" jdbcType="TIMESTAMP" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+    <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+    <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id,org_id,org_name,reward_type, category_UUID, seller_limit, reward_role,buy_radio,single_trade_weight,all_trade_quality,all_trade_weight,seq, reward_status, effective_time, created,
+    created_by, last_updated, last_updated_by, modification_number, row_id, parent_row_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from base_reward
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from base_reward
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.prcsteel.platform.acl.model.model.Reward" >
+    insert into base_reward (id, reward_type, category_UUID, seller_limit,
+      reward_role,buy_radio,seq, reward_status, effective_time,
+      created, created_by, last_updated, 
+      last_updated_by, modification_number, row_id, 
+      parent_row_id)
+    values (#{id,jdbcType=INTEGER}, #{rewardType},#{categoryUuid,jdbcType=VARCHAR}, #{sellerLimit,jdbcType=DECIMAL},
+      #{rewardRole,jdbcType=DECIMAL},#{buyRadio,jdbcType=DECIMAL},#{seq,jdbcType=INTEGER}, #{rewardStatus,jdbcType=VARCHAR}, #{effectiveTime,jdbcType=TIMESTAMP},
+      #{created,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, #{lastUpdated,jdbcType=TIMESTAMP}, 
+      #{lastUpdatedBy,jdbcType=VARCHAR}, #{modificationNumber,jdbcType=INTEGER}, #{rowId,jdbcType=VARCHAR}, 
+      #{parentRowId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.acl.model.model.Reward" >
+    insert into base_reward
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+       <if test="orgId != null" >
+        org_id,
+      </if>
+       <if test="orgName != null" >
+        org_name,
+      </if>
+      <if test="rewardType != null">
+        reward_type,
+      </if>
+      <if test="categoryUuid != null" >
+        category_UUID,
+      </if>
+      <if test="sellerLimit != null" >
+        seller_limit,
+      </if>
+      <if test="rewardRole != null" >
+        reward_role,
+      </if>
+      <if test="buyRadio != null" >
+        buy_radio,
+      </if>
+       <if test="singleTradeWeight != null" >
+        single_trade_weight,
+      </if>
+      <if test="allTradeQuality != null" >
+        all_trade_quality,
+      </if>
+      <if test="allTradeWeight != null" >
+        all_trade_weight,
+      </if>
+      <if test="seq != null" >
+        seq,
+      </if>
+      <if test="rewardStatus != null" >
+        reward_status,
+      </if>
+      <if test="effectiveTime != null" >
+        effective_time,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by,
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number,
+      </if>
+      <if test="rowId != null" >
+        row_id,
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+        <if test="orgId != null" >
+        #{orgId},
+      </if>
+       <if test="orgName != null" >
+        #{orgName},
+      </if>
+      <if test="rewardType != null">
+        #{rewardType},
+      </if>
+      <if test="categoryUuid != null" >
+        #{categoryUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerLimit != null" >
+        #{sellerLimit,jdbcType=DECIMAL},
+      </if>
+      <if test="rewardRole != null" >
+        #{rewardRole,jdbcType=DECIMAL},
+      </if>
+      <if test="buyRadio != null" >
+        #{buyRadio,jdbcType=DECIMAL},
+      </if>
+      <if test="singleTradeWeight != null" >
+        #{singleTradeWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="allTradeQuality != null" >
+       #{allTradeQuality,jdbcType=DECIMAL},
+      </if>
+      <if test="allTradeWeight != null" >
+       #{allTradeWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="seq != null" >
+        #{seq,jdbcType=INTEGER},
+      </if>
+      <if test="rewardStatus != null" >
+        #{rewardStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="effectiveTime != null" >
+        #{effectiveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        #{parentRowId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.acl.model.model.Reward" >
+    update base_reward
+    <set >
+      <if test="rewardType != null">
+        reward_type = #{rewardType}
+      </if>
+      <if test="categoryUuid != null" >
+        category_UUID = #{categoryUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerLimit != null" >
+        seller_limit = #{sellerLimit,jdbcType=DECIMAL},
+      </if>
+      <if test="rewardRole != null" >
+        reward_role = #{rewardRole,jdbcType=DECIMAL},
+      </if>
+      <if test="buyRadio != null" >
+       buy_radio= #{buyRadio,jdbcType=DECIMAL},
+      </if>
+      <if test="seq != null" >
+        seq=#{seq,jdbcType=INTEGER},
+      </if>
+      <if test="rewardStatus != null" >
+        reward_status = #{rewardStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="effectiveTime != null" >
+        effective_time = #{effectiveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number = #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        row_id = #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.acl.model.model.Reward" >
+    update base_reward
+    set reward_type = #{rewardType},
+      category_UUID = #{categoryUuid,jdbcType=VARCHAR},
+      seller_limit = #{sellerLimit,jdbcType=DECIMAL},
+      reward_role = #{rewardRole,jdbcType=DECIMAL},
+      buy_radio= #{buyRadio,jdbcType=DECIMAL},
+      seq=#{seq,jdbcType=INTEGER},
+      reward_status = #{rewardStatus,jdbcType=VARCHAR},
+      effective_time = #{effectiveTime,jdbcType=TIMESTAMP},
+      created = #{created,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      modification_number = #{modificationNumber,jdbcType=INTEGER},
+      row_id = #{rowId,jdbcType=VARCHAR},
+      parent_row_id = #{parentRowId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <!--把下个月生效的提成方案取消  -->
+   <update id="cancelReward">
+    update base_reward
+    set  reward_status = 'INVALID'     
+    where reward_status = 'EFFECT_NEXT_MONTH'
+  </update>
+  
+   <select id="queryAll" resultMap="BaseResultMap" parameterType="map">
+        select
+     <include refid="Base_Column_List"/>
+     from base_reward
+     where 1=1
+        <if test="rewardStatus != null">
+            and reward_status = #{rewardStatus}
+        </if>
+        <if test="rewardType != null">
+            and reward_type = #{rewardType}
+        </if>
+        <if test="categoryUUID != null">
+            and category_UUID = #{categoryUUID}
+        </if>
+   </select>
+  <!--通过大类 查找reward_role-->
+  <select id="findRewardRole" resultType="java.lang.Double">
+     select reward_role
+     from base_reward where  category_UUID = (
+     SELECT  uuid FROM  common_category_group t where t.name=#{name,jdbcType=VARCHAR} and site_uuid='inner_cbms'
+     ) and reward_status='EFFECT'
+  </select>
+  <!--查找佣金标准-->
+  <select id="getCommissionStandard" resultMap="BaseResultMap">
+   select
+   <include refid="Base_Column_List" />
+    from base_reward where reward_type = 'commission' and reward_status='EFFECT'
+  </select>
+
+  <!--通过卖家客户查看是临采   还是品牌店 -->
+  <select id="findConsignType" resultType="java.lang.String" >
+    select consign_type from cust_account where name=#{name,jdbcType=VARCHAR}
+  </select>
+    
+     <update id="expireOldReward" >
+    update base_reward
+    set  reward_status = 'INVALID'     
+    where reward_status = 'EFFECT'
+     
+  </update>
+  
+  <update id="startNewReward" >
+    update base_reward
+    set  reward_status = 'EFFECT'     
+    where reward_status = 'EFFECT_NEXT_MONTH'
+     and effective_time &lt;= NOW()
+  </update> 
+    
+    <!-- 统计已经到期的还未生效的提成条数 -->
+   <select id="countNextMonthEffectRecord" resultType="java.lang.Integer" >
+     select count(1) from  base_reward
+     where reward_status = 'EFFECT_NEXT_MONTH'
+    and effective_time &lt;= NOW()
+  </select>
+    
+    <!--提成方案-->
+    <resultMap id="RewardCategoryMap" type="com.prcsteel.platform.acl.model.dto.RewardDto">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="category_name" property="categoryName" jdbcType="VARCHAR"/>
+        <result column="seller_limit" property="sellerLimit" jdbcType="DECIMAL"/>
+        <result column="reward_role" property="rewardRole" jdbcType="DECIMAL"/>
+        <result column="category_UUID" property="categoryUuid" jdbcType="VARCHAR" />
+        <result column="buy_radio" property="buyRadio" jdbcType="VARCHAR" />
+    </resultMap>
+    
+     <select id="queryRewardDto" resultMap="RewardCategoryMap" parameterType="map">
+        select t1.id as id,t2.name as category_name,t1.seller_limit as seller_limit,t1.reward_role as reward_role,
+        t2.uuid as category_UUID
+        from base_reward t1
+        right join common_category_group t2 on t1.category_UUID=t2.uuid
+        <where>
+            <if test="rewardStatus!=null and rewardStatus!='' ">
+                t1.reward_status=#{rewardStatus,jdbcType=VARCHAR}
+            </if> 
+              	and t2.is_deleted=0 and t1.reward_type = 'category' and t2.site_uuid = 'inner_cbms'
+        </where>       
+    </select>
+  <!--通过提成类型 查找RewardDto-->
+  <select id="queryReward" resultMap="RewardCategoryMap">
+    select reward_role,category_UUID,buy_radio  from base_reward where reward_type='commission' and  reward_status='EFFECT'
+  </select>
+  <!--通过提成类型 查找RewardDto-->
+  <select id="queryRewardDtoList" resultMap="RewardCategoryMap">
+    select   seller_limit,reward_role,buy_radio from base_reward where reward_type='category_radio' and  reward_status='EFFECT' order by seq
+  </select>
+<!-- 获取 交易参数-->
+  <select id="getDealParameter" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from base_reward where reward_status='DEAL_PARAMETER'
+  </select>
+  <!-- 获取 单笔交易参数-->
+   <select id="getOneDealParameter" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from base_reward where reward_status='DEAL_PARAMETER' 
+    and reward_type=#{supplierLabel,jdbcType=VARCHAR} 
+    and org_id=(select org_id from acl_user where  id=#{userId,jdbcType=INTEGER})
+  </select>
+  <delete id="deleSysSetting">
+    delete from base_reward
+    where reward_status='DEAL_PARAMETER'
+  </delete>
+    
+</mapper>

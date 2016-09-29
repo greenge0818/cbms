@@ -1,0 +1,62 @@
+<div class="breadcrumbs" id="breadcrumbs" xmlns="http://www.w3.org/1999/html">
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            智能找货
+        </li>
+        <li class="active">询价单管理</li>
+    </ul>
+    <!-- /.breadcrumb -->
+</div>
+<!-- content S -->
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- PAGE CONTENT BEGINS -->
+                    <div class="clearfix">
+                        <div class="input-group pull-right col-md-12 col-sm-12 col-lg-12 text-left">
+                            <form class="form-inline">
+                                <label>采购单号：<input id="code" class="" type="text" value=""/></label>
+                                <label>卖家全称：</label><input id="seller" class="" type="text" value=""/></label>
+                                <label>地区：<input id="city" class="" type="text" value=""/></label>
+                                <label>品名：<input id="categoryName" class="" type="text" value=""/></label>
+                                <label>材质：<input id="materialName" class="" type="text" value=""/></label>
+                                <label>规格：<input id="spec" class="" type="text" value=""/></label>
+                                <label>仓库：<input id="warehouse" class="" type="text" value=""/></label>
+                                <label>钢厂：<input id="factory" class="" type="text" value=""/></label>
+                                <label>时间：
+                                    <input id="startDate" class="Wdate" type="text" onFocus="WdatePicker()"/> -
+                                    <input id="endDate" class="Wdate" type="text" onFocus="WdatePicker()"/></label>
+                                <button id="searchList" class="btn btn-sm btn-default" type="button">搜索
+                                </button>
+								<button class="btn btn-sm btn-default" type="button" id='cleanSearch'>清空</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- div.dataTables_borderWrap -->
+                    <div>
+                        <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>采购单号</th>
+                                <th>询价时间</th>
+                                <th>品名</th>
+                                <th>材质</th>
+                                <th>规格</th>
+                                <th>厂家</th>
+                                <th>仓库</th>
+                                <th>单价（元/吨）</th>
+                                <th>卖家</th>
+                                <th>备注</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div><!-- /.page-content -->
+<!-- content E -->
+<script src="$link.getContextPath()/js/views/smartmatch/inquiryorder/list.js"></script>

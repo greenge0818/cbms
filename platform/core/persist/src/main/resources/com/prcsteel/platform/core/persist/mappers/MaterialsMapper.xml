@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.core.persist.dao.MaterialsDao">
+	<resultMap id="BaseResultMap" type="com.prcsteel.platform.core.model.model.Materials">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="uuid" property="uuid" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="is_deleted" property="isDeleted" jdbcType="BIT" />
+		<result column="created" property="created" jdbcType="TIMESTAMP" />
+		<result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+		<result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+		<result column="last_updated_by" property="lastUpdatedBy"
+			jdbcType="VARCHAR" />
+		<result column="modification_number" property="modificationNumber"
+			jdbcType="INTEGER" />
+		<result column="row_id" property="rowId" jdbcType="VARCHAR" />
+		<result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<resultMap id="materialsMgt" type="com.prcsteel.platform.core.model.dto.MaterialMgtDto">
+		<result column="materialId" property="materialId" jdbcType="INTEGER" />
+		<result column="categoryMaterialId" property="categoryMaterialId" jdbcType="INTEGER" />
+		<result column="categoryUuid" property="categoryUuid" jdbcType="VARCHAR" />
+		<result column="categoryName" property="categoryName" jdbcType="VARCHAR" />
+		<result column="materialUuid" property="materialUuid" jdbcType="VARCHAR" />
+		<result column="materialName" property="materialName" jdbcType="VARCHAR" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		id, uuid, name, is_deleted, created, created_by,
+		last_updated,
+		last_updated_by, modification_number,
+		row_id,
+		parent_row_id
+	</sql>
+
+	<select id="queryMaterials" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		t1.id,
+		t1.uuid,
+		t1.name,
+		t1.is_deleted,
+		t1.created,
+		t1.created_by,
+		t1.last_updated,
+		t1.last_updated_by,
+		t1.modification_number,
+		t1.row_id,
+		t1.parent_row_id
+		from common_materials t1
+		join
+		common_category_materials t2 on t1.uuid
+		= t2.materials_uuid
+		where t2.category_uuid = #{categoryUuid,jdbcType=VARCHAR}
+
+	</select>
+
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from common_materials
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		common_materials
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.prcsteel.platform.core.model.model.Materials" useGeneratedKeys="true" keyProperty="id">
+		insert into common_materials
+		(id, uuid, name,
+		is_deleted, created, created_by,
+		last_updated,
+		last_updated_by, modification_number,
+		row_id, parent_row_id)
+		values
+		(#{id,jdbcType=INTEGER}, #{uuid,jdbcType=VARCHAR},
+		#{name,jdbcType=VARCHAR},
+		#{isDeleted,jdbcType=BIT},
+		#{created,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR},
+		#{lastUpdated,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR},
+		#{modificationNumber,jdbcType=INTEGER},
+		#{rowId,jdbcType=VARCHAR},
+		#{parentRowId,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.prcsteel.platform.core.model.model.Materials" useGeneratedKeys="true" keyProperty="id">
+		insert into common_materials
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="uuid != null">
+				uuid,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="isDeleted != null">
+				is_deleted,
+			</if>
+			<if test="created != null">
+				created,
+			</if>
+			<if test="createdBy != null">
+				created_by,
+			</if>
+			<if test="lastUpdated != null">
+				last_updated,
+			</if>
+			<if test="lastUpdatedBy != null">
+				last_updated_by,
+			</if>
+			<if test="modificationNumber != null">
+				modification_number,
+			</if>
+			<if test="rowId != null">
+				row_id,
+			</if>
+			<if test="parentRowId != null">
+				parent_row_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="uuid != null">
+				#{uuid,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="isDeleted != null">
+				#{isDeleted,jdbcType=BIT},
+			</if>
+			<if test="created != null">
+				#{created,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createdBy != null">
+				#{createdBy,jdbcType=VARCHAR},
+			</if>
+			<if test="lastUpdated != null">
+				#{lastUpdated,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastUpdatedBy != null">
+				#{lastUpdatedBy,jdbcType=VARCHAR},
+			</if>
+			<if test="modificationNumber != null">
+				#{modificationNumber,jdbcType=INTEGER},
+			</if>
+			<if test="rowId != null">
+				#{rowId,jdbcType=VARCHAR},
+			</if>
+			<if test="parentRowId != null">
+				#{parentRowId,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.core.model.model.Materials">
+		update common_materials
+		<set>
+			<if test="uuid != null">
+				uuid = #{uuid,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="isDeleted != null">
+				is_deleted = #{isDeleted,jdbcType=BIT},
+			</if>
+			<if test="created != null">
+				created = #{created,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createdBy != null">
+				created_by = #{createdBy,jdbcType=VARCHAR},
+			</if>
+			<if test="lastUpdated != null">
+				last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastUpdatedBy != null">
+				last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+			</if>
+			<if test="modificationNumber != null">
+				modification_number =
+				#{modificationNumber,jdbcType=INTEGER},
+			</if>
+			<if test="rowId != null">
+				row_id = #{rowId,jdbcType=VARCHAR},
+			</if>
+			<if test="parentRowId != null">
+				parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.core.model.model.Materials">
+		update
+		common_materials
+		set uuid = #{uuid,jdbcType=VARCHAR},
+		name =
+		#{name,jdbcType=VARCHAR},
+		is_deleted = #{isDeleted,jdbcType=BIT},
+		created = #{created,jdbcType=TIMESTAMP},
+		created_by =
+		#{createdBy,jdbcType=VARCHAR},
+		last_updated =
+		#{lastUpdated,jdbcType=TIMESTAMP},
+		last_updated_by =
+		#{lastUpdatedBy,jdbcType=VARCHAR},
+		modification_number =
+		#{modificationNumber,jdbcType=INTEGER},
+		row_id =
+		#{rowId,jdbcType=VARCHAR},
+		parent_row_id =
+		#{parentRowId,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<!-- 品规设置中材质管理列表总数 -->
+	<select id="totalForMaterialMgt" resultType="java.lang.Integer" parameterType="com.prcsteel.platform.smartmatch.model.query.ResourceQuery">
+		SELECT COUNT(*) 
+		FROM common_category_materials ccm
+		LEFT JOIN common_category cc on ccm.category_uuid=cc.uuid
+		LEFT JOIN common_materials cm on ccm.materials_uuid=cm.uuid
+		<where>
+			<if test="isVague !=null and isVague=='true'">
+				<if test="categoryName !=null and categoryName !=''">
+				AND cc.name LIKE '%' #{categoryName} '%'
+				</if>
+				<if test="materialName !=null and materialName !=''">
+				AND cm.name LIKE '%' #{materialName} '%'
+				</if>
+			</if>
+			<if test="isVague !=null and isVague=='false'">
+				<if test="categoryName !=null and categoryName !=''">
+				AND cc.name = #{categoryName}
+				</if>
+				<if test="materialName !=null and materialName !=''">
+				AND cm.name = #{materialName} 
+				</if>
+			</if>
+			<if test="categoryMaterialId !=null and categoryMaterialId !=''">
+			AND ccm.id=#{categoryMaterialId} 
+			</if>
+		</where>
+	</select>
+	
+	<!-- 根据品名和材质名称搜索-->
+	<select id="selectByCategoryNameAndMaterialName" resultMap="materialsMgt" >
+		SELECT cm.id materialId,ccm.id categoryMaterialId, ccm.category_uuid categoryUuid,cc.name categoryName,
+		ccm.materials_uuid materialUuid,cm.name materialName,ccm.remark 
+		FROM common_category_materials ccm
+		LEFT JOIN common_category cc on ccm.category_uuid=cc.uuid
+		LEFT JOIN common_materials cm on ccm.materials_uuid=cm.uuid
+		<where>
+			<if test="isVague !=null and isVague=='true'">
+				<if test="categoryName !=null and categoryName !=''">
+				AND cc.name LIKE '%' #{categoryName} '%'
+				</if>
+				<if test="materialName !=null and materialName !=''">
+				AND cm.name LIKE '%' #{materialName} '%'
+				</if>
+			</if>
+			<if test="isVague !=null and isVague=='false'">
+				<if test="categoryName !=null and categoryName !=''">
+				AND cc.name = #{categoryName}
+				</if>
+				<if test="materialName !=null and materialName !=''">
+				AND cm.name = #{materialName} 
+				</if>
+			</if>
+			<if test="categoryMaterialId !=null and categoryMaterialId !=''">
+			AND ccm.id=#{categoryMaterialId} 
+			</if>
+		</where>
+		ORDER BY ccm.id desc
+		LIMIT
+    	#{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+	</select>
+	
+	<!-- 根据材质名称查询-->
+	<select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+		SELECT 
+		<include refid="Base_Column_List" />
+		FROM common_materials t
+		<where>
+			<if test="materialName !=null and materialName !=''">
+			t.name = #{materialName,jdbcType=VARCHAR} 
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectByMaterialsName" resultMap="BaseResultMap" parameterType="java.lang.String">
+		SELECT 
+		<include refid="Base_Column_List" />
+		FROM common_materials 
+		<where>
+			<if test="materialName !=null and materialName !=''">
+			name = #{materialName,jdbcType=VARCHAR} 
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectByMaterialUuid" resultMap="BaseResultMap" parameterType="java.lang.String">
+		SELECT 
+		<include refid="Base_Column_List" />
+		FROM common_materials 
+		<where>
+			<if test="materialUuid !=null and materialUuid !=''">
+			uuid = #{materialUuid,jdbcType=VARCHAR} 
+			</if>
+		</where>
+	</select>
+</mapper>

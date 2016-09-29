@@ -1,0 +1,235 @@
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            交易管理
+        </li>
+        <li>
+            <a href="$link.getContextPath()/allowance/list/seller.html">折让单管理</a>
+        </li>
+        <li class="active">编辑卖家折让单</li>
+    </ul>
+</div>
+
+#if($allowance)
+<div class="page-content">
+    <div style="background-color: #f3c17a">
+        <ul class="breadcrumb">
+            <li class="red"><span id="step_one_span">1、选择交易单</span></li>
+            <li><span id="step_two_span">2、添加折扣金额、上传折让单</span></li>
+        </ul>
+    </div>
+    <!-- 审核不通过理由 -->
+    #if($!{allowance.status} == "not_through")
+        <p />
+        <div class="bg-yellow-style" style="padding:5px 10px;border:1px dotted orange">
+            <div class="clearfix  text-left">
+                <span>审核不通过理由：<em class="red">$!{allowance.remark}</em></span>
+            </div>
+        </div>
+    #end
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="clearfix">
+                <form action="$link.getContextPath()/allowance/saveselleredit.html" method="POST" enctype="multipart/form-data"
+                      id="sellerForm">
+                <div class="table-bar">
+                        <span>卖家全称：<em class="bolder">$!{allowance.accountName} &nbsp;&nbsp;#if($isShowDept)$!{allowance.departmentName}   
+                        #end</em></span>
+                        <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>开单时间</th>
+                                <th>寄售交易单号</th>
+                                <th>买家全称</th>
+                                <th>品名</th>
+                                <th>材质</th>
+                                <th>规格</th>
+                                <th>实提重量</th>
+                                #if($!displayWeight)
+                                <th>折扣重量</th>
+                                <th>折后重量</th>
+                                #end
+                                <th>实提金额</th>
+                                #if($!displayAmount)
+                                <th>折扣金额</th>
+                                <th>折后金额</th>
+                                #end
+                            </tr>
+                            </thead>
+                            <tbody class="orderList-tbody">
+                                #foreach($item in $list)
+                                <tr orderdetailid='$!{item.orderDetailId}' orderid='$!{item.orderId}' contractcode='$!{item.contractCode}'
+                                    buyerid='$!{item.buyerId}' sellerid='$!{allowance.accountId}' sellername='$!{allowance.accountName}'
+                                    totalweight='$!{item.totalWeight}' totalamount='$!{item.totalAmount}' totalquantity='$!{item.totalQuantity}'
+                                    totalactualweight='$!{item.totalActualWeight}' totalactualamount='$!{item.totalActualAmount}'
+                                    buyername="$!{item.buyerName}"
+                                    buyerdeptid="$!{item.buyerDepartmentId}" buyerdeptname="$!{item.buyerDepartmentName}"
+                                    sellerdeptid="$!{allowance.departmentId}" sellerdeptname="$!{allowance.departmentName}">
+                                    <td>
+                                        <span class="orderTime">$!date.format('yyyy-MM-dd HH:mm:ss',$!{item.orderTime})</span>
+                                    </td>
+                                    <td>
+                                       <span class="orderCode">$!{item.orderCode}</span>
+                                    </td>
+                                    <td>
+                                        <span class="buyerName">$!{item.buyerName}#if(${item.isShowBuyerDept})【$!{item.buyerDepartmentName}】
+                                        #end</span>
+                                    </td>
+                                    <td>
+                                        <span class="nsortName">$!{item.nsortName}</span>
+                                    </td>
+                                    <td>
+                                        <span class="material">$!{item.material}</span>
+                                    </td>
+                                    <td>
+                                       <span class="spec">$!{item.spec}</span>
+                                    </td>
+                                    <td class="text-right">
+                                        $NumberTool.format("#0.000000",$!{item.actualWeight})
+                                        <input type="hidden" class="actualWeight" name='actualWeight' value="$item.actualWeight">
+                                    </td>
+                                    #if($!displayWeight)
+                                    <td class="text-right">
+                                        <input type="hidden" class="allowanceWeight" name="allowanceWeight" value="$!item.allowanceWeight"/>
+                                        <select class="weightSymbol" value="">
+                                            <option value="-" #if($!item.allowanceWeight < 0) selected #end>-</option>
+                                            <option value="" #if($!item.allowanceWeight > 0) selected #end>+</option>
+                                        </select>
+                                        <input class="weightValue" type="text"
+                                               value='$NumberTool.format("#0.000000",$!item.absAllowanceWeight)' style="width:70px"
+                                               must="1" verify="weight" msg="仅支持大于0，小于实提重量的纯数字，小数点最多6位"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span class="unAllowanceWeight">$!item.unAllowanceWeight</span>
+                                    </td>
+                                    #end
+                                    <td class="text-right">
+                                        $NumberTool.format("#0.00",$!item.actualAmount)
+                                        <input type="hidden" class="actualAmount" name='actualAmount' value="$!item.actualAmount">
+                                    </td>
+                                    #if($!displayAmount)
+                                    <td class="text-right">
+                                        <input type="hidden" class="allowanceAmount" value="$!item.allowanceAmount"/>
+                                        <select class="amountSymbol">
+                                            <option value="-" #if($!item.allowanceAmount < 0) selected #end>-</option>
+                                            <option value="" #if($!item.allowanceAmount > 0) selected #end>+</option>
+                                        </select>
+                                        <input class="amountValue" type="text" value="$NumberTool.format("#0.00",$!item.absAllowanceAmount)" style="width:70px"
+                                               must="1" verify="rmb" msg="仅支持大于0，小于实提金额的纯数字，小数点最多2位">
+                                    </td>
+                                    <td class="text-right">
+                                        <span class="unAllowanceAmount">$!item.unAllowanceAmount</span>
+                                    </td>
+                                    #end
+                                </tr>
+                                #end
+                            </tbody>
+                            <tfoot class="tbody-border0" id="allownce_footer">
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td class="text-right">合计</td>
+                                <td class="text-right">
+                                    <input type="hidden" name="totalActualWeight" id="totalActualWeight"/>
+                                    <span id="totalActualWeightDisplay"></span>
+                                </td>
+                                #if($!displayWeight)
+                                <td class="text-right" >
+                                    <input type="hidden" name="totalAllowanceWeight" id="totalAllowanceWeight"/>
+                                    <span id="totalAllowanceWeightDisplay" ></span>
+                                </td>
+                                <td class="text-right">
+                                    <span id="totalUnAllowanceWeight"></span>
+                                </td>
+                                #end
+                                <td class="text-right">
+                                    <input type="hidden" name="totalActualAmount" id="totalActualAmount"/>
+                                    <span id="totalActualAmountDisplay"></span>
+                                </td>
+                                #if($!displayAmount)
+                                <td class="text-right">
+                                    <input type="hidden" name="totalAllowanceAmount" id="totalAllowanceAmount"/>
+                                    <span id="totalAllowanceAmountDisplay"></span>
+                                </td>
+                                <td class="text-right">
+                                    <span id="totalUnAllowanceAmount"></span>
+                                </td>
+                                #end
+                            </tr>
+                            </tfoot>
+                    </table>
+                </div> <!-- /.table-bar -->
+                 <div class= " col-xs-12 text-left clearfix">
+                        <em class="bolder">上传折让单：</em>
+                    <span class="vendor-text">
+						<a target="_blank" class="img-box">
+                   			<img id="turnImg"  width="200" height="200"
+                   				src="#if(${allowance.imgUrl})$link.getContextPath()/common/getfile.html?key=$!{allowance.imgUrl} #end">
+						</a>   
+                    </span>
+	                <br/>
+                    <div id="disguiserImgDiv">
+	                    	<input id="disguiserImg" name="disguiserImg" type="button" value="&nbsp;浏览...&nbsp;" />
+	                    <br/>
+                    </div>
+                    <span>
+                        <input id="allowanceImg" name="allowanceImg" type="file" style="display:none"
+							onchange="preImg(this.id,'turnImg');" value="" />
+                        	盖章扫描件或数码照，支持jpeg、jpg、png、gif 图片格式，小于2M；
+                    </span>
+                 </div>
+               </form><!-- /.form -->
+            </div>
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+</div> <!-- /.page-content -->
+<div class="pull-left" style="padding:10px;height:150px;width:350px;overflow:auto;overflow-x:hidden;">
+	<td class="bg-gray" rowspan="2">备注：</td>
+	<td rowspan="2" width="200">
+	    <textarea class="remarks-textarea" placeholder="可输入备注信息"
+	              id="allowance_note" disabled='disabled'>$!{allowance.note}</textarea>
+	</td>
+</div>
+<div class="text-center">
+	<span class="text-center">
+		<button type="button" class="btn btn-info btn-sm" id="submit">提交审核</button>
+        #if(${allowance.status} == 'not_through')
+		<button type="button" class="btn btn-info btn-sm" id="close">关闭</button>
+        #end
+        <a href="javascript:history.back(-1);" class="btn btn-default btn-sm">返回</a>
+	</span>
+</div>
+#else
+<div class="page-content">
+    <div class="settlement-info bg-yellow-style row">
+        <div class="clearfix">
+            <span class="bolder red"><em>没有找到该数据或状态已经更新或您没有权限查看,请返回重试！&nbsp;&nbsp;<a class="link"
+                                                                                     href='$link.getContextPath()/allowance/list/seller.html'>返回</a></em></span>
+        </div>
+    </div>
+</div>
+#end
+
+<input type="hidden" id="allowanceId" value='$!{allowance.id}'/>
+<input type="hidden" id="sellerId" value='$!{allowance.accountId}'/>
+<input type="hidden" id="oldImgUrl" value='$!{allowance.imgUrl}'/>
+<script>
+    var _pageContext = {
+        _allowance_manner:'$!{allowance.allowanceManner}',
+        _displayWeight:'$!displayWeight',
+        _displayAmount:'$!displayAmount',
+        _status:'$!{allowance.status}'
+    }
+</script>
+<script src="$link.getContextPath()/js/views/allowance/editseller.js"></script>

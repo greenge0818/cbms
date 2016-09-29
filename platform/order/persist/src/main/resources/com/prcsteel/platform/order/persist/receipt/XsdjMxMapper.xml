@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.order.persist.receipt.XsdjMxDao" >
+
+    <insert id="insert" parameterType="com.prcsteel.platform.order.model.receipt.XsdjMx">
+        INSERT INTO xsdj_mx (DJH, SPMC, JLDW, GGXH, SLIAN, SL, HSJE, HSDJ, ZKJE)
+        VALUES (#{djh, jdbcType=VARCHAR},
+                #{spmc, jdbcType=VARCHAR},
+                #{jldw, jdbcType=VARCHAR},
+                #{ggxh, jdbcType=INTEGER},
+                #{slian, jdbcType=DECIMAL},
+                #{sl, jdbcType=DECIMAL},
+                #{hsje, jdbcType=DECIMAL},
+                #{hsdj, jdbcType=DECIMAL},
+                #{zkje, jdbcType=DECIMAL})
+    </insert>
+
+</mapper>

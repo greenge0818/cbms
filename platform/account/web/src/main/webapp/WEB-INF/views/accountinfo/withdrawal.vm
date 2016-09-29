@@ -1,0 +1,94 @@
+<div class="main-content">
+    <div class="main-content-inner">
+        <div class="breadcrumbs" id="breadcrumbs">
+            <script type="text/javascript">
+                try {
+                    ace.settings.check('breadcrumbs', 'fixed')
+                } catch (e) {
+                }
+            </script>
+
+            <ul class="breadcrumb">
+                <li>
+                    <i class="ace-icon fa fa-home home-icon"></i>
+                    客户管理
+                </li>
+                <li>
+                    <i class="ace-icon"></i>
+                    <a href="$link.getContextPath()/company/list.html">我的客户</a>
+                </li>
+                <li>
+                    <i class="ace-icon"></i>
+                    <a href="$link.getContextPath()/company/$!{company.id}/credentialsinfo.html">$!{company.name}</a>
+                </li>
+                <li>
+                    <i class="ace-icon"></i>
+                    <a class="accountinfo" href="$link.getContextPath()/accountinfo/$!{company.id}/accountinfo.html">账户信息</a>
+                </li>
+                <li class="active">申请提现
+                </li>
+            </ul>
+            <!-- /.breadcrumb -->
+        </div>
+
+        <div class="page-content">
+            <div class="customer">
+                <div class="row padding55">
+                    <div class=""col-md-12>
+                        <p class="pull-left guiIpt-bar wid">请选择提现的银行：</p>
+                        <select class="l-text" id="bank">
+                                #foreach($bank in $!bankInfo)
+                                    <option value="$bank.id" bankCode="$!{bank.bankCode}" bankAccountCode="$!{bank.bankAccountCode}">
+                                        $!{bank.bankName}$!{bank.bankNameBranch}
+										#if($!bank.bankAccountCode.length()>4) ##防止线上脏数据导致报错 add lixiang 2016/8/31
+											#set($start = $!bank.bankAccountCode.length() - 4)  ##截取银行卡号后4位
+											（$!bank.bankAccountCode.substring($start)）
+										#end
+										
+                                    </option>
+    							#end
+                        </select>
+                    </div>
+                </div>
+                <div class="row padding55">
+                    <label class=" col-md-12 shk">
+                        <p class="pull-left guiIpt-bar wid">银行账号：</p>
+                        <p id="bankAccountCode">#if($!bankInfo.size()>0)$!bankInfo.get(0).bankAccountCode #end</p>
+                    </label>
+                </div>
+                <div class="row padding55">
+                    <label class=" col-md-12 shk">
+                        <p class="pull-left guiIpt-bar wid">银行行号：</p>
+                        <p id="bankCode">#if($!bankInfo.size()>0) $!bankInfo.get(0).bankCode #end</p>
+                    </label>
+                </div>
+                <div class="row backgr">
+                    <label class=" col-md-12 shk">
+                        <p class="pull-left guiIpt-bar wid padding-top10">可用金额：</p>
+                        <p class="orangeTwo padding-top10">$NumberTool.toThousandth($!{balance}) 元</p>
+                    </label>
+                </div>
+                <div class="row backgr">
+                    <label class=" col-md-12 shk">
+                        <p class="pull-left guiIpt-bar wid padding-top10">提现金额：</p>
+                        <input name="amount" type="text" class="l-text padding-top10" />
+                    </label>
+                </div>
+                <div class="row ckeckTB">
+                    <label class=" col-md-12 shk marginleft115">
+                        <button type="submit" class="btn btn-sm btn-primary" id="submit" disabled>提交申请</button>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- /.main-content -->
+<script src="$link.getContextPath()/js/views/accountinfo/withdrawal.js"></script>
+<script type="application/javascript">
+    /**
+     * 页面配置（变量定义）
+     * @private 账户余额
+     */
+    var _balance = $!{balance};
+    var _departmentId = $!{department.id}
+</script>

@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta charset="utf-8" />
+		<title>订单管理</title>
+
+		<meta name="description" content="Static &amp; Dynamic Tables" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+		<!-- bootstrap & fontawesome -->
+		<link rel="stylesheet" href="../../theme/default/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../../theme/default/font-awesome/4.2.0/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="../../theme/default/css/daterangepicker.min.css" />
+		<!-- page specific plugin styles -->
+
+		<!-- text fonts -->
+		<link rel="stylesheet" href="../../theme/default/fonts/fonts.googleapis.com.css" />
+
+		<!-- ace styles -->
+		<link rel="stylesheet" href="../../theme/default/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+		<link rel="stylesheet" href="../../css/style.css" />
+		<!--[if lte IE 9]>
+		<link rel="stylesheet" href="../../theme/default/css/ace-part2.min.css" class="ace-main-stylesheet"/>
+		<![endif]-->
+
+		<!--[if lte IE 9]>
+		<link rel="stylesheet" href="../../theme/default/css/ace-ie.min.css"/>
+		<![endif]-->
+
+		<!-- inline styles related to this page -->
+
+		<!-- ace settings handler -->
+		<script src="../../theme/default/js/ace-extra.min.js"></script>
+
+		<!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+		<!--[if lte IE 8]>
+		<script src="../../theme/default/js/html5shiv.min.js"></script>
+		<script src="../../theme/default/js/respond.min.js"></script>
+		<![endif]-->
+	</head>
+
+	<body class="no-skin">
+		<div id="navbar" class="navbar navbar-default">
+			<script type="text/javascript">
+				try{ace.settings.check('navbar' , 'fixed')}catch(e){}
+			</script>
+
+			<div class="navbar-container" id="navbar-container">
+				<button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
+					<span class="sr-only">Toggle sidebar</span>
+
+					<span class="icon-bar"></span>
+
+					<span class="icon-bar"></span>
+
+					<span class="icon-bar"></span>
+				</button>
+
+				<div class="navbar-header pull-left">
+					<a href="index.html" class="navbar-brand">
+						<small>
+							<i class="fa fa-leaf"></i>
+							Ace Admin
+						</small>
+					</a>
+				</div>
+
+				<div class="navbar-buttons navbar-header pull-right" role="navigation">
+					<ul class="nav ace-nav">
+						<li class="grey">
+							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+								<i class="ace-icon fa fa-tasks"></i>
+								<span class="badge badge-grey">4</span>
+							</a>
+
+							<ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
+								<li class="dropdown-header">
+									<i class="ace-icon fa fa-check"></i>
+									4 Tasks to complete
+								</li>
+
+								<li class="dropdown-content">
+									<ul class="dropdown-menu dropdown-navbar">
+										<li>
+											<a href="#">
+												<div class="clearfix">
+													<span class="pull-left">Software Update</span>
+													<span class="pull-right">65%</span>
+												</div>
+
+												<div class="progress progress-mini">
+													<div style="width:65%" class="progress-bar"></div>
+												</div>
+											</a>
+										</li>
+
+										<li>
+											<a href="#">
+												<div class="clearfix">
+													<span class="pull-left">Hardware Upgrade</span>
+													<span class="pull-right">35%</span>
+												</div>
+
+												<div class="progress progress-mini">
+													<div style="width:35%" class="progress-bar progress-bar-danger"></div>
+												</div>
+											</a>
+										</li>
+
+										<li>
+											<a href="#">
+												<div class="clearfix">
+													<span class="pull-left">Unit Testing</span>
+													<span class="pull-right">15%</span>
+												</div>
+
+												<div class="progress progress-mini">
+													<div style="width:15%" class="progress-bar progress-bar-warning"></div>
+												</div>
+											</a>
+										</li>
+
+										<li>
+											<a href="#">
+												<div class="clearfix">
+													<span class="pull-left">Bug Fixes</span>
+													<span class="pull-right">90%</span>
+												</div>
+
+												<div class="progress progress-mini progress-striped active">
+													<div style="width:90%" class="progress-bar progress-bar-success"></div>
+												</div>
+											</a>
+										</li>
+									</ul>
+								</li>
+
+								<li class="dropdown-footer">
+									<a href="#">
+										See tasks with details
+										<i class="ace-icon fa fa-arrow-right"></i>
+									</a>
+								</li>
+							</ul>
+						</li>
+
+						<li class="purple">
+							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+								<i class="ace-icon fa fa-bell icon-animated-bell"></i>
+								<span class="badge badge-important">8</span>
+							</a>
+
+							<ul class="dropdown-menu-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close">
+								<li class="dropdown-header">
+									<i class="ace-icon fa fa-exclamation-triangle"></i>
+									8 Notifications
+								</li>
+
+								<li class="dropdown-content">
+									<ul class="dropdown-menu dropdown-navbar navbar-pink">
+										<li>
+											<a href="#">
+												<div class="clearfix">
+													<span class="pull-left">
+														<i class="btn btn-xs no-hover btn-pink fa fa-comment"></i>
+														New Comments
+													</span>
+													<span class="pull-right badge badge-info">+12</span>
+												</div>
+											</a>
+										</li>
+
+										<li>
+											<a href="#">
+												<i class="btn btn-xs btn-primary fa fa-user"></i>
+												Bob just signed up as an editor ...
+											</a>
+										</li>
+
+										<li>
+											<a href="#">
+												<div class="clearfix">
+													<span class="pull-left">
+														<i class="btn btn-xs no-hover btn-success fa fa-shopping-cart"></i>
+														New Orders
+													</span>
+													<span class="pull-right badge badge-success">+8</span>
+												</div>
+											</a>
+										</li>
+
+										<li>
+											<a href="#">
+												<div class="clearfix">
+													<span class="pull-left">
+														<i class="btn btn-xs no-hover btn-info fa fa-twitter"></i>
+														Followers
+													</span>
+													<span class="pull-right badge badge-info">+11</span>
+												</div>
+											</a>
+										</li>
+									</ul>
+								</li>
+
+								<li class="dropdown-footer">
+									<a href="#">
+										See all notifications
+										<i class="ace-icon fa fa-arrow-right"></i>
+									</a>
+								</li>
+							</ul>
+						</li>
+
+						<li class="green">
+							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+								<i class="ace-icon fa fa-envelope icon-animated-vertical"></i>
+								<span class="badge badge-success">5</span>
+							</a>
+
+							<ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
+								<li class="dropdown-header">
+									<i class="ace-icon fa fa-envelope-o"></i>
+									5 Messages
+								</li>
+
+								<li class="dropdown-content">
+									<ul class="dropdown-menu dropdown-navbar">
+										<li>
+											<a href="#" class="clearfix">
+												<img src="../../theme/default/avatars/avatar.png" class="msg-photo" alt="Alex's Avatar" />
+												<span class="msg-body">
+													<span class="msg-title">
+														<span class="blue">Alex:</span>
+														Ciao sociis natoque penatibus et auctor ...
+													</span>
+
+													<span class="msg-time">
+														<i class="ace-icon fa fa-clock-o"></i>
+														<span>a moment ago</span>
+													</span>
+												</span>
+											</a>
+										</li>
+
+										<li>
+											<a href="#" class="clearfix">
+												<img src="../../theme/default/avatars/avatar3.png" class="msg-photo" alt="Susan's Avatar" />
+												<span class="msg-body">
+													<span class="msg-title">
+														<span class="blue">Susan:</span>
+														Vestibulum id ligula porta felis euismod ...
+													</span>
+
+													<span class="msg-time">
+														<i class="ace-icon fa fa-clock-o"></i>
+														<span>20 minutes ago</span>
+													</span>
+												</span>
+											</a>
+										</li>
+
+										<li>
+											<a href="#" class="clearfix">
+												<img src="../../theme/default/avatars/avatar4.png" class="msg-photo" alt="Bob's Avatar" />
+												<span class="msg-body">
+													<span class="msg-title">
+														<span class="blue">Bob:</span>
+														Nullam quis risus eget urna mollis ornare ...
+													</span>
+
+													<span class="msg-time">
+														<i class="ace-icon fa fa-clock-o"></i>
+														<span>3:15 pm</span>
+													</span>
+												</span>
+											</a>
+										</li>
+
+										<li>
+											<a href="#" class="clearfix">
+												<img src="../../theme/default/avatars/avatar2.png" class="msg-photo" alt="Kate's Avatar" />
+												<span class="msg-body">
+													<span class="msg-title">
+														<span class="blue">Kate:</span>
+														Ciao sociis natoque eget urna mollis ornare ...
+													</span>
+
+													<span class="msg-time">
+														<i class="ace-icon fa fa-clock-o"></i>
+														<span>1:33 pm</span>
+													</span>
+												</span>
+											</a>
+										</li>
+
+										<li>
+											<a href="#" class="clearfix">
+												<img src="../../theme/default/avatars/avatar5.png" class="msg-photo" alt="Fred's Avatar" />
+												<span class="msg-body">
+													<span class="msg-title">
+														<span class="blue">Fred:</span>
+														Vestibulum id penatibus et auctor  ...
+													</span>
+
+													<span class="msg-time">
+														<i class="ace-icon fa fa-clock-o"></i>
+														<span>10:09 am</span>
+													</span>
+												</span>
+											</a>
+										</li>
+									</ul>
+								</li>
+
+								<li class="dropdown-footer">
+									<a href="inbox.html">
+										See all messages
+										<i class="ace-icon fa fa-arrow-right"></i>
+									</a>
+								</li>
+							</ul>
+						</li>
+
+						<li class="light-blue">
+							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
+								<img class="nav-user-photo" src="../../theme/default/avatars/user.jpg" alt="Jason's Photo" />
+								<span class="user-info">
+									<small>Welcome,</small>
+									Jason
+								</span>
+
+								<i class="ace-icon fa fa-caret-down"></i>
+							</a>
+
+							<ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+								<li>
+									<a href="#">
+										<i class="ace-icon fa fa-cog"></i>
+										Settings
+									</a>
+								</li>
+
+								<li>
+									<a href="profile.html">
+										<i class="ace-icon fa fa-user"></i>
+										Profile
+									</a>
+								</li>
+
+								<li class="divider"></li>
+
+								<li>
+									<a href="#">
+										<i class="ace-icon fa fa-power-off"></i>
+										Logout
+									</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div><!-- /.navbar-container -->
+		</div>
+
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+
+			<div id="sidebar" class="sidebar                  responsive">
+				<script type="text/javascript">
+					try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
+				</script>
+				<ul class="nav nav-list">
+					<li class="active">
+						<a href="index.html">
+							<i class="menu-icon fa fa-tachometer"></i>
+							<span class="menu-text"> 控制台 </span>
+						</a>
+
+						<b class="arrow"></b>
+					</li>
+
+					<li class="">
+						<a href="#" class="dropdown-toggle">
+							<i class="menu-icon fa fa-pencil-square-o"></i>
+							<span class="menu-text"> 系统管理 </span>
+
+							<b class="arrow fa fa-angle-down"></b>
+						</a>
+
+						<b class="arrow"></b>
+
+						<ul class="submenu">
+							<li class="">
+								<a href="sysuser-list.html">
+									<i class="menu-icon fa fa-caret-right"></i>
+									管理服务中心
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+
+							<li class="">
+								<a href="sysuser-list.html">
+									<i class="menu-icon fa fa-caret-right"></i>
+									服务中心人员
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+
+							<li class="">
+								<a href="sysuser-list.html">
+									<i class="menu-icon fa fa-caret-right"></i>
+									提成比例设置
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+							<li class="">
+								<a href="sysuser-list.html">
+									<i class="menu-icon fa fa-caret-right"></i>
+									返利设置
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+							<li class="">
+								<a href="sysuser-list.html">
+									<i class="menu-icon fa fa-caret-right"></i>
+									系统日志
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+							<li class="">
+								<a href="sys/role.html">
+									<i class="menu-icon fa fa-caret-right"></i>
+									设置权限
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+						</ul>
+					</li>
+
+					<li class="">
+						<a href="#" class="dropdown-toggle">
+							<i class="menu-icon fa fa-pencil-square-o"></i>
+							<span class="menu-text"> 客户管理 </span>
+
+							<b class="arrow fa fa-angle-down"></b>
+						</a>
+
+						<b class="arrow"></b>
+
+						<ul class="submenu">
+							<li class="">
+								<a href="vendorlist.html">
+									<i class="menu-icon fa fa-caret-right"></i>
+									我的买家客户
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+
+							<li class="">
+								<a href="vendorlist.html">
+									<i class="menu-icon fa fa-caret-right"></i>
+									我的卖家客户
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+
+							<li class="">
+								<a href="sysuser-list.html">
+									<i class="menu-icon fa fa-caret-right"></i>
+									划转买家用户
+								</a>
+								<b class="arrow"></b>
+							</li>
+							<li class="">
+								<a href="sysuser-list.html">
+									<i class="menu-icon fa fa-caret-right"></i>
+									划转卖家客户
+								</a>
+								<b class="arrow"></b>
+							</li>
+							<li class="">
+								<a href="sysuser-list.html">
+									<i class="menu-icon fa fa-caret-right"></i>
+									卖家客户分组查询
+								</a>
+								<b class="arrow"></b>
+							</li>
+						</ul>
+					</li>
+
+					<li class="">
+						<a href="#" class="dropdown-toggle">
+							<i class="menu-icon fa fa-pencil-square-o"></i>
+							<span class="menu-text"> 订单管理 </span>
+
+							<b class="arrow fa fa-angle-down"></b>
+						</a>
+
+						<b class="arrow"></b>
+
+						<ul class="submenu">
+							<li class="">
+								<a href="sysuser-list.html">
+									<i class="menu-icon fa fa-caret-right"></i>
+									配货单
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+
+							<li class="">
+								<a href="sysuser-list.html">
+									<i class="menu-icon fa fa-caret-right"></i>
+									物流单
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+
+						</ul>
+					</li>
+
+					<li class="">
+						<a href="widgets.html">
+							<i class="menu-icon fa fa-list-alt"></i>
+							<span class="menu-text"> 财务中心 </span>
+						</a>
+
+						<b class="arrow"></b>
+					</li>
+
+					<li class="">
+						<a href="#" class="dropdown-toggle">
+							<i class="menu-icon fa fa-file-o"></i>
+
+							<span class="menu-text">
+								Other Pages
+
+								<span class="badge badge-primary">5</span>
+							</span>
+
+							<b class="arrow fa fa-angle-down"></b>
+						</a>
+
+						<b class="arrow"></b>
+
+						<ul class="submenu">
+							<li class="">
+								<a href="faq.html">
+									<i class="menu-icon fa fa-caret-right"></i>
+									FAQ
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+
+							<li class="">
+								<a href="error-404.html">
+									<i class="menu-icon fa fa-caret-right"></i>
+									Error 404
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+
+							<li class="">
+								<a href="error-500.html">
+									<i class="menu-icon fa fa-caret-right"></i>
+									Error 500
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+
+							<li class="">
+								<a href="grid.html">
+									<i class="menu-icon fa fa-caret-right"></i>
+									Grid
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+
+							<li class="">
+								<a href="blank.html">
+									<i class="menu-icon fa fa-caret-right"></i>
+									Blank Page
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+						</ul>
+					</li>
+				</ul><!-- /.nav-list -->
+
+				<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+					<i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+				</div>
+
+				<script type="text/javascript">
+					try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
+				</script>
+			</div>
+
+			<div class="main-content">
+				<div class="main-content-inner">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="ace-icon fa fa-home home-icon"></i>
+								<a href="#">订单管理</a>
+							</li>
+
+							<li class="active">订单列表</li>
+						</ul><!-- /.breadcrumb -->
+
+						#parse("layout/topbtn.vm")<!-- /.nav-search -->
+					</div>
+
+					<div class="page-content">
+		
+						<div class="row">
+							<div class="col-xs-12">
+								<!--TAPBAR-->
+								<div class="tabbar order-tab">
+                                    <ul class="nav nav-tabs padding-12 tab-color-blue" id="myTab4">
+                                        <li>
+                                            <a data-toggle="tab" href="reward.html">提成设置</a>
+                                        </li>
+                                        <li>
+                                            <a data-toggle="tab" href="Rebate">返利设置</a>
+                                        </li>
+                                        <li>
+                                            <a data-toggle="tab" href="filter-client.html">客户过滤设置</a>
+                                        </li>
+                                        <li>
+                                            <a data-toggle="tab" href="setinvoice.html">发票设置</a>
+                                        </li>
+										<li class="active">
+                                            <a data-toggle="tab" href="category.html">品类归属设置</a>
+                                        </li>
+                                    </ul>
+                                </div>
+								<!-- PAGE CONTENT BEGINS -->
+
+								<div class="row">
+									<div class="col-xs-12">
+
+										<!-- div.dataTables_borderWrap -->
+										<div class="table-bar" id="first-table">
+											<table id="dynamic-table" class="contable border0">
+												<thead>
+													<tr class="bg-gray">
+														<th width="80" class="border0">所属大类</th>
+														<th class="border0">品类</th>
+														<th width="60" class="border0">操作</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr class="bolder-b-dashed">
+														<td><span class="bolder">建材</span></td>
+														<td>螺纹钢、盘螺、高线，普圆、硬线、优线、拉丝材</td>
+														<td>
+														  <div class="hidden-sm hidden-xs action-buttons">
+														
+														    <a class="green category-edit" href="#" title="编辑">
+														      <i class="ace-icon fa fa-pencil bigger-130"></i>
+														    </a>
+														    <a class="red category-del" href="#" title="删除">
+														      <i class="ace-icon fa fa-trash-o bigger-130"></i>
+														    </a>
+														
+														  </div>
+														
+														  <div class="hidden-md hidden-lg">
+														    <div class="inline pos-rel">
+														      <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown" data-position="auto">
+														        <i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
+														      </button>
+														
+														      <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+														        <li>
+														          <a href="#" class="category-edit" data-rel="tooltip" title="编辑">
+														            <span class="green">
+														              <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+														            </span>
+														          </a>
+														        </li>
+														        <li>
+														          <a href="#" class="category-del" data-rel="tooltip" title="删除">
+														            <span class="red">
+														              <i class="ace-icon fa fa-trash-o bigger-130"></i>
+														            </span>
+														          </a>
+														        </li>
+														
+														      </ul>
+														    </div>
+														  </div>
+														</td>
+													</tr>
+													<tr class="bolder-b-dashed">
+														<td><span class="bolder">热卷</span></td>
+														<td>热轧卷，热轧开平板、热轧盒板、低合金卷，低合金开平板，酸洗板（卷），大梁卷，热轧带钢，船卷、容器卷、电工钢卷</td>
+														<td>
+														  <div class="hidden-sm hidden-xs action-buttons">
+														
+														    <a class="green category-edit" href="#" title="编辑">
+														      <i class="ace-icon fa fa-pencil bigger-130"></i>
+														    </a>
+														    <a class="red category-del" href="#" title="删除">
+														      <i class="ace-icon fa fa-trash-o bigger-130"></i>
+														    </a>
+														
+														  </div>
+														
+														  <div class="hidden-md hidden-lg">
+														    <div class="inline pos-rel">
+														      <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown" data-position="auto">
+														        <i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
+														      </button>
+														
+														      <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+														        <li>
+														          <a href="#" class="category-edit" data-rel="tooltip" title="编辑">
+														            <span class="green">
+														              <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+														            </span>
+														          </a>
+														        </li>
+														        <li>
+														          <a href="#" class="category-del" data-rel="tooltip" title="删除">
+														            <span class="red">
+														              <i class="ace-icon fa fa-trash-o bigger-130"></i>
+														            </span>
+														          </a>
+														        </li>
+														
+														      </ul>
+														    </div>
+														  </div>
+														</td>
+													</tr>
+													<tr class="bolder-b-dashed">
+														<td><span class="bolder">中厚板</span></td>
+														<td>普板、厚板、低合金板、热轧正平板、锰板、花纹板、大梁板、船板、锅炉板、碳板、容器板、桥梁板翼缘板</td>
+														<td>
+														  <div class="hidden-sm hidden-xs action-buttons">
+														
+														    <a class="green category-edit" href="#" title="编辑">
+														      <i class="ace-icon fa fa-pencil bigger-130"></i>
+														    </a>
+														    <a class="red category-del" href="#" title="删除">
+														      <i class="ace-icon fa fa-trash-o bigger-130"></i>
+														    </a>
+														
+														  </div>
+														
+														  <div class="hidden-md hidden-lg">
+														    <div class="inline pos-rel">
+														      <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown" data-position="auto">
+														        <i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
+														      </button>
+														
+														      <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+														        <li>
+														          <a href="#" class="category-edit" data-rel="tooltip" title="编辑">
+														            <span class="green">
+														              <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+														            </span>
+														          </a>
+														        </li>
+														        <li>
+														          <a href="#" class="category-del" data-rel="tooltip" title="删除">
+														            <span class="red">
+														              <i class="ace-icon fa fa-trash-o bigger-130"></i>
+														            </span>
+														          </a>
+														        </li>
+														
+														      </ul>
+														    </div>
+														  </div>
+														</td>
+													</tr>
+													<tr class="bolder-b-dashed">
+														<td><span class="bolder">冷轧</span></td>
+														<td>冷轧板、冷轧卷、冷轧深冲、冷轧带钢、冷轧硬卷、冷轧深冲卷</td>
+														<td>
+														  <div class="hidden-sm hidden-xs action-buttons">
+														
+														    <a class="green" href="#" title="编辑">
+														      <i class="ace-icon fa fa-pencil bigger-130"></i>
+														    </a>
+														    <a class="red" href="#" title="删除">
+														      <i class="ace-icon fa fa-trash-o bigger-130"></i>
+														    </a>
+														
+														  </div>
+														
+														  <div class="hidden-md hidden-lg">
+														    <div class="inline pos-rel">
+														      <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown" data-position="auto">
+														        <i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
+														      </button>
+														
+														      <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+														        <li>
+														          <a href="#" class="tooltip-success" data-rel="tooltip" title="编辑">
+														            <span class="green">
+														              <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+														            </span>
+														          </a>
+														        </li>
+														        <li>
+														          <a href="#" class="tooltip-success" data-rel="tooltip" title="删除">
+														            <span class="red">
+														              <i class="ace-icon fa fa-trash-o bigger-130"></i>
+														            </span>
+														          </a>
+														        </li>
+														
+														      </ul>
+														    </div>
+														  </div>
+														</td>
+													</tr>
+													<tr class="bolder-b-dashed">
+														<td><span class="bolder">镀锌</span></td>
+														<td>热镀锌板、彩涂板、镀锡板、电镀锌板、冷基镀锌板、镀铝锌板、镀锌扁钢、镀锌角钢、镀锌工字钢、镀锌H型钢、镀锌管、镀锌方矩管、涂塑钢管</td>
+														<td>
+														  <div class="hidden-sm hidden-xs action-buttons">
+														
+														    <a class="green category-edit" href="#" title="编辑">
+														      <i class="ace-icon fa fa-pencil bigger-130"></i>
+														    </a>
+														    <a class="red category-del" href="#" title="删除">
+														      <i class="ace-icon fa fa-trash-o bigger-130"></i>
+														    </a>
+														
+														  </div>
+														
+														  <div class="hidden-md hidden-lg">
+														    <div class="inline pos-rel">
+														      <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown" data-position="auto">
+														        <i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
+														      </button>
+														
+														      <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+														        <li>
+														          <a href="#" class="category-edit" data-rel="tooltip" title="编辑">
+														            <span class="green">
+														              <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+														            </span>
+														          </a>
+														        </li>
+														        <li>
+														          <a href="#" class="category-del" data-rel="tooltip" title="删除">
+														            <span class="red">
+														              <i class="ace-icon fa fa-trash-o bigger-130"></i>
+														            </span>
+														          </a>
+														        </li>
+														
+														      </ul>
+														    </div>
+														  </div>
+														</td>
+													</tr>
+													<tr class="bolder-b-dashed">
+														<td><span class="bolder">型钢</span></td>
+														<td>工字钢，角钢、槽钢、H型钢、轨道钢、扁钢、方钢、异型钢、六角钢</td>
+														<td>
+														  <div class="hidden-sm hidden-xs action-buttons">
+														
+														    <a class="green category-edit" href="#" title="编辑">
+														      <i class="ace-icon fa fa-pencil bigger-130"></i>
+														    </a>
+														    <a class="red category-del" href="#" title="删除">
+														      <i class="ace-icon fa fa-trash-o bigger-130"></i>
+														    </a>
+														
+														  </div>
+														
+														  <div class="hidden-md hidden-lg">
+														    <div class="inline pos-rel">
+														      <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown" data-position="auto">
+														        <i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
+														      </button>
+														
+														      <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+														        <li>
+														          <a href="#" class="category-edit" data-rel="tooltip" title="编辑">
+														            <span class="green">
+														              <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+														            </span>
+														          </a>
+														        </li>
+														        <li>
+														          <a href="#" class="category-del" data-rel="tooltip" title="删除">
+														            <span class="red">
+														              <i class="ace-icon fa fa-trash-o bigger-130"></i>
+														            </span>
+														          </a>
+														        </li>
+														
+														      </ul>
+														    </div>
+														  </div>
+														</td>
+													</tr>
+													<tr class="bolder-b-dashed">
+														<td><span class="bolder">管材</span></td>
+														<td>无缝管、焊管、螺旋管、方矩管、锅炉管、流体管、合金管、石油管、热扩管、直缝管、支架管、轴承管、结构管、化肥用管、精密无缝管、地质管、管线管</td>
+														<td>
+														  <div class="hidden-sm hidden-xs action-buttons">
+														
+														    <a class="green category-edit" href="#" title="编辑">
+														      <i class="ace-icon fa fa-pencil bigger-130"></i>
+														    </a>
+														    <a class="red category-del" href="#" title="删除">
+														      <i class="ace-icon fa fa-trash-o bigger-130"></i>
+														    </a>
+														
+														  </div>
+														
+														  <div class="hidden-md hidden-lg">
+														    <div class="inline pos-rel">
+														      <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown" data-position="auto">
+														        <i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
+														      </button>
+														
+														      <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+														        <li>
+														          <a href="#" class="category-edit" data-rel="tooltip" title="编辑">
+														            <span class="green">
+														              <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+														            </span>
+														          </a>
+														        </li>
+														        <li>
+														          <a href="#" class="category-del" data-rel="tooltip" title="删除">
+														            <span class="red">
+														              <i class="ace-icon fa fa-trash-o bigger-130"></i>
+														            </span>
+														          </a>
+														        </li>
+														
+														      </ul>
+														    </div>
+														  </div>
+														</td>
+													</tr>
+													<tr class="bolder-b-dashed">
+														<td><span class="bolder">优特钢</span></td>
+														<td>碳结板、高强钢、耐磨钢、（无）取向硅钢、钢瓶板、弹簧钢板、耐磨钢板、耐腐蚀钢板、模具钢、集装箱板、钢绞线、碳结圆、合结圆、齿轮钢、工具钢、冷拉元、易切削钢、冷镦钢、合金钢</td>
+														<td>
+														  <div class="hidden-sm hidden-xs action-buttons">
+														
+														    <a class="green category-edit" href="#" title="编辑">
+														      <i class="ace-icon fa fa-pencil bigger-130"></i>
+														    </a>
+														    <a class="red category-del" href="#" title="删除">
+														      <i class="ace-icon fa fa-trash-o bigger-130"></i>
+														    </a>
+														
+														  </div>
+														
+														  <div class="hidden-md hidden-lg">
+														    <div class="inline pos-rel">
+														      <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown" data-position="auto">
+														        <i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
+														      </button>
+														
+														      <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+														        <li>
+														          <a href="#" class="category-edit" data-rel="tooltip" title="编辑">
+														            <span class="green">
+														              <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+														            </span>
+														          </a>
+														        </li>
+														        <li>
+														          <a href="#" class="category-del" data-rel="tooltip" title="删除">
+														            <span class="red">
+														              <i class="ace-icon fa fa-trash-o bigger-130"></i>
+														            </span>
+														          </a>
+														        </li>
+														
+														      </ul>
+														    </div>
+														  </div>
+														</td>
+													</tr>
+													<tr class="bolder-b-dashed">
+														<td><span class="bolder">不锈钢</span></td>
+														<td>热轧不锈钢、冷轧不锈钢、不锈钢圆钢、不锈钢线材、不锈钢槽钢、不锈钢角钢、不锈钢扁钢、不锈钢工字钢、不锈钢管</td>
+														<td>
+														  <div class="hidden-sm hidden-xs action-buttons">
+														
+														    <a class="green category-edit" href="#" title="编辑">
+														      <i class="ace-icon fa fa-pencil bigger-130"></i>
+														    </a>
+														    <a class="red category-del" href="#" title="删除">
+														      <i class="ace-icon fa fa-trash-o bigger-130"></i>
+														    </a>
+														
+														  </div>
+														
+														  <div class="hidden-md hidden-lg">
+														    <div class="inline pos-rel">
+														      <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown" data-position="auto">
+														        <i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
+														      </button>
+														
+														      <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+														        <li>
+														          <a href="#" class="category-edit" data-rel="tooltip" title="编辑">
+														            <span class="green">
+														              <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+														            </span>
+														          </a>
+														        </li>
+														        <li>
+														          <a href="#" class="category-del" data-rel="tooltip" title="删除">
+														            <span class="red">
+														              <i class="ace-icon fa fa-trash-o bigger-130"></i>
+														            </span>
+														          </a>
+														        </li>
+														
+														      </ul>
+														    </div>
+														  </div>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+										<!--.recordbar-->
+										<div class="btn-bar">
+											<a type="button" href="category-edit.html" title="添加" class="btn btn-info btn-sm">添加</a>
+										</div>										
+										<!--/.recordbar-->
+									</div>
+								</div>
+
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div>
+			</div><!-- /.main-content -->
+
+			<div class="footer">
+				<div class="footer-inner">
+					<div class="footer-content">
+						<span class="bigger-120">
+							<span class="blue bolder">Ace</span>
+							Application &copy; 2013-2014
+						</span>
+
+						&nbsp; &nbsp;
+						<span class="action-buttons">
+							<a href="#">
+								<i class="ace-icon fa fa-twitter-square light-blue bigger-150"></i>
+							</a>
+
+							<a href="#">
+								<i class="ace-icon fa fa-facebook-square text-primary bigger-150"></i>
+							</a>
+
+							<a href="#">
+								<i class="ace-icon fa fa-rss-square orange bigger-150"></i>
+							</a>
+						</span>
+					</div>
+				</div>
+			</div>
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+
+		<!--[if !IE]> -->
+		<script src="../../theme/default/js/jquery.2.1.1.min.js"></script>
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+		<script src="../../theme/default/js/jquery.1.11.1.min.js"></script>
+		<![endif]-->
+
+		<!--[if !IE]> -->
+		<script type="text/javascript">
+			window.jQuery || document.write("<script src='../../theme/default/js/jquery.min.js'>"+"<"+"/script>");
+		</script>
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+<script type="text/javascript">
+ window.jQuery || document.write("<script src='assets/js/jquery1x.min.js'>"+"<"+"/script>");
+</script>
+<![endif]-->
+		<script type="text/javascript">
+			if('ontouchstart' in document.documentElement) document.write("<script src='../../theme/default/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+		</script>
+		<script src="../../theme/default/js/bootstrap.min.js"></script>
+
+		<!-- page specific plugin scripts -->
+
+		<!-- ace scripts -->
+		<script src="../../theme/default/js/ace-elements.min.js"></script>
+		<script src="../../theme/default/js/ace.min.js"></script>
+        <script src="../../theme/default/js/bootbox.min.js"></script>
+
+		<!-- inline scripts related to this page -->
+        <script type="text/javascript" src="../../js/global.js"></script>
+        <script type="text/javascript">
+        	$(".category-edit").click(function(){
+        		location.href="category-edit.html";
+        	});
+        </script>
+	</body>
+</html>

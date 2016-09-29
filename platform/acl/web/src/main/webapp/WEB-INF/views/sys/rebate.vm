@@ -1,0 +1,83 @@
+#set($layout="/sys/default.vm")
+<div class="breadcrumbs" id="breadcrumbs">
+	<script type="text/javascript">
+		try {
+			ace.settings.check('breadcrumbs', 'fixed')
+		} catch (e) {
+		}
+	</script>
+
+	<ul class="breadcrumb">
+        <li><i class="ace-icon fa fa-home home-icon"></i>系统管理</li>
+        <li>系统设置</li>
+        <li class="active">返利设置</li>
+	</ul>
+	<!-- /.breadcrumb -->
+
+	#parse("layout/topbtn.vm")
+	<!-- /.nav-search -->
+</div>
+
+<div class="page-content">
+
+	<div class="row">
+		<div class="col-xs-12">
+            <!--TAPBAR-->
+			#parse("sys/systemmenu.vm")
+            <!-- PAGE CONTENT BEGINS -->
+
+			<div class="row">
+				<div class="col-xs-12">
+
+					<!-- div.dataTables_borderWrap -->
+					<div class="table-bar" id="first-table">
+								<form method="post" id="saveRebate" action="$link.getContextPath()/rebate/saveRebate.html">
+						<table id="dynamic-table" class="contable border0">
+							<thead>
+							
+								<tr class="bg-gray">
+									<th class="border0">品类</th>
+									<th class="border0">返利（元/吨）</th>
+								</tr>
+							</thead>
+							<tbody>
+							
+							#foreach( $rebateDto in $rebate)
+								<tr class="bolder-b-dashed">
+									<td>$rebateDto.categoryName</td>
+									<input type="hidden" name="cat_uuid" value="$rebateDto.categoryUuid"/>
+									<td><input type="text"  name="rebateRole" value="$rebateDto.rebateRole" class="c-text"  must="1" verify="numeric""/></td>
+								</tr>			  
+						    #end	
+						   
+						   #foreach( $group in $init_rebate)
+								<tr class="bolder-b-dashed">
+									<td>$group.name</td>
+									<input type="hidden" name="cat_uuid" value="$group.uuid"/>
+									<td><input type="text"  name="rebateRole" value="0" class="c-text"  must="1" verify="numeric""/></td>
+								</tr>			  
+						    #end	 					
+								
+							</tbody>
+						</table>
+							</form>								
+					</div>
+					<!--.recordbar-->
+					<div class="btn-bar">
+						<button type="button" id="sure" class="btn btn-info btn-sm">确定</button>
+						<span class="warning-info">确认提交后,下月1号00:00:00开始生效</span>
+					</div>
+					<!--/.recordbar-->
+				</div>
+			</div>
+
+		</div>
+		<!-- /.col -->
+	</div>
+	<!-- /.row -->
+</div>
+<!-- /.page-content -->
+<script type="text/javascript" src="$link.getContextPath()/js/views/rebate/rebate.js"></script>
+<script type="text/javascript">
+	$("#saveRebate").verifyForm();
+</script>

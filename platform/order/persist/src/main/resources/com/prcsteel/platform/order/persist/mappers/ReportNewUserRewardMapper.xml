@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.order.persist.dao.ReportNewUserRewardDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.order.model.model.ReportNewUserReward" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="add_date" property="addDate" jdbcType="TIMESTAMP" />
+    <result column="manager_id" property="managerId" jdbcType="BIGINT" />
+    <result column="manager_name" property="managerName" jdbcType="VARCHAR" />
+    <result column="org_id" property="orgId" jdbcType="BIGINT" />
+    <result column="org_name" property="orgName" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="active" property="active" jdbcType="BIT" />
+    <result column="is_deleted" property="isDeleted" jdbcType="BIT" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+    <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+    <result column="add_new_buyer" property="addNewBuyer" jdbcType="BIGINT" />
+    <result column="add_new_seller" property="addNewSeller" jdbcType="BIGINT" />
+    <result column="seller_reward_amount" property="sellerRewardAmount" jdbcType="DECIMAL" />
+    <result column="buyer_reward_amount" property="buyerRewardAmount" jdbcType="DECIMAL" />
+    <result column="buyer_reward_role" property="buyerRewardRole" jdbcType="DECIMAL" />
+    <result column="seller_reward_role" property="sellerRewardRole" jdbcType="DECIMAL" />
+    <result column="open_order_date" property="openOrderDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, add_date, manager_id, manager_name, org_id, org_name, created, active, is_deleted, created_by,
+    last_updated, last_updated_by, modification_number, row_id, add_new_buyer, add_new_seller, 
+    seller_reward_amount, buyer_reward_amount, buyer_reward_role, seller_reward_role,open_order_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from report_new_user_reward
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from report_new_user_reward
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.prcsteel.platform.order.model.model.ReportNewUserReward" >
+    insert into report_new_user_reward (id, add_date, manager_id, 
+      manager_name, org_id, org_name, 
+      created, active, is_deleted, created_by,
+      last_updated, last_updated_by, modification_number, 
+      row_id, add_new_buyer, add_new_seller, 
+      seller_reward_amount, buyer_reward_amount, 
+      buyer_reward_role, seller_reward_role, open_order_date)
+    values (#{id,jdbcType=BIGINT}, #{addDate,jdbcType=TIMESTAMP}, #{managerId,jdbcType=BIGINT}, 
+      #{managerName,jdbcType=VARCHAR}, #{orgId,jdbcType=BIGINT}, #{orgName,jdbcType=VARCHAR}, 
+      #{created,jdbcType=TIMESTAMP}, #{active,jdbcType=BIT},#{isDeleted,jdbcType=BIT}, #{createdBy,jdbcType=VARCHAR},
+      #{lastUpdated,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}, #{modificationNumber,jdbcType=INTEGER}, 
+      #{rowId,jdbcType=VARCHAR}, #{addNewBuyer,jdbcType=BIGINT}, #{addNewSeller,jdbcType=BIGINT},
+      #{sellerRewardAmount,jdbcType=DECIMAL}, #{buyerRewardAmount,jdbcType=DECIMAL}, 
+      #{buyerRewardRole,jdbcType=DECIMAL}, #{sellerRewardRole,jdbcType=DECIMAL}, #{openOrderDate,jdbcType=TIMESTAMP},)
+  </insert>
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.order.model.model.ReportNewUserReward" >
+    insert into report_new_user_reward
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="addDate != null" >
+        add_date,
+      </if>
+      <if test="managerId != null" >
+        manager_id,
+      </if>
+      <if test="managerName != null" >
+        manager_name,
+      </if>
+      <if test="orgId != null" >
+        org_id,
+      </if>
+      <if test="orgName != null" >
+        org_name,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="active != null" >
+        active,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by,
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number,
+      </if>
+      <if test="rowId != null" >
+        row_id,
+      </if>
+      <if test="addNewBuyer != null" >
+        add_new_buyer,
+      </if>
+      <if test="addNewSeller != null" >
+        add_new_seller,
+      </if>
+      <if test="sellerRewardAmount != null" >
+        seller_reward_amount,
+      </if>
+      <if test="buyerRewardAmount != null" >
+        buyer_reward_amount,
+      </if>
+      <if test="buyerRewardRole != null" >
+        buyer_reward_role,
+      </if>
+      <if test="sellerRewardRole != null" >
+        seller_reward_role,
+      </if>
+      <if test="openOrderDate != null" >
+        open_order_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="addDate != null" >
+        #{addDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="managerId != null" >
+        #{managerId,jdbcType=BIGINT},
+      </if>
+      <if test="managerName != null" >
+        #{managerName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null" >
+        #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="orgName != null" >
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="active != null" >
+        #{active,jdbcType=BIT},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="addNewBuyer != null" >
+        #{addNewBuyer,jdbcType=BIGINT},
+      </if>
+      <if test="addNewSeller != null" >
+        #{addNewSeller,jdbcType=BIGINT},
+      </if>
+      <if test="sellerRewardAmount != null" >
+        #{sellerRewardAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="buyerRewardAmount != null" >
+        #{buyerRewardAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="buyerRewardRole != null" >
+        #{buyerRewardRole,jdbcType=DECIMAL},
+      </if>
+      <if test="sellerRewardRole != null" >
+        #{sellerRewardRole,jdbcType=DECIMAL},
+      </if>
+      <if test="openOrderDate != null" >
+        #{openOrderDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.order.model.model.ReportNewUserReward" >
+    update report_new_user_reward
+    <set >
+      <if test="addDate != null" >
+        add_date = #{addDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="managerId != null" >
+        manager_id = #{managerId,jdbcType=BIGINT},
+      </if>
+      <if test="managerName != null" >
+        manager_name = #{managerName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null" >
+        org_id = #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="orgName != null" >
+        org_name = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number = #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        row_id = #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="addNewBuyer != null" >
+        add_new_buyer = #{addNewBuyer,jdbcType=BIGINT},
+      </if>
+      <if test="addNewSeller != null" >
+        add_new_seller = #{addNewSeller,jdbcType=BIGINT},
+      </if>
+      <if test="sellerRewardAmount != null" >
+        seller_reward_amount = #{sellerRewardAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="buyerRewardAmount != null" >
+        buyer_reward_amount = #{buyerRewardAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="buyerRewardRole != null" >
+        buyer_reward_role = #{buyerRewardRole,jdbcType=DECIMAL},
+      </if>
+      <if test="sellerRewardRole != null" >
+        seller_reward_role = #{sellerRewardRole,jdbcType=DECIMAL},
+      </if>
+      <if test="openOrderDate != null" >
+        open_order_date = #{openOrderDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.order.model.model.ReportNewUserReward" >
+    update report_new_user_reward
+    set add_date = #{addDate,jdbcType=TIMESTAMP},
+      manager_id = #{managerId,jdbcType=BIGINT},
+      manager_name = #{managerName,jdbcType=VARCHAR},
+      org_id = #{orgId,jdbcType=BIGINT},
+      org_name = #{orgName,jdbcType=VARCHAR},
+      created = #{created,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=BIT},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      modification_number = #{modificationNumber,jdbcType=INTEGER},
+      row_id = #{rowId,jdbcType=VARCHAR},
+      add_new_buyer = #{addNewBuyer,jdbcType=BIGINT},
+      add_new_seller = #{addNewSeller,jdbcType=BIGINT},
+      seller_reward_amount = #{sellerRewardAmount,jdbcType=DECIMAL},
+      buyer_reward_amount = #{buyerRewardAmount,jdbcType=DECIMAL},
+      buyer_reward_role = #{buyerRewardRole,jdbcType=DECIMAL},
+      seller_reward_role = #{sellerRewardRole,jdbcType=DECIMAL},
+      open_order_date = #{openOrderDate,jdbcType=TIMESTAMP},
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <resultMap id="ReportNewUserReward" type="com.prcsteel.platform.order.model.dto.ReportNewUserRewardDto">
+        <id column="id" property="id" jdbcType="BIGINT"/>      
+      	<result column="new_seller" property="newSeller" jdbcType="DECIMAL"/>
+      	<result column="new_buyer" property="newBuyer" jdbcType="DECIMAL"/>
+        <result column="seller_amount" property="sellerAmount" jdbcType="DECIMAL"/>
+        <result column="buyer_amount" property="buyerAmount" jdbcType="DECIMAL"/>
+    </resultMap>
+  
+  	  <select id="queryReportNewUserReward" resultMap="ReportNewUserReward" parameterType="map">
+       select 
+		id,
+		sum(add_new_seller) as new_seller,
+		sum(add_new_buyer) as new_buyer,
+		sum(seller_reward_amount) as seller_amount,
+		sum(buyer_reward_amount) as buyer_amount
+		from report_new_user_reward       	
+			where add_date between #{start,jdbcType=TIMESTAMP} and #{end,jdbcType=TIMESTAMP} 
+			and is_deleted=0 and active = '1'
+            and org_id in
+			  <foreach item="orgIds" index="index" collection="list" open="(" separator="," close=")">
+            #{org_ids}
+        	</foreach>       
+    </select>
+    
+     <select id="queryReportNewUserRewardByManager" resultMap="ReportNewUserReward" parameterType="map">
+       select 
+		id,
+		sum(add_new_seller) as new_seller,
+		sum(add_new_buyer) as new_buyer,
+		sum(seller_reward_amount) as seller_amount,
+		sum(buyer_reward_amount) as buyer_amount
+		from report_new_user_reward       	
+			where add_date between #{start,jdbcType=TIMESTAMP} and #{end,jdbcType=TIMESTAMP} 
+			and is_deleted=0  and active = '1'and manager_id=#{managerId,jdbcType=BIGINT}
+    </select>
+
+   <!-- 查询服务中心买家卖家新增用户数提成信息 -->
+   <select id="queryNewUserRewardByOrgId" resultMap="BaseResultMap" parameterType="com.prcsteel.platform.order.model.query.ReportRewardQuery">
+      select t1.org_id,sum(case when t1.add_new_seller > 0 then 1 else 0 end) as add_new_seller,sum( case when t1.add_new_buyer > 0 then 1 else 0 end) as add_new_buyer,
+      sum(t1.seller_reward_amount) as seller_reward_amount,
+      sum(t1.buyer_reward_amount) as buyer_reward_amount,
+      MAX(t1.buyer_reward_role) as buyer_reward_role,
+      MAX(t1.seller_reward_role) as seller_reward_role
+      from report_new_user_reward  t1
+      where 1=1
+      and extract(YEAR_MONTH from t1.add_date)= #{month,jdbcType=VARCHAR}
+      and t1.is_deleted='0' and t1.active = '1'
+     <if test="orgId != null and orgId > 0">
+       and t1.org_id = #{orgId,jdbcType=BIGINT}
+     </if>
+      group by t1.org_id
+   </select>
+
+   <!-- 查询交易员买家卖家新增用户数提成信息 -->
+   <select id="queryManagerNewUserReward" resultMap="BaseResultMap" parameterType="com.prcsteel.platform.order.model.query.ReportRewardQuery">
+     select t1.manager_id,sum(case when t1.add_new_seller > 0 then 1 else 0 end) as add_new_seller,sum( case when t1.add_new_buyer > 0 then 1 else 0 end) as add_new_buyer,
+     sum(t1.seller_reward_amount) as seller_reward_amount,
+     sum(t1.buyer_reward_amount) as buyer_reward_amount,
+     MAX(t1.buyer_reward_role) as buyer_reward_role,
+     MAX(t1.seller_reward_role) as seller_reward_role
+     from report_new_user_reward  t1
+     where is_deleted != 1 
+     <if test="orgId != null">
+       and t1.org_id = #{orgId,jdbcType=BIGINT}
+     </if>
+     <if test="userIdList != null">
+       AND t1.manager_id IN
+       <foreach collection="userIdList" item="userId" open="(" separator="," close=")">
+         #{userId}
+       </foreach>
+     </if>
+     and extract(YEAR_MONTH from t1.add_date) = #{month,jdbcType=VARCHAR}
+     and t1.is_deleted='0' and t1.active = '1'
+     <if test="managerName != null and managerName != '' ">
+       and t1.manager_name LIKE #{managerName,jdbcType=VARCHAR}
+     </if>
+     group by t1.manager_id
+   </select>
+
+  <select id="queryByAccountId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from report_new_user_reward
+    where (add_new_buyer = #{accountId} or add_new_seller = #{accountId}) and active = '1' and is_deleted != 1
+  </select>
+
+	<select id="queryByAccountAndOpenDate" resultMap="BaseResultMap" parameterType="com.prcsteel.platform.order.model.query.ReportRewardQuery">
+	    select
+	    <include refid="Base_Column_List" />
+	    from report_new_user_reward
+	    <where>
+	    	is_deleted != 1 and active = 1
+	    	<if test="accountId!=null">
+	    		and (add_new_buyer = #{accountId,jdbcType=BIGINT} or add_new_seller = #{accountId,jdbcType=BIGINT})
+	    	</if>
+	    	<if test="openOrderDate!=null">
+	    		and open_order_date <![CDATA[ > ]]> #{openOrderDate,jdbcType=TIMESTAMP} 
+	    	</if>
+	    </where>
+	</select>
+
+  <update id="deleteByAccountId">
+      update report_new_user_reward
+      set add_date = now(),
+      is_deleted = 1,
+      last_updated = now(),
+      <if test="lastUpdatedBy!=null">
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      modification_number = #{oldModificationNumber} + 1
+    where (add_new_buyer = #{accountId} or add_new_seller = #{accountId}) and modification_number = #{oldModificationNumber} and active = 1 and is_deleted = 0
+  </update>
+
+</mapper>

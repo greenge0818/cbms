@@ -1,0 +1,158 @@
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            银票管理
+        </li>
+        <li class="active">
+            新增银票充值
+        </li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+        #parse("layout/topbtn.vm")<!-- /.nav-search -->
+</div>
+
+#set($disabled = true)
+#if($shiro.hasPermission("acceptdraft:create:add")) #set($disabled = false)#{end}
+#if($shiro.hasPermission("acceptdraft:create:submit"))#set($disabled = false)#{end}
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="clearfix">
+                <form action="$link.getContextPath()/acceptdraft/save.html" method="POST"
+                      enctype="multipart/form-data" id="form">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <!-- div.table-bar -->
+                            <div class="col-sm-12">
+                                <div class="table-bar col-sm-5 col-md-7 col-lg-3 ">
+                                    <input type="hidden" name="id" value="$!acceptdraft.id"/>
+                                    <input type="hidden" name="operation"/>
+                                    <label> 服务中心：　
+                                        <select name="orgId" id="orgId" value="$!acceptdraft.orgId">
+                                            <option value="8" #if($!acceptdraft.orgId == 8)selected="selected" #end>天津服务中心</option>
+                                            <option value="9" #if($!acceptdraft.orgId == 9)selected="selected" #end>武汉服务中心</option>
+                                            <option value="10" #if($!acceptdraft.orgId == 10)selected="selected" #end>杭州服务中心</option>
+                                            <option value="11" #if($!acceptdraft.orgId == 11)selected="selected" #end>无锡服务中心</option>
+
+                                        </select>
+                                    </label>
+                                    <label> 客户名称：　
+                                        <input #if($disabled) disabled#{end} type="text" style="width: 220px" value="$!acceptdraft.accountName" name="accountName" id="accountName" search="account" accounttype="buyer" must="1"/>
+                                    </label>
+                                    <label> 银票票号：　
+                                        <input #if($disabled) disabled#{end} type="text" style="width: 220px" value="$!acceptdraft.code" name="code" must="1"/>
+                                    </label>
+                                    <label> 付款行全称：
+                                        <input #if($disabled) disabled#{end} type="text" style="width: 220px" value="$!acceptdraft.acceptanceBankFullName" name="acceptanceBankFullName" must="1"/>
+                                    </label>
+                                    <label> 出票金额：　
+                                        <input type="hidden" name="amount" must="1" verify="rmb"/>
+                                        <input #if($disabled) disabled#{end} type="text"  style="width: 220px" value="$NumberTool.toThousandth($!acceptdraft.amount)" id="amountShow"/>&nbsp;元
+                                    </label>
+                                    <label> 银票到期日：
+                                        <input #if($disabled) disabled#{end} type="text"  style="width: 220px" value="$!date.format('yyyy-MM-dd',$!acceptdraft.endDate)" onFocus="WdatePicker({maxDate:'%y-%M-{%d+184} %H:%m:%s'})" name="endDate" must="1"/>
+                                    </label>
+                                    <label> 贴现率：　　
+                                        <input #if($disabled) disabled#{end} type="text" style="width: 220px" value="$!NumberTool.format("#0.000000", $!acceptdraft.discountRate)" name="discountRate" must="1" verify="weight" msg="贴现率最多6位小数"/>&nbsp;‰
+                                    </label>
+                                    <label> 贴现率成本：
+                                        <input #if($disabled) disabled#{end} type="text" style="width: 220px" value="$!NumberTool.format("#0.000000", $!acceptdraft.discountRateBase)" name="discountRateBase" must="1" verify="weight" msg="贴现率最多6位小数"/>&nbsp;‰
+                                    </label>
+                                    <div class="clearfix btn-bar text-left">
+                                        <a id="return">返回</a>&nbsp;
+                                        #if($shiro.hasPermission("acceptdraft:create:add"))
+                                            <button class="btn btn-primary btn-sm" type="button" id="save">保存</button>
+                                        #end
+                                        #if($shiro.hasPermission("acceptdraft:create:submit"))
+                                            <button class="btn btn-primary btn-sm" type="button" id="submit">提交审核</button>
+                                        #end
+                                    </div>
+                                    <div class="img-sliders-nav clearfix" id="img_pics">
+                                        #foreach($attachment in $attachments)
+                                        <span class="pull-left pos-rel"><a href="javascript:;">
+                                            <img #if($attachment.id)id="img$attachment.id" #end  #if($attachment.url)src="$link.getContextPath()/common/getfile.html?key=$attachment.url" #end alt="发票" width="100px" height="70px" style="border: 2px solid rgb(51, 122, 183);"/>
+                                        </a>
+                                            #if($shiro.hasPermission("acceptdraft:create:add"))
+                                             <a href="javascript:;" class="pos-abs fa fa-close red" style="right:5px;top:5px;z-index: 99;" #if($attachment.id)id="$attachment.id" #end></a>
+                                            #end
+                                        </span>
+                                        #end
+                                        <input id="imgsId" name="imgsId" type="hidden" value="">
+                                    </div>
+
+                                </div>
+                                <div class="table-bar col-sm-7 col-md-7 col-lg-9">
+                                    <label>上传银行汇票：（<a href="javascript:" id="showEx">查看示例</a>）
+                                        <input id="pic_amount" name="pic_amount" type="hidden" value="$attachments.size()"><a class="button btn-sm btn-info">点击上传图片</a>
+                                        <input id="pic" name="pic_accept_draft" type="file" multiple="multiple" value="" onchange="preImg(this.id,'imgsId');" #if($attachments)#else must="1"#end />
+                                        请上传银票正面扫描件或数码照，支持jpeg、jpg、png、gif 图片格式，小于2M；
+                                        <a href="javascript:" title="旋转" class="revolveImg button btn-sm btn-info">旋转图片</a>
+                                    </label>
+                                    <div class="table-bar pull-left pos-rel" style="min-height:770px;margin-left:100px;background:#ccc;">
+                                        <div>银票图片：</div>
+                                        <img id="turnImg" #if($attachments[0].url)src="$link.getContextPath()/common/getfile.html?key=$attachments[0].url" #end alt="" rel="0" width="745" height="428" style="margin-top:160px;margin-bottom:100px;" />
+                                        <a href="javascript:;" class="sliders-prve"></a>
+                                        <a href="javascript:;" class="sliders-next"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div><!-- /.page-content -->
+
+<script type="text/javascript">
+    var picAmount =  parseInt($("#pic_amount").val(),10);
+    var ids = '';//用来保存删除图片的id
+    /**
+     * 从 file 域获取 本地图片 url
+     */
+    function getFileUrl(sourceId) {
+        var url;
+        if (navigator.userAgent.indexOf("MSIE")>=1) { // IE
+            url = document.getElementById(sourceId).value;
+        } else if(navigator.userAgent.indexOf("Firefox")>0) { // Firefox
+            url = document.getElementById(sourceId).files;
+        } else if(navigator.userAgent.indexOf("Chrome")>0) { // Chrome
+            // url = window.URL.createObjectURL(document.getElementById(sourceId).files.item(0));
+            url = document.getElementById(sourceId).files;
+        }
+
+        return url;
+    }
+
+    /**
+     * 将本地图片 显示到浏览器上
+     */
+    function preImg(sourceId, targetId) {
+        var url = getFileUrl(sourceId);
+        var filelist = getFileUrl(sourceId);
+        var imgPre = document.getElementById(targetId);
+        var htmlStr = '';
+        $(imgPre).nextAll(".newAddPic").remove();
+        for(var i=0;i<filelist.length;i++){
+
+            htmlStr += '<span class="newAddPic pull-left pos-rel"><a href="javascript:;"><img src="'+window.URL.createObjectURL(filelist.item(i))+'" alt="发票" width="100px" height="70px" style="border: 2px solid rgb(51, 122, 183);"/></a></span>'
+        }
+        $(imgPre).after(htmlStr);
+        document.getElementById("turnImg").src = window.URL.createObjectURL(filelist.item(0));
+    }
+</script>
+<script src="$link.getContextPath()/js/views/account/searchaccount.js"></script>
+<script src="$link.getContextPath()/js/views/acceptraft/create.js"></script>
+<script src="$link.getContextPath()/js/views/common/turnImg.js"></script>

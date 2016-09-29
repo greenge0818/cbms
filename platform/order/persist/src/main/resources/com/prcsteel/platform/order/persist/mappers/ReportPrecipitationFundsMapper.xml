@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.order.persist.dao.ReportPrecipitationFundsDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.order.model.model.ReportPrecipitationFunds" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="calculate_date" property="calculateDate" jdbcType="TIMESTAMP" />
+    <result column="total_account_balance" property="totalAccountBalance" jdbcType="DECIMAL" />
+    <result column="credit_limit" property="creditLimit" jdbcType="DECIMAL" />
+    <result column="precipitation_funds" property="precipitationFunds" jdbcType="DECIMAL" />
+    <result column="is_deleted" property="isDeleted" jdbcType="TINYINT" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="BIGINT" />
+    <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+    <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <resultMap id="QueryResultMap" type="com.prcsteel.platform.order.model.dto.ReportPrecipitationFundsDto" extends="BaseResultMap">
+    <result column="calculateStr" property="calculateStr" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, calculate_date, total_account_balance, credit_limit, precipitation_funds, is_deleted, 
+    created, created_by, last_updated, last_updated_by, modification_number, row_id, 
+    parent_row_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from report_precipitation_funds
+    where id = #{id,jdbcType=BIGINT}
+    and is_deleted = 0
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from report_precipitation_funds
+    where id = #{id,jdbcType=BIGINT}
+    and is_deleted = 0
+  </delete>
+  <insert id="insert" parameterType="com.prcsteel.platform.order.model.model.ReportPrecipitationFunds" >
+    insert into report_precipitation_funds (id, calculate_date, total_account_balance, 
+      credit_limit, precipitation_funds, is_deleted, 
+      created, created_by, last_updated, 
+      last_updated_by, modification_number, row_id, 
+      parent_row_id)
+    values (#{id,jdbcType=BIGINT}, #{calculateDate,jdbcType=TIMESTAMP}, #{totalAccountBalance,jdbcType=DECIMAL}, 
+      #{creditLimit,jdbcType=DECIMAL}, #{precipitationFunds,jdbcType=DECIMAL}, #{isDeleted,jdbcType=TINYINT}, 
+      #{created,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, #{lastUpdated,jdbcType=TIMESTAMP}, 
+      #{lastUpdatedBy,jdbcType=VARCHAR}, #{modificationNumber,jdbcType=BIGINT}, #{rowId,jdbcType=VARCHAR}, 
+      #{parentRowId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.order.model.model.ReportPrecipitationFunds" >
+    insert into report_precipitation_funds
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="calculateDate != null" >
+        calculate_date,
+      </if>
+      <if test="totalAccountBalance != null" >
+        total_account_balance,
+      </if>
+      <if test="creditLimit != null" >
+        credit_limit,
+      </if>
+      <if test="precipitationFunds != null" >
+        precipitation_funds,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by,
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number,
+      </if>
+      <if test="rowId != null" >
+        row_id,
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="calculateDate != null" >
+        #{calculateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="totalAccountBalance != null" >
+        #{totalAccountBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="creditLimit != null" >
+        #{creditLimit,jdbcType=DECIMAL},
+      </if>
+      <if test="precipitationFunds != null" >
+        #{precipitationFunds,jdbcType=DECIMAL},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        #{modificationNumber,jdbcType=BIGINT},
+      </if>
+      <if test="rowId != null" >
+        #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        #{parentRowId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.order.model.model.ReportPrecipitationFunds" >
+    update report_precipitation_funds
+    <set >
+      <if test="calculateDate != null" >
+        calculate_date = #{calculateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="totalAccountBalance != null" >
+        total_account_balance = #{totalAccountBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="creditLimit != null" >
+        credit_limit = #{creditLimit,jdbcType=DECIMAL},
+      </if>
+      <if test="precipitationFunds != null" >
+        precipitation_funds = #{precipitationFunds,jdbcType=DECIMAL},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number = #{modificationNumber,jdbcType=BIGINT},
+      </if>
+      <if test="rowId != null" >
+        row_id = #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT} and is_deleted = 0
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.order.model.model.ReportPrecipitationFunds" >
+    update report_precipitation_funds
+    set calculate_date = #{calculateDate,jdbcType=TIMESTAMP},
+      total_account_balance = #{totalAccountBalance,jdbcType=DECIMAL},
+      credit_limit = #{creditLimit,jdbcType=DECIMAL},
+      precipitation_funds = #{precipitationFunds,jdbcType=DECIMAL},
+      is_deleted = #{isDeleted,jdbcType=TINYINT},
+      created = #{created,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      modification_number = #{modificationNumber,jdbcType=BIGINT},
+      row_id = #{rowId,jdbcType=VARCHAR},
+      parent_row_id = #{parentRowId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT} and is_deleted = 0
+  </update>
+
+  <select id="queryByParam" resultMap="QueryResultMap" parameterType="com.prcsteel.platform.order.model.query.ReportOrgDayQuery">
+    SELECT DATE_FORMAT(t.calculate_date,'%Y-%m-%d') as calculateStr,t.precipitation_funds
+    FROM report_precipitation_funds t
+    <where>
+      <if test="startPageTimeStr != null and startPageTimeStr != ''">
+        AND  DATE_FORMAT(t.calculate_date,'%Y-%m-%d') <![CDATA[ >= ]]> #{startPageTimeStr,jdbcType=VARCHAR}
+      </if>
+      <if test="endPageTimeStr != null and endPageTimeStr != ''">
+        AND  DATE_FORMAT(t.calculate_date,'%Y-%m-%d') <![CDATA[ <= ]]> #{endPageTimeStr,jdbcType=VARCHAR}
+      </if>
+      AND t.is_deleted = 0
+    </where>
+    ORDER BY t.calculate_date DESC
+  </select>
+</mapper>

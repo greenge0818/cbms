@@ -1,0 +1,71 @@
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            	基础管理
+        </li>
+        <li>区域管理</li>
+    </ul>
+    <!-- /.breadcrumb -->
+</div>
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="clearfix">
+                        <div class="input-group pull-right col-md-9 col-sm-9 col-lg-9 search-bar text-left">
+                            <form class="form-inline">
+                                <label>区域名称：<input id="areaName" class="ipt-text" type="text" maxlength='50'
+                                                  value=""/></label>
+                                <label>中心城市：<input id="centerCity" class="ipt-text" type="text" maxlength='50'
+                                                   search="city" cityNum="cn_c" value=""/></label>
+
+                               <label>辐射城市：<input id="refsCity" class="ipt-text" type="text" maxlength='50'
+                                                   search="city" cityNum="cn_r" value=""/></label>
+                                <button id="queryBtn" class="btn btn-sm btn-default" type="button" title="搜索">搜索
+                                </button>
+								<button class="btn btn-sm btn-default" type="button" id='cleanSearch'>清空</button>
+                            </form>
+                        </div>
+                        <div class="pull-left">
+                            <button id="cityAdd" class="btn btn-primary" title="添加">
+                                <i class="ace-icon glyphicon glyphicon-plus align-top bigger-125"></i>
+                                添加
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- div.dataTables_borderWrap -->
+                    <div>
+                        <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>区域类别</th>
+                                <th>区域名称</th>
+                                <th>中心城市</th>
+                                <th>辐射城市</th>
+                                <th>是否启用</th>
+                                <th style="width:80px;">操作</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+
+<script src="$link.getContextPath()/js/views/smartmatch/area/index.js"></script>

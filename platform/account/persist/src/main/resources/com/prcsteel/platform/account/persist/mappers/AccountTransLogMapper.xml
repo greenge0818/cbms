@@ -1,0 +1,818 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.account.persist.dao.AccountTransLogDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.account.model.model.AccountTransLog" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="account_id" property="accountId" jdbcType="BIGINT" />
+    <result column="consign_order_code" property="consignOrderCode" jdbcType="VARCHAR" />
+    <result column="serial_number" property="serialNumber" jdbcType="VARCHAR" />
+    <result column="apply_type" property="applyType" jdbcType="CHAR" />
+    <result column="amount" property="amount" jdbcType="DECIMAL" />
+    <result column="applyer_id" property="applyerId" jdbcType="BIGINT" />
+    <result column="applyer_name" property="applyerName" jdbcType="VARCHAR" />
+    <result column="serial_time" property="serialTime" jdbcType="TIMESTAMP" />
+    <result column="type" property="type" jdbcType="CHAR" />
+    <result column="current_balance" property="currentBalance" jdbcType="DECIMAL" />
+    <result column="pay_type" property="payType" jdbcType="CHAR" />
+    <result column="association_type" property="associationType" jdbcType="VARCHAR" />
+    <result column="cash_happen_balance" property="cashHappenBalance" jdbcType="DECIMAL" />
+    <result column="cash_current_balance" property="cashCurrentBalance" jdbcType="DECIMAL" />
+    <result column="credit" property="credit" jdbcType="DECIMAL" />
+      <result column="credit_balance" property="creditBalance" jdbcType="DECIMAL" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+    <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+    <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="AccountTransLogDto" type="com.prcsteel.platform.account.model.dto.AccountTransLogDto" extends="BaseResultMap">
+    <result column="name" property="accountName" jdbcType="VARCHAR" />
+    <result column="balance" property="balance" jdbcType="DECIMAL"/>
+    <result column="balance_freeze" property="balanceFreeze" jdbcType="DECIMAL"/>
+    <result column="balance_second_settlement" property="balanceSecondSettlement" jdbcType="DECIMAL"/>
+    <result column="balance_second_settlement_freeze" property="balanceSecondSettlementFreeze" jdbcType="DECIMAL"/>
+    <result column="total" property="total" jdbcType="INTEGER"/>
+  </resultMap>
+  <resultMap id="AccountInAndOut" type="com.prcsteel.platform.account.model.dto.AccountInAndOutDto" extends="BaseResultMap">
+    <result column="accountId" property="accountId" jdbcType="VARCHAR"/>
+    <result column="accountName" property="accountName" jdbcType="VARCHAR"/>
+    <result column="createTime" property="createTime" jdbcType="TIMESTAMP"/>
+    <result column="receiptAmount" property="receiptAmount" jdbcType="DECIMAL"/>
+    <result column="paymentAmount" property="paymentAmount" jdbcType="DECIMAL"/>
+    <result column="dealAmount" property="dealAmount" jdbcType="DECIMAL"/>
+    <result column="transType" property="transType" jdbcType="INTEGER"/>
+    <result column="payment_bank" property="paymentBank" jdbcType="VARCHAR"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, account_id, consign_order_code, serial_number, apply_type, amount, applyer_id, applyer_name, serial_time,
+    type, association_type, current_balance, pay_type, cash_happen_balance, cash_current_balance, credit, credit_balance, created, created_by, last_updated, last_updated_by, modification_number, row_id,
+    parent_row_id
+  </sql>
+  <select id="queryTransLogByAccountId" resultMap="AccountTransLogDto" >
+    select a.id, a.account_id, b.name, a.serial_time, a.consign_order_code, a.serial_number,
+          a.association_type, a.apply_type, a.amount, a.current_balance,
+          a.cash_happen_balance, a.cash_current_balance, b.balance, b.balance_freeze,
+          b.balance_second_settlement, b.balance_second_settlement_freeze,
+          a.applyer_id, a.applyer_name, a.type, a.pay_type,
+          a.created, a.created_by, a.last_updated, a.last_updated_by
+    from cust_account_trans_log a
+    left join cust_account b on a.account_id = b.id
+    where account_id = #{accountId,jdbcType=BIGINT}
+    <if test="consignOrderCode!=null and consignOrderCode!=''">
+      and consign_order_code like CONCAT('%',#{consignOrderCode},'%')
+    </if>
+    <if test="applyType!=null and applyType!=''">
+      and apply_type = #{applyType}
+    </if>
+    <if test="startTime!=null and startTime!=''">
+      and <![CDATA[date_format(a.serial_time,'%Y-%m-%d')>=date_format(#{startTime},'%Y-%m-%d') ]]>
+    </if>
+    <if test="endTime!=null and endTime!=''">
+      and <![CDATA[date_format(a.serial_time,'%Y-%m-%d')<=date_format(#{endTime},'%Y-%m-%d') ]]>
+    </if>
+    order by a.serial_time desc, a.id desc
+    <if test="start!=null and start!='' and length!=null and length!=''">
+      limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+    </if>
+  </select>
+  <select id="totalTransLog" resultType="int" >
+    SELECT count(1) FROM cust_account_trans_log t1 INNER JOIN
+    (SELECT id FROM cust_account a WHERE a.id= #{accountId,jdbcType=BIGINT} OR a.parent_id= #{accountId,jdbcType=BIGINT}) t2
+    ON t1.account_id = t2.id
+    <if test="consignOrderCode!=null and consignOrderCode!=''">
+      and t1.consign_order_code like CONCAT('%',#{consignOrderCode},'%')
+    </if>
+    <if test="applyType!=null and applyType!=''">
+      and t1.apply_type = #{applyType}
+    </if>
+    <if test="startTime!=null and startTime!=''">
+      and <![CDATA[date_format(t1.serial_time,'%Y-%m-%d')>=date_format(#{startTime},'%Y-%m-%d') ]]>
+    </if>
+    <if test="endTime!=null and endTime!=''">
+      and <![CDATA[date_format(t1.serial_time,'%Y-%m-%d')<=date_format(#{endTime},'%Y-%m-%d') ]]>
+    </if>
+  </select>
+  <update id="updateStatusById" >
+      update cust_account_trans_log
+          set status = 0,
+              last_updated = sysdate()
+          where account_id = #{accountId,jdbcType=BIGINT}
+          and consign_order_code = #{consignOrderCode,jdbcType=VARCHAR}
+          and pay_type = 'freeze'
+  </update>
+  <insert id="insert" parameterType="com.prcsteel.platform.account.model.model.AccountTransLog" >
+    insert into cust_account_trans_log (account_id, consign_order_code, serial_number,
+    apply_type, amount, applyer_id,
+    applyer_name, serial_time, type,association_type, current_balance, pay_type,
+    cash_happen_balance, cash_current_balance, credit, credit_balance, created, created_by, last_updated,
+    last_updated_by, modification_number, row_id,
+    parent_row_id)
+    values (#{accountId,jdbcType=BIGINT}, #{consignOrderCode,jdbcType=VARCHAR}, #{serialNumber,jdbcType=VARCHAR},
+    #{applyType,jdbcType=CHAR}, #{amount,jdbcType=DECIMAL}, #{applyerId,jdbcType=BIGINT},
+    #{applyerName,jdbcType=VARCHAR}, #{serialTime,jdbcType=TIMESTAMP}, #{type,jdbcType=CHAR},#{associationType,jdbcType=VARCHAR},#{currentBalance,jdbcType=DECIMAL},#{payType,jdbcType=CHAR},
+    #{cashHappenBalance,jdbcType=DECIMAL}, #{cashCurrentBalance,jdbcType=DECIMAL}, #{credit}, #{creditBalance},
+    #{created,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, #{lastUpdated,jdbcType=TIMESTAMP},
+    #{lastUpdatedBy,jdbcType=VARCHAR}, #{modificationNumber,jdbcType=INTEGER}, #{rowId,jdbcType=VARCHAR},
+    #{parentRowId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.account.model.model.AccountTransLog" useGeneratedKeys="true" keyProperty="id">
+    insert into cust_account_trans_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="accountId != null" >
+        account_id,
+      </if>
+      <if test="consignOrderCode != null" >
+        consign_order_code,
+      </if>
+      <if test="serialNumber != null" >
+        serial_number,
+      </if>
+      <if test="applyType != null" >
+        apply_type,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="applyerId != null" >
+        applyer_id,
+      </if>
+      <if test="applyerName != null" >
+        applyer_name,
+      </if>
+      <if test="serialTime != null" >
+        serial_time,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="associationType != null" >
+       association_type,
+      </if>
+      <if test="currentBalance != null" >
+        current_balance,
+      </if>
+      <if test="payType != null" >
+        pay_type,
+      </if>
+      <if test="cashHappenBalance != null" >
+        cash_happen_balance,
+      </if>
+      <if test="cashCurrentBalance != null" >
+        cash_current_balance,
+      </if>
+      <if test="credit != null" >
+         credit,
+      </if>
+      <if test="creditBalance != null" >
+          credit_balance,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by,
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number,
+      </if>
+      <if test="rowId != null" >
+        row_id,
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="accountId != null" >
+        #{accountId,jdbcType=BIGINT},
+      </if>
+      <if test="consignOrderCode != null" >
+        #{consignOrderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="serialNumber != null" >
+        #{serialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="applyType != null" >
+        #{applyType,jdbcType=CHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="applyerId != null" >
+        #{applyerId,jdbcType=BIGINT},
+      </if>
+      <if test="applyerName != null" >
+        #{applyerName,jdbcType=VARCHAR},
+      </if>
+      <if test="serialTime != null" >
+        #{serialTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=CHAR},
+      </if>
+      <if test="associationType != null" >
+        #{associationType,jdbcType=VARCHAR},
+      </if>
+      <if test="currentBalance != null" >
+        #{currentBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="payType != null" >
+        #{payType,jdbcType=CHAR},
+      </if>
+      <if test="cashHappenBalance != null" >
+        #{cashHappenBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="cashCurrentBalance != null" >
+        #{cashCurrentBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="credit != null" >
+         #{credit},
+      </if>
+      <if test="creditBalance != null" >
+         #{creditBalance},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        #{parentRowId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="queryAccountInAndOut" resultMap="AccountInAndOut"
+        parameterType="com.prcsteel.platform.account.model.query.AccountInAndOutQuery">
+    SELECT 0 AS payment_bank,1 AS transType,t1.payeename AS accountName,0 AS paymentAmount,(case when t1.tranFlag=1 then t1.txamount
+    else 0 end) AS receiptAmount,
+    (case when t1.tranFlag=0 then t1.txamount else 0 end) AS dealAmount,t1.created AS createTime FROM
+    busi_bank_transaction_original_detail t1
+    INNER JOIN cust_account t2 ON t1.payeename=t2.name
+    <where>
+        t1.txamount!=0
+        <if test="accountName!=null and accountName!='' ">
+            AND t2.name like concat('%',#{accountName},'%')
+        </if>
+        <if test="beginTime!=null">
+            AND <![CDATA[date_format(t1.created,'%Y-%m-%d')>=str_to_date(#{beginTime},'%Y-%m-%d') ]]>
+        </if>
+        <if test="endTime!=null">
+            AND <![CDATA[date_format(t1.created,'%Y-%m-%d')<=str_to_date(#{endTime},'%Y-%m-%d') ]]>
+        </if>
+    </where>
+    UNION ALL
+    SELECT 0 AS payment_bank,2,t1.recipname,0,(case when t1.drcrf=2 then t1.creditAmount * 0.01 else 0 end),
+    (case when t1.drcrf=1 then t1.creditAmount * 0.01 else 0 end),t1.created FROM busi_icbc_bdl_detail t1
+    INNER JOIN cust_account t2 ON t1.recipname=t2.name
+    <where>
+        t1.creditAmount!=0
+        <if test="accountName!=null and accountName!='' ">
+            AND t2.name like concat('%',#{accountName},'%')
+        </if>
+        <if test="beginTime!=null">
+            AND <![CDATA[date_format(t1.created,'%Y-%m-%d')>=str_to_date(#{beginTime},'%Y-%m-%d') ]]>
+        </if>
+        <if test="endTime!=null">
+            AND <![CDATA[date_format(t1.created,'%Y-%m-%d')<=str_to_date(#{endTime},'%Y-%m-%d') ]]>
+        </if>
+    </where>
+    UNION ALL
+    SELECT ifnull(t2.payment_bank,0),0,t2.receiver_name,t2.pay_amount,0,0,t3.created FROM busi_pay_request t1
+    INNER JOIN busi_pay_request_items t2 ON t1.id=t2.request_id
+    INNER JOIN(
+		SELECT * FROM busi_consign_order_audit_trail where id IN
+		(SELECT MIN(id) FROM busi_consign_order_audit_trail where set_to_status='PAYED' AND status_type='PAY' 
+		GROUP BY order_id) 
+		AND <![CDATA[date_format(created,'%Y-%m-%d')>=str_to_date(#{beginTime}, '%Y-%m-%d') ]]>
+		AND <![CDATA[date_format(created,'%Y-%m-%d')<=str_to_date(#{endTime}, '%Y-%m-%d')]]>
+	) t3 ON t1.consign_order_id=t3.order_id
+    INNER JOIN busi_consign_order t4 on t1.consign_order_id=t4.id
+    <where>
+        t2.pay_amount!=0 and t1.status='CONFIRMEDPAY' AND t3.set_to_status='PAYED' AND t3.status_type='PAY' 
+        and t4.status in(4,6,7,8,10,-8,-7,-6,-5) AND t1.pay_status = 'PAYED' AND t1.type =1 
+        <if test="accountName!=null and accountName!='' ">
+            AND t2.receiver_name like concat('%',#{accountName},'%')
+        </if>
+        <if test="beginTime!=null">
+            AND <![CDATA[date_format(t3.created,'%Y-%m-%d')>=str_to_date(#{beginTime},'%Y-%m-%d') ]]>
+        </if>
+        <if test="endTime!=null">
+            AND <![CDATA[date_format(t3.created,'%Y-%m-%d')<=str_to_date(#{endTime},'%Y-%m-%d') ]]>
+        </if>
+    </where>
+    GROUP BY t1.id
+    <!-- ADD BY lixiang 增加货币资金报表付款查询 -->   
+    UNION ALL
+    SELECT ifnull(t2.payment_bank,0),0,t2.receiver_name,t2.pay_amount,0,0,t3.created FROM busi_pay_request t1
+    INNER JOIN busi_pay_request_items t2 ON t1.id=t2.request_id
+    INNER JOIN busi_consign_order_items_operatedrecord t3 ON t1.change_order_id=t3.change_order_id
+    INNER JOIN busi_consign_order t4 on t1.consign_order_id=t4.id
+    <where>
+        t2.pay_amount!=0 and t1.status='CONFIRMEDPAY' AND t3.set_to_status='CHANGED_SUCCESS3'  
+        AND t4.status in(4,6,7,8,10,-8,-7,-6,-5) AND t1.pay_status = 'PAYED' AND t1.type =5 
+        <if test="accountName!=null and accountName!='' ">
+            AND t2.receiver_name like concat('%',#{accountName},'%')
+        </if>
+        <if test="beginTime!=null">
+            AND <![CDATA[date_format(t3.created,'%Y-%m-%d')>=str_to_date(#{beginTime},'%Y-%m-%d') ]]>
+        </if>
+        <if test="endTime!=null">
+            AND <![CDATA[date_format(t3.created,'%Y-%m-%d')<=str_to_date(#{endTime},'%Y-%m-%d') ]]>
+        </if>
+    </where>
+    UNION ALL
+    SELECT ifnull(t2.payment_bank,0),0,t2.receiver_name,t2.pay_amount,0,0,t3.serial_time FROM busi_pay_request t1
+    INNER JOIN busi_pay_request_items t2 ON t1.id=t2.request_id
+    INNER JOIN cust_account_trans_log t3 ON t1.code=t3.consign_order_code
+    <where>
+        t1.status ='CONFIRMEDPAY' AND t1.type =2 and t2.pay_amount!=0 
+		AND t3.pay_type = 'settlement' AND apply_type =6
+        <if test="accountName!=null and accountName!='' ">
+            AND t2.receiver_name like concat('%',#{accountName},'%')
+        </if>
+        <if test="beginTime!=null">
+            AND <![CDATA[date_format(t3.serial_time,'%Y-%m-%d')>=str_to_date(#{beginTime},'%Y-%m-%d') ]]>
+        </if>
+        <if test="endTime!=null">
+            AND <![CDATA[date_format(t3.serial_time,'%Y-%m-%d')<=str_to_date(#{endTime},'%Y-%m-%d') ]]>
+        </if>
+    </where>
+    UNION ALL
+    SELECT ifnull(t2.payment_bank,0),0,t2.receiver_name,t2.pay_amount,0,0,t3.serial_time FROM busi_pay_request t1
+    INNER JOIN busi_pay_request_items t2 ON t1.id=t2.request_id
+    INNER JOIN cust_account_trans_log t3 ON t1.code=t3.consign_order_code
+    <where>
+        t1.status ='CONFIRMED' AND t1.type =3 and t2.pay_amount!=0 
+		AND t3.pay_type = 'balance'
+        <!-- 资金提现操作需要匹配资金账户转出状态，否则会有重复记录 -->
+        AND  t3.apply_type = '4'
+        <if test="accountName!=null and accountName!='' ">
+            AND t2.receiver_name like concat('%',#{accountName},'%')
+        </if>
+        <if test="beginTime!=null">
+            AND <![CDATA[date_format(t3.serial_time,'%Y-%m-%d')>=str_to_date(#{beginTime},'%Y-%m-%d') ]]>
+        </if>
+        <if test="endTime!=null">
+            AND <![CDATA[date_format(t3.serial_time,'%Y-%m-%d')<=str_to_date(#{endTime},'%Y-%m-%d') ]]>
+        </if>
+    </where>
+    <if test="timeOrdering=='asc'">
+        ORDER BY createtime asc
+    </if>
+    <if test="timeOrdering=='desc'">
+        ORDER BY createtime desc
+    </if>
+    LIMIT #{start},#{length}
+  </select>
+  <select id="countAccountInAndOut" resultType="int"
+        parameterType="com.prcsteel.platform.account.model.query.AccountInAndOutQuery">
+    SELECT count(1) from (
+    SELECT 1 FROM busi_bank_transaction_original_detail t1
+    INNER JOIN cust_account t2 ON t1.payeename=t2.name
+    <where>
+        <if test="accountName!=null and accountName!='' ">
+            AND t2.name like concat('%',#{accountName},'%')
+        </if>
+        <if test="beginTime!=null">
+            AND <![CDATA[date_format(t1.created,'%Y-%m-%d')>=str_to_date(#{beginTime},'%Y-%m-%d') ]]>
+        </if>
+        <if test="endTime!=null">
+            AND <![CDATA[date_format(t1.created,'%Y-%m-%d')<=str_to_date(#{endTime},'%Y-%m-%d') ]]>
+        </if>
+    </where>
+    UNION ALL
+    SELECT 1 FROM busi_icbc_bdl_detail t1 
+    INNER JOIN cust_account t2 ON t1.recipname=t2.name
+    <where>
+        <if test="accountName!=null and accountName!='' ">
+            AND t2.name like concat('%',#{accountName},'%')
+        </if>
+        <if test="beginTime!=null">
+            AND <![CDATA[date_format(t1.created,'%Y-%m-%d')>=str_to_date(#{beginTime},'%Y-%m-%d') ]]>
+        </if>
+        <if test="endTime!=null">
+            AND <![CDATA[date_format(t1.created,'%Y-%m-%d')<=str_to_date(#{endTime},'%Y-%m-%d') ]]>
+        </if>
+    </where>
+    UNION ALL
+    SELECT 1 FROM busi_pay_request t1
+    INNER JOIN busi_pay_request_items t2 ON t1.id=t2.request_id
+    INNER JOIN(
+		SELECT * FROM busi_consign_order_audit_trail where id IN
+		(SELECT MIN(id) FROM busi_consign_order_audit_trail where set_to_status='PAYED' AND status_type='PAY' 
+		GROUP BY order_id) 
+		AND <![CDATA[date_format(created,'%Y-%m-%d')>=str_to_date(#{beginTime}, '%Y-%m-%d') ]]>
+		AND <![CDATA[date_format(created,'%Y-%m-%d')<=str_to_date(#{endTime}, '%Y-%m-%d')]]>
+	) t3 ON t1.consign_order_id=t3.order_id
+    INNER JOIN busi_consign_order t4 on t1.consign_order_id=t4.id
+    <where>
+        t1.status='CONFIRMEDPAY' AND t3.set_to_status='PAYED' AND t3.status_type='PAY' and t4.status
+        in(4,6,7,8,10,-5,-6,-7,-8) AND t1.type =1 AND t1.pay_status = 'PAYED' and t2.pay_amount!=0
+        <if test="accountName!=null and accountName!='' ">
+            AND t2.receiver_name like concat('%',#{accountName},'%')
+        </if>
+        <if test="beginTime!=null">
+            AND <![CDATA[date_format(t3.created,'%Y-%m-%d')>=str_to_date(#{beginTime},'%Y-%m-%d') ]]>
+        </if>
+        <if test="endTime!=null">
+            AND <![CDATA[date_format(t3.created,'%Y-%m-%d')<=str_to_date(#{endTime},'%Y-%m-%d') ]]>
+        </if>
+    </where>
+    GROUP BY t1.id
+    UNION ALL
+    SELECT 1 FROM busi_pay_request t1
+    INNER JOIN busi_pay_request_items t2 ON t1.id=t2.request_id
+    INNER JOIN busi_consign_order_items_operatedrecord t3 ON t1.change_order_id=t3.change_order_id
+    INNER JOIN busi_consign_order t4 on t1.consign_order_id=t4.id
+    <where>
+        t1.status='CONFIRMEDPAY' AND t3.set_to_status='CHANGED_SUCCESS3' AND t4.status
+        in(4,6,7,8,10,-5,-6,-7,-8) AND t1.type =5 AND t1.pay_status = 'PAYED' and t2.pay_amount!=0
+        <if test="accountName!=null and accountName!='' ">
+            AND t2.receiver_name like concat('%',#{accountName},'%')
+        </if>
+        <if test="beginTime!=null">
+            AND <![CDATA[date_format(t3.created,'%Y-%m-%d')>=str_to_date(#{beginTime},'%Y-%m-%d') ]]>
+        </if>
+        <if test="endTime!=null">
+            AND <![CDATA[date_format(t3.created,'%Y-%m-%d')<=str_to_date(#{endTime},'%Y-%m-%d') ]]>
+        </if>
+    </where>
+    UNION ALL
+    SELECT 1 FROM busi_pay_request t1
+    INNER JOIN busi_pay_request_items t2 ON t1.id=t2.request_id
+    INNER JOIN cust_account_trans_log t3 ON t1.code=t3.consign_order_code
+    <where>
+        t1.status ='CONFIRMEDPAY' AND t1.type =2 and t2.pay_amount!=0 
+		AND t3.pay_type = 'settlement' AND apply_type =6
+        <if test="accountName!=null and accountName!='' ">
+            AND t2.receiver_name like concat('%',#{accountName},'%')
+        </if>
+        <if test="beginTime!=null">
+            AND <![CDATA[date_format(t3.serial_time,'%Y-%m-%d')>=str_to_date(#{beginTime},'%Y-%m-%d') ]]>
+        </if>
+        <if test="endTime!=null">
+            AND <![CDATA[date_format(t3.serial_time,'%Y-%m-%d')<=str_to_date(#{endTime},'%Y-%m-%d') ]]>
+        </if>
+    </where>
+    UNION ALL
+    SELECT 1 FROM busi_pay_request t1
+    INNER JOIN busi_pay_request_items t2 ON t1.id=t2.request_id
+    INNER JOIN cust_account_trans_log t3 ON t1.code=t3.consign_order_code
+    <where>
+        t1.status ='CONFIRMED' AND t1.type =3 and t2.pay_amount!=0 
+		AND t3.pay_type = 'balance'
+        <!-- 资金提现操作需要匹配资金账户转出状态，否则会有重复记录 -->
+        AND  t3.apply_type = '4'
+        <if test="accountName!=null and accountName!='' ">
+            AND t2.receiver_name like concat('%',#{accountName},'%')
+        </if>
+        <if test="beginTime!=null">
+            AND <![CDATA[date_format(t3.serial_time,'%Y-%m-%d')>=str_to_date(#{beginTime},'%Y-%m-%d') ]]>
+        </if>
+        <if test="endTime!=null">
+            AND <![CDATA[date_format(t3.serial_time,'%Y-%m-%d')<=str_to_date(#{endTime},'%Y-%m-%d') ]]>
+        </if>
+    </where>
+    ) as t
+  </select>
+  <select id="queryAccountInAndOutTotal" resultMap="AccountInAndOut">
+    SELECT 0 AS payment_bank,1 AS transType,0 AS paymentAmount,sum(case when t1.tranFlag=1 then t1.txamount
+    else 0 end) AS receiptAmount,
+    sum(case when t1.tranFlag=0 then t1.txamount else 0 end) AS dealAmount FROM
+    busi_bank_transaction_original_detail t1
+    INNER JOIN cust_account t2 ON t1.payeename=t2.name
+    <where>
+        t1.txamount!=0
+        <if test="accountName!=null and accountName!='' ">
+            AND t2.name like concat('%',#{accountName},'%')
+        </if>
+        <if test="beginTime!=null">
+            AND <![CDATA[date_format(t1.created,'%Y-%m-%d')>=str_to_date(#{beginTime},'%Y-%m-%d') ]]>
+        </if>
+        <if test="endTime!=null">
+            AND <![CDATA[date_format(t1.created,'%Y-%m-%d')<=str_to_date(#{endTime},'%Y-%m-%d') ]]>
+        </if>
+    </where>
+    UNION ALL
+    SELECT 0 AS payment_bank,2,0,sum(case when t1.drcrf=2 then t1.creditAmount * 0.01 else 0 end),
+    sum(case when t1.drcrf=1 then t1.creditAmount * 0.01 else 0 end) FROM busi_icbc_bdl_detail t1
+    INNER JOIN cust_account t2 ON t1.recipname=t2.name
+    <where>
+        t1.creditAmount!=0
+        <if test="accountName!=null and accountName!='' ">
+            AND t2.name like concat('%',#{accountName},'%')
+        </if>
+        <if test="beginTime!=null">
+            AND <![CDATA[date_format(t1.created,'%Y-%m-%d')>=str_to_date(#{beginTime},'%Y-%m-%d') ]]>
+        </if>
+        <if test="endTime!=null">
+            AND <![CDATA[date_format(t1.created,'%Y-%m-%d')<=str_to_date(#{endTime},'%Y-%m-%d') ]]>
+        </if>
+    </where>
+    UNION ALL
+    SELECT ifnull(t.payment_bank,0),0,ifnull(sum(t.pay_amount),0),0,0 FROM 
+    (SELECT t2.payment_bank,t2.pay_amount FROM busi_pay_request t1
+    INNER JOIN busi_pay_request_items t2 ON t1.id=t2.request_id
+    INNER JOIN(
+		SELECT * FROM busi_consign_order_audit_trail where id IN
+		(SELECT MIN(id) FROM busi_consign_order_audit_trail where set_to_status='PAYED' AND status_type='PAY' 
+		GROUP BY order_id) 
+		AND <![CDATA[date_format(created,'%Y-%m-%d')>=str_to_date(#{beginTime}, '%Y-%m-%d') ]]>
+		AND <![CDATA[date_format(created,'%Y-%m-%d')<=str_to_date(#{endTime}, '%Y-%m-%d')]]>
+	) t3 ON t1.consign_order_id=t3.order_id
+    INNER JOIN busi_consign_order t4 on t1.consign_order_id=t4.id
+    <where>
+        t2.pay_amount!=0 and t1.status='CONFIRMEDPAY' AND t3.set_to_status='PAYED' AND t3.status_type='PAY'
+        and t4.status in(4,6,7,8,10,-8) AND t1.type =1 AND t2.payment_bank = 'SPD'
+        <if test="accountName!=null and accountName!='' ">
+            AND t2.receiver_name like concat('%',#{accountName},'%')
+        </if>
+        <if test="beginTime!=null">
+            AND <![CDATA[date_format(t3.created,'%Y-%m-%d')>=str_to_date(#{beginTime},'%Y-%m-%d') ]]>
+        </if>
+        <if test="endTime!=null">
+            AND <![CDATA[date_format(t3.created,'%Y-%m-%d')<=str_to_date(#{endTime},'%Y-%m-%d') ]]>
+        </if>
+    </where>
+    GROUP BY t1.id)t
+    UNION ALL 
+    SELECT ifnull(t.payment_bank,0),0,ifnull(sum(t.pay_amount),0),0,0 FROM 
+    (SELECT t2.payment_bank,t2.pay_amount FROM busi_pay_request t1
+    INNER JOIN busi_pay_request_items t2 ON t1.id=t2.request_id 
+    INNER JOIN(
+		SELECT * FROM busi_consign_order_audit_trail where id IN
+		(SELECT MIN(id) FROM busi_consign_order_audit_trail where set_to_status='PAYED' AND status_type='PAY' 
+		GROUP BY order_id) 
+		AND <![CDATA[date_format(created,'%Y-%m-%d')>=str_to_date(#{beginTime}, '%Y-%m-%d') ]]>
+		AND <![CDATA[date_format(created,'%Y-%m-%d')<=str_to_date(#{endTime}, '%Y-%m-%d')]]>
+	) t3 ON t1.consign_order_id=t3.order_id 
+    INNER JOIN busi_consign_order t4 on t1.consign_order_id=t4.id 
+    <where>
+        t2.pay_amount!=0 and t1.status='CONFIRMEDPAY' AND t3.set_to_status='PAYED' AND t3.status_type='PAY'
+        and t4.status in(4,6,7,8,10,-8) AND t1.type =1 AND t2.payment_bank = 'ICBC'
+        <if test="accountName!=null and accountName!='' ">
+            AND t2.receiver_name like concat('%',#{accountName},'%')
+        </if>
+        <if test="beginTime!=null">
+            AND <![CDATA[date_format(t3.created,'%Y-%m-%d')>=str_to_date(#{beginTime},'%Y-%m-%d') ]]>
+        </if>
+        <if test="endTime!=null">
+            AND <![CDATA[date_format(t3.created,'%Y-%m-%d')<=str_to_date(#{endTime},'%Y-%m-%d') ]]>
+        </if>
+    </where>
+    GROUP BY t1.id)t
+    <!-- add by lixiang 增加合同变更付款申请金额 -->
+    UNION ALL 
+    SELECT ifnull(t2.payment_bank,0),0,ifnull(sum(t2.pay_amount),0),0,0 
+    FROM busi_pay_request t1 
+    INNER JOIN busi_pay_request_items t2 ON t1.id=t2.request_id 
+	INNER JOIN busi_consign_order_items_operatedrecord t3 ON t1.change_order_id=t3.change_order_id
+	INNER JOIN busi_consign_order t4 on t1.consign_order_id=t4.id 
+    <where>
+        t2.pay_amount!=0 and t1.status='CONFIRMEDPAY' AND t3.set_to_status='CHANGED_SUCCESS3'
+        and t4.status in(4,6,7,8,10,-8) AND t1.type =5 AND t2.payment_bank = 'SPD'
+        <if test="accountName!=null and accountName!='' ">
+            AND t2.receiver_name like concat('%',#{accountName},'%')
+        </if>
+        <if test="beginTime!=null">
+            AND <![CDATA[date_format(t3.created,'%Y-%m-%d')>=str_to_date(#{beginTime},'%Y-%m-%d') ]]>
+        </if>
+        <if test="endTime!=null">
+            AND <![CDATA[date_format(t3.created,'%Y-%m-%d')<=str_to_date(#{endTime},'%Y-%m-%d') ]]>
+        </if>
+    </where>
+    <!-- add by lixiang 增加合同变更付款申请金额 -->
+    UNION ALL 
+    SELECT ifnull(t2.payment_bank,0),0,ifnull(sum(t2.pay_amount),0),0,0 
+    FROM busi_pay_request t1 
+    INNER JOIN busi_pay_request_items t2 ON t1.id=t2.request_id 
+	INNER JOIN busi_consign_order_items_operatedrecord t3 ON t1.change_order_id=t3.change_order_id
+	INNER JOIN busi_consign_order t4 on t1.consign_order_id=t4.id 
+    <where>
+        t2.pay_amount!=0 and t1.status='CONFIRMEDPAY' AND t3.set_to_status='CHANGED_SUCCESS3'
+        and t4.status in(4,6,7,8,10,-8) AND t1.type =5 AND t2.payment_bank = 'ICBC'
+        <if test="accountName!=null and accountName!='' ">
+            AND t2.receiver_name like concat('%',#{accountName},'%')
+        </if>
+        <if test="beginTime!=null">
+            AND <![CDATA[date_format(t3.created,'%Y-%m-%d')>=str_to_date(#{beginTime},'%Y-%m-%d') ]]>
+        </if>
+        <if test="endTime!=null">
+            AND <![CDATA[date_format(t3.created,'%Y-%m-%d')<=str_to_date(#{endTime},'%Y-%m-%d') ]]>
+        </if>
+    </where>
+    UNION ALL
+    SELECT ifnull(t2.payment_bank,0),0,ifnull(sum(t2.pay_amount),0),0,0 FROM busi_pay_request t1
+    INNER JOIN busi_pay_request_items t2 ON t1.id=t2.request_id
+    INNER JOIN cust_account_trans_log t3 ON t1.code=t3.consign_order_code
+    <where>
+        t1.status ='CONFIRMEDPAY' AND t1.type =2 and t2.pay_amount!=0 
+		AND t3.pay_type = 'settlement' AND apply_type =6 AND t2.payment_bank = 'ICBC' 
+        <if test="accountName!=null and accountName!='' ">
+            AND t2.receiver_name like concat('%',#{accountName},'%')
+        </if>
+        <if test="beginTime!=null">
+            AND <![CDATA[date_format(t3.serial_time,'%Y-%m-%d')>=str_to_date(#{beginTime},'%Y-%m-%d') ]]>
+        </if>
+        <if test="endTime!=null">
+            AND <![CDATA[date_format(t3.serial_time,'%Y-%m-%d')<=str_to_date(#{endTime},'%Y-%m-%d') ]]>
+        </if>
+    </where>
+    UNION ALL
+    SELECT ifnull(t2.payment_bank,0),0,ifnull(sum(t2.pay_amount),0),0,0 FROM busi_pay_request t1
+    INNER JOIN busi_pay_request_items t2 ON t1.id=t2.request_id
+    INNER JOIN cust_account_trans_log t3 ON t1.code=t3.consign_order_code
+    <where>
+        t1.status ='CONFIRMEDPAY' AND t1.type =2 and t2.pay_amount!=0 
+		AND t3.pay_type = 'settlement' AND apply_type =6 AND t2.payment_bank = 'SPD' 
+        <if test="accountName!=null and accountName!='' ">
+            AND t2.receiver_name like concat('%',#{accountName},'%')
+        </if>
+        <if test="beginTime!=null">
+            AND <![CDATA[date_format(t3.serial_time,'%Y-%m-%d')>=str_to_date(#{beginTime},'%Y-%m-%d') ]]>
+        </if>
+        <if test="endTime!=null">
+            AND <![CDATA[date_format(t3.serial_time,'%Y-%m-%d')<=str_to_date(#{endTime},'%Y-%m-%d') ]]>
+        </if>
+    </where>
+    UNION ALL
+    SELECT ifnull(t2.payment_bank,0),0,ifnull(sum(t2.pay_amount),0),0,0 FROM busi_pay_request t1
+    INNER JOIN busi_pay_request_items t2 ON t1.id=t2.request_id
+    INNER JOIN cust_account_trans_log t3 ON t1.code=t3.consign_order_code
+    <where>
+        t1.status ='CONFIRMED' AND t1.type =3 and t2.pay_amount!=0 
+		AND t3.pay_type = 'balance' AND t2.payment_bank = 'SPD'
+        <!-- 资金提现操作需要匹配资金账户转出状态，否则会有重复记录 -->
+        AND  t3.apply_type = '4'
+        <if test="accountName!=null and accountName!='' ">
+            AND t2.receiver_name like concat('%',#{accountName},'%')
+        </if>
+        <if test="beginTime!=null">
+            AND <![CDATA[date_format(t3.serial_time,'%Y-%m-%d')>=str_to_date(#{beginTime},'%Y-%m-%d') ]]>
+        </if>
+        <if test="endTime!=null">
+            AND <![CDATA[date_format(t3.serial_time,'%Y-%m-%d')<=str_to_date(#{endTime},'%Y-%m-%d') ]]>
+        </if>
+    </where>
+    UNION ALL
+    SELECT ifnull(t2.payment_bank,0),0,ifnull(sum(t2.pay_amount),0),0,0 FROM busi_pay_request t1
+    INNER JOIN busi_pay_request_items t2 ON t1.id=t2.request_id
+    INNER JOIN cust_account_trans_log t3 ON t1.code=t3.consign_order_code
+    <where>
+        t1.status ='CONFIRMED' AND t1.type =3 and t2.pay_amount!=0 
+		AND t3.pay_type = 'balance' AND t2.payment_bank = 'ICBC'
+        <!-- 资金提现操作需要匹配资金账户转出状态，否则会有重复记录 -->
+        AND  t3.apply_type = '4'
+        <if test="accountName!=null and accountName!='' ">
+            AND t2.receiver_name like concat('%',#{accountName},'%')
+        </if>
+        <if test="beginTime!=null">
+            AND <![CDATA[date_format(t3.serial_time,'%Y-%m-%d')>=str_to_date(#{beginTime},'%Y-%m-%d') ]]>
+        </if>
+        <if test="endTime!=null">
+            AND <![CDATA[date_format(t3.serial_time,'%Y-%m-%d')<=str_to_date(#{endTime},'%Y-%m-%d') ]]>
+        </if>
+    </where>
+  </select>
+  <select id="queryPreBlance" resultType="BigDecimal" parameterType="com.prcsteel.platform.account.model.query.AccountInAndOutQuery">
+    select current_balance from  cust_account_trans_log where
+        <![CDATA[date_format(serial_time,'%Y-%m-%d')<str_to_date(#{beginTime},'%Y-%m-%d') ]]>
+     order by serial_time desc
+    limit 0,1
+  </select>
+  <select id="queryNextBlance" resultType="BigDecimal" parameterType="com.prcsteel.platform.account.model.query.AccountInAndOutQuery">
+  select current_balance from  cust_account_trans_log where
+        <![CDATA[date_format(serial_time,'%Y-%m-%d')>str_to_date(#{endTime},'%Y-%m-%d') ]]>
+  order by serial_time asc
+  limit 0,1
+  </select>
+  <select id="queryLastBlance" resultType="BigDecimal" parameterType="com.prcsteel.platform.account.model.query.AccountInAndOutQuery">
+    select current_balance from  cust_account_trans_log
+    where
+       <![CDATA[date_format(serial_time,'%Y-%m-%d')<=str_to_date(#{endTime},'%Y-%m-%d') ]]>
+    order by serial_time desc
+    limit 0,1
+  </select>
+  
+  <select id="selectAccountTransLogByType" resultType="string" >
+  	select max(consign_order_code) from cust_account_trans_log where consign_order_code like #{type} '%'
+  </select>
+  
+  <!--根据查询对象查询账户流水信息 -->
+  <select id="searchFlowByQuery" resultMap="AccountTransLogDto"  parameterType="com.prcsteel.platform.account.model.query.AccountInfoFlowSearchQuery">
+      SELECT a.id, a.account_id, b.name, a.serial_time, a.consign_order_code, a.serial_number,
+          a.association_type, a.apply_type, a.amount, a.current_balance,
+          a.cash_happen_balance, a.cash_current_balance, b.balance, b.balance_freeze,
+          b.balance_second_settlement, b.balance_second_settlement_freeze,
+          a.applyer_id, a.applyer_name, a.type, a.pay_type,
+          a.created, a.created_by, a.last_updated, a.last_updated_by,
+          a.credit,a.credit_balance,NULL AS TOTAL
+    FROM cust_account_trans_log a
+    JOIN cust_account b on a.account_id = b.id
+    WHERE account_id = #{accountId,jdbcType=BIGINT}
+    <if test="consignOrderCode!=null and consignOrderCode!=''">
+      and consign_order_code like CONCAT('%',#{consignOrderCode},'%')
+    </if>
+    <if test="applyType!=null and applyType!=''">
+      and apply_type = #{applyType}
+    </if>
+    <if test="payType!=null and payType!=''">
+      AND pay_type = #{payType}
+    </if>
+    <if test="startTime!=null and startTime!=''">
+      and date_format(a.created,'%Y-%m-%d') <![CDATA[ >= ]]> date_format(#{startTime},'%Y-%m-%d')
+    </if>
+    <if test="endTime!=null and endTime!=''">
+      and date_format(a.created,'%Y-%m-%d') <![CDATA[ <= ]]> date_format(#{endTime},'%Y-%m-%d')
+    </if>
+    order by a.created desc, a.id desc
+      <if test="start != null and length != null">
+          limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+      </if>
+  </select>
+
+  
+  <!-- add afeng 查询信用流水最后一条记录 -->
+  <select id="queryLastCode" resultMap="BaseResultMap">
+  	SELECT * FROM cust_account_trans_log 
+  	WHERE association_type = 9 AND apply_type IN (26,27) 
+  	ORDER BY consign_order_code DESC LIMIT 1
+  </select>
+  
+  <select id="queryRevokeLastCode" resultMap="BaseResultMap">
+  	SELECT * FROM cust_account_trans_log 
+  	WHERE association_type = 7 AND apply_type = 24 
+  	ORDER BY consign_order_code DESC LIMIT 1
+  </select>
+    <!--根据查询对象统计账户流水 -->
+    <select id="countFlowByQuery" resultType="int" parameterType="com.prcsteel.platform.account.model.query.AccountInfoFlowSearchQuery">
+         SELECT count(1)
+        FROM cust_account_trans_log a
+        JOIN cust_account b on a.account_id = b.id
+        WHERE account_id = #{accountId,jdbcType=BIGINT}
+        <if test="consignOrderCode!=null and consignOrderCode!=''">
+            and consign_order_code like CONCAT('%',#{consignOrderCode},'%')
+        </if>
+        <if test="applyType!=null and applyType!=''">
+            and apply_type = #{applyType}
+        </if>
+        <if test="payType!=null and payType!=''">
+            AND pay_type = #{payType}
+        </if>
+        <if test="startTime!=null and startTime!=''">
+            and date_format(a.created,'%Y-%m-%d') <![CDATA[ >= ]]> date_format(#{startTime},'%Y-%m-%d')
+        </if>
+        <if test="endTime!=null and endTime!=''">
+            and date_format(a.created,'%Y-%m-%d') <![CDATA[ <= ]]> date_format(#{endTime},'%Y-%m-%d')
+        </if>
+    </select>
+    <!--根据查询对象查询账户流水 -->
+    <select id="queryFlowByQuery" resultMap="BaseResultMap" parameterType="com.prcsteel.platform.account.model.query.AccountInfoFlowSearchQuery">
+         SELECT 
+		<include refid="Base_Column_List"></include>
+        FROM cust_account_trans_log
+        WHERE account_id = #{accountId,jdbcType=BIGINT}
+        <if test="consignOrderCode!=null and consignOrderCode!=''">
+            and consign_order_code = #{consignOrderCode}
+        </if>
+        <if test="applyType!=null and applyType!=''">
+            and apply_type = #{applyType}
+        </if>
+        <if test="payType!=null and payType!=''">
+            AND pay_type = #{payType}
+        </if>
+        <if test="startTime!=null and startTime!=''">
+            and date_format(a.created,'%Y-%m-%d') <![CDATA[ >= ]]> date_format(#{startTime},'%Y-%m-%d')
+        </if>
+        <if test="endTime!=null and endTime!=''">
+            and date_format(a.created,'%Y-%m-%d') <![CDATA[ <= ]]> date_format(#{endTime},'%Y-%m-%d')
+        </if>
+    </select>
+</mapper>

@@ -1,0 +1,91 @@
+<div class="breadcrumbs" id="breadcrumbs">
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="#">智能找货</a>
+        </li>
+        <li>
+            <a href="#">询价单管理</a>
+        </li>
+        <li>
+            <a href="#">询价单详情</a>
+        </li>
+        <li>
+            报价单详情
+        </li>
+    </ul>
+    <!-- /.breadcrumb -->
+</div>
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="col-xs-12">
+                    #inquiryDetailManager("quotaDetail")
+                </div>
+                <div class="historyQuotation">
+                    #foreach($history in $quotation)
+                        <label>
+                            报价单${velocityCount}：$!date.format('yyyy-MM-dd HH:mm:ss ',$history.get(0).quotationOrderUpdateTime) &nbsp; 报价人：$history.get(0).ownerName
+                        </label>
+                        <div>
+                            <table class="table table-striped table-bordered table-hover dynamic-table">
+                                <thead>
+                                <tr>
+                                    <th>品名</th>
+                                    <th>材质</th>
+                                    <th>规格</th>
+                                    <th>厂家</th>
+                                    <th>仓库</th>
+                                    <th>重量</th>
+                                    <th>单价(元/吨)</th>
+                                    <th>小计(元)</th>
+                                    <th>备注</th>
+                                </tr>
+                                </thead>
+                                <tfoot>
+                                    #set($weightArr  = [])
+                                    #set($totalAmountArr  = [])
+                                    #foreach($item in $history)
+                                    #*此处加上if，以防页面上显示true*#
+                                        #if($weightArr.add($cbmsNumberUtil.formatWeight($!item.weight)))#end
+                                        #if($totalAmountArr.add($NumberTool.toThousandth($!item.totalAmount)))#end
+                                    <tr>
+                                        <td>$!item.categoryName</td>
+                                        <td>$!item.materialName</td>
+                                        <td>$!item.spec</td>
+                                        <td>$!item.factoryName</td>
+                                        <td >$!item.warehouseName</td>
+                                        <td >$cbmsNumberUtil.formatWeight($!item.weight,3)</td>
+                                        <td >$NumberTool.toThousandth($!item.dealPrice)</td>
+                                        <td >$NumberTool.toThousandth($!item.totalAmount)</td>
+                                        <td>$!item.remark</td>
+                                    </tr>
+                                    #end
+                                <tr>
+                                    <td colspan="9"><span>备注:  $history.get(0).remarkDesc</span></td>
+                                </tr>
+                                <tr>
+                                    <td>合计</td>
+                                    <td>--</td>
+                                    <td>--</td>
+                                    <td>--</td>
+                                    <td>--</td>
+                                    <td>$cbmsNumberUtil.formatWeight($math.getTotal($weightArr),3)</td>
+                                    <td>--</td>
+                                    <td>$math.getTotal($totalAmountArr)</td>
+                                    <td>--</td>
+                                </tfoot>
+                                </tr>
+                            </table>
+                        </div>
+                    #end
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    //表格表头颜色
+    $(".dynamic-table th").css("background-color","#E87716").css("color","#000000");
+</script>

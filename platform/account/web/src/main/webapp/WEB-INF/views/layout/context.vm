@@ -1,0 +1,13 @@
+<script type="text/javascript" >
+    var Context = new function() {
+        this.PATH = "$link.getContextPath()";
+    }
+
+    var MESSAGE = new function(){
+
+        this.ROLE = {
+            ADD:["添加成功","添加失败","名称重复","非法参数"],
+            UPDATE:["保存成功","保存失败","名称重复","非法参数"]
+        };
+    }
+</script>

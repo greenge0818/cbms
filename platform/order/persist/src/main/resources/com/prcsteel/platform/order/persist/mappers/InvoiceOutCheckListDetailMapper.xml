@@ -1,0 +1,754 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.order.persist.dao.InvoiceOutCheckListDetailDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.order.model.model.InvoiceOutCheckListDetail" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="checklist_id" property="checklistId" jdbcType="BIGINT" />
+    <result column="item_detail_id" property="itemDetailId" jdbcType="BIGINT" />
+    <result column="amount" property="amount" jdbcType="DECIMAL"/>
+    <result column="weight" property="weight" jdbcType="DECIMAL"/>
+	
+	<!-- add by tuxianming 20160624 用于客户销项报表 -->
+    <result column="is_limit_debet" property="isLimitDebet" jdbcType="TINYINT" />
+    <result column="debt_second_settlement" property="debtSecondSettlement" jdbcType="DECIMAL"/>
+    <result column="is_send" property="isSend" jdbcType="TINYINT"/>
+    
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+    <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+    <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+    <result column="ext1" property="ext1" jdbcType="VARCHAR" />
+    <result column="ext2" property="ext2" jdbcType="VARCHAR" />
+    <result column="ext3" property="ext3" jdbcType="VARCHAR" />
+    <result column="ext4" property="ext4" jdbcType="INTEGER" />
+    <result column="ext5" property="ext5" jdbcType="INTEGER" />
+    <result column="ext6" property="ext6" jdbcType="INTEGER" />
+    <result column="ext7" property="ext7" jdbcType="TIMESTAMP" />
+    <result column="ext8" property="ext8" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, checklist_id, item_detail_id, amount, weight, is_limit_debet, debt_second_settlement, is_send, created, created_by, last_updated, last_updated_by,
+    modification_number, row_id, parent_row_id, ext1, ext2, ext3, ext4, ext5, ext6, ext7, 
+    ext8
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from inv_invoice_out_checklist_detail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from inv_invoice_out_checklist_detail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.prcsteel.platform.order.model.model.InvoiceOutCheckListDetail" >
+    insert into inv_invoice_out_checklist_detail (id, checklist_id, item_detail_id, amount, weight,
+      is_limit_debet, debt_second_settlement, is_send,
+      created, created_by, last_updated, 
+      last_updated_by, modification_number, row_id, 
+      parent_row_id, ext1, ext2, 
+      ext3, ext4, ext5, ext6, 
+      ext7, ext8)
+    values (#{id,jdbcType=BIGINT}, #{checklistId,jdbcType=BIGINT}, #{itemDetailId,jdbcType=BIGINT}, #{amount,jdbcType=DECIMAL},#{weight,jdbcType=DECIMAL},
+      #{isLimitDebet,jdbcType=TINYINT}, #{debtSecondSettlement,jdbcType=DECIMAL}, #{isSend,jdbcType=TINYINT}, 
+      #{created,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, #{lastUpdated,jdbcType=TIMESTAMP}, 
+      #{lastUpdatedBy,jdbcType=VARCHAR}, #{modificationNumber,jdbcType=INTEGER}, #{rowId,jdbcType=VARCHAR}, 
+      #{parentRowId,jdbcType=VARCHAR}, #{ext1,jdbcType=VARCHAR}, #{ext2,jdbcType=VARCHAR}, 
+      #{ext3,jdbcType=VARCHAR}, #{ext4,jdbcType=INTEGER}, #{ext5,jdbcType=INTEGER}, #{ext6,jdbcType=INTEGER}, 
+      #{ext7,jdbcType=TIMESTAMP}, #{ext8,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.order.model.model.InvoiceOutCheckListDetail" >
+    insert into inv_invoice_out_checklist_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="checklistId != null" >
+        checklist_id,
+      </if>
+      <if test="itemDetailId != null" >
+        item_detail_id,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="weight != null" >
+        weight,
+      </if>
+      <if test="isLimitDebet != null" >
+        is_limit_debet,
+      </if>
+      <if test="debtSecondSettlement != null" >
+        debt_second_settlement,
+      </if>
+      <if test="isSend != null" >
+        is_send,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by,
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number,
+      </if>
+      <if test="rowId != null" >
+        row_id,
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id,
+      </if>
+      <if test="ext1 != null" >
+        ext1,
+      </if>
+      <if test="ext2 != null" >
+        ext2,
+      </if>
+      <if test="ext3 != null" >
+        ext3,
+      </if>
+      <if test="ext4 != null" >
+        ext4,
+      </if>
+      <if test="ext5 != null" >
+        ext5,
+      </if>
+      <if test="ext6 != null" >
+        ext6,
+      </if>
+      <if test="ext7 != null" >
+        ext7,
+      </if>
+      <if test="ext8 != null" >
+        ext8,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="checklistId != null" >
+        #{checklistId,jdbcType=BIGINT},
+      </if>
+      <if test="itemDetailId != null" >
+        #{itemDetailId,jdbcType=BIGINT},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="weight != null" >
+        #{weight,jdbcType=DECIMAL},
+      </if>
+      <if test="isLimitDebet != null" >
+        #{isLimitDebet,jdbcType=TINYINT},
+      </if>
+      <if test="debtSecondSettlement != null" >
+        #{debtSecondSettlement,jdbcType=DECIMAL},
+      </if>
+      <if test="isSend != null" >
+         #{isSend,jdbcType=TINYINT},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        #{parentRowId,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null" >
+        #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3 != null" >
+        #{ext3,jdbcType=VARCHAR},
+      </if>
+      <if test="ext4 != null" >
+        #{ext4,jdbcType=INTEGER},
+      </if>
+      <if test="ext5 != null" >
+        #{ext5,jdbcType=INTEGER},
+      </if>
+      <if test="ext6 != null" >
+        #{ext6,jdbcType=INTEGER},
+      </if>
+      <if test="ext7 != null" >
+        #{ext7,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ext8 != null" >
+        #{ext8,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.order.model.model.InvoiceOutCheckListDetail" >
+    update inv_invoice_out_checklist_detail
+    <set >
+      <if test="checklistId != null" >
+        checklist_id = #{checklistId,jdbcType=BIGINT},
+      </if>
+      <if test="itemDetailId != null" >
+        item_detail_id = #{itemDetailId,jdbcType=BIGINT},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="weight != null" >
+        weight = #{weight,jdbcType=DECIMAL},
+      </if>
+      <if test="isLimitDebet != null" >
+        is_limit_debet = #{isLimitDebet,jdbcType=TINYINT},
+      </if>
+      <if test="debtSecondSettlement != null" >
+        debt_second_settlement = #{debtSecondSettlement,jdbcType=DECIMAL},
+      </if>
+      <if test="isSend != null" >
+        is_send = #{isSend,jdbcType=DECIMAL},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number = #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        row_id = #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null" >
+        ext1 = #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        ext2 = #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3 != null" >
+        ext3 = #{ext3,jdbcType=VARCHAR},
+      </if>
+      <if test="ext4 != null" >
+        ext4 = #{ext4,jdbcType=INTEGER},
+      </if>
+      <if test="ext5 != null" >
+        ext5 = #{ext5,jdbcType=INTEGER},
+      </if>
+      <if test="ext6 != null" >
+        ext6 = #{ext6,jdbcType=INTEGER},
+      </if>
+      <if test="ext7 != null" >
+        ext7 = #{ext7,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ext8 != null" >
+        ext8 = #{ext8,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.order.model.model.InvoiceOutCheckListDetail" >
+    update inv_invoice_out_checklist_detail
+    set checklist_id = #{checklistId,jdbcType=BIGINT},
+      item_detail_id = #{itemDetailId,jdbcType=BIGINT},
+      amount = #{amount,jdbcType=DECIMAL},
+      weight = #{weight,jdbcType=DECIMAL},
+      is_limit_debet = #{isLimitDebet,jdbcType=TINYINT},
+      debt_second_settlement = #{debtSecondSettlement,jdbcType=DECIMAL},
+      is_send = #{isSend,jdbcType=TINYINT},
+      created = #{created,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      modification_number = #{modificationNumber,jdbcType=INTEGER},
+      row_id = #{rowId,jdbcType=VARCHAR},
+      parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      ext1 = #{ext1,jdbcType=VARCHAR},
+      ext2 = #{ext2,jdbcType=VARCHAR},
+      ext3 = #{ext3,jdbcType=VARCHAR},
+      ext4 = #{ext4,jdbcType=INTEGER},
+      ext5 = #{ext5,jdbcType=INTEGER},
+      ext6 = #{ext6,jdbcType=INTEGER},
+      ext7 = #{ext7,jdbcType=TIMESTAMP},
+      ext8 = #{ext8,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <resultMap id="resultMapChecklistDetailDto" type="com.prcsteel.platform.order.model.dto.ChecklistDetailDto" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="apply_time" property="applyTime" jdbcType="DATE" />
+    <result column="buyer_name" property="buyerName" jdbcType="VARCHAR" />
+    <result column="nsort_name" property="nsortName" jdbcType="VARCHAR" />
+    <result column="material" property="material" jdbcType="VARCHAR" />
+    <result column="spec" property="spec" jdbcType="VARCHAR" />
+    <result column="weight" property="weight" jdbcType="DECIMAL" />
+    <result column="amount" property="amount" jdbcType="DECIMAL" />
+    <result column="org_name" property="orgName" jdbcType="VARCHAR" />
+    <result column="type_of_spec" property="typeOfSpec" jdbcType="VARCHAR" />
+    <result column="invoice_type" property="invoiceType" jdbcType="VARCHAR" />
+    <result column="totalAmount" property="totalAmount" jdbcType="DECIMAL" />
+    <result column="totalWeight" property="totalWeight" jdbcType="DECIMAL" />
+  </resultMap>
+
+  <select id="queryByCondition" parameterType="com.prcsteel.platform.order.model.query.ChecklistDetailQuery" resultMap="resultMapChecklistDetailDto">
+    SELECT iioc.id, iioc.created AS apply_time, 
+    case when (
+		SELECT
+			count(*)
+		FROM
+			cust_account ca
+		WHERE
+			ca.parent_id = iioa.buyer_id
+	) > 1 
+	then CONCAT(iioa.buyer_name,'【',iioa.department_name,'】') 
+	else iioa.buyer_name end buyer_name, iioid.nsort_name, 
+    IFNULL(account.check_invoice_type,cae.invoice_type) AS invoice_type,
+            iioid.material, iioid.spec, iiocd.weight, iiocd.amount, bo.name AS org_name,in_detail.type_of_spec type_of_spec
+    FROM inv_invoice_out_checklist_detail iiocd
+      LEFT JOIN inv_invoice_out_checklist iioc ON iiocd.checklist_id = iioc.id
+      LEFT JOIN inv_invoice_out_item_detail iioid ON iioid.id = iiocd.item_detail_id
+      LEFT JOIN inv_invoice_out_apply_detail iioa ON iioa.id = iioid.apply_detail_id
+      LEFT JOIN base_organization bo ON bo.id = iioc.org_id
+      LEFT JOIN inv_invoice_in_detail in_detail on iioid.inv_invoice_in_detail_id=in_detail.id
+      LEFT JOIN cust_account account on account.id = iioa.buyer_id
+      LEFT JOIN cust_account_ext cae on cae.cust_account_id = account.id
+    WHERE iioa.is_deleted = 0
+    <if test="id!=null">
+      AND iioc.id=#{id, jdbcType=BIGINT}
+    </if>
+    <if test="beginTime!=null">
+      AND <![CDATA[date_format(iioa.created,'%Y-%m-%d')>=#{beginTime} ]]>
+    </if>
+    <if test="endTime!=null">
+      AND <![CDATA[date_format(iioa.created,'%Y-%m-%d')<=#{endTime} ]]>
+    </if>
+    <if test="buyerName!=null">
+      AND iioa.buyer_name LIKE CONCAT('%',#{buyerName},'%')
+    </if>
+    <if test="orgIds != null">
+         AND iioc.org_id IN
+         <foreach item="id" index="index" collection="orgIds" open="(" separator="," close=")">
+             #{id}
+         </foreach>
+    </if>
+    LIMIT #{start, jdbcType=INTEGER}, #{length, jdbcType=INTEGER}
+  </select>
+
+	<!-- tuxianming 根据条件查询求和总价格， 和总重量  -->
+  <select id="queryByConditionTotal" parameterType="com.prcsteel.platform.order.model.query.ChecklistDetailQuery" resultMap="resultMapChecklistDetailDto">
+    SELECT 
+		sum(iiocd.weight) as totalWeight, sum(iiocd.amount) as totalAmount
+    FROM inv_invoice_out_checklist_detail iiocd
+      LEFT JOIN inv_invoice_out_checklist iioc ON iiocd.checklist_id = iioc.id
+      LEFT JOIN inv_invoice_out_item_detail iioid ON iioid.id = iiocd.item_detail_id
+      LEFT JOIN inv_invoice_out_apply_detail iioa ON iioa.id = iioid.apply_detail_id
+      LEFT JOIN base_organization bo ON bo.id = iioc.org_id
+      LEFT JOIN inv_invoice_in_detail in_detail on iioid.inv_invoice_in_detail_id=in_detail.id
+      LEFT JOIN cust_account account on account.id = iioa.buyer_id
+    WHERE iioa.is_deleted = 0
+    <if test="id!=null">
+      AND iioc.id=#{id, jdbcType=BIGINT}
+    </if>
+    <if test="beginTime!=null">
+      AND <![CDATA[date_format(iioa.created,'%Y-%m-%d')>=#{beginTime} ]]>
+    </if>
+    <if test="endTime!=null">
+      AND <![CDATA[date_format(iioa.created,'%Y-%m-%d')<=#{endTime} ]]>
+    </if>
+    <if test="buyerName!=null">
+      AND iioa.buyer_name LIKE CONCAT('%',#{buyerName},'%')
+    </if>
+    <if test="orgIds != null">
+         AND iioc.org_id IN
+         <foreach item="id" index="index" collection="orgIds" open="(" separator="," close=")">
+             #{id}
+         </foreach>
+    </if>
+  </select>
+
+  <select id="countByCondition" parameterType="com.prcsteel.platform.order.model.query.ChecklistDetailQuery" resultType="Integer">
+    SELECT COUNT(iioc.id)
+    FROM inv_invoice_out_checklist_detail iiocd
+    LEFT JOIN inv_invoice_out_checklist iioc ON iiocd.checklist_id = iioc.id
+    LEFT JOIN inv_invoice_out_item_detail iioid ON iioid.id = iiocd.item_detail_id
+    LEFT JOIN inv_invoice_out_apply_detail iioa ON iioa.id = iioid.apply_detail_id
+    LEFT JOIN base_organization bo ON bo.id = iioc.org_id
+    WHERE iioa.is_deleted = 0
+    <if test="id!=null">
+      AND iioc.id=#{id, jdbcType=BIGINT}
+    </if>
+    <if test="beginTime!=null">
+      AND <![CDATA[date_format(iioa.created,'%Y-%m-%d')>=#{beginTime} ]]>
+    </if>
+    <if test="endTime!=null">
+      AND <![CDATA[date_format(iioa.created,'%Y-%m-%d')<=#{endTime} ]]>
+    </if>
+    <if test="buyerName!=null">
+      AND iioa.buyer_name LIKE CONCAT('%',#{buyerName},'%')
+    </if>
+    <if test="orgIds != null">
+         AND iioc.org_id IN
+         <foreach item="id" index="index" collection="orgIds" open="(" separator="," close=")">
+             #{id}
+         </foreach>
+    </if>
+  </select>
+  
+  <!-- 根据买家得到所有的已开销项金额之和 -->
+  <select id="querySumAmountByBuyerId" resultType="java.math.BigDecimal" parameterType="java.lang.Long">
+    	select sum(IFNULL(k.amount, 0)), k2.buyer_id, k2.buyer_name
+		from inv_invoice_out_checklist_detail as k
+		left join inv_invoice_out_item_detail as k1 on k.item_detail_id =  k1.id
+		left join inv_invoice_out_apply_detail as k2 on k2.id = k1.apply_detail_id
+		left join inv_invoice_out_checklist as k3 on k3.id = k.checklist_id
+		where k2.buyer_id = #{buyerId, jdbcType=BIGINT} and k3.status='INVOICED'
+    </select>
+  
+  	<!-- 留存销项报表 add by tuxianming 20160621 -->
+    <resultMap id="UnsendInvoiceOutMap" type="com.prcsteel.platform.order.model.dto.UnSendInvoiceOutDto" >
+		<result column="buyer_id" property="buyerId" jdbcType="BIGINT" />
+		<result column="checklist_id" property="checklistId" jdbcType="BIGINT" />
+		<result column="checklist_detail_id" property="checklistDetailId" jdbcType="BIGINT" />
+		<result column="is_send" property="isSend" jdbcType="TINYINT" />
+		<result column="buyer_name" property="buyerName" jdbcType="VARCHAR" />
+		<result column="code" property="orderCode" jdbcType="VARCHAR" />
+		<result column="nsort_name" property="nsortName" jdbcType="VARCHAR" />
+		<result column="spec" property="spec" jdbcType="VARCHAR" />
+		<result column="weight" property="weight" jdbcType="DECIMAL" />
+		<result column="amount" property="amount" jdbcType="DECIMAL" />
+		<result column="org_id" property="orgId" jdbcType="BIGINT" />
+		<result column="org_name" property="orgName" jdbcType="VARCHAR" />
+		<result column="is_limit_debet" property="isLimitDebet" jdbcType="TINYINT" />
+		<result column="created" property="created" jdbcType="TIMESTAMP" />
+		<result column="buyer_credential_status" property="buyerCredentialStatus" jdbcType="VARCHAR" />
+		<result column="seller_credential_status" property="sellerCredentialStatus" jdbcType="VARCHAR" />
+		<result column="balance_second_settlement" property="balanceSecondSettlement" jdbcType="DECIMAL" />
+		<result column="invoice_type" property="invoiceType" jdbcType="VARCHAR" />
+	</resultMap>
+
+  <!-- 留存销项报表： 查询已经生成的销项清单数据，满足下列三个条件的任意一个条件，都是所需数据 -->
+  <!-- 买家凭证审核不同的； 卖家凭证审核不通过的； 二结欠款小于系统设置的最大欠款额度的 -->
+  <select id="queryUnsendInvoiceOut" parameterType="com.prcsteel.platform.order.model.query.ChecklistDetailQuery" resultMap="UnsendInvoiceOutMap">
+    select 
+		f.buyer_id, f.buyer_name, f.checklist_id,f.checklist_detail_id, f.is_send, f.code, f.nsort_name, f.spec, 
+		f.weight, f.amount, f.org_id, f.org_name, date_format(f.created,'%Y-%m-%d') as created, f.invoice_type,
+		f.is_limit_debet, 
+		<!-- is_limit_debet==true, 表示二结欠款小于系统设置的最大欠款额度，所以取固化是的欠款金额debt_second_settlement， 否则：取客户正常二结欠款 -->
+		if(f.is_limit_debet, f.debt_second_settlement, f.balance_second_settlement) as balance_second_settlement,
+		
+		<!-- 如果：buyer_check_value=1，则审核通过，否则：检查凭证里面的status, 是什么状态就显示什么状态 -->
+		IF(f.buyer_check_value=1, 
+			IF(f.buyer_credential_status = 'APPROVED' OR f.batch_buyer_credential_status = 'APPROVED', '审核通过', 
+				IF(f.buyer_credential_status = 'PENDING_SUBMIT' OR f.batch_buyer_credential_status = 'PENDING_SUBMIT' OR (f.buyer_credential_status is null and f.batch_buyer_credential_status is null), '待提交', 
+					IF(f.buyer_credential_status = 'PENDING_APPROVAL' OR f.batch_buyer_credential_status = 'PENDING_APPROVAL', '待审核', '审核不通过')
+				)
+			), 
+			'审核通过'
+		) as buyer_credential_status, 
+		
+		<!-- 如果：seller_check_value=1，则审核通过，否则：检查凭证里面的status, 是什么状态就显示什么状态 -->
+		IF(f.seller_check_value=1, 
+			IF(f.seller_credential_status = 'APPROVED' OR f.batch_seller_credential_status = 'APPROVED', '审核通过', 
+				IF(f.seller_credential_status = 'PENDING_SUBMIT' OR f.batch_seller_credential_status = 'PENDING_SUBMIT' or (f.seller_credential_status is null and f.batch_seller_credential_status is null), '待提交',			
+					IF(f.seller_credential_status = 'PENDING_APPROVAL' OR f.batch_seller_credential_status = 'PENDING_APPROVAL', '待审核', '审核不通过')
+				)
+			), 
+			'审核通过'
+		) as seller_credential_status
+		
+		<!-- 以下信息用来做调试的 -->
+		<!-- 
+		,f.buyer_check_value, f.buyer_credential_status, f.batch_buyer_credential_status
+		,f.seller_check_value, f.seller_credential_status, f.batch_seller_credential_status
+		-->
+	FROM(
+		select t.buyer_id, t.buyer_name, t3.id as checklist_id, t2.id as checklist_detail_id, t2.is_send, t6.code, t1.nsort_name, t1.spec, 
+			t2.weight, t2.amount, t0.org_id, t0.org_name, t3.created, a.balance_second_settlement,
+			t2.is_limit_debet, t2.debt_second_settlement, 
+			<!-- 买家凭证审核是不是需要审核， 1： 需要|0，-1，不需要-->
+			CASE (
+				SELECT k3.setting_value
+				FROM cust_account as k2,
+					base_sys_setting as k3  
+				WHERE k2.id = t5.seller_id
+					AND k2.supplier_label = k3.setting_name
+					AND k3.setting_type='client_type'        
+					AND k3.display_name='买家凭证'
+			) WHEN '1' THEN 1 WHEN '0' THEN 0 ELSE -1 END
+			as buyer_check_value, 
+			
+			<!-- 卖家凭证审核是不是需要审核， 1： 需要|0，-1，不需要-->
+			CASE (
+				SELECT k3.setting_value
+				FROM cust_account as k2,
+					base_sys_setting as k3  
+				WHERE k2.id = t5.seller_id
+					AND k2.supplier_label = k3.setting_name
+					AND k3.setting_type='client_type'        
+					AND k3.display_name='卖家凭证'
+			) WHEN '1' THEN 1 WHEN '0' THEN 0 ELSE -1 END
+			as seller_check_value,
+			
+			coc.status as buyer_credential_status, 
+			coc1.status as batch_buyer_credential_status, 
+			coc2.status as seller_credential_status, 
+			coc3.status as batch_seller_credential_status,
+			
+			IFNULL(a1.check_invoice_type,ae.invoice_type) AS invoice_type
+		FROM
+			inv_invoice_out_apply as t0
+			left join inv_invoice_out_apply_detail as t on t0.id = t.invoice_out_apply_id
+			left join inv_invoice_out_item_detail as t1 on t.id = t1.apply_detail_id
+			left join inv_invoice_out_checklist_detail as t2 on t1.id = t2.item_detail_id
+			
+			left join inv_invoice_out_checklist as t3 ON t3.id = t2.checklist_id 
+			
+			left join busi_consign_order_items as t5 ON t5.id = t1.order_detail_id
+			left join busi_consign_order as t6 ON t5.order_id = t6.id
+			
+			left join cust_account as a ON a.id = t.department_id
+			
+			left join cust_account as a1 ON a1.id = t.buyer_id 
+			left join cust_account_ext ae on ae.cust_account_id = a1.id
+			
+			left join busi_consign_order_credential as coc ON t6.buyer_credential_code = coc.credential_code
+			left join busi_consign_order_credential as coc1 ON t6.batch_buyer_credential_code = coc1.credential_code
+			left join busi_consign_order_credential as coc2 ON t5.seller_credential_code = coc2.credential_code
+			left join busi_consign_order_credential as coc3 ON t5.batch_seller_credential_code = coc3.credential_code
+		<where> t0.is_deleted != 1 
+			AND t.is_deleted != 1
+			AND t1.is_deleted != 1
+			AND t3.send_status = 'UNSEND' 
+			<if test="id!=null">
+		      AND t3.id=#{id, jdbcType=BIGINT}
+		    </if>
+			<if test="isSend!=null">
+				<if test="isSend == true">
+			      AND t2.is_send=#{isSend, jdbcType=TINYINT}
+				</if>
+				<if test="isSend == false">
+			      AND (t2.is_send=#{isSend, jdbcType=TINYINT} or t2.is_send is null)
+				</if>
+		    </if>
+		    <if test="beginTime!=null">
+		      AND <![CDATA[date_format(t3.created,'%Y-%m-%d')>=#{beginTime} ]]>
+		    </if>
+		    <if test="endTime!=null">
+		      AND <![CDATA[date_format(t3.created,'%Y-%m-%d')<=#{endTime} ]]>
+		    </if>
+		    <if test="buyerId!=null">
+		      AND t.buyer_id = #{buyerId, jdbcType=BIGINT}
+		    </if>
+		    <if test="orgIds != null">
+		         AND t0.org_id IN
+		         <foreach item="id" index="index" collection="orgIds" open="(" separator="," close=")">
+		             #{id}
+		         </foreach>
+		    </if>
+		    <if test="orderCode != null">
+		      AND t6.code = #{orderCode, jdbcType=VARCHAR}
+		    </if>
+    	</where>
+		GROUP BY t2.id
+	) as f
+	<where>
+		<!-- 满足一下三个条件的任意一个的。 -->
+		<!-- 买家凭证需要审核，  并且buyer_credential_status，batch_buyer_credential_status都没有审核通过 -->
+		( 
+			f.buyer_check_value = '1' 
+			AND (f.buyer_credential_status is null or f.buyer_credential_status != 'APPROVED') 
+			AND (f.batch_buyer_credential_status is null or f.batch_buyer_credential_status != 'APPROVED') 
+		) 
+	
+		<!-- 卖家凭证需要审核，  并且seller_credential_status，batch_seller_credential_status都没有审核通过 -->
+		OR 
+		(
+			f.seller_check_value = '1' 
+			AND (f.seller_credential_status is null or f.seller_credential_status != 'APPROVED') 
+			AND (f.batch_seller_credential_status is null or f.batch_seller_credential_status != 'APPROVED')
+		) 
+		<!-- 二结余额小于0， 并且超过了系统设置的最大欠款数的 -->
+		OR f.is_limit_debet = false
+			
+	</where>		
+    <if test="start != -1 and length != -1">
+     	LIMIT #{start, jdbcType=INTEGER}, #{length, jdbcType=INTEGER}
+    </if>
+  </select>
+  
+  <select id="totalUnsendInvoiceOut" parameterType="com.prcsteel.platform.order.model.query.ChecklistDetailQuery" resultType="Integer">
+    select 
+		count(1)
+	FROM(
+		select t3.id as checklist_id, a.balance_second_settlement, t2.is_limit_debet,
+			
+			<!-- 买家凭证审核是不是需要审核， 1： 需要|0，-1，不需要-->
+			CASE (
+				SELECT k3.setting_value
+				FROM cust_account as k2,
+					base_sys_setting as k3  
+				WHERE k2.id = t5.seller_id
+					AND k2.supplier_label = k3.setting_name
+					AND k3.setting_type='client_type'        
+					AND k3.display_name='买家凭证'
+			) WHEN '1' THEN 1 WHEN '0' THEN 0 ELSE -1 END
+			as buyer_check_value, 
+			
+			<!-- 卖家凭证审核是不是需要审核， 1： 需要|0，-1，不需要-->
+			CASE (
+				SELECT k3.setting_value
+				FROM cust_account as k2,
+					base_sys_setting as k3  
+				WHERE k2.id = t5.seller_id
+					AND k2.supplier_label = k3.setting_name
+					AND k3.setting_type='client_type'        
+					AND k3.display_name='卖家凭证'
+			) WHEN '1' THEN 1 WHEN '0' THEN 0 ELSE -1 END
+			as seller_check_value,
+			
+			coc.status as buyer_credential_status, 
+			coc1.status as batch_buyer_credential_status, 
+			coc2.status as seller_credential_status, 
+			coc3.status as batch_seller_credential_status
+		FROM
+			inv_invoice_out_apply as t0
+			left join inv_invoice_out_apply_detail as t on t0.id = t.invoice_out_apply_id
+			left join inv_invoice_out_item_detail as t1 on t.id = t1.apply_detail_id
+			left join inv_invoice_out_checklist_detail as t2 on t1.id = t2.item_detail_id
+			
+			left join inv_invoice_out_checklist as t3 ON t3.id = t2.checklist_id 
+			
+			left join busi_consign_order_items as t5 ON t5.id = t1.order_detail_id
+			left join busi_consign_order as t6 ON t5.order_id = t6.id
+			
+			left join cust_account as a ON a.parent_id = t.buyer_id
+			
+			left join busi_consign_order_credential as coc ON t6.buyer_credential_code = coc.credential_code
+			left join busi_consign_order_credential as coc1 ON t6.batch_buyer_credential_code = coc1.credential_code
+			left join busi_consign_order_credential as coc2 ON t5.seller_credential_code = coc2.credential_code
+			left join busi_consign_order_credential as coc3 ON t5.batch_seller_credential_code = coc3.credential_code
+		<where> t0.is_deleted != 1 
+			AND t.is_deleted != 1
+			AND t1.is_deleted != 1
+			AND t3.send_status = 'UNSEND' 
+			<if test="id!=null">
+		      AND t3.id=#{id, jdbcType=BIGINT}
+		    </if>
+		    <if test="isSend!=null">
+				<if test="isSend == true">
+			      AND t2.is_send=#{isSend, jdbcType=TINYINT}
+				</if>
+				<if test="isSend == false">
+			      AND (t2.is_send=#{isSend, jdbcType=TINYINT} or t2.is_send is null)
+				</if>
+		    </if>
+		    <if test="beginTime!=null">
+		      AND <![CDATA[date_format(t3.created,'%Y-%m-%d')>=#{beginTime} ]]>
+		    </if>
+		    <if test="endTime!=null">
+		      AND <![CDATA[date_format(t3.created,'%Y-%m-%d')<=#{endTime} ]]>
+		    </if>
+		    <if test="buyerId!=null">
+		      AND t.buyer_id = #{buyerId, jdbcType=BIGINT}
+		    </if>
+		    <if test="orgIds != null">
+		         AND t0.org_id IN
+		         <foreach item="id" index="index" collection="orgIds" open="(" separator="," close=")">
+		             #{id}
+		         </foreach>
+		    </if>
+    	</where>
+		GROUP BY t2.id
+	) as f
+	<where>
+		<!-- 满足一下三个条件的任意一个的。 -->
+		<!-- 买家凭证需要审核，  并且buyer_credential_status，batch_buyer_credential_status都没有审核通过 -->
+		( 
+			f.buyer_check_value = '1' 
+			AND (f.buyer_credential_status is null or f.buyer_credential_status != 'APPROVED') 
+			AND (f.batch_buyer_credential_status is null or f.batch_buyer_credential_status != 'APPROVED') 
+		) 
+	
+		<!-- 卖家凭证需要审核，  并且seller_credential_status，batch_seller_credential_status都没有审核通过 -->
+		OR 
+		(
+			f.seller_check_value = '1' 
+			AND (f.seller_credential_status is null or f.seller_credential_status != 'APPROVED') 
+			AND (f.batch_seller_credential_status is null or f.batch_seller_credential_status != 'APPROVED')
+		) 
+		<!-- 二结余额小于0， 并且超过了系统设置的最大欠款数的 -->
+		OR f.is_limit_debet = false
+	</where>	
+  </select>
+  
+	<resultMap id="InvoiceCheckListDetailMap" type="com.prcsteel.platform.order.model.dto.InvoiceOutCheckListDetailDto" extends="BaseResultMap">
+		<result column="buyer_id" property="buyerId" jdbcType="BIGINT" />
+	    <result column="is_limit_debet" property="isLimitDebet" jdbcType="TINYINT" />
+	    <result column="debt_second_settlement" property="debtSecondSettlement" jdbcType="DECIMAL"/>
+	    <result column="balance_second_settlement" property="balanceSecondSettlement" jdbcType="DECIMAL" />
+	</resultMap>
+
+	<!-- 查询所有不可寄出的销项详情 -->
+	<select id="queryDetail" parameterType="com.prcsteel.platform.order.model.query.ChecklistDetailQuery" resultMap="InvoiceCheckListDetailMap">
+		select
+			t0.buyer_id, t.id, t.checklist_id, t.item_detail_id, t.amount, t.weight, t.is_limit_debet, t.debt_second_settlement, t.created, t.created_by, t.last_updated, t.last_updated_by,
+		    t.modification_number, t.row_id, t.parent_row_id, t.ext1, t.ext2, t.ext3, t.ext4, t.ext5, t.ext6, t.ext7, 
+		    t.ext8, a.balance_second_settlement
+	    from inv_invoice_out_checklist_detail as t 
+			left join inv_invoice_out_item_detail as t1 on t1.id = t.item_detail_id
+			left join inv_invoice_out_apply_detail as t0  on t0.id = t1.apply_detail_id
+			left join cust_account as a ON a.id = t0.department_id
+		<where>
+			<if test="isLimitDebet != null and isLimitDebet == false">
+				and (t.is_limit_debet is null or t.is_limit_debet = false)
+			</if>
+			<if test="isLimitDebet != null and isLimitDebet == true">
+				and t.is_limit_debet = true
+			</if>
+		</where>
+	</select>
+  	<!-- end 留存销项报表 add by tuxianming 20160621 -->
+  	
+  	<!-- 更新是不是寄出状态 -->
+  	<update id="updateSend" parameterType="com.prcsteel.platform.order.model.model.InvoiceOutCheckListDetail" >
+    update inv_invoice_out_checklist_detail
+    <set >
+      <if test="isSend != null" >
+        is_send = #{isSend,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where id in <foreach item="id" index="index" collection="list" open="(" separator="," close=")">
+             #{id}
+         </foreach>
+  </update>
+</mapper>

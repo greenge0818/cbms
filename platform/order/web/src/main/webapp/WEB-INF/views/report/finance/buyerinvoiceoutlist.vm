@@ -1,0 +1,69 @@
+<div class="breadcrumbs" id="breadcrumbs">
+	<script type="text/javascript">
+		try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+	</script>
+
+	<ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+         	   财务报表 	
+        </li>
+        <li class="active">
+            客户销项报表
+        </li>
+	</ul><!-- /.breadcrumb -->
+
+		#parse("layout/topbtn.vm")<!-- /.nav-search -->
+</div>
+
+<div class="page-content">
+	<div class="row">
+		<div class="col-xs-12">
+			<!-- PAGE CONTENT BEGINS -->
+
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="clearfix search-bar">
+						<div class="clearfix">
+						<form id="searchForm" class="form-inline input-group">
+							<label>客户名称：</label>
+							<input placeholder="客户名称" id="buyer_name" type="text" class="ipt-text" value="">
+							<label>时间：</label>
+                            <input id="startTime" class="Wdate" type="text" value="$!{startTime}"
+                                       onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')||\'2030-10-01\'}', minDate:'2016-01-01'})"/> -
+                            <input id="endTime" class="Wdate" type="text"  value="$!{endTime}"
+                                   onFocus="WdatePicker({minDate:'#F{$dp.$D(\'startTime\')||\'2016-01-01\'}',maxDate:'2030-10-01'})"/>
+							
+                            <button id="queryBtn" class="btn btn-sm btn-default" type="button" title="搜索">
+                                <i class="ace-icon fa fa-search bigger-110"></i>搜索
+                            </button>
+	                         <button type="button" class="btn btn-sm btn-default" id="export_to_excel">导出到EXCEL</button>
+						</form>
+                        </div>
+					</div>
+
+					<!-- div.dataTables_borderWrap -->
+					<div>
+						<table id="dynamic-table" class="table table-striped table-bordered table-hover">
+							<thead>
+								<tr>
+									<!--<th><label class='checkbox'><input class='ace' id='selectAll' type='checkbox' value='' name='status'><span class='lbl'></span></label></th>
+									-->
+									<th>客户名称</th>
+									<th>期初未开销项金额（元）</th>
+									<th>销售实提金额（元）</th>
+									<th>已开销项金额（元）</th>
+									<th>未开销项金额（元）</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+
+		</div><!-- /.col -->
+	</div><!-- /.row -->
+</div><!-- /.page-content -->
+
+<script src="$link.getContextPath()/js/views/report/finance/buyerinvoiceoutlist.js"></script>      

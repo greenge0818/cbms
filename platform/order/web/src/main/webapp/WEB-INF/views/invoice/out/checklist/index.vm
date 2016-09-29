@@ -1,0 +1,103 @@
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            	发票管理
+        </li>
+        <li>销项票管理  </li>
+        <li class="active">待开票</li>
+    </ul>
+    <!-- /.breadcrumb -->
+</div>
+#if($error)
+    <p>非法请求！</p>
+#else
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <!--TAPBAR-->
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+
+                    <div class="clearfix">
+                        <div class="input-group pull-right col-md-12 col-sm-12 col-lg-12 search-bar text-left">
+                            <form class="form-inline">
+                                <div style="float:left;">
+                                    #if($id && $id==0)
+                                        全部开票清单
+                                    #else
+                                        开票清单    清单编号：$!{checklist.id}    生成时间：$!date.format('yyyy-MM-dd',$!{checklist.created})   申请开票金额（元）：$!{checklist.amount}
+                                    #end
+                                </div>
+                                <label style="display: #if($id && $id==0)  #else none #end">清单编号：<input id="checkListId" class="ipt-text" type="text" maxlength='50'
+                                                  value="#if($id && $id>0)$!{id}#end"/></label>
+                                <label style="display: #if($id && $id==0)  #else none #end">时间申请：</label>
+                                <input style="display: #if($id && $id==0)  #else none #end" id="beginTime" class="Wdate" type="text" value="$!{beginTime}"
+                                       readonly="readonly"
+                                       onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')||\'%y-%M-%d\'}'})"/>
+                                <input style="display: #if($id && $id==0)  #else none #end" id="endTime" class="Wdate" type="text" value="$!{endTime}" readonly="readonly"
+                                       onFocus="WdatePicker({minDate:'#F{$dp.$D(\'beginTime\')}',maxDate:'%y-%M-%d'})"/>
+                                <label>买家全称：<input id="buyerName" class="ipt-text" type="text" maxlength='50' value=""/></label>
+                                <button id="queryBtn" class="btn btn-sm btn-default" type="button" title="搜索">
+                                    <i class="aace-icon fa fa-search bigger-110"></i>搜索
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    #if($shiro.hasPermission("invoice:out:checklist:export"))
+                    <button type="button" class="btn btn-info btn-sm btn-export" >导出全部到EXCEL</button>
+                    #end
+                    <!-- div.dataTables_borderWrap -->
+                    <div>
+                        <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th class="#if($checklist)none#end">清单编号</th>
+                                <th class="#if($checklist)none#end">申请时间</th>
+                                <th>买家名称</th>
+                                <th>货物或应税劳务、服务名称</th>
+                                <th>规格</th>
+                                <th>数量（吨）</th>
+                                <th>价税合计（元）</th>
+                                <th>服务中心</th>
+                                <th>发票类型</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    #if($shiro.hasPermission("invoice:out:checklist:export"))
+                        <button type="button" class="btn btn-info btn-sm btn-export" >导出全部到EXCEL</button>
+                    #end
+                    <button type="button" class="btn btn-info btn-sm go-back">返回</button>
+                </div>
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+
+<script type="text/javascript">
+#if($checklist)
+    var hidden = true;
+#else
+    var hidden = false;
+#end
+var _specSignList = {
+#foreach($specSign in ${specSignList})
+"$!{specSign.settingValue}":"$!{specSign.displayName}",
+#end
+'':''
+};
+</script>
+
+<script src="$link.getContextPath()/js/views/invoice/out/checklist/index.js"></script>
+#end

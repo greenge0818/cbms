@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.order.persist.dao.ConsignOrderSettleDao" >
+  <resultMap id="SettleInfoMap" type="com.prcsteel.platform.order.model.dto.ConsignOrderSettleDto" >
+    <id column="account_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="account_type" property="accountType" jdbcType="VARCHAR" />
+    <result column="bank_name" property="account_BankName" jdbcType="VARCHAR" />
+    <result column="bank_account_code" property="account_BankCode" jdbcType="BIGINT" />
+    <result column="contact_tel" property="account_Tel" jdbcType="VARCHAR" />
+    <result column="addr" property="account_Address" jdbcType="BIGINT" />
+    <result column="total_amount" property="amount" jdbcType="DECIMAL" />
+    <result column="settle_amount" property="settleAmount" jdbcType="DECIMAL" />
+    <result column="balance" property="balance" jdbcType="DECIMAL" />
+  </resultMap>
+
+  <select id="getBuyerSettleInfo" resultMap="SettleInfoMap" parameterType="java.lang.Long" >
+    select 'buyer' account_type, t2.account_name,concat(t4.bank_name_main, t4.bank_name_branch) bank_name,
+    t4.account_code bank_account_code,t2.contact_tel,t4.addr,round(t2.total_contract_releted_amount, 2) total_amount,
+    sum(round(t1.actual_pick_weight_server*t1.deal_price, 2)) settle_amount, t3.balance
+    from busi_consign_order_items t1
+    left join busi_consign_order t2 on t2.id=t1.order_id
+    left join cust_account t3 on t2.account_id=t3.id
+     left join cust_account_ext t4 on t4.cust_account_id = t3.id
+    where t2.id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="getSellerSettleInfo" resultMap="SettleInfoMap" parameterType="java.lang.Long" >
+  	SELECT t.account_type,t.account_name,t.consign_order_id,t.contact_tel,t.addr,t.settle_amount,t.balance,
+	t6.receiver_bank_name bank_name,t6.receiver_account_code bank_account_code,
+	sum(ROUND(t6.pay_amount + t6.second_balance_takeout + t6.credit_used_repay,2)) total_amount
+	FROM(
+	select 'seller' account_type, t3.name account_name, t2.id consign_order_id,t7.tel contact_tel,t7.addr, 
+	sum(round(actual_pick_weight_server*cost_price, 2)) settle_amount, t3.balance 
+	from busi_consign_order_items t1 
+	left join busi_consign_order t2 on t2.id=t1.order_id 
+	left join cust_account t3 on t1.seller_id=t3.id 
+	left join cust_account_ext t7 on t7.cust_account_id = t3.id 
+	where t2.id = #{id,jdbcType=BIGINT}  group by t3.id) t
+	LEFT JOIN busi_pay_request t5 on t5.consign_order_id = t.consign_order_id
+	left join busi_pay_request_items t6 on t6.request_id = t5.id 
+  </select>
+</mapper>

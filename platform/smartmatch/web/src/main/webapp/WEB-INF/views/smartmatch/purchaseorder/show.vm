@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<div class="breadcrumbs" id="breadcrumbs">
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            智能找货
+        </li>
+		<li class="active">采购单管理</li>
+        <li class="active">采购单详情</li>
+    </ul>
+    <!-- /.breadcrumb -->
+</div>
+<!-- content S -->
+<div class="page-content">
+    <div>
+		<div class="pull-left" style="margin-top:10px;text-align:center; width:100%; height:60px;font-size:24px;">  
+            <span class="logo-bar bolder btn-sm" style="font-size:40px; background:#B22222; color:#FFF; font-family:宋体;">采购单详情</span>
+        </div>
+        <div>
+			<span>采购单状态：$!purchaseOrder.purchaseStatus</span>
+			<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+			<span>时间：$!date.format('yyyy-MM-dd HH:mm',$!purchaseOrder.lastUpdated)</span>
+			<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+			<span>关闭原因：$!{purchaseOrder.getCloseReason()}</span>
+		</div>
+        <table class="contable">
+            <tbody>
+            <tr>
+                <td class="bg-gray">采购单号</td>
+                <td>$!purchaseOrder.code<input type="hidden" id="purchaseOrderId" value="$!purchaseOrder.id"/></td>
+                <td class="bg-gray">生成时间</td>
+                <td>$!date.format('yyyy-MM-dd HH:mm',$!purchaseOrder.created)</td>
+                <td class="bg-gray">交易员</td>
+                <td>$!purchaseOrder.ownerName</td>
+            </tr>
+            <tr>
+                <td class="bg-gray">买家</td>
+                <td>$!purchaseOrder.buyerName</td>
+                <td class="bg-gray">买家联系人</td>
+                <td>$!purchaseOrder.contact</td>
+                <td class="bg-gray">买家电话</td>
+                <td>$!purchaseOrder.tel</td>
+            </tr>
+            <tr>
+                <td class="bg-gray">交货地</td>
+                <td>$!purchaseOrder.deliveryCity</td>
+                <td class="bg-gray">采购地</td>
+                <td colspan="3">$!purchaseOrder.purchaseOtherCity</td>
+            </tr>
+            <tr>
+                <td class="bg-gray">备注</td>
+                <td colspan="5">$!purchaseOrder.remark</td>
+            </tr>
+            </tbody>
+		</table>
+    </div>
+	
+	<hr style="height:0.5px;border:none;border-top:1px dashed #B22222;" />
+
+    <div>
+		<span>采购单明细：</span>
+        <div>
+            <table id="purchaseItemsTable" class="table table-bordered table-hover check">
+                <thead>
+                <tr>
+                    <th style='width: 145px'>品名</th>
+                    <th style='width: 253px'>材质</th>
+                    <th style='width: 257px'>规格</th>
+                    <th style='width: 213px'>厂家</th>
+                    <th style='width: 105px'>数量</th>
+                    <th style='width: 143px'>重量(吨)</th>
+                </tr>
+                </thead> 
+				<tbody>
+				</tbody>
+            </table>
+        </div>
+    </div>
+	
+    <div id='quotation'>
+	</div>
+	
+	<div class="btn-bar">
+		<a class="btn btn-sm btn-info confirm" style="font-size:15px;" id="return">返回</a>
+	</div>
+	
+</div><!-- /.page-content -->
+
+<!-- content E -->
+<script src="$link.getContextPath()/js/views/smartmatch/purchaseorder/purchaseShow.js"></script>

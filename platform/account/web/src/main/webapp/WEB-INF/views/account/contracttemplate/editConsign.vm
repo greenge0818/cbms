@@ -1,0 +1,102 @@
+<!-- 代运运营协议界面 -->
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="#">客户管理</a>
+        </li>
+        <li>
+            <i class="ace-icon fa"></i>
+            <a href="$link.getContextPath()/company/list.html">我的客户</a>
+        </li>
+        <li class="active">
+            编辑卖家代运营协议
+        </li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+</div>
+
+<div class="page-content print-page">
+    <div class="row">
+        <div class="col-xs-12">
+
+            <!-- PAGE CONTENT BEGINS -->
+            <!-- table-bar-->
+            <div id="print1" class="table-bar tab-pane in active">
+                <h1 class="bolder text-center clearfix"><span class="logo-bar print-logo pull-left"><img
+                        src="$link.getContextPath()/img/print-logo.png"/></span><span style="margin-right:100px">钢为网代运营委托协议</span>
+                </h1>
+                <table class="contable print-table border0 mg-t-35">
+                    <tbody class="border0">
+                    <tr>
+                        <td colspan="5">甲方：$!{info.companyName}</td>
+                        <td colspan="5">合同编号：--</td>
+                    </tr>
+                    <tr>
+                        <td colspan="10">乙方：杭州钢为网络科技有限公司</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <form id="contracttemplateForm" action="$link.getContextPath()/agreementTemplate/submitconsign.html"
+                      method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="accountId" value="$!{info.currentCompanyId}" id="accountId"/>
+                        <textarea cols="150" rows="70" name="content" id="content" must="1">
+                            $!{info.content}
+                        </textarea>
+
+                    <div class="pd-t-15">
+                        <table class="contable print-table border0">
+                            <tbody>
+                            <tr>
+                                <td width="90">甲方：</td><td colspan="5" width="200">$!{info.companyName}</td><td width="90">乙方：</td><td colspan="3" width="200">杭州钢为网络科技有限公司</td>
+                            </tr>
+
+                            <tr>
+                                <td>法定代表人<br>(授权代表)：</td><td colspan="5"></td><td>法定代表人<br>(授权代表)：</td><td colspan="3"></td>
+                            </tr>
+                            <tr>
+                                <td>日期：</td><td colspan="5"></td>
+                                <td>日期：</td><td colspan="3"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="btn-bar text-center">
+                        <input type="hidden" value="$!{isReload}" id="isReload"/>
+                        <button type="submit" id="btnSubmit" class="btn btn-primary"><i class="fa fa-submit"></i>提交
+                        </button>
+                        <button type="button" id="btnBack" class="btn btn-primary" title="返回"
+                                onclick="location.href='$link.getContextPath()/company/${info.currentCompanyId}/credentialsinfo.html'">
+                            返回
+                        </button>
+                        #if(${showRecoverBtn})
+                            <button type="button" id="btnRecover" class="btn btn-primary">恢复到系统默认的模板</button>
+                        #end
+                    </div>
+                </form>
+            </div>
+            <!-- /.table-bar -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div><!-- /.page-content -->
+
+<script src="$link.getContextPath()/theme/default/js/kindeditor-4.1.9/kindeditor.js"></script>
+<script src="$link.getContextPath()/theme/default/js/kindeditor-4.1.9/lang/zh_CN.js"></script>
+<script src="$link.getContextPath()/theme/default/js/kindeditor-4.1.9/plugins/code/prettify.js"></script>
+<script src="$link.getContextPath()/js/views/contracttemplate/editConsign.js"></script>
+<link rel="stylesheet" href="$link.getContextPath()/theme/default/js/kindeditor-4.1.9/themes/default/default.css"/>
+<link rel="stylesheet" href="$link.getContextPath()/theme/default/js/kindeditor-4.1.9/plugins/code/prettify.css"/>
+
+

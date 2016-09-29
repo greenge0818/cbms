@@ -1,0 +1,1629 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.account.persist.dao.AccountDao">
+    <resultMap id="BaseResultMap" type="com.prcsteel.platform.account.model.model.Account">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="addr" property="addr" jdbcType="VARCHAR"/>
+        <result column="zip" property="zip" jdbcType="VARCHAR"/>
+        <result column="tel" property="tel" jdbcType="VARCHAR"/>
+        <result column="balance" property="balance" jdbcType="DECIMAL"/>
+        <result column="balance_freeze" property="balanceFreeze" jdbcType="DECIMAL"/>
+        <result column="balance_second_settlement" property="balanceSecondSettlement" jdbcType="DECIMAL"/>
+        <result column="proxy_qty" property="proxyQty" jdbcType="DECIMAL"/>
+        <result column="balance_second_settlement_freeze" property="balanceSecondSettlementFreeze" jdbcType="DECIMAL"/>
+        <result column="balance_rebate" property="balanceRebate" jdbcType="DECIMAL"/>
+        <result column="fax" property="fax" jdbcType="VARCHAR"/>
+        <result column="legal_person_name" property="legalPersonName" jdbcType="VARCHAR"/>
+        <result column="mobil" property="mobil" jdbcType="VARCHAR"/>
+        <result column="business" property="business" jdbcType="VARCHAR"/>
+        <result column="web_site_url" property="webSiteUrl" jdbcType="VARCHAR"/>
+        <result column="business_type" property="businessType" jdbcType="CHAR"/>
+        <result column="province_id" property="provinceId" jdbcType="BIGINT"/>
+        <result column="city_id" property="cityId" jdbcType="BIGINT"/>
+        <result column="district_id" property="districtId" jdbcType="BIGINT"/>
+        <result column="proxy_factory" property="proxyFactory" jdbcType="VARCHAR"/>
+        <result column="license_code" property="licenseCode" jdbcType="VARCHAR"/>
+        <result column="reg_address" property="regAddress" jdbcType="VARCHAR"/>
+        <result column="org_code" property="orgCode" jdbcType="VARCHAR"/>
+        <result column="bank_name_main" property="bankNameMain" jdbcType="VARCHAR"/>
+        <result column="bank_code" property="bankCode" jdbcType="VARCHAR"/>
+        <result column="bank_name_branch" property="bankNameBranch" jdbcType="VARCHAR"/>
+        <result column="bank_province_id" property="bankProvinceId" jdbcType="BIGINT"/>
+        <result column="bank_city_id" property="bankCityId" jdbcType="BIGINT"/>
+        <result column="account_code" property="accountCode" jdbcType="VARCHAR"/>
+        <result column="tax_code" property="taxCode" jdbcType="VARCHAR"/>
+        <result column="reg_time" property="regTime" jdbcType="TIMESTAMP"/>
+        <result column="last_bill_time" property="lastBillTime" jdbcType="TIMESTAMP"/>
+        <result column="buyer_deal_total" property="buyerDealTotal" jdbcType="INTEGER"/>
+        <result column="seller_deal_total" property="sellerDealTotal" jdbcType="INTEGER"/>
+        <result column="type" property="type" jdbcType="CHAR"/>
+        <result column="account_tag" property="accountTag" jdbcType="BIGINT"/>
+        <result column="consign_type" property="consignType" jdbcType="VARCHAR"/>
+        <result column="manager_id" property="managerId" jdbcType="BIGINT"/>
+        <result column="org_id" property="orgId" jdbcType="BIGINT"/>
+        <result column="org_name" property="orgName" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="is_accept_draft_charged" property="isAcceptDraftCharged" jdbcType="INTEGER"/>
+        <result column="invoice_type" property="invoiceType" jdbcType="VARCHAR"/>
+        <result column="check_invoice_type" property="checkInvoiceType" jdbcType="VARCHAR"/>
+        <result column="invoice_data_status" property="invoiceDataStatus" jdbcType="VARCHAR"/>
+        <result column="invoice_data_decline_reason" property="invoiceDataDeclineReason" jdbcType="VARCHAR"/>
+        <result column="bank_data_status" property="bankDataStatus" jdbcType="VARCHAR"/>
+        <result column="bank_data_reason" property="bankDataReason" jdbcType="VARCHAR"/>
+        <result column="bank_data_reminded" property="bankDataReminded" jdbcType="VARCHAR"/>
+
+        <result column="register_date" property="registerDate" jdbcType="VARCHAR"/>
+        <result column="register_capital" property="registerCapital" jdbcType="DECIMAL"/>
+        <result column="supplier_label" property="supplierLabel" jdbcType="VARCHAR"/>
+        <result column="buyer_label" property="buyerLabel" jdbcType="VARCHAR"/>
+        <result column="payment_label" property="paymentLabel" jdbcType="VARCHAR"/>
+        <result column="belong_org" property="belongOrg" jdbcType="VARCHAR"/>
+        <result column="dept_fax" property="deptFax" jdbcType="VARCHAR"/>
+
+        <result column="seller_single_trade_weight" property="sellerSingleTradeWeight" jdbcType="DECIMAL"/>
+        <result column="seller_all_trade_weight" property="sellerAllTradeWeight" jdbcType="DECIMAL"/>
+        <result column="seller_all_trade_quality" property="sellerAllTradeQuality" jdbcType="DECIMAL"/>
+        <result column="is_seller_percent" property="isSellerPercent" jdbcType="INTEGER"/>
+        <result column="created" property="created" jdbcType="TIMESTAMP"/>
+        <result column="created_by" property="createdBy" jdbcType="VARCHAR"/>
+        <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP"/>
+        <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR"/>
+        <result column="modification_number" property="modificationNumber" jdbcType="INTEGER"/>
+        <result column="row_id" property="rowId" jdbcType="VARCHAR"/>
+        <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR"/>
+        <result column="credit_amount" property="creditAmount" jdbcType="DECIMAL" />
+        <result column="structure_type" property="structureType" jdbcType="VARCHAR" />
+        <result column="parent_id" property="parentId" jdbcType="BIGINT" />
+        <result column="is_deleted" property="isDeleted" jdbcType="BIT" />
+        <result column="credit_amount" property="creditAmount" jdbcType="DECIMAL"/>
+        <result column="structure_type" property="structureType" jdbcType="VARCHAR"/>
+        <result column="mail_addr" property="mailAddr" jdbcType="VARCHAR"/>
+        <result column="credit_amount_used" property="creditAmountUsed" jdbcType="DECIMAL"/>
+        <result column="is_auto_second_payment" property="isAutoSecondPayment" jdbcType="BIT"/>
+        <result column="kd_balance_second_settlement" property="kdBalanceSecondSettlement" jdbcType="DECIMAL"/><!--提供给款道的二结余额 -->
+    </resultMap>
+    <sql id="Base_Column_List">
+        t1.id, t1.balance, t1.balance_freeze, t1.balance_second_settlement, t1.balance_second_settlement_freeze,
+        t1.balance_rebate, t1.business, t1.business_type, t1.last_bill_time, t1.buyer_deal_total, t1.seller_deal_total,
+        t1.type, t1.account_tag, t1.consign_type, t1.manager_id, t1.status, t1.is_accept_draft_charged, t1.check_invoice_type,
+        t1.credit_amount, t1.structure_type, t1.parent_id, t1.created, t1.created_by, t1.last_updated, t1.last_updated_by,
+        t1.modification_number, t1.row_id, t1.parent_row_id, t1.is_deleted,t1.credit_amount_used,t1.is_auto_second_payment,
+        t2.cust_account_id, t2.code, t1.name, t2.addr, t2.zip, t2.mail_addr, t2.tel, t2.fax, t2.legal_person_name, t2.mobil, t2.web_site_url,
+        t1.org_id, t1.org_name,t2.reg_time,t2.province_id,t2.city_id,t2.district_id,t2.bank_data_status,t2.bank_data_reminded,
+        t2.org_code, t2.bank_name_main, t2.bank_code, t2.bank_name_branch, t2.bank_province_id,
+        t2.bank_city_id, t2.account_code, t2.tax_code,t2.invoice_data_status, t1.register_date, t1.register_capital,
+    t1.supplier_label, t1.buyer_label, t1.payment_label, t1.belong_org, t1.dept_fax,
+    t1.seller_single_trade_weight,t1.seller_all_trade_weight,t1.seller_all_trade_quality,
+    t1.is_seller_percent
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+        select
+        <include refid="Base_Column_List" />
+        ,(select min(balance_second_settlement) from cust_account acct where acct.parent_id = t1.id ) as kd_balance_second_settlement
+        from cust_account t1
+        left join cust_account_ext t2 on t1.id = t2.cust_account_id
+        where t1.id = #{id,jdbcType=BIGINT} AND t1.is_deleted = 0
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+        delete from cust_account
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.prcsteel.platform.account.model.model.Account" >
+        insert into cust_account (id, balance, balance_freeze,
+        balance_second_settlement, balance_second_settlement_freeze,
+        balance_rebate, business, business_type,
+        last_bill_time, buyer_deal_total, seller_deal_total,
+        type, account_tag, consign_type, manager_id,
+        status, is_accept_draft_charged, check_invoice_type,
+        credit_amount, structure_type, parent_id, created,
+        created_by, last_updated, last_updated_by,
+        modification_number, row_id, parent_row_id,
+        is_deleted,org_id, org_name,credit_amount_used,is_auto_second_payment,register_date, register_capital, supplier_label,
+      buyer_label, payment_label, belong_org, dept_fax)
+        values (#{id,jdbcType=BIGINT}, #{balance,jdbcType=DECIMAL}, #{balanceFreeze,jdbcType=DECIMAL},
+        #{balanceSecondSettlement,jdbcType=DECIMAL}, #{balanceSecondSettlementFreeze,jdbcType=DECIMAL},
+        #{balanceRebate,jdbcType=DECIMAL}, #{business,jdbcType=VARCHAR}, #{businessType,jdbcType=CHAR},
+        #{lastBillTime,jdbcType=TIMESTAMP}, #{buyerDealTotal,jdbcType=INTEGER}, #{sellerDealTotal,jdbcType=INTEGER},
+        #{type,jdbcType=CHAR},#{accountTag,jdbcType=BIGINT}, #{consignType,jdbcType=VARCHAR}, #{managerId,jdbcType=BIGINT},
+        #{status,jdbcType=INTEGER}, #{isAcceptDraftCharged,jdbcType=BIT}, #{checkInvoiceType,jdbcType=VARCHAR},
+        #{creditAmount,jdbcType=DECIMAL}, #{structureType,jdbcType=VARCHAR}, #{parentId,jdbcType=BIGINT}, #{created,jdbcType=TIMESTAMP},
+        #{createdBy,jdbcType=VARCHAR}, #{lastUpdated,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR},
+        #{modificationNumber,jdbcType=INTEGER}, #{rowId,jdbcType=VARCHAR}, #{parentRowId,jdbcType=VARCHAR},
+        #{isDeleted,jdbcType=BIT},#{orgId,jdbcType=BIGINT},#{orgName,jdbcType=VARCHAR},
+        #{creditAmountUsed,jdbcType=DECIMAL},#{isAutoSecondPayment,jdbcType=BIT}
+      , #{registerDate,jdbcType=VARCHAR}, #{registerCapital,jdbcType=DECIMAL}, #{supplierLabel,jdbcType=VARCHAR},
+      #{buyerLabel,jdbcType=VARCHAR}, #{paymentLabel,jdbcType=VARCHAR}, #{belongOrg,jdbcType=VARCHAR},#{deptFax,jdbcType=VARCHAR},
+      #{sellerSingleTradeWeight,jdbcType=DECIMAL},#{sellerAllTradeWeight,jdbcType=DECIMAL},
+      #{sellerAllTradeQuality,jdbcType=DECIMAL},#{isSellerPercent,,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="com.prcsteel.platform.account.model.model.Account" useGeneratedKeys="true"
+            keyProperty="id" >
+        insert into cust_account
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="balance != null" >
+                balance,
+            </if>
+            <if test="balanceFreeze != null" >
+                balance_freeze,
+            </if>
+            <if test="balanceSecondSettlement != null" >
+                balance_second_settlement,
+            </if>
+            <if test="balanceSecondSettlementFreeze != null" >
+                balance_second_settlement_freeze,
+            </if>
+            <if test="balanceRebate != null" >
+                balance_rebate,
+            </if>
+            <if test="business != null" >
+                business,
+            </if>
+            <if test="businessType != null" >
+                business_type,
+            </if>
+            <if test="lastBillTime != null" >
+                last_bill_time,
+            </if>
+            <if test="buyerDealTotal != null" >
+                buyer_deal_total,
+            </if>
+            <if test="sellerDealTotal != null" >
+                seller_deal_total,
+            </if>
+            <if test="type != null" >
+                type,
+            </if>
+            <if test="accountTag != null" >
+                account_tag,
+            </if>
+            <if test="consignType != null" >
+                consign_type,
+            </if>
+            <if test="managerId != null" >
+                manager_id,
+            </if>
+            <if test="status != null" >
+                status,
+            </if>
+            <if test="isAcceptDraftCharged != null" >
+                is_accept_draft_charged,
+            </if>
+            <if test="checkInvoiceType != null" >
+                check_invoice_type,
+            </if>
+            <if test="creditAmount != null" >
+                credit_amount,
+            </if>
+	    
+	    <if test="registerDate != null" >
+                register_date,
+            </if>
+            <if test="registerCapital != null" >
+                register_capital,
+            </if>
+            <if test="supplierLabel != null" >
+                supplier_label,
+            </if>
+            <if test="buyerLabel != null" >
+                buyer_label,
+            </if>
+            <if test="paymentLabel != null" >
+                payment_label,
+            </if>
+            <if test="belongOrg != null" >
+                belong_org,
+            </if>
+            <if test="deptFax != null" >
+                dept_fax,
+            </if>
+            <if test="sellerSingleTradeWeight != null" >
+                seller_single_trade_weight,
+            </if>
+            <if test="sellerAllTradeWeight != null" >
+                seller_all_trade_weight,
+            </if>
+            <if test="sellerAllTradeQuality != null" >
+                seller_all_trade_quality,
+            </if>
+            <if test="isSellerPercent != null" >
+                is_seller_percent,
+            </if>
+            <if test="structureType != null" >
+                structure_type,
+            </if>
+	    
+            <if test="parentId != null" >
+                parent_id,
+            </if>
+            <if test="created != null" >
+                created,
+            </if>
+            <if test="createdBy != null" >
+                created_by,
+            </if>
+            <if test="lastUpdated != null" >
+                last_updated,
+            </if>
+            <if test="lastUpdatedBy != null" >
+                last_updated_by,
+            </if>
+            <if test="modificationNumber != null" >
+                modification_number,
+            </if>
+            <if test="rowId != null" >
+                row_id,
+            </if>
+            <if test="parentRowId != null" >
+                parent_row_id,
+            </if>
+            <if test="isDeleted != null" >
+                is_deleted,
+            </if>
+            <if test="orgId != null">
+                org_id,
+            </if>
+            <if test="orgName != null">
+                org_name,
+            </if>
+            <if test="creditAmountUsed != null">
+                credit_amount_used,
+            </if>
+            <if test="isAutoSecondPayment != null">
+                is_auto_second_payment
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="balance != null" >
+                #{balance,jdbcType=DECIMAL},
+            </if>
+            <if test="balanceFreeze != null" >
+                #{balanceFreeze,jdbcType=DECIMAL},
+            </if>
+            <if test="balanceSecondSettlement != null" >
+                #{balanceSecondSettlement,jdbcType=DECIMAL},
+            </if>
+            <if test="balanceSecondSettlementFreeze != null" >
+                #{balanceSecondSettlementFreeze,jdbcType=DECIMAL},
+            </if>
+            <if test="balanceRebate != null" >
+                #{balanceRebate,jdbcType=DECIMAL},
+            </if>
+            <if test="business != null" >
+                #{business,jdbcType=VARCHAR},
+            </if>
+            <if test="businessType != null" >
+                #{businessType,jdbcType=CHAR},
+            </if>
+            <if test="lastBillTime != null" >
+                #{lastBillTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="buyerDealTotal != null" >
+                #{buyerDealTotal,jdbcType=INTEGER},
+            </if>
+            <if test="sellerDealTotal != null" >
+                #{sellerDealTotal,jdbcType=INTEGER},
+            </if>
+            <if test="type != null" >
+                #{type,jdbcType=CHAR},
+            </if>
+            <if test="accountTag != null" >
+                #{accountTag,jdbcType=BIGINT},
+            </if>
+            <if test="consignType != null" >
+                #{consignType,jdbcType=VARCHAR},
+            </if>
+            <if test="managerId != null" >
+                #{managerId,jdbcType=BIGINT},
+            </if>
+            <if test="status != null" >
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="isAcceptDraftCharged != null" >
+                #{isAcceptDraftCharged,jdbcType=BIT},
+            </if>
+            <if test="checkInvoiceType != null" >
+                #{checkInvoiceType,jdbcType=VARCHAR},
+            </if>
+            <if test="creditAmount != null" >
+                #{creditAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="registerDate != null" >
+                 #{registerDate,jdbcType=VARCHAR},
+            </if>
+            <if test="registerCapital != null" >
+                 #{registerCapital,jdbcType=DECIMAL},
+            </if>
+            <if test="supplierLabel != null" >
+                 #{supplierLabel,jdbcType=VARCHAR},
+            </if>
+            <if test="buyerLabel != null" >
+                 #{buyerLabel,jdbcType=VARCHAR},
+            </if>
+            <if test="paymentLabel != null" >
+                 #{paymentLabel,jdbcType=VARCHAR},
+            </if>
+            <if test="belongOrg != null" >
+                #{belongOrg,jdbcType=VARCHAR},
+            </if>
+            <if test="deptFax != null" >
+                #{deptFax,jdbcType=VARCHAR},
+            </if>
+            <if test="sellerSingleTradeWeight != null" >
+                #{sellerSingleTradeWeight,jdbcType=DECIMAL},
+            </if>
+            <if test="sellerAllTradeWeight != null" >
+                #{sellerAllTradeWeight,jdbcType=DECIMAL},
+            </if>
+            <if test="sellerAllTradeQuality != null" >
+                #{sellerAllTradeQuality,jdbcType=DECIMAL},
+            </if>
+            <if test="isSellerPercent != null" >
+                #{isSellerPercent,jdbcType=INTEGER},
+            </if>
+            <if test="structureType != null" >
+                #{structureType,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId != null" >
+                #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="created != null" >
+                #{created,jdbcType=TIMESTAMP},
+            </if>
+
+            <if test="createdBy != null" >
+                #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdated != null" >
+                #{lastUpdated,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdatedBy != null" >
+                #{lastUpdatedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modificationNumber != null" >
+                #{modificationNumber,jdbcType=INTEGER},
+            </if>
+            <if test="rowId != null" >
+                #{rowId,jdbcType=VARCHAR},
+            </if>
+            <if test="parentRowId != null" >
+                #{parentRowId,jdbcType=VARCHAR},
+            </if>
+            <if test="isDeleted != null" >
+                #{isDeleted,jdbcType=BIT},
+            </if>
+            <if test="orgId != null">
+                #{orgId,jdbcType=BIGINT},
+            </if>
+            <if test="orgName != null">
+                #{orgName,jdbcType=VARCHAR},
+            </if>
+            <if test="creditAmountUsed != null">
+                #{creditAmountUsed,jdbcType=DECIMAL},
+            </if>
+            <if test="isAutoSecondPayment != null">
+                #{isAutoSecondPayment,jdbcType=BIT}
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.account.model.model.Account" >
+        update cust_account
+        <set >
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="balance != null" >
+                balance = #{balance,jdbcType=DECIMAL},
+            </if>
+            <if test="balanceFreeze != null" >
+                balance_freeze = #{balanceFreeze,jdbcType=DECIMAL},
+            </if>
+            <if test="balanceSecondSettlement != null" >
+                balance_second_settlement = #{balanceSecondSettlement,jdbcType=DECIMAL},
+            </if>
+            <if test="balanceSecondSettlementFreeze != null" >
+                balance_second_settlement_freeze = #{balanceSecondSettlementFreeze,jdbcType=DECIMAL},
+            </if>
+            <if test="balanceRebate != null" >
+                balance_rebate = #{balanceRebate,jdbcType=DECIMAL},
+            </if>
+            <if test="business != null" >
+                business = #{business,jdbcType=VARCHAR},
+            </if>
+            <if test="businessType != null" >
+                business_type = #{businessType,jdbcType=CHAR},
+            </if>
+            <if test="lastBillTime != null" >
+                last_bill_time = #{lastBillTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="buyerDealTotal != null" >
+                buyer_deal_total = #{buyerDealTotal,jdbcType=INTEGER},
+            </if>
+            <if test="sellerDealTotal != null" >
+                seller_deal_total = #{sellerDealTotal,jdbcType=INTEGER},
+            </if>
+            <if test="type != null" >
+                type = #{type,jdbcType=CHAR},
+            </if>
+            <if test="accountTag != null" >
+                account_tag = #{accountTag,jdbcType=BIGINT},
+            </if>
+            <if test="consignType != null" >
+                consign_type = #{consignType,jdbcType=VARCHAR},
+            </if>
+            <if test="managerId != null" >
+                manager_id = #{managerId,jdbcType=BIGINT},
+            </if>
+            <if test="status != null" >
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="isAcceptDraftCharged != null" >
+                is_accept_draft_charged = #{isAcceptDraftCharged,jdbcType=BIT},
+            </if>
+            <if test="checkInvoiceType != null" >
+                check_invoice_type = #{checkInvoiceType,jdbcType=VARCHAR},
+            </if>
+            <if test="creditAmount != null" >
+                credit_amount = #{creditAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="structureType != null" >
+                structure_type = #{structureType,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId != null" >
+                parent_id = #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="created != null" >
+                created = #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdBy != null" >
+                created_by = #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdated != null" >
+                last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdatedBy != null" >
+                last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modificationNumber != null" >
+                modification_number = #{modificationNumber,jdbcType=INTEGER},
+            </if>
+            <if test="rowId != null" >
+                row_id = #{rowId,jdbcType=VARCHAR},
+            </if>
+            <if test="parentRowId != null" >
+                parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+            </if>
+            <if test="orgId != null">
+                org_id = #{orgId,jdbcType=BIGINT},
+            </if>
+            <if test="orgName != null">
+                org_name = #{orgName,jdbcType=VARCHAR},
+            </if>
+            <if test="isDeleted != null" >
+                is_deleted = #{isDeleted,jdbcType=BIT},
+            </if>
+            <if test="creditAmountUsed != null">
+                credit_amount_used  = #{creditAmountUsed,jdbcType=DECIMAL},
+            </if>
+	        <if test="registerDate != null" >
+                register_date = #{registerDate,jdbcType=VARCHAR},
+            </if>
+            <if test="registerCapital != null" >
+                register_capital = #{registerCapital,jdbcType=DECIMAL},
+            </if>
+            <!-- 因可能存在客户将注册资金清空保存，此字段单独写方法保存 afeng -->
+            <if test="especially == true">
+            	register_capital = null,
+            </if>
+            <if test="supplierLabel != null" >
+                supplier_label = #{supplierLabel,jdbcType=VARCHAR},
+            </if>
+            <if test="buyerLabel != null" >
+                buyer_label = #{buyerLabel,jdbcType=VARCHAR},
+            </if>
+            <if test="paymentLabel != null" >
+                payment_label = #{paymentLabel,jdbcType=VARCHAR},
+            </if>
+            <if test="belongOrg != null" >
+                belong_org = #{belongOrg,jdbcType=VARCHAR},
+            </if>
+            <if test="deptFax != null" >
+                dept_fax = #{deptFax,jdbcType=VARCHAR},
+            </if>
+            <if test="sellerSingleTradeWeight != null" >
+                seller_single_trade_weight= #{sellerSingleTradeWeight,jdbcType=DECIMAL},
+            </if>
+            <if test="sellerAllTradeWeight != null" >
+                seller_all_trade_weight= #{sellerAllTradeWeight,jdbcType=DECIMAL},
+            </if>
+            <if test="sellerAllTradeQuality != null" >
+                seller_all_trade_quality= #{sellerAllTradeQuality,jdbcType=DECIMAL},
+            </if>
+            <if test="isSellerPercent != null" >
+                is_seller_percent= #{isSellerPercent,jdbcType=INTEGER},
+            </if>
+            <if test="isAutoSecondPayment != null">
+                is_auto_second_payment = #{isAutoSecondPayment,jdbcType=BIT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.account.model.model.Account" >
+        update cust_account
+        set balance = #{balance,jdbcType=DECIMAL},
+        balance_freeze = #{balanceFreeze,jdbcType=DECIMAL},
+        balance_second_settlement = #{balanceSecondSettlement,jdbcType=DECIMAL},
+        balance_second_settlement_freeze = #{balanceSecondSettlementFreeze,jdbcType=DECIMAL},
+        balance_rebate = #{balanceRebate,jdbcType=DECIMAL},
+        business = #{business,jdbcType=VARCHAR},
+        business_type = #{businessType,jdbcType=CHAR},
+        last_bill_time = #{lastBillTime,jdbcType=TIMESTAMP},
+        buyer_deal_total = #{buyerDealTotal,jdbcType=INTEGER},
+        seller_deal_total = #{sellerDealTotal,jdbcType=INTEGER},
+        type = #{type,jdbcType=CHAR},
+        account_tag = #{accountTag,jdbcType=BIGINT},
+        consign_type = #{consignType,jdbcType=VARCHAR},
+        manager_id = #{managerId,jdbcType=BIGINT},
+        status = #{status,jdbcType=INTEGER},
+        is_accept_draft_charged = #{isAcceptDraftCharged,jdbcType=BIT},
+        check_invoice_type = #{checkInvoiceType,jdbcType=VARCHAR},
+        credit_amount = #{creditAmount,jdbcType=DECIMAL},
+        structure_type = #{structureType,jdbcType=VARCHAR},
+        parent_id = #{parentId,jdbcType=BIGINT},
+        created = #{created,jdbcType=TIMESTAMP},
+        created_by = #{createdBy,jdbcType=VARCHAR},
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+        modification_number = #{modificationNumber,jdbcType=INTEGER},
+        row_id = #{rowId,jdbcType=VARCHAR},
+        parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+        is_deleted = #{isDeleted,jdbcType=BIT},
+        credit_amount_used  = #{creditAmountUsed,jdbcType=DECIMAL},
+        is_auto_second_payment = #{isAutoSecondPayment,jdbcType=BIT}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKeySelectiveExcludeBankInfo" parameterType="com.prcsteel.platform.account.model.model.Account">
+        update cust_account
+        <set>
+            <if test="balance != null" >
+                balance = #{balance,jdbcType=DECIMAL},
+            </if>
+            <if test="balanceFreeze != null" >
+                balance_freeze = #{balanceFreeze,jdbcType=DECIMAL},
+            </if>
+            <if test="balanceSecondSettlement != null" >
+                balance_second_settlement = #{balanceSecondSettlement,jdbcType=DECIMAL},
+            </if>
+            <if test="balanceSecondSettlementFreeze != null" >
+                balance_second_settlement_freeze = #{balanceSecondSettlementFreeze,jdbcType=DECIMAL},
+            </if>
+            <if test="balanceRebate != null" >
+                balance_rebate = #{balanceRebate,jdbcType=DECIMAL},
+            </if>
+            <if test="business != null" >
+                business = #{business,jdbcType=VARCHAR},
+            </if>
+            <if test="businessType != null" >
+                business_type = #{businessType,jdbcType=CHAR},
+            </if>
+            <if test="lastBillTime != null" >
+                last_bill_time = #{lastBillTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="buyerDealTotal != null" >
+                buyer_deal_total = #{buyerDealTotal,jdbcType=INTEGER},
+            </if>
+            <if test="sellerDealTotal != null" >
+                seller_deal_total = #{sellerDealTotal,jdbcType=INTEGER},
+            </if>
+            <if test="type != null" >
+                type = #{type,jdbcType=CHAR},
+            </if>
+            <if test="accountTag != null" >
+                account_tag = #{accountTag,jdbcType=BIGINT},
+            </if>
+            <if test="consignType != null" >
+                consign_type = #{consignType,jdbcType=VARCHAR},
+            </if>
+            <if test="managerId != null" >
+                manager_id = #{managerId,jdbcType=BIGINT},
+            </if>
+            <if test="status != null" >
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="isAcceptDraftCharged != null" >
+                is_accept_draft_charged = #{isAcceptDraftCharged,jdbcType=BIT},
+            </if>
+            <if test="checkInvoiceType != null" >
+                check_invoice_type = #{checkInvoiceType,jdbcType=VARCHAR},
+            </if>
+            <if test="creditAmount != null" >
+                credit_amount = #{creditAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="structureType != null" >
+                structure_type = #{structureType,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId  != null" >
+                parent_id = #{parentId ,jdbcType=BIGINT},
+            </if>
+            <if test="created != null" >
+                created = #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdBy != null" >
+                created_by = #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdatedBy != null" >
+                last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="rowId != null" >
+                row_id = #{rowId,jdbcType=VARCHAR},
+            </if>
+            <if test="parentRowId != null" >
+                parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+            </if>
+            <if test="isDeleted != null" >
+                is_deleted = #{isDeleted,jdbcType=BIT},
+            </if>
+            <if test="creditAmountUsed != null">
+                credit_amount_used  = #{creditAmountUsed,jdbcType=DECIMAL},
+            </if>
+	    <if test="registerDate != null" >
+                register_date = #{registerDate,jdbcType=VARCHAR},
+            </if>
+            <if test="registerCapital != null" >
+                register_capital = #{registerCapital,jdbcType=DECIMAL},
+            </if>
+            <if test="supplierLabel != null" >
+                supplier_label = #{supplierLabel,jdbcType=VARCHAR},
+            </if>
+            <if test="buyerLabel != null" >
+                buyer_label = #{buyerLabel,jdbcType=VARCHAR},
+            </if>
+            <if test="paymentLabel != null" >
+                payment_label = #{paymentLabel,jdbcType=VARCHAR},
+            </if>
+            <if test="belongOrg != null" >
+                belong_org = #{belongOrg,jdbcType=VARCHAR},
+            </if>
+            <if test="deptFax != null" >
+                dept_fax = #{deptFax,jdbcType=VARCHAR},
+            </if>
+            <if test="sellerSingleTradeWeight != null" >
+                seller_single_trade_weight= #{sellerSingleTradeWeight,jdbcType=DECIMAL},
+            </if>
+            <if test="sellerAllTradeWeight != null" >
+                seller_all_trade_weight= #{sellerAllTradeWeight,jdbcType=DECIMAL},
+            </if>
+            <if test="sellerAllTradeQuality != null" >
+                seller_all_trade_quality= #{sellerAllTradeQuality,jdbcType=DECIMAL},
+            </if>
+            <if test="isSellerPercent != null" >
+                is_seller_percent= #{isSellerPercent,jdbcType=INTEGER},
+            </if>
+            <if test="isAutoSecondPayment != null">
+                is_auto_second_payment = #{isAutoSecondPayment,jdbcType=BIT},
+            </if>
+            modification_number=modification_number+1,
+            last_updated = now(),
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="getAccountCode" resultType="java.lang.String">
+        select LPAD(COALESCE(max(code),0)+1,6,'0') from cust_account_ext
+    </select>
+    <select id="selectByCode" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cust_account t1
+        left join cust_account_ext t2 on t1.id = t2.cust_account_id
+        where t2.code = #{code,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByTel" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List" />
+        from cust_account t1
+        left join cust_account_ext t2 on t1.id = t2.cust_account_id
+        where t2.tel = #{tel,jdbcType=BIGINT}
+    </select>
+
+    <resultMap id="sellerResultMap" extends="BaseResultMap" type="com.prcsteel.platform.account.model.dto.SellerAccountDto">
+        <result column="manager" property="manager" jdbcType="VARCHAR"/>
+        <result column="managertel" property="managerTel" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <update id="updateStatusByPrimaryKey">
+        update cust_account t set t.status = #{status,jdbcType=INTEGER}
+        ,t.modification_number = ifnull(t.modification_number,0) + 1
+        ,t.last_updated = now(),t.last_updated_by = #{loginId,jdbcType=VARCHAR}
+        where t.id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateInvoiceDataStatusByPrimaryKey">
+        update cust_account_ext t set t.invoice_data_status = #{status,jdbcType=VARCHAR}
+        <if test="reason!=null and reason!=''">
+            ,invoice_data_decline_reason = #{reason,jdbcType=VARCHAR}
+        </if>
+        ,t.modification_number = ifnull(t.modification_number,0) + 1
+        ,t.last_updated = now(),t.last_updated_by = #{loginId,jdbcType=VARCHAR}
+        where t.cust_account_id = #{id,jdbcType=BIGINT}
+    </update>
+    <!-- 查询卖家客户分组列表  -->
+    <select id="listSellerSearch" resultMap="sellerResultMap" parameterType="map">
+        SELECT
+        t1.id,t1.name,t5.legal_person_name,t5.tel,t5.mobil,t1.business,t5.proxy_factory,t1.created,t1.status,t1.manager_id,
+        t2.name AS manager,t2.tel AS managertel FROM cust_account t1
+        INNER JOIN acl_user t2 ON t1.manager_id=t2.id
+        LEFT JOIN base_province t3 ON t1.province_id=t3.id
+        LEFT JOIN base_city t4 ON t1.city_id=t4.id
+        LEFT JOIN cust_account_ext t5 on t1.id = t5.cust_account_id
+        WHERE t1.type IN ('seller','both')
+        <if test="companyName != null and companyName != ''">
+            and t1.name like #{companyName,jdbcType=VARCHAR}
+        </if>
+        <if test="business != null and business != ''">
+            and t1.business like #{business,jdbcType=VARCHAR}
+        </if>
+        <if test="provinceId != null and provinceId > 0 ">
+            and t5.province_id = #{provinceId,jdbcType=INTEGER}
+        </if>
+        <if test="cityId != null and cityId > 0 ">
+            and t5.city_id = #{cityId,jdbcType=INTEGER}
+        </if>
+        <if test="status != null and status == 0 ">
+            and t1.status = #{status,jdbcType=INTEGER}
+        </if>
+        <if test="status != null and status != 0 ">
+            and t1.status != 0
+        </if>
+        limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+    </select>
+    <!-- 查询卖家客户分组列表总数  -->
+    <select id="totalSellerSearch" resultType="java.lang.Integer" parameterType="map">
+        SELECT count(t1.id) FROM cust_account t1
+        INNER JOIN acl_user t2 ON t1.manager_id=t2.id
+        LEFT JOIN base_province t3 ON t1.province_id=t3.id
+        LEFT JOIN base_city t4 ON t1.city_id=t4.id
+        LEFT JOIN cust_account_ext t5 on t1.id = t5.cust_account_id
+        WHERE t1.type IN ('seller','both')
+        <if test="companyName != null and companyName != ''">
+            and t1.name like #{companyName,jdbcType=VARCHAR}
+        </if>
+        <if test="business != null and business != ''">
+            and t1.business like #{business,jdbcType=VARCHAR}
+        </if>
+        <if test="provinceId != null and provinceId > 0 ">
+            and t5.province_id = #{provinceId,jdbcType=INTEGER}
+        </if>
+        <if test="cityId != null and cityId > 0 ">
+            and t5.city_id = #{cityId,jdbcType=INTEGER}
+        </if>
+        <if test="status != null and status == 0 ">
+            and t1.status = #{status,jdbcType=INTEGER}
+        </if>
+        <if test="status != null and status != 0 ">
+            and t1.status != 0
+        </if>
+    </select>
+
+    <!-- 查询企业信息列表总数  -->
+    <select id="totalAccount" resultType="int" parameterType="map">
+        SELECT count(t1.id)
+        FROM cust_account t1
+        left join cust_account_contact t2
+        on t1.id = t2.account_id and t2.is_main = 1
+        LEFT JOIN cust_account_ext t3 on t1.id = t3.cust_account_id
+        <!-- Green add 09/21 -->
+        and t2.type IN
+        <foreach collection="types" item="type" index="index" open="(" close=")" separator=",">
+            #{type}
+        </foreach>
+        where
+        t1.type IN
+        <foreach collection="types" item="type" index="index" open="(" close=")" separator=",">
+            #{type}
+        </foreach>
+
+        <if test="accountName != null and accountName != ''">
+            and t1.name like #{accountName,jdbcType=VARCHAR}
+        </if>
+        <if test="contactName != null and contactName != ''">
+            and t2.name like #{contactName,jdbcType=VARCHAR}
+        </if>
+        <if test="managerIds != null and managerIds != ''">
+            and t1.manager_id in
+            <foreach collection="managerIds" item="managerId" index="index"
+
+                     open="(" close=")" separator=",">
+                #{managerId}
+            </foreach>
+        </if>
+    </select>
+
+    <!-- 根据公司名称及用户                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         名称 分页模糊查询企业信息列表  -->
+    <select id="selectByAccountNameAndContactName" resultType="map" parameterType="map">
+        SELECT t1.id as account_id,t1.name as account_name,t1.business,t3.proxy_factory
+        ,date_format(t3.reg_time,'%Y-%m-%d %H:%i:%s') as reg_time
+        ,t2.id as contact_id,ifnull(t2.name,'') as contact_name,ifnull(t2.tel,'') as tel,t1.status
+        FROM cust_account t1
+        left join cust_account_contact t2
+        on t1.id = t2.account_id and t2.is_main = 1
+        LEFT JOIN cust_account_ext t3 on t1.id = t3.cust_account_id
+        <!-- Green add 09/21 -->
+        and t2.type IN
+        <foreach collection="types" item="type" index="index" open="(" close=")" separator=",">
+            #{type}
+        </foreach>
+        where
+        t1.type IN
+        <foreach collection="types" item="type" index="index" open="(" close=")" separator=",">
+            #{type}
+        </foreach>
+
+        <if test="accountName != null and accountName != ''">
+            and t1.name like #{accountName,jdbcType=VARCHAR}
+        </if>
+        <if test="contactName != null and contactName != ''">
+            and t2.name like #{contactName,jdbcType=VARCHAR}
+        </if>
+        <if test="contactTel != null and contactTel != ''">
+            and t2.tel  like #{contactTel,jdbcType=VARCHAR}
+        </if>
+
+        <if test="managerIds != null and managerIds != ''">
+            and t1.manager_id in
+            <foreach collection="managerIds" item="managerId" index="index"
+                     open="(" close=")" separator=",">
+                #{managerId}
+            </foreach>
+        </if>
+        order by t1.id asc
+        limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+    </select>
+
+    <!--查询交易员的客户信息-->
+    <select id="queryAccountWithSingleContactByManager" parameterType="com.prcsteel.platform.account.model.query.CompanyQuery"
+            resultType="com.prcsteel.platform.account.model.dto.AccountForAppDto">
+        SELECT t3.id,t3.name,t4.reg_time as regTime,t6.nsort_name as nsortName,t3.account_tag as accountTag,t5.name as contact,
+          t5.tel as contactTel,t6.factory as proxyFactory FROM cust_account_contact t1
+            INNER JOIN cust_account t2 ON t1.account_id=t2.id AND t2.is_deleted=0
+            INNER JOIN cust_account t3 ON t2.parent_id=t3.id AND t3.is_deleted=0
+            INNER JOIN cust_account_ext t4 ON t3.id=t4.cust_account_id AND t4.is_deleted=0
+            LEFT JOIN cust_contact t5 ON t1.contact_id=t5.id AND t5.is_deleted=0
+            LEFT JOIN cust_proxy_factory t6 on t3.id=t6.account_id AND t6.is_deleted=0
+            WHERE t1.is_deleted=0
+            <if test="userIdList != null and userIdList.size() > 0">
+                AND t1.manager in
+                <foreach item="id" index="index" collection="userIdList" open="(" separator="," close=")">
+                    #{id}
+                </foreach>
+            </if>
+            <if test="accountTag != null and accountTag > 0">
+                AND t3.account_tag <![CDATA[ & ]]> #{accountTag,jdbcType=BIGINT} != 0
+            </if>
+        GROUP BY t3.id
+        order by t4.reg_time desc
+        limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+    </select>
+
+    <!--根据用户ID，公司名称模糊查询-->
+    <select id="listAccountByName" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List" />
+        from cust_account t1
+        left join cust_account_ext t2 on t1.id = t2.cust_account_id
+        where t1.status !=0
+        <if test="managerId != null and managerId > 0 ">
+            and (t1.manager_id = #{managerId,jdbcType=BIGINT} )
+        </if>
+        <if test="name != null and name != '' ">
+            and t1.name like replace(replace(#{name,jdbcType=VARCHAR},' ',''), '　','')
+        </if>
+        <if test="types != null ">
+            and t1.type IN
+            <foreach collection="types" item="type" index="index" open="(" close=")" separator=",">
+                #{type}
+            </foreach>
+        </if>
+        <if test="accountTag != null and accountTag > 0">
+            AND t1.account_tag <![CDATA[ & ]]> #{accountTag,jdbcType=BIGINT} = #{accountTag,jdbcType=BIGINT}
+        </if>
+        <if test="cardInfoStatus != null and cardInfoStatus != '' ">
+            AND t2.card_info_status = #{cardInfoStatus,jdbcType=VARCHAR}
+        </if>
+        and t1.structure_type = 'Company'
+        and t1.status != 0
+        order by t1.id desc
+        limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+    </select>
+
+	<!--根据用户ID，公司名称模糊查询 add by tuxianming@-->
+    <select id="listDeparmentAccount" resultMap="BaseResultMap" parameterType="map">
+        select
+        	t1.id, concat(p.name,'【', t1.name,'】') as name, p.consign_type, t2.province_id, t2.city_id
+        from cust_account t1
+	        left join cust_account p on t1.parent_id = p.id 
+	        left join cust_account_ext t2 on p.id = t2.cust_account_id
+        <where>
+	        <if test="managerId != null and managerId > 0 ">
+	            and (t1.manager_id = #{managerId,jdbcType=BIGINT} )
+	        </if>
+	        <if test="name != null and name != '' ">
+	            and p.name like replace(replace(#{name,jdbcType=VARCHAR},' ',''), '　','')
+	        </if>
+	        <if test="types != null ">
+	            and p.type IN
+	            <foreach collection="types" item="type" index="index" open="(" close=")" separator=",">
+	                #{type}
+	            </foreach>
+	        </if>
+	        <if test="accountTag != null and accountTag > 0">
+	            AND t1.account_tag <![CDATA[ & ]]> #{accountTag,jdbcType=BIGINT} = #{accountTag,jdbcType=BIGINT}
+	        </if>
+	        <if test="cardInfoStatus != null and cardInfoStatus != '' ">
+	            AND t2.card_info_status = #{cardInfoStatus,jdbcType=VARCHAR}
+	        </if>
+	        and p.structure_type = 'Company'
+	        and t1.status != 0
+	        and p.status != 0
+        </where>
+        order by t1.id desc
+        limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+    </select>
+
+    <!--根据用户ID，公司名称模糊查询总数-->
+    <select id="totalListAccountByName" resultType="java.lang.Integer" parameterType="map">
+        select count(t1.id)
+        from cust_account t1
+        left join cust_account_ext t2 on t1.id = t2.cust_account_id
+        where t1.status !=0
+        <if test="managerId != null and managerId > 0 ">
+            and t1.manager_id = #{managerId,jdbcType=BIGINT}
+        </if>
+        <if test="name != null and name != '' ">
+            and t1.name like #{name,jdbcType=VARCHAR}
+        </if>
+        <if test="types != null ">
+            and t1.type IN
+            <foreach collection="types" item="type" index="index" open="(" close=")" separator=",">
+                #{type}
+            </foreach>
+        </if>
+        <if test="accountTag != null and accountTag > 0">
+            AND t1.account_tag <![CDATA[ & ]]> #{accountTag,jdbcType=BIGINT} = #{accountTag,jdbcType=BIGINT}
+        </if>
+        and t1.structure_type = 'Company'
+    </select>
+
+    <!--根据公司名称查询-->
+    <select id="selectAccountByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List" />
+        from cust_account t1
+        left join cust_account_ext t2 on t1.id = t2.cust_account_id
+        where t1.name = replace(replace(#{name,jdbcType=VARCHAR},' ',''), '　','')
+        order by t1.id desc
+        limit 0,1
+    </select>
+
+    <!--更新现金余额-->
+    <update id="updateBalanceById" parameterType="map">
+        update cust_account
+        set balance = #{balance,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <!--付款更新余额 二次结算余额大于0 -->
+    <update id="updatePayment">
+        update cust_account
+        set balance = #{balance,jdbcType=DECIMAL},
+        balance_freeze = #{balanceFreeze,jdbcType=DECIMAL},
+        balance_second_settlement = #{secondSettlement,jdbcType=DECIMAL},
+        balance_second_settlement_freeze = #{secondSettlementFreeze,jdbcType=DECIMAL},
+        balance_rebate = #{balanceRebate,jdbcType=DECIMAL},
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+        modification_number = ifnull(modification_number, 0) + 1
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <!--付款更新余额 二次结算余额大于0 -->
+    <update id="updatePaymentV2">
+        update cust_account
+        set balance = #{balance,jdbcType=DECIMAL},
+        balance_freeze = #{balanceFreeze,jdbcType=DECIMAL},
+        balance_second_settlement = #{secondSettlement,jdbcType=DECIMAL},
+        balance_second_settlement_freeze = #{secondSettlementFreeze,jdbcType=DECIMAL},
+        credit_amount_used = #{creditUsed,jdbcType=DECIMAL},
+        credit_amount = #{creditLimit,jdbcType=DECIMAL},
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+        modification_number = ifnull(modification_number, 0) + 1
+        where id = #{id,jdbcType=BIGINT}
+        and balance = #{originBalance,jdbcType=DECIMAL}
+        and balance_freeze = #{originBalanceFreeze,jdbcType=DECIMAL}
+        and balance_second_settlement = #{originSecondSettlement,jdbcType=DECIMAL}
+        and balance_second_settlement_freeze = #{originSecondSettlementFreeze,jdbcType=DECIMAL}
+        and credit_amount_used = #{originCreditUsed,jdbcType=DECIMAL}
+        and credit_amount = #{originCreditLimit,jdbcType=DECIMAL}
+    </update>
+
+    <!-- 买家资料待审核列表 -->
+    <select id="selectUncheckedBuyerList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from cust_account t1
+        left join cust_account_ext t2 on t1.id = t2.cust_account_id
+        where t2.invoice_data_status='2'
+        and type in ('buyer','both')
+        <if test="orgId > 0">
+            and (select a.id from base_organization a,acl_user b where a.id=b.org_id and b.id=x.manager_id)=
+            #{orgId,jdbcType=BIGINT}
+        </if>
+        <if test="name!=null and name!=''">
+            and t1.name like #{name,jdbcType=VARCHAR}
+        </if>
+    </select>
+    <select id="selectManagerInfoByIds" resultType="com.prcsteel.platform.account.model.dto.TraderInfoDto" parameterType="java.util.List">
+        select name ,id from acl_user where id in
+        (
+        select distinct manager_id from cust_account where id in
+        <foreach item="id" index="index" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        )
+    </select>
+
+
+    <!--查询客户及归属的交易员的相关信息 -->
+    <select id="queryAccountAndManagerInfoByAccountId" resultType="com.prcsteel.platform.common.dto.BuyerOrderDetailDto">
+        select t1.id as sellerId,t1.name as sellerName,
+        t1.manager_id as managerId,t2.name as managerName,t2.org_id as orgId,t3.name as orgName
+        from cust_account t1,acl_user t2, base_organization t3,cust_account_ext t4
+        where t1.id = #{accountId,jdbcType=BIGINT}
+        and t1.manager_id = t2.id
+        and t2.org_id = t3.id
+        and t1.id = t4.cust_account_id
+    </select>
+
+    <!-- 统计已锁定的客户记录数 -->
+    <select id="countLockedAccount" resultType="int" parameterType="list">
+        SELECT count(1) FROM cust_account t1
+        WHERE t1.id IN
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id,jdbcType=BIGINT}
+        </foreach>
+        AND t1.STATUS = 0
+    </select>
+
+    <resultMap id="accountDtoMap" type="com.prcsteel.platform.account.model.dto.AccountDto">
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="balance_second_settlement" property="balanceSecondSettlement" jdbcType="DECIMAL"/>
+        <result column="departmentName" property="departmentName" jdbcType="VARCHAR"/>
+        <result column="departmentCount" property="departmentCount" jdbcType="BIGINT"/>    
+    </resultMap>
+	
+    <!-- 通过客户ID查询客户二次结算欠款金额 -->
+    <select id="queryForBalance" resultMap="accountDtoMap" parameterType="java.util.List">
+        SELECT t3.name, t1.name AS departmentName, t1.balance_second_settlement,
+			(SELECT COUNT(t.id) FROM cust_account t WHERE t.parent_id = t3.id) AS departmentCount 
+		FROM cust_account t1
+		INNER JOIN cust_account t3 ON t3.id = t1.parent_id 
+        LEFT JOIN cust_account_ext t2 on t1.id = t2.cust_account_id
+        WHERE <![CDATA[t1.balance_second_settlement < 0]]>
+        <if test="accountIds != null and accountIds.size() > 0">
+            AND t1.id IN
+            <foreach item="accountId" index="index" collection="accountIds" open="(" separator="," close=")">
+                #{accountId}
+            </foreach>
+        </if>
+    </select>
+
+    <!-- 通过客户ID查询客户二次结算金额 -->
+    <select id="selectSecondBalance" resultType="java.math.BigDecimal" parameterType="java.util.List">
+        SELECT a.balance_second_settlement FROM cust_account a
+        WHERE a.id = #{accountId,jdbcType=BIGINT}
+    </select>
+
+    <update id="updateDealTotal" parameterType="com.prcsteel.platform.account.model.model.Account">
+        update cust_account
+        set
+        buyer_deal_total = #{buyerDealTotal,jdbcType=INTEGER},
+        seller_deal_total = #{sellerDealTotal,jdbcType=INTEGER},
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+        modification_number = ifnull(modification_number, 0) + 1
+        where id = #{id,jdbcType=BIGINT} and modification_number=#{modificationNumber}
+    </update>
+
+    <select id="queryAccountsByIds" resultMap="BaseResultMap" parameterType="java.util.List">
+        select
+        <include refid="Base_Column_List" />
+        from cust_account t1
+        left join cust_account_ext t2 on t1.id = t2.cust_account_id
+        WHERE t1.id IN
+        <foreach item="accountId" index="index" collection="accountIds" open="(" separator="," close=")">
+            #{accountId}
+        </foreach>
+    </select>
+
+    <!-- 客户银行账号审核列表数据 -->
+    <select id="selectBankCodeVerifyList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from cust_account t1
+        left join cust_account_ext t2 on t1.id = t2.cust_account_id
+        WHERE t2.bank_data_status in ('Requested', 'Insufficient')
+        AND t1.status != 0
+        <if test="name!=null and name!=''">
+            AND t1.name like CONCAT('%',#{name},'%')
+        </if>
+        <if test="beginTime!=null and beginTime!=''">
+            AND <![CDATA[date_format(t1.last_updated,'%Y-%m-%d')>=date_format(#{beginTime},'%Y-%m-%d') ]]>
+        </if>
+        <if test="endTime!=null and endTime!=''">
+            AND <![CDATA[date_format(t1.last_updated,'%Y-%m-%d')<=date_format(#{endTime},'%Y-%m-%d') ]]>
+        </if>
+        <choose>
+            <when test="orderBy != null and orderBy != ''">
+                order by ${orderBy}
+                <if test="order != null and order != '' ">
+                    ${order}
+                </if>
+            </when>
+            <otherwise>
+                order by t1.last_updated asc
+            </otherwise>
+        </choose>
+        limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+    </select>
+
+    <!-- 客户银行账号审核列表总数 -->
+    <select id="selectBankCodeVerifyTotal" resultType="int">
+        SELECT COUNT(1)
+        FROM cust_account t1
+        left join cust_account_ext t2 on t1.id = t2.cust_account_id
+        WHERE t2.bank_data_status in ('Requested', 'Insufficient')
+        AND t1.status != 0
+        <if test="name!=null and name!=''">
+            AND t1.name like CONCAT('%',#{name},'%')
+        </if>
+        <if test="beginTime!=null and beginTime!=''">
+            AND <![CDATA[date_format(t1.last_updated,'%Y-%m-%d')>=date_format(#{beginTime},'%Y-%m-%d') ]]>
+        </if>
+        <if test="endTime!=null and endTime!=''">
+            AND <![CDATA[date_format(t1.last_updated,'%Y-%m-%d')<=date_format(#{endTime},'%Y-%m-%d') ]]>
+        </if>
+    </select>
+    <update id="updateBankDataStatusByPrimaryKey">
+        update cust_account_ext t
+        set
+        <if test="bankDataStatus!=null and bankDataStatus!=''">
+            t.bank_data_status = #{bankDataStatus,jdbcType=VARCHAR},
+        </if>
+        <if test="bankDataReason!=null and bankDataReason!=''">
+            t.bank_data_reason = #{bankDataReason,jdbcType=VARCHAR},
+        </if>
+        <if test="bankDataReminded != null and bankDataReminded != ''">
+            t.bank_data_reminded = #{bankDataReminded,jdbcType=VARCHAR},
+        </if>
+        t.modification_number = ifnull(t.modification_number, 0) + 1,
+        t.last_updated = now(),
+        t.last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR}
+        where t.cust_account_id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <!-- 当前所有资金账户余额 -->
+    <select id="queryBalance" resultType="java.math.BigDecimal">
+        SELECT SUM(ROUND(t.balance,2)) FROM cust_account t
+    </select>
+
+    <!-- 查询所有卖家 -->
+    
+      <resultMap id="BaseResultMapTwo" type="com.prcsteel.platform.account.model.dto.AccountAllDto">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="selectAllSellerAccount" resultMap="BaseResultMapTwo">
+        select
+        t1.id,t1.name
+        from cust_account t1
+        left join cust_account_ext t2 on t1.id = t2.cust_account_id
+        WHERE t1.account_tag<![CDATA[ & ]]>2=2 and t1.parent_id=0
+    </select>
+
+    <resultMap id="CustomerTransferMap" type="com.prcsteel.platform.account.model.dto.CustomerTransferDto">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="account_tag" property="accountTag" jdbcType="BIGINT"/>
+        <result column="org_id" property="orgId" jdbcType="BIGINT"/>
+        <result column="org_name" property="orgName" jdbcType="VARCHAR"/>
+        <result column="manager_name" property="managerName" jdbcType="VARCHAR"/>
+        <result column="created" property="created" jdbcType="TIMESTAMP"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+    </resultMap>
+    <select id="queryDeptByCompanyId" parameterType="long" resultType="com.prcsteel.platform.account.model.dto.DepartmentDto">
+        SELECT t.id,t.name,t.balance, t.balance_freeze balanceFreeze, t.balance_second_settlement balanceSecondSettlement,
+        t.balance_second_settlement_freeze balanceSecondSettlementFreeze,t.credit_amount creditAmount,t.credit_amount_used creditUsed,t.belong_org belongOrg,t.dept_fax deptFax,
+        LEAST(
+		(
+			t.credit_amount - t.credit_amount_used
+		),
+		(
+			SELECT
+				ifnull(i.credit_limit - SUM(ca.credit_amount_used), t.credit_amount - t.credit_amount_used)
+			FROM
+				cust_grouping_infor_account ia
+			LEFT JOIN cust_account ca ON ia.department_id = ca.id
+			WHERE
+				ia.grouping_infor_id = i.id and ia.is_delete = 0
+		)
+	    ) creditBalance,
+        t.status,t.is_auto_second_payment as isAutoSecondPayment,
+        e.fax as fax
+        FROM cust_account t
+        LEFT JOIN cust_grouping_infor_account a on t.id = a.department_id and a.is_delete = 0
+         LEFT JOIN cust_grouping_infor i on a.grouping_infor_id =  i.id and i.is_delete = 0
+         LEFT JOIN cust_account_ext e on t.id = e.cust_account_id
+        WHERE t.parent_id = #{companyId,jdbcType=BIGINT}
+        AND t.is_deleted = 0
+        ORDER BY t.id
+    </select>
+
+    <update id="updateIsDeletedById">
+        UPDATE cust_account t
+        set t.is_deleted = 1
+        ,t.last_updated = CURRENT_TIMESTAMP
+        ,t.last_updated_by = #{userName,jdbcType=VARCHAR}
+        ,t.modification_number = ifnull(t.modification_number, 0) + 1
+        where t.id = #{id,jdbcType=BIGINT} and t.is_deleted = 0
+    </update>
+
+    <select id="queryCreditAmountTotalByParentId" resultType="java.math.BigDecimal">
+        SELECT SUM(t.credit_amount) FROM cust_account t
+        WHERE
+        t.parent_id = #{parentId,jdbcType=VARCHAR}
+        AND t.is_deleted = 0
+        <if test="deptId != null and deptId > 0">
+            AND t.id != #{deptId,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <select id="queryDeptCountByNameAndParentId" resultType="int" parameterType="com.prcsteel.platform.account.model.query.ContactQuery">
+        SELECT COUNT(1)
+        FROM cust_account t
+        WHERE t.name = #{deptName,jdbcType=VARCHAR}
+        AND t.is_deleted = 0
+        AND t.parent_id = #{parentId,jdbcType=VARCHAR}
+        AND t.structure_type = 'Department'
+        <if test="deptId != null and deptId > 0">
+            AND t.id != #{deptId,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <update id="batchUpateStatusByPrimaryKeys"  parameterType="com.prcsteel.platform.account.model.dto.AccountDtoForUpdate" >
+        update cust_account t set t.status = #{status,jdbcType=INTEGER}
+        ,t.modification_number = ifnull(t.modification_number,0) + 1
+        ,t.last_updated = now(),t.last_updated_by = #{user.name,jdbcType=VARCHAR}
+        where t.id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id,jdbcType=BIGINT}
+        </foreach>
+    </update>
+
+    <!-- 公司列表查询 -->
+    <select id="queryCompanyByCompanyQuery" parameterType="com.prcsteel.platform.account.model.query.CompanyQuery"
+            resultType="com.prcsteel.platform.account.model.dto.CompanyDto">
+        SELECT t1.id,t1.name,t1.account_tag AS accountTag,t2.annual_purchase_agreement_status AS purchaseAgreementStatus
+        ,t2.annual_purchase_agreement_decline_reason AS purchaseAgreementReason,
+        t2.seller_consign_agreement_status AS consignAgreementStatus,t2.seller_consign_agreement_decline_reason AS consignAgreementReason
+        ,t2.invoice_data_status AS invoiceDataStatus,t2.bank_data_status AS bankDataStatus,
+        t2.card_info_status AS cardInfoStatus,t1.org_name AS orgName,t1.status,DATE_FORMAT(t2.reg_time,'%Y-%m-%d') AS regTime
+        FROM cust_account t1
+        JOIN cust_account_ext t2 ON t1.id = t2.cust_account_id
+        WHERE t1.is_deleted = 0
+        AND t1.structure_type = 'Company'
+        <!-- 归属服务中心条件过滤 -->
+        <if test="orgId != null and orgId > 0">
+            AND t1.org_id= #{orgId,jdbcType=BIGINT}
+        </if>
+        <!-- 数据权限控制：纯买家客户account_tag=1，根据交易员和客户关系来判断，管理员能查看所有用户，其他客户所有用户均可见-->
+        AND ( t1.account_tag != 1  OR (
+        t1.account_tag = 1
+        <if test="userIdList != null and userIdList.size > 0">
+            AND EXISTS (
+            SELECT t2.id FROM cust_account ca,cust_account_contact cac
+            <where>
+                AND ca.parent_id = t1.id
+                AND ca.is_deleted = 0
+                AND cac.is_deleted = 0
+                AND cac.manager IN
+                <foreach collection="userIdList" item="id" open="(" separator="," close=")">
+                    #{id,jdbcType=BIGINT}
+                </foreach>
+                AND ca.id  = cac.account_id
+            </where>
+            )
+        </if>
+        )
+        )
+
+        AND t1.name LIKE CONCAT('%',#{companyName,jdbcType=VARCHAR},'%')
+        <if test="accountTag != null and accountTag > 0">
+            AND t1.account_tag <![CDATA[ & ]]> #{accountTag,jdbcType=BIGINT} = #{accountTag,jdbcType=BIGINT}
+        </if>
+        <if test="purchaseStatusList != null and purchaseStatusList.size > 0">
+            AND t2.annual_purchase_agreement_status IN
+            <foreach collection="purchaseStatusList" item="status" open="(" separator="," close=")">
+                #{status,jdbcType=VARCHAR}
+            </foreach>
+        </if>
+        <if test="consignStatusList != null and consignStatusList.size > 0">
+            AND t2.seller_consign_agreement_status IN
+            <foreach collection="consignStatusList" item="status" open="(" separator="," close=")">
+                #{status,jdbcType=VARCHAR}
+            </foreach>
+        </if>
+        <if test="invoiceStatusList != null and invoiceStatusList.size > 0">
+            AND t2.invoice_data_status IN
+            <foreach collection="invoiceStatusList" item="status" open="(" separator="," close=")">
+                #{status,jdbcType=VARCHAR}
+            </foreach>
+        </if>
+        <if test="cardStatusList != null and cardStatusList.size > 0">
+            AND t2.card_info_status IN
+            <foreach collection="cardStatusList" item="status" open="(" separator="," close=")">
+                #{status,jdbcType=VARCHAR}
+            </foreach>
+        </if>
+        <if test="payStatusList != null and payStatusList.size > 0">
+            AND t2.bank_data_status IN
+            <foreach collection="payStatusList" item="status" open="(" separator="," close=")">
+                #{status,jdbcType=VARCHAR}
+            </foreach>
+        </if>
+        <if test="orderBy != null and orderBy != '' ">
+            order by ${orderBy}
+            <if test="order != null and order != '' ">
+                ${order}
+            </if>
+        </if>
+
+        LIMIT #{start,jdbcType=INTEGER}, #{length,jdbcType=INTEGER}
+    </select>
+
+    <!-- 公司列表记录数查询 -->
+    <select id="queryCompanyTotalByCompanyQuery" parameterType="com.prcsteel.platform.account.model.query.CompanyQuery"
+            resultType="int">
+        SELECT count(1)
+        FROM cust_account t1
+        JOIN cust_account_ext t2 ON t1.id = t2.cust_account_id
+        WHERE t1.is_deleted = 0
+        AND t1.structure_type = 'Company'
+        <!-- 归属服务中心条件过滤 -->
+        <if test="orgId != null and orgId > 0">
+            AND t1.org_id= #{orgId,jdbcType=BIGINT}
+        </if>
+        <!-- 数据权限控制：纯买家客户account_tag=1，根据交易员和客户关系来判断，管理员能查看所有用户，其他客户所有用户均可见-->
+        AND ( t1.account_tag != 1  OR (
+        t1.account_tag = 1
+        <if test="userIdList != null and userIdList.size > 0">
+            AND EXISTS (
+            SELECT t2.id FROM cust_account ca,cust_account_contact cac
+            <where>
+                AND ca.parent_id = t1.id
+                AND ca.is_deleted = 0
+                AND cac.is_deleted = 0
+                AND cac.manager IN
+                <foreach collection="userIdList" item="id" open="(" separator="," close=")">
+                    #{id,jdbcType=BIGINT}
+                </foreach>
+                AND ca.id  = cac.account_id
+            </where>
+            )
+        </if>
+        )
+        )
+
+        AND t1.name LIKE CONCAT('%',#{companyName,jdbcType=VARCHAR},'%')
+        <if test="accountTag != null">
+            AND t1.account_tag <![CDATA[ & ]]> #{accountTag,jdbcType=BIGINT} = #{accountTag,jdbcType=BIGINT}
+        </if>
+        <if test="purchaseStatusList != null and purchaseStatusList.size > 0">
+            AND t2.annual_purchase_agreement_status IN
+            <foreach collection="purchaseStatusList" item="status" open="(" separator="," close=")">
+                #{status,jdbcType=VARCHAR}
+            </foreach>
+        </if>
+        <if test="consignStatusList != null and consignStatusList.size > 0">
+            AND t2.seller_consign_agreement_status IN
+            <foreach collection="consignStatusList" item="status" open="(" separator="," close=")">
+                #{status,jdbcType=VARCHAR}
+            </foreach>
+        </if>
+        <if test="invoiceStatusList != null and invoiceStatusList.size > 0">
+            AND t2.invoice_data_status IN
+            <foreach collection="invoiceStatusList" item="status" open="(" separator="," close=")">
+                #{status,jdbcType=VARCHAR}
+            </foreach>
+        </if>
+        <if test="cardStatusList != null and cardStatusList.size > 0">
+            AND t2.card_info_status IN
+            <foreach collection="cardStatusList" item="status" open="(" separator="," close=")">
+                #{status,jdbcType=VARCHAR}
+            </foreach>
+        </if>
+        <if test="payStatusList != null and payStatusList.size > 0">
+            AND t2.bank_data_status IN
+            <foreach collection="payStatusList" item="status" open="(" separator="," close=")">
+                #{status,jdbcType=VARCHAR}
+            </foreach>
+        </if>
+    </select>
+
+    <select id="selectAccountInfoById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+        select
+        <include refid="Base_Column_List" />
+        from cust_account t1
+        left join cust_account_ext t2 on t1.id = t2.cust_account_id
+        where (t1.id = #{accountId,jdbcType=BIGINT} OR t1.parent_id= #{accountId,jdbcType=BIGINT}) AND t1.is_deleted = 0
+    </select>
+
+    <!--根据交易员查询相关买家公司-->
+    <select id="queryAccountByManager" parameterType="com.prcsteel.platform.account.model.model.Account"
+            resultType="com.prcsteel.platform.account.model.model.Account">
+        SELECT t1.id,t1.name,t1.account_tag FROM cust_account t1
+        LEFT JOIN (SELECT DISTINCT t2.parent_id FROM cust_account t2
+        LEFT JOIN cust_account_contact t3 ON t3.account_id=t2.id WHERE t3.manager= #{managerId,jdbcType=BIGINT})t4
+        ON t1.id=t4.parent_id WHERE t1.structure_type='Company' AND t1.status != 0
+        <if test="name !=null and name!=''">
+            AND t1.name LIKE CONCAT('%',#{name,jdbcType=VARCHAR},'%')
+        </if>
+    </select>
+    <!--根据客户名称查询 有几个部门-->
+    <select id="queryDepartmentByName" parameterType="Long"
+            resultType="int">
+        SELECT COUNT(id) FROM cust_account
+        WHERE parent_id=#{accountId}
+        AND is_deleted=0
+
+    </select>
+    <!--根据客户下的部门名称-->
+    <select id="queryDepartment" parameterType="Long"
+            resultType="Long">
+        SELECT
+        id
+        FROM cust_account
+        WHERE parent_id=#{id}
+        AND is_deleted=0
+
+    </select>
+    <!--查询客户列表总条数，增加条件必须是卖家属性的客户，modify by zhoucai@prcsteel.com 2016-3-17  -->
+    <select id="querCustomerTransferCount" resultType="java.lang.Integer" parameterType="com.prcsteel.platform.account.model.query.CustomerTransferQuery">
+        SELECT
+        COUNT(id)
+        FROM
+        cust_account
+        WHERE
+        structure_type = 'Company' AND
+        is_deleted = 0 AND
+        <if test="accountTag != null and accountTag > 0">
+            account_tag <![CDATA[ & ]]> #{accountTag,jdbcType=BIGINT}=#{accountTag,jdbcType=BIGINT}
+        </if>
+        <if test="orgId !=null">
+            AND (org_id = #{orgId,jdbcType=BIGINT} OR org_id = 0)
+        </if>
+        <if test="accountId !=null">
+            AND account_id = #{accountId,jdbcType=BIGINT}
+        </if>
+        <if test="accountName !=null">
+            AND name LIKE CONCAT('%',#{accountName,jdbcType=VARCHAR},'%')
+        </if>
+    </select>
+    <!-- 客户划转列表只查询包含卖家属性的客户 ,去掉查询交易员信息  modify by zhoucai@prcsteel.com 2016-3-17 -->
+    <select id="querCustomerTransferList" resultMap="CustomerTransferMap" parameterType="com.prcsteel.platform.account.model.query.CustomerTransferQuery" >
+
+        SELECT
+        id,name,account_tag,org_id,org_name,created,status
+        FROM
+        cust_account
+        WHERE
+        structure_type = 'Company' AND
+        is_deleted = 0 AND
+        <if test="accountTag != null and accountTag > 0">
+            account_tag <![CDATA[ & ]]> #{accountTag,jdbcType=BIGINT} = #{accountTag,jdbcType=BIGINT}
+        </if>
+        <if test="orgId !=null">
+            AND(org_id = #{orgId,jdbcType=BIGINT} OR org_id = 0)
+        </if>
+        <if test="accountId !=null">
+            AND account_id = #{accountId,jdbcType=BIGINT}
+        </if>
+        <if test="accountName != null">
+            AND name LIKE CONCAT('%',#{accountName,jdbcType=VARCHAR},'%')
+        </if>
+        GROUP BY id
+        ORDER BY created
+        <if test="start != null and length != null">
+            limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+        </if>
+    </select>
+    <!-- add by zhoucai@prcsteel.com 判断当前登录的角色是否为管理员，如果是则返回1，否则返回0 -->
+    <select id="queryIsAdminCount" resultType="java.lang.Integer" parameterType="com.prcsteel.platform.account.model.query.AccountStateQuery">
+        SELECT
+        count(*)
+        FROM
+        acl_role t,acl_user t1
+        WHERE
+        t.id = t1.role_id AND
+        t1.login_id=#{loginId,jdbcType=VARCHAR} AND
+        t1.status=1 AND
+        t.code='管理员'
+    </select>
+
+    <resultMap id="accountDetilMap" type="com.prcsteel.platform.account.model.dto.CustAccountDto" extends="BaseResultMap">
+        <result column="accountId" property="accountId" jdbcType="BIGINT" />
+        <result column="accountName" property="accountName" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <!-- lixiang 二结应收应付详情账户信息 -->
+    <select id="queryForAccountId" resultMap="accountDetilMap">
+        SELECT *,t2.id AS accountId, t1.name AS accountName FROM cust_account t1
+        INNER JOIN cust_account t2 ON t1.parent_id = t2.id
+        WHERE t1.id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="queryCreditAmountUsedTotalByGroupingId" resultType="decimal" parameterType="java.lang.Long">
+        SELECT SUM(t1.credit_amount_used)
+        FROM cust_account t1,cust_grouping_infor_account t2
+        <where>
+        AND t2.grouping_infor_id = #{groupingId,jdbcType=BIGINT}
+        AND t2.is_delete = 0
+        AND t1.is_deleted = 0
+        AND t1.id = t2.department_id
+        </where>
+    </select>
+
+    <resultMap id="AccountCreditDto" extends="BaseResultMap" type="com.prcsteel.platform.account.model.dto.AccountCreditDto">
+        <result column="group_credit_balance" property="groupCreditBalance" jdbcType="DECIMAL"/>
+    </resultMap>
+    <select id="selectActualCreditBalanceById" resultMap="AccountCreditDto" parameterType="java.lang.Long" >
+        select
+        t1.*,(SELECT
+				t4.credit_limit - IFNULL(SUM(ca.credit_amount_used), 0)
+			FROM
+				cust_grouping_infor_account ia
+			LEFT JOIN cust_account ca ON ia.department_id = ca.id
+			WHERE
+				ia.grouping_infor_id = t4.id and ia.is_delete = 0 and ia.department_id != t1.id) group_credit_balance
+        from cust_account t1
+        left join cust_grouping_infor_account t3 on t3.department_id = t1.id and t3.is_delete = 0
+        left join cust_grouping_infor t4 on t4.id = t3.grouping_infor_id and t4.is_delete = 0
+        where t1.id = #{id,jdbcType=BIGINT} AND t1.is_deleted = 0
+    </select>
+    <select id="queryOrgIdsByAccountId" parameterType="java.lang.Long" resultType="java.lang.Long">
+        SELECT DISTINCT t2.org_id FROM  cust_account_contact t1
+        INNER JOIN acl_user t2 ON t1.manager=t2.id
+        WHERE t1.account_id IN(SELECT id FROM cust_account WHERE parent_id=#{accountId} )
+        and t1.is_deleted=0
+    </select>
+    <select id="queryParentByDeptId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM cust_account t1
+        LEFT JOIN cust_account_ext t2 ON t1.id = t2.cust_account_id
+        INNER JOIN cust_account t3 ON t3.parent_id = t1.id
+        WHERE t3.id = #{deptId,jdbcType=BIGINT} AND t1.is_deleted = 0
+    </select>
+</mapper>

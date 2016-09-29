@@ -1,0 +1,720 @@
+#**
+ * spring.vm
+ *
+ * This file consists of a collection of Velocity macros aimed at easing
+ * some of the common requirements of web applications - in particular
+ * handling of forms.
+ *
+ * Spring's Velocity support will automatically make this file and therefore
+ * all macros within it available to any application using Spring's
+ * VelocityConfigurer.
+ *
+ * To take advantage of these macros, the "exposeSpringMacroHelpers" property
+ * of the VelocityView class needs to be set to "true". This will expose a
+ * RequestContext under the name "springMacroRequestContext", as needed by
+ * the macros in this library.
+ *
+ * @author Darren Davison
+ * @author Juergen Hoeller
+ * @since 1.1
+ *#
+#**
+ * springMessage
+ *
+ * Macro to translate a message code into a message.
+ *#
+#macro( springMessage $code )$springMacroRequestContext.getMessage($code)#end
+
+#**
+ * springMessageText
+ *
+ * Macro to translate a message code into a message,
+ * using the given default text if no message found.
+ *#
+#macro( springMessageText $code $text )$springMacroRequestContext.getMessage($code, $text)#end
+
+#**
+ * springTheme
+ *
+ * Macro to translate a theme message code into a string.
+ *#
+#macro( springTheme $code )$springMacroRequestContext.getThemeMessage($code)#end
+
+#**
+ * springThemeText
+ *
+ * Macro to translate a theme message code into a string,
+ * using the given default text if no message found.
+ *#
+#macro( springThemeText $code $text )$springMacroRequestContext.getThemeMessage($code, $text)#end
+
+#**
+ * springUrl
+ *
+ * Takes a relative URL and makes it absolute from the server root by
+ * adding the context root for the web application.
+ *#
+#macro( springUrl $relativeUrl )$springMacroRequestContext.getContextPath()${relativeUrl}#end
+
+#**
+ * springBind
+ *
+ * Exposes a BindStatus object for the given bind path, which can be
+ * a bean (e.g. "person") to get global errors, or a bean property
+ * (e.g. "person.name") to get field errors. Can be called multiple times
+ * within a form to bind to multiple command objects and/or field names.
+ *
+ * This macro will participate in the default HTML escape setting for the given
+ * RequestContext. This can be customized by calling "setDefaultHtmlEscape"
+ * on the "springMacroRequestContext" context variable, or via the
+ * "defaultHtmlEscape" context-param in web.xml (same as for the JSP bind tag).
+ * Also regards a "springHtmlEscape" variable in the template context.
+ *
+ * Producing no output, the following context variable will be available
+ * each time this macro is referenced:
+ *
+ *   $status : a BindStatus instance holding the command object name,
+ *   expression, value, and error codes and messages for the path supplied
+ *
+ * @param $path : the path (string value) of the value required to bind to.
+ *   Spring defaults to a command name of "command" but this can be overridden
+ *   by user config.
+ *#
+#macro( springBind $path )
+    #if("$!springHtmlEscape" != "")
+        #set( $status = $springMacroRequestContext.getBindStatus($path, $springHtmlEscape) )
+    #else
+        #set( $status = $springMacroRequestContext.getBindStatus($path) )
+    #end
+#end
+
+#**
+ * springBindEscaped
+ *
+ * Similar to springBind, but takes an explicit HTML escape flag rather
+ * than relying on the default HTML escape setting.
+ *#
+#macro( springBindEscaped $path $htmlEscape )
+    #set( $status = $springMacroRequestContext.getBindStatus($path, $htmlEscape) )
+#end
+
+#**
+ * springFormInput
+ *
+ * Display a form input field of type 'text' and bind it to an attribute
+ * of a command or bean.
+ *
+ * @param path the name of the field to bind to
+ * @param attributes any additional attributes for the element (such as class
+ *    or CSS styles or size
+ *
+ *#
+#macro( springFormInput $path $attributes )
+    #springBind($path)
+    <input type="text" id="${status.expression}" name="${status.expression}" value="$!status.value" ${attributes}#springCloseTag()
+#end
+
+#**
+ * springFormPasswordInput
+ *
+ * Display a form input field of type 'password' and bind it to an attribute
+ * of a command or bean.  No value will ever be specified for this field regardless
+ * of whether one exists or not.  For hopefully obvious reasons!
+ *
+ * @param path the name of the field to bind to
+ * @param attributes any additional attributes for the element (such as class
+ *    or CSS styles or size
+ *
+ *#
+#macro( springFormPasswordInput $path $attributes )
+    #springBind($path)
+    <input type="password" id="${status.expression}" name="${status.expression}" value="" ${attributes}#springCloseTag()
+#end
+
+#**
+ * springFormHiddenInput
+ *
+ * Generate a form input field of type 'hidden' and bind it to an attribute
+ * of a command or bean.
+ *
+ * @param path the name of the field to bind to
+ * @param attributes any additional attributes for the element (such as class
+ *    or CSS styles or size
+ *
+ *#
+#macro( springFormHiddenInput $path $attributes )
+    #springBind($path)
+    <input type="hidden" id="${status.expression}" name="${status.expression}" value="$!status.value" ${attributes}#springCloseTag()
+#end
+
+#**
+ * formTextArea
+ *
+ * display a text area and bind it to an attribute
+ * of a command or bean
+ *
+ * @param path the name of the field to bind to
+ * @param attributes any additional attributes for the element (such as class
+ *    or CSS styles or size
+ *
+ *#
+#macro( springFormTextarea $path $attributes )
+    #springBind($path)
+    <textarea id="${status.expression}" name="${status.expression}" ${attributes}>$!status.value</textarea>
+#end
+
+#**
+ * springFormSingleSelect
+ *
+ * Show a selectbox (dropdown) input element allowing a single value to be chosen
+ * from a list of options.
+ *
+ * The null check for $status.value leverages Velocity's 'quiet' notation rather
+ * than the more common #if($status.value) since this method evaluates to the
+ * boolean 'false' if the content of $status.value is the String "false" - not
+ * what we want.
+ *
+ * @param path the name of the field to bind to
+ * @param options a map (value=label) of all the available options
+ * @param attributes any additional attributes for the element (such as class
+ *    or CSS styles or size
+*#
+#macro( springFormSingleSelect $path $options $attributes )
+    #springBind($path)
+    <select id="${status.expression}" name="${status.expression}" ${attributes}>
+        #foreach($option in $options.keySet())
+            <option value="${option}"
+            #if("$!status.value" == "$option")
+                selected="selected"
+            #end>
+            ${options.get($option)}</option>
+        #end
+    </select>
+#end
+
+#**
+ * springFormMultiSelect
+ *
+ * Show a listbox of options allowing the user to make 0 or more choices from
+ * the list of options.
+ *
+ * @param path the name of the field to bind to
+ * @param options a map (value=label) of all the available options
+ * @param attributes any additional attributes for the element (such as class
+ *    or CSS styles or size
+*#
+#macro( springFormMultiSelect $path $options $attributes )
+    #springBind($path)
+    <select multiple="multiple" id="${status.expression}" name="${status.expression}" ${attributes}>
+        #foreach($option in $options.keySet())
+            <option value="${option}"
+            #foreach($item in $status.value)
+                #if($item == $option)
+                    selected="selected"
+                #end
+            #end
+            >${options.get($option)}</option>
+        #end
+    </select>
+#end
+
+#**
+ * springFormRadioButtons
+ *
+ * Show radio buttons.
+ *
+ * @param path the name of the field to bind to
+ * @param options a map (value=label) of all the available options
+ * @param separator the html tag or other character list that should be used to
+ *    separate each option.  Typically '&nbsp;' or '<br>'
+ * @param attributes any additional attributes for the element (such as class
+ *    or CSS styles or size
+*#
+#macro( springFormRadioButtons $path $options $separator $attributes )
+    #springBind($path)
+    #foreach($option in $options.keySet())
+        <input type="radio" name="${status.expression}" value="${option}"
+        #if("$!status.value" == "$option")
+            checked="checked"
+        #end
+        ${attributes}
+        #springCloseTag()
+        ${options.get($option)} ${separator}
+    #end
+#end
+
+#**
+ * springFormCheckboxes
+ *
+ * Show checkboxes.
+ *
+ * @param path the name of the field to bind to
+ * @param options a map (value=label) of all the available options
+ * @param separator the html tag or other character list that should be used to
+ *    separate each option.  Typically '&nbsp;' or '<br>'
+ * @param attributes any additional attributes for the element (such as class
+ *    or CSS styles or size
+*#
+#macro( springFormCheckboxes $path $options $separator $attributes )
+    #springBind($path)
+    #foreach($option in $options.keySet())
+        <input type="checkbox" name="${status.expression}" value="${option}"
+        #foreach($item in $status.value)
+            #if($item == $option) checked="checked" #end
+        #end
+        ${attributes} #springCloseTag()
+        ${options.get($option)} ${separator}
+    #end
+    <input type="hidden" name="_${status.expression}" value="on"/>
+#end
+
+#**
+ * springShowErrors
+ *
+ * Show validation errors for the currently bound field, with
+ * optional style attributes.
+ *
+ * @param separator the html tag or other character list that should be used to
+ *    separate each option. Typically '<br>'.
+ * @param classOrStyle either the name of a CSS class element (which is defined in
+ *    the template or an external CSS file) or an inline style.  If the value passed in here
+ *    contains a colon (:) then a 'style=' attribute will be used, else a 'class=' attribute
+ *    will be used.
+*#
+#macro( springShowErrors $separator $classOrStyle )
+    #foreach($error in $status.errorMessages)
+        #if($classOrStyle == "")
+            <b>${error}</b>
+        #else
+            #if($classOrStyle.indexOf(":") == -1)
+                #set($attr="class")
+            #else
+                #set($attr="style")
+            #end
+            <span ${attr}="${classOrStyle}">${error}</span>
+        #end
+        ${separator}
+    #end
+#end
+
+#**
+ * springCloseTag
+ *
+ * Simple macro to close an HTML tag that has no body with '>' or '/>',
+ * depending on the value of a 'springXhtmlCompliant' variable in the
+ * template context.
+ *#
+#macro( springCloseTag )#if($springXhtmlCompliant)/>#else>#end #end
+
+#macro(showPermission $nodes)
+    #foreach($perm in ${nodes.child})
+    <label>
+        <input name="permsId" value="${perm.permission.id}" data-pid="${perm.permission.parentId}" type="checkbox" class="ace">
+        <span class="lbl">${perm.permission.name}</span>
+    </label>
+
+    ##show childs
+    #showPermission($perm)
+
+    #end
+#end
+
+#macro(invoiceTopBar $index $msg)
+    <div class="tabbar order-tab">
+        <ul class="nav nav-tabs padding-12 tab-color-blue" id="myTab4">
+
+            #if($shiro.hasPermission("invoice:out:unchecklist:page"))
+            <li #if($index==1) class="active" #end>
+                <a href="$link.getContextPath()/invoice/out/invoicedata/unchecklist.html">待审核开票资料
+                    #if($msg && $msg>0)
+                        <span class="red">($msg)</span>
+                    #end
+                </a>
+            </li>
+            #end
+
+            #if($shiro.hasPermission("invoice:out:apply:page"))
+            <li #if($index==2) class="active" #end>
+                <a href="$link.getContextPath()/invoice/apply/index.html">待申请开票
+                    #if($msg && $msg>0)
+                        <span class="red">($msg)</span>
+                    #end
+                </a>
+            </li>
+            #end
+
+            #if($shiro.hasPermission("invoice:out:audit:page"))
+            <li #if($index==3) class="active" #end>
+                <a href="$link.getContextPath()/invoice/apply/audit.html">待开票审核
+                    #if($msg && $msg>0)
+                        <span class="red">($msg)</span>
+                    #end
+                </a>
+            </li>
+            #end
+
+            #if($shiro.hasPermission("invoice:out:waitinginvoice:page"))
+            <li #if($index==4) class="active" #end>
+                <a href="$link.getContextPath()/invoice/out/waitinginvoice.html">待开票
+                    #if($msg && $msg>0)
+                        <span class="red">($msg)</span>
+                    #end
+                </a>
+            </li>
+            #end
+
+            #if($shiro.hasPermission("invoice:out:inputinvoicelist:page"))
+            <li #if($index==5) class="active" #end>
+                <a href="$link.getContextPath()/invoice/out/inputinvoicelist.html">待录入
+                    #if($msg && $msg>0)
+                        <span class="red">($msg)</span>
+                    #end
+                </a>
+
+            </li>
+            #end
+
+            #if($shiro.hasPermission("invoice:out:express:page"))
+            <li #if($index==6) class="active" #end>
+                <a href="$link.getContextPath()/invoice/express/index.html">待寄出
+                    #if($msg && $msg>0)
+                        <span class="red">($msg)</span>
+                    #end
+                </a>
+            </li>
+            #end
+
+            #if($shiro.hasPermission("invoice:out:confirm:page"))
+            <li #if($index==7) class="active" #end>
+                <a href="$link.getContextPath()/invoice/out/confirm.html ">待确认
+                    #if($msg && $msg>0)
+                        <span class="red">($msg)</span>
+                    #end
+                </a>
+            </li>
+            #end
+
+            #if($shiro.hasPermission("invoice:out:confirmed:page"))
+            <li #if($index==8) class="active" #end>
+                <a href="$link.getContextPath()/invoice/out/confirmed.html">已确认
+                    #if($msg && $msg>0)
+                        <span class="red">($msg)</span>
+                    #end
+                </a>
+            </li>
+            #end
+
+        </ul>
+    </div>
+#end
+
+
+#macro( invoiceTabBar )
+<!--TABBAR-->
+<div class="tabbar">
+    <ul class="nav nav-tabs padding-12 tab-color-blue" id="myTab4">
+        <li
+            #if($!{status} == 'ALL')
+                    class="active"
+            #end>
+
+            <a
+                #if($!{status} == 'ALL')
+                        href="javascript:;"
+                #else
+                        href="$link.getContextPath()/invoice/in/index.html"
+                #end>
+                全部<span class="red bolder">
+            </span>
+            </a>
+        </li>
+        <li
+            #if(($!{status} == 'AWAITS') || 
+            	($!{status} == 'WAIT' && $!{tabNeedRelationStatus} == 'toberelation'))
+                    class="active"
+            #end>
+            <a
+                #if($!{status} == 'AWAITS')
+                        href="javascript:;"
+                #else
+                        href="$link.getContextPath()/invoice/in/awaits.html"
+                #end
+                    >待收票<span class="red bolder">
+                $!{receiveTotal}
+            </span>
+            </a>
+        </li>
+        <li
+            #if($!{status} == 'RECEIVED')
+                    class="active"
+            #end>
+            <a
+                #if($!{status} == 'RECEIVED')
+                        href="javascript:;"
+                #else
+                        href="$link.getContextPath()/invoice/in/send.html"
+                #end
+                    >待寄出<span class="red bolder">
+                $!{sendTotal}
+            </span>
+            </a>
+        </li>
+        <li
+            #if($!{status} == 'SENT')
+                    class="active"
+            #end>
+            <a
+                #if($!{status} == 'SENT')
+                        href="javascript:;"
+                #else
+                        href="$link.getContextPath()/invoice/in/confirm.html"
+                #end
+                    >待确认<span class="red bolder">
+                $!{confirmTotal}
+            </span>
+            </a>
+        </li>
+        <li
+            #if($!{status} == 'WAIT' && $!{tabNeedRelationStatus} == 'hasrelation')
+                    class="active"
+            #end>
+            <a
+                #if($!{status} == 'WAIT' && $!{tabNeedRelationStatus} == 'hasrelation')
+                        href="javascript:;"
+                #else
+                        href="$link.getContextPath()/invoice/in/authentication.html"
+                #end
+                    >待认证<span class="red bolder">
+                $!{authenticationTotal}
+            </span>
+            </a>
+        </li>
+        <li
+            #if($!{status} == 'ALREADY')
+                    class="active"
+            #end>
+            <a
+                #if($!{status} == 'ALREADY')
+                        href="javascript:;"
+                #else
+                        href="$link.getContextPath()/invoice/in/authenticationed.html"
+                #end
+                    >已认证
+            </a>
+        </li>
+        <li
+            #if($!{status} == 'CANCEL')
+                    class="active"
+            #end>
+            <a
+                #if($!{status} == 'CANCEL')
+                        href="javascript:;"
+                #else
+                        href="$link.getContextPath()/invoice/in/cancel.html"
+                #end
+                    >已作废
+            </a>
+        </li>
+    </ul>
+</div>
+#end
+
+#macro(inquiryorderTbar $current)
+<div class="tabbar">
+	<ul class="nav nav-tabs padding-12 tab-color-blue" id="myTab4">
+		#if($shiro.hasPermission("smartmatch:purchaseorder:pending_accepte"))
+		<li>
+            <input type="hidden" value="0">
+            #if($current!="info")
+            <a href="javascript:;;" id="unprocess">
+            #else
+            <a id="unprocess" href="$link.getContextPath()/smartmatch/purchaseorder/list.html#pending_accepte?tabIndex=0">
+            #end
+            待处理<span class="red bolder"></span>
+            </a>
+        </li>
+		#end
+		#if($shiro.hasPermission("smartmatch:purchaseorder:p1"))
+		<li>
+            <input type="hidden" value="1">
+            #if($current!="info")
+            <a href="javascript:;;" id="unassign">
+            #else
+            <a id="unassign" href="$link.getContextPath()/smartmatch/purchaseorder/list.html#p1?tabIndex=1">
+            #end
+            待指派<span class="red bolder"></span>
+            </a>
+        </li>
+		#end
+		#if($shiro.hasPermission("smartmatch:purchaseorder:p3"))
+		<li>
+            <input type="hidden" value="3">
+            #if($current!="info")
+            <a href="javascript:;;" id="listed">
+            #else
+            <a id="listed" href="$link.getContextPath()/smartmatch/purchaseorder/list.html#p3?tabIndex=3">
+            #end
+            待开单	<span class="red bolder"></span>
+            </a>
+        </li>
+		#end
+		#if($shiro.hasPermission("smartmatch:purchaseorder:p2"))
+		<li>
+            <input type="hidden" value="2">
+            #if($current!="info")
+            <a href="javascript:;;" id="listed">
+            #else
+            <a id="listed" href="$link.getContextPath()/smartmatch/purchaseorder/list.html#p2?tabIndex=2">
+            #end
+            已完成	<span class="red bolder"></span>
+            </a>
+        </li>
+		#end
+    </ul>
+</div>
+#end
+
+#macro(resManagerTbar $current)
+<div class="tabbar">
+    <ul class="nav nav-tabs padding-12 tab-color-blue" id="myTab4">
+		<li  #if($current=="list") class="active" #end>
+            <input type="hidden" value="0">
+            #if($current=="list")
+            <a href="javascript:;;" id="unlisted">
+            #else
+            <a id="unlisted" href="$link.getContextPath()/resource/sort/index.html?tabIndex=0">
+            #end
+            待审核<span class="red bolder">（$!{unListedCount}）</span>
+            </a>
+        </li>
+		 <li>
+            <input type="hidden" value="1">
+            #if($current=="list")
+            <a href="javascript:;;" id="listed">
+            #else
+            <a id="listed" href="$link.getContextPath()/resource/sort/index.html?tabIndex=1">
+            #end
+            日常资源<span class="red bolder">（$!{listedCount}）</span>
+            </a>
+        </li>
+		<li>
+            <input type="hidden" value="2">
+            #if($current=="list")
+            <a href="javascript:;;" id="inquery">
+            #else
+            <a id="inquery" href="$link.getContextPath()/resource/sort/index.html?tabIndex=2">
+            #end
+            询价资源<span class="red bolder">（$!{inqueryCount}）</span>
+            </a>
+        </li>
+		<li>
+            <input type="hidden" value="3">
+            #if($current=="list")
+            <a href="javascript:;;" id="historyTransaction">
+            #else
+            <a id="historyTransaction" href="$link.getContextPath()/resource/sort/index.html?tabIndex=3">
+            #end
+            历史成交<span class="red bolder">（$!{historyTransactionCount}）</span>
+            </a>
+        </li>
+		<li>
+            <input type="hidden" value="4">
+            #if($current=="list")
+            <a href="javascript:;;" id="exception">
+            #else
+            <a id="exception" href="$link.getContextPath()/resource/sort/index.html?tabIndex=4">
+            #end
+            异常资源<span class="red bolder">（$!{exceptionCount}）</span>
+            </a>
+        </li>
+        <li>
+            <input type="hidden" value="5"/>
+            #if($current=="list")
+                <a href="javascript:;">
+            #else
+                <a href="$link.getContextPath()/resource/sort/index.html?tabIndex=5">
+            #end
+                全部资源<span class="red bolder">（$!{allCount}）</span>
+            </a>
+        </li>
+		<li>
+            <input type="hidden" value="6">
+            #if($current=="lost")
+            <a href="javascript:;;" id="lostResource">
+            #else
+            <a id="lostResource" href="$link.getContextPath()/resource/lost/index.html?tabIndex=6">
+            #end
+            缺失资源
+            </a>
+        </li>
+	    #if($shiro.hasPermission("smartmatch:inventory:info:page"))
+        <li >
+			<input type="hidden" value="7">
+			#if($current=="info")
+			<a href="javascript:;;" id="inventory">
+			#else
+            <a href="$link.getContextPath()/smartmatch/inventory/info.html?tabIndex=7">
+			#end
+                库存监控
+            </a>
+        </li>
+		#end
+		<li>
+            <input type="hidden" value="8">
+            #if($current=="market")
+            <a href="javascript:;" id="marketResource">
+            #else
+            <a id="marketResource" href="$link.getContextPath()/resource/market/index.html?tabIndex=8">
+            #end
+           超市资源
+            </a>
+        </li>
+	
+		<li  #if($current=="base") class="active" #end >
+            <input type="hidden" value="9">
+            #if($current=="base")
+            <a href="javascript:;;" id="baseResource">
+            #else
+            <a id="baseResource" href="$link.getContextPath()/resource/base/index.html?tabIndex=9">
+            #end
+            基础资源
+            </a>
+        </li>
+	
+    </ul>
+</div>
+#end
+
+#macro(inquiryDetailManager $select)
+<div class="tabbar">
+    <ul class="nav nav-tabs padding-12 tab-color-blue" id="myTab4">
+		<li  #if($select=="inquiryOrderDetail") class="active" #end >
+            #if($select=="inquiryOrderDetail")
+            	<a href="javascript:;;">
+            #else
+            	<a id="inquiryOrderDetail" href="$link.getContextPath()/smartmatch/purchaseorder/created.html?id=$!purchaseOrderId&isDetail=1">
+            #end
+            询价单详情
+            </a>
+        </li>
+		<li  #if($select=="inquiryDetail") class="active" #end >
+            #if($select=="inquiryDetail")
+            	<a href="javascript:;;" id="inquiryDetail">
+            #else
+            	<a id="inquiryDetail" href="$link.getContextPath()/smartmatch/purchaseorder/$!purchaseOrderId/inquirydetail.html">
+            #end
+            询价详情 &nbsp;<span style="color: red;">($!detailCount)</span>
+            </a>
+        </li>
+		<li  #if($select=="quotaDetail") class="active" #end >
+            #if($select=="quotaDetail")
+            	<a href="javascript:;;">
+            #else
+            	<a  href="$link.getContextPath()/smartmatch/quotation/$!{purchaseOrderId}/detail.html?tabIndex=3">
+            #end
+           报价详情 &nbsp;<span style="color: red;">($!quotaCount)</span>
+            </a>
+        </li>                
+    </ul>
+</div>
+#end

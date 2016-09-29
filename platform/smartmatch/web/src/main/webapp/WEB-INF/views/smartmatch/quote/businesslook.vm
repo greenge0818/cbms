@@ -1,0 +1,358 @@
+<style>
+.d-inner{ overflow:visible}
+.dataTables_length{ padding-top: 15px;}
+.price_text{ width: 80px;}
+.update_resource{ margin-right: 10px;}
+.dataTables_processing{ position: absolute; top:150px; width: 100px; left: 50%; margin-left: -50px;}
+.showphonelist{white-space:nowrap;}
+</style>
+<link rel="stylesheet" href="$link.getContextPath()/css/nav.css" />
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            询报价管理
+        </li>
+
+         <li class="active">业务找货</li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+</div>
+<!-- content S -->
+<div class="page-content">
+	#parse("quoteQuery.vm")
+	<form id="search_form">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="m-s">
+                <div id="m-searchDiv" class="m-search m-search-bar clearfix pd-b-5">
+                	<div class="spec">
+                        <div id="spec" type="spec" class="product-ipt" rel="1">
+                            <span class="in-block f-fl"><em class="red"></em>规格：</span>
+                            <div class="form-item">
+	                            <input type="text"  id="spec" name="specs" search="spec" placeholder=''>
+                            </div>&nbsp;&nbsp;
+                        </div>
+                    </div>
+                    <div class="product-ipt">
+                        <span class="in-block f-fl"><em class="red"></em>品名：</span>
+                        <div class="form-item">
+                            <input type="text" id="category" name="categorys" search="category" placeholder=''>
+                        </div>
+                    </div>
+                    <div class="product-ipt">
+                        <span class="in-block f-fl"><em class="red"></em>材质：</span>
+                        <div class="form-item material">
+                            <input type="text" id="material" name="materials" search="material">
+                        </div>
+                    </div>
+                    <div class="product-ipt" type="factory">
+                        <span class="in-block f-fl">钢厂：</span>
+                        <div class="form-item factory">
+                            <input type="text" id="factory" name="factorys"  search="factory" class="f-text"   placeholder='' >
+                        </div>
+                    </div>
+                    <div class="f-fl weight-bar">
+                        <label><em class="red"></em>交货地:：
+							<input type="text" id="city" name="citys" search='city' value="$!cityName" >
+                        </label>
+	                    <a name="delBtn" title="删除" class="del-btn fa fa-minus-square pull-right" href="javascript:;" value=""></a>
+	                    <a value="" class="clone-btn fa fa-plus-square pull-right" title="复制" id="" href="javascript:;"  ></a>
+                    </div>
+                    <div class="f-fr seachbox">
+                        <button id="searchList" class="btn-danger btn btn-sm" type="button" onclick="serachList()">查询</button>
+                        <span id="cleanSearch" class="otherbtn cursor-hand"> 清空</span>
+                    </div>
+                </div>
+				<!-- 常搜资源 start   -->
+				<div id="hotSearch" style="text-align:left; padding:0px; margin:0px;">
+                    <div class="f-fl hotsearchleft">
+                        <span class="f-fl">常搜资源：</span>
+    					<div id="hotSearch_content">
+    						<div style="margin-left:10px;float: left;">
+    							<a href="javascript:void(0);" onclick="addCommonSearch()">新增</a>
+    						</div>
+    					</div>
+                    </div>
+                    <div class="toolbar f-fr">
+                        <span class="pull-right">
+                            <button id="bu_openOrder" type="button" class="btn btn-info btn-sm" title="快速开单" onclick="openOrder();return false;">
+                                <i class="ace-icon glyphicon glyphicon-plus align-top bigger-125"></i>
+                          		  	快速开单
+                            </button>
+                        </span>
+                      
+                        <span class="pull-right">
+                            &nbsp; &nbsp; <input type="checkbox" id="todayPrice" checked='checked'/>
+                           	只看今日报价
+                        </span>
+                        <span class="pull-right">卖家：
+                        	<input type="text" autocomplete="off" value=""  style="width:200px" id="account" name="account" placeholder='输入首字母查询'>
+                        </span>                          
+                    </div>
+				</div>
+				<!-- 常搜资源      end-->
+                <div id="singleTable">
+                    <table id="dynamic-table-single" class="table tabaleborder">
+                        <thead>
+                            <tr class="trnobackimg bg-c-ececec">
+                            	<th></th>
+                                <th>卖方名称</th>
+                                <th>品名</th>
+                                <th>材质</th>
+                                <th>规格</th>
+                                <th>厂家</th>
+                                <th>所在城市</th>
+                                <th>仓库</th>
+                                <th>上次询价</th>
+                                <th>件重</th>
+                                <th>数量(件)</th>
+                                <th>重量(吨)</th>
+                                <th>单价(元/吨)</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div id="multiTable" style="display:none">
+                    <table id="dynamic-table-multi" class="table alp sTWidth" >
+                        <thead>
+                            <tr class="trnobackimg">
+                            	<th></th>
+                                <th>卖方名称</th>
+                                <th>归属服务中心</th>
+                                <th>总重量(吨)</th>
+                                <th>上次询价</th>
+                                <th>采购总金额</th>
+                                <th>销售总金额</th>
+                            </tr>
+                        </thead>
+                         <tbody id="databody" class="text-left td-bg-f7"></tbody>                       
+                    </table>
+                    <table class="hideBlock table dataTable no-footer dataTable-overflow none leftWidth" id="subTable" >    
+                        <thead>
+                            <tr class="trnobackimg">
+                            	<th></th>
+                                <th>品名</th>
+                                <th>材质</th>
+                                <th>规格</th>
+                                <th>产地</th>
+                                <th>所在城市</th>
+                                <th>仓库</th>
+                                <th>计量方式</th>
+                                <th>件重</th>
+                                <th>数量(件)</th>
+                                <th>重量(吨)</th>
+                                <th>单价(元/吨)</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                    </table>                    
+                </div>                                
+			</div>
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+	</form>
+</div><!-- /.page-content -->
+<div id="commonSearchFormDiv"  style='display: none;'>
+	<div style='margin-top:15px; margin-bottom: 25px;' id = "style">
+	    <form id="commonSearch_form">
+	        <div class="m-s">
+	            <div id="m-search"  style="width: 300px;">
+	                <div class="product-ipt nofloat">
+	                    <span class="in-block f-fl width80">品名：</span>
+	                    <div class="form-item">
+							<input id="categoryId_form" type="hidden" />
+							<input id="category_form" search="category_form" class="f-text" type="text" autocomplete="off" placeholder='' must="1"/>                        
+	                    </div>
+	                </div>
+	                <div class="product-ipt nofloat">
+	                    <span class="in-block f-fl width80">材质：</span>
+	                    <div class="form-item material">
+	                        <input id="materialId_form" type="hidden"/>
+							<input id="material_form" search="material_form" class="f-text" type="text"  autocomplete="off" must="1" />
+	                    </div>
+	                </div>
+	                <div class="spec nofloat">
+	                    <div id="spec" type="spec" class="product-ipt nofloat guige" rel="1">
+	                        <span class="in-block f-fl width80">规格：</span>
+	                        <div class="form-item">
+	                            <input id="spec_form" search="spec_from" class="f-text" autocomplete="off" type="text" must="1"/>
+	                        </div>&nbsp;&nbsp;
+	                    </div>
+	                </div>
+	                <div class="product-ipt nofloat" type="factory">
+	                    <span class="in-block f-fl width80">钢厂：</span>
+	                    <div class="form-item factory">
+	                        <input id="factory_form" search="factory_form" class="f-text" type="text"  autocomplete="off" value=""/>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	        <div class="table-bar text-left">
+	            <div class="product-ipt nofloat" type="factory">
+	                <span class="in-block f-fl width80">城市：</span>
+	                <div class="form-item factory">
+	                    <input id="city_form" search="city_form" class="f-text" type="text" autocomplete="off" value=""  />
+	                </div>
+	            </div>
+	        </div>
+	        <div class="table-bar text-center">
+	            <button id="commit_btn" data-bb-handler="success" type="button" class="btn btn-sm btn-primary"><i class="ace-icon fa fa-check"></i>保存</button>
+	            <button id="cancel_btn" data-bb-handler="button" type="button" class="btn btn-sm">取消</button>
+	        </div>        
+		</form>
+	</div>
+</div>
+
+
+<div id="determine" style="display: none;">
+	<div style='margin-top:15px; margin-bottom: 25px;' id = "style">
+	    <form id='form-horizontal' class='form-horizontal' role='form'>
+			<input type="hidden" id="resourceId" class="f-text" value="">
+	        <div class="m-s">
+                <div id="m-search"  style="width: 300px">
+                    <div class="product-ipt nofloat">
+                        <span class="in-block f-fl width80"><em class="red">*</em>品名：</span>
+                        <div class="form-item">
+                            <input type="text" id="category" name="category_dia" search="category" placeholder='' must="1">
+                        </div>
+                    </div>
+                    <div class="product-ipt nofloat">
+                        <span class="in-block f-fl width80"><em class="red">*</em>材质：</span>
+                        <div class="form-item material">
+                            <input type="text" id="material" name="material_dia" search="material" must="1">
+                        </div>
+                    </div>
+		    <div class="spec nofloat">
+                        <div id="spec" type="spec" class="product-ipt nofloat guige" rel="1">
+                            <span class="in-block f-fl width80"><em class="red">*</em>规格：</span>
+                            <div class="form-item">
+	                            <input type="text" id="spec_dia" name="spec_dia" search="spec" placeholder='' must="1">
+                            </div>&nbsp;&nbsp;
+                        </div>
+                    </div>
+                    <div class="product-ipt nofloat" type="factory">
+                        <span class="in-block f-fl width80"><em class="red">*</em>钢厂：</span>
+                        <div class="form-item factory">
+                            <input type="text" id="factory" name="factory_dia"  search="factory" class="f-text"   placeholder='' >
+                        </div>
+                    </div>
+		</div>
+	    </div>
+	    <div class="table-bar text-left">
+        <div class="product-ipt nofloat" type="factory">
+            <span class="in-block f-fl width80"><em class="red">*</em>仓库：</span>
+            <div class="form-item factory">
+                <input type="text" id="warehouse" name="warehouse" must="1"  class="f-text"   placeholder='' >
+            </div>
+        </div> 
+		 <div class="product-ipt nofloat" type="factory">
+    		 	<span class="in-block f-fl width80"><em class="red">*</em>城市：</span>
+			<div class="form-item factory">
+                    		<input type="text" id="city" fill="true" class="city f-text" type="text" search='city' name="citys" value=""  must="1"/>
+                    	</div>
+                    </div>
+		    <div class="product-ipt nofloat" type="factory">
+                	<span class="in-block f-fl width80"><em class="red">*</em>计重方式：</span>
+			<div class="form-item factory">
+                    		<input  type="text" id="weightConcept"  class="weightConcept f-text"  value=""  must="1"/>
+                	  </div>
+                    </div>
+ 		    <div class="product-ipt nofloat" type="factory">
+    			<span class="in-block f-fl width80"><em class="red">*</em>单价：</span>
+			<div class="form-item factory">
+                    		<input id="price"  class="price" type="text f-text" value=""  must="1" verify="rmb"/>
+                    	</div>
+                    </div>
+            </div>
+			<div class="table-bar text-center">
+				<button id="btncommit" data-bb-handler="success" type="button" class="btn btn-sm btn-primary"><i class="ace-icon fa fa-check"></i>保存</button>
+				<button id="btnClose" data-bb-handler="button" type="button" class="btn btn-sm">取消</button>
+	        </div>
+		</form>
+	</div><!-- end style-->
+</div><!-- end determine-->
+<div id="determine2" style="display: none;">
+    <div style='margin-top:15px; margin-bottom: 25px;' id = "style">
+        <form id='form-horizontal' class='form-horizontal' role='form'>
+            <input type="hidden" id="resourceId" class="f-text" value="">
+            <div class="m-s">
+                <div id="m-search"  style="width: 300px;">
+                    <div class="product-ipt nofloat">
+                        <span class="in-block f-fl width80"><em class="red">*</em>品名：</span>
+                        <div class="form-item">
+                            <input type="text" id="category" name="category_dia" search="category" placeholder='' must="1">
+                        </div>
+                    </div>
+                    <div class="product-ipt nofloat">
+                        <span class="in-block f-fl width80"><em class="red">*</em>材质：</span>
+                        <div class="form-item material">
+                            <input type="text" id="material" name="material_dia" search="material" must="1">
+                        </div>
+                    </div>
+                    <div class="spec nofloat">
+                        <div id="spec" type="spec" class="product-ipt nofloat guige" rel="1">
+                            <span class="in-block f-fl width80"><em class="red">*</em>规格：</span>
+                            <div class="form-item">
+                                <input type="text" id="spec_dia" name="spec_dia" search="spec" placeholder='' must="1">
+                            </div>&nbsp;&nbsp;
+                        </div>
+                    </div>
+                    <div class="product-ipt nofloat" type="factory">
+                        <span class="in-block f-fl width80"><em class="red">*</em>钢厂：</span>
+                        <div class="form-item factory">
+                            <input type="text" id="factory" name="factory_dia"  search="factory" class="f-text"   placeholder='' >
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="table-bar text-left">
+                     <div class="product-ipt nofloat" type="factory">
+                        <span class="in-block f-fl width80"><em class="red">*</em>仓库：</span>
+                        <div class="form-item factory">
+                            <input type="text" id="warehouse" name="warehouse"  must="1" class="f-text"   placeholder='' >
+                        </div>
+                    </div>            
+                    <div class="product-ipt nofloat" type="factory">
+                        <span class="in-block f-fl width80"><em class="red">*</em>城市：</span>
+                        <div class="form-item factory">
+                            <input type="text" fill="true" id="city" name="citys"  search="city"  must="1" class="city f-text"   placeholder='' >
+                        </div>
+                    </div>
+                    <div class="product-ipt nofloat" type="factory">
+                        <span class="in-block f-fl width80"><em class="red">*</em>计重方式：</span>
+                        <div class="form-item factory">
+                            <input type="text" id="weightConcept"  class="weightConcept f-text"  must="1" >
+                        </div>
+                    </div>
+                    <div class="product-ipt nofloat" type="factory">
+                        <span class="in-block f-fl width80"><em class="red">*</em>单价：</span>
+                        <div class="form-item factory">
+                            <input type="text" id="price"  class="price f-text"  must="1" >
+                        </div>
+                    </div>
+            </div>
+            <div class="table-bar text-center">
+                <button id="btncommit" data-bb-handler="success" type="button" class="btn btn-sm btn-primary"><i class="ace-icon fa fa-check"></i>保存</button>
+                <button id="btnClose" data-bb-handler="button" type="button" class="btn btn-sm">取消</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="application/javascript">
+	var _orderDomain = "$!{orderDomain}";
+</script>
+<script src="$link.getContextPath()/js/views/smartmatch/quote/businesslook.js"></script>
+<script src="$link.getContextPath()/js/views/smartmatch/quote/businesslookTable.js"></script>
+<script src="$link.getContextPath()/js/views/smartmatch/quote/matchresource.js"></script>
+<script src="$link.getContextPath()/js/views/smartmatch/quote/business_dialg.js"></script>
+<script src="$link.getContextPath()/js/views/smartmatch/quote/businesslookCommonSearch.js"></script>

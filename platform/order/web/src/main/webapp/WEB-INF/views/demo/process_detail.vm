@@ -1,0 +1,63 @@
+
+<div class="main-content">
+	<script type="text/javascript">
+		try {
+			ace.settings.check('breadcrumbs', 'fixed')
+		} catch (e) {
+		}
+	</script>
+	<div class="main-content-inner">
+		<!-- content S -->
+		<div class="breadcrumbs" id="breadcrumbs">
+			<ul class="breadcrumb">
+				<li><i class="ace-icon fa fa-home home-icon"></i> <a
+					class="active">控制台</a></li>
+				<li class="active">主页</li>
+			</ul>
+			<div class="page-content">
+				<div class="row">
+					<div class="col-xs-12">
+						<!-- PAGE CONTENT BEGINS -->
+						<h4>$!processTitle</h4>
+						<div class="row">
+							<img alt="sss" src="$link.getContextPath()/activiti/process/$processInstanceId/diagram.html">
+						</div>
+						<h6>流程操作历史</h6>
+						<div class="row">
+							#foreach($t in $hisoricTasks)
+								#if(${t.endTime})
+									<div class="row">
+									    $date.format("yyyy-MM-dd HH:mm:ss",$dateFormaterIso8601.parse(${t.endTime}))
+										${t.name} &nbsp;&nbsp;&nbsp;&nbsp;
+										${t.assignee}
+									</div>
+								#end
+							#end
+						</div>
+						#if($formInfos)
+						<div class="row">
+							<form method="post" action="$link.getContextPath()/activiti/task/execute.html">
+							#foreach($f in ${formInfos.formProperties})
+							<div class="row">
+								${f.name} : 
+								#if(${f.type} == "boolean")
+									<input name="formProperties['$f.id']" type="checkbox"/>
+								#else
+									<input name="formProperties['$f.id']" type="text"/>
+								#end
+							</div>
+							#end
+							<input type="hidden" name="taskId" value="$!taskId"/>
+							<input type="submit" value="完成任务"/>
+							</form>
+						</div>
+						#end
+					</div>
+					<!-- /.col -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.page-content -->
+		</div>
+	</div>
+</div>

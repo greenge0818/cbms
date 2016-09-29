@@ -1,0 +1,117 @@
+<div class="main-content">
+	<div class="main-content-inner">
+		<div class="breadcrumbs" id="breadcrumbs">
+			<script type="text/javascript">
+				try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+			</script>
+
+			<ul class="breadcrumb">
+				<li>
+					<i class="ace-icon fa fa-home home-icon"></i>
+					交易管理
+				</li>
+                <li>
+                    <a href="$link.getContextPath()/common/menu/order-view/order-query-index-page.html">交易单管理</a>
+                </li>
+                <li>
+                    <a href="$link.getContextPath()/order/query/pickup.html">待提货</a>
+                </li>
+				<li class="active">查看提货单</li>
+			</ul><!-- /.breadcrumb -->
+
+				#parse("layout/topbtn.vm")<!-- /.nav-search -->
+		</div>
+
+		<div class="page-content">
+		<form class="form" id="pickupForm">
+			<div class="row">
+				<div class=" recordbar text-left col-xs-12">
+				  <span>买家全称：<span class="bolder">$!{pb.buyerName}</span></span>
+				  <span>交易单号：<span class="bolder">$!{pb.consignOrderCode}</span></span>
+				</div>
+			</div>
+			<div class="row">
+
+				<div class="table-bar">
+					<h5 class="bolder">货权信息</h5>
+					<table id="dynamic-table" class="table table-striped table-bordered table-hover">
+						<thead><tr><th>货权公司</th><th>类型</th><th>交货地</th><th>仓库</th><th>品名</th><th>规格</th><th>材质</th>
+						<th>件量<br>（吨）</th><th>订单数量</th><th>已提数量</th><th>可提数量</th><th>提货数量</th><th>提货重量<br>（吨）</th></tr></thead>
+						<tbody>
+							#foreach( $elem in ${detail})
+							<tr>
+								<td>$!{elem.seller_name}</td><td>$!{elem.consign_type}</td><td>$!{elem.city}</td><td>$!{elem.warehouse}</td><td>$!{elem.nsort_name} </td><td> $!{elem.spec}</td>
+								<td>${elem.material}</td><td>${elem.single_weight}</td><td>${elem.quantity}</td><td>${elem.picked_qty}</td>
+									<td><span class="red">$!{elem.left_qty}</span></td><td>$!{elem.pick_quantity}</td>
+									<td><span class="red">$!{elem.pick_weight1}</span></td>
+							</tr>
+							#end
+						</tbody>
+
+					</table>
+				</div><!--/table-bar 1-->
+				<div class="table-bar">
+					<h5 class="bolder">提货信息</h5>
+					<table  class="contable table">
+						<tbody>
+							<tr>
+								<td>提货方式</td>
+								<td>
+										#foreach($elem in $pickupTypes)
+											#if($elem==$pb.deliveryType) $!elem.name#end
+										#end
+								</td>
+							</tr>
+							<tr>
+								<td>提货人信息</td>
+								<td>
+									#if($pb.deliveryType=="CAR")
+										<ul class="forwarder-ul">
+    										#foreach($p in $persons)
+    											<li>
+        											<label>车船号：$!p.validCode</label>
+        											<label>司机姓名：$!p.name</label>
+        											<label>联系方式：$!p.mobil</label>
+        										</li>
+											#end
+										</ul>
+									#else
+										#foreach($p in $persons)
+    										<li>
+    											<label>身份证号：$!p.validCode</label>
+    											<label>联系人：$!p.name</label>
+    											<label>联系方式：$!p.mobil</label>
+    										</li>
+    									#end
+									#end
+									
+								</td>
+							</tr>
+							<tr>
+								<td>上传买家提单</td>
+								<td>
+									#if(${pb.buyerPickupbillPath})
+										<img src="$link.getContextPath()$!{pb.buyerPickupbillPath}"/>
+									#end
+								</td>
+							</tr>
+							<tr>
+								<td>备注</td>
+								<td>
+									$pb.note
+								</td>
+							</tr>
+						</tbody>
+
+					</table>
+				</div><!--/table-bar 2-->
+			</div><!-- /.row -->
+			<div class="text-center">
+				<button class="btn btn-info btn-sm" id="submit">确定</button>
+    			<a href="#" class="btn btn-default btn-sm">返回</a>
+    		</div>
+		</form>
+		</div><!-- /.page-content -->
+		
+	</div>
+</div><!-- /.main-content -->

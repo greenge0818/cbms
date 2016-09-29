@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.smartmatch.persist.dao.CategoryWeightDao">
+	<resultMap id="BaseResultMap" type="com.prcsteel.platform.smartmatch.model.model.CategoryWeight">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="factory_id" property="factoryId" jdbcType="BIGINT" />
+		<result column="category_uuid" property="categoryUuid"
+			jdbcType="VARCHAR" />
+		<result column="material_uuid" property="materialUuid"
+			jdbcType="VARCHAR" />
+		<result column="norms_uuid" property="normsUuid" jdbcType="VARCHAR" />
+		<result column="norms_name" property="normsName" jdbcType="VARCHAR" />
+		<result column="single_weight" property="singleWeight"
+			jdbcType="DECIMAL" />
+		<result column="created" property="created" jdbcType="TIMESTAMP" />
+		<result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+		<result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+		<result column="last_updated_by" property="lastUpdatedBy"
+			jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, factory_id, category_uuid, material_uuid, norms_uuid,
+		norms_name,
+		single_weight,
+		created, created_by, last_updated,
+		last_updated_by
+	</sql>
+
+	<select id="selectByFactoryId" resultType="int"
+		parameterType="java.lang.Long">
+		select count(factory_id)
+		from common_category_weight
+		where factory_id = #{factoryId,jdbcType=BIGINT}
+	</select>
+	
+	<select id="selectByParameter" resultType="int"
+		parameterType="com.prcsteel.platform.smartmatch.model.model.CategoryWeight">
+		select count(id)
+		from common_category_weight
+		where 1=1
+		<if test="factoryId != null and factoryId != ''">
+			and factory_id = #{factoryId,jdbcType=BIGINT}
+		</if>
+		<if test="categoryUuid != null and categoryUuid != ''">
+			and category_uuid = #{categoryUuid,jdbcType=BIGINT}
+		</if>
+		<if test="normsName != null and normsName != ''">
+			and norms_name = #{normsName,jdbcType=BIGINT}
+		</if>
+		<if test="id != null and id != ''">
+			and id != #{id,jdbcType=BIGINT}
+		</if>
+	</select>
+
+	<!-- 根据钢厂,品名,材质，规格 分页模糊查询物资单件重量列表 -->
+	<select id="selectByNameAndBusinessAndMaterialAndNorms"
+		resultType="map" parameterType="map">
+		SELECT
+		t1.id,t1.single_weight,t1.norms_name,t2.name as factoryName,
+		t3.name as categoryName,t4.name as materialName
+		FROM
+		common_category_weight t1
+		left join base_factory t2 on t1.factory_id =
+		t2.id
+		left join common_category t3 on t1.category_uuid = t3.uuid
+		left
+		join common_materials t4 on t1.material_uuid = t4.uuid
+		where 1=1
+		<if test="factory != null and factory != ''">
+			and t2.name like #{factory,jdbcType=VARCHAR}
+		</if>
+		<if test="category != null and category != ''">
+			and t3.name like #{category,jdbcType=VARCHAR}
+		</if>
+		<if test="material != null and material != ''">
+			and t4.name like #{material,jdbcType=VARCHAR}
+		</if>
+		<if test="norms != null and norms != ''">
+			and t1.norms_name like #{norms,jdbcType=VARCHAR}
+		</if>
+		order by t1.id desc
+		limit
+		#{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+	</select>
+
+	<!-- 根据钢厂,品名,材质，规格 分页模糊查询物资单件重量 -->
+	<select id="selectSingleWeightByParamIds" resultType="java.math.BigDecimal" parameterType="com.prcsteel.platform.smartmatch.model.query.SingleWeightQuery">
+		SELECT
+		single_weight
+		FROM
+		common_category_weight t1
+		<where>
+			<if test="factoryId != null and factoryId != ''">
+				and factory_id = #{factoryId,jdbcType=BIGINT}
+			</if>
+			<if test="categoryUuid != null and categoryUuid != ''">
+				and category_uuid = #{categoryUuid,jdbcType=BIGINT}
+			</if>
+			<if test="norms != null and norms != ''">
+				and norms_name = #{norms,jdbcType=BIGINT}
+			</if>
+			and is_deleted = 0
+		</where>
+	</select>
+
+	<!-- 查询钢厂总数 -->
+	<select id="totalCategoryWeight" resultType="int" parameterType="com.prcsteel.platform.smartmatch.model.query.CatagoryWeightQuery">
+		SELECT count(t1.id)
+		FROM common_category_weight t1
+		left join
+		base_factory t2 on
+		t1.factory_id = t2.id
+		left join common_category t3 on
+		t1.category_uuid
+		= t3.uuid
+		left join common_materials t4 on
+		t1.material_uuid = t4.uuid
+		where 1=1
+		<if test="factory != null and factory != ''">
+			and t2.name like concat('%',TRIM(#{factory,jdbcType=VARCHAR}),'%')
+		</if>
+		<if test="category != null and category != ''">
+			and t3.name like concat('%',TRIM(#{category,jdbcType=VARCHAR}),'%')
+		</if>
+		<if test="material != null and material != ''">
+			and t4.name like concat('%',TRIM(#{material,jdbcType=VARCHAR}),'%')
+		</if>
+		<if test="norms != null and norms != ''">
+			and t1.norms_name like concat('%',TRIM(#{norms,jdbcType=VARCHAR}),'%')
+		</if>
+	</select>
+
+	<select id="selectById" resultType="map" parameterType="map">
+		SELECT
+		t1.id,t1.single_weight,t1.norms_name,t2.name as factoryName,
+		t3.name as
+		categoryName,t4.name as materialName
+		FROM
+		common_category_weight t1
+		left
+		join base_factory t2 on t1.factory_id =
+		t2.id
+		left join common_category
+		t3 on t1.category_uuid = t3.uuid
+		left
+		join common_materials t4 on
+		t1.material_uuid = t4.uuid
+		where t1.id = #{id,jdbcType=BIGINT}
+	</select>
+
+	<select id="selectFactoryName" resultType="String"
+		parameterType="java.lang.Long">
+		select 
+		t2.name
+		from common_category_weight t1
+		left join base_factory t2 on t1.factory_id = t2.id
+		where t1.id = #{id,jdbcType=BIGINT}
+	</select>
+	
+	<select id="selectCategoryName" resultType="String"
+		parameterType="java.lang.Long">
+		select 
+		t2.name
+		from common_category_weight t1
+		left join common_category t2 on t1.category_uuid = t2.uuid
+		where t1.id = #{id,jdbcType=BIGINT}
+	</select>
+	
+	<select id="selectMaterialName" resultType="String"
+		parameterType="java.lang.Long">
+		select 
+		t2.name
+		from common_category_weight t1
+		left join common_materials t2 on t1.material_uuid = t2.uuid
+		where t1.id = #{id,jdbcType=BIGINT}
+	</select>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from common_category_weight
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		common_category_weight
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.prcsteel.platform.smartmatch.model.model.CategoryWeight">
+		insert into
+		common_category_weight (id, factory_id, category_uuid,
+		material_uuid,
+		norms_uuid, norms_name,
+		single_weight, created, created_by,
+		last_updated, last_updated_by)
+		values (#{id,jdbcType=BIGINT},
+		#{factoryId,jdbcType=BIGINT},
+		#{categoryUuid,jdbcType=VARCHAR},
+		#{materialUuid,jdbcType=VARCHAR}, #{normsUuid,jdbcType=VARCHAR},
+		#{normsName,jdbcType=VARCHAR},
+		#{singleWeight,jdbcType=DECIMAL},
+		#{created,jdbcType=TIMESTAMP},
+		#{createdBy,jdbcType=VARCHAR},
+		#{lastUpdated,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.prcsteel.platform.smartmatch.model.model.CategoryWeight">
+		insert into common_category_weight
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="factoryId != null">
+				factory_id,
+			</if>
+			<if test="categoryUuid != null">
+				category_uuid,
+			</if>
+			<if test="materialUuid != null">
+				material_uuid,
+			</if>
+			<if test="normsUuid != null">
+				norms_uuid,
+			</if>
+			<if test="normsName != null">
+				norms_name,
+			</if>
+			<if test="singleWeight != null">
+				single_weight,
+			</if>
+			<if test="created != null">
+				created,
+			</if>
+			<if test="createdBy != null">
+				created_by,
+			</if>
+			<if test="lastUpdated != null">
+				last_updated,
+			</if>
+			<if test="lastUpdatedBy != null">
+				last_updated_by,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="factoryId != null">
+				#{factoryId,jdbcType=BIGINT},
+			</if>
+			<if test="categoryUuid != null">
+				#{categoryUuid,jdbcType=VARCHAR},
+			</if>
+			<if test="materialUuid != null">
+				#{materialUuid,jdbcType=VARCHAR},
+			</if>
+			<if test="normsUuid != null">
+				#{normsUuid,jdbcType=VARCHAR},
+			</if>
+			<if test="normsName != null">
+				#{normsName,jdbcType=VARCHAR},
+			</if>
+			<if test="singleWeight != null">
+				#{singleWeight,jdbcType=DECIMAL},
+			</if>
+			<if test="created != null">
+				#{created,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createdBy != null">
+				#{createdBy,jdbcType=VARCHAR},
+			</if>
+			<if test="lastUpdated != null">
+				#{lastUpdated,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastUpdatedBy != null">
+				#{lastUpdatedBy,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.smartmatch.model.model.CategoryWeight">
+		update common_category_weight
+		<set>
+			<if test="factoryId != null">
+				factory_id = #{factoryId,jdbcType=BIGINT},
+			</if>
+			<if test="categoryUuid != null">
+				category_uuid = #{categoryUuid,jdbcType=VARCHAR},
+			</if>
+			<if test="materialUuid != null">
+				material_uuid = #{materialUuid,jdbcType=VARCHAR},
+			</if>
+			<if test="normsUuid != null">
+				norms_uuid = #{normsUuid,jdbcType=VARCHAR},
+			</if>
+			<if test="normsName != null">
+				norms_name = #{normsName,jdbcType=VARCHAR},
+			</if>
+			<if test="singleWeight != null">
+				single_weight = #{singleWeight,jdbcType=DECIMAL},
+			</if>
+			<if test="created != null">
+				created = #{created,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createdBy != null">
+				created_by = #{createdBy,jdbcType=VARCHAR},
+			</if>
+			last_updated = now(),
+			<if test="lastUpdatedBy != null">
+				last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.smartmatch.model.model.CategoryWeight">
+		update
+		common_category_weight
+		set factory_id = #{factoryId,jdbcType=BIGINT},
+		category_uuid = #{categoryUuid,jdbcType=VARCHAR},
+		material_uuid =
+		#{materialUuid,jdbcType=VARCHAR},
+		norms_uuid =
+		#{normsUuid,jdbcType=VARCHAR},
+		norms_name =
+		#{normsName,jdbcType=VARCHAR},
+		single_weight =
+		#{singleWeight,jdbcType=DECIMAL},
+		created =
+		#{created,jdbcType=TIMESTAMP},
+		created_by =
+		#{createdBy,jdbcType=VARCHAR},
+		last_updated =
+		#{lastUpdated,jdbcType=TIMESTAMP},
+		last_updated_by =
+		#{lastUpdatedBy,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+</mapper>

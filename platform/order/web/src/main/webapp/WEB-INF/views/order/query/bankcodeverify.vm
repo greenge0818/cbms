@@ -1,0 +1,144 @@
+<!-- 客户银行账号审核 -->
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            	交易管理
+        </li>
+        <li>
+            <a href="$link.getContextPath()/common/menu/order-view/order-query-index-page.html">交易单管理</a>
+        </li>
+        <li class="">
+           <a href="/order/order/query/confirmpayment.html">待确认已付款</a>
+        </li>
+        <li class="active">
+           客户银行账号审核
+        </li>
+    </ul>
+    <!-- /.breadcrumb -->
+</div>
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <!--TAPBAR-->
+            <!-- tapbar S -->
+            #parse("/layout/order/tapbar.vm")
+            <!-- tapbar E -->
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="clearfix">
+                        <div class="input-group pull-right col-md-12 col-sm-12 col-lg-12 search-bar text-left">
+                            <form class="form-inline">
+                                <label>客户名称：<input id="accountName" search='account' class="ipt-text" type="text" value=""/></label>
+                                <label>编辑时间：</label>
+                                <input id="startTime" class="Wdate" type="text" value="$!{startTime}"
+                                       onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')||\'2020-10-01\'}'})"/> -
+                                <input id="endTime" class="Wdate" type="text" value="$!{endTime}"
+                                       onFocus="WdatePicker({minDate:'#F{$dp.$D(\'startTime\')}',maxDate:'2020-10-01'})"/>
+
+                                <button id="queryBtn" class="btn btn-sm btn-default" type="button" title="搜索">
+                                    <i class="aace-icon fa fa-search bigger-110"></i>搜索
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!--second tab s-->
+                    <div class="">
+                        <ul class="nav nav-tabs" id="secTab">
+                               #if($!{status}=="REQUESTED")
+								<li rel="first-table">
+                                    <a href="$link.getContextPath()/order/query/payment.html" aria-expanded="true">
+                                        交易单付款申请			<span class="red bolder">$!{review_payment}</span>
+                                    </a>
+                                </li>
+                                <li class="" rel="sec-table">
+                                    <a href="$link.getContextPath()/order/query/secondpayaudit.html" aria-expanded="false">
+                                        二次结算付款申请		<span class="red bolder">$!{audit_secondsettle}</span>
+                                    </a>
+                                </li>
+                                <li class="active" rel="sec-table">
+                                    <a href="#" aria-expanded="false">
+                                        提现付款申请 			<span class="red bolder">$!{audit_cash_payment}</span>
+                                    </a>
+                                </li>
+								#elseif($!{status}=="APPLYPRINTED")
+                                <li rel="first-table">
+                                    <a href="$link.getContextPath()/order/query/confirmpayment.html" aria-expanded="true">
+                                       交易单付款确认<span class="red bolder">$!{confirmpayment_order}</span>
+                                    </a>
+                                </li>
+								#if($shiro.hasPermission("order:query:secondpaysettlementaccounting:page")
+								||$shiro.hasPermission("order:query:secondpaysettlement:page"))
+                                <li class="" rel="sec-table">
+                                    <a href="$link.getContextPath()/order/query/secondpaysettlement.html"
+                                       aria-expanded="false">
+                                        二次结算付款确认<span class="red bolder">$!{confirmpayment_secondsettle}</span>
+                                    </a>
+                                </li>
+								#end
+                                <li class="" rel="sec-table">
+                                    <a href="$link.getContextPath()/order/query/withdrawconfirm.html" aria-expanded="false">
+                                        提现付款确认<span class="red bolder">$!{confirmpayment_withdraw}</span>
+                                    </a>
+                                </li>
+                                <li class="" rel="third-table">
+	                                <a  href="$link.getContextPath()/order/query/confirm/request.html" aria-expanded="false">
+	                                   预付款确认<span class="red bolder">$!{paymentconfirm}</span>
+	                                </a>
+	                            </li>
+                                #if($shiro.hasPermission("order:query:bankcode:confirm"))
+                                <li class="active" rel="sec-table">
+                                    <a href="#" aria-expanded="false">
+                                       客户银行信息审核<span class="red bolder">$!{confirmpaymentbankcode}</span>
+                                    </a>
+                                </li>
+                                #end
+                            #end
+                        </ul>
+                    </div>
+                    <!--second tab e-->
+                    <!-- div.dataTables_borderWrap -->
+                    <div>
+                        <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th class="none">ID</th>
+                                <th>客户名称</th>
+								<th orderBy="last_updated">编辑时间</th>
+								<th >编辑人</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+#if($!{status}=="REQUESTED")
+<input type="hidden" id="orderBy" value="created"/>
+<input type="hidden" id="order" value="desc"/>
+#elseif($!{status}=="APPLYPRINTED")	
+<input type="hidden" id="orderBy" value="last_updated"/>
+<input type="hidden" id="order" value=""/>
+#end
+<input type="hidden" id="status" value="$!{status}">
+<input type="hidden" id="withdrawApp" value="$shiro.hasPermission("order:query:withdrawapp:audit")">
+<input type="hidden" id="withdrawPrint" value="$shiro.hasPermission("order:query:withdrawconfirm:print")">
+<input type="hidden" id="withdrawConfirm" value="$shiro.hasPermission("order:query:withdrawconfirm:confirm")">
+<script src="$link.getContextPath()/js/views/order/bankcodeverify.js"></script>
+<script src='$link.getContextPath()/js/views/account/searchaccount.js'></script>
+<script src="$link.getContextPath()/js/views/user/userorg.js"></script>

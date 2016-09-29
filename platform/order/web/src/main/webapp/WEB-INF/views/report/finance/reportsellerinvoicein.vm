@@ -1,0 +1,67 @@
+<div class="breadcrumbs" id="breadcrumbs">
+	<script type="text/javascript">
+		try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+	</script>
+
+	<ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+         	   财务报表 	
+        </li>
+        <li class="active">
+            供应商进项报表
+        </li>
+	</ul><!-- /.breadcrumb -->
+
+		#parse("layout/topbtn.vm")<!-- /.nav-search -->
+</div>
+
+<div class="page-content">
+	<div class="row">
+		<div class="col-xs-12">
+			<!-- PAGE CONTENT BEGINS -->
+
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="clearfix search-bar">
+						<div class="clearfix">
+						<form id="searchForm" class="form-inline input-group">
+							<label>供应商名称：</label>
+							<input placeholder="供应商名称" id="sellerName" name="sellerName" type="text" class="ipt-text" value="">
+							<label>时间：</label>
+                            <input id="startTime" class="Wdate" type="text" value="$!{startTime}"
+                                   onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')||\'2030-10-01\'}', minDate:'2016-01-01'})"/> -
+                            <input id="endTime" class="Wdate" type="text"  value="$!{endTime}" 
+                                   onFocus="WdatePicker({minDate:'#F{$dp.$D(\'startTime\')||\'2016-01-01\'}',maxDate:'2030-10-01'})"/>
+							
+                            <button id="queryBtn" class="btn btn-sm btn-default" type="button" title="搜索">
+                                <i class="ace-icon fa fa-search bigger-110"></i>搜索
+                            </button>
+	                         <button type="button" class="btn btn-sm btn-default" id="output">导出到EXCEL</button>
+						</form>
+                        </div>
+					</div>
+
+					<!-- div.dataTables_borderWrap -->
+					<div>
+						<table id="dynamic-table" class="table table-striped table-bordered table-hover">
+							<thead>
+								<tr>
+									<th>供应商名称</th>
+									<th>期初未收进项金额（元）</th>
+									<th>采购实提金额（元）</th>
+									<th>已收进项金额（元）</th>
+									<th>未收进项金额（元）</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+
+		</div><!-- /.col -->
+	</div><!-- /.row -->
+</div><!-- /.page-content -->
+
+<script src="$link.getContextPath()/js/views/report/finance/reportsellerinvoicein.js"></script>      

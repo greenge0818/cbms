@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.core.persist.dao.CityDao">
+    <resultMap id="BaseResultMap" type="com.prcsteel.platform.core.model.model.City">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="province_id" property="provinceId" jdbcType="BIGINT"/>
+
+    </resultMap>
+    <!--add by zhoucai 2015-6-23 城市省份对应关系-->
+    <resultMap id="CityProvinceResultMap" type="com.prcsteel.platform.core.model.dto.ProvinceCityRelationDto">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="province_id" property="provinceId" jdbcType="BIGINT"/>
+        <result column="province_name" property="provinceName" jdbcType="VARCHAR"/>
+
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, name, province_id
+  </sql>
+    <select id="listByProvinceId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from base_city
+        <if test="provinceId != null ">
+            where province_id = #{provinceId,jdbcType=BIGINT}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from base_city
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    
+    <select id="getAllCity" resultMap="BaseResultMap">
+    	SELECT 
+    		<include refid="Base_Column_List"/>
+    	FROM base_city 
+    </select>
+    <!--add by zhoucai 2015-6-23 查询城市省份对应关系-->
+    <select id="getProvinceCityRelation" resultMap="CityProvinceResultMap">
+        SELECT
+          t1.id,
+           t1.name,
+           t1.province_id,
+           t2.name AS province_name
+        FROM base_city t1
+        LEFT JOIN
+          base_province t2 ON  t1.province_id=t2.id
+    </select>
+     <select id="selectCityByIds" resultMap="BaseResultMap" parameterType="java.util.List">
+     	
+     	SELECT
+        	<include refid="Base_Column_List"/>
+        FROM base_city 
+        WHERE id in
+		<foreach item="id" index="index" collection="ids" open="(" separator="," close=")">
+		    #{id}
+		</foreach>
+     </select>
+     
+    <select id="queryByCityName" resultMap="BaseResultMap" parameterType="java.lang.String">
+     	SELECT
+        	<include refid="Base_Column_List"/>
+        FROM base_city 
+        WHERE name = #{cityName}
+     </select>
+</mapper>

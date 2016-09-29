@@ -1,0 +1,123 @@
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+			交易管理
+		</li>
+		<li>
+            <a href="/order/order/paymentmanager/request.html">支付管理</a>
+        </li>
+        <li class="active">付款申请单</li>
+    </ul>
+    <!-- /.breadcrumb -->
+</div>
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+        	#paymentTabBar
+        	<a href="$link.getContextPath()/order/paymentmanager/paymentcreate.html" class="btn btn-danger btn-sm">新增付款</a>
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="clearfix">
+						<div class="clearfix">
+							<form id="searchForm" class="form-inline">
+								<label>付款单号：<input id="code" class="ipt-text" type="text" value="" /></label>
+								<label>客户全称：<input id="buyer_name" class="ipt-text" type="text" value="" /></label>
+								<label>申请付款金额：
+									<input class="ipt-text" type="text" value="" id="pay_amount"  maxlength="16"  verify="rmb"/>
+								</label>
+								<label class="pos-rel" id ="pay_status">状态：
+								<a id="payStatusBtn" href="javascript:void(0);">选择状态</a>
+                            	<div id="status" class='pos-abs none' style="z-index:10;top:15px;left:70px;width:120px;background:#fff;border:1px solid #ccc">
+	                                <ul>
+	                                	<li class="text-left" style="padding:5px;">
+		                                   		<label class="pos-rel">
+		                                   			<input type="checkbox" id="selectAllStatus" class="ace" value="all">
+		                                   			<span class="lbl">全部</span>
+		                                   		</label>
+		                                    </li>
+	                                    <li class="text-left" style="padding:5px;">
+	                                   		<label class="pos-rel">
+	                                   			<input type="checkbox"  class="ace" id="pending" value="pending">
+	                                   			<span class="lbl">待审核</span>
+	                                   		</label>
+	                                    </li>
+	                                    <li class="text-left" style="padding:5px;">
+	                                   		<label class="pos-rel">
+	                                   			<input type="checkbox"  class="ace" id="stay_confirm" value="stay_confirm">
+	                                   			<span class="lbl">待确认</span>
+	                                   		</label>
+	                                    </li>
+	                                    <li class="text-left" style="padding:5px;">
+	                                   		<label class="pos-rel">
+	                                   			<input type="checkbox"  class="ace" id="pass" value="pass">
+	                                   			<span class="lbl">审核不通过</span>
+	                                   		</label>
+	                                    </li>
+	                                </ul>
+                            	</div>
+                            	</label>
+								<label>付款申请单类型：</label>
+								<select id="type">
+									<option value="">全部</option>
+									<option value="order_apply">订单付款申请单</option>
+									<option value="second_apply">二结付款申请单</option>
+									<option value="withdrawals_apply">提现付款申请单</option>
+									<option value="advance_apply">预付款申请单</option>
+								</select>
+								<br/>
+								<label>申请时间：</label>
+								<input id="startTime" class="ipt-text" type="text" value="$!startTime"
+	                           		onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')||\'2020-10-01\'}'})"/> -
+	                    		<input id="endTime" class="ipt-text" type="text" value="$!endTime"
+	                           		onFocus="WdatePicker({minDate:'#F{$dp.$D(\'startTime\')}',maxDate:'2020-10-01'})"/>
+								<button class="btn btn-sm btn-default ok-btn" type="button" id="btn">
+									<i class="aace-icon fa fa-search bigger-110"></i>搜索
+								</button>
+								 <label class="checkbox">
+	                                <input id="closed" type="checkbox" class="ace">
+	                                <span class="lbl">显示已关闭的付款申请单</span>
+	                            </label>
+							</form>
+                        </div>
+                    </div>
+                    <!-- div.dataTables_borderWrap -->
+                    <form id="search" class="form-inline">
+                    <div>
+                        <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+                            	<th>付款申请单号</th>
+                            	<th>客户名称</th>
+                            	<th>申请人</th>
+                                <th>服务中心</th>
+                                <th>申请时间</th>
+                                <th>申请付款金额(元)</th>
+                                <th>付款申请单类型</th>
+                                <th>支付方式</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+
+
+
+<script src="$link.getContextPath()/js/views/order/request.js"></script>

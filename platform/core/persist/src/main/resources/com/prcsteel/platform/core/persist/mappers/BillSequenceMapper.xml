@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.core.persist.dao.BillSequenceDao" >
+
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.core.model.model.BillSequence" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="org_id" property="orgId" jdbcType="BIGINT" />
+    <result column="account_id" property="accountId" jdbcType="BIGINT" />
+    <result column="seq_type" property="seqType" jdbcType="VARCHAR" />
+    <result column="current_value" property="currentValue" jdbcType="INTEGER" />
+    <result column="seq_date" property="seqDate" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, user_id, org_id, account_id, seq_type, current_value, seq_date, created
+  </sql>
+
+  <select id="query" resultMap="BaseResultMap" parameterType="com.prcsteel.platform.core.model.model.BillSequence" >
+    select 
+    <include refid="Base_Column_List" />
+    from busi_bill_sequence
+    where org_id = #{orgId,jdbcType=BIGINT}
+    and seq_type = #{seqType,jdbcType=VARCHAR}
+    and seq_date = #{seqDate,jdbcType=VARCHAR}
+    ORDER BY current_value DESC, id DESC
+	LIMIT 0,1
+  </select>
+
+  <insert id="insert" parameterType="com.prcsteel.platform.core.model.model.BillSequence" >
+    insert into busi_bill_sequence (id, user_id, org_id, 
+      account_id, seq_type, current_value, 
+      seq_date, created)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{orgId,jdbcType=BIGINT}, 
+      #{accountId,jdbcType=BIGINT}, #{seqType,jdbcType=VARCHAR}, #{currentValue,jdbcType=INTEGER}, 
+      #{seqDate,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP})
+  </insert>
+
+  <update id="updateCurrentValueById" parameterType="Long" >
+    update busi_bill_sequence
+    set current_value = current_value+1
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateById" parameterType="java.lang.Long" >
+    update busi_bill_sequence
+    set current_value = current_value+1
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

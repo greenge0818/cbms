@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.account.persist.dao.AccountBankDao">
+    <resultMap id="BaseResultMap" type="com.prcsteel.platform.account.model.model.AccountBank" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="account_id" property="accountId" jdbcType="BIGINT" />
+        <result column="bank_code" property="bankCode" jdbcType="VARCHAR" />
+        <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+        <result column="bank_name_branch" property="bankNameBranch" jdbcType="VARCHAR" />
+        <result column="bank_province_id" property="bankProvinceId" jdbcType="BIGINT" />
+        <result column="bank_city_id" property="bankCityId" jdbcType="BIGINT" />
+        <result column="bank_province_name" property="bankProvinceName" jdbcType="VARCHAR" />
+        <result column="bank_city_name" property="bankCityName" jdbcType="VARCHAR" />
+        <result column="bank_account_code" property="bankAccountCode" jdbcType="VARCHAR" />
+        <result column="is_default" property="isDefault" jdbcType="BIGINT" />
+        <result column="bank_data_status" property="bankDataStatus" jdbcType="VARCHAR" />
+        <result column="url" property="url" jdbcType="VARCHAR" />
+        <result column="is_deleted" property="isDeleted" jdbcType="BIGINT" />
+        <result column="created" property="created" jdbcType="TIMESTAMP" />
+        <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+        <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+        <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+        <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+        <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+        <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        id, account_id, bank_code, bank_name, bank_name_branch, bank_province_id, bank_city_id,
+        bank_province_name, bank_city_name, bank_account_code, is_default,bank_data_status,url,is_deleted,created, created_by, last_updated,
+        last_updated_by, modification_number, row_id, parent_row_id
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+        select
+        <include refid="Base_Column_List" />
+        from cust_account_bank
+        where id = #{id,jdbcType=BIGINT} and is_deleted = 0
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+        delete from cust_account_bank
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.prcsteel.platform.account.model.model.AccountBank" >
+        insert into cust_account_bank (id, account_id, bank_code,
+        bank_name, bank_name_branch, bank_province_id,
+        bank_city_id, bank_province_name, bank_city_name,
+        bank_account_code,is_default,bank_data_status,url,is_deleted, created, created_by,
+        last_updated, last_updated_by, modification_number,
+        row_id, parent_row_id)
+        values (#{id,jdbcType=BIGINT}, #{accountId,jdbcType=BIGINT}, #{bankCode,jdbcType=VARCHAR},
+        #{bankName,jdbcType=VARCHAR}, #{bankNameBranch,jdbcType=VARCHAR}, #{bankProvinceId,jdbcType=BIGINT},
+        #{bankCityId,jdbcType=BIGINT}, #{bankProvinceName,jdbcType=VARCHAR}, #{bankCityName,jdbcType=VARCHAR},
+        #{bankAccountCode,jdbcType=VARCHAR},#{isDefault,jdbcType=BIGINT}, #{bankDataStatus,jdbcType=VARCHAR},#{url,jdbcType=VARCHAR},#{isDeleted,jdbcType=BIGINT}, #{created,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR},
+        #{lastUpdated,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}, #{modificationNumber,jdbcType=INTEGER},
+        #{rowId,jdbcType=VARCHAR}, #{parentRowId,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.prcsteel.platform.account.model.model.AccountBank" >
+        insert into cust_account_bank
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="accountId != null" >
+                account_id,
+            </if>
+            <if test="bankCode != null" >
+                bank_code,
+            </if>
+            <if test="bankName != null" >
+                bank_name,
+            </if>
+            <if test="bankNameBranch != null" >
+                bank_name_branch,
+            </if>
+            <if test="bankProvinceId != null" >
+                bank_province_id,
+            </if>
+            <if test="bankCityId != null" >
+                bank_city_id,
+            </if>
+            <if test="bankProvinceName != null" >
+                bank_province_name,
+            </if>
+            <if test="bankCityName != null" >
+                bank_city_name,
+            </if>
+            <if test="bankAccountCode != null" >
+                bank_account_code,
+            </if>
+            <if test="isDefault != null" >
+                is_default,
+            </if>
+            <if test="bankDataStatus != null" >
+                bank_data_status,
+            </if>
+            <if test="url != null" >
+                url,
+            </if>
+            <if test="isDeleted != null" >
+                is_deleted,
+            </if>
+            <if test="created != null" >
+                created,
+            </if>
+            <if test="createdBy != null" >
+                created_by,
+            </if>
+            <if test="lastUpdated != null" >
+                last_updated,
+            </if>
+            <if test="lastUpdatedBy != null" >
+                last_updated_by,
+            </if>
+            <if test="modificationNumber != null" >
+                modification_number,
+            </if>
+            <if test="rowId != null" >
+                row_id,
+            </if>
+            <if test="parentRowId != null" >
+                parent_row_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="accountId != null" >
+                #{accountId,jdbcType=BIGINT},
+            </if>
+            <if test="bankCode != null" >
+                #{bankCode,jdbcType=VARCHAR},
+            </if>
+            <if test="bankName != null" >
+                #{bankName,jdbcType=VARCHAR},
+            </if>
+            <if test="bankNameBranch != null" >
+                #{bankNameBranch,jdbcType=VARCHAR},
+            </if>
+            <if test="bankProvinceId != null" >
+                #{bankProvinceId,jdbcType=BIGINT},
+            </if>
+            <if test="bankCityId != null" >
+                #{bankCityId,jdbcType=BIGINT},
+            </if>
+            <if test="bankProvinceName != null" >
+                #{bankProvinceName,jdbcType=VARCHAR},
+            </if>
+            <if test="bankCityName != null" >
+                #{bankCityName,jdbcType=VARCHAR},
+            </if>
+            <if test="bankAccountCode != null" >
+                #{bankAccountCode,jdbcType=VARCHAR},
+            </if>
+            <if test="isDefault != null" >
+                 #{isDefault,jdbcType=BIGINT},
+            </if>
+            <if test="bankDataStatus != null" >
+                #{bankDataStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null" >
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="isDeleted != null" >
+                #{isDeleted,jdbcType=BIGINT},
+            </if>
+            <if test="created != null" >
+                #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdBy != null" >
+                #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdated != null" >
+                #{lastUpdated,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdatedBy != null" >
+                #{lastUpdatedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modificationNumber != null" >
+                #{modificationNumber,jdbcType=INTEGER},
+            </if>
+            <if test="rowId != null" >
+                #{rowId,jdbcType=VARCHAR},
+            </if>
+            <if test="parentRowId != null" >
+                #{parentRowId,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.account.model.model.AccountBank" >
+        update cust_account_bank
+        <set >
+            <if test="accountId != null" >
+                account_id = #{accountId,jdbcType=BIGINT},
+            </if>
+            <if test="bankCode != null" >
+                bank_code = #{bankCode,jdbcType=VARCHAR},
+            </if>
+            <if test="bankName != null" >
+                bank_name = #{bankName,jdbcType=VARCHAR},
+            </if>
+            <if test="bankNameBranch != null" >
+                bank_name_branch = #{bankNameBranch,jdbcType=VARCHAR},
+            </if>
+            <if test="bankProvinceId != null" >
+                bank_province_id = #{bankProvinceId,jdbcType=BIGINT},
+            </if>
+            <if test="bankCityId != null" >
+                bank_city_id = #{bankCityId,jdbcType=BIGINT},
+            </if>
+            <if test="bankProvinceName != null" >
+                bank_province_name = #{bankProvinceName,jdbcType=VARCHAR},
+            </if>
+            <if test="bankCityName != null" >
+                bank_city_name = #{bankCityName,jdbcType=VARCHAR},
+            </if>
+            <if test="bankAccountCode != null" >
+                bank_account_code = #{bankAccountCode,jdbcType=VARCHAR},
+            </if>
+            <if test="isDefault != null" >
+                 is_default = #{isDefault,jdbcType=BIGINT},
+            </if>
+            <if test="bankDataStatus != null" >
+                bank_data_status = #{bankDataStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null" >
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="isDeleted != null" >
+                is_deleted = #{isDeleted,jdbcType=BIGINT},
+            </if>
+            <if test="created != null" >
+                created = #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdBy != null" >
+                created_by = #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdated != null" >
+                last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdatedBy != null" >
+                last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modificationNumber != null" >
+                modification_number = #{modificationNumber,jdbcType=INTEGER},
+            </if>
+            <if test="rowId != null" >
+                row_id = #{rowId,jdbcType=VARCHAR},
+            </if>
+            <if test="parentRowId != null" >
+                parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT} and is_deleted = 0
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.account.model.model.AccountBank" >
+    update cust_account_bank
+    set account_id = #{accountId,jdbcType=BIGINT},
+      bank_code = #{bankCode,jdbcType=VARCHAR},
+      bank_name = #{bankName,jdbcType=VARCHAR},
+      bank_name_branch = #{bankNameBranch,jdbcType=VARCHAR},
+      bank_province_id = #{bankProvinceId,jdbcType=BIGINT},
+      bank_city_id = #{bankCityId,jdbcType=BIGINT},
+      bank_province_name = #{bankProvinceName,jdbcType=VARCHAR},
+      bank_city_name = #{bankCityName,jdbcType=VARCHAR},
+      bank_account_code = #{bankAccountCode,jdbcType=VARCHAR},
+      is_default = #{isDefault,jdbcType=BIGINT},
+      bank_data_status = #{bankDataStatus,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      is_deleted = #{isDeleted,jdbcType=BIGINT},
+      created = #{created,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      modification_number = #{modificationNumber,jdbcType=INTEGER},
+      row_id = #{rowId,jdbcType=VARCHAR},
+      parent_row_id = #{parentRowId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT} and is_deleted = 0
+  </update>
+
+    <select id="query" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        from cust_account_bank
+        <where>
+            AND is_deleted = 0
+            <if test="bankDataStatus != null">
+            	AND bank_data_status = #{bankDataStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="accountId!=null and accountId>0">
+               AND  account_id = #{accountId,jdbcType=BIGINT}
+            </if>
+        </where>
+        order by id desc
+    </select>
+
+    <!-- 获取已通过审核且没删除的银行信息，如果有设置默认银行，则默认银行排在第一位 -->
+    <select id="queryAllEnabledBankByAccountId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from cust_account_bank
+        <where>
+             is_deleted = 0 and bank_data_status = 'Approved'
+            <if test="accountId!=null and accountId>0">
+                and  account_id = #{accountId}
+            </if>
+        </where>
+        order by is_default desc, id desc
+    </select>
+
+    <!-- 查询银行信息表的银行账号是否存在  -->
+    <select id="totalBankAccountCode" resultType="int" >
+        select count(1)
+        from cust_account_bank
+        where bank_account_code = #{bankAccountCode,jdbcType=VARCHAR} AND is_deleted = 0
+    </select>
+    
+    <!-- 根据银行卡号查询 -->
+    <select id="selectByAccountCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+    	select <include refid="Base_Column_List"/>
+    	from cust_account_bank
+        where bank_account_code = #{bankAccountCode,jdbcType=VARCHAR} AND is_deleted = 0
+    </select>
+    
+    <!-- 修改客户默认银行信息 -->
+     <update id="updateByAccountId" parameterType="com.prcsteel.platform.account.model.dto.BankDto">
+    	UPDATE cust_account_bank
+    	SET is_default = #{isDefault,jdbcType=BIGINT}
+    	,last_updated_by = #{loginId,jdbcType=VARCHAR}
+    	,last_updated = now()
+    	,modification_number = modification_number + 1
+	    WHERE account_id = #{accountId,jdbcType=BIGINT}
+	    AND is_deleted = 0
+   	 </update>
+   	 
+   	 <update id="updateBankById" parameterType="com.prcsteel.platform.account.model.dto.BankDto">
+   	 	UPDATE cust_account_bank
+    	SET is_default = #{isDefault,jdbcType=BIGINT}
+    	WHERE id = #{bankId,jdbcType=BIGINT}
+   	 </update>
+   	 
+   	 <update id="batchUpdate" parameterType="com.prcsteel.platform.account.model.model.AccountBank">
+		<foreach collection="list" item="bank" index="index" open="" close="" separator=";">
+	        update cust_account_bank 
+	        <set>
+	          bank_data_status=#{bank.bankDataStatus},
+	        <if test="bank.disagreeDesc != null">
+		          bank_data_status_reason=#{bank.disagreeDesc}
+            </if>
+            </set>
+	        where id = ${bank.id}
+		 </foreach>
+   	 </update>
+   	 <update id="updateBankStatusByAccountId" parameterType="com.prcsteel.platform.account.model.model.AccountBank">
+  	 	update cust_account_bank
+    	set bank_data_status = #{bankDataStatus}
+    	where account_id = #{accountId}
+   	 </update>   	    	 
+</mapper>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.order.persist.dao.PaymentOrderDao">
+	<resultMap id="BaseResultMap" type="com.prcsteel.platform.order.model.model.BusiPayRequest" >
+	    <id column="id" property="id" jdbcType="BIGINT" />
+	    <result column="code" property="code" jdbcType="VARCHAR" />
+	    <result column="consign_order_id" property="consignOrderId" jdbcType="BIGINT" />
+	    <result column="consign_order_code" property="consignOrderCode" jdbcType="VARCHAR" />
+	    <result column="contract_code" property="contractCode" jdbcType="VARCHAR" />
+	    <result column="contract_url" property="contractUrl" jdbcType="VARCHAR" />
+	    <result column="requester_id" property="requesterId" jdbcType="BIGINT" />
+	    <result column="requester_name" property="requesterName" jdbcType="VARCHAR" />
+	    <result column="org_id" property="orgId" jdbcType="BIGINT" />
+	    <result column="org_name" property="orgName" jdbcType="VARCHAR" />
+	    <result column="buyer_id" property="buyerId" jdbcType="BIGINT" />
+	    <result column="buyer_name" property="buyerName" jdbcType="VARCHAR" />
+	    <result column="total_amount" property="totalAmount" jdbcType="DECIMAL" />
+	    <result column="status" property="status" jdbcType="VARCHAR" />
+	    <result column="decline_reason" property="declineReason" jdbcType="VARCHAR" />
+	    <result column="type" property="type" jdbcType="VARCHAR" />
+	    <result column="print_times" property="printTimes" jdbcType="INTEGER" />
+	    <result column="last_print_ip" property="lastPrintIp" jdbcType="VARCHAR" />  
+		<result column="print_name" property="printName" jdbcType="VARCHAR" />
+		<result column="last_print_date" property="lastPrintDate" jdbcType="TIMESTAMP" />
+	    <result column="created" property="created" jdbcType="TIMESTAMP" />
+	    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+	    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+	    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+	    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+	    <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+	    <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+	    <result column="ext1" property="ext1" jdbcType="VARCHAR" />
+	    <result column="ext2" property="ext2" jdbcType="VARCHAR" />
+	    <result column="ext3" property="ext3" jdbcType="VARCHAR" />
+	    <result column="ext4" property="ext4" jdbcType="INTEGER" />
+	    <result column="ext5" property="ext5" jdbcType="INTEGER" />
+	    <result column="ext6" property="ext6" jdbcType="INTEGER" />
+	    <result column="ext7" property="ext7" jdbcType="TIMESTAMP" />
+	    <result column="ext8" property="ext8" jdbcType="BIGINT" />
+	  </resultMap>
+		
+	<resultMap id="selectByOrder" type="com.prcsteel.platform.order.model.dto.PaymentOrderDto">
+		<result column="p_id" property="pid" jdbcType="BIGINT"/>
+		<result column="code" property="code" jdbcType="VARCHAR"/>
+		<result column="consign_order_id" property="consignOrderId" jdbcType="BIGINT" />
+		<result column="contract_code" property="contractCode" jdbcType="VARCHAR" />
+		<result column="buyer_id" property="buyerId" jdbcType="BIGINT"/>
+		<result column="buyer_name" property="buyerName" jdbcType="VARCHAR" />
+		<result column="requester_id" property="requesterId" jdbcType="BIGINT" />
+	    <result column="requester_name" property="requesterName" jdbcType="VARCHAR" />
+	    <result column="org_id" property="orgId" jdbcType="BIGINT" />
+	    <result column="org_name" property="orgName" jdbcType="VARCHAR" />
+	    <result column="total_amount" property="totalAmount" jdbcType="DECIMAL" />
+	    <result column="print_times" property="printTimes" jdbcType="INTEGER" />
+	    <result column="created" property="created" jdbcType="TIMESTAMP" />
+	    <result column="it_id" property="itid" jdbcType="BIGINT" />
+	    <result column="receiver_id" property="receiverId" jdbcType="BIGINT" />
+	    <result column="receiver_name" property="receiverName" jdbcType="VARCHAR" />
+	    <result column="receiver_bank_name" property="receiverBankName" jdbcType="VARCHAR" />
+    	<result column="receiver_bank_city" property="receiverBankCity" jdbcType="VARCHAR" />
+    	<result column="receiver_branch_bank_name" property="receiverBranchBankName" jdbcType="VARCHAR" />
+    	<result column="receiver_account_code" property="receiverAccountCode" jdbcType="VARCHAR" />
+    	<result column="receiver_bank_code" property="receiverBankCode" jdbcType="VARCHAR" />
+	    <result column="pay_amount" property="payAmount" jdbcType="DECIMAL" />
+	    <result column="o_id" property="oid" jdbcType="BIGINT" />
+	    <result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="last_print_ip" property="lastPrintIp" jdbcType="VARCHAR" />  
+		<result column="print_name" property="printName" jdbcType="VARCHAR" />
+		<result column="last_print_date" property="lastPrintDate" jdbcType="TIMESTAMP" />
+		<result column="pay_code" property="payCode" jdbcType="VARCHAR" />
+		<result column="receiver_department_id" property="receiverDepartmentId" jdbcType="BIGINT" />
+	</resultMap>
+	
+	<resultMap id="queryForProcessMap" type="com.prcsteel.platform.order.model.dto.PayProcessDto">
+		<result column="requester_name" property="requesterName" jdbcType="VARCHAR" />
+		<result column="user_name" property="userName" jdbcType="VARCHAR" />
+		<result column="operator_name" property="operatorName" jdbcType="VARCHAR" />
+		<result column="operator_role_name" property="operatorRoleName" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<select id="selectByOrderId" resultMap="selectByOrder" parameterType="java.lang.Long">
+		SELECT p.id p_id,p.code,p.consign_order_id,p.contract_code,p.buyer_id,p.buyer_name,p.status,
+		o.owner_id as requester_id ,o.owner_name as requester_name,(select u.org_id from acl_user u where u.id = o.owner_id) as org_id,
+		(select g.name from base_organization g where id = (select u.org_id from acl_user u where u.id = o.owner_id)) as org_name,
+		p.total_amount,p.print_times,p.created,it.id it_id,it.receiver_id,it.receiver_department_id,it.receiver_name,it.receiver_bank_name,it.receiver_bank_city,it.receiver_bank_code,
+		it.receiver_branch_bank_name,it.receiver_account_code,it.pay_amount,o.id o_id,o.account_id,o.account_name,
+		p.last_print_ip,p.print_name,it.pay_code,
+		p.last_print_date
+		FROM busi_pay_request p 
+		INNER JOIN busi_consign_order o ON p.consign_order_id = o.id
+		INNER JOIN busi_pay_request_items it ON it.request_id = p.id
+		WHERE p.type='1' AND p.status not in('DECLINED','ABANDONED')
+		AND o.id = #{id,jdbcType=BIGINT}
+	</select>
+	
+	<update id= "updateById" parameterType= "com.prcsteel.platform.order.model.model.BusiPayRequest">
+	update busi_pay_request
+    set print_times = #{printTimes,jdbcType=BIGINT},last_print_ip=#{lastPrintIp},print_name=#{printName},last_print_date=#{lastPrintDate},last_updated=now()
+    <if test="status!=null and status!=''">
+    	,status=#{status,jdbcType=VARCHAR}
+    </if>
+    where id = #{id,jdbcType=BIGINT}
+  </update >
+  
+  <select id="findByRequestId" resultType="java.lang.String" parameterType="java.lang.Long">
+  	SELECT p.status FROM busi_pay_request p
+  	WHERE p.id = #{requestId,jdbcType=BIGINT}
+  </select>
+
+	<select id="queryReceiverIdByRequestId" resultType="java.lang.Long" parameterType="java.lang.Long">
+		SELECT it.receiver_id FROM busi_pay_request p
+		INNER JOIN busi_pay_request_items it ON it.request_id = p.id
+		WHERE p.id = #{requestId,jdbcType=BIGINT}
+	</select>
+<!-- 通过变更合同id查询变更后的付款申请单-->
+	<select id="selectChangeRequestByOrderId" resultMap="selectByOrder" parameterType="java.lang.Long">
+		SELECT p.id p_id,p.code,p.consign_order_id,p.contract_code,p.buyer_id,p.buyer_name,p.status,
+		o.owner_id as requester_id ,o.owner_name as requester_name,(select u.org_id from acl_user u where u.id = o.owner_id) as org_id,
+		(select g.name from base_organization g where id = (select u.org_id from acl_user u where u.id = o.owner_id)) as org_name,
+		p.total_amount,p.print_times,p.created,it.id it_id,it.receiver_id,it.receiver_department_id,it.receiver_name,it.receiver_bank_name,it.receiver_bank_city,it.receiver_bank_code,
+		it.receiver_branch_bank_name,it.receiver_account_code,it.pay_amount,o.id o_id,o.account_id,o.account_name,
+		p.last_print_ip,p.print_name,it.pay_code,
+		p.last_print_date
+		FROM busi_pay_request p
+		INNER JOIN busi_consign_order o ON p.consign_order_id = o.id 
+		INNER JOIN busi_pay_request_items it ON it.request_id = p.id
+		WHERE p.type='5' AND p.status not in('DECLINED','ABANDONED')
+		AND p.change_order_id = #{id,jdbcType=BIGINT}
+	</select>
+</mapper>

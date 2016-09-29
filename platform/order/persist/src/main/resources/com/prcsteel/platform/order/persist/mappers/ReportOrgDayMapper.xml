@@ -1,0 +1,579 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.order.persist.dao.ReportOrgDayDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.order.model.model.ReportOrgDay" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="org_id" property="orgId" jdbcType="BIGINT" />
+    <result column="org_name" property="orgName" jdbcType="VARCHAR" />
+    <result column="calculate_date" property="calculateDate" jdbcType="TIMESTAMP" />
+    <result column="releted_total_sale_amount" property="reletedTotalSaleAmount" jdbcType="DECIMAL" />
+    <result column="releted_total_purchase_amount" property="reletedTotalPurchaseAmount" jdbcType="DECIMAL" />
+    <result column="releted_total_weight" property="reletedTotalWeight" jdbcType="DECIMAL" />
+    <result column="releted_total_order" property="reletedTotalOrder" jdbcType="BIGINT" />
+    <result column="releted_total_consign_order" property="reletedTotalConsignOrder" jdbcType="BIGINT" />
+    <result column="second_total_sale_amount" property="secondTotalSaleAmount" jdbcType="DECIMAL" />
+    <result column="second_total_purchase_amount" property="secondTotalPurchaseAmount" jdbcType="DECIMAL" />
+    <result column="second_total_weight" property="secondTotalWeight" jdbcType="DECIMAL" />
+    <result column="second_total_order" property="secondTotalOrder" jdbcType="BIGINT" />
+    <result column="second_total_consign_order" property="secondTotalConsignOrder" jdbcType="BIGINT" />
+    <result column="total_consign_seller_account" property="totalConsignSellerAccount" jdbcType="BIGINT" />
+    <result column="is_deleted" property="isDeleted" jdbcType="TINYINT" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="BIGINT" />
+    <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+    <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <resultMap id="QueryResultMap" type="com.prcsteel.platform.order.model.dto.ReportOrgDayDto" extends="BaseResultMap">
+    <result column="calculateStr" property="calculateStr" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, org_id, org_name, calculate_date, releted_total_sale_amount, releted_total_purchase_amount, 
+    releted_total_weight, releted_total_order, releted_total_consign_order, second_total_sale_amount, 
+    second_total_purchase_amount, second_total_weight, second_total_order, second_total_consign_order, 
+    total_consign_seller_account, is_deleted,remark, created, created_by, last_updated, last_updated_by,
+    modification_number, row_id, parent_row_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from report_org_day
+    where id = #{id,jdbcType=BIGINT} and is_deleted = 0
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from report_org_day
+    where id = #{id,jdbcType=BIGINT} and is_deleted = 0
+  </delete>
+  <insert id="insert" parameterType="com.prcsteel.platform.order.model.model.ReportOrgDay" >
+    insert into report_org_day (id, org_id, org_name, 
+      calculate_date, releted_total_sale_amount, 
+      releted_total_purchase_amount, releted_total_weight, 
+      releted_total_order, releted_total_consign_order, 
+      second_total_sale_amount, second_total_purchase_amount, 
+      second_total_weight, second_total_order, second_total_consign_order, 
+      total_consign_seller_account, is_deleted,remark, created,
+      created_by, last_updated, last_updated_by, 
+      modification_number, row_id, parent_row_id
+      )
+    values (#{id,jdbcType=BIGINT}, #{orgId,jdbcType=BIGINT}, #{orgName,jdbcType=VARCHAR}, 
+      #{calculateDate,jdbcType=TIMESTAMP}, #{reletedTotalSaleAmount,jdbcType=DECIMAL}, 
+      #{reletedTotalPurchaseAmount,jdbcType=DECIMAL}, #{reletedTotalWeight,jdbcType=DECIMAL}, 
+      #{reletedTotalOrder,jdbcType=BIGINT}, #{reletedTotalConsignOrder,jdbcType=BIGINT}, 
+      #{secondTotalSaleAmount,jdbcType=DECIMAL}, #{secondTotalPurchaseAmount,jdbcType=DECIMAL}, 
+      #{secondTotalWeight,jdbcType=DECIMAL}, #{secondTotalOrder,jdbcType=BIGINT}, #{secondTotalConsignOrder,jdbcType=BIGINT}, 
+      #{totalConsignSellerAccount,jdbcType=BIGINT}, #{isDeleted,jdbcType=TINYINT},#{remark,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP},
+      #{createdBy,jdbcType=VARCHAR}, #{lastUpdated,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}, 
+      #{modificationNumber,jdbcType=BIGINT}, #{rowId,jdbcType=VARCHAR}, #{parentRowId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.order.model.model.ReportOrgDay" >
+    insert into report_org_day
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orgId != null" >
+        org_id,
+      </if>
+      <if test="orgName != null" >
+        org_name,
+      </if>
+      <if test="calculateDate != null" >
+        calculate_date,
+      </if>
+      <if test="reletedTotalSaleAmount != null" >
+        releted_total_sale_amount,
+      </if>
+      <if test="reletedTotalPurchaseAmount != null" >
+        releted_total_purchase_amount,
+      </if>
+      <if test="reletedTotalWeight != null" >
+        releted_total_weight,
+      </if>
+      <if test="reletedTotalOrder != null" >
+        releted_total_order,
+      </if>
+      <if test="reletedTotalConsignOrder != null" >
+        releted_total_consign_order,
+      </if>
+      <if test="secondTotalSaleAmount != null" >
+        second_total_sale_amount,
+      </if>
+      <if test="secondTotalPurchaseAmount != null" >
+        second_total_purchase_amount,
+      </if>
+      <if test="secondTotalWeight != null" >
+        second_total_weight,
+      </if>
+      <if test="secondTotalOrder != null" >
+        second_total_order,
+      </if>
+      <if test="secondTotalConsignOrder != null" >
+        second_total_consign_order,
+      </if>
+      <if test="totalConsignSellerAccount != null" >
+        total_consign_seller_account,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by,
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number,
+      </if>
+      <if test="rowId != null" >
+        row_id,
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orgId != null" >
+        #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="orgName != null" >
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="calculateDate != null" >
+        #{calculateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reletedTotalSaleAmount != null" >
+        #{reletedTotalSaleAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="reletedTotalPurchaseAmount != null" >
+        #{reletedTotalPurchaseAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="reletedTotalWeight != null" >
+        #{reletedTotalWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="reletedTotalOrder != null" >
+        #{reletedTotalOrder,jdbcType=BIGINT},
+      </if>
+      <if test="reletedTotalConsignOrder != null" >
+        #{reletedTotalConsignOrder,jdbcType=BIGINT},
+      </if>
+      <if test="secondTotalSaleAmount != null" >
+        #{secondTotalSaleAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="secondTotalPurchaseAmount != null" >
+        #{secondTotalPurchaseAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="secondTotalWeight != null" >
+        #{secondTotalWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="secondTotalOrder != null" >
+        #{secondTotalOrder,jdbcType=BIGINT},
+      </if>
+      <if test="secondTotalConsignOrder != null" >
+        #{secondTotalConsignOrder,jdbcType=BIGINT},
+      </if>
+      <if test="totalConsignSellerAccount != null" >
+        #{totalConsignSellerAccount,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        #{modificationNumber,jdbcType=BIGINT},
+      </if>
+      <if test="rowId != null" >
+        #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        #{parentRowId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.order.model.model.ReportOrgDay" >
+    update report_org_day
+    <set >
+      <if test="orgId != null" >
+        org_id = #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="orgName != null" >
+        org_name = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="calculateDate != null" >
+        calculate_date = #{calculateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reletedTotalSaleAmount != null" >
+        releted_total_sale_amount = #{reletedTotalSaleAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="reletedTotalPurchaseAmount != null" >
+        releted_total_purchase_amount = #{reletedTotalPurchaseAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="reletedTotalWeight != null" >
+        releted_total_weight = #{reletedTotalWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="reletedTotalOrder != null" >
+        releted_total_order = #{reletedTotalOrder,jdbcType=BIGINT},
+      </if>
+      <if test="reletedTotalConsignOrder != null" >
+        releted_total_consign_order = #{reletedTotalConsignOrder,jdbcType=BIGINT},
+      </if>
+      <if test="secondTotalSaleAmount != null" >
+        second_total_sale_amount = #{secondTotalSaleAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="secondTotalPurchaseAmount != null" >
+        second_total_purchase_amount = #{secondTotalPurchaseAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="secondTotalWeight != null" >
+        second_total_weight = #{secondTotalWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="secondTotalOrder != null" >
+        second_total_order = #{secondTotalOrder,jdbcType=BIGINT},
+      </if>
+      <if test="secondTotalConsignOrder != null" >
+        second_total_consign_order = #{secondTotalConsignOrder,jdbcType=BIGINT},
+      </if>
+      <if test="totalConsignSellerAccount != null" >
+        total_consign_seller_account = #{totalConsignSellerAccount,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number = #{modificationNumber,jdbcType=BIGINT},
+      </if>
+      <if test="rowId != null" >
+        row_id = #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT} and is_deleted = 0
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.order.model.model.ReportOrgDay" >
+    update report_org_day
+    set org_id = #{orgId,jdbcType=BIGINT},
+      org_name = #{orgName,jdbcType=VARCHAR},
+      calculate_date = #{calculateDate,jdbcType=TIMESTAMP},
+      releted_total_sale_amount = #{reletedTotalSaleAmount,jdbcType=DECIMAL},
+      releted_total_purchase_amount = #{reletedTotalPurchaseAmount,jdbcType=DECIMAL},
+      releted_total_weight = #{reletedTotalWeight,jdbcType=DECIMAL},
+      releted_total_order = #{reletedTotalOrder,jdbcType=BIGINT},
+      releted_total_consign_order = #{reletedTotalConsignOrder,jdbcType=BIGINT},
+      second_total_sale_amount = #{secondTotalSaleAmount,jdbcType=DECIMAL},
+      second_total_purchase_amount = #{secondTotalPurchaseAmount,jdbcType=DECIMAL},
+      second_total_weight = #{secondTotalWeight,jdbcType=DECIMAL},
+      second_total_order = #{secondTotalOrder,jdbcType=BIGINT},
+      second_total_consign_order = #{secondTotalConsignOrder,jdbcType=BIGINT},
+      total_consign_seller_account = #{totalConsignSellerAccount,jdbcType=BIGINT},
+      is_deleted = #{isDeleted,jdbcType=TINYINT},
+      remark = #{remark,jdbcType=VARCHAR},
+      created = #{created,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      modification_number = #{modificationNumber,jdbcType=BIGINT},
+      row_id = #{rowId,jdbcType=VARCHAR},
+      parent_row_id = #{parentRowId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT} and is_deleted = 0
+  </update>
+
+
+  <!-- 统计当天服务中心关联 订单销售额（合同关联金额）、重量之和、笔数之和、代运营交易笔数之和 -->
+  <select id="queryOrgReletedOrderData" resultMap="BaseResultMap" parameterType="com.prcsteel.platform.order.model.query.ReportOrgDayQuery">
+      SELECT  t1.order_org_id as org_id,SUM(ROUND(t1.total_contract_releted_amount,2)) as releted_total_sale_amount
+      ,SUM(t1.total_weight) as releted_total_weight,COUNT(t1.id) as releted_total_order,SUM(CASE WHEN t1.consign_type = 'consign' THEN 1 ELSE 0 END ) as releted_total_consign_order
+      FROM busi_consign_order t1
+      <where>
+        EXISTS(
+          SELECT t2.id  FROM busi_consign_order_audit_trail t2
+          WHERE t2.created > #{startDate,jdbcType=TIMESTAMP} AND t2.created <![CDATA[ <= ]]> #{endDate,jdbcType=TIMESTAMP}
+          AND t2.set_to_status = '4'
+          AND t2.status_type = 'MAIN'
+          AND t1.id = t2.order_id
+        )
+        AND t1.status IN
+        <foreach collection="orderStatusList" item="status" open="(" separator="," close=")">
+          #{status}
+        </foreach>
+      </where>
+      GROUP BY t1.order_org_id
+  </select>
+
+  <!-- 统计当天服务中心关联订单采购金额 （初次付款） -->
+  <select id="queryOrgReletedOrderPurchaseAmount" resultMap="BaseResultMap" parameterType="com.prcsteel.platform.order.model.query.ReportOrgDayQuery">
+    SELECT t1.order_org_id as org_id,SUM(ROUND(t2.total_amount,2)) as releted_total_purchase_amount
+    FROM busi_consign_order t1,busi_pay_request t2
+    <where>
+      EXISTS(
+        SELECT t.id  FROM busi_consign_order_audit_trail t
+        WHERE t.created > #{startDate,jdbcType=TIMESTAMP} AND t.created <![CDATA[ <= ]]> #{endDate,jdbcType=TIMESTAMP}
+        AND t.set_to_status ='PAYED'
+        AND t.status_type = 'PAY'
+        AND t1.id = t.order_id
+      )
+      AND t1.status IN
+      <foreach collection="orderStatusList" item="status" open="(" separator="," close=")">
+        #{status}
+      </foreach>
+      AND t1.pay_status = 'PAYED'
+      AND t2.type = '1'
+      AND t2.status = 'CONFIRMEDPAY'
+      AND t1.id = t2.consign_order_id
+    </where>
+    GROUP BY t1.order_org_id
+  </select>
+
+  <!-- 统计当天服务中心二结订单销售结算额、采购结算额、重量之和、笔数之和、代运营交易笔数之和（二次结算的实提重量 实提金额） -->
+  <select id="queryOrgSecondOrderData" resultMap="BaseResultMap" parameterType="com.prcsteel.platform.order.model.query.ReportOrgDayQuery">
+    SELECT  t1.order_org_id as org_id,SUM(ROUND(t2.actual_pick_weight_server * t2.deal_price,2)) as second_total_sale_amount
+    ,SUM(ROUND(t2.actual_pick_weight_server * t2.cost_price,2)) as second_total_purchase_amount
+    ,SUM(t2.actual_pick_weight_server) as second_total_weight,COUNT(DISTINCT t1.id) as second_total_order,COUNT(DISTINCT CASE WHEN t1.consign_type = 'consign' THEN t1.id ELSE NULL END) as second_total_consign_order
+    FROM busi_consign_order t1,busi_consign_order_items t2
+    <where>
+      EXISTS(
+        SELECT t.id  FROM busi_consign_order_audit_trail t
+        WHERE t.created > #{startDate,jdbcType=TIMESTAMP} AND t.created <![CDATA[ <= ]]> #{endDate,jdbcType=TIMESTAMP}
+        AND t.set_to_status = '7'
+        AND t.status_type = 'MAIN'
+        AND t1.id = t.order_id
+      )
+      AND t1.status IN
+      <foreach collection="orderStatusList" item="status" open="(" separator="," close=")">
+        #{status}
+      </foreach>
+      AND t1.id = t2.order_id
+    </where>
+    GROUP BY t1.order_org_id
+  </select>
+
+  <!-- 统计截止到当天各服务中心所有已签约的卖家数 -->
+  <select id="queryOrgConsignSellerTotal" resultMap="BaseResultMap">
+      SELECT t2.org_id,COUNT(DISTINCT t1.id) as total_consign_seller_account
+      FROM cust_account t1
+	  INNER JOIN cust_account t3 ON t3.parent_id = t1.id AND t3.is_deleted=0
+	  LEFT JOIN cust_account_contact t4 ON t4.account_id = t3.id AND t4.is_deleted = 0
+      INNER JOIN acl_user t2 ON t2.id = t4.manager 
+      WHERE t1.is_deleted=0 AND t1.account_tag  <![CDATA[&]]> 10 = 10 
+      AND t1.structure_type = 'Company'
+      GROUP BY t2.org_id
+  </select>
+
+  <select id="queryAllCalculateDateForPage" resultType="java.lang.String" parameterType="com.prcsteel.platform.order.model.query.ReportOrgDayQuery">
+    SELECT DISTINCT DATE_FORMAT(t.calculate_date,'%Y-%m-%d')
+    FROM report_org_day t
+    <where>
+      <if test="startTimeStr != null and startTimeStr != ''">
+        AND  DATE_FORMAT(t.calculate_date,'%Y-%m-%d') <![CDATA[ >= ]]> #{startTimeStr,jdbcType=VARCHAR}
+      </if>
+      <if test="endTimeStr != null and endTimeStr != ''">
+        AND  DATE_FORMAT(t.calculate_date,'%Y-%m-%d') <![CDATA[ <= ]]> #{endTimeStr,jdbcType=VARCHAR}
+      </if>
+      <![CDATA[
+      AND (t.releted_total_sale_amount <> 0  OR  t.releted_total_purchase_amount <> 0 OR t.releted_total_weight <> 0 OR t.releted_total_order <> 0)
+      ]]>
+      AND t.is_deleted = 0
+    </where>
+    ORDER BY t.calculate_date DESC
+  </select>
+
+  <select id="queryByParam" resultMap="QueryResultMap" parameterType="com.prcsteel.platform.order.model.query.ReportOrgDayQuery">
+    SELECT DATE_FORMAT(t.calculate_date,'%Y-%m-%d') as calculateStr,t.org_id,t.releted_total_consign_order,t.releted_total_order,t.releted_total_purchase_amount
+    ,t.releted_total_sale_amount,t.releted_total_weight,t.second_total_consign_order,t.second_total_order,t.second_total_purchase_amount,t.second_total_sale_amount,t.second_total_weight
+    ,t.total_consign_seller_account
+    FROM report_org_day t
+   <where>
+      <if test="startPageTimeStr != null and startPageTimeStr != ''">
+        AND  DATE_FORMAT(t.calculate_date,'%Y-%m-%d') <![CDATA[ >= ]]> #{startPageTimeStr,jdbcType=VARCHAR}
+      </if>
+      <if test="endPageTimeStr != null and endPageTimeStr != ''">
+        AND  DATE_FORMAT(t.calculate_date,'%Y-%m-%d') <![CDATA[ <= ]]> #{endPageTimeStr,jdbcType=VARCHAR}
+      </if>
+      AND t.is_deleted = 0
+      <![CDATA[
+      AND (t.releted_total_sale_amount <> 0  OR  t.releted_total_purchase_amount <> 0 OR t.releted_total_weight <> 0 OR t.releted_total_order <> 0)
+      ]]>
+   </where>
+   ORDER BY t.calculate_date
+   <choose>
+   		<when test="dateOrderBy !=null">
+   			${dateOrderBy}
+   		</when>
+   		<otherwise>
+   			DESC
+   		</otherwise>
+   </choose>
+   
+  </select>
+
+  <select id="queryTotalGroupByOrgByParam" resultMap="QueryResultMap" parameterType="com.prcsteel.platform.order.model.query.ReportOrgDayQuery">
+    SELECT '合计' as calculateStr,t.org_id,sum(t.releted_total_consign_order) as releted_total_consign_order
+    ,sum(t.releted_total_order) as releted_total_order,sum(t.releted_total_purchase_amount) as releted_total_purchase_amount
+    ,sum(t.releted_total_sale_amount) as releted_total_sale_amount
+    ,sum(t.releted_total_weight) as releted_total_weight,sum(t.second_total_consign_order) as second_total_consign_order
+    ,sum(t.second_total_order) as second_total_order,sum(t.second_total_purchase_amount) as second_total_purchase_amount
+    ,sum(t.second_total_sale_amount) as second_total_sale_amount,sum(t.second_total_weight) as second_total_weight
+    ,sum(t.total_consign_seller_account) as total_consign_seller_account
+    FROM report_org_day t
+    <where>
+      <if test="startTimeStr != null and startTimeStr != ''">
+        AND  DATE_FORMAT(t.calculate_date,'%Y-%m-%d') <![CDATA[ >= ]]> #{startTimeStr,jdbcType=VARCHAR}
+      </if>
+      <if test="endTimeStr != null and endTimeStr != ''">
+        AND  DATE_FORMAT(t.calculate_date,'%Y-%m-%d') <![CDATA[ <= ]]> #{endTimeStr,jdbcType=VARCHAR}
+      </if>
+      AND t.is_deleted = 0
+    </where>
+    GROUP  BY t.org_id
+  </select>
+
+
+  <select id="queryMonthReportAllCalculateDateForPage" resultType="java.lang.String" parameterType="com.prcsteel.platform.order.model.query.ReportOrgDayQuery">
+    SELECT DISTINCT t.calculateStr
+    FROM (
+      SELECT date_format(t3.created,'%Y-%m-%d') as calculateStr ,t1.order_org_id as org_id,SUM(ROUND(t2.actual_pick_weight_server * t2.deal_price,2)) as second_total_sale_amount
+      ,SUM(ROUND(t2.actual_pick_weight_server * t2.cost_price,2)) as second_total_purchase_amount
+      ,SUM(t2.actual_pick_weight_server) as second_total_weight,COUNT(DISTINCT t1.id) as second_total_order,COUNT(DISTINCT CASE WHEN t1.consign_type = 'consign' THEN t1.id ELSE NULL END) as second_total_consign_order
+      FROM busi_consign_order t1,busi_consign_order_items t2,busi_consign_order_audit_trail t3
+      <where>
+        <if test="startTimeStr != null and startTimeStr != ''">
+          AND  DATE_FORMAT(t3.created,'%Y-%m-%d') <![CDATA[ >= ]]> #{startTimeStr,jdbcType=VARCHAR}
+        </if>
+        <if test="endTimeStr != null and endTimeStr != ''">
+          AND  DATE_FORMAT(t3.created,'%Y-%m-%d') <![CDATA[ <= ]]> #{endTimeStr,jdbcType=VARCHAR}
+        </if>
+        AND t3.set_to_status = '7'
+        AND t3.status_type = 'MAIN'
+        AND t1.status IN
+        <foreach collection="orderStatusList" item="status" open="(" separator="," close=")">
+          #{status}
+        </foreach>
+        AND t1.id = t3.order_id
+        AND t1.id = t2.order_id
+      </where>
+      GROUP BY date_format(t3.created,'%Y-%m-%d'),t1.order_org_id
+    ) as t
+    WHERE
+    <![CDATA[
+    t.second_total_sale_amount <> 0 or t.second_total_purchase_amount <> 0
+    or t.second_total_weight <> 0 or t.second_total_order <> 0
+    ]]>
+    ORDER BY t.calculateStr
+  </select>
+
+  <select id="queryMonthByParam" resultMap="QueryResultMap" parameterType="com.prcsteel.platform.order.model.query.ReportOrgDayQuery">
+    SELECT t.calculateStr,t.org_id,t.second_total_sale_amount,t.second_total_purchase_amount,t.second_total_weight,t.second_total_order
+    ,t.second_total_consign_order,t1.total_consign_seller_account
+    FROM(
+      SELECT date_format(t3.created,'%Y-%m-%d') as calculateStr ,t1.order_org_id as org_id,SUM(ROUND(t2.actual_pick_weight_server * t2.deal_price,2)) as second_total_sale_amount
+      ,SUM(ROUND(t2.actual_pick_weight_server * t2.cost_price,2)) as second_total_purchase_amount
+      ,SUM(t2.actual_pick_weight_server) as second_total_weight,COUNT(DISTINCT t1.id) as second_total_order,COUNT(DISTINCT CASE WHEN t1.consign_type = 'consign' THEN t1.id ELSE NULL END) as second_total_consign_order
+      FROM busi_consign_order t1,busi_consign_order_items t2,busi_consign_order_audit_trail t3
+      <where>
+        <if test="startPageTimeStr != null and startPageTimeStr != ''">
+          AND  DATE_FORMAT(t3.created,'%Y-%m-%d') <![CDATA[ >= ]]> #{startPageTimeStr,jdbcType=VARCHAR}
+        </if>
+        <if test="endPageTimeStr != null and endPageTimeStr != ''">
+          AND  DATE_FORMAT(t3.created,'%Y-%m-%d') <![CDATA[ <= ]]> #{endPageTimeStr,jdbcType=VARCHAR}
+        </if>
+        AND t3.set_to_status = '7'
+        AND t3.status_type = 'MAIN'
+        AND t1.status IN
+        <foreach collection="orderStatusList" item="status" open="(" separator="," close=")">
+          #{status}
+        </foreach>
+        AND t1.id = t3.order_id
+        AND t1.id = t2.order_id
+      </where>
+      GROUP BY date_format(t3.created,'%Y-%m-%d'),t1.order_org_id
+    ) as t
+    LEFT JOIN report_org_day t1 on date_format(t1.calculate_date,'%Y-%m-%d') = t.calculateStr and t1.org_id = t.org_id
+    WHERE
+    <![CDATA[
+    t.second_total_sale_amount <> 0 or t.second_total_purchase_amount <> 0
+    or t.second_total_weight <> 0 or t.second_total_order <> 0
+    ]]>
+    ORDER BY t.calculateStr
+  </select>
+
+  <select id="queryMonthTotalGroupByOrgByParam" resultMap="QueryResultMap" parameterType="com.prcsteel.platform.order.model.query.ReportOrgDayQuery">
+    SELECT '合计' as calculateStr,t.org_id,SUM(t.second_total_sale_amount) as second_total_sale_amount
+    ,SUM(t.second_total_purchase_amount) as second_total_purchase_amount
+    ,SUM(t.second_total_weight) as second_total_weight,SUM(t.second_total_order) as second_total_order
+    ,SUM(t.second_total_consign_order) as second_total_consign_order
+    ,SUM(t1.total_consign_seller_account) as total_consign_seller_account
+    FROM(
+    SELECT date_format(t3.created,'%Y-%m-%d') as calculateStr ,t1.order_org_id as org_id
+    ,SUM(ROUND(t2.actual_pick_weight_server * t2.deal_price,2)) as second_total_sale_amount
+    ,SUM(ROUND(t2.actual_pick_weight_server * t2.cost_price,2)) as second_total_purchase_amount
+    ,SUM(t2.actual_pick_weight_server) as second_total_weight,COUNT(DISTINCT t1.id) as second_total_order
+    ,COUNT(DISTINCT CASE WHEN t1.consign_type = 'consign' THEN t1.id ELSE NULL END) as second_total_consign_order
+    FROM busi_consign_order t1,busi_consign_order_items t2,busi_consign_order_audit_trail t3
+    <where>
+      <if test="startTimeStr != null and startTimeStr != ''">
+        AND  DATE_FORMAT(t3.created,'%Y-%m-%d') <![CDATA[ >= ]]> #{startTimeStr,jdbcType=VARCHAR}
+      </if>
+      <if test="endTimeStr != null and endTimeStr != ''">
+        AND  DATE_FORMAT(t3.created,'%Y-%m-%d') <![CDATA[ <= ]]> #{endTimeStr,jdbcType=VARCHAR}
+      </if>
+      AND t3.set_to_status = '7' AND t3.status_type = 'MAIN'
+      AND t1.status IN
+      <foreach collection="orderStatusList" item="status" open="(" separator="," close=")">
+        #{status}
+      </foreach>
+      AND t1.id = t3.order_id AND t1.id = t2.order_id
+    </where>
+    GROUP BY date_format(t3.created,'%Y-%m-%d'),t1.order_org_id
+    ) as t
+    LEFT JOIN report_org_day t1 on date_format(t1.calculate_date,'%Y-%m-%d') = t.calculateStr and t1.org_id = t.org_id
+    GROUP BY t.org_id
+  </select>
+
+</mapper>

@@ -1,0 +1,556 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.kuandao.persist.dao.KuandaoPaymentOrderDao">
+   <resultMap type="com.prcsteel.platform.kuandao.model.dto.KuandaoPaymentOrderDto" id="KuandaoPaymentMap">
+   		<id column="id" property="id" jdbcType="INTEGER"/>
+   		<result column="payment_order_code" property="paymentOrderCode" jdbcType="VARCHAR"/>
+  		<result column="consign_order_id" property="consignOrderId" jdbcType="BIGINT"/>
+  		<result column="consign_order_code" property="consignOrderCode" jdbcType="VARCHAR"/>
+   		<result column="imp_acq_ssn" property="impAcqSsn" jdbcType="VARCHAR"/>
+   		<result column="occur_type" property="occurType" jdbcType="INTEGER"/>
+   		<result column="transaction_amount" property="transactionAmount" jdbcType="DECIMAL"/>
+   		<result column="pay_mer_id" property="payMerId" jdbcType="VARCHAR"/>
+   		<result column="pay_mer_name" property="payMerName" jdbcType="VARCHAR"/>
+   		<result column="payee_mer_id" property="payeeMerId" jdbcType="VARCHAR"/>
+   		<result column="payee_mer_name" property="payeeMerName" jdbcType="VARCHAR"/>
+   		<result column="payee_mer_vir_acctNo" property="payeeMerVirAcctNo" jdbcType="VARCHAR"/>
+   		<result column="nsort_name" property="nsortName" jdbcType="VARCHAR"/>
+   		<result column="weight" property="weight" jdbcType="DECIMAL"/>
+   		<result column="status" property="status" jdbcType="VARCHAR"/>
+   		<result column="submit_status" property="submitStatus" jdbcType="INTEGER"/>
+   		<result column="charg_status" property="chargStatus" jdbcType="INTEGER"/>
+   		<result column="charg_time" property="chargTime" jdbcType="TIMESTAMP"/>
+   		<result column="lastChargStatus" property="lastChargStatus" jdbcType="INTEGER"/>
+   		<result column="submit_error_msg" property="submitErrorMsg" jdbcType="VARCHAR"/>
+   		<result column="acq_ssn" property="acqSsn" jdbcType="VARCHAR"/>
+   		<result column="settDate" property="settDate" jdbcType="VARCHAR"/>
+   		<result column="created" property="created" jdbcType="TIMESTAMP"/>
+   		<result column="created_by" property="createdBy" jdbcType="VARCHAR"/>
+   		<result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP"/>
+   		<result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR"/>
+   		<result column="modification_number" property="modificationNumber" jdbcType="INTEGER"/>
+   		<result column="row_id" property="rowId" jdbcType="VARCHAR"/>
+   		<result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR"/>
+   		<!-- 增加一个关联查询字段，映射到pojo中供页面使用 -->
+   		<result column="code" property="consignOrderCode" jdbcType="VARCHAR"/>
+   		<result column="owner_name" property="ownerName" jdbcType="VARCHAR"/>
+   		<result column="createDateTime" property="createDateTime" jdbcType="VARCHAR"/>
+   </resultMap>
+   <resultMap type="com.prcsteel.platform.kuandao.model.model.KuandaoPaymentOrder" id="PaymentMap">
+   		<id column="id" property="id" jdbcType="INTEGER"/>
+   		<result column="payment_order_code" property="paymentOrderCode" jdbcType="VARCHAR"/>
+  		<result column="consign_order_id" property="consignOrderId" jdbcType="BIGINT"/>
+   		<result column="imp_acq_ssn" property="impAcqSsn" jdbcType="VARCHAR"/>
+   		<result column="occur_type" property="occurType" jdbcType="INTEGER"/>
+   		<result column="transaction_amount" property="transactionAmount" jdbcType="DECIMAL"/>
+   		<result column="pay_mer_id" property="payMerId" jdbcType="VARCHAR"/>
+   		<result column="pay_mer_name" property="payMerName" jdbcType="VARCHAR"/>
+   		<result column="payee_mer_id" property="payeeMerId" jdbcType="VARCHAR"/>
+   		<result column="payee_mer_name" property="payeeMerName" jdbcType="VARCHAR"/>
+   		<result column="nsort_name" property="nsortName" jdbcType="VARCHAR"/>
+   		<result column="weight" property="weight" jdbcType="DECIMAL"/>
+   		<result column="status" property="status" jdbcType="VARCHAR"/>
+   		<result column="submit_status" property="submitStatus" jdbcType="INTEGER"/>
+   		<result column="charg_status" property="chargStatus" jdbcType="INTEGER"/>
+   		<result column="charg_time" property="chargTime" jdbcType="TIMESTAMP"/>
+   		<result column="lastStatus" property="lastStatus" jdbcType="VARCHAR"/>
+   		<result column="lastSubmitStatus" property="lastSubmitStatus" jdbcType="INTEGER"/>
+   		<result column="lastChargStatus" property="lastChargStatus" jdbcType="INTEGER"/>
+   		<result column="submit_error_msg" property="submitErrorMsg" jdbcType="VARCHAR"/>
+   		<result column="acq_ssn" property="acqSsn" jdbcType="VARCHAR"/>
+   		<result column="settDate" property="settDate" jdbcType="VARCHAR"/>
+   		<result column="created" property="created" jdbcType="TIMESTAMP"/>
+   		<result column="created_by" property="createdBy" jdbcType="VARCHAR"/>
+   		<result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP"/>
+   		<result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR"/>
+   		<result column="modification_number" property="modificationNumber" jdbcType="INTEGER"/>
+   		<result column="row_id" property="rowId" jdbcType="VARCHAR"/>
+   		<result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR"/>
+   </resultMap>
+   <!--Log映射  -->
+   <resultMap type="com.prcsteel.platform.kuandao.model.dto.PaymentOrderSynchLogDto" id="PaymentOrderSynchLogMap">
+   		<id column="id" property="id" jdbcType="INTEGER"/>
+   		<result column="payment_order_code" property="paymentOrderCode" jdbcType="VARCHAR"/>
+  		<result column="consign_order_code" property="consignOrderCode" jdbcType="VARCHAR"/>
+   		<result column="occur_type" property="occurType" jdbcType="INTEGER"/>
+   		<result column="transaction_amount" property="transactionAmount" jdbcType="DECIMAL"/>
+   		<result column="pay_mer_id" property="payMerId" jdbcType="VARCHAR"/>
+   		<result column="pay_mer_name" property="payMerName" jdbcType="VARCHAR"/>
+   		<result column="payee_mer_id" property="payeeMerId" jdbcType="VARCHAR"/>
+   		<result column="payee_mer_name" property="payeeMerName" jdbcType="VARCHAR"/>
+   		<result column="payee_mer_vir_acctNo" property="payeeMerVirAcctNo" jdbcType="VARCHAR"/>
+   		<result column="nsort_name" property="nsortName" jdbcType="VARCHAR"/>
+   		<result column="weight" property="weight" jdbcType="DECIMAL"/>
+   		<result column="result" property="result" jdbcType="INTEGER"/>
+   		<result column="error_msg" property="errorMsg" jdbcType="VARCHAR"/>
+   		<result column="created" property="created" jdbcType="TIMESTAMP"/>
+   		<result column="created_by" property="createdBy" jdbcType="VARCHAR"/>
+   		<result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP"/>
+   		<result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR"/>
+   		<result column="modification_number" property="modificationNumber" jdbcType="INTEGER"/>
+   		<result column="row_id" property="rowId" jdbcType="VARCHAR"/>
+   		<result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR"/>
+   		<result column="createDateTime" property="createDateTime" jdbcType="VARCHAR"/>
+   		<result column="consign_order_id" property="consignOrderId" jdbcType="BIGINT"/>
+   		<result column="imp_acq_ssn" property="impAcqSsn" jdbcType="VARCHAR"/>
+   		<result column="payment_order_id" property="paymentOrderId" jdbcType="INTEGER"/>
+   </resultMap>
+   <resultMap id="ConsignOrderMap" type="com.prcsteel.platform.kuandao.model.dto.ConsignOrderDto">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="account_id" property="accountId" jdbcType="BIGINT"/>
+        <result column="account_name" property="accountName" jdbcType="VARCHAR"/>
+        <result column="department_id" property="departmentId" jdbcType="BIGINT"/>
+        <result column="department_name" property="departmentName" jdbcType="VARCHAR"/>
+        <result column="owner_id" property="ownerId" jdbcType="BIGINT"/>
+        <result column="owner_name" property="ownerName" jdbcType="VARCHAR"/>
+        <result column="contact_id" property="contactId" jdbcType="BIGINT"/>
+        <result column="contact_name" property="contactName" jdbcType="VARCHAR"/>
+        <result column="contact_tel" property="contactTel" jdbcType="VARCHAR"/>
+        <result column="delivery_type" property="deliveryType" jdbcType="CHAR"/>
+        <result column="fee_taker" property="feeTaker" jdbcType="VARCHAR"/>
+        <result column="ship_fee" property="shipFee" jdbcType="DECIMAL"/>
+        <result column="outbound_taker" property="outboundTaker" jdbcType="VARCHAR"/>
+        <result column="outbound_fee" property="outboundFee" jdbcType="DECIMAL"/>
+        <result column="total_quantity" property="totalQuantity" jdbcType="INTEGER"/>
+        <result column="total_weight" property="totalWeight" jdbcType="DECIMAL"/>
+        <result column="total_amount" property="totalAmount" jdbcType="DECIMAL"/>
+        <result column="second_balance_takeout" property="secondBalanceTakeout" jdbcType="DECIMAL" />
+        <result column="total_contract_releted_amount" property="totalContractReletedAmount" jdbcType="DECIMAL"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="origin_status" property="originStatus" jdbcType="VARCHAR"/>
+        <result column="note" property="note" jdbcType="VARCHAR"/>
+        <result column="contract_code" property="contractCode" jdbcType="VARCHAR"/>
+        <result column="pay_status" property="payStatus" jdbcType="VARCHAR"/>
+        <result column="pickup_status" property="pickupStatus" jdbcType="INTEGER"/>
+        <result column="fillup_status" property="fillupStatus" jdbcType="INTEGER"/>
+        <result column="call_back_status" property="callBackStatus" jdbcType="VARCHAR"/>
+        <result column="call_back_note" property="callBackNote" jdbcType="VARCHAR"/>
+        <result column="consign_type" property="consignType" jdbcType="VARCHAR"/>
+        <result column="operator_id" property="operatorId" jdbcType="BIGINT"/>
+        <result column="operator_name" property="operatorName" jdbcType="VARCHAR"/>
+        <result column="contract_address" property="contractAddress" jdbcType="VARCHAR"/>
+        <result column="order_org_id" property="orderOrgId" jdbcType="BIGINT"/>
+        <result column="order_org_name" property="orderOrgName" jdbcType="VARCHAR"/>
+        <result column="buyer_org_id" property="buyerOrgId" jdbcType="BIGINT"/>
+        <result column="buyer_org_name" property="buyerOrgName" jdbcType="VARCHAR"/>
+        <result column="created_by" property="createdBy" jdbcType="VARCHAR"/>
+        <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR"/>
+        <result column="payment_type" property="paymentType" jdbcType="VARCHAR"/>
+        <result column="delay_num" property="delayNum" jdbcType="INTEGER"/>
+        <result column="is_count_achievement" property="isCountAchievement" jdbcType="VARCHAR"/>
+        <result column="owner_job_number" property="ownerJobNumber" jdbcType="VARCHAR"/>
+        <result column="departmentCount" property="departmentCount" jdbcType="BIGINT"/>
+        <result column="buyer_credential_code" property="buyerCredentialCode" jdbcType="VARCHAR"/>
+        <result column="batch_buyer_credential_code" property="batchBuyerCredentialCode" jdbcType="VARCHAR"/>
+    </resultMap>
+   <!-- 异常订单与支付单同步日志查询条件 -->
+   <sql id="PaymentOrdersLogQueryCondition">
+   		<if test="consignOrderCode!=null and consignOrderCode!=''">
+			AND l.consign_order_code LIKE concat('%',#{consignOrderCode,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="payMerName!=null and payMerName!=''">
+			AND l.pay_mer_name LIKE concat('%',#{payMerName,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="payeeMerName!=null and payeeMerName!=''">
+			AND l.payee_mer_name LIKE concat('%',#{payeeMerName,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="paymentOrderCode!=null and paymentOrderCode!=''">
+			AND l.payment_order_code  LIKE concat('%',#{paymentOrderCode,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="dateCreated!=null and dateCreated!=''">
+			<![CDATA[AND l.created>=#{dateCreated,jdbcType=TIMESTAMP}]]>
+		</if>
+		<if test="dateEnd!=null and dateEnd!=''">
+			<![CDATA[AND l.created<=#{dateEnd,jdbcType=TIMESTAMP}]]>
+		</if>
+		<if test="result != null ">
+			AND l.result = #{result,jdbcType=INTEGER}
+		</if>
+   </sql>
+   <!-- 订单查询条件 -->
+   <sql id="PaymentOrdersQueryCondition">
+		<if test="consignOrderCode!=null and consignOrderCode!=''">
+			AND c.code LIKE concat('%',#{consignOrderCode,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="payMerName!=null and payMerName!=''">
+			AND k.pay_mer_name LIKE concat('%',#{payMerName,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="payeeMerName!=null and payeeMerName!=''">
+			AND k.payee_mer_name LIKE concat('%',#{payeeMerName,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="ownerName!=null and ownerName!=''">
+			AND c.owner_name LIKE concat('%',#{ownerName,jdbcType=VARCHAR},'%'s)
+		</if>
+		<if test="submitStatus !=null ">
+			AND k.submit_status = #{submitStatus,jdbcType=INTEGER}
+		</if>
+		<if test="chargStatus !=null ">
+			AND k.charg_status = #{chargStatus,jdbcType=INTEGER}
+		</if>
+		<if test="dateCreated!=null and dateCreated!=''">
+			<![CDATA[AND c.created>=#{dateCreated,jdbcType=TIMESTAMP}]]>
+		</if>
+		<if test="dateEnd!=null and dateEnd!=''">
+			<![CDATA[AND c.created<=#{dateEnd,jdbcType=TIMESTAMP}]]>
+		</if>
+   </sql>
+   
+   <sql id="KuandaoPayment_Column_List">
+ 	  c.code,c.owner_id,c.owner_name,c.code as consign_order_code,k.id,k.payment_order_code,k.consign_order_id,k.imp_acq_ssn,k.occur_type,k.transaction_amount,k.payee_mer_id,k.payee_mer_name,k.payee_mer_vir_acctNo,
+ 	  k.pay_mer_id,k.pay_mer_name,k.nsort_name,k.weight,k.status,k.submit_status,k.submit_error_msg,k.acq_ssn,k.settDate,k.created,k.created_by,
+ 	  k.last_updated,k.last_updated_by,k.modification_number,k.row_id,k.parent_row_id,k.charg_status,k.status as lastStatus,k.submit_status as lastSubmitStatus,
+ 	  k.charg_status as lastChargStatus,k.charg_time
+   </sql>
+   <sql id="Payment_Column_List">
+ 	  id,payment_order_code,consign_order_id,imp_acq_ssn,occur_type,transaction_amount,payee_mer_id,payee_mer_name,
+ 	  pay_mer_id,pay_mer_name,nsort_name,weight,status,submit_status,submit_error_msg,acq_ssn,settDate,created,created_by,
+ 	  last_updated,last_updated_by,modification_number,row_id,parent_row_id,k.charg_status,k.charg_status as lastChargStatus,k.charg_time
+   </sql>
+   <sql id="ConsignOrder_Column_List">
+        id, code, account_id,department_id,department_name, account_name, owner_id, owner_name, contact_id, contact_name,
+        contact_tel, delivery_type, delivery_start_date, delivery_end_date, fee_taker, ship_fee, outbound_taker,outbound_fee,
+        total_quantity, total_weight, total_amount,second_balance_takeout,total_contract_releted_amount, status, origin_status, note, contract_code, pay_status,
+        pickup_status, fillup_status, call_back_status, call_back_note, consign_type, operator_id, operator_name, contract_address, created, created_by, last_updated,
+        order_org_id, order_org_name, buyer_org_id, buyer_org_name,
+        last_updated_by, modification_number, row_id, parent_row_id,payment_type,delay_num,is_count_achievement,owner_job_number,secondary_time,buyer_credential_code,batch_buyer_credential_code
+    </sql>
+    <select id="queryFinishConsignOrderByCondition" resultMap="ConsignOrderMap" parameterType="com.prcsteel.platform.kuandao.model.dto.ConsignOrderDto">
+        SELECT
+        <include refid="ConsignOrder_Column_List"/>
+        FROM busi_consign_order
+        <where>
+        	<if test="accountId != null">
+        	 	account_id = #{accountId,jdbcType=BIGINT}
+        	</if>
+        	<if test="status != null and status != ''">
+        		AND status = #{status,jdbcType=VARCHAR}
+        	</if>
+        </where>
+    </select>
+   <!--查询所有订单  -->
+   <select id="queryPaymentOrders" parameterType="map" resultMap="KuandaoPaymentMap">
+		SELECT
+		<include refid="KuandaoPayment_Column_List"/>,date_format(k.created,'%Y-%m-%d %H:%i:%s') as createDateTime
+		FROM kuandao_payment_order k
+		LEFT JOIN busi_consign_order c
+		ON k.consign_order_id=c.id
+		<where>
+			k.submit_status != 2
+			<include refid="PaymentOrdersQueryCondition"/>
+		</where>
+		ORDER BY k.created desc
+		LIMIT #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER}
+   </select>
+   <!-- 统计所有订单总数 -->
+   <select id="totalPaymentOrders" parameterType="com.prcsteel.platform.kuandao.model.dto.KuandaoPaymentOrderDto" resultType="int">
+   		SELECT count(k.id) FROM kuandao_payment_order k
+		INNER JOIN busi_consign_order c
+		ON k.consign_order_id=c.id
+		<where>
+			k.submit_status != 2
+			<include refid="PaymentOrdersQueryCondition"/>
+		</where>
+   </select>
+   
+   <!-- 查询所有提交失败订单总数 -->
+   <select id="totalAbnormalPaymentOrders" parameterType="com.prcsteel.platform.kuandao.model.dto.KuandaoPaymentOrderDto" resultType="int">
+   		SELECT count(k.id) FROM kuandao_payment_order k
+		INNER join busi_consign_order c
+		ON k.consign_order_id=c.id
+		<where>
+			k.submit_status= 2
+			<include refid="PaymentOrdersQueryCondition"/>
+		</where>
+   </select>
+   <!--查询所有提交失败订单  -->
+   <select id="queryAbnormalPaymentOrders" parameterType="map" resultMap="KuandaoPaymentMap">
+   		SELECT
+		<include refid="KuandaoPayment_Column_List"/>,date_format(k.created,'%Y-%m-%d %H:%i:%s') as createDateTime
+		FROM kuandao_payment_order k
+		LEFT JOIN busi_consign_order c
+		ON k.consign_order_id=c.id
+		<where>
+			k.submit_status= 2
+			<include refid="PaymentOrdersQueryCondition"/>
+		</where>
+		ORDER BY k.created desc
+		LIMIT #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER}
+   </select>
+   <!-- 查询异常日志总数 用户分页-->
+   <select id="totalSynchronizeLog" parameterType="com.prcsteel.platform.kuandao.model.dto.PaymentOrderSynchLogDto" resultType="int">
+   		SELECT count(id) FROM kuandao_payment_order_submitlog l
+		<where>
+			<include refid="PaymentOrdersLogQueryCondition"/>
+		</where>
+   </select>
+  <select id="querySynchronizeLog" parameterType="map" resultMap="PaymentOrderSynchLogMap">
+  		SELECT l.*,date_format(l.created,'%Y-%m-%d %H:%i:%s') as createDateTime,o.consign_order_id,o.imp_acq_ssn FROM kuandao_payment_order_submitlog l
+  		LEFT JOIN kuandao_payment_order o
+  		ON l.payment_order_id = o.id
+  		<where>
+  			<include refid="PaymentOrdersLogQueryCondition"></include>
+  		</where>
+  		ORDER BY l.created desc
+  		LIMIT #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER}
+  </select>
+  
+   <!-- 根据订单id查询订单 -->
+   <select id="selectByPrimaryKey" parameterType="int" resultMap="KuandaoPaymentMap">
+   		SELECT 
+   		<include refid="KuandaoPayment_Column_List"/> 
+   		FROM kuandao_payment_order k
+   		LEFT JOIN busi_consign_order c
+   		ON k.consign_order_id=c.id
+   		WHERE k.id=#{id}
+   </select>
+   
+   <!-- 根据订单表id更新订单信息 -->
+   <update id="updateOrderById" parameterType="com.prcsteel.platform.kuandao.model.dto.KuandaoPaymentOrderDto">
+   		UPDATE kuandao_payment_order
+   		<set>
+   			<if test="transactionAmount!=null">
+   				transaction_amount=#{transactionAmount,jdbcType=DECIMAL}
+   			</if>
+   			<if test="payeeMerName!=null">
+   				payee_mer_name=#{payeeMerName,jdbcType=VARCHAR}
+   			</if>
+   			<if test="payMerName!=null">
+   				pay_mer_name=#{payMerName,jdbcType=VARCHAR}
+   			</if>
+   			<if test="nsortName!=null">
+   				nsort_name=#{nsortName,jdbcType=VARCHAR}
+   			</if>
+   			<if test="weight!=null">
+   				weight=#{weight,jdbcType=DECIMAL}
+   			</if>
+   		</set>
+   		WHERE id=#{id,jdbcType=INTEGER}
+   </update>
+   
+   <!-- 去重查询交易单内商品名 -->
+   <select id="queryNsorts" parameterType="String" resultType="String">
+   		SELECT distinct(i.nsort_name) nsort FROM busi_consign_order_items i,busi_consign_order o WHERE o.id=i.order_id and o.code=#{value,jdbcType=VARCHAR} 
+   </select>
+   	
+   	<!-- 落地支付单日志 -->
+   	<insert id="insertSynchronizeLog" useGeneratedKeys="true" parameterType="com.prcsteel.platform.kuandao.model.model.PaymentOrderSynchLog"
+          keyProperty="id">
+       INSERT INTO kuandao_payment_order_submitlog
+       <trim prefix="(" suffix=")" suffixOverrides=",">
+      		<if test="consignOrderCode!=null">consign_order_code,</if>
+      		<if test="paymentOrderCode!=null">payment_order_code,</if>
+      		<if test="paymentOrderId!=null">payment_order_Id,</if>
+      		<if test="occurType!=null">occur_type,</if>
+      		<if test="payMerId!=null">pay_mer_id,</if>
+      		<if test="payMerName!=null">pay_mer_name,</if>
+      		<if test="payeeMerId!=null">payee_mer_id,</if>
+      		<if test="payeeMerName!=null">payee_mer_name,</if>
+      		<if test="payeeMerVirAcctNo!=null">payee_mer_vir_acctNo,</if>
+      		<if test="nsortName!=null">nsort_name,</if>
+      		<if test="weight!=null">weight,</if>
+      		<if test="transactionAmount!=null">transaction_amount,</if>
+      		<if test="result!=null">result,</if>
+      		<if test="errorMsg!=null">error_msg,</if>
+      		<if test="created!=null">created,</if>
+      		<if test="createdBy!=null">created_by,</if>
+      		<if test="lastUpdated!=null">last_updated,</if>
+      		<if test="lastUpdatedBy!=null">last_updated_by,</if>
+      		<if test="modificationNumber!=null">modification_number,</if>
+      		<if test="rowId!=null">row_id,</if>
+      		<if test="parentRowId!=null">parent_row_id,</if>
+       </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+       		<if test="consignOrderCode!=null">#{consignOrderCode,jdbcType=VARCHAR},</if>
+      		<if test="paymentOrderCode!=null">#{paymentOrderCode,jdbcType=VARCHAR},</if>
+      		<if test="paymentOrderId!=null">#{paymentOrderId,jdbcType=INTEGER},</if>
+      		<if test="occurType!=null">#{occurType,jdbcType=INTEGER},</if>
+      		<if test="payMerId!=null">#{payMerId,jdbcType=VARCHAR},</if>
+      		<if test="payMerName!=null">#{payMerName,jdbcType=VARCHAR},</if>
+      		<if test="payeeMerId!=null">#{payeeMerId,jdbcType=VARCHAR},</if>
+      		<if test="payeeMerName!=null">#{payeeMerName,jdbcType=VARCHAR},</if>
+      		<if test="payeeMerVirAcctNo!=null">#{payeeMerVirAcctNo,jdbcType=VARCHAR},</if>
+      		<if test="nsortName!=null">#{nsortName,jdbcType=VARCHAR},</if>
+      		<if test="weight!=null">#{weight,jdbcType=DECIMAL},</if>
+      		<if test="transactionAmount!=null">#{transactionAmount,jdbcType=DECIMAL},</if>
+      		<if test="result!=null">#{result,jdbcType=INTEGER},</if>
+      		<if test="errorMsg!=null">#{errorMsg,jdbcType=VARCHAR},</if>
+      		<if test="created!=null">#{created,jdbcType=TIMESTAMP},</if>
+      		<if test="createdBy!=null">#{createdBy,jdbcType=VARCHAR},</if>
+      		<if test="lastUpdated!=null">#{lastUpdated,jdbcType=TIMESTAMP},</if>
+      		<if test="lastUpdatedBy!=null">#{lastUpdatedBy,jdbcType=VARCHAR},</if>
+      		<if test="modificationNumber!=null">#{modificationNumber,jdbcType=INTEGER},</if>
+      		<if test="rowId!=null">#{rowId,jdbcType=VARCHAR},</if>
+      		<if test="parentRowId!=null">#{parentRowId,jdbcType=VARCHAR},</if>
+       </trim>
+    </insert>
+    
+	<!--落地支付单表  -->
+   	<insert id="insertPaymentOrder" useGeneratedKeys="true" parameterType="com.prcsteel.platform.kuandao.model.model.KuandaoPaymentOrder"
+   			keyProperty="id">
+   		INSERT INTO kuandao_payment_order
+   		<trim prefix="(" suffix=")" suffixOverrides=",">
+   			<if test="paymentOrderCode!=null">payment_order_code,</if>
+   			<if test="consignOrderId!=null">consign_order_id,</if>
+   			<if test="impAcqSsn!=null">imp_acq_ssn,</if>
+   			<if test="occurType!=null">occur_type,</if>
+   			<if test="transactionAmount!=null">transaction_amount,</if>
+   			<if test="payeeMerId!=null">payee_mer_id,</if>
+   			<if test="payeeMerName!=null">payee_mer_name,</if>
+   			<if test="payeeMerVirAcctNo!=null">payee_mer_vir_acctNo,</if>
+   			<if test="payMerId!=null">pay_mer_id,</if>
+   			<if test="payMerName!=null">pay_mer_name,</if>
+   			<if test="nsortName!=null">nsort_name,</if>
+   			<if test="weight!=null">weight,</if>
+   			<if test="status!=null">status,</if>
+   			<if test="submitStatus!=null">submit_status,</if>
+   			<if test="submitErrorMsg!=null">submit_error_msg,</if>
+   			<if test="acqSsn!=null">acq_ssn,</if>
+   			<if test="settDate!=null">settDate,</if>
+   			<if test="created!=null">created,</if>
+   			<if test="createdBy!=null">created_by,</if>
+   			<if test="lastUpdated!=null">last_updated,</if>
+   			<if test="lastUpdatedBy!=null">last_updated_by,</if>
+   			<if test="modificationNumber!=null">modification_number,</if>
+   			<if test="rowId!=null">row_id,</if>
+   			<if test="parentRowId!=null">parent_row_id,</if>
+ 		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+   			<if test="paymentOrderCode!=null">#{paymentOrderCode,jdbcType=VARCHAR},</if>
+   			<if test="consignOrderId!=null">#{consignOrderId,jdbcType=BIGINT},</if>
+   			<if test="impAcqSsn!=null">#{impAcqSsn,jdbcType=VARCHAR},</if>
+   			<if test="occurType!=null">#{occurType,jdbcType=INTEGER},</if>
+   			<if test="transactionAmount!=null">#{transactionAmount,jdbcType=DECIMAL},</if>
+   			<if test="payeeMerId!=null">#{payeeMerId,jdbcType=VARCHAR},</if>
+   			<if test="payeeMerName!=null">#{payeeMerName,jdbcType=VARCHAR},</if>
+   			<if test="payeeMerVirAcctNo!=null">#{payeeMerVirAcctNo,jdbcType=VARCHAR},</if>
+   			<if test="payMerId!=null">#{payMerId,jdbcType=VARCHAR},</if>
+   			<if test="payMerName!=null">#{payMerName,jdbcType=VARCHAR},</if>
+   			<if test="nsortName!=null">#{nsortName,jdbcType=VARCHAR},</if>
+   			<if test="weight!=null">#{weight,jdbcType=DECIMAL},</if>
+   			<if test="status!=null">#{status,jdbcType=VARCHAR},</if>
+   			<if test="submitStatus!=null">#{submitStatus,jdbcType=INTEGER},</if>
+   			<if test="submitErrorMsg!=null">#{submitErrorMsg,jdbcType=VARCHAR},</if>
+   			<if test="acqSsn!=null">#{acqSsn,jdbcType=VARCHAR},</if>
+   			<if test="settDate!=null">#{settDate,jdbcType=VARCHAR},</if>
+   			<if test="created!=null">#{created,jdbcType=TIMESTAMP},</if>
+   			<if test="createdBy!=null">#{createdBy,jdbcType=VARCHAR},</if>
+   			<if test="lastUpdated!=null">#{lastUpdated,jdbcType=TIMESTAMP},</if>
+   			<if test="lastUpdatedBy!=null">#{lastUpdatedBy,jdbcType=VARCHAR},</if>
+   			<if test="modificationNumber!=null">#{modificationNumber,jdbcType=INTEGER},</if>
+   			<if test="rowId!=null">#{rowId,jdbcType=VARCHAR},</if>
+   			<if test="parentRowId!=null">#{parentRowId,jdbcType=VARCHAR},</if>
+		</trim>
+   	</insert>
+   	<!--更新支付单表  -->
+   	 <update id="update" parameterType="com.prcsteel.platform.kuandao.model.model.KuandaoPaymentOrder">
+        UPDATE kuandao_payment_order
+        <set>
+        	<if test="paymentOrderCode!=null">payment_order_code=#{paymentOrderCode,jdbcType=VARCHAR},</if>
+   			<if test="consignOrderId!=null">consign_order_id=#{consignOrderId,jdbcType=BIGINT},</if>
+   			<if test="impAcqSsn!=null">imp_acq_ssn=#{impAcqSsn,jdbcType=VARCHAR},</if>
+   			<if test="occurType!=null">occur_type=#{occurType,jdbcType=INTEGER},</if>
+   			<if test="transactionAmount!=null">transaction_amount=#{transactionAmount,jdbcType=DECIMAL},</if>
+   			<if test="payeeMerId!=null">payee_mer_id=#{payeeMerId,jdbcType=VARCHAR},</if>
+   			<if test="payeeMerName!=null">payee_mer_name=#{payeeMerName,jdbcType=VARCHAR},</if>
+   			<if test="payMerId!=null">pay_mer_id=#{payMerId,jdbcType=VARCHAR},</if>
+   			<if test="payMerName!=null">pay_mer_name=#{payMerName,jdbcType=VARCHAR},</if>
+   			<if test="nsortName!=null">nsort_name=#{nsortName,jdbcType=VARCHAR},</if>
+   			<if test="weight!=null">weight=#{weight,jdbcType=DECIMAL},</if>
+   			<if test="status!=null">status=#{status,jdbcType=VARCHAR},</if>
+   			<if test="submitStatus!=null">submit_status=#{submitStatus,jdbcType=INTEGER},</if>
+   			<if test="submitErrorMsg!=null">submit_error_msg=#{submitErrorMsg,jdbcType=VARCHAR},</if>
+   			<if test="acqSsn!=null">acq_ssn=#{acqSsn,jdbcType=VARCHAR},</if>
+   			<if test="settDate!=null">settDate=#{settDate,jdbcType=VARCHAR},</if>
+   			<if test="created!=null">created=#{created,jdbcType=TIMESTAMP},</if>
+   			<if test="createdBy!=null">created_by=#{createdBy,jdbcType=VARCHAR},</if>
+   			<if test="lastUpdated!=null">last_updated=#{lastUpdated,jdbcType=TIMESTAMP},</if>
+   			<if test="lastUpdatedBy!=null">last_updated_by=#{lastUpdatedBy,jdbcType=VARCHAR},</if>
+            modification_number =ifnull(modification_number,0)+1,
+            <if test="rowId != null">
+                row_id = #{rowId,jdbcType=VARCHAR},
+            </if>
+            <if test="parentRowId != null">
+                parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+            </if>
+            <if test="chargStatus != null">
+                charg_status = #{chargStatus,jdbcType=INTEGER},
+            </if>
+            <if test="chargTime != null">
+                charg_time = #{chargTime,jdbcType=INTEGER},
+            </if>
+        </set>
+        <where>
+        	<if test="id != null">
+	        	id = #{id,jdbcType=INTEGER}
+        	</if>
+        	<if test="lastSubmitStatus != null">
+        		AND submit_status=#{lastSubmitStatus,jdbcType=INTEGER}
+        	</if>
+        	<if test="lastStatus != null and lastStatus != ''">
+        		AND status=#{lastStatus,jdbcType=VARCHAR}
+        	</if>
+        	<if test="lastChargStatus != null">
+                AND charg_status = #{lastChargStatus,jdbcType=INTEGER}
+            </if>
+        </where> 
+     </update>
+		<!-- 根据条件查找支付单,支付单号和交易日期组合查询才能确定唯一记录 -->
+	<select id="queryPaymentOrderByCondition"  parameterType="com.prcsteel.platform.kuandao.model.dto.KuandaoPaymentOrderDto" resultMap="PaymentMap">
+		SELECT
+		<include refid="Payment_Column_List"/>
+		FROM kuandao_payment_order k
+		<where>
+			<if test="id != null">
+				AND k.id=#{id,jdbcType=INTEGER}
+			</if>
+			<if test="impAcqSsn != null and impAcqSsn != ''">
+				AND k.imp_acq_ssn=#{impAcqSsn,jdbcType=VARCHAR}
+			</if>
+			<if test="paymentOrderCode != null and paymentOrderCode != ''">
+				AND k.payment_order_code=#{paymentOrderCode,jdbcType=VARCHAR}
+			</if>
+			<if test="settDate != null and settDate != '' ">
+				AND k.settDate=#{settDate,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+	
+	<!--查询订单联系人 -->
+	<resultMap id="UserMap" type="com.prcsteel.platform.acl.model.model.User">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="login_id" property="loginId" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="role_id" property="roleId" jdbcType="BIGINT"/>
+        <result column="tel" property="tel" jdbcType="VARCHAR"/>
+        <result column="phone_ext" property="phoneExt" jdbcType="VARCHAR"/>
+        <result column="org_id" property="orgId" jdbcType="BIGINT"/>
+        <result column="job_number" property="jobNumber" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="created" property="created" jdbcType="TIMESTAMP"/>
+        <result column="created_by" property="createdBy" jdbcType="VARCHAR"/>
+        <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP"/>
+        <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR"/>
+        <result column="modification_number" property="modificationNumber" jdbcType="INTEGER"/>
+        <result column="row_id" property="rowId" jdbcType="VARCHAR"/>
+        <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="User_Column_List">
+    u.id, u.login_id, u.name, u.role_id, u.tel,u.phone_ext, u.org_id, u.job_number, u.status, u.created, u.created_by, u.last_updated,
+    u.last_updated_by, u.modification_number, u.row_id, u.parent_row_id
+  </sql>
+   <select id="queryContractByOrderId" parameterType="long" resultMap="UserMap">
+		SELECT
+		<include refid="User_Column_List"></include>
+		FROM busi_consign_order c
+		INNER JOIN acl_user u
+		ON c.owner_id = u.id
+		<where>
+			c.id = #{consignOrderId,jdbcType=BIGINT}
+		</where>
+   </select>
+   
+</mapper>
+
+
+

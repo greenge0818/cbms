@@ -1,0 +1,83 @@
+#*
+往来单位账务报表*#
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            财务报表
+        </li>
+        <li class="active">
+            往来单位账务报表
+        </li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+    #parse("layout/topbtn.vm")
+    <!-- /.nav-search -->
+
+</div>
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="clearfix">
+                        <div class="input-group  col-md-12 col-sm-12 col-lg-12 search-bar">
+                            <form class="form-inline checkbox">
+                                <label>客户名称：</label>
+                                <input id="accountName" type="text"/>
+                                <label>时间：</label>
+                                <input id="startTime" name="startTimeStr" class="Wdate" type="text" value="$!{startTime}" style="width:100px;"
+                                       onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')||\'2030-10-01\'}',minDate:'#F{\'2016-01-01\'}'})"/> -
+                                <input id="endTime" name="endTimeStr" class="Wdate" type="text" value="$!{endTime}" style="width:100px;"
+                                       onFocus="WdatePicker({minDate:'#F{$dp.$D(\'startTime\')}',maxDate:'2030-10-01'})"/>
+
+                                <button id="queryBtn" class="btn btn-sm btn-default" type="button" title="搜索">
+                                    <i class="aace-icon fa fa-search bigger-110"></i>搜索
+                                </button>
+                                &nbsp;&nbsp;
+                                <button id="output" class="btn btn-sm btn-default" type="button" title="导出到EXCEL">
+                                    <i class="aace-icon fa  bigger-110"></i>导出到EXCEL
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- div.dataTables_borderWrap table-striped(隔行变色)-->
+                    <div>
+                        <table id="dynamic-table" class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>客户名称</th>
+                                <th>期初余额（元）</th>
+                                <th>实际销售交易金额<br/>（元）</th>
+                                <th>已收金额（元）</th>
+                                <th>实际采购交易金额<br/>（元）</th>
+                                <th>已付金额（元）</th>
+                                <th>期末余额（元）</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    </br>
+    <!-- /.row -->
+</div>
+
+<script src="$link.getContextPath()/js/views/report/finance/accountFund.js"></script>

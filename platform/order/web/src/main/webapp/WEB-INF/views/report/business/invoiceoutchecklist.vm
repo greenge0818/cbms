@@ -1,0 +1,99 @@
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="#">业务报表</a>
+        </li>
+        <li class="active">销项票开票清单</li>
+    </ul>
+    <!-- /.breadcrumb -->
+</div>
+#if($error)
+    <p>非法请求！</p>
+#else
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <!--TAPBAR-->
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+
+                    <div class="clearfix">
+                        <div class="input-group pull-right col-md-12 col-sm-12 col-lg-12 search-bar text-left">
+                            <form class="form-inline">
+                                <label >清单编号：<input id="checkListId" class="ipt-text" type="text" maxlength='50'
+                                                  value="#if($id && $id>0)$!{id}#end"/></label>
+                                <label >开票时间：</label>
+                                       
+                                <input id="beginTime" class="Wdate" type="text" value="$!{startTime}"
+                                       onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')||\'2030-10-01\'}'})"/> -
+                                <input id="endTime" class="Wdate" type="text"  value="$!{endTime}"
+                                       onFocus="WdatePicker({minDate:'#F{$dp.$D(\'beginTime\')}',maxDate:'2030-10-01'})"/>       
+                                       
+                                <label>买家全称：<input id="buyerName" class="ipt-text" type="text" maxlength='50' value=""/></label>
+                                <label class="pos-rel" id="org_options">服务中心：
+								<a id="orgSelectBtn" href="javascript:void(0);">选择服务中心</a>
+	                            <div id="orgSelect" class='pos-abs none' style="z-index:10;top:28px;left:70px;width:120px;background:#fff;border:1px solid #ccc">
+	                                <ul>
+	                                #if($!isAll)
+									    <li class="text-left" style="padding:5px;">
+	                                   		<label class="pos-rel">
+	                                   			<input type="checkbox" id="selectAllOrg" class="ace" value="all">
+	                                   			<span class="lbl">全部服务中心</span>
+	                                   		</label>
+	                                    </li>
+									#end
+	                                #foreach($org in $!orgs)
+	                                    <li class="text-left" style="padding:5px;">
+	                                   		<label class="pos-rel">
+	                                   			<input type="checkbox" class="ace" value="$org.id">
+	                                   			<span class="lbl">$org.name</span>
+	                                   		</label>
+	                                    </li>
+	                                #end
+	                                </ul>
+	                            </div>
+                                <button id="queryBtn" class="btn btn-sm btn-default" type="button" title="搜索">
+                                    <i class="aace-icon fa fa-search bigger-110"></i>搜索
+                                </button>
+                                <button type="button" class="btn btn-info btn-sm btn-export" >导出全部到EXCEL</button>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- div.dataTables_borderWrap -->
+                    <div>
+                    	<div class="pull-right" style="margin-top:10px;"><b>应开发票合计：<span id="pageTotalWeight"></span> 吨     <span id="pageTotalAmount"></span>元</b></div>
+                        <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>清单编号</th>
+                                <th>开票时间</th>
+                                <th width="200">买家名称</th>
+                                <th>品名</th>
+                                <th>规格</th>
+                                <th>数量（吨）</th>
+                                <th>价税合计（元）</th>
+                                <th>服务中心</th>
+                                <th>发票类型</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+
+<script src="$link.getContextPath()/js/views/report/business/invoiceoutchecklist.js"></script>
+#end

@@ -1,0 +1,782 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.order.persist.dao.BusiSecondSettlementLogDao">
+    <resultMap id="BaseResultMap" type="com.prcsteel.platform.order.model.model.CustAccountTransLog">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="account_id" jdbcType="BIGINT" property="accountId"/>
+        <result column="consign_order_code" jdbcType="VARCHAR" property="consignOrderCode"/>
+        <result column="serial_number" jdbcType="VARCHAR" property="serialNumber"/>
+        <result column="apply_type" jdbcType="VARCHAR" property="applyType"/>
+        <result column="amount" jdbcType="DECIMAL" property="amount"/>
+        <result column="applyer_id" jdbcType="BIGINT" property="applyerId"/>
+        <result column="applyer_name" jdbcType="VARCHAR" property="applyerName"/>
+        <result column="serial_time" jdbcType="TIMESTAMP" property="serialTime"/>
+        <result column="type" jdbcType="CHAR" property="type"/>
+        <result column="current_balance" jdbcType="DECIMAL" property="currentBalance"/>
+        <result column="pay_type" jdbcType="CHAR" property="payType"/>
+        <result column="association_type" jdbcType="VARCHAR" property="associationType"/>
+        <result column="created" jdbcType="TIMESTAMP" property="created"/>
+        <result column="created_by" jdbcType="VARCHAR" property="createdBy"/>
+        <result column="last_updated" jdbcType="TIMESTAMP" property="lastUpdated"/>
+        <result column="last_updated_by" jdbcType="VARCHAR" property="lastUpdatedBy"/>
+        <result column="modification_number" jdbcType="INTEGER" property="modificationNumber"/>
+        <result column="row_id" jdbcType="VARCHAR" property="rowId"/>
+        <result column="parent_row_id" jdbcType="VARCHAR" property="parentRowId"/>
+        <result column="ext1" jdbcType="VARCHAR" property="ext1"/>
+        <result column="ext2" jdbcType="VARCHAR" property="ext2"/>
+        <result column="ext3" jdbcType="VARCHAR" property="ext3"/>
+        <result column="ext4" jdbcType="INTEGER" property="ext4"/>
+        <result column="ext5" jdbcType="INTEGER" property="ext5"/>
+        <result column="ext6" jdbcType="INTEGER" property="ext6"/>
+        <result column="ext7" jdbcType="TIMESTAMP" property="ext7"/>
+        <result column="ext8" jdbcType="BIGINT" property="ext8"/>
+    </resultMap>
+
+    <resultMap id="accountUser" type="com.prcsteel.platform.account.model.dto.AccountUserDto">
+        <result column="departmentId" property="departmentId" jdbcType="BIGINT"/>
+        <result column="accountName" property="accountName" jdbcType="VARCHAR"/>
+        <result column="balance_second_settlement" property="balanceSecondSettlement" jdbcType="DECIMAL"/>
+        <result column="departmentName" property="departmentName" jdbcType="VARCHAR"/>
+        <result column="managerName" property="managerName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="accounttranslogMap" type="com.prcsteel.platform.order.model.dto.CustAccountTransLogDto">
+        <result column="t_id" property="tid" jdbcType="BIGINT"/>
+        <result column="account_id" property="accountId" jdbcType="BIGINT"/>
+        <result column="consign_order_code" property="consignOrderCode" jdbcType="VARCHAR"/>
+        <result column="serial_number" property="serialNumber" jdbcType="VARCHAR"/>
+        <result column="apply_type" property="applyType" jdbcType="CHAR"/>
+        <result column="amount" property="amount" jdbcType="DECIMAL"/>
+        <result column="applyer_id" property="applyerId" jdbcType="BIGINT"/>
+        <result column="applyer_name" property="applyerName" jdbcType="VARCHAR"/>
+        <result column="serial_time" property="serialTime" jdbcType="TIMESTAMP"/>
+        <result column="type" property="type" jdbcType="CHAR"/>
+        <result column="current_balance" property="currentBalance" jdbcType="DECIMAL"/>
+        <result column="pay_type" property="payType" jdbcType="CHAR"/>
+        <result column="association_type" jdbcType="VARCHAR" property="associationType"/>
+        <result column="created" property="created" jdbcType="TIMESTAMP"/>
+        <result column="c_id" property="cid" jdbcType="BIGINT"/>
+        <result column="c_name" property="cName" jdbcType="VARCHAR"/>
+        <result column="balance" property="balance" jdbcType="DECIMAL"/>
+        <result column="balance_second_settlement" property="balanceSecondSettlement" jdbcType="DECIMAL"/>
+        <result column="o_id" property="oid" jdbcType="BIGINT"/>
+        <result column="o_name" property="oName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="ConsignOrderAuditTrailMap" type="com.prcsteel.platform.order.model.model.OrderAuditTrail">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="order_id" property="orderId" jdbcType="BIGINT"/>
+        <result column="set_to_status" property="setToStatus" jdbcType="VARCHAR"/>
+        <result column="operator_id" property="operatorId" jdbcType="BIGINT"/>
+        <result column="operator_name" property="operatorName" jdbcType="VARCHAR"/>
+        <result column="created" property="created" jdbcType="TIMESTAMP"/>
+        <result column="created_by" property="createdBy" jdbcType="VARCHAR"/>
+        <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP"/>
+        <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR"/>
+        <result column="modification_number" property="modificationNumber" jdbcType="INTEGER"/>
+        <result column="row_id" property="rowId" jdbcType="VARCHAR"/>
+        <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR"/>
+        <result column="ext1" property="ext1" jdbcType="VARCHAR"/>
+        <result column="ext2" property="ext2" jdbcType="VARCHAR"/>
+        <result column="ext3" property="ext3" jdbcType="VARCHAR"/>
+        <result column="ext4" property="ext4" jdbcType="INTEGER"/>
+        <result column="ext5" property="ext5" jdbcType="INTEGER"/>
+        <result column="ext6" property="ext6" jdbcType="INTEGER"/>
+        <result column="ext7" property="ext7" jdbcType="TIMESTAMP"/>
+        <result column="ext8" property="ext8" jdbcType="BIGINT"/>
+        <result column="note" property="note" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="BusiPayRequestMap" type="com.prcsteel.platform.order.model.model.BusiPayRequest">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="consign_order_id" property="consignOrderId" jdbcType="BIGINT"/>
+        <result column="consign_order_code" property="consignOrderCode" jdbcType="VARCHAR"/>
+        <result column="contract_code" property="contractCode" jdbcType="VARCHAR"/>
+        <result column="contract_url" property="contractUrl" jdbcType="VARCHAR"/>
+        <result column="requester_id" property="requesterId" jdbcType="BIGINT"/>
+        <result column="requester_name" property="requesterName" jdbcType="VARCHAR"/>
+        <result column="org_id" property="orgId" jdbcType="BIGINT"/>
+        <result column="org_name" property="orgName" jdbcType="VARCHAR"/>
+        <result column="buyer_id" property="buyerId" jdbcType="BIGINT"/>
+        <result column="buyer_name" property="buyerName" jdbcType="VARCHAR"/>
+        <result column="department_id" property="departmentId" jdbcType="BIGINT"/>
+        <result column="department_name" property="departmentName" jdbcType="VARCHAR"/>
+        <result column="total_amount" property="totalAmount" jdbcType="DECIMAL"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="decline_reason" property="declineReason" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="print_times" property="printTimes" jdbcType="INTEGER"/>
+        <result column="created" property="created" jdbcType="TIMESTAMP"/>
+        <result column="created_by" property="createdBy" jdbcType="VARCHAR"/>
+        <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP"/>
+        <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR"/>
+        <result column="modification_number" property="modificationNumber" jdbcType="INTEGER"/>
+        <result column="row_id" property="rowId" jdbcType="VARCHAR"/>
+        <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR"/>
+        <result column="last_print_ip" property="lastPrintIp" jdbcType="VARCHAR"/>
+        <result column="print_name" property="printName" jdbcType="VARCHAR"/>
+        <result column="last_print_date" property="lastPrintDate" jdbcType="TIMESTAMP"/>
+        <result column="ext1" property="ext1" jdbcType="VARCHAR"/>
+        <result column="ext2" property="ext2" jdbcType="VARCHAR"/>
+        <result column="ext3" property="ext3" jdbcType="VARCHAR"/>
+        <result column="ext4" property="ext4" jdbcType="INTEGER"/>
+        <result column="ext5" property="ext5" jdbcType="INTEGER"/>
+        <result column="ext6" property="ext6" jdbcType="INTEGER"/>
+        <result column="ext7" property="ext7" jdbcType="TIMESTAMP"/>
+        <result column="ext8" property="ext8" jdbcType="BIGINT"/>
+        <result column="departmentCount" property="departmentCount" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <resultMap id="PayOrgMap" type="com.prcsteel.platform.order.model.dto.PayRequestOrgDto">
+        <result column="q_id" property="qid" jdbcType="BIGINT"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="requester_id" property="requesterId" jdbcType="BIGINT"/>
+        <result column="requester_name" property="requesterName" jdbcType="VARCHAR"/>
+        <result column="org_id" property="orgId" jdbcType="BIGINT"/>
+        <result column="org_name" property="orgName" jdbcType="VARCHAR"/>
+        <result column="buyer_id" property="buyerId" jdbcType="BIGINT"/>
+        <result column="buyer_name" property="buyerName" jdbcType="VARCHAR"/>
+        <result column="total_amount" property="totalAmount" jdbcType="DECIMAL"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="print_times" property="printTimes" jdbcType="INTEGER"/>
+        <result column="created" property="created" jdbcType="TIMESTAMP"/>
+        <result column="last_updated" property="lastUpdated" jdbcType="VARCHAR"/>
+        <result column="o_id" property="oid" jdbcType="BIGINT"/>
+        <result column="o_name" property="oName" jdbcType="VARCHAR"/>
+        <result column="credit_limit" property="creditLimit" jdbcType="DECIMAL"/>
+        <result column="credit_limit_used" property="creditLimitUsed" jdbcType="BIGINT"/>
+        <result column="department_id" property="departmentId" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <resultMap id="OrderAuditTrailMap" type="com.prcsteel.platform.order.model.model.OrderAuditTrail">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="order_id" property="orderId" jdbcType="BIGINT"/>
+        <result column="set_to_status" property="setToStatus" jdbcType="VARCHAR"/>
+        <result column="operator_id" property="operatorId" jdbcType="BIGINT"/>
+        <result column="operator_name" property="operatorName" jdbcType="VARCHAR"/>
+        <result column="created" property="created" jdbcType="TIMESTAMP"/>
+        <result column="created_by" property="createdBy" jdbcType="VARCHAR"/>
+        <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP"/>
+        <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR"/>
+        <result column="modification_number" property="modificationNumber" jdbcType="INTEGER"/>
+        <result column="row_id" property="rowId" jdbcType="VARCHAR"/>
+        <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR"/>
+        <result column="ext1" property="ext1" jdbcType="VARCHAR"/>
+        <result column="ext2" property="ext2" jdbcType="VARCHAR"/>
+        <result column="ext3" property="ext3" jdbcType="VARCHAR"/>
+        <result column="ext4" property="ext4" jdbcType="INTEGER"/>
+        <result column="ext5" property="ext5" jdbcType="INTEGER"/>
+        <result column="ext6" property="ext6" jdbcType="INTEGER"/>
+        <result column="ext7" property="ext7" jdbcType="TIMESTAMP"/>
+        <result column="ext8" property="ext8" jdbcType="BIGINT"/>
+        <result column="note" property="note" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="requestItemMap" type="com.prcsteel.platform.order.model.dto.PayRequestItemDto">
+        <result column="q_id" property="qid" jdbcType="BIGINT"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="requester_id" property="requesterId" jdbcType="BIGINT"/>
+        <result column="requester_name" property="requesterName" jdbcType="VARCHAR"/>
+        <result column="org_id" property="orgId" jdbcType="BIGINT"/>
+        <result column="org_name" property="orgName" jdbcType="VARCHAR"/>
+        <result column="buyer_id" property="buyerId" jdbcType="BIGINT"/>
+        <result column="created" property="created" jdbcType="TIMESTAMP"/>
+        <result column="print_times" property="printTimes" jdbcType="VARCHAR"/>
+        <result column="buyer_name" property="buyerName" jdbcType="VARCHAR"/>
+        <result column="itemid" property="itemId" jdbcType="BIGINT"/>
+        <result column="receiver_account_code" jdbcType="VARCHAR" property="receiverAccountCode"/>
+        <result column="receiver_name" jdbcType="VARCHAR" property="receiverName"/>
+        <result column="receiver_bank_name" jdbcType="VARCHAR" property="receiverBankName"/>
+        <result column="receiver_bank_city" jdbcType="VARCHAR" property="receiverBankCity"/>
+        <result column="receiver_branch_bank_name" jdbcType="VARCHAR" property="receiverBranchBankName"/>
+        <result column="pay_amount" property="payAmount" jdbcType="DECIMAL"/>
+        <result column="receiver_bank_code" property="receiverBankCode" jdbcType="VARCHAR" />
+        <result column="print_name" property="printName" jdbcType="VARCHAR" />
+		<result column="last_print_date" property="lastPrintDate" jdbcType="TIMESTAMP" />
+		<result column="pay_code" property="payCode" jdbcType="VARCHAR"></result>
+    </resultMap>
+
+    <resultMap id="CustAccoutMap" type="com.prcsteel.platform.order.model.model.CustAccount" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="code" property="code" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="addr" property="addr" jdbcType="VARCHAR" />
+        <result column="zip" property="zip" jdbcType="VARCHAR" />
+        <result column="tel" property="tel" jdbcType="VARCHAR" />
+        <result column="balance" property="balance" jdbcType="DECIMAL" />
+        <result column="balance_freeze" property="balanceFreeze" jdbcType="DECIMAL" />
+        <result column="balance_second_settlement" property="balanceSecondSettlement" jdbcType="DECIMAL" />
+        <result column="balance_second_settlement_freeze" property="balanceSecondSettlementFreeze" jdbcType="DECIMAL" />
+        <result column="fax" property="fax" jdbcType="VARCHAR" />
+        <result column="legal_person_name" property="legalPersonName" jdbcType="VARCHAR" />
+        <result column="mobil" property="mobil" jdbcType="VARCHAR" />
+        <result column="business" property="business" jdbcType="VARCHAR" />
+        <result column="web_site_url" property="webSiteUrl" jdbcType="VARCHAR" />
+        <result column="business_type" property="businessType" jdbcType="CHAR" />
+        <result column="province_id" property="provinceId" jdbcType="BIGINT" />
+        <result column="city_id" property="cityId" jdbcType="BIGINT" />
+        <result column="district_id" property="districtId" jdbcType="BIGINT" />
+        <result column="proxy_factory" property="proxyFactory" jdbcType="VARCHAR" />
+        <result column="proxy_qty" property="proxyQty" jdbcType="DECIMAL" />
+        <result column="license_code" property="licenseCode" jdbcType="VARCHAR" />
+        <result column="reg_address" property="regAddress" jdbcType="VARCHAR" />
+        <result column="org_code" property="orgCode" jdbcType="VARCHAR" />
+        <result column="bank_code" property="bankCode" jdbcType="VARCHAR" />
+        <result column="bank_name_main" property="bankNameMain" jdbcType="VARCHAR" />
+        <result column="bank_name_branch" property="bankNameBranch" jdbcType="VARCHAR" />
+        <result column="bank_provincie_id" property="bankProvincieId" jdbcType="BIGINT" />
+        <result column="bank_city_id" property="bankCityId" jdbcType="BIGINT" />
+        <result column="account_code" property="accountCode" jdbcType="VARCHAR" />
+        <result column="tax_code" property="taxCode" jdbcType="VARCHAR" />
+        <result column="reg_time" property="regTime" jdbcType="TIMESTAMP" />
+        <result column="last_bill_time" property="lastBillTime" jdbcType="TIMESTAMP" />
+        <result column="buyer_deal_total" property="buyerDealTotal" jdbcType="INTEGER" />
+        <result column="seller_deal_total" property="sellerDealTotal" jdbcType="INTEGER" />
+        <result column="type" property="type" jdbcType="CHAR" />
+        <result column="consign_type" property="consignType" jdbcType="VARCHAR" />
+        <result column="manager_id" property="managerId" jdbcType="BIGINT" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+        <result column="created" property="created" jdbcType="TIMESTAMP" />
+        <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+        <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+        <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+        <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+        <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+        <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+    </resultMap>
+
+	<resultMap id="UserOrgMap" type="com.prcsteel.platform.acl.model.dto.UserOrgDto" >
+        <result column="id" property="id" jdbcType="BIGINT" />
+        <result column="name" property="name" jdbcType="VARCHAR" />    
+    </resultMap>
+    
+    <resultMap id="OrgMap" type="com.prcsteel.platform.order.model.dto.OrgLimitDto" >
+    	<result column="id" property="id" jdbcType="BIGINT" />
+        <result column="credit_limit" property="creditLimit" jdbcType="DECIMAL"/>
+        <result column="credit_limit_used" property="creditLimitUsed" jdbcType="DECIMAL"/>    
+    </resultMap>
+    <!-- 首页应收应付专用 -->
+	<select id="queryByUserId" resultMap="accountUser"  parameterType="java.util.List">
+		<![CDATA[
+		SELECT 
+			SUM(CASE WHEN x.balance_second_settlement>0 THEN x.balance_second_settlement ELSE 0 END ) AS positiveBalanceSecond,
+			SUM(CASE WHEN x.balance_second_settlement<0 THEN x.balance_second_settlement ELSE 0 END ) AS minusBalanceSecond
+		]]>
+		FROM
+		(SELECT t2.id,t2.balance_second_settlement
+			FROM cust_account t1 
+			INNER JOIN cust_account t2 ON t2.parent_id = t1.id
+			LEFT JOIN cust_account_contact t3 ON t3.account_id = t2.id
+			LEFT JOIN acl_user t4 ON t4.id = t3.manager
+			<![CDATA[WHERE t2.balance_second_settlement <> 0]]>
+			<if test="userIds != null ">
+         		AND t4.id IN
+        		<foreach item="userId" index="index" collection="userIds" open="(" separator="," close=")">
+             		#{userId}
+         		</foreach>
+     		</if>
+		GROUP BY t2.id) x
+	</select>
+
+	<!-- 二结应收应付列表 lixiang -->
+    <select id="queryById" resultMap="accountUser" parameterType="map">
+        <![CDATA[
+	        SELECT t1.name AS accountName,t2.balance_second_settlement,t2.id AS departmentId,
+	        t2.name AS departmentName,
+				(SELECT GROUP_CONCAT(DISTINCT NULLIF(t10.name,'')) from acl_user t10
+				LEFT JOIN cust_account_contact t11 ON t11.manager = t10.id
+				LEFT JOIN cust_account t12 ON t12.id = t11.account_id
+				LEFT JOIN cust_account_contact t13 ON t13.id = t11.contact_id
+				WHERE t12.id = t2.id AND t11.is_deleted = 0 and t12.is_deleted = 0 AND t13.is_deleted = 0
+				group by t12.id) AS managerName
+			FROM cust_account t1
+			INNER JOIN cust_account t2 ON t2.parent_id = t1.id
+			LEFT JOIN cust_account_contact t3 ON t3.account_id = t2.id
+			LEFT JOIN acl_user t4 ON t4.id = t3.manager
+			WHERE t2.balance_second_settlement <> 0
+		]]>
+		<if test="userIds != null ">
+	        and t4.id in
+	        <foreach item="userId" index="index" collection="userIds" open="(" separator="," close=")">
+	            #{userId}
+	        </foreach>
+	    </if>
+		<if test="balanceSecondSmall != null">
+			<![CDATA[and t2.balance_second_settlement < 0]]> 
+		</if>
+		<if test="balanceSecondBig != null">
+			<![CDATA[and t2.balance_second_settlement > 0]]> 
+		</if>
+		<if test="accountName != null and accountName !=''">
+			and t1.name like '%${accountName}%'
+		</if>
+		<if test="orgId != null and orgId !=''">
+			and t4.org_id = #{orgId} 
+		</if>
+		<if test="userName != null and userName !=''">
+			and t4.name like '%${userName}%'
+		</if>
+		GROUP BY t2.id
+		limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+ 	</select>
+
+    <select id="queryByIdCount" resultType="java.lang.Integer" parameterType="map">
+  	<![CDATA[
+		SELECT COUNT(1) FROM (SELECT t1.name
+		FROM cust_account t1 
+		INNER JOIN cust_account t2 ON t2.parent_id = t1.id
+		LEFT JOIN cust_account_contact t3 ON t3.account_id = t2.id
+		LEFT JOIN acl_user t4 ON t4.id = t3.manager
+		WHERE t2.balance_second_settlement <> 0
+	]]>
+		<if test="userIds != null ">
+	        and t4.id in
+	        <foreach item="userId" index="index" collection="userIds" open="(" separator="," close=")">
+	            #{userId}
+	        </foreach>
+	    </if>
+		<if test="balanceSecondSmall != null">
+			<![CDATA[and t2.balance_second_settlement < 0]]> 
+		</if>
+		<if test="balanceSecondBig != null">
+			<![CDATA[and t2.balance_second_settlement > 0]]> 
+		</if>
+		<if test="accountName != null and accountName !=''">
+			and t1.name like '%${accountName}%'
+		</if>
+		<if test="orgId != null and orgId !=''">
+			and t4.org_id = #{orgId} 
+		</if>
+		<if test="userName != null and userName !=''">
+			and t4.name like '%${userName}%'
+		</if>
+		GROUP BY t2.id)f 
+  	</select>
+	
+	<resultMap id="accountDetilMap" type="com.prcsteel.platform.order.model.dto.CustAccountDto" extends="CustAccoutMap">
+		<result column="accountId" property="accountId" jdbcType="BIGINT" />
+		<result column="accountName" property="accountName" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<!-- lixiang 二结应收应付详情账户信息 -->
+    <select id="queryForAccountId" resultMap="accountDetilMap">
+	    SELECT *,t2.id AS accountId, t2.name AS accountName FROM cust_account t1
+		INNER JOIN cust_account t2 ON t1.parent_id = t2.id
+		WHERE t1.id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="queryByPayType" resultMap="accounttranslogMap">
+    	select t.id t_id, t.account_id, t.consign_order_code, t.serial_number, t.apply_type, t.amount, t.applyer_id, t. applyer_name,
+    	t.serial_time, t.type, t.current_balance, t.pay_type,t.association_type, t.created,c.id c_id,c.name c_name,c.balance, 
+    	c.balance_second_settlement,o.id o_id, o.name o_name from cust_account_trans_log t,cust_account c,acl_user u,base_organization o 
+    	where t.applyer_id =u.id and u.org_id = o.id and t.account_id = c.id and t.account_id = #{id,jdbcType=BIGINT}
+    	and t.pay_type = 'settlement'
+        <if test="dateStart != null and dateEnd != null ">
+            and t.serial_time between #{dateStart,jdbcType=TIMESTAMP} and #{dateEnd,jdbcType=TIMESTAMP}
+        </if>
+        order by t.serial_time desc, t.id desc
+        <if test="start != null and length != null">
+            limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER}
+        </if>
+
+    </select>
+
+    <select id="queryByPayTypeCount" resultType="java.lang.Integer">
+    	select COUNT(t.id) from cust_account_trans_log t,cust_account c,acl_user u,base_organization o 
+    	where t.applyer_id =u.id and u.org_id = o.id and t.account_id = c.id and t.account_id = #{id,jdbcType=BIGINT}
+    	and t.pay_type = 'settlement'
+        <if test="dateStart != null and dateEnd != null ">
+            and t.serial_time between #{dateStart,jdbcType=TIMESTAMP} and #{dateEnd,jdbcType=TIMESTAMP}
+        </if>
+    </select>
+	
+	<select id="qureyByOid" resultMap="UserOrgMap">
+		select o.id , o.name from acl_user u,base_organization o where o.id = u.org_id and u.org_id = #{id,jdbcType=BIGINT} 
+	</select>
+	
+    <insert id="insertPayRequest" useGeneratedKeys="true" parameterType="com.prcsteel.platform.order.model.model.PayRequest"
+            keyProperty="id">
+        insert into busi_pay_request
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="code != null">
+                code,
+            </if>
+            <if test="consignOrderId != null">
+                consign_order_id,
+            </if>
+            <if test="consignOrderCode != null">
+                consign_order_code,
+            </if>
+            <if test="contractCode != null">
+                contract_code,
+            </if>
+            <if test="contractUrl != null">
+                contract_url,
+            </if>
+            <if test="requesterId != null">
+                requester_id,
+            </if>
+            <if test="requesterName != null">
+                requester_name,
+            </if>
+            <if test="orgId != null">
+                org_id,
+            </if>
+            <if test="orgName != null">
+                org_name,
+            </if>
+            <if test="buyerId != null">
+                buyer_id,
+            </if>
+            <if test="buyerName != null">
+                buyer_name,
+            </if>
+            <if test="departmentId != null">
+                department_id,
+            </if>
+            <if test="departmentName != null">
+                department_name,
+            </if>
+            <if test="totalAmount != null">
+                total_amount,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="declineReason != null">
+                decline_reason,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="printTimes != null">
+                print_times,
+            </if>
+            <if test="created != null">
+                created,
+            </if>
+            <if test="createdBy != null">
+                created_by,
+            </if>
+            <if test="lastUpdated != null">
+                last_updated,
+            </if>
+            <if test="lastUpdatedBy != null">
+                last_updated_by,
+            </if>
+            <if test="modificationNumber != null">
+                modification_number,
+            </if>
+            <if test="rowId != null">
+                row_id,
+            </if>
+            <if test="parentRowId != null">
+                parent_row_id,
+            </if>
+            <if test="ext1 != null">
+                ext1,
+            </if>
+            <if test="ext2 != null">
+                ext2,
+            </if>
+            <if test="ext3 != null">
+                ext3,
+            </if>
+            <if test="ext4 != null">
+                ext4,
+            </if>
+            <if test="ext5 != null">
+                ext5,
+            </if>
+            <if test="ext6 != null">
+                ext6,
+            </if>
+            <if test="ext7 != null">
+                ext7,
+            </if>
+            <if test="ext8 != null">
+                ext8,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="code != null">
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="consignOrderId != null">
+                #{consignOrderId,jdbcType=BIGINT},
+            </if>
+            <if test="consignOrderCode != null">
+                #{consignOrderCode,jdbcType=VARCHAR},
+            </if>
+            <if test="contractCode != null">
+                #{contractCode,jdbcType=VARCHAR},
+            </if>
+            <if test="contractUrl != null">
+                #{contractUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="requesterId != null">
+                #{requesterId,jdbcType=BIGINT},
+            </if>
+            <if test="requesterName != null">
+                #{requesterName,jdbcType=VARCHAR},
+            </if>
+            <if test="orgId != null">
+                #{orgId,jdbcType=BIGINT},
+            </if>
+            <if test="orgName != null">
+                #{orgName,jdbcType=VARCHAR},
+            </if>
+            <if test="buyerId != null">
+                #{buyerId,jdbcType=BIGINT},
+            </if>
+            <if test="buyerName != null">
+                #{buyerName,jdbcType=VARCHAR},
+            </if>
+            <if test="departmentId != null">
+                #{departmentId,jdbcType=BIGINT},
+            </if>
+            <if test="departmentName != null">
+                #{departmentName,jdbcType=VARCHAR},
+            </if>
+            <if test="totalAmount != null">
+                #{totalAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="declineReason != null">
+                #{declineReason,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="printTimes != null">
+                #{printTimes,jdbcType=INTEGER},
+            </if>
+            <if test="created != null">
+                #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdBy != null">
+                #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdated != null">
+                #{lastUpdated,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdatedBy != null">
+                #{lastUpdatedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modificationNumber != null">
+                #{modificationNumber,jdbcType=INTEGER},
+            </if>
+            <if test="rowId != null">
+                #{rowId,jdbcType=VARCHAR},
+            </if>
+            <if test="parentRowId != null">
+                #{parentRowId,jdbcType=VARCHAR},
+            </if>
+            <if test="ext1 != null">
+                #{ext1,jdbcType=VARCHAR},
+            </if>
+            <if test="ext2 != null">
+                #{ext2,jdbcType=VARCHAR},
+            </if>
+            <if test="ext3 != null">
+                #{ext3,jdbcType=VARCHAR},
+            </if>
+            <if test="ext4 != null">
+                #{ext4,jdbcType=INTEGER},
+            </if>
+            <if test="ext5 != null">
+                #{ext5,jdbcType=INTEGER},
+            </if>
+            <if test="ext6 != null">
+                #{ext6,jdbcType=INTEGER},
+            </if>
+            <if test="ext7 != null">
+                #{ext7,jdbcType=TIMESTAMP},
+            </if>
+            <if test="ext8 != null">
+                #{ext8,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="queryOrgCreditUsed" parameterType="java.lang.Long" resultType="DECIMAL">
+        select (select 0-ifnull(sum(balance_second_settlement + balance_second_settlement_freeze), 0) from cust_account a
+        left join acl_user u on a.manager_id = u.id
+        left join base_organization org on u.org_id = org.id
+        where org.id =  #{orgId}) +
+        (select ifnull(sum(total_amount), 0) from busi_pay_request
+        where type = 2 and status = 'APPROVED' and org_id =  #{orgId}) credit_limit_used
+    </select>
+
+    <select id="queryPayRequst" resultMap="PayOrgMap" parameterType="map">
+    select * from(
+        SELECT q.id AS q_id,q.code,q.created,
+        date_format(q.last_updated,'%Y-%m-%d %H:%i:%s') as last_updated,
+        q.org_id,q.buyer_id,q.buyer_name,q.department_id,q.requester_id,q.requester_name,q.total_amount,q.status,q.print_times,
+        o.id o_id,o.name o_name,o.credit_limit,
+        (select
+        (select 0-ifnull(sum(balance_second_settlement + balance_second_settlement_freeze), 0) from cust_account a
+        left join acl_user u on a.manager_id = u.id
+        left join base_organization org on u.org_id = org.id
+        where org.id =  o.id) +
+        (select ifnull(sum(total_amount), 0) from busi_pay_request
+        where type = 2 and status = 'APPROVED' and org_id =  o.id) approved_freeze_amount ) credit_limit_used,u.id u_id
+        FROM busi_pay_request q,base_organization o,acl_user u
+        WHERE q.org_id = o.id AND u.id = q.requester_id  AND q.type='2'
+        <if test="requestId != null and requestId!=''">
+            and q.id = #{requestId,jdbcType=BIGINT}
+        </if>
+        <if test="userIds != null ">
+         	AND u.id in
+         	<foreach item="userId" index="index" collection="userIds" open="(" separator="," close=")">
+             	#{userId}
+         	</foreach>
+     	</if>
+        <if test="status != null">
+            AND (q.status = #{status,jdbcType=VARCHAR}
+            	<if test="status=='APPROVED' and showPrinted == 1">
+	            	or q.status = 'APPLYPRINTED'
+	            </if>
+            )
+            <if test="status=='APPROVED'||status=='APPLYPRINTED'">
+            	and exists (select 1 from acl_user x,acl_user_org y
+				where q.requester_id =x.id 
+				and x.org_id = y.org_id
+				and y.user_id = #{userId,jdbcType=BIGINT}
+				)
+            </if>
+        </if>
+        <if test="dateStart != null and dateEnd != null ">
+            AND q.created between #{dateStart,jdbcType=TIMESTAMP} AND #{dateEnd,jdbcType=TIMESTAMP}
+        </if>
+        <if test="requesterName != null and requesterName != ''">
+            AND q.requester_name = #{requesterName,jdbcType=VARCHAR}
+        </if>
+        ) x
+        <choose>
+        	<when test="orderBy != null and orderBy != ''">
+        		order by ${orderBy}
+	           <if test="order != null and order != '' ">
+		           ${order}
+		        </if>
+        	</when>
+        	<otherwise>
+        		order by q_id desc
+        	</otherwise>
+        </choose>
+        
+        limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+    </select>
+	<!-- 通过当前用户查询对应的服务中心 -->
+	<select id="queryForOrg" resultMap="PayOrgMap" parameterType="map">
+		SELECT base.credit_limit 
+		FROM base_organization base 
+		INNER JOIN acl_user u ON u.id = #{userId,jdbcType=VARCHAR} 
+		WHERE u.org_id = base.id
+	</select>
+	
+    <select id="payRequstCount" resultType="java.lang.Integer" parameterType="map">
+        select count(q.id ) from busi_pay_request q,base_organization o,acl_user u
+        where q.org_id = o.id and u.id = q.requester_id and q.type='2'
+        <if test="userIds != null ">
+         and u.id in
+         <foreach item="userId" index="index" collection="userIds" open="(" separator="," close=")">
+             #{userId}
+         </foreach>
+     	</if>
+        <if test="status != null">
+            and (q.status in (#{status,jdbcType=VARCHAR},#{statusTwo,jdbcType=VARCHAR})
+            	<if test="status=='APPROVED' and showPrinted == 1">
+	            	or q.status = 'APPLYPRINTED'
+	            </if>
+            )
+            <if test="status=='APPROVED'||status=='APPLYPRINTED'">
+            	and exists (select 1 from acl_user x,acl_user_org y
+				where q.requester_id =x.id 
+				and x.org_id = y.org_id
+				and y.user_id = #{userId,jdbcType=BIGINT}
+				)
+            </if>
+        </if>
+        <if test="dateStart != null and dateEnd != null ">
+            and q.created between #{dateStart,jdbcType=TIMESTAMP} and #{dateEnd,jdbcType=TIMESTAMP}
+        </if>
+        <if test="requesterName != null and requesterName != ''">
+            and q.requester_name = #{requesterName,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <select id="queryByBuyerId" resultMap="requestItemMap">
+  	SELECT q.id q_id,q.code,q.requester_id ,q.requester_name,q.buyer_id,
+    q.org_id,q.org_name,q.created,q.print_times,q.status,q.print_name,q.last_print_date,
+    item.id itemid,item.pay_code,
+	item.receiver_name,item.receiver_bank_name,
+	item.receiver_bank_city,item.receiver_branch_bank_name,item.pay_amount,
+	item.receiver_account_code,item.receiver_bank_code 
+	FROM busi_pay_request q
+	INNER JOIN busi_pay_request_items item ON item.request_id = q.id
+	WHERE q.id = #{requestId,jdbcType=BIGINT} AND q.status = #{status,jdbcType=VARCHAR} 
+	<if test="type !=null">
+		AND q.type= #{type,jdbcType=VARCHAR}
+	</if>
+  </select>
+
+    <select id="queryByRequestId" resultMap="BusiPayRequestMap">
+  	 SELECT t.*,(SELECT COUNT(t1.id) FROM cust_account t1 WHERE t1.parent_id = t.buyer_id) AS departmentCount 
+  	 FROM busi_pay_request t WHERE t.id=#{id,jdbcType=BIGINT}
+  </select>
+
+    <update id="updateById" parameterType="com.prcsteel.platform.order.model.model.BusiPayRequest">
+        update busi_pay_request
+        <if test="status != null">
+            set status = #{status,jdbcType=VARCHAR}
+        </if>
+        <if test="declineReason != null">
+            ,decline_reason = #{declineReason,jdbcType=VARCHAR}
+        </if>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <insert id="addOrderAuditTrail" parameterType="com.prcsteel.platform.order.model.model.OrderAuditTrail">
+    insert into busi_consign_order_audit_trail ( order_id, set_to_status, 
+      operator_id, operator_name, created, 
+      created_by, last_updated, last_updated_by, 
+      modification_number, row_id, parent_row_id, 
+      ext1, ext2, ext3, ext4, 
+      ext5, ext6, ext7, 
+      ext8, note)
+    values (#{orderId,jdbcType=BIGINT}, #{setToStatus,jdbcType=VARCHAR}, 
+      #{operatorId,jdbcType=BIGINT}, #{operatorName,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, 
+      #{createdBy,jdbcType=VARCHAR}, #{lastUpdated,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}, 
+      #{modificationNumber,jdbcType=INTEGER}, #{rowId,jdbcType=VARCHAR}, #{parentRowId,jdbcType=VARCHAR}, 
+      #{ext1,jdbcType=VARCHAR}, #{ext2,jdbcType=VARCHAR}, #{ext3,jdbcType=VARCHAR}, #{ext4,jdbcType=INTEGER}, 
+      #{ext5,jdbcType=INTEGER}, #{ext6,jdbcType=INTEGER}, #{ext7,jdbcType=TIMESTAMP}, 
+      #{ext8,jdbcType=BIGINT}, #{note,jdbcType=VARCHAR})
+  </insert>
+    <resultMap type="com.prcsteel.platform.order.model.dto.PayAccountDto" id="PayAccountMap">
+        <result column="balance" property="balance" jdbcType="DECIMAL"/>
+        <result column="balance_second_settlement" property="balanceSecondSettlement" jdbcType="DECIMAL"/>
+    </resultMap>
+    <select id="queryBalance" resultMap="PayAccountMap">
+  	select c.balance,c.balance_second_settlement  
+  	from cust_account c where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <!-- 通过客户ID查询当前服务中心额度 -->
+  <select id="queryCreditLimit" resultMap="OrgMap">
+  	SELECT o.id,o.credit_limit,o.credit_limit_used 
+	FROM base_organization o,cust_account c
+	INNER JOIN acl_user u ON c.manager_id = u.id
+	WHERE u.org_id = o.id AND c.id= #{acountId,jdbcType=BIGINT}
+  </select>
+  
+</mapper>

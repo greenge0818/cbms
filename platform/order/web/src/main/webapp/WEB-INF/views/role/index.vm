@@ -1,0 +1,87 @@
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="#">系统管理</a>
+        </li>
+
+        <li class="active">角色管理</li>
+    </ul><!-- /.breadcrumb -->
+
+        #parse("layout/topbtn.vm")<!-- /.nav-search -->
+</div>
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="pull-left">
+                <button id="btnAdd" class="btn btn-primary" style="display: none" title="添加">
+                    <i class="ace-icon glyphicon glyphicon-plus align-top bigger-125"></i>
+                    添加
+                </button>
+            </div>
+
+            <div class="row">
+                <div class="zTreeDemoBackground left">
+                    <ul id="roleTree" class="ztree"></ul>
+                </div>
+            </div>
+            <ul id="log" class="log"></ul></p>
+            <script type="text/javascript">
+                var $assets = "dist";//this will be used in fuelux.tree-sampledata.js
+            </script>
+
+            <!-- PAGE CONTENT ENDS -->
+
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+</div><!-- /.page-content -->
+
+<div id="addNewRoleWin" class='well' style='margin-top:25px;display: none;'>
+    <div style='margin-top:25px;width: 400px;'>
+        <form id='form-horizontal' class='form-horizontal' role='form'>
+            <div class='form-group'><label class='col-sm-3 control-label no-padding-right' for='txtNewPwd2'>角色名称</label>
+                <div class='col-sm-9'><input must='1' type='text' name="name" must='1' placeholder='请输入角色名称' class='col-xs-10 col-sm-5'/></div>
+            </div>
+            <div class='form-group'><label class='col-sm-3 control-label no-padding-right' for='txtNewPwd2'>访问级别</label>
+                <div class='col-sm-9'>
+                    <select name="type">
+                        <option value="0">仅自己</option>
+                        <option value="1">所有</option>
+                        <option value="2">同级+下线</option>
+                        <option value="3">下级</option>
+                    </select>
+                </div>
+
+            </div>
+			<div class='form-group'><label class='col-sm-3 control-label no-padding-right' for='txtNewPwd2'>角色类型</label>
+                <div class='col-sm-9'>
+                    <select name="roleType">
+                        #foreach( $elem in $roleTypes)
+                            <option value="$elem">$elem.name</option>
+                        #{end}
+                    </select>
+                </div>
+
+            </div>
+            <input type="hidden" name="id" />
+            <input type="hidden" name="parentId" />
+            <input type="hidden" name="code" />
+            <div class="modal-footer"><button id="btnSaveRole" data-bb-handler="success" type="button" class="btn btn-sm btn-primary"><i class="ace-icon fa fa-check"></i> 保存</button>
+                <button id="btnClose" data-bb-handler="button" type="button" class="btn btn-sm">取消</button></div>
+        </form>
+    </div>
+</div>
+
+
+
+<script src="$link.getContextPath()/theme/default/js/jquery.ztree.core.min.js"></script>
+<script type="text/javascript" src="$link.getContextPath()/theme/default/js/jquery.ztree.excheck.js"></script>
+<script type="text/javascript" src="$link.getContextPath()/theme/default/js/jquery.ztree.exedit.min.js"></script>
+<!-- ace scripts -->
+<script src="$link.getContextPath()/js/views/role/index.js"></script>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:amq="http://activemq.apache.org/schema/core"
+       xmlns:jms="http://www.springframework.org/schema/jms"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:websocket="http://www.springframework.org/schema/websocket"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd
+        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
+        http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-2.5.xsd">
+
+    <!--<websocket:message-broker application-destination-prefix="/web">
+        <websocket:stomp-endpoint path="/messaging">
+            <websocket:sockjs/>
+        </websocket:stomp-endpoint>
+        <websocket:stomp-broker-relay  prefix="/topic,/queue" />
+        <websocket:broker-channel>
+            <websocket:executor  core-pool-size="4" max-pool-size="10" />
+        </websocket:broker-channel>
+    </websocket:message-broker>-->
+
+    <!--JMS broker, sample for CLUSTER URL: 'failover:(tcp://12.13.14.100:61616,tcp://12.13.14.101:61616)?randomize=true'-->
+    <amq:connectionFactory id="amqConnectionFactory" brokerURL="${jmsUrl}"/>
+    
+    <!-- ConnectionFactory Definition -->
+    <bean id="connectionFactory" class="org.springframework.jms.connection.CachingConnectionFactory">
+        <constructor-arg ref="amqConnectionFactory"/>
+    </bean>
+    <!-- JMS channel -->
+    <bean id="activemq" class="org.apache.activemq.camel.component.ActiveMQComponent">
+        <property name="connectionFactory" ref="amqConnectionFactory"/>
+    </bean>
+    <!-- JmsTemplate Definition -->
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="connectionFactory"/>
+    </bean>
+    <!-- send repeatedly permitting  -->
+    <bean id="djmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name= "sessionAcknowledgeMode" value="3"/>
+    </bean>
+
+    <!-- Camel context -->
+    <camelContext id="camelContext" xmlns="http://camel.apache.org/schema/spring">
+    </camelContext>
+
+    <!-- 监听ASSMQ推送的询价单推送 -->
+    <bean id="assInquiryLitener" class="com.prcsteel.platform.smartmatch.web.mq.AssInquiryLitener">
+    </bean>
+    <jms:listener-container
+            container-type="default"
+            connection-factory="connectionFactory"
+            acknowledge="auto">
+        <jms:listener destination="${jms.assInquiry}" ref="assInquiryLitener" method="onMessage" />
+    </jms:listener-container>
+
+    <!-- 监听ASSMQ推送的询价单推送 -->
+    <bean id="resourceChangeForMaketService" class="com.prcsteel.platform.smartmatch.service.impl.ResourceChangeForMaketServiceImpl">
+        <property name="jmsTemplate" ref="djmsTemplate" />
+        <property name="queue" value="${jms.resourceChangeForMaket}" />
+    </bean>
+
+    <!--找货更新超市需求单状态-->
+    <bean id="requirementStatusService" class="com.prcsteel.platform.smartmatch.service.impl.RequirementStatusServiceImpl" >
+        <property name="jmsTemplate" ref="djmsTemplate"/>
+        <property name="queue" value="${jms.updateRequirementStatus}"/>
+    </bean>
+
+</beans>

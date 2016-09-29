@@ -1,0 +1,1400 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta charset="utf-8" />
+		<title>新增采购</title>
+
+		<meta name="description" content="Static &amp; Dynamic Tables" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+		<!-- bootstrap & fontawesome -->
+		<link rel="stylesheet" href="../../theme/default/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../../theme/default/font-awesome/4.2.0/css/font-awesome.min.css" />
+		<!-- page specific plugin styles -->
+
+		<!-- text fonts -->
+		<link rel="stylesheet" href="../../theme/default/fonts/fonts.googleapis.com.css" />
+
+		<!-- ace styles -->
+		<link rel="stylesheet" href="../../theme/default/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+		<link rel="stylesheet" href="../../css/style.css" />
+
+		<!--[if lte IE 9]>
+		<link rel="stylesheet" href="../../theme/default/css/ace-part2.min.css" class="ace-main-stylesheet" />
+		<![endif]-->
+
+		<!--[if lte IE 9]>
+		<link rel="stylesheet" href="../../theme/default/css/ace-ie.min.css" />
+		<![endif]-->
+
+		<!-- inline styles related to this page -->
+
+		<!-- ace settings handler -->
+		<script src="../../theme/default/js/ace-extra.min.js"></script>
+
+		<!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+		<!--[if lte IE 8]>
+		<script src="../../theme/default/js/html5shiv.min.js"></script>
+		<script src="../../theme/default/js/respond.min.js"></script>
+		<![endif]-->
+	</head>
+
+	<body class="no-skin">
+		<div id="navbar" class="navbar navbar-default">
+			<script type="text/javascript">
+				try {
+					ace.settings.check('navbar', 'fixed')
+				} catch(e) {
+				}
+			</script>
+
+			<div class="navbar-container" id="navbar-container">
+				<button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
+					<span class="sr-only">Toggle sidebar</span>
+
+					<span class="icon-bar"></span>
+
+					<span class="icon-bar"></span>
+
+					<span class="icon-bar"></span>
+				</button>
+
+				<div class="navbar-header pull-left">
+					<a href="index.html" class="navbar-brand"> <small> <i class="fa fa-leaf"></i> prcsteel cbms </small> </a>
+				</div>
+
+				<div class="navbar-buttons navbar-header pull-right" role="navigation">
+					<ul class="nav ace-nav">
+						<li class="grey">
+							<a data-toggle="dropdown" class="dropdown-toggle" href="#"> <i class="ace-icon fa fa-tasks"></i> <span class="badge badge-grey">4</span> </a>
+
+							<ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
+								<li class="dropdown-header">
+									<i class="ace-icon fa fa-check"></i>
+									4 Tasks to complete
+								</li>
+
+								<li class="dropdown-content">
+									<ul class="dropdown-menu dropdown-navbar">
+										<li>
+											<a href="#">
+											<div class="clearfix">
+												<span class="pull-left">Software Update</span>
+												<span class="pull-right">65%</span>
+											</div>
+											<div class="progress progress-mini">
+												<div style="width:65%" class="progress-bar"></div>
+											</div> </a>
+										</li>
+
+										<li>
+											<a href="#">
+											<div class="clearfix">
+												<span class="pull-left">Hardware Upgrade</span>
+												<span class="pull-right">35%</span>
+											</div>
+											<div class="progress progress-mini">
+												<div style="width:35%" class="progress-bar progress-bar-danger"></div>
+											</div> </a>
+										</li>
+
+										<li>
+											<a href="#">
+											<div class="clearfix">
+												<span class="pull-left">Unit Testing</span>
+												<span class="pull-right">15%</span>
+											</div>
+											<div class="progress progress-mini">
+												<div style="width:15%" class="progress-bar progress-bar-warning"></div>
+											</div> </a>
+										</li>
+
+										<li>
+											<a href="#">
+											<div class="clearfix">
+												<span class="pull-left">Bug Fixes</span>
+												<span class="pull-right">90%</span>
+											</div>
+											<div class="progress progress-mini progress-striped active">
+												<div style="width:90%" class="progress-bar progress-bar-success"></div>
+											</div> </a>
+										</li>
+									</ul>
+								</li>
+
+								<li class="dropdown-footer">
+									<a href="#"> See tasks with details <i class="ace-icon fa fa-arrow-right"></i> </a>
+								</li>
+							</ul>
+						</li>
+
+						<li class="purple">
+							<a data-toggle="dropdown" class="dropdown-toggle" href="#"> <i class="ace-icon fa fa-bell icon-animated-bell"></i> <span class="badge badge-important">8</span> </a>
+
+							<ul class="dropdown-menu-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close">
+								<li class="dropdown-header">
+									<i class="ace-icon fa fa-exclamation-triangle"></i>
+									8 Notifications
+								</li>
+
+								<li class="dropdown-content">
+									<ul class="dropdown-menu dropdown-navbar navbar-pink">
+										<li>
+											<a href="#">
+											<div class="clearfix">
+												<span class="pull-left"> <i class="btn btn-xs no-hover btn-pink fa fa-comment"></i> New Comments </span>
+												<span class="pull-right badge badge-info">+12</span>
+											</div> </a>
+										</li>
+
+										<li>
+											<a href="#"> <i class="btn btn-xs btn-primary fa fa-user"></i> Bob just signed up as an editor ... </a>
+										</li>
+
+										<li>
+											<a href="#">
+											<div class="clearfix">
+												<span class="pull-left"> <i class="btn btn-xs no-hover btn-success fa fa-shopping-cart"></i> New Orders </span>
+												<span class="pull-right badge badge-success">+8</span>
+											</div> </a>
+										</li>
+
+										<li>
+											<a href="#">
+											<div class="clearfix">
+												<span class="pull-left"> <i class="btn btn-xs no-hover btn-info fa fa-twitter"></i> Followers </span>
+												<span class="pull-right badge badge-info">+11</span>
+											</div> </a>
+										</li>
+									</ul>
+								</li>
+
+								<li class="dropdown-footer">
+									<a href="#"> See all notifications <i class="ace-icon fa fa-arrow-right"></i> </a>
+								</li>
+							</ul>
+						</li>
+
+						<li class="green">
+							<a data-toggle="dropdown" class="dropdown-toggle" href="#"> <i class="ace-icon fa fa-envelope icon-animated-vertical"></i> <span class="badge badge-success">5</span> </a>
+
+							<ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
+								<li class="dropdown-header">
+									<i class="ace-icon fa fa-envelope-o"></i>
+									5 Messages
+								</li>
+
+								<li class="dropdown-content">
+									<ul class="dropdown-menu dropdown-navbar">
+										<li>
+											<a href="#" class="clearfix"> <img src="../../theme/default/avatars/avatar.png" class="msg-photo" alt="Alex's Avatar" /> <span class="msg-body"> <span class="msg-title"> <span class="blue">Alex:</span> Ciao sociis natoque penatibus et auctor ... </span> <span class="msg-time"> <i class="ace-icon fa fa-clock-o"></i> <span>a moment ago</span> </span> </span> </a>
+										</li>
+
+										<li>
+											<a href="#" class="clearfix"> <img src="../../theme/default/avatars/avatar3.png" class="msg-photo" alt="Susan's Avatar" /> <span class="msg-body"> <span class="msg-title"> <span class="blue">Susan:</span> Vestibulum id ligula porta felis euismod ... </span> <span class="msg-time"> <i class="ace-icon fa fa-clock-o"></i> <span>20 minutes ago</span> </span> </span> </a>
+										</li>
+
+										<li>
+											<a href="#" class="clearfix"> <img src="../../theme/default/avatars/avatar4.png" class="msg-photo" alt="Bob's Avatar" /> <span class="msg-body"> <span class="msg-title"> <span class="blue">Bob:</span> Nullam quis risus eget urna mollis ornare ... </span> <span class="msg-time"> <i class="ace-icon fa fa-clock-o"></i> <span>3:15 pm</span> </span> </span> </a>
+										</li>
+
+										<li>
+											<a href="#" class="clearfix"> <img src="../../theme/default/avatars/avatar2.png" class="msg-photo" alt="Kate's Avatar" /> <span class="msg-body"> <span class="msg-title"> <span class="blue">Kate:</span> Ciao sociis natoque eget urna mollis ornare ... </span> <span class="msg-time"> <i class="ace-icon fa fa-clock-o"></i> <span>1:33 pm</span> </span> </span> </a>
+										</li>
+
+										<li>
+											<a href="#" class="clearfix"> <img src="../../theme/default/avatars/avatar5.png" class="msg-photo" alt="Fred's Avatar" /> <span class="msg-body"> <span class="msg-title"> <span class="blue">Fred:</span> Vestibulum id penatibus et auctor  ... </span> <span class="msg-time"> <i class="ace-icon fa fa-clock-o"></i> <span>10:09 am</span> </span> </span> </a>
+										</li>
+									</ul>
+								</li>
+
+								<li class="dropdown-footer">
+									<a href="inbox.html"> See all messages <i class="ace-icon fa fa-arrow-right"></i> </a>
+								</li>
+							</ul>
+						</li>
+
+						<li class="light-blue">
+							<a data-toggle="dropdown" href="#" class="dropdown-toggle"> <img class="nav-user-photo" src="../../theme/default/avatars/user.jpg" alt="Jason's Photo" /> <span class="user-info"> <small>Welcome,</small> Jason </span> <i class="ace-icon fa fa-caret-down"></i> </a>
+
+							<ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+								<li>
+									<a href="#"> <i class="ace-icon fa fa-cog"></i> Settings </a>
+								</li>
+
+								<li>
+									<a href="profile.html"> <i class="ace-icon fa fa-user"></i> Profile </a>
+								</li>
+
+								<li class="divider"></li>
+
+								<li>
+									<a href="#"> <i class="ace-icon fa fa-power-off"></i> Logout </a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div><!-- /.navbar-container -->
+		</div>
+
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try {
+					ace.settings.check('main-container', 'fixed')
+				} catch(e) {
+				}
+			</script>
+
+			<div id="sidebar" class="sidebar                  responsive">
+				<script type="text/javascript">
+					try {
+						ace.settings.check('sidebar', 'fixed')
+					} catch(e) {
+					}
+				</script>
+
+				<ul class="nav nav-list">
+					<li class="active">
+						<a href="index.html"> <i class="menu-icon fa fa-tachometer"></i> <span class="menu-text"> 控制台 </span> </a>
+
+						<b class="arrow"></b>
+					</li>
+
+					<li class="">
+						<a href="#" class="dropdown-toggle"> <i class="menu-icon fa fa-pencil-square-o"></i> <span class="menu-text"> 系统管理 </span> <b class="arrow fa fa-angle-down"></b> </a>
+
+						<b class="arrow"></b>
+
+						<ul class="submenu">
+							<li class="">
+								<a href="sysuser-list.html"> <i class="menu-icon fa fa-caret-right"></i> 管理服务中心 </a>
+
+								<b class="arrow"></b>
+							</li>
+
+							<li class="">
+								<a href="sysuser-list.html"> <i class="menu-icon fa fa-caret-right"></i> 服务中心人员 </a>
+
+								<b class="arrow"></b>
+							</li>
+
+							<li class="">
+								<a href="sysuser-list.html"> <i class="menu-icon fa fa-caret-right"></i> 提成比例设置 </a>
+
+								<b class="arrow"></b>
+							</li>
+							<li class="">
+								<a href="sysuser-list.html"> <i class="menu-icon fa fa-caret-right"></i> 返利设置 </a>
+
+								<b class="arrow"></b>
+							</li>
+							<li class="">
+								<a href="sysuser-list.html"> <i class="menu-icon fa fa-caret-right"></i> 系统日志 </a>
+
+								<b class="arrow"></b>
+							</li>
+							<li class="">
+								<a href="role.html"> <i class="menu-icon fa fa-caret-right"></i> 设置权限 </a>
+
+								<b class="arrow"></b>
+							</li>
+						</ul>
+					</li>
+
+					<li class="">
+						<a href="#" class="dropdown-toggle"> <i class="menu-icon fa fa-pencil-square-o"></i> <span class="menu-text"> 客户管理 </span> <b class="arrow fa fa-angle-down"></b> </a>
+
+						<b class="arrow"></b>
+						<ul class="submenu">
+							<li class="">
+								<a href="vendorlist.html"> <i class="menu-icon fa fa-caret-right"></i> 我的买家客户 </a>
+								<b class="arrow"></b>
+							</li>
+							<li class="">
+								<a href="vendorlist.html"> <i class="menu-icon fa fa-caret-right"></i> 我的卖家客户 </a>
+								<b class="arrow"></b>
+							</li>
+							<li class="">
+								<a href="sysuser-list.html"> <i class="menu-icon fa fa-caret-right"></i> 划转买家用户 </a>
+								<b class="arrow"></b>
+							</li>
+							<li class="">
+								<a href="sysuser-list.html"> <i class="menu-icon fa fa-caret-right"></i> 划转卖家客户 </a>
+								<b class="arrow"></b>
+							</li>
+							<li class="">
+								<a href="sysuser-list.html"> <i class="menu-icon fa fa-caret-right"></i> 卖家客户分组查询 </a>
+								<b class="arrow"></b>
+							</li>
+						</ul>
+					</li>
+
+					<li class="">
+						<a href="#" class="dropdown-toggle"> <i class="menu-icon fa fa-pencil-square-o"></i> <span class="menu-text"> 订单管理 </span> <b class="arrow fa fa-angle-down"></b> </a>
+
+						<b class="arrow"></b>
+
+						<ul class="submenu">
+							<li class="">
+								<a href="sysuser-list.html"> <i class="menu-icon fa fa-caret-right"></i> 配货单 </a>
+
+								<b class="arrow"></b>
+							</li>
+
+							<li class="">
+								<a href="sysuser-list.html"> <i class="menu-icon fa fa-caret-right"></i> 物流单 </a>
+
+								<b class="arrow"></b>
+							</li>
+
+						</ul>
+					</li>
+
+					<li class="">
+						<a href="widgets.html"> <i class="menu-icon fa fa-list-alt"></i> <span class="menu-text"> 财务中心 </span> </a>
+
+						<b class="arrow"></b>
+					</li>
+				</ul><!-- /.nav-list -->
+
+				<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+					<i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+				</div>
+
+				<script type="text/javascript">
+					try {
+						ace.settings.check('sidebar', 'collapsed')
+					} catch(e) {
+					}
+				</script>
+			</div>
+
+			<div class="main-content">
+				<div class="main-content-inner">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try {
+								ace.settings.check('breadcrumbs', 'fixed')
+							} catch(e) {
+							}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="ace-icon fa fa-home home-icon"></i>
+								<a href="#">进项票管理</a>
+							</li>
+
+							<li class="active">
+								待收票
+							</li>
+						</ul><!-- /.breadcrumb -->
+
+						#parse("layout/topbtn.vm")<!-- /.nav-search -->
+					</div>
+
+					<div class="page-content">
+
+						<div class="input-group">
+							<form class="form-inline find-goods-search">
+								<label>采购单号：CG2015050001</label>
+								<label>生成时间：20151105&nbsp;11：20</label>
+								<label>服务中心：
+									<select>
+										<option>杭州服务中心</option>
+										<option>杭州服务中心</option>
+									</select> </label>
+								<label>交易员：
+									<input type="text" value="" name="" class="" />
+								</label>
+								<label>联系电话：
+									<input type="text" value="" name="" class="" />
+								</label>
+								<label>买家联系人：
+									<input type="text" value="" name="" class="" />
+								</label>
+								<label style="width:480px">公司名称：
+									<input style="width:391px" type="text" value="" name="" class="" />
+								</label>
+								<label> 　交货地：
+									<input type="text" value="" name="" class="" />
+								</label>
+
+								采购地： <label class="pos-rel">
+									<input type="checkbox" name="area-check" class="ace">
+									<span class="lbl"></span>上海 </label><label class="pos-rel">
+									<input type="checkbox" name="area-check" class="ace">
+									<span class="lbl"></span>杭州 </label><label class="pos-rel">
+									<input type="checkbox" name="area-check" class="ace">
+									<span class="lbl"></span>无锡 </label><label class="pos-rel">
+									<input type="checkbox" name="area-check" class="ace">
+									<span class="lbl"></span>上海 </label>
+
+								<!--服务中心S-->
+								<div class="sevCenter f-clrfix" >
+									<div class="form-item">
+										<div class="border-style">
+											<div class="item-text">
+												<div class="item-text-wrap">
+													<label style="color: rgb(153, 153, 153);" class="f-label">可多选</label>
+													<input type="text" value="" class="f-text inputspec1" id="inputspec1">
+												</div>
+												<span class="icon down-arr-icon"></span>
+											</div>
+										</div>
+										<div id="showLayer_spec1" class="show-layer extent-bar textures-bar standard-bar none" >
+											<div type="specDetail" class="textures-con clearfix" style="display: block;">
+												<div class="textures-con-bar-list bder-b-dashed">
+													<span><a href="javascript:;" class="">0.80</a></span><span><a href="javascript:;">0.85</a></span><span><a href="javascript:;">0.90</a></span><span><a href="javascript:;">0.95</a></span><span><a href="javascript:;">1.00</a></span><span><a href="javascript:;">1.05</a></span>
+												</div>
+												<div class="textures-con-bar-list bder-b-dashed">
+													<span><a href="javascript:;" class="">1.10</a></span><span><a href="javascript:;" class="">1.15</a></span><span><a href="javascript:;" class="">1.20</a></span><span><a href="javascript:;" class="">1.25</a></span><span><a href="javascript:;" class="">1.30</a></span><span><a href="javascript:;" class="">1.35</a></span>
+												</div>
+												<div class="textures-con-bar-list bder-b-dashed">
+													<span><a href="javascript:;">1.40</a></span><span><a href="javascript:;">1.50</a></span><span><a href="javascript:;">1.55</a></span><span><a href="javascript:;">1.60</a></span><span><a href="javascript:;">1.65</a></span><span><a href="javascript:;">1.80</a></span>
+												</div>
+												<div class="f-clr-l"></div>
+											</div>
+
+											<div class="btn-bar t-l">
+												<label class="pos-rel  pull-left">
+													<input type="checkbox" id="allCheck" name="" class="ace">
+													<span class="lbl"></span> <span class="s-gray">其他：</span></label>
+												<input type="text" id="from_spec2" value="" class="c-text pull-left range-ipt">
+												<button class="clear-btn" value="">
+													清除
+												</button>
+												<button class="confirm-btn" value="">
+													确认
+												</button>
+											</div>
+
+										</div>
+									</div>
+								</div>
+								<!--服务中心E-->
+
+							</form>
+						</div>
+						<div class="">
+
+							<!--筛选规则 S-->
+							<div class="m-s">
+								<div id="m-search" class="m-search m-search-bar clearfix" style="">
+									<div class="product-ipt">
+										<span class="in-block f-fl">品名：</span>
+										<div class="form-item">
+											<label style="color: rgb(153, 153, 153);" class="f-label">输入首字母查询</label>
+											<input type="text" autocomplete="off" value="" class="f-text nsortName" id="nsortName">
+											<span class="icon down-arr-icon"></span>
+											<!--品名首字母匹配  S-->
+											<div class="product-complete none" id="proComp" style="display: none;">
+												<ul class="product-complete-ul">
+													<li nsortid="2410" sortid="2394">
+														<a href="javascript:;">中厚板</a>
+													</li>
+													<li nsortid="2652" sortid="2394">
+														<a href="javascript:;">Z向板</a>
+													</li>
+													<li nsortid="3013" sortid="2397">
+														<a href="javascript:;">直缝管</a>
+													</li>
+													<li nsortid="2599" sortid="2397">
+														<a href="javascript:;">支架管</a>
+													</li>
+													<li nsortid="2494" sortid="2397">
+														<a href="javascript:;">轴承管</a>
+													</li>
+													<li nsortid="2458" sortid="2398">
+														<a href="javascript:;">轴承钢</a>
+													</li>
+												</ul>
+											</div>
+											<!--品名首字母匹配  E-->
+											<!--品名数据层  S-->
+											<div id="showLayer_nsortName" class="show-layer product-bar none" style="display: none;">
+												<div class="product-t">
+													<ul class="product-t-ul">
+														<li class="product-t-li hover">
+															<a sortid="2394" href="javascript:;">板材</a><em class="icon down-redArr-icon"></em>
+														</li>
+														<li class="product-t-li">
+															<a sortid="2403" href="javascript:;">卷材</a><em class="icon down-redArr-icon"></em>
+														</li>
+														<li class="product-t-li">
+															<a sortid="2396" href="javascript:;">建材</a><em class="icon down-redArr-icon"></em>
+														</li>
+														<li class="product-t-li">
+															<a sortid="2395" href="javascript:;">型材</a><em class="icon down-redArr-icon"></em>
+														</li>
+														<li class="product-t-li">
+															<a sortid="2397" href="javascript:;">管材</a><em class="icon down-redArr-icon"></em>
+														</li>
+														<li class="product-t-li">
+															<a sortid="2398" href="javascript:;">优钢</a><em class="icon down-redArr-icon"></em>
+														</li>
+													</ul>
+												</div>
+												<div name="nsort">
+													<div class="product-con clearfix bder-b-dashed">
+														<div class="product-con-sort f-fl">
+															<span class="bold">热轧:</span>
+														</div>
+														<div class="product-con-bar f-fl">
+															<div class="product-con-bar-list">
+																<span><a href="javascript:;" nsortid="2406" class="hover">热轧开平板</a></span><span><a href="javascript:;" nsortid="2407">热轧正平板</a></span><span><a href="javascript:;" nsortid="2410">中厚板</a></span><span><a href="javascript:;" nsortid="3064">厚板</a></span><span><a href="javascript:;" nsortid="2411">低合金板</a></span>
+															</div>
+															<div class="product-con-bar-list">
+																<span><a href="javascript:;" nsortid="2452">花纹板</a></span><span><a href="javascript:;" nsortid="2412">大梁板</a></span><span><a href="javascript:;" nsortid="2466">船板</a></span><span><a href="javascript:;" nsortid="2413">锅炉板</a></span><span><a href="javascript:;" nsortid="2414">容器板</a></span>
+															</div>
+															<div class="product-con-bar-list">
+																<span><a href="javascript:;" nsortid="2441">桥梁板</a></span><span><a href="javascript:;" nsortid="2443">翼缘板</a></span><span><a href="javascript:;" nsortid="2469">弹簧板</a></span><span><a href="javascript:;" nsortid="2513">耐磨钢板</a></span><span><a href="javascript:;" nsortid="2465">硅钢</a></span>
+															</div>
+															<div class="product-con-bar-list">
+																<span><a href="javascript:;" nsortid="2467">酸洗板</a></span><span><a href="javascript:;" nsortid="3061">合金板</a></span><span><a href="javascript:;" nsortid="2641">高强度板</a></span><span><a href="javascript:;" nsortid="2542">搪瓷板</a></span><span><a href="javascript:;" nsortid="2597">合结板</a></span>
+															</div>
+															<div class="product-con-bar-list">
+																<span><a href="javascript:;" nsortid="2590">热轧盒板</a></span><span><a href="javascript:;" nsortid="2468">耐候板</a></span><span><a href="javascript:;" nsortid="2471">钢瓶板</a></span><span><a href="javascript:;" nsortid="2453">碳板</a></span><span><a href="javascript:;" nsortid="2598">锰板</a></span>
+															</div>
+															<div class="product-con-bar-list">
+																<span><a href="javascript:;" nsortid="2404">耐腐蚀钢板</a></span><span><a href="javascript:;" nsortid="2470">集装箱板</a></span><span><a href="javascript:;" nsortid="2545">模具板</a></span><span><a href="javascript:;" nsortid="2582">管线钢</a></span><span><a href="javascript:;" nsortid="2587">高建钢</a></span>
+															</div>
+															<div class="product-con-bar-list">
+																<span><a href="javascript:;" nsortid="2632">无磁钢</a></span><span><a href="javascript:;" nsortid="2988">临氢钢板</a></span><span><a href="javascript:;" nsortid="2652">Z向板</a></span>
+															</div>
+														</div>
+													</div>
+													<div class="product-con clearfix bder-b-dashed">
+														<div class="product-con-sort f-fl">
+															<span class="bold">冷轧:</span>
+														</div>
+														<div class="product-con-bar f-fl">
+															<div class="product-con-bar-list">
+																<span><a href="javascript:;" nsortid="2416">冷轧平板</a></span><span><a href="javascript:;" nsortid="2418">冷轧深冲板</a></span><span><a href="javascript:;" nsortid="2577">冷轧盒板</a></span>
+															</div>
+														</div>
+													</div>
+													<div class="product-con clearfix bder-b-dashed">
+														<div class="product-con-sort f-fl">
+															<span class="bold">涂镀:</span>
+														</div>
+														<div class="product-con-bar f-fl">
+															<div class="product-con-bar-list">
+																<span><a href="javascript:;" nsortid="2560">热镀锌板</a></span><span><a href="javascript:;" nsortid="2868">彩涂板</a></span><span><a href="javascript:;" nsortid="2555">镀锡板</a></span><span><a href="javascript:;" nsortid="2757">冷基镀锌板</a></span><span><a href="javascript:;" nsortid="2557">镀铝锌板</a></span>
+															</div>
+															<div class="product-con-bar-list">
+																<span><a href="javascript:;" nsortid="2559">电镀锌板</a></span>
+															</div>
+														</div>
+													</div>
+													<div class="product-con clearfix bder-b-dashed">
+														<div class="product-con-sort f-fl">
+															<span class="bold">不锈钢:</span>
+														</div>
+														<div class="product-con-bar f-fl">
+															<div class="product-con-bar-list">
+																<span><a href="javascript:;" nsortid="2448">热轧不锈钢板</a></span><span><a href="javascript:;" nsortid="3076">冷轧不锈钢板</a></span>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div name="nsort" style="display: none;">
+													<div class="product-con clearfix bder-b-dashed">
+														<div class="product-con-sort f-fl">
+															<span class="bold">热轧:</span>
+														</div>
+														<div class="product-con-bar f-fl">
+															<div class="product-con-bar-list">
+																<span><a href="javascript:;" nsortid="2405">热轧卷板</a></span><span><a href="javascript:;" nsortid="2603">低合金卷</a></span><span><a href="javascript:;" nsortid="3021">汽车钢</a></span><span><a href="javascript:;" nsortid="2521">花纹卷</a></span><span><a href="javascript:;" nsortid="3022">大梁卷</a></span>
+															</div>
+															<div class="product-con-bar-list">
+																<span><a href="javascript:;" nsortid="2801">船卷</a></span><span><a href="javascript:;" nsortid="2408">热轧带钢</a></span><span><a href="javascript:;" nsortid="2604">酸洗卷</a></span><span><a href="javascript:;" nsortid="2510">电工钢卷</a></span><span><a href="javascript:;" nsortid="3078">容器卷</a></span>
+															</div>
+														</div>
+													</div>
+													<div class="product-con clearfix bder-b-dashed">
+														<div class="product-con-sort f-fl">
+															<span class="bold">冷轧:</span>
+														</div>
+														<div class="product-con-bar f-fl">
+															<div class="product-con-bar-list">
+																<span><a href="javascript:;" nsortid="2415">冷轧卷板</a></span><span><a href="javascript:;" nsortid="2474">冷轧硬卷</a></span><span><a href="javascript:;" nsortid="2417">冷轧深冲卷</a></span><span><a href="javascript:;" nsortid="2419">冷轧带钢</a></span>
+															</div>
+														</div>
+													</div>
+													<div class="product-con clearfix bder-b-dashed">
+														<div class="product-con-sort f-fl">
+															<span class="bold">涂镀:</span>
+														</div>
+														<div class="product-con-bar f-fl">
+															<div class="product-con-bar-list">
+																<span><a href="javascript:;" nsortid="2592">镀锌带钢</a></span><span><a href="javascript:;" nsortid="2647">热镀锌卷</a></span><span><a href="javascript:;" nsortid="2554">彩涂卷</a></span><span><a href="javascript:;" nsortid="3007">镀铝锌卷</a></span><span><a href="javascript:;" nsortid="2748">电镀锌卷</a></span>
+															</div>
+														</div>
+													</div>
+													<div class="product-con clearfix bder-b-dashed">
+														<div class="product-con-sort f-fl">
+															<span class="bold">不锈钢:</span>
+														</div>
+														<div class="product-con-bar f-fl">
+															<div class="product-con-bar-list">
+																<span><a href="javascript:;" nsortid="3075">热轧不锈钢卷</a></span><span><a href="javascript:;" nsortid="3077">冷轧不锈钢卷</a></span><span><a href="javascript:;" nsortid="2608">不锈带钢</a></span>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div name="nsort" style="display: none;">
+													<div class="product-con clearfix bder-b-dashed">
+														<div class="product-con-sort f-fl">
+															<span class="bold">热轧:</span>
+														</div>
+														<div class="product-con-bar f-fl">
+															<div class="product-con-bar-list">
+																<span><a href="javascript:;" nsortid="2427">螺纹钢</a></span><span><a href="javascript:;" nsortid="2522">盘螺</a></span><span><a href="javascript:;" nsortid="2430">高线</a></span><span><a href="javascript:;" nsortid="2429">圆钢</a></span><span><a href="javascript:;" nsortid="2616">硬线</a></span>
+															</div>
+															<div class="product-con-bar-list">
+																<span><a href="javascript:;" nsortid="2550">钢绞线</a></span><span><a href="javascript:;" nsortid="2610">拉丝材</a></span><span><a href="javascript:;" nsortid="2485">优线</a></span><span><a href="javascript:;" nsortid="2799">锚杆钢</a></span>
+															</div>
+														</div>
+													</div>
+													<div class="product-con clearfix bder-b-dashed">
+														<div class="product-con-sort f-fl">
+															<span class="bold">不锈钢:</span>
+														</div>
+														<div class="product-con-bar f-fl">
+															<div class="product-con-bar-list">
+																<span><a href="javascript:;" nsortid="2450">不锈圆钢</a></span><span><a href="javascript:;" nsortid="2497">不锈钢线材</a></span>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div name="nsort" style="display: none;">
+													<div class="product-con clearfix bder-b-dashed">
+														<div class="product-con-sort f-fl">
+															<span class="bold">热轧:</span>
+														</div>
+														<div class="product-con-bar f-fl">
+															<div class="product-con-bar-list">
+																<span><a href="javascript:;" nsortid="2421">槽钢</a></span><span><a href="javascript:;" nsortid="2422">工字钢</a></span><span><a href="javascript:;" nsortid="2475">等边角钢</a></span><span><a href="javascript:;" nsortid="2476">不等边角钢</a></span><span><a href="javascript:;" nsortid="2424">轨道钢</a></span>
+															</div>
+															<div class="product-con-bar-list">
+																<span><a href="javascript:;" nsortid="2425">扁钢</a></span><span><a href="javascript:;" nsortid="2426">方钢</a></span><span><a href="javascript:;" nsortid="2423">H型钢</a></span><span><a href="javascript:;" nsortid="2515">矿工钢</a></span><span><a href="javascript:;" nsortid="2477">异型钢</a></span>
+															</div>
+															<div class="product-con-bar-list">
+																<span><a href="javascript:;" nsortid="2606">弹簧扁钢</a></span><span><a href="javascript:;" nsortid="2575">球扁钢</a></span><span><a href="javascript:;" nsortid="2596">六角钢</a></span>
+															</div>
+														</div>
+													</div>
+													<div class="product-con clearfix bder-b-dashed">
+														<div class="product-con-sort f-fl">
+															<span class="bold">涂镀:</span>
+														</div>
+														<div class="product-con-bar f-fl">
+															<div class="product-con-bar-list">
+																<span><a href="javascript:;" nsortid="2548">镀锌扁钢</a></span><span><a href="javascript:;" nsortid="2536">镀锌角钢</a></span><span><a href="javascript:;" nsortid="2584">镀锌槽钢</a></span><span><a href="javascript:;" nsortid="3073">镀锌工字钢</a></span><span><a href="javascript:;" nsortid="3074">镀锌H型钢</a></span>
+															</div>
+														</div>
+													</div>
+													<div class="product-con clearfix bder-b-dashed">
+														<div class="product-con-sort f-fl">
+															<span class="bold">不锈钢:</span>
+														</div>
+														<div class="product-con-bar f-fl">
+															<div class="product-con-bar-list">
+																<span><a href="javascript:;" nsortid="2454">不锈槽钢</a></span><span><a href="javascript:;" nsortid="2455">不锈角钢</a></span><span><a href="javascript:;" nsortid="2456">不锈扁钢</a></span><span><a href="javascript:;" nsortid="2451">不锈工字钢</a></span>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div name="nsort" style="display: none;">
+													<div class="product-con clearfix bder-b-dashed">
+														<div class="product-con-sort f-fl">
+															<span class="bold">热轧:</span>
+														</div>
+														<div class="product-con-bar f-fl">
+															<div class="product-con-bar-list">
+																<span><a href="javascript:;" nsortid="2434">无缝管</a></span><span><a href="javascript:;" nsortid="2432">焊管</a></span><span><a href="javascript:;" nsortid="2438">螺旋管</a></span><span><a href="javascript:;" nsortid="2437">锅炉管</a></span><span><a href="javascript:;" nsortid="2487">流体管</a></span>
+															</div>
+															<div class="product-con-bar-list">
+																<span><a href="javascript:;" nsortid="2488">合金管</a></span><span><a href="javascript:;" nsortid="2492">石油管</a></span><span><a href="javascript:;" nsortid="3011">热扩管</a></span><span><a href="javascript:;" nsortid="2436">方矩管</a></span><span><a href="javascript:;" nsortid="3013">直缝管</a></span>
+															</div>
+															<div class="product-con-bar-list">
+																<span><a href="javascript:;" nsortid="2599">支架管</a></span><span><a href="javascript:;" nsortid="2494">轴承管</a></span><span><a href="javascript:;" nsortid="2490">结构管</a></span><span><a href="javascript:;" nsortid="2489">化肥用管</a></span><span><a href="javascript:;" nsortid="2547">精密无缝管</a></span>
+															</div>
+															<div class="product-con-bar-list">
+																<span><a href="javascript:;" nsortid="2653">地质管</a></span><span><a href="javascript:;" nsortid="2613">管线管</a></span>
+															</div>
+														</div>
+													</div>
+													<div class="product-con clearfix bder-b-dashed">
+														<div class="product-con-sort f-fl">
+															<span class="bold">涂镀:</span>
+														</div>
+														<div class="product-con-bar f-fl">
+															<div class="product-con-bar-list">
+																<span><a href="javascript:;" nsortid="2433">镀锌管</a></span><span><a href="javascript:;" nsortid="2435">镀锌方矩管</a></span><span><a href="javascript:;" nsortid="3065">涂塑钢管</a></span>
+															</div>
+														</div>
+													</div>
+													<div class="product-con clearfix bder-b-dashed">
+														<div class="product-con-sort f-fl">
+															<span class="bold">不锈钢:</span>
+														</div>
+														<div class="product-con-bar f-fl">
+															<div class="product-con-bar-list">
+																<span><a href="javascript:;" nsortid="2449">不锈钢管</a></span>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div name="nsort" style="display: none;">
+													<div class="product-con clearfix bder-b-dashed">
+														<div class="product-con-sort f-fl">
+															<span class="bold">热轧:</span>
+														</div>
+														<div class="product-con-bar f-fl">
+															<div class="product-con-bar-list">
+																<span><a href="javascript:;" nsortid="2439">碳结圆</a></span><span><a href="javascript:;" nsortid="2440">合结圆</a></span><span><a href="javascript:;" nsortid="2444">模具钢</a></span><span><a href="javascript:;" nsortid="2458">轴承钢</a></span><span><a href="javascript:;" nsortid="2460">齿轮钢</a></span>
+															</div>
+															<div class="product-con-bar-list">
+																<span><a href="javascript:;" nsortid="2445">弹簧钢</a></span><span><a href="javascript:;" nsortid="2595">工具钢</a></span><span><a href="javascript:;" nsortid="2431">冷拉元</a></span><span><a href="javascript:;" nsortid="2496">易切削钢</a></span><span><a href="javascript:;" nsortid="2571">冷镦钢</a></span>
+															</div>
+															<div class="product-con-bar-list">
+																<span><a href="javascript:;" nsortid="2631">合金钢</a></span>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<!--品名数据层 E-->
+										</div>
+									</div>
+									<div class="product-ipt">
+										<span class="in-block f-fl">材质：</span>
+										<div class="form-item">
+											<label style="color: rgb(153, 153, 153);" class="f-label">单选</label>
+											<input type="text" autocomplete="off" value="" class="f-text material" id="material">
+											<span class="icon down-arr-icon"></span>
+											<!--材质数据层  S-->
+											<div id="showLayer_material" class="show-layer none caizhi" style="display: none;">
+												<div class="caizhi-con">
+													<div class="textures-con-bar-list bder-b-dashed">
+														<span><a href="javascript:;">Q235B</a></span><span><a href="javascript:;" class="hover">SPHC </a></span><span><a href="javascript:;">SS400</a></span>
+													</div>
+												</div>
+											</div>
+											<!--材质数据层  E-->
+										</div>
+									</div>
+									<div id="spec1" type="spec" class="product-ipt guige" rel="1">
+										<span class="in-block f-fl">规格：</span>
+										<div class="form-item">
+											<div class="border-style">
+												<div class="item-text">
+													<div class="item-text-wrap">
+														<label style="color: rgb(153, 153, 153);" class="f-label">腹高</label>
+														<input type="text" value="" class="f-text inputspec1" id="inputspec1">
+													</div>
+													<span class="icon down-arr-icon"></span>
+												</div>
+											</div><!--规格数据层  S-->
+											<div id="showLayer_spec1" class="show-layer textures-bar standard-bar none houdu" >
+												<div class="standard-t f-clr-r">
+													<ul class="standard-t-ul">
+														<li class="standard-t-li hover">
+															<a href="javascript:;">0.80~1.80</a><em class="icon down-redArr-icon"></em>
+														</li>
+														<li class="standard-t-li">
+															<a href="javascript:;">2.00~7.00</a><em class="icon down-redArr-icon"></em>
+														</li>
+														<li class="standard-t-li">
+															<a href="javascript:;">7.50~7.75</a><em class="icon down-redArr-icon"></em>
+														</li>
+													</ul>
+													<a class="layer-del pull-right"></a>
+												</div>
+												<div type="specDetail" class="textures-con clearfix" style="display: block;">
+													<div class="textures-con-bar-list bder-b-dashed">
+														<span class="textures-list-first bold">0.80~1.05</span><span><a href="javascript:;" class="">0.80</a></span><span><a href="javascript:;">0.85</a></span><span><a href="javascript:;">0.90</a></span><span><a href="javascript:;">0.95</a></span><span><a href="javascript:;">1.00</a></span><span><a href="javascript:;">1.05</a></span>
+													</div>
+													<div class="textures-con-bar-list bder-b-dashed">
+														<span class="textures-list-first bold" checked="checked">1.10~1.35</span><span><a href="javascript:;" class="">1.10</a></span><span><a href="javascript:;" class="">1.15</a></span><span><a href="javascript:;" class="">1.20</a></span><span><a href="javascript:;" class="">1.25</a></span><span><a href="javascript:;" class="">1.30</a></span><span><a href="javascript:;" class="">1.35</a></span>
+													</div>
+													<div class="textures-con-bar-list bder-b-dashed">
+														<span class="textures-list-first bold">1.40~1.80</span><span><a href="javascript:;">1.40</a></span><span><a href="javascript:;">1.50</a></span><span><a href="javascript:;">1.55</a></span><span><a href="javascript:;">1.60</a></span><span><a href="javascript:;">1.65</a></span><span><a href="javascript:;">1.80</a></span>
+													</div>
+													<div class="f-clr-l"></div>
+												</div>
+												<div type="specDetail" class="textures-con clearfix" style="display: none;">
+													<div class="textures-con-bar-list bder-b-dashed">
+														<span class="textures-list-first bold">2.00~3.50</span><span><a href="javascript:;">2.00</a></span><span><a href="javascript:;">2.20</a></span><span><a href="javascript:;">2.50</a></span><span><a href="javascript:;">2.75</a></span><span><a href="javascript:;">3.00</a></span><span><a href="javascript:;">3.50</a></span>
+													</div>
+													<div class="textures-con-bar-list bder-b-dashed">
+														<span class="textures-list-first bold">3.75~5.00</span><span><a href="javascript:;">3.75</a></span><span><a href="javascript:;">4.00</a></span><span><a href="javascript:;">4.25</a></span><span><a href="javascript:;">4.50</a></span><span><a href="javascript:;">4.75</a></span><span><a href="javascript:;">5.00</a></span>
+													</div>
+													<div class="textures-con-bar-list bder-b-dashed">
+														<span class="textures-list-first bold">5.30~7.00</span><span><a href="javascript:;">5.30</a></span><span><a href="javascript:;">5.50</a></span><span><a href="javascript:;">5.75</a></span><span><a href="javascript:;">6.00</a></span><span><a href="javascript:;">6.50</a></span><span><a href="javascript:;">7.00</a></span>
+													</div>
+													<div class="f-clr-l"></div>
+												</div>
+												<div type="specDetail" class="textures-con f-clrfix" style="display: none;">
+													<div class="textures-con-bar-list bder-b-dashed">
+														<span class="textures-list-first bold">7.50~7.75</span><span><a href="javascript:;">7.50</a></span><span><a href="javascript:;">7.75</a></span>
+													</div>
+													<div class="f-clr-l"></div>
+												</div>
+												<div class="btn-bar">
+													<button class="clear-btn">
+														清除
+													</button>
+													<button class="confirm-btn">
+														确认
+													</button>
+												</div><!--规格数据层  E-->
+											</div>
+										</div><em class="red">*</em>
+									</div>
+									<div id="spec2" type="spec" class="product-ipt guige" rel="2">
+										<div class="form-item">
+											<div class="border-style">
+												<div class="item-text">
+													<div class="item-text-wrap">
+														<label style="color: rgb(169, 169, 169);" class="f-label">翼宽</label>
+														<input type="text" value="" class="f-text inputspec2" id="inputspec2">
+													</div>
+													<span class="icon down-arr-icon"></span>
+												</div>
+											</div>
+											<div id="showLayer_spec2" class="show-layer textures-bar breadth-bar extent-bar none" style="display: none;">
+												<div class="textures-con clearfix ">
+													<div class="textures-con-bar-list bder-b-dashed">
+														<span><a href="javascript:;" class="hover">1500.00</a></span>
+													</div><div class="clearfix"></div>
+												</div>
+												<div class="btn-bar t-l">
+													<span class="s-gray">范围：</span>
+													<input type="text" id="from_spec2" value="" class="range-ipt range-ipt1">
+													<em class="dash-line">&mdash;</em>
+													<input type="text" id="to_spec2" value="" class="range-ipt range-ipt2">
+													<button class="clear-btn" value="">
+														清除
+													</button>
+													<button class="confirm-btn" value="">
+														确认
+													</button>
+												</div>
+											</div>
+										</div><em class="red">*</em>
+									</div>
+									<div id="spec3" type="spec" class="product-ipt guige" rel="3">
+										<div class="form-item">
+											<div class="border-style">
+												<div class="item-text">
+													<div class="item-text-wrap">
+														<label style="color: rgb(169, 169, 169);" class="f-label">腹厚</label>
+														<input type="text" value="" class="f-text inputspec3" id="inputspec3">
+													</div>
+													<span class="icon down-arr-icon"></span>
+												</div>
+											</div>
+											<div class="show-layer breadth-bar extent-bar  none" id="showLayer_spec3">
+												<div class="textures-con clearfix ">
+													<div class="textures-con-bar-list bder-b-dashed">
+														<span><a href="javascript:;">6000.00</a></span><span><a href="javascript:;">7400.00</a></span><span><a href="javascript:;">8000.00</a></span><span><a href="javascript:;">8100.00</a></span><span><a href="javascript:;">9000.00</a></span><span><a href="javascript:;">9300.00</a></span>
+													</div>
+													<div class="textures-con-bar-list bder-b-dashed">
+														<span><a href="javascript:;">10000.00</a></span><span><a href="javascript:;">10200.00</a></span><span><a href="javascript:;">11000.00</a></span><span><a href="javascript:;">11100.00</a></span><span><a href="javascript:;">11200.00</a></span><span><a href="javascript:;">11300.00</a></span>
+													</div>
+													<div class="textures-con-bar-list bder-b-dashed">
+														<span><a href="javascript:;">11600.00</a></span><span><a href="javascript:;">12000.00</a></span>
+													</div><div class="clearfix"></div>
+												</div>
+												<div class="btn-bar t-l">
+													<span class="s-gray">范围：</span>
+													<input class="range-ipt range-ipt1" type="text" value="" id="from_spec3">
+													<em class="dash-line">—</em>
+													<input class="range-ipt range-ipt2" type="text" value="" id="to_spec3">
+													<button class="clear-btn">
+														清除
+													</button>
+													<button class="confirm-btn">
+														确认
+													</button>
+												</div>
+											</div>
+										</div><em class="red">*</em>
+									</div>
+									<!--厂家S-->
+									<div id="spec1" type="spec" class="product-ipt focus" rel="0">
+										<span class="in-block f-fl">厂家：</span>
+										<div class="form-item">
+											<div class="border-style">
+												<div class="item-text">
+													<div class="item-text-wrap">
+														<label style="color: rgb(153, 153, 153);" class="f-label">可多选</label>
+														<input type="text" value="" class="f-text inputspec1" id="inputspec1">
+													</div>
+													<span class="icon down-arr-icon"></span>
+												</div>
+											</div>
+											<div id="showLayer_spec1" class="show-layer extent-bar textures-bar standard-bar none" >
+												<div type="specDetail" class="textures-con clearfix" style="display: block;">
+													<div class="textures-con-bar-list bder-b-dashed">
+														<span><a href="javascript:;" class="">0.80</a></span><span><a href="javascript:;">0.85</a></span><span><a href="javascript:;">0.90</a></span><span><a href="javascript:;">0.95</a></span><span><a href="javascript:;">1.00</a></span><span><a href="javascript:;">1.05</a></span>
+													</div>
+													<div class="textures-con-bar-list bder-b-dashed">
+														<span><a href="javascript:;" class="">1.10</a></span><span><a href="javascript:;" class="">1.15</a></span><span><a href="javascript:;" class="">1.20</a></span><span><a href="javascript:;" class="">1.25</a></span><span><a href="javascript:;" class="">1.30</a></span><span><a href="javascript:;" class="">1.35</a></span>
+													</div>
+													<div class="textures-con-bar-list bder-b-dashed">
+														<span><a href="javascript:;">1.40</a></span><span><a href="javascript:;">1.50</a></span><span><a href="javascript:;">1.55</a></span><span><a href="javascript:;">1.60</a></span><span><a href="javascript:;">1.65</a></span><span><a href="javascript:;">1.80</a></span>
+													</div>
+													<div class="f-clr-l"></div>
+												</div>
+
+												<div class="btn-bar t-l">
+													<label class="pos-rel  pull-left">
+														<input type="checkbox" id="allCheck" name="" class="ace">
+														<span class="lbl"></span> <span class="s-gray">其他：</span></label>
+													<input type="text" id="from_spec2" value="" class="c-text pull-left range-ipt">
+													<button class="clear-btn" value="">
+														清除
+													</button>
+													<button class="confirm-btn" value="">
+														确认
+													</button>
+												</div>
+
+											</div>
+										</div>
+									</div>
+									<!--厂家E-->
+									<div class="f-fl weight-bar">
+										<label>重量：
+											<input type="text"  class="sd-text" name="weight" value="" />
+										</label>&nbsp;吨</span>
+									</div>
+									<div class="f-fl num-bar">
+										<label>数量：
+											<input type="text"  class="sd-text" name="weight" value="" />
+										</label>&nbsp;件</span>
+									</div>
+									<a name="delBtn" title="删除" class="del-btn fa fa-minus-square pull-right" href="javascript:;" value=""></a>
+									<a value="" class="clone-btn fa fa-plus-square pull-right" title="复制" id="" href="javascript:;"  ></a>
+									<p class="clearfix"></p>
+									<!--选择S-->
+									<div class="text-left clearfix">
+										<span class="search-radio-bar quality-bar" data="quality">质量：
+											<select>
+												<option>国际</option>
+												<option>非国际</option>
+												<option>不限</option>
+											</select> </span>
+										<span class="search-radio-bar performance-bar" data="performance">性能：
+											<select>
+												<option>保性能</option>
+												<option>不保性能</option>
+												<option>不限</option>
+											</select> </span>
+										<span class="search-radio-bar performance-bar" data="performance">外观：
+											<select>
+												<option>外观1</option>
+												<option>外观2</option>
+												<option>外观3</option>
+											</select> </span>
+										<span class="search-radio-bar craft-bar" data="craft">工艺：
+											<select>
+												<option>涂镀</option>
+												<option>非涂镀</option>
+												<option>不限</option>
+											</select> </span>
+										<span class="search-radio-bar craft-bar" data="craft">镀层：
+											<select>
+												<option>涂镀</option>
+												<option>非涂镀</option>
+												<option>不限</option>
+											</select> </span>
+										<span class="search-radio-bar craft-bar" data="craft">花纹：
+											<select>
+												<option>涂镀</option>
+												<option>非涂镀</option>
+												<option>不限</option>
+											</select> </span>
+										<span class="search-radio-bar craft-bar" data="craft">表面：
+											<select>
+												<option>涂镀</option>
+												<option>非涂镀</option>
+												<option>不限</option>
+											</select> </span>
+										<span class="search-radio-bar craft-bar" data="craft">钝化：
+											<select>
+												<option>涂镀</option>
+												<option>非涂镀</option>
+												<option>不限</option>
+											</select> </span>
+
+									</div>
+									<!--选择E-->
+								</div>
+								<p class="clearfix"></p>
+								<!--匹配卖家 S-->
+								<div class="assign-bar text-left">
+									<label class="pos-rel">
+										<input type="checkbox" id="allCheck" name="check" class="ace">
+										<span class="lbl"></span>指定卖家:</label>
+									<input type="text" value="" class="" name="" />
+									<button type="button" class="btn btn-sm btn-info">确定</button>
+								</div>
+								<div class="tableBar seller-bar">
+									<div class="seller-head clearfix">
+										<span class="font-dai">代</span><span class="seller-name">峰良实业（上海）有限公司</span>
+										<span class="toggle-info"> <span class="contacts"> <label>联系人：
+													<select>
+														<option>王经理，13297823311</option>
+														<option>王经理，13297823311</option>
+														<option>王经理，13297823311</option>
+													</select> </label> </span> <a class="fa fa-phone-square fa-2x" href="javascript:;" title="电话">&nbsp;</a> <a class="fa fa-qq fa-2x" href="javascript:;" title="QQ">&nbsp;</a> <span class="jyy">交易员：王大锤</span> </span>
+										<button class="btn btn-info btn-sm pull-right none" >
+											已询价
+										</button>
+									</div>
+									<!--.toggle-bar-->
+									<div class="toggle-bar">
+
+										<table class="table">
+											<thead>
+												<tr>
+													<td>品名</td><td>材质</td><td>规格</td>
+													<td>厂家</td><td>仓库</td><td>求购重量(吨)</td>
+													<td>重量(吨)</td><td>数量(件)</td><td>单价(元/吨)</td><td>操作</td>
+												</tr>
+
+											</thead>
+											<tbody>
+												<tr>
+													<td><span>H型钢</span></td>
+													<td><span>Q235B</span></td>
+													<td>
+													<input type="text"  class="c-text" name="" value="" />
+													</td>
+													<td><span>
+														<select>
+															<option>湖北鄂钢</option>
+															<option>湖北鄂钢1</option>
+														</select> </span></td>
+													<td><span>
+														<select>
+															<option>常州刚才仓库</option>
+															<option>常州刚才仓库1</option>
+														</select> </span><label class="pos-rel">
+														<input type="checkbox" id="allCheck" name="check" class="ace">
+														<span class="lbl"></span>仓储费15元/吨</label></td>
+													<td class="text-right"><span>10</span></td>
+													<td>
+													<input type="text"  class="sd-text" name="" value="" />
+													</td>
+													<td><span>
+														<input type="number"  class="d-text" name="" value="" min="0" />
+													</span></td>
+													<td><span>
+														<input type="text"  class="d-text" name="" value="" min="0" />
+													</span></td>
+													<td><a href="javascript:;" class="fa fa-trash-o fa-lg" title="删除">
+														&nbsp;<a href="javascript:;" class="fa fa-edit fa-lg" title="编辑"></a>
+													</a>
+														
+													</td>
+												</tr>
+												<tr>
+													<td><span>H型钢</span></td>
+													<td><span>Q235B</span></td>
+													<td>
+													<input type="text"  class="c-text" name="" value="" />
+													</td>
+													<td><span>
+														<select>
+															<option>湖北鄂钢</option>
+															<option>湖北鄂钢1</option>
+														</select> </span></td>
+													<td><span>
+														<select>
+															<option>常州刚才仓库</option>
+															<option>常州刚才仓库1</option>
+														</select> </span><label class="pos-rel">
+														<input type="checkbox" id="allCheck" name="check" class="ace">
+														<span class="lbl"></span>仓储费15元/吨</label></td>
+													<td class="text-right"><span>10</span></td>
+													<td>
+													<input type="text"  class="sd-text" name="" value="" />
+													</td>
+													<td><span>
+														<input type="number"  class="d-text" name="" value="" min="0" />
+													</span></td>
+													<td><span>
+														<input type="text"  class="d-text" name="" value="" />
+													</span></td>
+													<td><a href="javascript:;" class="fa fa-trash-o fa-lg" title="删除"></a>
+														&nbsp;<a href="javascript:;" class="fa fa-edit fa-lg" title="编辑"></a>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+										<div class="seller-footer clearfix">
+											<label class="remarks-bar" >备注
+												<input type="text" name="remarks-ipt"  class="remarks-ipt" />
+											</label>
+											<label class="pos-rel">
+												<input type="checkbox" id="allCheck" name="check" class="ace">
+												<span class="lbl"></span>屏蔽报价</label>
+											<input type="text"  class="c-text" name="" value="" />
+											<span class="pull-right">
+												<button class="btn btn-info btn-sm">
+													保存
+												</button> <span class="fa fa-long-arrow-right fa-2x">&nbsp;</span>
+												<button class="btn btn-info btn-sm">
+													填写报价单
+												</button> </span>
+										</div>
+									</div>
+									<!--/.taggle-bar-->
+								</div>
+								<div class="tableBar seller-bar">
+									<div class="seller-head clearfix">
+										<span class="font-lin">临</span><span class="seller-name">峰良实业（上海）有限公司</span>
+										<span class="toggle-info none"> <span class="contacts"> <label>联系人：
+													<select>
+														<option>王经理，13297823311</option>
+														<option>王经理，13297823311</option>
+														<option>王经理，13297823311</option>
+													</select> </label> </span> <a class="fa fa-phone-square fa-2x" href="javascript:;" title="电话">&nbsp;</a> <a class="fa fa-qq fa-2x" href="javascript:;" title="QQ">&nbsp;</a> <span class="jyy">交易员：王大锤</span> </span>
+										<button class="btn btn-info btn-sm pull-right" >
+											未询价
+										</button>
+									</div>
+									<!--.toggle-bar-->
+									<div class="toggle-bar none">
+
+										<table class="table">
+											<thead>
+												<tr>
+													<td>品名</td><td>材质</td><td>规格</td>
+													<td>厂家</td><td>仓库</td><td>求购重量(吨)</td>
+													<td>重量(吨)</td><td>数量(件)</td><td>单价(元/吨)</td><td>操作</td>
+												</tr>
+
+											</thead>
+											<tbody>
+												<tr>
+													<td><span>H型钢</span></td>
+													<td><span>Q235B</span></td>
+													<td>
+													<input type="text"  class="c-text" name="" value="" />
+													</td>
+													<td><span>
+														<select>
+															<option>湖北鄂钢</option>
+															<option>湖北鄂钢1</option>
+														</select> </span></td>
+													<td><span>
+														<select>
+															<option>常州刚才仓库</option>
+															<option>常州刚才仓库1</option>
+														</select> </span><label> <label class="pos-rel">
+															<input type="checkbox" id="allCheck" name="check" class="ace">
+															<span class="lbl"></span>仓储费15元/吨</label> </label></td>
+													<td class="text-right"><span>10</span></td>
+													<td>
+													<input type="text"  class="sd-text" name="" value="" />
+													</td>
+													<td><span>
+														<input type="number"  class="d-text" name="" value="" min="0" />
+													</span></td>
+													<td><span>
+														<input type="text"  class="d-text" name="" value="" min="0" />
+													</span></td>
+													<td><a href="javascript:;" class="seller-del fa fa-trash-o fa-lg" title="删除"></a>
+														&nbsp;<a href="javascript:;" class="fa fa-edit fa-lg" title="编辑"></a>
+													</td>
+												</tr>
+												<tr>
+													<td><span>H型钢</span></td>
+													<td><span>Q235B</span></td>
+													<td>
+													<input type="text"  class="c-text" name="" value="" />
+													</td>
+													<td><span>
+														<select>
+															<option>湖北鄂钢</option>
+															<option>湖北鄂钢1</option>
+														</select> </span></td>
+													<td><span>
+														<select>
+															<option>常州刚才仓库</option>
+															<option>常州刚才仓库1</option>
+														</select> </span><label class="pos-rel">
+														<input type="checkbox" id="allCheck" name="check" class="ace">
+														<span class="lbl"></span>仓储费15元/吨</label></td>
+													<td class="text-right"><span>10</span></td>
+													<td>
+													<input type="text"  class="sd-text" name="" value="" />
+													</td>
+													<td><span>
+														<input type="number"  class="d-text" name="" value="" min="0" />
+													</span></td>
+													<td><span>
+														<input type="text"  class="d-text" name="" value="" />
+													</span></td>
+													<td><a href="javascript:;" class="fa fa-trash-o fa-lg" title="删除"></a>
+														&nbsp;<a href="javascript:;" class="fa fa-edit fa-lg" title="编辑"></a>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+										<div class="seller-footer clearfix">
+											<label class="remarks-bar" >备注
+												<input type="text" name="remarks-ipt"  class="remarks-ipt" />
+											</label>
+											<label class="pos-rel">
+												<input type="checkbox" id="allCheck" name="check" class="ace">
+												<span class="lbl"></span>屏蔽报价</label>
+											<input type="text"  class="c-text" name="" value="" />
+											<span class="pull-right">
+												<button class="btn btn-info btn-sm">
+													保存
+												</button> <span class="fa fa-long-arrow-right fa-2x">&nbsp;</span>
+												<button class="btn btn-info btn-sm">
+													填写报价单
+												</button> </span>
+										</div>
+									</div>
+									<!--/.taggle-bar-->
+								</div>
+								<!--匹配卖家 E-->
+							</div>
+
+							<!--筛选规则 E-->
+						</div>
+						<div class="list_return">
+							<a class="link">查看其他报价</a>
+						</div>
+						<div class="purchase-footer">
+							<div class="footer-btn-bar f-clrfix">
+								<span class="f-fl">已保存3家报价，覆盖50%资源</span>
+								<button type="button" class="f-fr btn btn-info btn-sm">填写报价单</button>
+							</div>
+						</div>
+					</div><!-- /.page-content -->
+				</div>
+			</div><!-- /.main-content -->
+
+			<div class="footer">
+				<div class="footer-inner">
+					<div class="footer-content">
+						<span class="bigger-120"> <span class="blue bolder">Ace</span> Application &copy; 2013-2014 </span>
+						&nbsp; &nbsp;
+						<span class="action-buttons"> <a href="#"> <i class="ace-icon fa fa-twitter-square light-blue bigger-150"></i> </a> <a href="#"> <i class="ace-icon fa fa-facebook-square text-primary bigger-150"></i> </a> <a href="#"> <i class="ace-icon fa fa-rss-square orange bigger-150"></i> </a> </span>
+					</div>
+				</div>
+			</div>
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse"> <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i> </a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+
+		<!--[if !IE]> -->
+		<script src="../../theme/default/js/jquery.2.1.1.min.js"></script>
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+		<script src="../assets/js/jquery.1.11.1.min.js"></script>
+		<![endif]-->
+
+		<!--[if !IE]> -->
+		<script type="text/javascript">
+			window.jQuery || document.write("<script src='../../theme/default/js/jquery.min.js'>" + "<" + "/script>");
+		</script>
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+		<script type="text/javascript">
+		window.jQuery || document.write("<script src='../assets/js/jquery1x.min.js'>"+"<"+"/script>");
+		</script>
+		<![endif]-->
+		<script type="text/javascript">
+			if ('ontouchstart' in document.documentElement)
+				document.write("<script src='../../theme/default/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+		</script>
+		<script src="../../theme/default/js/bootstrap.min.js"></script>
+
+		<!-- page specific plugin scripts -->
+		<script src="../../theme/default/js/jquery.dataTables.min.js"></script>
+		<script src="../../theme/default/js/jquery.dataTables.bootstrap.min.js"></script>
+		<script src="../../theme/default/js/dataTables.tableTools.min.js"></script>
+		<script src="../../theme/default/js/dataTables.colVis.min.js"></script>
+		<script src="../../theme/default/js/artdialog.min.js"></script>
+
+		<!-- ace scripts -->
+		<script src="../../theme/default/js/ace-elements.min.js"></script>
+		<script src="../../theme/default/js/ace.min.js"></script>
+		<script src="../../theme/default/js/bootbox.min.js"></script>
+		<script src="../../js/global.js" type="text/javascript"></script>
+		<script src="../../js/findgoods/findgoods.js" type="text/javascript"></script>
+		<!-- inline scripts related to this page -->
+		<script type="text/javascript">
+			//当HTML高度小于视口高度提交订单按钮固定在底部
+			function setHeight() {
+				$(".purchase-footer").removeAttr("style");
+				var browser_h = cbms.getTotalHeight(), sH = $(window).scrollTop(), html_h = $('body').innerHeight();
+				var ro = $(".list_return")[0].getBoundingClientRect();
+				
+				console.log((ro.top+160) +"<="+ (browser_h));
+				
+				if (ro.top+100 >= (browser_h)) {
+					$(".purchase-footer").css({
+						"position" : "fixed",
+						"bottom" : "0px",
+						"margin-bottom":"0px"
+						/*"left" : "0"*/
+					});
+				} else {
+					$(".purchase-footer").removeAttr("style");
+				}
+
+			}
+
+			$(function() {
+				//复制
+				$(document).on("click", ".modify-inv", function() {
+					var $c = $(this).closest("tr").clone(true);
+					$(this).closest("tr").after($c);
+				});
+				//删除
+				$(document).on("click", ".del-inv", function() {
+					if ($(".invoice-table").find(".del-inv").length > 1) {
+						var $c = $(this).closest("tr").remove();
+					}
+				});
+				//添加
+				$(document).on("click", ".add-inv", function() {
+					var $c = $(this).closest("tr").clone(true);
+					$(this).closest("tr").after($c);
+				});
+				//查看关联
+				$(document).on("click", ".look-relate", function() {
+					cbms.getDialog('发票关联', 'invoice-relate.html');
+					//window.open('invoice-relate.html','发票关联','height=600,width=900,top=0,left=0,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no, status=no');
+				});
+
+				$(window).scroll(function() {
+					setTimeout(setHeight, 200);
+				});
+				setTimeout(setHeight, 200);
+			});
+		</script>
+	</body>
+</html>

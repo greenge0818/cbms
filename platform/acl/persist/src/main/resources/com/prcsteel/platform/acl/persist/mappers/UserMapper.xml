@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.acl.persist.dao.UserDao">
+    <resultMap id="BaseResultMap" type="com.prcsteel.platform.acl.model.model.User">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="login_id" property="loginId" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="role_id" property="roleId" jdbcType="BIGINT"/>
+        <result column="tel" property="tel" jdbcType="VARCHAR"/>
+        <result column="phone_ext" property="phoneExt" jdbcType="VARCHAR"/>
+        <result column="org_id" property="orgId" jdbcType="BIGINT"/>
+        <result column="job_number" property="jobNumber" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="created" property="created" jdbcType="TIMESTAMP"/>
+        <result column="created_by" property="createdBy" jdbcType="VARCHAR"/>
+        <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP"/>
+        <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR"/>
+        <result column="modification_number" property="modificationNumber" jdbcType="INTEGER"/>
+        <result column="row_id" property="rowId" jdbcType="VARCHAR"/>
+        <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, login_id, name, role_id, tel,phone_ext, org_id, job_number, status, created, created_by, last_updated,
+    last_updated_by, modification_number, row_id, parent_row_id
+  </sql>
+
+    <insert id="insert" parameterType="com.prcsteel.platform.acl.model.model.User">
+    insert into acl_user (id, login_id, name,
+    role_id, tel,phone_ext, org_id, job_number, status,
+    created, created_by, last_updated,
+    last_updated_by, modification_number, row_id,
+    parent_row_id)
+    values (#{id,jdbcType=BIGINT}, #{loginId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+    #{roleId,jdbcType=BIGINT}, #{tel,jdbcType=VARCHAR},#{phoneExt,jdbcType=VARCHAR}, #{orgId,jdbcType=BIGINT}, #{jobNumber}, #{status,jdbcType=INTEGER},
+    #{created,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, #{lastUpdated,jdbcType=TIMESTAMP},
+    #{lastUpdatedBy,jdbcType=VARCHAR}, #{modificationNumber,jdbcType=INTEGER}, #{rowId,jdbcType=VARCHAR},
+    #{parentRowId,jdbcType=VARCHAR})
+  </insert>
+
+    <select id="queryByLoginId" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from acl_user
+        where login_Id = #{loginId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="queryByParam" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        from acl_user
+        where 1=1
+        <if test="loginId != null">
+            and login_id = #{loginId,jdbcType=VARCHAR}
+        </if>
+        <if test="name != null">
+            and name = #{name,jdbcType=VARCHAR}
+        </if>
+        <if test="tel != null">
+            and tel = #{tel,jdbcType=VARCHAR}
+        </if>
+        <if test="orgId != null">
+            and org_id = #{orgId,jdbcType=BIGINT}
+        </if>
+        <if test="forUserOrgConfig!=null and forUserOrgConfig==true">
+        	and id not in (select distinct user_id from acl_user_org)
+        </if>
+        <if test="userIds != null ">
+            and id in
+            <foreach item="id" index="index" collection="userIds" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
+    </select>
+
+    <select id="queryById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from acl_user
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="queryByTel" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from acl_user
+        where tel = #{tel}
+    </select>
+
+    <select id="queryByJobNumber" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from acl_user
+        where job_number = #{jobNumber}
+    </select>
+
+    <update id="updateRoleById" parameterType="com.prcsteel.platform.acl.model.model.User">
+        update acl_user
+        set role_id = #{roleId,jdbcType=INTEGER}, last_updated = #{lastUpdated,jdbcType=TIMESTAMP}, last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR}, modification_number = modification_number + 1
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <!--用户身份角色-->
+    <resultMap id="UserOrgResultMap" type="com.prcsteel.platform.acl.model.dto.UserOrgDto">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="parent_id" property="parentId" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <!--查找用户的组织角色-->
+    <select id="queryUserOrg" resultMap="UserOrgResultMap" parameterType="map">
+        select t1.id+1000 as id,t1.name,t1.org_id as parent_id from acl_user t1
+        left join acl_role t2 on t1.role_id=t2.id
+        <where>
+            <if test="roleName!=null and roleName!='' ">
+                t2.name=#{roleName,jdbcType=VARCHAR}
+            </if>
+            <if test="roleType!=null ">
+                and t2.role_type=#{roleType,jdbcType=VARCHAR}
+            </if>
+            <if test="orgId!=null ">
+                and t1.org_id=#{orgId,jdbcType=BIGINT}
+            </if>
+            <if test="userIds != null ">
+                and t1.id in
+                <foreach item="id" index="index" collection="userIds" open="(" separator="," close=")">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
+        union
+        select id,name,parent_id from base_organization t3
+        <where>
+            <if test="charger!=null ">
+                t3.charger=#{charger,jdbcType=BIGINT}
+            </if>
+            <if test="userIds != null ">
+                and t3.charger in
+                <foreach item="id" index="index" collection="userIds" open="(" separator="," close=")">
+                    #{id}
+                </foreach>
+            </if>
+            <if test="orgId!=null ">
+                and t3.id=#{orgId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </select>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.acl.model.model.User">
+        update acl_user
+        <set>
+            <if test="loginId != null">
+                login_id = #{loginId,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="roleId != null">
+                role_id = #{roleId,jdbcType=BIGINT},
+            </if>
+            <if test="tel != null">
+                tel = #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="phoneExt != null">
+                phone_ext = #{phoneExt,jdbcType=VARCHAR},
+            </if>
+            <if test="orgId != null">
+                org_id = #{orgId,jdbcType=BIGINT},
+            </if>
+            <if test="jobNumber != null">
+                job_number = #{jobNumber,jdbcType=BIGINT},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="created != null">
+                created = #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdBy != null">
+                created_by = #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdated != null">
+                last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdatedBy != null">
+                last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="rowId != null">
+                row_id = #{rowId,jdbcType=VARCHAR},
+            </if>
+            <if test="parentRowId != null">
+                parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+            </if>
+            modification_number = modification_number + 1
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="queryByRoleId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from acl_user
+        where role_id = #{roleId,jdbcType=BIGINT}
+    </select>
+
+    <select id="queryByRoleIds" resultMap="BaseResultMap" parameterType="map">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM acl_user
+        WHERE role_id IN
+        <foreach item="id" index="index" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <resultMap id="showMap" type="com.prcsteel.platform.acl.model.dto.UserDto">
+        <result column="user_id" property="userId" jdbcType="BIGINT"/>
+        <result column="login_id" property="loginId" jdbcType="VARCHAR"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="tel" property="tel" jdbcType="VARCHAR"/>
+        <result column="phone_ext" property="phoneExt" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="role_name" property="roleName" jdbcType="VARCHAR"/>
+        <result column="role_id" property="roleId" jdbcType="BIGINT"/>
+        <result column="org_name" property="orgName" jdbcType="VARCHAR"/>
+        <result column="org_id" property="orgId" jdbcType="BIGINT"/>
+        <result column="job_number" property="jobNumber" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="queryUserForShow" resultMap="showMap" parameterType="map">
+        select u.login_id as login_id,
+        u.name as user_name,
+        u.tel as tel,
+        u.phone_ext as phoneExt,
+        u.status as status,
+        u.id as user_id,
+        r.name as role_name,
+        u.role_id as role_id,
+        o.name as org_name,
+        o.id as org_id,
+        u.job_number
+        from acl_user u
+        LEFT JOIN acl_role r on r.id = u.role_id
+        LEFT JOIN base_organization o on o.id = u.org_id
+        where 1=1
+        <if test="orgIds != null">
+            and( u.org_id IN
+            <foreach item="orgId" index="index" collection="orgIds" open="(" separator="," close=")">
+                #{orgId}
+            </foreach>
+            or u.id in(
+            select o2.charger from base_organization o2 where o2.id in
+            <foreach item="orgId" index="index" collection="orgIds" open="(" separator="," close=")">
+                #{orgId}
+            </foreach>
+            ))
+        </if>
+        <if test="id != null">
+            and u.id = #{id}
+        </if>
+        <if test="statusList != null">
+            and u.status IN
+            <foreach item="status" index="index" collection="statusList" open="(" separator="," close=")">
+                #{status}
+            </foreach>
+        </if>
+        order by u.id asc
+        <if test="start != null and length != null">
+            limit #{start},#{length}
+        </if>
+    </select>
+    <select id="countUserForShow" resultType="int" parameterType="map">
+        select count(1)
+        from acl_user u
+        LEFT JOIN acl_role r on r.id = u.role_id
+        LEFT JOIN base_organization o on o.id = u.org_id
+        where 1=1
+        <if test="orgIds != null">
+            and( u.org_id IN
+            <foreach item="orgId" index="index" collection="orgIds" open="(" separator="," close=")">
+                #{orgId}
+            </foreach>
+            or u.id in(
+            select o2.charger from base_organization o2 where o2.id in
+            <foreach item="orgId" index="index" collection="orgIds" open="(" separator="," close=")">
+                #{orgId}
+            </foreach>
+            ))
+        </if>
+        <if test="id != null">
+            and u.id = #{id}
+        </if>
+        <if test="statusList != null">
+            and u.status IN
+            <foreach item="status" index="index" collection="statusList" open="(" separator="," close=")">
+                #{status}
+            </foreach>
+        </if>
+        order by u.id asc
+    </select>
+
+    <!--查询所有能给自己开单的用户-->
+    <select id="queryByPermissionCode" resultMap="BaseResultMap">
+        SELECT t4.id,t4.name from acl_permission t1
+        LEFT JOIN acl_role_permission t2 on t1.id=t2.permission_id
+        LEFT JOIN acl_role t3 on t2.role_id=t3.id
+        LEFT JOIN acl_user t4 on t3.id=t4.role_id
+        WHERE t1.code=#{code,jdbcType=VARCHAR}
+        AND t4.status!=0
+        <if test="userIds != null ">
+            AND t4.id IN
+            <foreach item="id" index="index" collection="userIds" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
+        ORDER BY t4.id ASC
+    </select>
+
+    <!-- 查找业务服务中心及服务中心的所有交易员 -->
+    <select id="queryTradersBusinessOrgByOrgIdSelective" resultMap="UserOrgResultMap">
+      SELECT t1.id+1000 AS id,t1.name,t1.org_id AS parent_id
+      FROM acl_user t1,acl_role t2,base_organization t3
+      WHERE 1=1
+     <if test="orgId != null and orgId > 0">
+          and t1.org_id =#{orgId}
+      </if>
+      AND t3.name LIKE '%服务中心'
+      AND t2.role_type = 'Trader'
+      AND t3.id = t1.org_id
+      AND t1.role_id = t2.id
+
+      UNION
+
+      SELECT id,NAME,0 AS parent_id FROM base_organization t2
+      WHERE t2.name LIKE '%服务中心'
+     <if test="orgId != null and orgId > 0">
+          and t2.id =#{orgId}
+      </if>
+     ORDER BY parent_id,id
+    </select>
+
+    <!--查找服务中心下所有用户-->
+    <select id="queryUsersByOrgId" resultMap="UserOrgResultMap" parameterType="com.prcsteel.platform.acl.model.query.ReportOrgQuery">
+            select id,name from acl_user
+            <where>
+                <if test="orgId != null and orgId > 0">
+                    AND org_id = #{orgId,jdbcType=BIGINT}
+                </if>
+                <if test="userIdList != null">
+                    AND id IN
+                    <foreach collection="userIdList" item="userId" open="(" separator="," close=")">
+                        #{userId}
+                    </foreach>
+                </if>
+                <if test="managerName != null and managerName != '' ">
+                    AND name LIKE #{managerName,jdbcType=VARCHAR}
+                </if>
+            </where>
+            ;
+    </select>
+    
+    <!--根据角色类型查找用户列表-->
+    <select id="queryByRoleType" resultMap="BaseResultMap" parameterType="map">
+    	select t.id, t.login_id, t.name
+		from acl_user t LEFT JOIN acl_role r on r.id = t.role_id
+		<where>
+			<if test="roleType != null and roleType !=''">
+			r.role_type = #{roleType}
+			</if>
+			and r.code != '产品内勤' ;
+		</where>
+    </select>
+
+    <!--查询直接上级列表-->
+    <select id="queryDirectManagersByRoleId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        SELECT * FROM (
+            SELECT * FROM (  SELECT
+                @role_id AS roleid,
+                (SELECT @role_id := parent_id FROM acl_role WHERE id = @role_id AND `status`=1) AS parent_id,
+                @level := @level + 1 AS LEVEL
+                FROM (SELECT @role_id := #{roleId}, @level := 0) t1,acl_role t2
+                WHERE @role_id != 0 AND t2.`status`=1) t3
+            WHERE t3.level != 1 AND EXISTS(SELECT 1 FROM acl_user WHERE role_id=t3.roleid AND `status`=1)
+            ORDER BY t3.level ASC LIMIT 0,1) t4
+        INNER JOIN acl_user t5 ON t4.roleid=t5.role_id
+        WHERE t5.`status`=1
+    </select>
+
+    <!--查询同部门同级别人员-->
+    <select id="querySiblingById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        SELECT * FROM acl_user  t1 INNER JOIN
+        (SELECT org_id,role_id FROM acl_user WHERE id=#{userId}) t2 ON t1.org_id=t2.org_id AND t1.role_id=t2.role_id
+        where t1.status=1
+    </select>
+</mapper>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<div class="breadcrumbs" id="breadcrumbs">
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            智能找货
+        </li>
+        <li class="active">询价单管理</li>
+    </ul>
+    <!-- /.breadcrumb -->
+</div>
+<!-- content S -->
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+						#inquiryorderTbar
+                    <div class="clearfix">
+                        <div class="input-group pull-right col-md-12 col-sm-12 col-lg-12 text-left">
+                            <form class="form-inline">
+                                <input type="hidden" value="$!{orderDomain}" id="orderDomain"/>
+                                <label>询价单号：<input id="code" class="" type="text" value=""/></label>
+                                <label>买家全称：<input id="buyerName" class="" type="text" value=""/></label>
+                                <label>品名：<input id="categoryName" class="" type="text" value=""/></label>
+                                <label>交货地：<input id="deliveryName" class="" type="text" value=""/></label>
+                                <label>生成时间：
+                                    <input id="startTime" class="Wdate" type="text" onFocus="WdatePicker()"/> -
+                                    <input id="endTime" class="Wdate" type="text" onFocus="WdatePicker()"/></label>
+                                <label>需求单号：<input id="requirementCode" class="" type="text" value=""/></label>
+                                <label>状态：
+                                	<select class="select-left" id="status">
+                    					<option value="-1">全部</option>
+                    					<option value="PENDING_ACCEPTE">待受理</option>
+                    					<option value="PENDING_QUOTE">待报价</option>
+                    					<option value="PENDING_CLERK_ACCEPTE">待业务员处理</option>
+                    					<option value="QUOTED">已报价</option>                    					             					                    					                    					
+               						</select>
+                                </label>
+                                <button id="searchList" class="btn btn-sm btn-default" type="button">搜索
+                                </button>
+								<button class="btn btn-sm btn-default" type="button" id='cleanSearch'>清空</button>
+                            </form>
+                        </div>
+
+                    </div>
+                    <!-- div.dataTables_borderWrap -->
+					
+					<div class="toolbar clearfix" style="height:38px;">
+
+						<span class="pull-right">
+                        <button type="button" id="addInquiryOrder" class="btn btn-info btn-sm" title="新增询价单">
+						新增询价单
+                        </button>
+					
+						</span>
+					</div>
+					
+                    <div>
+                        <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>询价单号</th>
+                                <th>生成时间</th>
+								<th>需求单号</th>
+                                <th>买家</th>
+								<th>联系人</th>
+								<th>电话</th>
+                                <th>品名</th>
+                                <th>交货地</th>
+								<th>受理人</th>
+								<th>操作人</th>
+                                <th>状态</th>
+                                <th style="width: 150px">操作</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+    <!--指派-->
+    #parse("/layout/purchaseorder/assign.vm")
+    <!--改派-->
+    #parse("/layout/purchaseorder/reassign.vm")
+    <!--重新激活-->
+    #parse("/layout/purchaseorder/reactive.vm")
+</div><!-- /.page-content -->
+
+
+
+<script type="application/javascript">
+	var tabIndex = "$!{tabIndex}";
+    var IsOrgManager = "$!{IsOrgManager}";
+    var canClose="$shiro.hasPermission("smartmatch:purchaseorder:list:activate")";
+    var canAssignToBusi=$shiro.hasPermission("smartmatch:purchaseorder:list:assigntobusi");
+    var canAssignToSale=$shiro.hasPermission("smartmatch:purchaseorder:list:assigntonetsale");
+	var reassi_permission= "$!{reassi_permission}";
+	var quotaionAssi_permission = "$!{quotaionAssi}";
+	var orgId = "$!{orgId}";
+</script>
+<!-- content E -->
+<script src="$link.getContextPath()/js/views/smartmatch/purchaseorder/purchaseList.js"></script>
+<script src="$link.getContextPath()/js/views/user/userorg.js"></script>

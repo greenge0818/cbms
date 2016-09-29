@@ -1,0 +1,381 @@
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="#">发票管理</a>
+        </li>
+        <li>
+            <a href="$link.getContextPath()/invoice/in/awaits.html">进项票管理</a>
+        </li>
+        <li>
+            <a href="$link.getContextPath()/invoice/in/authentication.html">#if($data.status == "WAIT")待#else已#end认证</a>
+        </li>
+    	<li class="active">查看发票</li>
+    </ul>    
+    <!-- /.breadcrumb -->
+</div>
+
+<div class="page-content">
+    <form>
+        <div class="row">
+            <div class="col-xs-12">
+            <div class="page-content">
+                    <div class="col-xs-12">
+                        <div class="step-bar">
+                            <div class="ystep4"></div>
+
+                            <div class="ystep2" style="margin-left:200px;"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- div.table-bar -->
+                <div class="invoice-tit text-center">
+                    <div class="input-group pull-right col-md-12 col-sm-12 col-lg-12 search-bar text-left">
+                        <label>卖家全称：<span id="sellerName">$!{data.sellerName}</span></label>
+                    </div>
+                    <div class="pull-left">
+                        <label> &nbsp;区位码：
+                            $!{data.areaCode}
+                        </label><br/>
+                        <label>发票状态：
+                            #if($data.status == "AWAITS")
+                                待收票
+                            #elseif($data.status == "RECEIVED")
+                                待寄出
+                            #elseif($data.status == "SENT")
+                                待确定
+                            #elseif($data.status == "WAIT")
+                                待认证
+                            #elseif($data.status == "ALREADY")
+                                已认证
+                            #elseif($data.status == "CANCEL")
+                                已作废
+                            #end
+                        </label>
+                    </div>
+                    <span><img src="$link.getContextPath()/img/fp.png" width="170" height="80"/></span>
+
+                    <div class="pull-right">
+                        <label>
+                            发票号No：&nbsp;$!{data.code}
+                        </label><br/>
+                        <label>
+                            &nbsp;<span class="inv-red">开票日期：</span> <em id="detail_invoiceDate">$!date.format('yyyy-MM-dd',$!{data.invoiceDate})</em>
+                        </label>
+                    </div>
+                </div>
+                <div class="table-bar">
+                    <table class="invoice-table-first " style="width:1115px;">
+                        <tbody>
+                        <tr class="border-btm-none">
+                            <td width="30px"><span class="inv-red">购买方</span></td>
+                            <td width="500px">
+                                <ul>
+                                    <li><span class="inv-red">名　　　　称：</span><span>杭州钢为网络科技有限公司</span></li>
+                                    <li><span class="inv-red">纳税人识别号：</span><span>91330103MA27X0F7XW</span></li>
+                                    <li>
+                                        <span class="inv-red">地址、　电话：</span>
+                                        <span>杭州市西湖区西溪街道文二路188号16号楼559室  0571-89718771</span>
+                                    </li>
+                                    <li><span class="inv-red">开户行及账号：</span><span>浦发银行杭州钱塘支行95090154800004792</span>
+                                    </li>
+                                </ul>
+                            </td>
+                            <td width="25px"><span class="inv-red">密码区</span></td>
+                            <td width="500px" style="border-bottom:0;"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <table id="dynamic-table" class="invoice-table text-center" style="width:1115px;">
+                        <tbody>
+                        <tr class="border-btm-none inv-red">
+                            <td width="220px">货物或应税劳务、服务名称</td>
+                            <td width="135">规格型号</td>
+                            <td width="50">单位</td>
+                            <td width="50">数量</td>
+                            <td width="110">单价</td>
+                            <td width="70">金额</td>
+                            <td width="40">税率</td>
+                            <td width="100">税额</td>
+                            <td width="100">价税合计</td>
+                            <td width="60"></td>
+                            <td width="140">备注</td>
+                        </tr>
+                        
+                        ## add by tuxianming show allowance row
+                        #if(${data.allowance})
+	                        <tr class="border-tb-none" id="allowanceRow" allowanceitems="">
+	                            <td width="220px">$!{data.allowance.cargoName}</td>
+	                            <td width="135">折扣</td>
+	                            <td width="50">吨</td>
+	                            <td width="50"> - </td>
+	                            <td width="110"><span name="price">-</span></td>
+	                            <td width="70">
+	                            	$cbmsNumberUtil.formatMoney($!{data.allowance.noTaxAmount})
+	                            </td>
+	                            <td width="40">17%</td>
+	                            <td width="60">
+	                            	$cbmsNumberUtil.formatMoney($!{data.allowance.taxAmount})
+	                            </td>
+	                            <td width="100"><span name="amount">$!{cbmsNumberUtil.formatMoney(${data.allowance.amount})}</span></td>
+	                            <td width="140">
+	                                <button type="button" name="allowanceViewRelate" class="btn btn-xs btn-info look-relate">查看关联</button>
+	                            </td>
+	                            <td style="border-bottom:none;"></td>
+	                        </tr>
+                        #end
+                        ## end allowance row
+                        
+                        #set($notAddMemo=true)
+                        #foreach($detail in $data.details)
+                        #if($detail.checkAmount && $detail.checkAmount>0)
+                        	#set($isChecked=true)
+                        #end
+                        <tr class="border-tb-none">
+                            <td width="220px">$!{detail.nsortNameComb}</td>
+                            <td width="135">$!{detail.specName} ${detail.spec}</td>
+                            <td width="50">吨</td>
+                            <td width="50">
+                            	#if($isChecked)
+                            		$cbmsNumberUtil.formatWeight($!{detail.checkWeight})
+                           		#else 
+                           			$cbmsNumberUtil.formatWeight($!{detail.weight})
+                          		#end
+                          	</td>
+                            <td width="110">
+                            	<span name="price">
+                            	#if($isChecked)
+                            		#set($tmp=$!{detail.checkNoTaxAmount} / ${detail.checkWeight})
+                            	#else 
+                            		#set($tmp=$!{detail.noTaxAmount} / ${detail.weight}) 
+                           		#end
+                           		$!cbmsNumberUtil.formatMoney($tmp)
+                            	</span>
+                           	</td>
+                            <td width="120">
+                            	#if($isChecked)
+                            		$cbmsNumberUtil.formatMoney($!{detail.checkNoTaxAmount})
+                           		#else 
+                           			$cbmsNumberUtil.formatMoney($!{detail.noTaxAmount})
+                         		#end
+                         	</td>
+                            <td width="40">17%</td>
+                            <td width="100">
+                            	#if($isChecked)
+                            		$cbmsNumberUtil.formatMoney($!{detail.checkTaxAmount})
+                           		#else 
+                           			$cbmsNumberUtil.formatMoney($!{detail.taxAmount})
+                          		#end
+                          	</td>
+                            <td width="100">
+                            	<span name="amount">
+                            	#if($isChecked)
+                            		$cbmsNumberUtil.formatMoney($!{detail.checkAmount})
+                            	#else 
+                            		$cbmsNumberUtil.formatMoney($!{detail.amount})
+                            	#end
+                            	</span></td>
+                            <td width="60"><span name="status" class="grey bo"></span>
+                                <button type="button" name="viewRelate" class="btn btn-xs btn-info look-relate" detailId="${detail.id}">查看关联</button>
+                            </td>
+                            #if($notAddMemo)
+                            	#set($notAddMemo=false)
+                            	<td rowspan="$!data.details.size()" width="140" class="memoTd">
+									<textarea rows="2" cols="10" class="memo" disabled="disabled" readonly="readonly">$!data.memo</textarea>
+								</td>
+                            #end
+                        </tr>
+                        #end
+                        <tr class="border-btm-none">
+                            <td width="220px"><span class="inv-red">合计</span></td>
+                            <td width="135"></td>
+                            <td width="50"></td>
+                            <td width="50"></td>
+                            <td width="110"></td>
+                            <td width="70" class="text-right">
+                            	<span id="totalNoTaxAmount">$cbmsNumberUtil.formatMoney($!{data.totalNoTaxAmount})</span>
+                            </td>
+                            <td width="40"></td>
+                            <td width="100" class="text-right">
+                            	<span id="totalTaxAmount">$cbmsNumberUtil.formatMoney($!{data.totalTaxAmount})</span>
+                           	</td>
+                            <td width="100"></td>
+                            <td width="60"></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><span class="inv-red">价税合计</span></td>
+                            <td colspan="10">
+                                <label style="margin-left:188px">
+                                    <span class="rmb inv-red">￥</span>
+                                    #if($data.checkTotalAmount && $data.checkTotalAmount>0)
+                                    	$cbmsNumberUtil.formatMoney($!{data.checkTotalAmount})
+                                    #else
+                                    	$cbmsNumberUtil.formatMoney($!{data.totalAmount})
+                                    #end
+                                </label>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix">
+            <div class="pull-left btn-bar none">
+                <button class="btn btn-primary btn-sm" type="button" title="返回">返回</button>
+            </div>
+        </div>
+    </form>
+
+    <div id="assignDialog" style="display: none;">
+        <div class="row" style="padding: 4px;height:360px;width:1000px;">
+            <div class="col-xs-12">
+                <div class="table-bar" style="height:180px;">
+                    <table class="table text-center" style="margin-bottom: 0px;">
+                        <thead>
+                        <tr>
+                            <th>开票日期</th>
+                            <th>卖家全称</th>
+                            <th>货物或应税劳务名称</th>
+                            <th>规格型号</th>
+                            <th>发票单价</th>
+                            <th>数量/重量(吨)</th>
+                            <th>价税合计（元）</th>
+                            <th>剩余重量</th>
+                            <th>剩余金额</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td id="assign_invoiceDate"></td>
+                            <td id="assign_sellerName"></td>
+                            <td id="assign_cargoName"></td>
+                            <td id="assign_cargoSpec"></td>
+                            <td id="assign_invoicePrice"></td>
+                            <td id="assign_cargoWeight"></td>
+                            <td id="assign_priceTaxAmount"></td>
+                            <td id="assign_remainWeight" class="red"></td>
+                            <td id="assign_remainAmount" class="red"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div style="overflow: auto;overflow-x:hidden;height:230px; ">
+                        <table id="relateTable" class="table text-center">
+                            <thead>
+                            <tr>
+                                <th>时间</th>
+                                <th>交易单号</th>
+                                <th>合同号</th>
+                                <th>买家名称</th>
+                                <th>品名</th>
+                                <th>材质</th>
+                                <th>规格</th>
+                                <th>采购单价</th>
+                                <th>未到票重量(吨)</th>
+                                <th>未到票金额(元)</th>
+                                <th>到票重量</th>
+                                <th>到票金额</th>
+                            </tr>
+                            </thead>
+                            <tbody id="relateTableBody">
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="text-center">
+	#if($data.status == "WAIT")
+	    <button type="button" id="pass" class="btn btn-sm btn-primary">通过认证</button>
+	    <button type="button" id="refuse" class="btn btn-sm btn-primary">不通过认证</button>
+	    <button type="button" id="roollback" class="btn btn-sm btn-primary">打回</button>
+    #else
+    	#if($data.invoiceOutIds)
+    		<button type="button" id="cancel" class="btn btn-sm btn-primary" disabled="disabled">取消认证
+    	#else
+    		<button type="button" id="cancel" class="btn btn-sm btn-primary">取消认证
+    	#end
+    #end
+</div>
+
+<div id="allowanceDialog" style="display: none;">
+    <div class="row" style="padding: 4px;height:360px;width:1150px;">
+        <div class="col-xs-12">
+            <!-- div.table-bar -->
+            <div class="clearfix">
+                <div class="input-group pull-left col-md-12 col-sm-12 col-lg-12 form-inline">
+                    <input type="hidden" id="allowanceCurrentRowId"/>
+                    <label>货物或应税劳务名称：</label>
+                    <span id="allowanceCargoName">$!data.allowance.cargoName</span>&nbsp;&nbsp;
+                    <label>价税合计（元）：</label>
+					<span id="allowancePriceTaxAmount">$!data.allowance.amount</span>&nbsp;&nbsp;
+                    <label>剩余金额（元）：</label>
+                    <span id="allowanceRemainAmount" class="red">0.00</span>
+                </div>
+            </div>
+            <div class="table-bar" style="height:180px;">
+                <div style="overflow: auto;overflow-x:hidden;height:230px; ">
+                    <table id="allowanceTable" class="table text-center">
+                        <thead>
+                        <tr>
+                            <th>折让单号</th>
+                            <th>时间</th>
+                            <th>卖家全称</th>
+                            <th>买家全称</th>
+                            <th>品名</th>
+                            <th>材质</th>
+                            <th>规格</th>
+                            <th>折扣金额</th>
+                        </tr>
+                        </thead>
+                        <tbody id="allowanceTableBody">
+                        #foreach($allowanceItem in $data.allaownceDetails)
+	                        <tr>
+	                            <td>$!allowanceItem.allowanceCode</td>
+	                            <td>$NumberTool.dateToStr($!allowanceItem.orderTime, "yyyy-MM-dd")</td>
+	                            <td>$!{data.sellerName}</td>
+	                            <td>$!allowanceItem.buyerName</td>
+	                            <td>$!allowanceItem.nsortName</td>
+	                            <td>$!allowanceItem.material</td>
+	                            <td>$!allowanceItem.spec</td>
+	                            <td>$!allowanceItem.allowanceAmount</td>
+	                        </tr>
+                        #end
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- /.page-content -->
+<input type="hidden" id="sellerId" value="$!{data.sellerId}"/>
+<input type="hidden" id="invoiceId" value="$!{data.id}"/>
+<script src="$link.getContextPath()/js/views/invoice/certificatedetails.js"></script>
+<script src="$link.getContextPath()/theme/default/js/ystep.js"></script>
+

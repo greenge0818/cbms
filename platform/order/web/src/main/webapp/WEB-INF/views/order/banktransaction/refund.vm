@@ -1,0 +1,93 @@
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            	交易管理
+        </li>
+        <li>
+            <a href="$link.getContextPath()/order/banktransaction/list.html">到账查询</a>
+        </li>
+        <li class="active">退款申请单</li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+    #parse("layout/topbtn.vm")
+    <!-- /.nav-search -->
+</div>
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <!--TAPBAR-->
+            <!-- tapbar S -->
+            #parse("/layout/order/tapbar.vm")
+            <!-- tapbar E -->
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- div.dataTables_borderWrap -->
+            <div id="printTable">
+                <p align="center"><span class="bolder">退款申请单</span></p>
+                <p align="right"><span style="font-family:'Applied Font Bold', 'Applied Font';">申请时间：$!date.format('yyyy-MM-dd HH:mm:ss ',$!refundRequest.created)</span></p>
+                <table class="contable">
+                    <tbody>
+                    <tr>
+                        <td class="bg-gray">收款单位：</td>
+                        <td>$!{refundRequest.receiverName}</td>
+                        <td class="bg-gray">业务类型：</td>
+                        <td>$!{refundRequest.type}</td>
+                    </tr>
+                    <tr>
+                        <td class="bg-gray">收款账号：</td>
+                        <td>$!{refundRequest.receiverAccountCode}</td>
+                        <td class="bg-gray">退款原因：</td>
+                        <td>$!{refundRequest.reason}</td>
+                    </tr>
+                    <tr>
+                        <td class="bg-gray">开户行：</td>
+                        <td>$!{refundRequest.receiverAccountName}</td>
+                        <td class="bg-gray">行号：</td>
+                        <td>$!{refundRequest.bankCode}</td>
+                    </tr>
+                    <tr>
+                        <td class="bg-gray">金额（大写）：</td>
+                        <td>$!{refundRequest.amountUpperCase}</td>
+                        <td class="bg-gray">金额（小写）：</td>
+                        <td>￥$NumberTool.toThousandth($!{refundRequest.amountLowerCase})</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="print-finfo" align="right">
+                    <span>总出纳：</span><span>出纳：</span>
+                    <span>核算会计：</span><span>服务中心总经理：$!charger</span>
+                    <span>申请人：$!requester</span>
+
+                </div>
+            </div>
+            <!--/.recordbar-->
+        </div>
+        <!-- /.col -->
+    </div>
+	    <!-- /.row -->
+
+	<div class="btn-bar">
+	    <a class="btn btn-sm btn-default" href="$link.getContextPath()/order/banktransaction/list.html">返回</a>
+	    <a id="prints" class="btn btn-sm btn-default">打印</a>
+	</div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(document).on("click", "#prints",function () {
+            $( "#printTable" ).print();
+        });
+    })
+</script>

@@ -1,0 +1,63 @@
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+    <style type="text/css">
+    </style>
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            系统管理
+        </li>
+        <li>
+            运营处理
+        </li>
+        <li class="active">
+            错误客户名称修改
+        </li>
+    </ul><!-- /.breadcrumb -->
+
+    </div>
+    <div class="page-content">
+        <div class="row">
+            <div class="col-xs-12">
+                <!--TAPBAR-->
+                <div class="tabbar order-tab">
+                    <ul class="nav nav-tabs padding-12 tab-color-blue" id="myTab4">
+                        <li><a href="$link.getContextPath()/order/query/modifyordercontact.html">返利处理</a></li>
+                        <li class="active"><a href="$link.getContextPath()/sys/maintain/erraccountedit.html">错误客户名称修改</a></li>
+                    </ul>
+                </div>
+                <!-- PAGE CONTENT BEGINS -->
+                <div class="row">
+                    <div class="col-xs-12">
+
+
+            <div class="main-container" id="form-checkData" style="margin-top:50px;">
+                <form id="searchForm">
+                <label>
+                    错误客户名称：<input class="ipt-text" id="errName" name="errName" type="text" value="" />
+                </label>
+                <br>
+                <label>
+                    正确客户名称：<input id="correctName" name="correctName" type="text" value="" />
+                </label>
+                <br /> <br /> <br />
+                <button id="eidtBtn" class="btn btn-info  btn-sm" type="button" >
+                    确认修改
+                </button>
+                </form>
+            </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+
+    <script type="text/javascript" src="$link.getContextPath()/js/views/sys/maintain/erraccountedit.js"></script>

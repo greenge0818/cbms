@@ -1,0 +1,93 @@
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="#">发票管理</a>
+        </li>
+        <li>
+            <a href="#">销项票管理</a>
+        </li>
+        <li>待开票</li>
+    </ul>
+    <!-- /.breadcrumb -->
+        #parse("layout/topbtn.vm")<!-- /.nav-search -->
+</div>
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <!--TAPBAR-->
+            #invoiceTopBar(4, 0)
+            <!--second tab start-->
+            <div class="tabbar">
+                <ul class="nav nav-tabs padding-12 tab-color-blue pull-left" id="secTab">
+                    <li class="" rel="sec-table">
+                        <a  href="$link.getContextPath()/invoice/out/waitinginvoice.html" aria-expanded="false">
+                            待生成的开票清单
+                        </a>
+                    </li>
+                    <li class="active" rel="first-table">
+                        <a  href="javascript:;" aria-expanded="true">
+                            已生成的开票清单
+                        </a>
+                    </li>
+                    <li class="input-org" style="padding-left:20px;">
+                    	<label class="pos-rel" id="org_options">服务中心：
+								<a id="orgSelectBtn" href="javascript:void(0);">选择服务中心</a>
+	                            <div id="orgSelect" class='pos-abs none' style="z-index:10;top:15px;left:70px;width:120px;background:#fff;border:1px solid #ccc">
+	                                <ul>
+	                               		<li class="text-left" style="padding:5px;">
+	                                   		<label class="pos-rel">
+	                                   			<input type="checkbox" id="selectAllOrg" class="ace" value="all">
+	                                   			<span class="lbl">全部服务中心</span>
+	                                   		</label>
+	                                    </li>
+	                                #foreach($org in $!orgs)
+	                                    <li class="text-left" style="padding:5px;">
+	                                   		<label class="pos-rel">
+	                                   			<input type="checkbox"  class="ace" value="$org.id">
+	                                   			<span class="lbl">$org.name</span>
+	                                   		</label>
+	                                    </li>
+	                                #end
+	                                </ul>
+	                            </div>
+	                             <button id="search_btn" class="btn btn-sm btn-default" type="button" title="搜索">
+		                                <i class="aace-icon fa bigger-110"></i>搜索
+		                            </button>
+                        </label>
+                    <li>
+                </ul>
+                <span class="pull-right">
+                    #if($shiro.hasPermission("invoice:out:checklist:page"))
+                        <a href="$link.getContextPath()/invoice/out/checklist/0/index.html" class="btn-sm btn btn-info">查看所有开票清单</a>
+                    #end
+                </span>
+            </div>
+            <!--second tab end-->
+            <div class="table-bar col-sm-12">
+                <table id="generated-table" class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th>清单编号</th>
+                        <th>生成时间</th>
+                        <th>服务中心</th>
+                        <th>申请开票金额（元）</th>
+                        <th>类型</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div><!-- /.page-content -->
+<input type="hidden" id="allowViewChecklist" value="$shiro.hasPermission("invoice:out:checklist:page")" />
+<script src="$link.getContextPath()/js/views/invoice/out/generatedinvoice.js"></script>

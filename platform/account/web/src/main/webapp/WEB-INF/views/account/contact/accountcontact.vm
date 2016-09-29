@@ -1,0 +1,77 @@
+<div class="breadcrumbs" id="breadcrumbs">
+	<script type="text/javascript">
+		try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+	</script>
+
+	<ul class="breadcrumb">
+		<li>
+			<i class="ace-icon fa fa-home home-icon"></i>
+            客户管理
+		</li>
+		<li class="active">联系人划转</li>
+	</ul><!-- /.breadcrumb -->
+
+	<!-- /.nav-search -->
+</div>
+<div class="page-content">
+	<div class="row">
+		<div class="col-xs-12">
+			<!-- PAGE CONTENT BEGINS -->
+
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="clearfix">
+						<div class="form-group">
+							<div class="col-sm-10">
+								<label>待选联系人：</label>
+								<select multiple="multiple" size="10" name="duallistbox_demo1[]" id="duallist">
+								#foreach($item in $list)
+									<option value="$item.cid"  accountId ="$!item.accountId" nameex="$!item.uName" uid="$item.manager" contactName="$!item.bName" type="$!item.type">$!item.bName ($!item.bTel) _$!item.typeName ($!item.accountName #if($item.deptName && "" !=$item.deptName) -$!item.deptName #end ) &nbsp;&nbsp;&nbsp;$!item.uName</option>
+								#end
+								</select>
+								<div class="hr hr-16 hr-dotted"></div>
+							</div>
+							<br/>
+							<br/>
+							<div class="col-sm-2 control-label no-padding-top" for="duallist">
+                                <label>服务中心：</label><input placeholder="请选择服务中心" must='1' id="sorganization" type="text"
+                                                           class="ipt-text" readonly="" value=""
+                                                           onclick="showMenu(); style='width: 200px'"/>
+                                <input type='hidden' id='sorganizationHidden' value='0'/><br/><br/><br/>
+								<label>划转给交易员：</label>
+									<select id="userId"></select>
+								<br/>
+								<br/>
+								<br/>
+								<button class="btn btn-info" type="button" id="trans">
+									<i class="ace-icon fa fa-check bigger-110"></i>
+									确认划转
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div style="text-align:center">
+		        <button id="transferAssignBtn" class="btn btn-sm btn-info" type="button" title="联系人划转历史">
+		            <i class="aace-icon fa bigger-110"></i>联系人划转历史
+		        </button>
+		    </div>
+
+		</div><!-- /.col -->
+	</div><!-- /.row -->
+</div><!-- /.page-content -->
+
+<div id="menuContent" class="menuContent" style="display:none; position: absolute;">
+    <ul id="tree" class="ztree" style="margin-top:0; width:160px;"></ul>
+</div>
+<!-- page specific plugin scripts -->
+<script src="$link.getContextPath()/theme/default/js/jquery.bootstrap-duallistbox.min.js"></script>
+<script src="$link.getContextPath()/theme/default/js/jquery.raty.min.js"></script>
+<script src="$link.getContextPath()/theme/default/js/bootstrap-multiselect.min.js"></script>
+<script src="$link.getContextPath()/theme/default/js/select2.min.js"></script>
+
+<script src="$link.getContextPath()/js/transfered.js"></script>
+<script src="$link.getContextPath()/js/views/account/accoutcontact.js"></script>
+<script src="$link.getContextPath()/js/views/account/assigncommen.js"></script>

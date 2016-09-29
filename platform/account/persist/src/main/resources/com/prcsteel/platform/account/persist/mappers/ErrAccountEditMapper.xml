@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.account.persist.dao.ErrAccountEditDao">
+
+    <update id="updateAccountName" >
+            <![CDATA[
+        update cust_account set name =   #{correctName,jdbcType=VARCHAR} where name =#{errName,jdbcType=VARCHAR};
+		update busi_consign_order set account_name =  #{correctName,jdbcType=VARCHAR} where account_name = #{errName,jdbcType=VARCHAR};
+		update busi_consign_order_items set seller_name =  #{correctName,jdbcType=VARCHAR} where seller_name = #{errName,jdbcType=VARCHAR};
+		update busi_pay_request set buyer_name =  #{correctName,jdbcType=VARCHAR}  where buyer_name = #{errName,jdbcType=VARCHAR};
+		update busi_pay_request_items set receiver_name =  #{correctName,jdbcType=VARCHAR} where receiver_name = #{errName,jdbcType=VARCHAR};
+		update busi_consign_order_contract set customer_name =  #{correctName,jdbcType=VARCHAR} where customer_name = #{errName,jdbcType=VARCHAR};
+		update busi_delivery_bill set seller_name =  #{correctName,jdbcType=VARCHAR} where seller_name = #{errName,jdbcType=VARCHAR};
+		update busi_pickup_bill set buyer_name =  #{correctName,jdbcType=VARCHAR} where buyer_name = #{errName,jdbcType=VARCHAR};
+		update busi_pickup_items set seller_name =  #{correctName,jdbcType=VARCHAR} where seller_name = #{errName,jdbcType=VARCHAR};
+		update inv_pool_in set seller_name =  #{correctName,jdbcType=VARCHAR} where seller_name = #{errName,jdbcType=VARCHAR};
+		update inv_pool_out set buyer_name =  #{correctName,jdbcType=VARCHAR} where buyer_name = #{errName,jdbcType=VARCHAR};
+    ]]>
+        </update>
+
+
+</mapper>

@@ -1,0 +1,293 @@
+#set($LOGIN_USER=$session.getAttribute("LOGINUSER"))
+#set($USER_ORGANIZATION=$session.getAttribute("USER_ORGANIZATION"))
+
+#if(!$LOGIN_USER && !$USER_ORGANIZATION && !$LOGIN_USER.name && !$USER_ORGANIZATION.name)
+<script type="text/javascript">
+    $(function () {
+        $('#main-container').empty();
+        cbms.alert("<span style='color: Red'>对不起，您还没有权限访问当前应用系统！" +
+        "<br/>您即将自动退出本系统！</span>");
+
+        setTimeout(function () {
+            window.location.href = "$link.getContextPath()/logout.html";
+        }, 3000);
+    })
+</script>
+#else
+<script type="text/javascript">
+    $(document).on("click", "#logout", function () {
+        window.sessionStorage.removeItem("hideGuide");
+    });
+</script>
+#end
+
+<script type="text/javascript">
+	var domain = {
+		order:'$orderDomain',
+		kuandao:'$kuandaoDomain'
+	};
+	
+</script>
+<script src='$link.getContextPath()/js/kuandao/ZeroClipboard.js'></script>
+<script src='$link.getContextPath()/js/kuandao/takenumber.js'></script>
+<div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <script type="text/javascript">
+        try{ace.settings.check('navbar' , 'fixed')}catch(e){}
+    </script>
+
+    <div class="navbar-container" id="navbar-container">
+        <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
+            <span class="sr-only">Toggle sidebar</span>
+
+            <span class="icon-bar"></span>
+
+            <span class="icon-bar"></span>
+
+            <span class="icon-bar"></span>
+        </button>
+
+        <div class="navbar-header pull-left">
+            <a href="$link.getContextPath()/index.html" class="navbar-brand">
+                <span class="logo-bar">
+					<img src="$link.getContextPath()/img/logo.png" />&nbsp;杭州钢为网络科技有限公司<em style="font-size:10px">v2.0</em>
+                </span>
+            </a>
+            <div style="line-height: 42px;color:#fff;/* margin-left:300px; */height: 42px;text-align: center;width: 900px;font-size: 16px;">
+                公司打款账号&nbsp;&nbsp;工行：1202020619900121479&nbsp;&nbsp;浦发：95090154800004792
+            </div>
+        </div>
+        <div class="pull-left">
+
+        </div>
+
+        <div class="navbar-buttons navbar-header pull-right" role="navigation">
+            <ul class="nav ace-nav">
+                
+            <!--<li class="purple">
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <i class="ace-icon fa fa-bell icon-animated-bell"></i>
+                        <span class="badge badge-important">8</span>
+                    </a>
+
+                    <ul class="dropdown-menu-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close">
+                        <li class="dropdown-header">
+                            <i class="ace-icon fa fa-exclamation-triangle"></i>
+                            8 条通告
+                        </li>
+
+                        <li class="dropdown-content">
+                            <ul class="dropdown-menu dropdown-navbar navbar-pink">
+                                <li>
+                                    <a href="#">
+                                        <div class="clearfix">
+													<span class="pull-left">
+														<i class="btn btn-xs no-hover btn-pink fa fa-comment"></i>
+														New Comments
+													</span>
+                                            <span class="pull-right badge badge-info">+12</span>
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="btn btn-xs btn-primary fa fa-user"></i>
+                                        Bob just signed up as an editor ...
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <div class="clearfix">
+													<span class="pull-left">
+														<i class="btn btn-xs no-hover btn-success fa fa-shopping-cart"></i>
+														New Orders
+													</span>
+                                            <span class="pull-right badge badge-success">+8</span>
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <div class="clearfix">
+													<span class="pull-left">
+														<i class="btn btn-xs no-hover btn-info fa fa-twitter"></i>
+														Followers
+													</span>
+                                            <span class="pull-right badge badge-info">+11</span>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="dropdown-footer">
+                            <a href="#">
+                                                                                查看更多
+                                <i class="ace-icon fa fa-arrow-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </li>-->
+				
+           <!--<li class="green">
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <i class="ace-icon fa fa-envelope icon-animated-vertical"></i>
+                        <span class="badge badge-success">5</span>
+                    </a>
+
+                    <ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
+                        <li class="dropdown-header">
+                            <i class="ace-icon fa fa-envelope-o"></i>
+                            5 条信息
+                        </li>
+
+                        <li class="dropdown-content">
+                            <ul class="dropdown-menu dropdown-navbar">
+                                <li>
+                                    <a href="#" class="clearfix">
+                                        <img src="$link.getContextPath()/theme/default/avatars/avatar.png" class="msg-photo" alt="Alex's Avatar" />
+												<span class="msg-body">
+													<span class="msg-title">
+														<span class="blue">Alex:</span>
+														Ciao sociis natoque penatibus et auctor ...
+													</span>
+
+													<span class="msg-time">
+														<i class="ace-icon fa fa-clock-o"></i>
+														<span>a moment ago</span>
+													</span>
+												</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#" class="clearfix">
+                                        <img src="$link.getContextPath()/theme/default/avatars/avatar3.png" class="msg-photo" alt="Susan's Avatar" />
+												<span class="msg-body">
+													<span class="msg-title">
+														<span class="blue">Susan:</span>
+														Vestibulum id ligula porta felis euismod ...
+													</span>
+
+													<span class="msg-time">
+														<i class="ace-icon fa fa-clock-o"></i>
+														<span>20 minutes ago</span>
+													</span>
+												</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#" class="clearfix">
+                                        <img src="$link.getContextPath()/theme/default/avatars/avatar4.png" class="msg-photo" alt="Bob's Avatar" />
+												<span class="msg-body">
+													<span class="msg-title">
+														<span class="blue">Bob:</span>
+														Nullam quis risus eget urna mollis ornare ...
+													</span>
+
+													<span class="msg-time">
+														<i class="ace-icon fa fa-clock-o"></i>
+														<span>3:15 pm</span>
+													</span>
+												</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#" class="clearfix">
+                                        <img src="$link.getContextPath()/theme/default/avatars/avatar2.png" class="msg-photo" alt="Kate's Avatar" />
+												<span class="msg-body">
+													<span class="msg-title">
+														<span class="blue">Kate:</span>
+														Ciao sociis natoque eget urna mollis ornare ...
+													</span>
+
+													<span class="msg-time">
+														<i class="ace-icon fa fa-clock-o"></i>
+														<span>1:33 pm</span>
+													</span>
+												</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#" class="clearfix">
+                                        <img src="$link.getContextPath()/theme/default/avatars/avatar5.png" class="msg-photo" alt="Fred's Avatar" />
+												<span class="msg-body">
+													<span class="msg-title">
+														<span class="blue">Fred:</span>
+														Vestibulum id penatibus et auctor  ...
+													</span>
+
+													<span class="msg-time">
+														<i class="ace-icon fa fa-clock-o"></i>
+														<span>10:09 am</span>
+													</span>
+												</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="dropdown-footer">
+                            <a href="inbox.html">
+                                                                                查看所有
+                                <i class="ace-icon fa fa-arrow-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </li>-->
+
+                <li class="red">
+                    <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                        <span>
+                            $!{USER_ORGANIZATION.name}
+                        </span>
+                        <img class="nav-user-photo" src="$link.getContextPath()/theme/default/avatars/user.jpg" alt="$!{shiro.getUsername()}'s Photo" />
+                                <span class="user-info">
+									<small>欢迎,</small>
+                                    $!{LOGIN_USER.name}
+								</span>
+
+                        <i class="ace-icon fa fa-caret-down"></i>
+                    </a>
+
+                    <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                        #*<li>
+                            <a href="#">
+                                <i class="ace-icon fa fa-cog"></i>
+ 								设置
+                            </a>
+                        </li>*#
+
+                        <li>
+                            <a target="_blank" href="http://iwork.gtxh.cn:8080/">
+                                <i  class="ace-icon fa fa-user"></i>
+                            	个人信息
+                            </a>
+                        </li>
+
+                        <li class="divider"></li>
+
+                        <li>
+                            <a id="logout" href="$link.getContextPath()/logout.html">
+                                <i class="ace-icon fa fa-power-off"></i>
+								退出
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+		#if($shiro.hasPermission("kuandao:takenumber:btn"))
+		<div class="pull-right" id="takeNumberStyle">
+            <a href="#" class="kuandao-btn" onclick="takeNumber()"></a>
+        </div>
+		#end
+    </div><!-- /.navbar-container -->
+</div>
+
+

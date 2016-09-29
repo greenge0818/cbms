@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.order.persist.dao.OrderStatusDao">
+
+    <resultMap id="OrderAuditTrailMap" type="com.prcsteel.platform.order.model.model.OrderAuditTrail">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="order_id" jdbcType="BIGINT" property="orderId"/>
+        <result column="set_to_status" jdbcType="VARCHAR" property="setToStatus"/>
+        <result column="operator_id" jdbcType="BIGINT" property="operatorId"/>
+        <result column="operator_name" jdbcType="VARCHAR" property="operatorName"/>
+        <result column="note" jdbcType="VARCHAR" property="note"/>
+        <result column="status_type" jdbcType="CHAR" property="statusType"/>
+        <result column="created" jdbcType="TIMESTAMP" property="created"/>
+        <result column="created_by" jdbcType="VARCHAR" property="createdBy"/>
+        <result column="last_updated" jdbcType="TIMESTAMP" property="lastUpdated"/>
+        <result column="last_updated_by" jdbcType="VARCHAR" property="lastUpdatedBy"/>
+        <result column="modification_number" jdbcType="INTEGER" property="modificationNumber"/>
+        <result column="row_id" jdbcType="VARCHAR" property="rowId"/>
+        <result column="parent_row_id" jdbcType="VARCHAR" property="parentRowId"/>
+        <result column="ext1" jdbcType="VARCHAR" property="ext1"/>
+        <result column="ext2" jdbcType="VARCHAR" property="ext2"/>
+        <result column="ext3" jdbcType="VARCHAR" property="ext3"/>
+        <result column="ext4" jdbcType="INTEGER" property="ext4"/>
+        <result column="ext5" jdbcType="INTEGER" property="ext5"/>
+        <result column="ext6" jdbcType="INTEGER" property="ext6"/>
+        <result column="ext7" jdbcType="TIMESTAMP" property="ext7"/>
+        <result column="ext8" jdbcType="BIGINT" property="ext8"/>
+    </resultMap>
+    <resultMap id="auditDetail" type="com.prcsteel.platform.order.model.dto.ConsignOrderStatusDto">
+        <result column="operator_name" property="operaterName" jdbcType="VARCHAR"/>
+        <result column="name" property="roleName" jdbcType="VARCHAR"/>
+        <result column="tel" property="mobile" jdbcType="VARCHAR"/>
+        <result column="set_to_status" property="status" jdbcType="VARCHAR"/>
+        <result column="status_type" property="statusType" jdbcType="VARCHAR"/>
+        <result column="created" property="operationTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <select id="getAuditDetailById" resultMap="auditDetail" parameterType="java.lang.Long">
+      select t1.set_to_status,operator_id,operator_name,status_type,t1.created,t3.name,t2.tel
+from busi_consign_order_audit_trail t1
+  inner join acl_user t2 on t1.operator_id=t2.id
+  inner join acl_role t3 on t2.role_id=t3.id
+where order_id=#{orderId,jdbcType=BIGINT};
+  </select>
+
+    <insert id="insertOrderAuditTrail" parameterType="com.prcsteel.platform.order.model.model.OrderAuditTrail">
+    insert into busi_consign_order_audit_trail (id, order_id, set_to_status,
+    operator_id, operator_name, note,
+    status_type, created, created_by,
+    last_updated, last_updated_by, modification_number,
+    row_id, parent_row_id, ext1,
+    ext2, ext3, ext4, ext5,
+    ext6, ext7, ext8)
+    values (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{setToStatus,jdbcType=VARCHAR},
+    #{operatorId,jdbcType=BIGINT}, #{operatorName,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR},
+    #{statusType,jdbcType=CHAR}, #{created,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR},
+    #{lastUpdated,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}, #{modificationNumber,jdbcType=INTEGER},
+    #{rowId,jdbcType=VARCHAR}, #{parentRowId,jdbcType=VARCHAR}, #{ext1,jdbcType=VARCHAR},
+    #{ext2,jdbcType=VARCHAR}, #{ext3,jdbcType=VARCHAR}, #{ext4,jdbcType=INTEGER}, #{ext5,jdbcType=INTEGER},
+    #{ext6,jdbcType=INTEGER}, #{ext7,jdbcType=TIMESTAMP}, #{ext8,jdbcType=BIGINT})
+  </insert>
+
+    <update id="updateOrderStatus" parameterType="map">
+        update busi_consign_order
+        set
+        <if test="status != null">
+            status = #{status,jdbcType=VARCHAR},
+        </if>
+        <if test="payStatus != null">
+            pay_status = #{payStatus,jdbcType=VARCHAR},
+        </if>
+        <if test="pickupStatus != null">
+            pickup_status = #{pickupStatus,jdbcType=INTEGER},
+        </if>
+        <if test="fillupStatus != null">
+            fillup_status = #{fillupStatus,jdbcType=INTEGER},
+        </if>
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+        modification_number = ifnull(modification_number,0)+1
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateOrderStatusForSecondarySettlement" parameterType="map">
+    update busi_consign_order
+    set status = #{status},
+    last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+    last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+    secondary_time = #{secondaryTime,jdbcType=TIMESTAMP},
+    modification_number = ifnull(modification_number,0)+1
+    where status = 6 and id = #{orderId}
+  </update>
+
+    <select id="getLastStatus" resultMap="OrderAuditTrailMap">
+	      select * from busi_consign_order_audit_trail 
+			where order_id=#{orderId,jdbcType=BIGINT}
+			and status_type=#{statusType,jdbcType=VARCHAR}
+			order by created desc 
+			limit 0,1
+	</select>
+
+    <!--批量插入-->
+    <insert id="batchInsert" parameterType="com.prcsteel.platform.order.model.model.OrderAuditTrail">
+        insert into busi_consign_order_audit_trail (id, order_id, set_to_status,
+        operator_id, operator_name, note,
+        status_type, created, created_by,
+        last_updated, last_updated_by, modification_number,
+        row_id, parent_row_id, ext1,
+        ext2, ext3, ext4, ext5,
+        ext6, ext7, ext8)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.id,jdbcType=BIGINT}, #{item.orderId,jdbcType=BIGINT}, #{item.setToStatus,jdbcType=VARCHAR},
+            #{item.operatorId,jdbcType=BIGINT}, #{item.operatorName,jdbcType=VARCHAR}, #{item.note,jdbcType=VARCHAR},
+            #{item.statusType,jdbcType=CHAR}, #{item.created,jdbcType=TIMESTAMP}, #{item.createdBy,jdbcType=VARCHAR},
+            #{item.lastUpdated,jdbcType=TIMESTAMP}, #{item.lastUpdatedBy,jdbcType=VARCHAR}, #{item.modificationNumber,jdbcType=INTEGER},
+            #{item.rowId,jdbcType=VARCHAR}, #{item.parentRowId,jdbcType=VARCHAR}, #{item.ext1,jdbcType=VARCHAR},
+            #{item.ext2,jdbcType=VARCHAR}, #{item.ext3,jdbcType=VARCHAR}, #{item.ext4,jdbcType=INTEGER}, #{item.ext5,jdbcType=INTEGER},
+            #{item.ext6,jdbcType=INTEGER}, #{item.ext7,jdbcType=TIMESTAMP}, #{item.ext8,jdbcType=BIGINT}
+            )
+        </foreach>
+    </insert>
+
+    <select id="queryCloseReasonByOrderId" resultType="java.lang.String">
+        SELECT IFNULL(ext3,'无')
+        FROM busi_consign_order_audit_trail
+		    WHERE set_to_status IN ('3', '-4','-5','-1','5') AND order_id = #{orderId,jdbcType=BIGINT}
+        ORDER BY created DESC LIMIT 0,1
+    </select>
+
+
+
+
+</mapper>

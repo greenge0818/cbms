@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.smartmatch.persist.dao.CacheDao" >
+  <!-- 获取客户相关信息  -->
+  <resultMap id="accountMap" type="com.prcsteel.platform.smartmatch.model.dto.CacheAccountDto" >
+    <result column="accountId" property="accountId" jdbcType="BIGINT" />
+    <result column="accountName" property="accountName" jdbcType="VARCHAR" />
+    <result column="account_tag" property="accountTag" jdbcType="BIGINT" />
+	<result column="contactName" property="contactName" jdbcType="VARCHAR" />
+	<result column="contactTel" property="contactTel" jdbcType="VARCHAR" />    
+  </resultMap>
+  <select id="getAccountInfo"  resultMap="accountMap">
+    select t.id as accountId,t.name as accountName,t.account_tag,group_concat(t3.name  separator ',') as contactName,
+		group_concat(t3.tel  separator ',') as contactTel from cust_account t
+    -- 根据Id找部门
+    left join cust_account t1 on t1.parent_id = t.id
+    -- 根据部门Id找到联系人关系
+    left join cust_account_contact t2 on t2.account_id = t1.id
+    -- 找到联系人姓名和电话
+    left join cust_contact t3 on t3.id = t2.contact_id
+		group by t.id
+  </select>
+</mapper>

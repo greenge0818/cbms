@@ -1,0 +1,165 @@
+<div class="main-content">
+	<div class="main-content-inner">
+		<div class="breadcrumbs" id="breadcrumbs">
+			<script type="text/javascript">
+				try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+			</script>
+
+			<ul class="breadcrumb">
+				<li>
+					<i class="ace-icon fa fa-home home-icon"></i>
+					交易管理
+				</li>
+                <li>
+                    <a href="$link.getContextPath()/common/menu/order-view/order-query-index-page.html">交易单管理</a>
+                </li>
+                <li>
+                    <a href="$link.getContextPath()/order/query/pickup.html">待提货</a>
+                </li>
+				<li class="active">查看提货单</li>
+			</ul><!-- /.breadcrumb -->
+
+				#parse("layout/topbtn.vm")<!-- /.nav-search -->
+		</div>
+
+		<div class="page-content">
+			<div class="row">
+				<div class="recordbar text-left col-xs-12">
+				  <span>买家全称：<span class="bolder">$!{order.accountName}</span></span>
+				  <span>交易单号：<span class="bolder">$!{order.code}</span></span>
+				  #if($!order.pickupStatus!=3)
+				  <!--<a href="$link.getContextPath()/order/pickup/order/$!{order.id}/create.html">继续录入提货单</a>-->
+				  #end
+				</div>
+			</div>
+			#foreach($info in $list)
+				
+			#set($head=$info.get("head"))
+			<div class="row">
+				<div class="text-left col-xs-12 clearfix">
+				  <span>提货单号：<span class="bolder">$!{head.code}</span></span>
+				  <span>提货证件：<span class="bolder">#if($!{head.deliveryType}=="CAR") 行驶证#else 身份证#end</span></span>
+				  <span>录入时间：<span class="bolder">$date.format("yyyy-MM-dd HH:mm:ss",$!{head.created})</span></span>
+				   
+				  <span class="pull-right">
+					  <!--
+					  <a href="$link.getContextPath()/order/pickup/${head.id}.html">查看</a> -->
+					  #if($shiro.hasPermission("order:query:pickup:print"))  
+						<a href="$link.getContextPath()/order/pickup/${head.id}/showprint.html"">打印</a>
+					  #end
+	    			  #if($head.ext4==0) 
+							#if($shiro.hasPermission("order:query:pickup:edit"))  
+						  <a href="$link.getContextPath()/order/pickup/${head.id}/edit.html">编辑</a>
+							#end
+							#if($shiro.hasPermission("order:query:pickup:delete"))  
+	    				  <a href="javascript:;" onclick="delPickupBill($head.id)">删除</a>
+						  #end
+					  #end
+					  <!--
+					  #if($head.ext4==0)
+					  
+					  #end
+					  #if($head.ext5>0)
+						<a href="$link.getContextPath()/order/pickup/${head.id}/delivery.html">放货单</a>
+					  #else
+						
+					  #end
+					  -->
+				  </span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="table-bar">
+					<table id="dynamic-table" class="table table-striped table-bordered table-hover">
+						<thead><tr><th>货权公司</th><th>类型</th><th>交货地</th><th>仓库</th><th>品名</th><th>规格</th><th>材质</th>
+						<th>件量<br>（吨）</th><th>订单数量</th><th>提货数量</th><th>提货重量<br>（吨）</th></tr></thead>
+						<tbody>
+							#foreach( $elem in $info.get("detail"))
+							<tr>
+								<td>$!{elem.seller_name}</td><td>$!{elem.consign_type}</td><td>$!{elem.city}</td><td>$!{elem.warehouse}</td><td>$!{elem.nsort_name} </td><td> $!{elem.spec}</td>
+                                <td>${elem.material}</td><td>${elem.single_weight}</td><td>${elem.quantity}</td><td><span class="red">$!{elem.pick_quantity}</span></td>
+									<td><span class="red">$!{elem.pick_weight1}</span></td>
+							</tr>
+							#end
+						</tbody>
+
+					</table>
+				</div><!--/table-bar 1-->
+				
+			</div><!-- /.row -->
+			#end
+			<div class="btn-bar text-center"><button id="back" type="button" class="btn btn-default">返回</button></div>
+		</div><!-- /.page-content -->
+		
+	</div>
+</div><!-- /.main-content -->
+<input name="consignOrderId" value="${order.id}" type="hidden"/>
+<script>
+function delPickupBill(billId){
+    if(!showButtons()){
+        return false;
+    }
+    cbms.confirm("确实删除?","",function(){
+		$.get("$link.getContextPath()/order/pickup/"+billId+"/delete.html",function(data){
+    		if(data.success){
+				if(data.data=="clear"){
+    				cbms.alert("删除成功",function(){
+    					location.href="$link.getContextPath()/order/query/pickup.html"
+    				});
+				}else{
+					cbms.alert("删除成功",function(){
+    					location.reload();
+    				});
+				}
+			}else{
+    			cbms.alert(data.data);
+			}
+    	});
+	});
+}
+$(document).ready(function() {
+	$(document).on("click","#back",function(){
+		location.href="$link.getContextPath()/order/query/pickup.html";
+	})
+});
+/**
+ * 正在进行合同变更的订单，禁止除“返回”外的按钮操作
+ */
+function showButtons() {
+    //var type = $("#alterStatus").val();
+    var orderId = $('input[name="consignOrderId"]').val() ;
+    var returnFlag = true;
+    /*if(type == "PENDING_APPROVAL" || type == "PENDING_RELATE" || type=="PENDING_APPLY" || type=="PAYED_DISAPPROVE" ||type=="PENDING_APPR_PAY" || type =="PENDING_PRINT_PAY" || type =="PENDING_CONFIRM_PAY"){
+ cbms.alert("该交易单正在进行合同变更，请变更完成后操作！");
+ return false;
+ }else{*/
+    $.ajax({
+        type: 'post',
+        async: false,
+        url: Context.PATH + '/order/changecontract/queryorderpaystatus.html',
+        data: {
+            orderId: orderId,
+            origin:"origin"
+        },
+        error: function (s) {
+            cbms.alert("查询订单信息报错！");
+            returnFlag = false;
+        }
+        , success: function (re) {
+            if (re.success) {
+                if(re.data == "PENDING_APPROVAL" || re.data == "PENDING_RELATE" || re.data=="PENDING_APPLY" || re.data=="PAYED_DISAPPROVE" || re.data=="PENDING_APPR_PAY" || re.data =="PENDING_PRINT_PAY" || re.data =="PENDING_CONFIRM_PAY"){
+                    cbms.alert("该交易单正在进行合同变更，请变更完成后操作！");
+                    returnFlag = false;
+                }else{
+                    returnFlag = true;
+                }
+            }else{
+                cbms.alert("查询订单信息报错！");
+                returnFlag = false;
+            }
+        }
+    });
+    //}
+    return returnFlag;
+}
+</script>

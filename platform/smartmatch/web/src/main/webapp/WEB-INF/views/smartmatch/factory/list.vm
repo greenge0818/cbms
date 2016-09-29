@@ -1,0 +1,210 @@
+#set($layout="layout/blank.vm")
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <title>品牌店代运营系统</title>
+    <!-- meta S -->
+    #parse("layout/meta.vm")
+    <!-- meta E -->
+    <!-- meta S -->
+    #parse("layout/context.vm")
+    <!-- meta E -->
+</head>
+
+<body class="no-skin">
+<!-- Header S-->
+#parse("layout/header.vm")
+<!-- Header E -->
+
+<div class="main-container" id="main-container">
+    <script type="text/javascript">
+        try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+    </script>
+
+    <!-- Sidebar S-->
+    #parse("layout/sidebar.vm")
+    <!-- Sidebar E -->
+
+    <div class="main-content">
+        <div class="main-content-inner">
+            <div class="breadcrumbs" id="breadcrumbs">
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="ace-icon fa fa-home home-icon"></i>
+                        	基础管理
+                    </li>
+                    <li class="active">钢厂管理</li>
+                </ul><!-- /.breadcrumb -->
+            </div>
+            <!-- content S -->
+            <div class="page-content">
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+								<div class="row">
+									<div class="col-xs-12">
+										<div class="clearfix">
+                                            <div class="input-group pull-right col-md-11 col-sm-11 col-lg-11 search-bar text-left">
+                                                <form class="form-inline">
+                                                    <label>钢厂：</label><input id="factoryName" class="" type="text" value="" />
+                                                    <label>城市：</label><input id="factoryCity" class="" type="text" value="" />
+                                                    <label>生产品种：</label><input id="factoryBusiness" class="" type="text" value="" />
+                                                    <button id="searchVendorlist" class="btn btn-sm btn-default" type="button">搜索
+                                                    </button>
+													<button class="btn btn-sm btn-default" type="button" id='cleanSearch'>清空</button>
+                                                </form>
+                                            </div>
+											<div class="pull-left">
+                                                <button id="addFactory" class="btn btn-primary" title="添加">
+                                                    <i class="ace-icon glyphicon glyphicon-plus align-top bigger-125"></i>
+                                                    添加
+                                                </button>
+                                            </div>
+										</div>
+
+										<!-- div.dataTables_borderWrap -->
+										<div>
+											<table id="dynamic-table" class="table table-striped table-bordered table-hover">
+												<thead>
+													<tr>
+														<th>钢厂名称</th>
+														<th>别名</th>
+														<th>所在城市</th>
+														<th>详细地址</th>
+														<th>首字母</th>
+														<th>联系人</th>
+														<th>电话</th>
+														<th>生产品种</th>
+														<th>经度</th>
+														<th>纬度</th>
+														<th>年产量(万吨)</th>
+														<th style="width: 80px;">操作</th>
+													</tr>
+												</thead>
+											</table>
+										</div>
+
+										 <div id="hidden-form" style='display: none;'>
+                                             <div class="well" style="width:475px">
+                                            	<form id="form-horizontal" class="form-horizontal" role="form">
+                                            		<div class="form-group">
+                                            			<label class="col-sm-3 control-label no-padding-right" for="name"><em class="red">*</em>钢厂</label>
+                                            			<div class="col-sm-9">
+                                            				<input type="text" id="name" placeholder="请输入钢厂名" must="1" class="col-xs-10 col-sm-5" />
+                                            			</div>
+                                            		</div>
+													
+													<div class="form-group">
+                                            			<label class="col-sm-3 control-label no-padding-right" for="alias">别名</label>
+                                            			<div class="col-sm-9">
+                                            				<input type="text" id="alias" placeholder="请输入别名" class="col-xs-10 col-sm-5" />
+                                            			</div>
+                                            		</div>
+
+                                            		<div class="form-group">
+                                            			<label class="col-sm-3 control-label no-padding-right" for="address"><em class="red">*</em>地址</label>
+                                            			<div class="col-sm-9">
+                                            				<span class="vendor-edit"><select id="province" name="provinceId" must="1" class="col-xs-10 col-sm-4">
+                                            					<option value="">==请选择==</option> </select>
+                                            					<select id="city" name="cityId" must="1" class="col-xs-10 col-sm-4"></select>
+                                            					<select id="district" name="districtId" class="col-xs-10 col-sm-4"></select>
+                                            				</span>
+                                            			</div>
+                                            		</div>
+
+                                            		<div class="form-group">
+                                            			<label class="col-sm-3 control-label no-padding-right" for="addr"></label>
+                                            			<div class="col-sm-9">
+                                            				<input type="text" id="addr" placeholder="详细地址" must="1" class="col-xs-10 col-sm-5"/>
+                                            			</div>
+                                            		</div>
+                                            		
+                                            		<div class="form-group">
+                                            			<label class="col-sm-3 control-label no-padding-right" for="initials">首字母:</label>
+                                            			<div class="col-sm-9">
+                                            				<input type="text" id="initials" placeholder="请输入首字母" maxlength="1"  class="col-xs-10 col-sm-5"/>
+                                            			</div>
+                                            		</div>
+                                            		<div class="form-group">
+                                            			<label class="col-sm-3 control-label no-padding-right" for="longitude">经度</label>
+                                            			<div class="col-sm-9">
+                                            				<input type="text" id="longitude" placeholder="请输入经度" verify="numeric" class="col-xs-10 col-sm-5" />
+                                            			</div>
+                                            		</div>
+
+                                            		<div class="form-group">
+                                            			<label class="col-sm-3 control-label no-padding-right" for="latitude">纬度</label>
+                                            			<div class="col-sm-9">
+                                            				<input type="text" id="latitude" placeholder="请输入纬度" verify="numeric" class="col-xs-10 col-sm-5" />
+                                            			</div>
+                                            		</div>
+
+                                            		<div class="form-group">
+                                                    	<label class="col-sm-3 control-label no-padding-right" for="contact">联系人</label>
+                                            			<div class="col-sm-9">
+                                                    		<input type="text" id="contact" placeholder="联系人姓名" class="col-xs-10 col-sm-5" />
+                                                    	</div>
+                                                    </div>
+                                                    
+                                                    <div class="form-group">
+                                                    	<label class="col-sm-3 control-label no-padding-right" for="mobile"><em class="red">*</em>电话</label>
+                                                    	<div class="col-sm-9">
+                                                    		<input type="text" id="mobile" placeholder="电话" must="1" class="col-xs-10 col-sm-5" />
+                                                    	</div>
+                                                    </div>
+
+
+                                            		<div class="form-group">
+                                            			<label class="col-sm-3 control-label no-padding-right" for="business">主营</label>
+                                            			<div class="col-sm-9">
+                                            				<input type="text" id="business" placeholder="主营产品" class="col-xs-10 col-sm-5" />
+                                            			</div>
+                                            		</div>
+
+                                            		<div class="form-group">
+                                            			<label class="col-sm-3 control-label no-padding-right" for="output">产量</label>
+                                            			<div class="col-sm-9">
+                                            				<input type="text" id="output" verify="smartweight" class="col-xs-10 col-sm-5" />
+                                            				<label class="col-sm-2 control-label no-padding-left" for="deptName">吨/年</label>
+                                            			</div>
+                                            		</div>
+                                                </form>
+
+                                            	<div class="modal-footer">
+                                            		<button data-bb-handler="success" type="button" id="saveInfoBtn" class="btn btn-sm btn-primary">
+                                            		<i class="ace-icon fa fa-check"></i>
+                                            		保存
+                                            		</button>
+                                            		<button data-bb-handler="button" type="button" id="cancel" class="btn btn-sm">
+                                            		取消
+                                            		</button>
+                                            	</div>
+                                            </div>
+                                            </div>
+
+									</div>
+								</div>
+
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+            <!-- content E -->
+        </div>
+    </div><!-- /.main-content -->
+
+    <!-- Footer S -->
+    #parse("layout/footer.vm")
+    <!-- Footer E -->
+
+    <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+        <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+    </a>
+</div><!-- /.main-container -->
+
+<!-- basic scripts S -->
+#parse("layout/scripts.vm")
+<!-- basic scripts E -->
+<script src="$link.getContextPath()/js/views/smartmatch/factory/factory.js"></script>
+<script src="$link.getContextPath()/js/views/common/regionallinkage.js"></script>
+</body>
+</html>

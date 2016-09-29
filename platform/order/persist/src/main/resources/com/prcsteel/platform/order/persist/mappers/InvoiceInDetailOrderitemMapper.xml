@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.order.persist.dao.InvoiceInDetailOrderitemDao">
+    
+    <insert id="batchInsert" parameterType="com.prcsteel.platform.order.model.model.InvoiceInDetailOrderItem">
+    insert into inv_invoice_in_detail_orderitem (id, invoice_detail_id, order_id, 
+      orderitem_id, weight, amount, allowance_amount,
+      active, created, created_by, 
+      last_updated, last_updated_by, modification_number, 
+      row_id, parent_row_id, ext1, 
+      ext2, ext3, ext4, ext5, 
+      ext6, ext7, ext8)
+    values 
+    <foreach collection="list" item="it" separator=",">
+    (#{it.id}, #{it.invoiceDetailId}, #{it.orderId}, 
+      #{it.orderitemId}, #{it.weight}, #{it.amount}, #{it.allowanceAmount},
+      #{it.active},NOW(), #{it.createdBy},
+      NOW(), #{it.lastUpdatedBy}, 0, 
+      #{it.rowId}, #{it.parentRowId}, #{it.ext1}, 
+      #{it.ext2}, #{it.ext3}, #{it.ext4}, #{it.ext5}, 
+      #{it.ext6}, #{it.ext7}, #{it.ext8})
+    </foreach>
+  </insert>
+  
+  <select id="selectByDetailIds" parameterType="java.lang.Long" resultType="com.prcsteel.platform.order.model.model.InvoiceInDetailOrderItem">
+  	SELECT 
+		id, invoice_detail_id invoiceDetailId, order_id orderId, 
+		orderitem_id orderitemId, weight, amount, IFNULL(allowance_amount,0) allowanceAmount,
+		active, created, created_by createdBy, 
+		last_updated lastUpdated, last_updated_by lastUpdatedBy, 
+		modification_number modificationNumber, 
+		row_id rowId, parent_row_id parentRowId, ext1, 
+		ext2, ext3, ext4, ext5, 
+		ext6, ext7, ext8
+ 	FROM inv_invoice_in_detail_orderitem
+  	WHERE active = 1 AND invoice_detail_id IN
+  	<foreach collection="list" item="id" open="(" close=")" separator=",">#{id}</foreach>
+  </select>
+
+  <update id="setInactiveByDetailId" parameterType="java.lang.Long">
+  	UPDATE inv_invoice_in_detail_orderitem
+  	SET active = 0
+  	WHERE invoice_detail_id=#{invoiceDetailId}
+  </update>
+
+    <select id="countByOrderId" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        SELECT count(id)
+        FROM inv_invoice_in_detail_orderitem
+        WHERE active = 1 AND order_id = #{orderId}
+    </select>
+    
+   <select id="queryOrderItemIds"  parameterType="com.prcsteel.platform.order.model.query.AllowanceOrderQuery" resultType="java.lang.Long">
+  	SELECT 
+		orderitem_id
+ 	FROM inv_invoice_in_detail_orderitem
+  	WHERE active = 1 AND orderitem_id IN
+  	<foreach collection="orderDetailIds" item="id" open="(" close=")" separator=",">#{id}</foreach>
+  	GROUP BY orderitem_id
+  </select>
+    <resultMap id="orderItemsInvoiceInInfoDto" type="com.prcsteel.platform.order.model.dto.OrderItemsInvoiceInInfoDto">
+        <result column="created" property="created" jdbcType="VARCHAR" />
+        <result column="area_code" property="areaCode" jdbcType="VARCHAR" />
+        <result column="code" property="code" jdbcType="VARCHAR" />
+        <result column="seller_name" property="sellerName" jdbcType="VARCHAR" />
+        <result column="nsort_name_comb" property="nsortNameComb" jdbcType="VARCHAR" />
+        <result column="type_of_spec" property="typeOfSpec" jdbcType="VARCHAR" />
+        <result column="price" property="price" jdbcType="DECIMAL" />
+        <result column="check_weight" property="checkWeight" jdbcType="DECIMAL" />
+        <result column="check_amount" property="checkAmount" jdbcType="DECIMAL" />
+        <result column="weight" property="weight" jdbcType="DECIMAL" />
+        <result column="amount" property="amount" jdbcType="DECIMAL" />
+    </resultMap>
+    <select id="queryOrderItemsInInvoice" resultMap="orderItemsInvoiceInInfoDto" parameterType="java.lang.Long">
+        SELECT
+        date_format(d.created,'%Y-%m-%d') AS created, i.area_code,i.code,i.seller_name,d.nsort_name_comb,
+        (case when d.type_of_spec='none' then d.spec else concat(b.display_name,d.spec) end) AS type_of_spec,
+        round((ifnull(d.no_tax_amount,0)/ifnull(d.weight,d.check_weight)),6) AS price,
+        ifnull(d.weight,d.check_weight) AS check_weight,ifnull(d.amount,d.check_amount) AS check_amount,o.weight,o.amount
+        FROM  inv_invoice_in_detail_orderitem o
+        LEFT JOIN inv_invoice_in_detail d ON o.invoice_detail_id = d.id
+        LEFT JOIN inv_invoice_in i ON d.invoice_in_id = i.id
+        LEFT JOIN base_sys_setting b ON b.setting_value = d.type_of_spec
+        WHERE o.orderitem_id  = #{id,jdbcType=BIGINT} AND o.active='1'
+        AND i.relation_status = 'hasrelation'
+        AND b.setting_type='typeofspec'
+        <![CDATA[AND i.status <> 'CANCEL' ]]>;
+    </select>
+</mapper>

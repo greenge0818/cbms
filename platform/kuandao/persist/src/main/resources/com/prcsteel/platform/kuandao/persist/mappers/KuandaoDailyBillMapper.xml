@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.kuandao.persist.dao.KuandaoDailyBillDao">
+	<resultMap type="com.prcsteel.platform.kuandao.model.dto.KuandaoDailyBillDto" id="dailyBillResultMap">
+		<id column="id" property="id"/> 
+		<result column="imp_acq_ssn" property="impAcqSsn"/>
+		<result column="payee_acct_no" property="payeeAcctNo"/>
+		<result column="payee_virtual_acct_no" property="payeeVirtualAcctNo"/>
+		<result column="payee_virtual_acct_name" property="payeeVirtualAcctName"/>
+		<result column="pay_mer_acct_no" property="payMerAcctNo"/>
+		<result column="pay_mer_name" property="payMerName"/>
+		<result column="pay_mer_branch_id" property="payMerBranchId"/>
+		<result column="is_debit" property="isDebit"/>
+		<result column="imp_date" property="impDate"/>
+		<result column="transaction_amount" property="transactionAmount"/>
+		<result column="balance" property="balance"/>
+		<result column="digest_code" property="digestCode"/>
+		<result column="payment_order_code" property="paymentOrderCode"/>
+		<result column="payment_status" property="paymentStatus"/>
+		<result column="created" property="created"/>
+		<result column="created_by" property="createdBy"/>
+		<result column="last_updated" property="lastUpdated"/>
+		<result column="last_updated_by" property="lastUpdatedBy"/>
+		<result column="modification_number" property="modificationNumber"/>
+		<result column="row_id" property="rowId"/>
+		<result column="parent_row_id" property="parentRowId"/>
+		<result column="teller_id" property="tellerId"/>
+		<result column="virtual_share_date" property="virtualShareDate"/>
+		<result column="teller_serial_no" property="tellerSerialNo"/>
+		<result column="correction_entries_mark" property="correctionEntriesMark"/>
+		<result column="voucher_no" property="voucherNo"/>
+	</resultMap>
+	<!-- 插入日终对账单 -->
+	<insert id="insertDailyBill" useGeneratedKeys="true" parameterType="com.prcsteel.platform.kuandao.model.model.KuandaoDailyBill"
+			keyProperty="id">
+		insert into kuandao_daily_bill
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="impAcqSsn!=null">imp_acq_ssn,</if>
+			<if test="payeeAcctNo!=null">payee_acct_no,</if>
+			<if test="payeeVirtualAcctNo!=null">payee_virtual_acct_no,</if>
+			<if test="payeeVirtualAcctName!=null">payee_virtual_acct_name,</if>
+			<if test="payMerAcctNo!=null">pay_mer_acct_no,</if>
+			<if test="payMerName!=null">pay_mer_name,</if>
+			<if test="payMerBranchId!=null">pay_mer_branch_id,</if>
+			<if test="isDebit!=null">is_debit,</if>
+			<if test="impDate!=null">imp_date,</if>
+			<if test="transactionAmount!=null">transaction_amount,</if>
+			<if test="balance!=null">balance,</if>
+			<if test="digestCode!=null">digest_code,</if>
+			<if test="paymentOrderCode!=null">payment_order_code,</if>
+			<if test="paymentStatus!=null">payment_status,</if>
+			<if test="created!=null">created,</if>
+			<if test="createdBy!=null">created_by,</if>
+			<if test="lastUpdated!=null">last_updated,</if>
+			<if test="lastUpdatedBy!=null">last_updated_by,</if>
+			<if test="modificationNumber!=null">modification_number,</if>
+			<if test="rowId!=null">row_id,</if>
+			<if test="parentRowId!=null">parent_row_id,</if>
+			<if test="tellerId!=null">teller_id,</if>
+			<if test="virtualShareDate!=null">virtual_share_date,</if>
+			<if test="tellerSerialNo!=null">teller_serial_no,</if>
+			<if test="correctionEntriesMark!=null">correction_entries_mark,</if>
+			<if test="voucherNo!=null">voucher_no,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="impAcqSsn!=null">#{impAcqSsn,jdbcType=VARCHAR},</if>
+			<if test="payeeAcctNo!=null">#{payeeAcctNo,jdbcType=VARCHAR},</if>
+			<if test="payeeVirtualAcctNo!=null">#{payeeVirtualAcctNo,jdbcType=VARCHAR},</if>
+			<if test="payeeVirtualAcctName!=null">#{payeeVirtualAcctName,jdbcType=VARCHAR},</if>
+			<if test="payMerAcctNo!=null">#{payMerAcctNo,jdbcType=VARCHAR},</if>
+			<if test="payMerName!=null">#{payMerName,jdbcType=VARCHAR},</if>
+			<if test="payMerBranchId!=null">#{payMerBranchId,jdbcType=VARCHAR},</if>
+			<if test="isDebit!=null">#{isDebit,jdbcType=VARCHAR},</if>
+			<if test="impDate!=null">#{impDate,jdbcType=VARCHAR},</if>
+			<if test="transactionAmount!=null">#{transactionAmount,jdbcType=DECIMAL},</if>
+			<if test="balance!=null">#{balance,jdbcType=DECIMAL},</if>
+			<if test="digestCode!=null">#{digestCode,jdbcType=VARCHAR},</if>
+			<if test="paymentOrderCode!=null">#{paymentOrderCode,jdbcType=VARCHAR},</if>
+			<if test="paymentStatus!=null">#{paymentStatus,jdbcType=VARCHAR},</if>
+			<if test="created!=null">#{created,jdbcType=TIMESTAMP},</if>
+			<if test="createdBy!=null">#{createdBy,jdbcType=VARCHAR},</if>
+			<if test="lastUpdated!=null">#{lastUpdated,jdbcType=TIMESTAMP},</if>
+			<if test="lastUpdatedBy!=null">#{lastUpdatedBy,jdbcType=VARCHAR},</if>
+			<if test="modificationNumber!=null">#{modificationNumber,jdbcType=Integer},</if>
+			<if test="rowId!=null">#{rowId,jdbcType=VARCHAR},</if>
+			<if test="parentRowId!=null">#{parentRowId,jdbcType=VARCHAR},</if>
+			<if test="tellerId!=null">#{tellerId,jdbcType=VARCHAR},</if>
+			<if test="virtualShareDate!=null">#{virtualShareDate,jdbcType=VARCHAR},</if>
+			<if test="tellerSerialNo!=null">#{tellerSerialNo,jdbcType=VARCHAR},</if>
+			<if test="correctionEntriesMark!=null">#{correctionEntriesMark,jdbcType=VARCHAR},</if>
+			<if test="voucherNo!=null">#{voucherNo,jdbcType=VARCHAR},</if>
+		</trim>
+	</insert>
+	<sql id="queryDailyBillCondition">
+		<if test="startDate != null and startDate != ''">
+			<![CDATA[AND imp_date >= #{startDate,jdbcType=VARCHAR}]]>
+		</if>
+		<if test="endDate != null and endDate != ''">
+			<![CDATA[AND imp_date <= #{endDate,jdbcType=VARCHAR}]]>
+		</if>
+		<if test="payeeVirtualAcctName != null and payeeVirtualAcctName != ''">
+			AND payee_virtual_acct_name LIKE concat('%',#{payeeVirtualAcctName,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="payMerName != null and payMerName != ''">
+			AND pay_mer_name LIKE concat('%',#{payMerName,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="paymentOrderCode != null and paymentOrderCode != ''">
+			AND payment_order_code LIKE concat('%',#{paymentOrderCode,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="paymentStatus != null  and paymentStatus != ''">
+			AND payment_status = #{paymentStatus,jdbcType=VARCHAR}
+		</if>
+	</sql>
+	
+	<!-- 日终对账单查询明细 -->
+	<select id="queryDailyBillByCondition" parameterType="map" resultMap="dailyBillResultMap">
+		SELECT * FROM kuandao_daily_bill
+		<where>
+			<include refid="queryDailyBillCondition"></include>
+		</where>
+		order by imp_acq_ssn desc,imp_date desc
+		limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER}
+	</select>
+	<!-- 日终对账查询总数 -->
+	<select id="queryTotalDailyBill" parameterType="com.prcsteel.platform.kuandao.model.dto.KuandaoDailyBillDto" resultType="int">
+		select count(id) from kuandao_daily_bill
+		<where>
+			<include refid="queryDailyBillCondition"></include>
+		</where>
+	</select>
+	
+	<!-- 日终对账单查询明细 -->
+	<select id="queryTestDataByCondition" parameterType="com.prcsteel.platform.kuandao.model.dto.KuandaoDailyBillDto" resultMap="dailyBillResultMap">
+		SELECT * FROM kuandao_daily_bill_test
+		<where>
+			<if test="impDate != null and impDate != ''">
+				imp_date = #{impDate,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+</mapper>
+
+
+

@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+       default-lazy-init="false">
+
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="closeOrderJobTrigger"/>
+                <ref bean="syncTransactionDataJobTrigger"/>
+                <ref bean="rebateAndRewardTrigger"/>
+                <ref bean="localTransactionDataJobTrigger"/>
+                <ref bean="syncReceiptDataJobTrigger"/>
+                <ref bean="icbcBdlDataJobTrigger"/>
+                <ref bean="spdbBdlDataJobTrigger"/>
+                <!--  <ref bean="calculateOrgDayJobTrigger"/>-->
+                <!--  <ref bean="syncSendReportMailJobTrigger"/>-->
+                <ref bean="closeAllowanceJobTrigger"/>
+                <ref bean="setHolidayJobTrigger"/>
+                <ref bean="syncReceiptDataToThisSysJobTrigger"/>
+                <ref bean="copyResourceDataJobTrigger"/>
+               <!--  <ref bean="historyTransactionJobTrigger"/> -->
+                <ref bean="insertCommissionJobTrigger"/>
+                <ref bean="updateDebtSecondSettlementJobTrigger"/>
+            </list>
+        </property>
+        <property name="autoStartup" value="${CBMS_QUARTZ_JOB_ENABLED}"/>
+    </bean>
+
+    <bean id="closeOrderJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="closeOrderJobDetail"/>
+        <property name="cronExpression" value="0 30 17 * * ?"/>
+    </bean>
+
+    <bean id="closeOrderJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="closeOrderJob"/>
+        <property name="targetMethod" value="execute"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+
+    <bean id="closeOrderJob" class="com.prcsteel.platform.order.web.job.CloseOrderJob"/>
+
+    <bean id="syncTransactionDataJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="syncTransactionDataJobDetail"/>
+        <property name="cronExpression" value="0 */1 * * * ?"/>
+        <!--<property name="cronExpression" value="*/1 * * * * ?"/> 每秒执行一次-->
+    </bean>
+
+    <bean id="syncTransactionDataJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="syncTransactionDataJob"/>
+        <property name="targetMethod" value="execute"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+
+    <!-- 工行银企直连1分钟 -->
+    <bean id="icbcBdlDataJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="icbcBdlDataJobDetail"/>
+        <property name="cronExpression" value="0 */1 * * * ?"/>
+    </bean>
+    <bean id="icbcBdlDataJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="icbcBdlDataJob"/>
+        <property name="targetMethod" value="execute"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+
+    <!-- 浦发银企直连1分钟 -->
+    <bean id="spdbBdlDataJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="spdbBdlDataJobDetail"/>
+        <property name="cronExpression" value="0 */1 * * * ?"/>
+    </bean>
+    <bean id="spdbBdlDataJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="spdbBdlDataJob"/>
+        <property name="targetMethod" value="execute"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+
+
+    <!-- 每月定时启用返利和提成方案 -->
+    <bean id="rebateAndRewardTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="executeRebateAndReward"/>
+        <property name="cronExpression" value="* * * 1 * ?"/>
+    </bean>
+
+    <bean id="executeRebateAndReward" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="startRebateAndReward"/>
+        <property name="targetMethod" value="execute"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+
+    <bean id="startRebateAndReward" class="com.prcsteel.platform.order.web.job.StartRebateAndReward"/>
+
+    <bean id="syncTransactionDataJob" class="com.prcsteel.platform.order.web.job.SyncTransactionDataJob"/>
+
+    <bean id="icbcBdlDataJob" class="com.prcsteel.platform.order.web.job.ICBCBdlDataJob"/>
+
+    <bean id="spdbBdlDataJob" class="com.prcsteel.platform.order.web.job.SPDBBdlDataJob"/>
+
+
+    <!-- 本地到账异常自动处理 -->
+    <bean id="localTransactionDataJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="localTransactionDataJobDetail"/>
+        <property name="cronExpression" value="1 * * * * ?"/>
+        <!--<property name="cronExpression" value="*/1 * * * * ?"/> -->
+    </bean>
+
+    <bean id="localTransactionDataJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="localTransactionDataJob"/>
+        <property name="targetMethod" value="execute"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+
+    <bean id="localTransactionDataJob" class="com.prcsteel.platform.order.web.job.LocalTransactionDataJob"/>
+
+    <!-- 同步票据信息 -->
+    <bean id="syncReceiptDataJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="syncReceiptDataJobDetail"/>
+        <property name="cronExpression" value="0 */5 * * * ?"/>
+    </bean>
+
+    <bean id="syncReceiptDataJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="syncReceiptDataJob"/>
+        <property name="targetMethod" value="execute"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+
+    <bean id="syncReceiptDataJob" class="com.prcsteel.platform.order.web.job.SyncReceiptDataJob"/>
+
+    <!-- 服务中心日报 每隔1分钟 -->
+    <!--  <bean id="calculateOrgDayJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="calculateOrgDayJobDetail"/>
+        <property name="cronExpression" value="0 */1 * * * ?"/>
+    </bean>
+    <bean id="calculateOrgDayJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="calculateOrgDayJob"/>
+        <property name="targetMethod" value="execute"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="calculateOrgDayJob" class="com.prcsteel.platform.order.web.job.CalculateOrgDayJob"/>-->
+
+    <!-- 发送报表邮件 -->
+    <!--<bean id="sendReportMailJob" class="com.prcsteel.platform.order.web.job.SendReportMailJob"/>
+    <bean id="syncSendReportMail" 
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="sendReportMailJob"/>
+        <property name="targetMethod" value="execute"/>
+        <property name="concurrent" value="false"/>
+    </bean>-->
+    <!--<bean id="syncSendReportMailJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="syncSendReportMail"/>
+        <property name="cronExpression" value="0 * * * * ?"/>
+    </bean>-->
+    <!-- end 发送报表邮件 -->
+
+    <!-- 从爱信诺将已开发票数据回传到本地数据库 author: tuxianming-->
+    <bean id="receiptDataToThisSysJob" class="com.prcsteel.platform.order.web.job.ReceiptDataToThisSysJob"/>
+    <bean id="syncReceiptDataToThisSys"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="receiptDataToThisSysJob"/>
+        <property name="targetMethod" value="execute"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="syncReceiptDataToThisSysJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="syncReceiptDataToThisSys"/>
+        <property name="cronExpression" value="0 * * * * ?"/><!-- 每分钟执行一次 -->
+    </bean>
+    <!-- end 从爱信诺将已开发票数据回传到本地数据库 -->
+
+    <!-- 自动关闭折让单 -->
+    <bean id="closeAllowanceJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="closeAllowanceJobDetail"/>
+        <property name="cronExpression" value="0 */5 * * * ?"/>
+    </bean>
+
+    <bean id="closeAllowanceJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="closeAllowanceJob"/>
+        <property name="targetMethod" value="execute"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+
+    <bean id="closeAllowanceJob" class="com.prcsteel.platform.order.web.job.CloseAllowanceJob"/>
+	
+	
+	<!-- 自动设置工作日与非工作日 -->
+    <bean id="setHolidayJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="setHolidayJobDetail"/>
+        <property name="cronExpression" value="0 0 1 * * ? "/>
+    </bean>
+	
+	<bean id="setHolidayJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="setHolidayJob"/>
+        <property name="targetMethod" value="execute"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+
+    <bean id="setHolidayJob" class="com.prcsteel.platform.order.web.job.SetHolidayJob"/>
+	
+    <!-- 复制资源-->
+    <bean id="copyResourceDataJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="copyResourceDataJobDetail"/>
+        <property name="cronExpression" value="0 0 17 * * ?"/>  <!-- 每天下午5点执行 -->
+    </bean>
+
+    <bean id="copyResourceDataJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="copyResourceDataJob"/>
+        <property name="targetMethod" value="execute"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+
+    <bean id="copyResourceDataJob" class="com.prcsteel.platform.order.web.job.CopyResourceDataToHistoryJob"/>
+    <!-- end 复制资源 -->
+
+    <!-- 历史成交资源-->
+    <!--  
+ 	<bean id="historyTransactionJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="historyTransactionJobDetail"/>
+        <property name="cronExpression" value="0 10 17 * * ?"/>  每天下午5点10分执行
+    </bean>
+
+    <bean id="historyTransactionJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="historyTransactionJob"/>
+        <property name="targetMethod" value="execute"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+       -->
+    <bean id="historyTransactionJob" class="com.prcsteel.platform.order.web.job.HistoryTransactionJob"/>
+  
+    <!-- end 历史成交资源 -->
+
+    <bean id="insertCommissionJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="insertCommissionJobDetail"/>
+        <property name="cronExpression" value="0 0 1 1 * ?"/>
+    </bean>
+
+    <bean id="insertCommissionJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="insertCommissionJob"/>
+        <property name="targetMethod" value="execute"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="insertCommissionJob" class="com.prcsteel.platform.order.web.job.InsertCommissionJob"/>
+
+    <!-- 需补齐买、卖家凭证的已开票订单-->
+    <bean id="certificateInvoiceJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="certificateInvoiceJobDetail"/>
+        <property name="cronExpression" value="* * * 1 * ?"/>  <!-- 每月1号凌晨触发 -->
+    </bean>
+
+    <bean id="certificateInvoiceJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="certificateInvoiceJob"/>
+        <property name="targetMethod" value="execute"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+
+    <bean id="certificateInvoiceJob" class="com.prcsteel.platform.order.web.job.CertificateInvoiceJob"/>
+    <!-- end 需补齐买、卖家凭证的已开票订单 -->
+    
+    
+    <!-- 根据账户下面的二结欠款更新销项票清单二结欠款author: tuxianming, 2160627-->
+    <bean id="updateDebtSecondSettlementJob" class="com.prcsteel.platform.order.web.job.UpdateDebtSecondSettlementJob"/>
+    <bean id="updateDebtSecondSettlementJobSys"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="updateDebtSecondSettlementJob"/>
+        <property name="targetMethod" value="execute"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="updateDebtSecondSettlementJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="updateDebtSecondSettlementJobSys"/>
+        <property name="cronExpression" value="59 59 23 * * ?"/><!-- 每天23:59:59执行  -->
+    </bean>
+    <!-- end 根据账户下面的二结欠款更新销项票清单二结欠款 -->
+    
+</beans>

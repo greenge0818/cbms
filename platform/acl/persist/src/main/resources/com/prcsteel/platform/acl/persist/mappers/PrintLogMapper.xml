@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.acl.persist.dao.PrintLogDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.acl.model.model.PrintLog" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="bill_code" property="billCode" jdbcType="VARCHAR" />
+    <result column="bill_type" property="billType" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="ip_address" property="ipAddress" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+    <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+    <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+    <result column="ext1" property="ext1" jdbcType="VARCHAR" />
+    <result column="ext2" property="ext2" jdbcType="VARCHAR" />
+    <result column="ext3" property="ext3" jdbcType="VARCHAR" />
+    <result column="ext4" property="ext4" jdbcType="INTEGER" />
+    <result column="ext5" property="ext5" jdbcType="INTEGER" />
+    <result column="ext6" property="ext6" jdbcType="INTEGER" />
+    <result column="ext7" property="ext7" jdbcType="TIMESTAMP" />
+    <result column="ext8" property="ext8" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, bill_code, bill_type, user_id, user_name, ip_address, created, created_by, last_updated, 
+    last_updated_by, modification_number, row_id, parent_row_id, ext1, ext2, ext3, ext4, 
+    ext5, ext6, ext7, ext8
+  </sql>
+
+  <insert id="insert" parameterType="com.prcsteel.platform.acl.model.model.PrintLog" >
+    INSERT INTO busi_print_log (bill_code, bill_type,
+      user_id, user_name, ip_address, 
+      created, created_by, last_updated, 
+      last_updated_by)
+    VALUES (#{billCode,jdbcType=VARCHAR}, #{billType,jdbcType=VARCHAR},
+      #{userId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{ipAddress,jdbcType=VARCHAR}, 
+      NOW(), #{createdBy,jdbcType=VARCHAR}, NOW(),
+      #{lastUpdatedBy,jdbcType=VARCHAR})
+  </insert>
+
+  <select id="query" parameterType="map" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM busi_print_log
+    WHERE 1 = 1
+    <if test="billCode != null and billCode != ''">
+      and bill_code = #{billCode,jdbcType=VARCHAR}
+    </if>
+    <if test="billType != null and billType != ''">
+      and bill_type = #{billType,jdbcType=VARCHAR}
+    </if>
+    <if test="userId != null and userId > 0">
+      and user_id = #{userId,jdbcType=BIGINT}
+    </if>
+    ORDER BY created DESC
+  </select>
+
+</mapper>

@@ -1,0 +1,99 @@
+<!-- 全部-->
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+    <style >
+        .menuContent{
+            overflow: auto;
+            height: 350px;
+            overflow-x:hidden;
+        }
+    </style>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            	款道支付
+        </li>
+        <li class="active">日终对账单下载</li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+    <!-- /.nav-search -->
+</div>
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <!--TAPBAR-->
+
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="clearfix">
+                        <div class="input-group pull-right col-md-12 col-sm-12 col-lg-12 search-bar">
+                            <form class="form-inline">
+                                <label>日期：</label> <input id="startDate" class="Wdate" type="text" value="$!{startDate}"
+                                       onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'endDate\')||\'2120-10-01\'}'})"/> -
+                                <input id="endDate" class="Wdate" type="text"  value="$!{endDate}"
+                                       onFocus="WdatePicker({minDate:'#F{$dp.$D(\'startDate\')}',maxDate:'2120-10-01'})"/>
+                                <label>虚拟账户名称：</label><input id="payeeMerName" class="ipt-text" type="text" value=""/>
+                                <label>对方名称：</label><input id="payMerName" class="ipt-text" type="text" value=""/>
+                                <label>支付单号：</label><input id="paymentOrderCode" class="ipt-text" type="text" value=""/>
+                                <label>状态：</label>
+                                <select id="status">
+									<option value ="">不限</option> 
+									<option value ="0">未匹配</option>  
+									<option value ="1">已匹配</option>
+									<option value ="2">已退款</option>
+								</select>
+								
+                                <button id="queryBtn" class="btn btn-sm btn-default" type="button" title="搜索">
+                                    <i class="aace-icon fa fa-search bigger-110"></i>搜索
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+					
+                    <!-- div.dataTables_borderWrap -->
+                    <div class="dataTable-overflow">
+                        <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+								<th><div style="width:80px">汇入流水号</div></th>
+								<th><div style="width:110px">实账户</div></th>
+                                <th><div style="width:100px">虚账户</div></th>
+                                <th><div style="width:170px">虚账户名称</div></th>
+                                <th><div style="width:40px">借/贷</div></th>
+                                <th><div style="width:70px">金额</div></th>
+                                <th><div style="width:60px">账户余额</div></th>
+                                <th><div style="width:80px">交易日期</div></th>
+                                <th><div style="width:160px">摘要代码</div></th>
+                                <th><div style="width:80px">对方行行号</div></th>
+                                <th><div style="width:120px">对方账号</div></th>
+                                <th><div style="width:170px">对方名称</div></th>
+                                <th><div style="width:110px">附言（支付单号）</div></th>
+                                <th><div style="width:30px">记录状态</div></th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                                <td colspan="14" style="text-align:right"></td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+
+<script src="$link.getContextPath()/js/views/kuandao/commonquery.js"></script>
+<script src="$link.getContextPath()/js/views/kuandao/bill/index.js"></script>

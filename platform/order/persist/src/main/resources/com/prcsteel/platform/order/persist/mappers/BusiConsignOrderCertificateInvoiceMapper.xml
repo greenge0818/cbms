@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.order.persist.dao.BusiConsignOrderCertificateInvoiceDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.order.model.model.BusiConsignOrderCertificateInvoice" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="credential_code" property="credentialCode" jdbcType="VARCHAR" />
+    <result column="buyer_id" property="buyerId" jdbcType="BIGINT" />
+    <result column="seller_id" property="sellerId" jdbcType="BIGINT" />
+    <result column="buyer_name" property="buyerName" jdbcType="VARCHAR" />
+    <result column="seller_name" property="sellerName" jdbcType="VARCHAR" />
+    <result column="owner_id" property="ownerId" jdbcType="BIGINT" />
+    <result column="owner_name" property="ownerName" jdbcType="VARCHAR" />
+    <result column="quantity" property="quantity" jdbcType="INTEGER" />
+    <result column="total_weight" property="totalWeight" jdbcType="DECIMAL" />
+    <result column="actual_pick_total_weight" property="actualPickTotalWeight" jdbcType="DECIMAL" />
+    <result column="total_amount" property="totalAmount" jdbcType="DECIMAL" />
+    <result column="actual_pick_total_amount" property="actualPickTotalAmount" jdbcType="DECIMAL" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="open_order_date" property="openOrderDate" jdbcType="VARCHAR" />
+    <result column="print_date" property="printDate" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, code, type,credential_code, buyer_id, seller_id, buyer_name, seller_name, owner_id,
+    owner_name, quantity, total_weight, actual_pick_total_weight, total_amount, actual_pick_total_amount, 
+    status, open_order_date, print_date, created, created_by, last_updated, last_updated_by
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from busi_consign_order_certificate_invoice
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from busi_consign_order_certificate_invoice
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id"  parameterType="com.prcsteel.platform.order.model.model.BusiConsignOrderCertificateInvoice" >
+    insert into busi_consign_order_certificate_invoice (id, code, credential_code, 
+      buyer_id, seller_id, buyer_name, 
+      seller_name, owner_id, owner_name, 
+      quantity, total_weight, actual_pick_total_weight, 
+      total_amount, actual_pick_total_amount, status, 
+      open_order_date, print_date, created, 
+      created_by, last_updated, last_updated_by
+      )
+    values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{credentialCode,jdbcType=VARCHAR}, 
+      #{buyerId,jdbcType=BIGINT}, #{sellerId,jdbcType=BIGINT}, #{buyerName,jdbcType=VARCHAR}, 
+      #{sellerName,jdbcType=VARCHAR}, #{ownerId,jdbcType=BIGINT}, #{ownerName,jdbcType=VARCHAR}, 
+      #{quantity,jdbcType=INTEGER}, #{totalWeight,jdbcType=DECIMAL}, #{actualPickTotalWeight,jdbcType=DECIMAL}, 
+      #{totalAmount,jdbcType=DECIMAL}, #{actualPickTotalAmount,jdbcType=DECIMAL}, #{status,jdbcType=VARCHAR}, 
+      #{openOrderDate,jdbcType=TIMESTAMP}, #{printDate,jdbcType=TIMESTAMP}, #{created,jdbcType=TIMESTAMP}, 
+      #{createdBy,jdbcType=VARCHAR}, #{lastUpdated,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id"  parameterType="com.prcsteel.platform.order.model.model.BusiConsignOrderCertificateInvoice" >
+    insert into busi_consign_order_certificate_invoice
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="credentialCode != null" >
+        credential_code,
+      </if>
+      <if test="buyerId != null" >
+        buyer_id,
+      </if>
+      <if test="sellerId != null" >
+        seller_id,
+      </if>
+      <if test="buyerName != null" >
+        buyer_name,
+      </if>
+      <if test="sellerName != null" >
+        seller_name,
+      </if>
+      <if test="ownerId != null" >
+        owner_id,
+      </if>
+      <if test="ownerName != null" >
+        owner_name,
+      </if>
+      <if test="quantity != null" >
+        quantity,
+      </if>
+      <if test="totalWeight != null" >
+        total_weight,
+      </if>
+      <if test="actualPickTotalWeight != null" >
+        actual_pick_total_weight,
+      </if>
+      <if test="totalAmount != null" >
+        total_amount,
+      </if>
+      <if test="actualPickTotalAmount != null" >
+        actual_pick_total_amount,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="openOrderDate != null" >
+        open_order_date,
+      </if>
+      <if test="printDate != null" >
+        print_date,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="credentialCode != null" >
+        #{credentialCode,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerId != null" >
+        #{buyerId,jdbcType=BIGINT},
+      </if>
+      <if test="sellerId != null" >
+        #{sellerId,jdbcType=BIGINT},
+      </if>
+      <if test="buyerName != null" >
+        #{buyerName,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerName != null" >
+        #{sellerName,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerId != null" >
+        #{ownerId,jdbcType=BIGINT},
+      </if>
+      <if test="ownerName != null" >
+        #{ownerName,jdbcType=VARCHAR},
+      </if>
+      <if test="quantity != null" >
+        #{quantity,jdbcType=INTEGER},
+      </if>
+      <if test="totalWeight != null" >
+        #{totalWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="actualPickTotalWeight != null" >
+        #{actualPickTotalWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="totalAmount != null" >
+        #{totalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="actualPickTotalAmount != null" >
+        #{actualPickTotalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="openOrderDate != null" >
+        #{openOrderDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="printDate != null" >
+        #{printDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.order.model.model.BusiConsignOrderCertificateInvoice" >
+    update busi_consign_order_certificate_invoice
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="credentialCode != null" >
+        credential_code = #{credentialCode,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerId != null" >
+        buyer_id = #{buyerId,jdbcType=BIGINT},
+      </if>
+      <if test="sellerId != null" >
+        seller_id = #{sellerId,jdbcType=BIGINT},
+      </if>
+      <if test="buyerName != null" >
+        buyer_name = #{buyerName,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerName != null" >
+        seller_name = #{sellerName,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerId != null" >
+        owner_id = #{ownerId,jdbcType=BIGINT},
+      </if>
+      <if test="ownerName != null" >
+        owner_name = #{ownerName,jdbcType=VARCHAR},
+      </if>
+      <if test="quantity != null" >
+        quantity = #{quantity,jdbcType=INTEGER},
+      </if>
+      <if test="totalWeight != null" >
+        total_weight = #{totalWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="actualPickTotalWeight != null" >
+        actual_pick_total_weight = #{actualPickTotalWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="totalAmount != null" >
+        total_amount = #{totalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="actualPickTotalAmount != null" >
+        actual_pick_total_amount = #{actualPickTotalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="openOrderDate != null" >
+        open_order_date = #{openOrderDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="printDate != null" >
+        print_date = #{printDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.order.model.model.BusiConsignOrderCertificateInvoice" >
+    update busi_consign_order_certificate_invoice
+    set code = #{code,jdbcType=VARCHAR},
+      credential_code = #{credentialCode,jdbcType=VARCHAR},
+      buyer_id = #{buyerId,jdbcType=BIGINT},
+      seller_id = #{sellerId,jdbcType=BIGINT},
+      buyer_name = #{buyerName,jdbcType=VARCHAR},
+      seller_name = #{sellerName,jdbcType=VARCHAR},
+      owner_id = #{ownerId,jdbcType=BIGINT},
+      owner_name = #{ownerName,jdbcType=VARCHAR},
+      quantity = #{quantity,jdbcType=INTEGER},
+      total_weight = #{totalWeight,jdbcType=DECIMAL},
+      actual_pick_total_weight = #{actualPickTotalWeight,jdbcType=DECIMAL},
+      total_amount = #{totalAmount,jdbcType=DECIMAL},
+      actual_pick_total_amount = #{actualPickTotalAmount,jdbcType=DECIMAL},
+      status = #{status,jdbcType=VARCHAR},
+      open_order_date = #{openOrderDate,jdbcType=TIMESTAMP},
+      print_date = #{printDate,jdbcType=TIMESTAMP},
+      created = #{created,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <!---批量插入-->
+  <insert id="doBatchInsert" useGeneratedKeys="true"  parameterType="com.prcsteel.platform.order.model.dto.CertificateInvoiceDto"  >
+      INSERT INTO busi_consign_order_certificate_invoice
+          (code,type, credential_code, buyer_id, seller_id, buyer_name,seller_name, owner_id, owner_name,
+          quantity, total_weight, actual_pick_total_weight,
+          total_amount, actual_pick_total_amount, status,
+          open_order_date, print_date, created,
+          created_by, last_updated, last_updated_by
+          )
+      VALUES
+      <foreach collection="list" item="item" index="index" separator=",">
+        (
+        #{item.code},#{item.accountType},#{item.credentialCode},#{item.buyerId},#{item.sellerId},#{item.buyerName},
+        #{item.sellerName},#{item.ownerId},#{item.ownerName},#{item.actualPickTotalQuantity},#{item.totalWeight},
+        #{item.actualPickTotalWeight},#{item.totalAmount},#{item.actualPickTotalAmount},#{item.certificateStatus},#{item.openOrderDate},
+        #{item.printDate},NOW(),'cbadminJob',NOW(),'cbadminJob'
+        )
+      </foreach>
+  </insert>
+
+  <!--根据查询对象检索数据-->
+  <select id="searchCertificateInvoice" resultMap="BaseResultMap" parameterType="com.prcsteel.platform.order.model.query.CertificateInvoiceQuery">
+      SELECT  SQL_CALC_FOUND_ROWS
+          <include refid="Base_Column_List"/>,'' total
+      FROM busi_consign_order_certificate_invoice
+      <where>
+          <if test="code != null and code !=''" >
+             AND code  LIKE '%' #{code,jdbcType=VARCHAR} '%'
+          </if>
+
+          <if test=" type!= null and type !=''" >
+             AND type  =  #{type,jdbcType=VARCHAR}
+          </if>
+
+          <if test="credentialCode != null and credentialCode !=''" >
+            AND credential_code   LIKE '%' #{credentialCode,jdbcType=VARCHAR} '%'
+          </if>
+
+          <if test="buyerName != null and buyerName !=''" >
+            AND buyer_name  LIKE '%' #{buyerName,jdbcType=VARCHAR} '%'
+          </if>
+
+          <if test="sellerName != null and sellerName !=''" >
+            AND seller_name LIKE '%' #{sellerName,jdbcType=VARCHAR} '%'
+          </if>
+
+          <if test="ownerName != null and ownerName !=''" >
+            AND owner_name LIKE '%' #{ownerName,jdbcType=VARCHAR} '%'
+          </if>
+
+          <if test="status != null and status !=''" >
+            AND  status = #{status,jdbcType=VARCHAR}
+          </if>
+
+          <if test="startTime != null and startTime !=''" >
+            AND  STR_TO_DATE(open_order_date,'%Y-%m-%d')  <![CDATA[ >=  ]]> #{startTime,jdbcType=VARCHAR}
+          </if>
+
+          <if test="endTime != null and endTime !=''" >
+            AND  STR_TO_DATE(open_order_date,'%Y-%m-%d') <![CDATA[ <=  ]]> #{endTime,jdbcType=VARCHAR}
+          </if>
+
+          <if test="credentialStartTime != null and credentialStartTime !=''" >
+            AND  STR_TO_DATE(print_date,'%Y-%m-%d')  <![CDATA[ >=  ]]> #{credentialStartTime,jdbcType=VARCHAR}
+          </if>
+
+          <if test="credentialEndTime != null and credentialEndTime !=''" >
+            AND  STR_TO_DATE(print_date,'%Y-%m-%d') <![CDATA[ <=  ]]> #{credentialEndTime,jdbcType=VARCHAR}
+          </if>
+      </where>
+      limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+      UNION
+      SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,FOUND_ROWS() TOTAL
+  </select>
+</mapper>

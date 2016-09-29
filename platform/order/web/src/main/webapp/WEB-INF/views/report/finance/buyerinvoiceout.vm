@@ -1,0 +1,72 @@
+<div class="breadcrumbs" id="breadcrumbs">
+	<script type="text/javascript">
+		try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+	</script>
+
+	<ul class="breadcrumb">
+        <li>
+			<i class="ace-icon fa fa-home home-icon"></i>
+			财务报表 	
+        </li>
+        <li>
+			客户销项报表
+        </li>
+        <li class="active">
+			客户销项报表明细
+        </li>
+	</ul><!-- /.breadcrumb -->
+
+		#parse("layout/topbtn.vm")<!-- /.nav-search -->
+</div>
+
+<div class="page-content">
+	<div class="row">
+		<div class="col-xs-12">
+			<!-- PAGE CONTENT BEGINS -->
+
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="clearfix search-bar">
+						<div class="clearfix">
+						<form id="searchForm" class="form-inline input-group">
+							<input type="hidden" name="buyer_id" value="$!{buyerId}" id="buyer_id"/>
+							<label><b>客户名称：$!{buyName}</b></label>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<label>时间：</label>
+                            <input id="startTime" class="Wdate" type="text" value="$!{startTime}"
+                                   onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')||\'2030-10-01\'}', minDate:'2016-01-01'})"/> -
+                            <input id="endTime" class="Wdate" type="text"  value="$!{endTime}" 
+                                   onFocus="WdatePicker({minDate:'#F{$dp.$D(\'startTime\')||\'2016-01-01\'}',maxDate:'2030-10-01'})"/>
+							
+                            <button id="queryBtn" class="btn btn-sm btn-default" eid="$!{buyerId}" type="button" title="搜索">
+                                <i class="ace-icon fa fa-search bigger-110"></i>搜索
+                            </button>
+	                        <button type="button" class="btn btn-sm btn-default" id="export_to_excel">导出到EXCEL</button>
+						</form>
+                        </div>
+					</div>
+
+					<!-- div.dataTables_borderWrap -->
+					<div>
+						<table id="dynamic-table" class="table table-striped table-bordered table-hover">
+							<thead>
+								<tr>
+									<th  width="120px">时间</th>
+									<th>合同号</th>
+									<th>单号</th>
+									<th>交易发生额（元）</th>
+									<th>销项票发生额（元）</th>
+									<th>应开销项余额（元）</th>
+									<th>摘要</th>
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+		</div><!-- /.col -->
+	</div><!-- /.row -->
+</div><!-- /.page-content -->
+<script src="$link.getContextPath()/js/views/report/finance/buyerinvoiceout.js"></script>

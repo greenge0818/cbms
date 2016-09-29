@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:p="http://www.springframework.org/schema/p"
+	   xmlns:cache="http://www.springframework.org/schema/cache"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+                           http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-3.1.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+	<cache:annotation-driven />
+
+	<!-- 使用spring cache注解实现memcached缓存 -->
+	<cache:annotation-driven />
+
+	<!-- 配置缓存管理类 -->
+	<bean id="cacheManager" class="com.google.code.ssm.spring.SSMCacheManager">
+		<property name="caches">
+			<set>
+				<bean class="com.google.code.ssm.spring.SSMCache">
+					<constructor-arg name="cache" index="0" ref="mycache" />
+					<!-- 5 minutes,unit is second -->
+					<constructor-arg name="expiration" index="1" value="300" />
+					<!-- @CacheEvict(..., "allEntries" = true) do work -->
+					<constructor-arg name="allowClear" index="2" value="true" />
+				</bean>
+			</set>
+		</property>
+	</bean>
+
+	<!-- 对于不同模块设置不同缓存模块 -->
+	<bean id="mycache" parent="cacheBlock">
+		<property name="cacheName" value="mycache" />
+		<property name="addressProvider">
+			<bean class="com.google.code.ssm.config.DefaultAddressProvider">
+				<property name="address" value="${memcached.server.addressAndPort}" />
+			</bean>
+		</property>
+	</bean>
+
+	<!-- 以下是通用配置，。一般来说是不用修改的 -->
+	<!-- easy way to test different types of serialization mechanizm by passing
+		it as system property (-Dssm.provider=JSON) -->
+	<bean id="defaultSerializationTypeAsString" class="java.lang.String">
+		<constructor-arg
+				value="#{systemProperties['ssm.defaultSerializationType']?:'JSON'}" />
+	</bean>
+	<bean id="cacheBlock" class="com.google.code.ssm.CacheFactory"
+		  abstract="true">
+		<property name="cacheClientFactory" ref="cacheClientFactory" />
+		<property name="configuration">
+			<bean
+					class="com.google.code.ssm.providers.xmemcached.XMemcachedConfiguration">
+				<property name="consistentHashing" value="true" />
+				<property name="connectionPoolSize" value="30" />
+			</bean>
+		</property>
+		<property name="defaultSerializationType"
+				  value="#{T(com.google.code.ssm.api.format.SerializationType).valueOf(@defaultSerializationTypeAsString)}" />
+	</bean>
+	<bean id="cacheClientFactory"
+		  class="com.google.code.ssm.providers.xmemcached.MemcacheClientFactoryImpl" />
+
+</beans>

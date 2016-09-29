@@ -1,0 +1,105 @@
+#set($account=$accountdto.account)
+#set($accountExt=$accountdto.accountExt)
+#set($attachmentList=$accountdto.attachments)
+<div class="main-content">
+    <div class="main-content-inner">
+        <div class="breadcrumbs" id="breadcrumbs">
+            <script type="text/javascript">
+                try {
+                    ace.settings.check('breadcrumbs', 'fixed')
+                } catch (e) {
+                }
+            </script>
+
+            <ul class="breadcrumb">
+            <ul class="breadcrumb">
+                <li>
+                    <i class="ace-icon fa fa-home home-icon"></i>
+                    	客户管理
+                </li>
+                <li>
+                    <i class="ace-icon"></i>
+                    <a href="javascript:void(0)">我的客户</a>
+                </li>
+                <li>
+                    <i class="ace-icon"></i>
+                    <a href="javascript:void(0)">$!{account.name}</a>
+                </li>
+                <li class="active">审核资料
+                </li>
+            </ul>
+        </div>
+
+        <div class="page-content">
+        	<form id="bankForm">	
+	            <div class="customer">
+		            <div class="topbottom10">
+		            <span>
+		                                        公司全称：$!{accountdto.account.name}
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;客户性质：$!{accountdto.customerProperty}
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;服务中心 ：$!{account.orgName}</span>
+		            </div>
+		            <div class="tableFour">
+		                <h1>打款资料<span></span></h1>
+	                    <div id="payInfo">
+		                    <input type="hidden" name="id" value="$account.id">
+		                    <input type="hidden" name="extId" value="$accountExt.id">
+	                    	#foreach($bank in $bankList)
+	                    	<input type="hidden" name="bankIds" value="${bank.id}">
+	                        <div class="row">
+	                            <div class="col-md-6">
+	                                <div class="row-marginbottom">
+	                                    <span class="xo edo">开户行所在城市：</span>
+	                           			<span class="xo edo">$!{bank.bankProvinceName}$!{bank.bankCityName}</span>
+	                                </div>
+	                                <div class="row-marginbottom">
+	                                    <span class="xo edo">开户银行：</span>
+	                                    <span class="xo edo">$!{bank.bankName}$!{bank.bankNameBranch}</span>
+	                                </div>
+	                                <div class="row-marginbottom">
+	                                    <span class="xo edo">行号：</span>
+	                                    <span class="xo edo">$!{bank.bankCode}</span>
+	                                </div>
+	                            </div>
+	                            <div class="col-md-6">
+	                                <div class="pull-left">
+	                                    <span class="xo edo">打款资料：</span>
+	                                </div>
+	                                <div class=" pull-left">
+	                                    <a rel="lightbox"><img class="imgbigger imgo" src="$link.getContextPath()/common/getfile.html?key=$!{bank.url}"/></a>
+	                                </div>
+	                            </div>
+	                        </div>
+	                        <div class="row">
+	                            <div class="col-md-12">
+	                                <span class="xo edo">银行账号：</span>
+	                               	<span class="xo edo">$!{bank.bankAccountCode}</span>
+	                            </div>
+	                        </div>
+	                        <div id="audit" class="row row-marginbottom">
+	                            <div class="col-md-6">
+	                            </div>
+	                            <div class="col-md-6">
+									<label><input name="auditOp_${bank.id}" type="radio" value="threeCard" checked="true"  onclick="isShowAuditDesc(false,${bank.id})"/>通过</label>
+									<label><input id="disagree_$bank.id" name="auditOp_${bank.id}" type="radio" isSelect="false" bankId="${bank.id}"  onclick="isShowAuditDesc(true,${bank.id})"/>不通过</label>
+									<input id="auditDesc_$bank.id" name="disagreeDescs" type="text" style="display: none"/>
+									</br>
+	                            </div>
+	                        </div>                       
+	                        #end
+	                    </div>
+		           	</div>
+		           	<div>
+			           	<div style="padding-left: 100px">
+							<a  href="$accountDomain/flow/bank/list.html">返回</a>		           	
+			           	</div>
+			           	<div style="padding-left: 600px">
+							<input id="auditBtn" type="button" value="审核" onclick="doAudit()"/>
+			           	</div>	           	
+		           	</div>	           	
+		        </div>
+	        </form>
+	     </div>
+	</div>
+</div>
+<script src="$link.getContextPath()/js/views/company/workflow/bank.js"></script>

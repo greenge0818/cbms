@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.acl.persist.dao.SysSettingDao">
+    <resultMap id="BaseResultMap" type="com.prcsteel.platform.acl.model.model.SysSetting">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="setting_type" property="settingType" jdbcType="VARCHAR"/>
+        <result column="setting_name" property="settingName" jdbcType="VARCHAR"/>
+        <result column="setting_value" property="settingValue" jdbcType="VARCHAR"/>
+        <result column="default_value" property="defaultValue" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="display_name" property="displayName" jdbcType="VARCHAR"/>
+        <result column="sequence" property="sequence" jdbcType="INTEGER"/>
+        <result column="report_org_day" property="reportOrgDay" jdbcType="INTEGER"/>
+        <result column="created" property="created" jdbcType="TIMESTAMP"/>
+        <result column="created_by" property="createdBy" jdbcType="VARCHAR"/>
+        <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP"/>
+        <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR"/>
+        <result column="modification_number" property="modificationNumber" jdbcType="INTEGER"/>
+        <result column="row_id" property="rowId" jdbcType="VARCHAR"/>
+        <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR"/>
+        <result column="ext1" property="ext1" jdbcType="VARCHAR"/>
+        <result column="ext2" property="ext2" jdbcType="VARCHAR"/>
+        <result column="ext3" property="ext3" jdbcType="VARCHAR"/>
+        <result column="ext4" property="ext4" jdbcType="INTEGER"/>
+        <result column="ext5" property="ext5" jdbcType="INTEGER"/>
+        <result column="ext6" property="ext6" jdbcType="INTEGER"/>
+        <result column="ext7" property="ext7" jdbcType="TIMESTAMP"/>
+        <result column="ext8" property="ext8" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    id, setting_type, setting_name, setting_value, default_value, description, display_name, 
+    sequence, created,report_org_day, created_by, last_updated, last_updated_by, modification_number, 
+    row_id, parent_row_id, ext1, ext2, ext3, ext4, ext5, ext6, ext7, ext8
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from base_sys_setting
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from base_sys_setting
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.prcsteel.platform.acl.model.model.SysSetting">
+    insert into base_sys_setting (setting_type, setting_name,
+      setting_value, default_value, description, 
+      display_name, sequence, report_org_day, created, 
+      created_by, last_updated, last_updated_by, 
+      modification_number, row_id, parent_row_id, 
+      ext1, ext2, ext3, ext4, 
+      ext5, ext6, ext7, 
+      ext8)
+    values (#{settingType,jdbcType=VARCHAR}, #{settingName,jdbcType=VARCHAR},
+      #{settingValue,jdbcType=VARCHAR}, #{defaultValue,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{displayName,jdbcType=VARCHAR}, #{sequence,jdbcType=INTEGER},#{reportOrgDay,jdbcType=INTEGER}, #{created,jdbcType=TIMESTAMP}, 
+      #{createdBy,jdbcType=VARCHAR}, #{lastUpdated,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}, 
+      #{modificationNumber,jdbcType=INTEGER}, #{rowId,jdbcType=VARCHAR}, #{parentRowId,jdbcType=VARCHAR}, 
+      #{ext1,jdbcType=VARCHAR}, #{ext2,jdbcType=VARCHAR}, #{ext3,jdbcType=VARCHAR}, #{ext4,jdbcType=INTEGER}, 
+      #{ext5,jdbcType=INTEGER}, #{ext6,jdbcType=INTEGER}, #{ext7,jdbcType=TIMESTAMP}, 
+      #{ext8,jdbcType=BIGINT})
+  </insert>
+    <insert id="insertSelective" parameterType="com.prcsteel.platform.acl.model.model.SysSetting">
+        insert into base_sys_setting
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="settingType != null">
+                setting_type,
+            </if>
+            <if test="settingName != null">
+                setting_name,
+            </if>
+            <if test="settingValue != null">
+                setting_value,
+            </if>
+            <if test="defaultValue != null">
+                default_value,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="displayName != null">
+                display_name,
+            </if>
+            <if test="sequence != null">
+                sequence,
+            </if>
+            <if test="reportOrgDay != null">
+                report_org_day,
+            </if>
+            <if test="created != null">
+                created,
+            </if>
+            <if test="createdBy != null">
+                created_by,
+            </if>
+            <if test="lastUpdated != null">
+                last_updated,
+            </if>
+            <if test="lastUpdatedBy != null">
+                last_updated_by,
+            </if>
+            <if test="modificationNumber != null">
+                modification_number,
+            </if>
+            <if test="rowId != null">
+                row_id,
+            </if>
+            <if test="parentRowId != null">
+                parent_row_id,
+            </if>
+            <if test="ext1 != null">
+                ext1,
+            </if>
+            <if test="ext2 != null">
+                ext2,
+            </if>
+            <if test="ext3 != null">
+                ext3,
+            </if>
+            <if test="ext4 != null">
+                ext4,
+            </if>
+            <if test="ext5 != null">
+                ext5,
+            </if>
+            <if test="ext6 != null">
+                ext6,
+            </if>
+            <if test="ext7 != null">
+                ext7,
+            </if>
+            <if test="ext8 != null">
+                ext8,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="settingType != null">
+                #{settingType,jdbcType=VARCHAR},
+            </if>
+            <if test="settingName != null">
+                #{settingName,jdbcType=VARCHAR},
+            </if>
+            <if test="settingValue != null">
+                #{settingValue,jdbcType=VARCHAR},
+            </if>
+            <if test="defaultValue != null">
+                #{defaultValue,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="displayName != null">
+                #{displayName,jdbcType=VARCHAR},
+            </if>
+            <if test="sequence != null">
+                #{sequence,jdbcType=INTEGER},
+            </if>
+            <if test="reportOrgDay != null">
+                #{reportOrgDay,jdbcType=INTEGER},
+            </if>
+            <if test="created != null">
+                #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdBy != null">
+                #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdated != null">
+                #{lastUpdated,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdatedBy != null">
+                #{lastUpdatedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modificationNumber != null">
+                #{modificationNumber,jdbcType=INTEGER},
+            </if>
+            <if test="rowId != null">
+                #{rowId,jdbcType=VARCHAR},
+            </if>
+            <if test="parentRowId != null">
+                #{parentRowId,jdbcType=VARCHAR},
+            </if>
+            <if test="ext1 != null">
+                #{ext1,jdbcType=VARCHAR},
+            </if>
+            <if test="ext2 != null">
+                #{ext2,jdbcType=VARCHAR},
+            </if>
+            <if test="ext3 != null">
+                #{ext3,jdbcType=VARCHAR},
+            </if>
+            <if test="ext4 != null">
+                #{ext4,jdbcType=INTEGER},
+            </if>
+            <if test="ext5 != null">
+                #{ext5,jdbcType=INTEGER},
+            </if>
+            <if test="ext6 != null">
+                #{ext6,jdbcType=INTEGER},
+            </if>
+            <if test="ext7 != null">
+                #{ext7,jdbcType=TIMESTAMP},
+            </if>
+            <if test="ext8 != null">
+                #{ext8,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.acl.model.model.SysSetting">
+        update base_sys_setting
+        <set>
+            <if test="settingType != null">
+                setting_type = #{settingType,jdbcType=VARCHAR},
+            </if>
+            <if test="settingName != null">
+                setting_name = #{settingName,jdbcType=VARCHAR},
+            </if>
+            <if test="settingValue != null">
+                setting_value = #{settingValue,jdbcType=VARCHAR},
+            </if>
+            <if test="defaultValue != null">
+                default_value = #{defaultValue,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                description = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="displayName != null">
+                display_name = #{displayName,jdbcType=VARCHAR},
+            </if>
+            <if test="sequence != null">
+                sequence = #{sequence,jdbcType=INTEGER},
+            </if>
+            <if test="reportOrgDay != null">
+                report_org_day = #{reportOrgDay,jdbcType=INTEGER},
+            </if>
+            <if test="created != null">
+                created = #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdBy != null">
+                created_by = #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdated != null">
+                last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdatedBy != null">
+                last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modificationNumber != null">
+                modification_number = #{modificationNumber,jdbcType=INTEGER},
+            </if>
+            <if test="rowId != null">
+                row_id = #{rowId,jdbcType=VARCHAR},
+            </if>
+            <if test="parentRowId != null">
+                parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+            </if>
+            <if test="ext1 != null">
+                ext1 = #{ext1,jdbcType=VARCHAR},
+            </if>
+            <if test="ext2 != null">
+                ext2 = #{ext2,jdbcType=VARCHAR},
+            </if>
+            <if test="ext3 != null">
+                ext3 = #{ext3,jdbcType=VARCHAR},
+            </if>
+            <if test="ext4 != null">
+                ext4 = #{ext4,jdbcType=INTEGER},
+            </if>
+            <if test="ext5 != null">
+                ext5 = #{ext5,jdbcType=INTEGER},
+            </if>
+            <if test="ext6 != null">
+                ext6 = #{ext6,jdbcType=INTEGER},
+            </if>
+            <if test="ext7 != null">
+                ext7 = #{ext7,jdbcType=TIMESTAMP},
+            </if>
+            <if test="ext8 != null">
+                ext8 = #{ext8,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.acl.model.model.SysSetting">
+    update base_sys_setting
+    set setting_type = #{settingType,jdbcType=VARCHAR},
+      setting_name = #{settingName,jdbcType=VARCHAR},
+      setting_value = #{settingValue,jdbcType=VARCHAR},
+      default_value = #{defaultValue,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      display_name = #{displayName,jdbcType=VARCHAR},
+      sequence = #{sequence,jdbcType=INTEGER},
+      report_org_day = #{reportOrgDay,jdbcType=INTEGER},
+      created = #{created,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      modification_number = #{modificationNumber,jdbcType=INTEGER},
+      row_id = #{rowId,jdbcType=VARCHAR},
+      parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      ext1 = #{ext1,jdbcType=VARCHAR},
+      ext2 = #{ext2,jdbcType=VARCHAR},
+      ext3 = #{ext3,jdbcType=VARCHAR},
+      ext4 = #{ext4,jdbcType=INTEGER},
+      ext5 = #{ext5,jdbcType=INTEGER},
+      ext6 = #{ext6,jdbcType=INTEGER},
+      ext7 = #{ext7,jdbcType=TIMESTAMP},
+      ext8 = #{ext8,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <select id="selectByParam"
+            resultMap="BaseResultMap"
+            parameterType="com.prcsteel.platform.acl.model.query.SysSettingQuery">
+        select
+        <include refid="Base_Column_List"/>
+        from base_sys_setting
+        <where>
+            <if test="type != null and type != '' ">
+                setting_type = #{type}
+            </if>
+            <if test="value != null and value != '' ">
+                and setting_value = #{value}
+            </if>
+            <if test="name != null and name != '' ">
+                and setting_name like CONCAT('%',#{name},'%')
+            </if>
+            <if test="displayName != null and displayName != ''">
+                and display_name like CONCAT('%',#{displayName},'%')
+            </if>
+        </where>
+        <if test="displayName != null and displayName != ''">
+                and display_name like CONCAT('%',#{displayName},'%')
+        </if>
+        <if test="rowId != null">
+                and row_id = #{rowId}
+        </if>
+        <choose>
+	    		<when  test="sort != null">
+	    			order by ${sort}
+	    		</when>
+	    		<otherwise>
+	    			order by id desc
+	    		</otherwise>
+   		</choose>
+        <if test="start != null and length != null ">
+            limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+        </if>
+    </select>
+
+    <select id="selectByParamTotal"
+            resultType="java.lang.Integer"
+            parameterType="com.prcsteel.platform.acl.model.query.SysSettingQuery">
+        select
+        count(id)
+        from base_sys_setting
+        <where>
+            <if test="type != null and type != '' ">
+                setting_type = #{type}
+            </if>
+            <if test="value != null and value != '' ">
+                and setting_value = #{value}
+            </if>
+            <if test="name != null and name != '' ">
+                and setting_name like CONCAT('%',#{name},'%')
+            </if>
+            <if test="displayName != null and displayName != ''">
+                and display_name like CONCAT('%',#{displayName},'%')
+            </if>
+            <if test="rowId != null">
+                and row_id = #{rowId}
+        	</if>
+        </where>
+    </select>
+
+    <update id="updateBySettingTypeSelective" parameterType="com.prcsteel.platform.acl.model.model.SysSetting">
+        update base_sys_setting
+        <set>
+            <if test="settingType != null">
+                setting_type = #{settingType,jdbcType=VARCHAR},
+            </if>
+            <if test="settingName != null">
+                setting_name = #{settingName,jdbcType=VARCHAR},
+            </if>
+            <if test="settingValue != null">
+                setting_value = #{settingValue,jdbcType=VARCHAR},
+            </if>
+            <if test="defaultValue != null">
+                default_value = #{defaultValue,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                description = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="displayName != null">
+                display_name = #{displayName,jdbcType=VARCHAR},
+            </if>
+            <if test="sequence != null">
+                sequence = #{sequence,jdbcType=INTEGER},
+            </if>
+            <if test="reportOrgDay != null">
+                report_org_day = #{reportOrgDay,jdbcType=INTEGER},
+            </if>
+            <if test="created != null">
+                created = #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdBy != null">
+                created_by = #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdated != null">
+                last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdatedBy != null">
+                last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modificationNumber != null">
+                modification_number = #{modificationNumber,jdbcType=INTEGER},
+            </if>
+            <if test="rowId != null">
+                row_id = #{rowId,jdbcType=VARCHAR},
+            </if>
+            <if test="parentRowId != null">
+                parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+            </if>
+            <if test="ext1 != null">
+                ext1 = #{ext1,jdbcType=VARCHAR},
+            </if>
+            <if test="ext2 != null">
+                ext2 = #{ext2,jdbcType=VARCHAR},
+            </if>
+            <if test="ext3 != null">
+                ext3 = #{ext3,jdbcType=VARCHAR},
+            </if>
+            <if test="ext4 != null">
+                ext4 = #{ext4,jdbcType=INTEGER},
+            </if>
+            <if test="ext5 != null">
+                ext5 = #{ext5,jdbcType=INTEGER},
+            </if>
+            <if test="ext6 != null">
+                ext6 = #{ext6,jdbcType=INTEGER},
+            </if>
+            <if test="ext7 != null">
+                ext7 = #{ext7,jdbcType=TIMESTAMP},
+            </if>
+            <if test="ext8 != null">
+                ext8 = #{ext8,jdbcType=BIGINT},
+            </if>
+        </set>
+        where setting_type = #{settingType,jdbcType=VARCHAR}
+    </update>
+
+	<select id="queryByType" resultMap="BaseResultMap" parameterType="java.lang.String">
+		SELECT
+        <include refid="Base_Column_List"/>
+        FROM base_sys_setting
+        WHERE
+        setting_type = #{settingType,jdbcType=VARCHAR}
+        limit 1
+	</select>
+
+    <select id="queryCurrentCreditLimit" resultType="java.lang.String">
+        SELECT t.setting_value FROM base_sys_setting t where t.setting_type = 'credit_limit'
+        ORDER BY last_updated  DESC LIMIT 0,1
+    </select>
+    <select id="queryCertNameByLabel" resultType="java.lang.String" parameterType="map">
+        select description from base_sys_setting
+         where setting_type='client_type'
+         and setting_name= #{sellerLabel,jdbcType=VARCHAR}
+          and display_name=#{certType,jdbcType=VARCHAR}
+          limit 1
+    </select>
+    <select id="querySysSetting" resultMap="BaseResultMap" parameterType="map">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM base_sys_setting
+        <where>
+            <if test="settingType!=null and settingType!='' ">
+                setting_type=#{settingType,jdbcType=VARCHAR}
+            </if>
+            <if test="settingName!=null and settingName!='' ">
+                AND   setting_name=#{settingName,jdbcType=VARCHAR}
+            </if>
+            <if test="defaultValue!=null and defaultValue!='' ">
+                AND  default_value=#{defaultValue,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+    <delete id="delSysSetting">
+        delete from base_sys_setting
+        where setting_type in ('client_type','exceedtime','hint','customer_label','bill_setting','ControlPinSettings','apply_payment_contract_setting')
+
+    </delete>
+
+    <select id="selectSavePaymentSort" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select
+        count(id)
+        from base_sys_setting
+        where display_name = #{displayName,jdbcType=VARCHAR}
+    </select>
+
+    <select id="querySettingValueByName" resultType="java.lang.String" parameterType="java.lang.String">
+        select setting_value from base_sys_setting
+        where setting_type='apply_payment_contract_setting'
+        and setting_name= #{settingName,jdbcType=VARCHAR}
+    </select>
+</mapper>

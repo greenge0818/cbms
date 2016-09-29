@@ -1,0 +1,12 @@
+<link href="$link.getContextPath()/css/marketlist.css" rel="stylesheet" />
+<div class="m-main" id="m-main">
+	<dl class="" style="width:340px;margin:100px auto;text-align:center">
+		<dt style="font-size:80px;color:#c81623;font-weight:bold"><img src="$link.getContextPath()/img/err404.png" /></dt>
+		<dd style="font-size:14px;font-weight:bold;line-height:30px;text-align:center;">
+			
+			页面不存在，
+			请及时与管理员联系或企业群里知会下。
+			
+		</dd>
+	</dl>
+</div>

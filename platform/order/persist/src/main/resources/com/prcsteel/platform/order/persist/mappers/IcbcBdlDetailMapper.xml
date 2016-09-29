@@ -1,0 +1,692 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.order.persist.dao.IcbcBdlDetailDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.order.model.model.IcbcBdlDetail" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="Drcrf" property="drcrf" jdbcType="VARCHAR" />
+    <result column="VouhNo" property="vouhNo" jdbcType="VARCHAR" />
+    <result column="DebitAmount" property="debitAmount" jdbcType="VARCHAR" />
+    <result column="CreditAmount" property="creditAmount" jdbcType="VARCHAR" />
+    <result column="Balance" property="balance" jdbcType="VARCHAR" />
+    <result column="RecipBkNo" property="recipBkNo" jdbcType="VARCHAR" />
+    <result column="RecipBkName" property="recipBkName" jdbcType="VARCHAR" />
+    <result column="RecipAccNo" property="recipAccNo" jdbcType="VARCHAR" />
+    <result column="RecipName" property="recipName" jdbcType="VARCHAR" />
+    <result column="Summary" property="summary" jdbcType="VARCHAR" />
+    <result column="UseCN" property="useCN" jdbcType="VARCHAR" />
+    <result column="PostScript" property="postScript" jdbcType="VARCHAR" />
+    <result column="BusCode" property="busCode" jdbcType="VARCHAR" />
+    <result column="Date" property="date" jdbcType="VARCHAR" />
+    <result column="Time" property="time" jdbcType="VARCHAR" />
+    <result column="Ref" property="ref" jdbcType="VARCHAR" />
+    <result column="Oref" property="oref" jdbcType="VARCHAR" />
+    <result column="EnSummary" property="enSummary" jdbcType="VARCHAR" />
+    <result column="BusType" property="busType" jdbcType="VARCHAR" />
+    <result column="VouhType" property="vouhType" jdbcType="VARCHAR" />
+    <result column="AddInfo" property="addInfo" jdbcType="VARCHAR" />
+    <result column="TimeStamp" property="timeStamp" jdbcType="TIMESTAMP" />
+    <result column="RepReserved3" property="repReserved3" jdbcType="VARCHAR" />
+    <result column="RepReserved4" property="repReserved4" jdbcType="VARCHAR" />
+    <result column="UpDtranf" property="upDtranf" jdbcType="VARCHAR" />
+    <result column="ValueDate" property="valueDate" jdbcType="VARCHAR" />
+    <result column="TrxCode" property="trxCode" jdbcType="VARCHAR" />
+    <result column="SequenceNo" property="sequenceNo" jdbcType="VARCHAR" />
+    <result column="Cashf" property="cashf" jdbcType="VARCHAR" />
+    <result column="SubAcctSeq" property="subAcctSeq" jdbcType="VARCHAR" />
+    <result column="THCurrency" property="tHCurrency" jdbcType="VARCHAR" />
+    <result column="NextTag" property="nextTag" jdbcType="VARCHAR" />
+    <result column="begin_number" property="beginNumber" jdbcType="INTEGER" />
+    <result column="begin_date" property="beginDate" jdbcType="VARCHAR" />
+    <result column="end_date" property="endDate" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+    <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+    <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+    <result column="ext1" property="ext1" jdbcType="VARCHAR" />
+    <result column="ext2" property="ext2" jdbcType="VARCHAR" />
+    <result column="ext3" property="ext3" jdbcType="VARCHAR" />
+    <result column="ext4" property="ext4" jdbcType="INTEGER" />
+    <result column="ext5" property="ext5" jdbcType="INTEGER" />
+    <result column="ext6" property="ext6" jdbcType="INTEGER" />
+    <result column="ext7" property="ext7" jdbcType="TIMESTAMP" />
+    <result column="ext8" property="ext8" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, Drcrf, VouhNo, DebitAmount, CreditAmount, Balance, RecipBkNo, RecipBkName,
+    RecipAccNo, RecipName, Summary, UseCN, PostScript, BusCode, Date, Time, Ref, Oref, 
+    EnSummary, BusType, VouhType, AddInfo, TimeStamp, RepReserved3, RepReserved4, UpDtranf, ValueDate, TrxCode,
+    SequenceNo, Cashf, SubAcctSeq, THCurrency, NextTag, begin_number,
+    begin_date, end_date, status, created, created_by, last_updated, last_updated_by, 
+    modification_number, row_id, parent_row_id, ext1, ext2, ext3, ext4, ext5, ext6, ext7, 
+    ext8
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from busi_icbc_bdl_detail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from busi_icbc_bdl_detail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.prcsteel.platform.order.model.model.IcbcBdlDetail" >
+    insert into busi_icbc_bdl_detail (id, Drcrf,
+      VouhNo, DebitAmount, CreditAmount, 
+      Balance, RecipBkNo, RecipBkName, 
+      RecipAccNo, RecipName, Summary, 
+      UseCN, PostScript, BusCode, 
+      Date, Time, Ref, Oref, 
+      EnSummary, BusType, VouhType, 
+      AddInfo, TimeStamp, RepReserved3, RepReserved4,
+      UpDtranf, ValueDate, TrxCode,
+      SequenceNo, Cashf, SubAcctSeq, THCurrency, NextTag,
+      begin_number, begin_date, end_date,
+      status, created, created_by, 
+      last_updated, last_updated_by, modification_number, 
+      row_id, parent_row_id, ext1, 
+      ext2, ext3, ext4, ext5, 
+      ext6, ext7, ext8)
+    values (#{id,jdbcType=BIGINT}, #{drcrf,jdbcType=VARCHAR},
+      #{vouhNo,jdbcType=VARCHAR}, #{debitAmount,jdbcType=VARCHAR}, #{creditAmount,jdbcType=VARCHAR},
+      #{balance,jdbcType=VARCHAR}, #{recipBkNo,jdbcType=VARCHAR}, #{recipBkName,jdbcType=VARCHAR},
+      #{recipAccNo,jdbcType=VARCHAR}, #{recipName,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR},
+      #{useCN,jdbcType=VARCHAR}, #{postScript,jdbcType=VARCHAR}, #{busCode,jdbcType=VARCHAR},
+      #{date,jdbcType=VARCHAR}, #{time,jdbcType=VARCHAR}, #{ref,jdbcType=VARCHAR}, #{oref,jdbcType=VARCHAR}, 
+      #{enSummary,jdbcType=VARCHAR}, #{busType,jdbcType=VARCHAR}, #{vouhType,jdbcType=VARCHAR},
+      #{addInfo,jdbcType=VARCHAR}, #{timeStamp,jdbcType=TIMESTAMP}, #{repReserved3,jdbcType=VARCHAR}, #{repReserved4,jdbcType=VARCHAR},
+      #{upDtranf,jdbcType=VARCHAR}, #{valueDate,jdbcType=VARCHAR}, #{trxCode,jdbcType=VARCHAR}, #{sequenceNo,jdbcType=VARCHAR},
+      #{cashf,jdbcType=VARCHAR}, #{subAcctSeq,jdbcType=VARCHAR}, #{tHCurrency,jdbcType=VARCHAR}, #{nextTag,jdbcType=VARCHAR},
+      #{beginNumber,jdbcType=INTEGER}, #{beginDate,jdbcType=VARCHAR}, #{endDate,jdbcType=VARCHAR},
+      #{status,jdbcType=INTEGER}, #{created,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, 
+      #{lastUpdated,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}, #{modificationNumber,jdbcType=INTEGER}, 
+      #{rowId,jdbcType=VARCHAR}, #{parentRowId,jdbcType=VARCHAR}, #{ext1,jdbcType=VARCHAR}, 
+      #{ext2,jdbcType=VARCHAR}, #{ext3,jdbcType=VARCHAR}, #{ext4,jdbcType=INTEGER}, #{ext5,jdbcType=INTEGER}, 
+      #{ext6,jdbcType=INTEGER}, #{ext7,jdbcType=TIMESTAMP}, #{ext8,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.order.model.model.IcbcBdlDetail" >
+    insert into busi_icbc_bdl_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="drcrf != null" >
+        Drcrf,
+      </if>
+      <if test="vouhNo != null" >
+        VouhNo,
+      </if>
+      <if test="debitAmount != null" >
+        DebitAmount,
+      </if>
+      <if test="creditAmount != null" >
+        CreditAmount,
+      </if>
+      <if test="balance != null" >
+        Balance,
+      </if>
+      <if test="recipBkNo != null" >
+        RecipBkNo,
+      </if>
+      <if test="recipBkName != null" >
+        RecipBkName,
+      </if>
+      <if test="recipAccNo != null" >
+        RecipAccNo,
+      </if>
+      <if test="recipName != null" >
+        RecipName,
+      </if>
+      <if test="summary != null" >
+        Summary,
+      </if>
+      <if test="useCN != null" >
+        UseCN,
+      </if>
+      <if test="postScript != null" >
+        PostScript,
+      </if>
+      <if test="busCode != null" >
+        BusCode,
+      </if>
+      <if test="date != null" >
+        Date,
+      </if>
+      <if test="time != null" >
+        Time,
+      </if>
+      <if test="ref != null" >
+        Ref,
+      </if>
+      <if test="oref != null" >
+        Oref,
+      </if>
+      <if test="enSummary != null" >
+        EnSummary,
+      </if>
+      <if test="busType != null" >
+        BusType,
+      </if>
+      <if test="vouhType != null" >
+        VouhType,
+      </if>
+      <if test="addInfo != null" >
+        AddInfo,
+      </if>
+      <if test="timeStamp != null" >
+        TimeStamp,
+      </if>
+      <if test="repReserved3 != null" >
+        RepReserved3,
+      </if>
+      <if test="repReserved4 != null" >
+        RepReserved4,
+      </if>
+      <if test="upDtranf != null" >
+        UpDtranf,
+      </if>
+      <if test="valueDate != null" >
+        ValueDate,
+      </if>
+      <if test="trxCode != null" >
+        TrxCode,
+      </if>
+      <if test="sequenceNo != null" >
+        SequenceNo,
+      </if>
+      <if test="cashf != null" >
+        Cashf,
+      </if>
+      <if test="subAcctSeq != null" >
+        SubAcctSeq,
+      </if>
+      <if test="tHCurrency != null" >
+        THCurrency,
+      </if>
+      <if test="nextTag != null" >
+        NextTag,
+      </if>
+      <if test="beginNumber != null" >
+        begin_number,
+      </if>
+      <if test="beginDate != null" >
+        begin_date,
+      </if>
+      <if test="endDate != null" >
+        end_date,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by,
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number,
+      </if>
+      <if test="rowId != null" >
+        row_id,
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id,
+      </if>
+      <if test="ext1 != null" >
+        ext1,
+      </if>
+      <if test="ext2 != null" >
+        ext2,
+      </if>
+      <if test="ext3 != null" >
+        ext3,
+      </if>
+      <if test="ext4 != null" >
+        ext4,
+      </if>
+      <if test="ext5 != null" >
+        ext5,
+      </if>
+      <if test="ext6 != null" >
+        ext6,
+      </if>
+      <if test="ext7 != null" >
+        ext7,
+      </if>
+      <if test="ext8 != null" >
+        ext8,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="drcrf != null" >
+        #{drcrf,jdbcType=VARCHAR},
+      </if>
+      <if test="vouhNo != null" >
+        #{vouhNo,jdbcType=VARCHAR},
+      </if>
+      <if test="debitAmount != null" >
+        #{debitAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="creditAmount != null" >
+        #{creditAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="balance != null" >
+        #{balance,jdbcType=VARCHAR},
+      </if>
+      <if test="recipBkNo != null" >
+        #{recipBkNo,jdbcType=VARCHAR},
+      </if>
+      <if test="recipBkName != null" >
+        #{recipBkName,jdbcType=VARCHAR},
+      </if>
+      <if test="recipAccNo != null" >
+        #{recipAccNo,jdbcType=VARCHAR},
+      </if>
+      <if test="recipName != null" >
+        #{recipName,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null" >
+        #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="useCN != null" >
+        #{useCN,jdbcType=VARCHAR},
+      </if>
+      <if test="postScript != null" >
+        #{postScript,jdbcType=VARCHAR},
+      </if>
+      <if test="busCode != null" >
+        #{busCode,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=VARCHAR},
+      </if>
+      <if test="ref != null" >
+        #{ref,jdbcType=VARCHAR},
+      </if>
+      <if test="oref != null" >
+        #{oref,jdbcType=VARCHAR},
+      </if>
+      <if test="enSummary != null" >
+        #{enSummary,jdbcType=VARCHAR},
+      </if>
+      <if test="busType != null" >
+        #{busType,jdbcType=VARCHAR},
+      </if>
+      <if test="vouhType != null" >
+        #{vouhType,jdbcType=VARCHAR},
+      </if>
+      <if test="addInfo != null" >
+        #{addInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="timeStamp != null" >
+        #{timeStamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="repReserved3 != null" >
+        #{repReserved3,jdbcType=VARCHAR},
+      </if>
+      <if test="repReserved4 != null" >
+        #{repReserved4,jdbcType=VARCHAR},
+      </if>
+      <if test="upDtranf != null" >
+        #{upDtranf,jdbcType=VARCHAR},
+      </if>
+      <if test="valueDate != null" >
+        #{valueDate,jdbcType=VARCHAR},
+      </if>
+      <if test="trxCode != null" >
+        #{trxCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sequenceNo != null" >
+        #{sequenceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="cashf != null" >
+        #{cashf,jdbcType=VARCHAR},
+      </if>
+      <if test="subAcctSeq != null" >
+        #{subAcctSeq,jdbcType=VARCHAR},
+      </if>
+      <if test="tHCurrency != null" >
+        #{tHCurrency,jdbcType=VARCHAR},
+      </if>
+      <if test="nextTag != null" >
+        #{nextTag,jdbcType=VARCHAR},
+      </if>
+      <if test="beginNumber != null" >
+        #{beginNumber,jdbcType=INTEGER},
+      </if>
+      <if test="beginDate != null" >
+        #{beginDate,jdbcType=VARCHAR},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        #{parentRowId,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null" >
+        #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3 != null" >
+        #{ext3,jdbcType=VARCHAR},
+      </if>
+      <if test="ext4 != null" >
+        #{ext4,jdbcType=INTEGER},
+      </if>
+      <if test="ext5 != null" >
+        #{ext5,jdbcType=INTEGER},
+      </if>
+      <if test="ext6 != null" >
+        #{ext6,jdbcType=INTEGER},
+      </if>
+      <if test="ext7 != null" >
+        #{ext7,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ext8 != null" >
+        #{ext8,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.order.model.model.IcbcBdlDetail" >
+    update busi_icbc_bdl_detail
+    <set >
+      <if test="drcrf != null" >
+        Drcrf = #{drcrf,jdbcType=VARCHAR},
+      </if>
+      <if test="vouhNo != null" >
+        VouhNo = #{vouhNo,jdbcType=VARCHAR},
+      </if>
+      <if test="debitAmount != null" >
+        DebitAmount = #{debitAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="creditAmount != null" >
+        CreditAmount = #{creditAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="balance != null" >
+        Balance = #{balance,jdbcType=VARCHAR},
+      </if>
+      <if test="recipBkNo != null" >
+        RecipBkNo = #{recipBkNo,jdbcType=VARCHAR},
+      </if>
+      <if test="recipBkName != null" >
+        RecipBkName = #{recipBkName,jdbcType=VARCHAR},
+      </if>
+      <if test="recipAccNo != null" >
+        RecipAccNo = #{recipAccNo,jdbcType=VARCHAR},
+      </if>
+      <if test="recipName != null" >
+        RecipName = #{recipName,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null" >
+        Summary = #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="useCN != null" >
+        UseCN = #{useCN,jdbcType=VARCHAR},
+      </if>
+      <if test="postScript != null" >
+        PostScript = #{postScript,jdbcType=VARCHAR},
+      </if>
+      <if test="busCode != null" >
+        BusCode = #{busCode,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        Date = #{date,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        Time = #{time,jdbcType=VARCHAR},
+      </if>
+      <if test="ref != null" >
+        Ref = #{ref,jdbcType=VARCHAR},
+      </if>
+      <if test="oref != null" >
+        Oref = #{oref,jdbcType=VARCHAR},
+      </if>
+      <if test="enSummary != null" >
+        EnSummary = #{enSummary,jdbcType=VARCHAR},
+      </if>
+      <if test="busType != null" >
+        BusType = #{busType,jdbcType=VARCHAR},
+      </if>
+      <if test="vouhType != null" >
+        VouhType = #{vouhType,jdbcType=VARCHAR},
+      </if>
+      <if test="addInfo != null" >
+        AddInfo = #{addInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="timeStamp != null" >
+        TimeStamp = #{timeStamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="repReserved3 != null" >
+        RepReserved3 = #{repReserved3,jdbcType=VARCHAR},
+      </if>
+      <if test="repReserved4 != null" >
+        RepReserved4 = #{repReserved4,jdbcType=VARCHAR},
+      </if>
+      <if test="upDtranf != null" >
+        UpDtranf = #{upDtranf,jdbcType=VARCHAR},
+      </if>
+      <if test="valueDate != null" >
+        ValueDate = #{valueDate,jdbcType=VARCHAR},
+      </if>
+      <if test="trxCode != null" >
+        TrxCode = #{trxCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sequenceNo != null" >
+        SequenceNo = #{sequenceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="cashf != null" >
+        Cashf = #{cashf,jdbcType=VARCHAR},
+      </if>
+      <if test="subAcctSeq != null" >
+        SubAcctSeq = #{subAcctSeq,jdbcType=VARCHAR},
+      </if>
+      <if test="tHCurrency != null" >
+        THCurrency = #{tHCurrency,jdbcType=VARCHAR},
+      </if>
+      <if test="nextTag != null" >
+        NextTag = #{nextTag,jdbcType=VARCHAR},
+      </if>
+      <if test="beginNumber != null" >
+        begin_number = #{beginNumber,jdbcType=INTEGER},
+      </if>
+      <if test="beginDate != null" >
+        begin_date = #{beginDate,jdbcType=VARCHAR},
+      </if>
+      <if test="endDate != null" >
+        end_date = #{endDate,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number = #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        row_id = #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null" >
+        ext1 = #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        ext2 = #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3 != null" >
+        ext3 = #{ext3,jdbcType=VARCHAR},
+      </if>
+      <if test="ext4 != null" >
+        ext4 = #{ext4,jdbcType=INTEGER},
+      </if>
+      <if test="ext5 != null" >
+        ext5 = #{ext5,jdbcType=INTEGER},
+      </if>
+      <if test="ext6 != null" >
+        ext6 = #{ext6,jdbcType=INTEGER},
+      </if>
+      <if test="ext7 != null" >
+        ext7 = #{ext7,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ext8 != null" >
+        ext8 = #{ext8,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.order.model.model.IcbcBdlDetail" >
+    update busi_icbc_bdl_detail
+    set Drcrf = #{drcrf,jdbcType=VARCHAR},
+      VouhNo = #{vouhNo,jdbcType=VARCHAR},
+      DebitAmount = #{debitAmount,jdbcType=VARCHAR},
+      CreditAmount = #{creditAmount,jdbcType=VARCHAR},
+      Balance = #{balance,jdbcType=VARCHAR},
+      RecipBkNo = #{recipBkNo,jdbcType=VARCHAR},
+      RecipBkName = #{recipBkName,jdbcType=VARCHAR},
+      RecipAccNo = #{recipAccNo,jdbcType=VARCHAR},
+      RecipName = #{recipName,jdbcType=VARCHAR},
+      Summary = #{summary,jdbcType=VARCHAR},
+      UseCN = #{useCN,jdbcType=VARCHAR},
+      PostScript = #{postScript,jdbcType=VARCHAR},
+      BusCode = #{busCode,jdbcType=VARCHAR},
+      Date = #{date,jdbcType=VARCHAR},
+      Time = #{time,jdbcType=VARCHAR},
+      Ref = #{ref,jdbcType=VARCHAR},
+      Oref = #{oref,jdbcType=VARCHAR},
+      EnSummary = #{enSummary,jdbcType=VARCHAR},
+      BusType = #{busType,jdbcType=VARCHAR},
+      VouhType = #{vouhType,jdbcType=VARCHAR},
+      AddInfo = #{addInfo,jdbcType=VARCHAR},
+      TimeStamp = #{timeStamp,jdbcType=TIMESTAMP},
+      RepReserved3 = #{repReserved3,jdbcType=VARCHAR},
+      RepReserved4 = #{repReserved4,jdbcType=VARCHAR},
+      UpDtranf = #{upDtranf,jdbcType=VARCHAR},
+      ValueDate = #{valueDate,jdbcType=VARCHAR},
+      TrxCode = #{trxCode,jdbcType=VARCHAR},
+      SequenceNo = #{sequenceNo,jdbcType=VARCHAR},
+      Cashf = #{cashf,jdbcType=VARCHAR},
+      SubAcctSeq = #{subAcctSeq,jdbcType=VARCHAR},
+      THCurrency = #{tHCurrency,jdbcType=VARCHAR},
+      NextTag = #{nextTag,jdbcType=VARCHAR},
+      begin_number = #{beginNumber,jdbcType=INTEGER},
+      begin_date = #{beginDate,jdbcType=VARCHAR},
+      end_date = #{endDate,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      created = #{created,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      modification_number = #{modificationNumber,jdbcType=INTEGER},
+      row_id = #{rowId,jdbcType=VARCHAR},
+      parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      ext1 = #{ext1,jdbcType=VARCHAR},
+      ext2 = #{ext2,jdbcType=VARCHAR},
+      ext3 = #{ext3,jdbcType=VARCHAR},
+      ext4 = #{ext4,jdbcType=INTEGER},
+      ext5 = #{ext5,jdbcType=INTEGER},
+      ext6 = #{ext6,jdbcType=INTEGER},
+      ext7 = #{ext7,jdbcType=TIMESTAMP},
+      ext8 = #{ext8,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectBeginNumber" resultType="int" >
+    select ifnull(MAX(begin_number), 0 )
+    from busi_icbc_bdl_detail
+    where begin_date = #{beginDate,jdbcType=VARCHAR}
+      and end_date = #{endDate,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectSequenceNo" resultType="int" >
+    select count(1) from busi_icbc_bdl_detail where SequenceNo = #{sequenceNo,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectNextTag" resultType="String">
+    select NextTag from busi_icbc_bdl_detail where date_format(ValueDate,'%Y%m%d') = #{beginDate,jdbcType=VARCHAR} order by id desc limit 1
+  </select>
+
+  <!-- 出纳确认付款错误，72小时内如果有打款进来疑似支付错误 -->
+  <select id="totalErrorPay" resultType="int">
+    SELECT COUNT(1)
+    FROM busi_icbc_bdl_detail
+    WHERE Drcrf = 1
+    AND CreditAmount = #{creditAmount,jdbcType=VARCHAR}
+    AND RecipName = #{recipName,jdbcType=VARCHAR}
+    <![CDATA[
+      AND TIMESTAMPDIFF(HOUR, date_format(TimeStamp,'%Y-%m-%d %H:%i:%s'), date_format(#{timeStamp},'%Y-%m-%d %H:%i:%s')) <=
+      (SELECT setting_value from base_sys_setting WHERE setting_type = 'PayError')
+    ]]>
+  </select>
+ 
+  <resultMap id="icbcBdlDetailMap" type="com.prcsteel.platform.order.model.dto.IcbcBdDto" >
+  	<result column="transTime" property="transTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <!-- 工行回执单查询 -->
+  <select id="queryBankReceipts" resultMap="icbcBdlDetailMap">
+  	SELECT Drcrf, VouhNo, DebitAmount, CreditAmount/100 as CreditAmount, Balance, RecipBkNo, RecipBkName,
+    RecipAccNo, RecipName, Summary, UseCN, PostScript, BusCode, Date, Time, Ref, Oref, 
+    EnSummary, BusType, VouhType, AddInfo, TimeStamp, RepReserved3, RepReserved4, UpDtranf, ValueDate, TrxCode,
+    SequenceNo, Cashf, SubAcctSeq, THCurrency, NextTag, begin_number,
+    begin_date, end_date, status, 
+    STR_TO_DATE(concat(Date,' ',LPAD(Time, 6, 0)),'%Y%m%d %H%i%s') as transTime 
+    FROM busi_icbc_bdl_detail 
+	WHERE RecipName =#{recipName,jdbcType=VARCHAR}
+	AND RecipAccNo=#{recipAccNo,jdbcType=VARCHAR}
+	AND CAST(CreditAmount/100 as decimal(18,6)) = CAST(#{creditAmount,jdbcType=DECIMAL} as DECIMAL(18,6))
+	AND Drcrf = 1
+	ORDER BY TimeStamp DESC LIMIT 1
+  </select>
+</mapper>

@@ -1,0 +1,583 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.account.persist.dao.AccountAssignDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.account.model.model.Account" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="addr" property="addr" jdbcType="VARCHAR" />
+    <result column="zip" property="zip" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="fax" property="fax" jdbcType="VARCHAR" />
+    <result column="legal_person_name" property="legalPersonName" jdbcType="VARCHAR" />
+    <result column="mobil" property="mobil" jdbcType="VARCHAR" />
+    <result column="business" property="business" jdbcType="VARCHAR" />
+    <result column="web_site_url" property="webSiteUrl" jdbcType="VARCHAR" />
+    <result column="business_type" property="businessType" jdbcType="CHAR" />
+    <result column="province_id" property="provinceId" jdbcType="BIGINT" />
+    <result column="city_id" property="cityId" jdbcType="BIGINT" />
+    <result column="district_id" property="districtId" jdbcType="BIGINT" />
+    <result column="proxy_factory" property="proxyFactory" jdbcType="VARCHAR" />
+    <result column="proxy_qty" property="proxyQty" jdbcType="DECIMAL" />
+    <result column="license_code" property="licenseCode" jdbcType="VARCHAR" />
+    <result column="org_code" property="orgCode" jdbcType="VARCHAR" />
+    <result column="bank_code" property="bankCode" jdbcType="VARCHAR" />
+    <result column="bank_name_main" property="bankNameMain" jdbcType="VARCHAR" />
+    <result column="bank_name_branch" property="bankNameBranch" jdbcType="VARCHAR" />
+    <result column="account_code" property="accountCode" jdbcType="VARCHAR" />
+    <result column="tax_code" property="taxCode" jdbcType="VARCHAR" />
+    <result column="reg_time" property="regTime" jdbcType="TIMESTAMP" />
+    <result column="last_bill_time" property="lastBillTime" jdbcType="TIMESTAMP" />
+    <result column="buyer_deal_total" property="buyerDealTotal" jdbcType="INTEGER" />
+    <result column="seller_deal_total" property="sellerDealTotal" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="CHAR" />
+    <result column="manager_id" property="managerId" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="balance" property="balance" jdbcType="DECIMAL" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+    <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+    <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+    <result column="consign_type" property="consignType" jdbcType="VARCHAR" />
+    <result column="balance_freeze" property="balanceFreeze" jdbcType="DECIMAL" />
+    <result column="balance_second_settlement" property="balanceSecondSettlement" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, code, name, addr, zip, tel, fax, legal_person_name, mobil, business, web_site_url, 
+    business_type, province_id, city_id, district_id, proxy_factory, proxy_qty, license_code, 
+    org_code, bank_code, bank_name_main, bank_name_branch, account_code, tax_code, reg_time, 
+    last_bill_time, buyer_deal_total,seller_deal_total ,type, manager_id, status, balance, created, created_by, 
+    last_updated, last_updated_by, modification_number, row_id, parent_row_id, consign_type, 
+    balance_freeze, balance_second_settlement
+  </sql>
+
+  <resultMap id="userMap" type="com.prcsteel.platform.acl.model.model.User">
+    <id column="id" property="id" jdbcType="BIGINT"/>
+    <result column="login_id" property="loginId" jdbcType="VARCHAR"/>
+    <result column="name" property="name" jdbcType="VARCHAR"/>
+    <result column="role_id" property="roleId" jdbcType="BIGINT"/>
+    <result column="tel" property="tel" jdbcType="VARCHAR"/>
+    <result column="org_id" property="orgId" jdbcType="BIGINT"/>
+    <result column="status" property="status" jdbcType="INTEGER"/>
+    <result column="created" property="created" jdbcType="TIMESTAMP"/>
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR"/>
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP"/>
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR"/>
+    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER"/>
+    <result column="row_id" property="rowId" jdbcType="VARCHAR"/>
+    <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR"/>
+  </resultMap>
+  
+  <sql id="User_Column_List">
+    id, login_id, name, role_id, tel, org_id, status, created, created_by, last_updated,
+    last_updated_by, modification_number, row_id, parent_row_id
+  </sql>
+
+  <resultMap id="assignDtoMap" type="com.prcsteel.platform.account.model.dto.AccountAssignDto">
+    <id column="a_id" property="id" jdbcType="BIGINT"/>
+    <result column="a_name" property="name" jdbcType="VARCHAR"/>
+    <result column="manager_id" property="managerId" jdbcType="BIGINT"/>
+    <result column="u_name" property="uName" jdbcType="VARCHAR"/>
+    <result column="type" property="type" jdbcType="CHAR"/>
+  </resultMap>
+
+  <resultMap id="assignLogsMap" type="com.prcsteel.platform.account.model.model.AccountAssignLogs" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="account_id" property="accountId" jdbcType="BIGINT" />
+    <result column="reg_time" property="regTime" jdbcType="TIMESTAMP" />
+    <result column="manager_ex_id" property="managerExId" jdbcType="BIGINT" />
+    <result column="manager_ex_name" property="managerExName" jdbcType="VARCHAR" />
+    <result column="manager_next_id" property="managerNextId" jdbcType="BIGINT" />
+    <result column="manager_next_name" property="managerNextName" jdbcType="VARCHAR" />
+    <result column="assigner_id" property="assignerId" jdbcType="BIGINT" />
+    <result column="assigner_name" property="assignerName" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="CHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+    <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+    <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+  </resultMap>
+ 
+  <resultMap id="contactAssignDtoMap" type="com.prcsteel.platform.account.model.dto.ContactAssignDto">
+    <id column="c_id" property="cid" jdbcType="BIGINT"/>
+    <id column="account_id" property="accountId" jdbcType="BIGINT"/>
+    <result column="b_name" property="bName" jdbcType="VARCHAR"/>
+    <result column="b_tel" property="bTel" jdbcType="VARCHAR"/>
+    <result column="manager" property="manager" jdbcType="BIGINT"/>
+    <result column="a_id" property="aid" jdbcType="BIGINT"/>
+    <result column="dept_name" property="deptName" jdbcType="VARCHAR"/>
+    <result column="account_name" property="accountName" jdbcType="VARCHAR"/>
+    <result column="u_id" property="uid" jdbcType="BIGINT"/>
+    <result column="u_name" property="uName" jdbcType="VARCHAR"/>
+    <result column="account_tag" property="accountTag" jdbcType="BIGINT"/>
+  </resultMap>
+  
+
+  <resultMap id="AccountContactMap" type="com.prcsteel.platform.account.model.model.AccountContact" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="account_id" property="accountId" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="dept_name" property="deptName" jdbcType="VARCHAR" />
+    <result column="qq" property="qq" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="is_main" property="isMain" jdbcType="BIT" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="manager" property="manager" jdbcType="BIGINT" />
+    <result column="note" property="note" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+    <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+    <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="AccountCountAssignLogsMap" type="com.prcsteel.platform.account.model.model.AccountCountAssignLogs" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="account_id" property="accountId" jdbcType="BIGINT" />
+    <result column="reg_time" property="regTime" jdbcType="TIMESTAMP" />
+    <result column="contact_name" property="contactName" jdbcType="VARCHAR" />
+    <result column="manager_ex_id" property="managerExId" jdbcType="BIGINT" />
+    <result column="manager_ex_name" property="managerExName" jdbcType="VARCHAR" />
+    <result column="manager_next_id" property="managerNextId" jdbcType="BIGINT" />
+    <result column="manager_next_name" property="managerNextName" jdbcType="VARCHAR" />
+    <result column="org_ex_id" property="orgExId" jdbcType="BIGINT" />
+    <result column="org_ex_name" property="orgExName" jdbcType="VARCHAR" />
+    <result column="org_next_id" property="orgNextId" jdbcType="BIGINT" />
+    <result column="org_next_name" property="orgNextName" jdbcType="VARCHAR" />
+    <result column="assigner_id" property="assignerId" jdbcType="BIGINT" />
+    <result column="assigner_name" property="assignerName" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="CHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+    <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+    <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.account.model.model.AccountCountAssignLogs"  
+  		useGeneratedKeys="true" keyProperty="id">
+    insert into cust_account_assign_logs
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="accountId != null" >
+        account_id,
+      </if>
+      <if test="regTime != null" >
+        reg_time,
+      </if>
+      <if test="orgExId != null" >
+        org_ex_id,
+      </if>
+      <if test="orgExName != null" >
+        org_ex_name,
+      </if>
+      <if test="orgNextId != null" >
+        org_next_id,
+      </if>
+      <if test="orgNextName != null" >
+        org_next_name,
+      </if>
+      <if test="assignerId != null" >
+        assigner_id,
+      </if>
+      <if test="assignerName != null" >
+        assigner_name,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by,
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number,
+      </if>
+      <if test="rowId != null" >
+        row_id,
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="accountId != null" >
+        #{accountId,jdbcType=BIGINT},
+      </if>
+      <if test="regTime != null" >
+        #{regTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orgExId != null" >
+      	#{orgExId,jdbcType=BIGINT},
+      </if>
+      <if test="orgExName != null" >
+      	#{orgExName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgNextId != null" >
+      	#{orgNextId,jdbcType=BIGINT},
+      </if>
+      <if test="orgNextName != null" >
+      	#{orgNextName,jdbcType=VARCHAR},
+      </if>
+      <if test="assignerId != null" >
+      	#{assignerId,jdbcType=BIGINT},
+      </if>
+      <if test="assignerName != null" >
+      	#{assignerName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=CHAR},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        #{parentRowId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from cust_account
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+
+  <select id="selectCreatedById" resultType="java.util.Date" parameterType="java.lang.Long" >
+    select created
+    from cust_account
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+
+  <select id="queryAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cust_account
+    </select>
+
+  <update id= "updateByIds">
+	UPDATE cust_account a
+    SET a.manager_id = #{managerId,jdbcType=BIGINT}
+	WHERE a.id IN
+    <foreach item="accountIds" index="index" collection="accountIds" open="(" separator="," close=")">
+       #{accountIds}
+    </foreach>
+  </update >
+  <select id="queryAlls" resultMap="userMap" parameterType="java.lang.Long">
+    select u.id, u.login_id, u.name, u.role_id, u.tel, u.org_id, u.status, u.created, u.created_by, u.last_updated,
+    u.last_updated_by, u.modification_number, u.row_id, u.parent_row_id
+    from acl_user u
+    left join acl_role r
+    on u.role_id = r.id
+    left join base_organization o
+    on u.org_id = o.id
+    where (r.code like '%交易员%' or r.code like '%办事处总经理%')
+    <if test="orgId != null and orgId > 0">
+      and o.id = #{orgId}
+    </if>
+  </select>
+
+  <select id="queryByManagerId" resultMap="assignDtoMap" parameterType="map">
+    select a.id a_id,a.name a_name,a.manager_id,a.type,u.id u_id,u.name u_name 
+    from cust_account a
+	LEFT JOIN acl_user u ON u.id = a.manager_id 
+	where a.type IN ('seller','both')
+ 	 <if test="userIds != null ">
+       and  u.id in
+         <foreach item="userId" index="index" collection="userIds" open="(" separator="," close=")">
+             #{userId}
+         </foreach>
+     </if>
+      order by u.id desc
+  </select>
+
+  <select id="queryByType" resultMap="assignDtoMap" parameterType="map">
+    select a.id a_id,a.name a_name,a.manager_id,a.type,u.id u_id,u.name u_name 
+	from cust_account a
+	LEFT JOIN acl_user u ON u.id = a.manager_id 
+    where a.type IN ('buyer','both')
+     <if test="userIds != null ">
+         and u.id in
+         <foreach item="userId" index="index" collection="userIds" open="(" separator="," close=")">
+             #{userId}
+         </foreach>
+     </if>
+     order by u.id desc
+  </select>
+
+  <insert id="insert" parameterType="com.prcsteel.platform.account.model.model.AccountAssignLogs" >
+    insert into cust_account_assign_logs (account_id, reg_time,
+    manager_ex_id, manager_ex_name, manager_next_id,
+    manager_next_name, assigner_id, assigner_name,
+    type, created, created_by,
+    last_updated, last_updated_by, modification_number,
+    row_id, parent_row_id)
+    values( #{accountId,jdbcType=BIGINT}, #{regTime,jdbcType=TIMESTAMP},
+    #{managerExId,jdbcType=BIGINT}, #{managerExName,jdbcType=VARCHAR}, #{managerNextId,jdbcType=BIGINT},
+    #{managerNextName,jdbcType=VARCHAR}, #{assignerId,jdbcType=BIGINT}, #{assignerName,jdbcType=VARCHAR},
+    #{type,jdbcType=CHAR}, #{created,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR},
+    #{lastUpdated,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}, #{modificationNumber,jdbcType=INTEGER},
+    #{rowId,jdbcType=VARCHAR}, #{parentRowId,jdbcType=VARCHAR})
+  </insert>
+  
+   <select id="queryByIds" resultMap="contactAssignDtoMap" parameterType="map">
+  	SELECT 
+  		c.contact_id c_id,c.account_id,b.name b_name,b.tel b_tel, c.manager,a.id a_id,a.name dept_name,p.name account_name,u.id u_id,u.name u_name,p.account_tag,b.dept_name b_dept_name
+	FROM 
+		cust_account_contact c
+	LEFT JOIN 
+		acl_user u ON c.manager=u.id
+	JOIN 
+		cust_account a ON c.account_id=a.id
+	JOIN 
+		cust_account p ON p.id=a.parent_id
+	JOIN 
+		cust_contact b ON c.contact_id=b.id 
+  	<if test="userIds != null ">
+       and ( u.id in
+       <foreach item="userId" index="index" collection="userIds" open="(" separator="," close=")">
+           #{userId}
+       </foreach>
+       or c.manager = 0
+       )
+    </if>
+    and c.is_deleted = 0 and c.status = 1
+	order by u.id desc 	
+  </select>
+  
+  <update id= "updateContactById">
+	update cust_account_contact
+    set manager = #{managerId,jdbcType=BIGINT}
+	WHERE id IN 
+    <foreach item="contactIds" index="index" collection="contactIds" open="(" separator="," close=")">
+       #{contactIds}
+    </foreach>
+  </update >
+  
+  <update id="updateByaccountId">
+  	UPDATE cust_account_contact t
+  	SET t.manager = #{managerId,jdbcType=BIGINT}
+	WHERE account_id IN 
+    <foreach item="accountIds" index="index" collection="accountIds" open="(" separator="," close=")">
+       #{accountIds}
+    </foreach>
+
+  </update>
+  
+  <insert id="insertCountLogs" parameterType="com.prcsteel.platform.account.model.model.AccountCountAssignLogs" >
+    insert into cust_account_contact_assign_logs (account_id, reg_time, 
+      contact_name, manager_ex_id, manager_ex_name, 
+      manager_next_id, manager_next_name, assigner_id, 
+      assigner_name, created, 
+      created_by, last_updated, last_updated_by, 
+      modification_number, row_id, parent_row_id
+      )
+    values (#{accountId,jdbcType=BIGINT}, #{regTime,jdbcType=TIMESTAMP}, 
+      #{contactName,jdbcType=VARCHAR}, #{managerExId,jdbcType=BIGINT}, #{managerExName,jdbcType=VARCHAR}, 
+      #{managerNextId,jdbcType=BIGINT}, #{managerNextName,jdbcType=VARCHAR}, #{assignerId,jdbcType=BIGINT}, 
+      #{assignerName,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, 
+      #{createdBy,jdbcType=VARCHAR}, #{lastUpdated,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}, 
+      #{modificationNumber,jdbcType=INTEGER}, #{rowId,jdbcType=VARCHAR}, #{parentRowId,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <!-- 批量插入划转联系人日志 -->
+  <insert id="insertContactLog" parameterType="com.prcsteel.platform.account.model.dto.ContactLogDto">
+  	insert into cust_account_contact_assign_logs (account_id, reg_time, 
+      contact_name, manager_ex_id, manager_ex_name, 
+      manager_next_id, manager_next_name, assigner_id, 
+      assigner_name, type, created, 
+      created_by, last_updated, last_updated_by, 
+      modification_number
+      )
+      SELECT a.id,c.reg_time,a.name,a.manager, u.name, 
+      #{managerNextId,jdbcType=BIGINT}, #{managerNextName,jdbcType=VARCHAR}, #{assignerId,jdbcType=BIGINT}, 
+      #{assignerName,jdbcType=VARCHAR}, a.type, #{created,jdbcType=TIMESTAMP}, 
+      #{createdBy,jdbcType=VARCHAR}, #{lastUpdated,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}, 
+      #{modificationNumber,jdbcType=INTEGER}
+      FROM cust_account_contact a
+      INNER JOIN cust_account c ON a.account_id = c.id
+      INNER JOIN acl_user u ON a.manager = u.id 
+      WHERE a.account_id IN
+      <foreach collection="accountIds" item="accountIds" index="index" open="(" close=")" separator=",">
+           #{accountIds}
+      </foreach>
+  </insert>
+
+
+  <select id="queryAccountAssignLogTotalByParam" resultType="int" parameterType="com.prcsteel.platform.account.model.query.AccountAssignLogQuery">
+   <!-- modify  by zhoucai@prcsteel.com 调整sql查询逻辑，与查询列表逻辑保持一致-->
+   <!--  
+    SELECT count(1)
+    FROM cust_account_assign_logs t1,cust_account t2
+    <where>
+    <if test="orgId != null and orgId > 0">
+      AND t2.org_id = #{orgId,jdbcType=BIGINT}
+    </if>
+    <if test="accountName != null and accountName != ''">
+      AND t2.name LIKE CONCAT('%',#{accountName,jdbcType=VARCHAR},'%')
+    </if>
+    AND t1.account_id= t2.id
+    </where>
+  </select>-->
+    SELECT 
+		COUNT(1) 
+	FROM 
+		cust_account_assign_logs t1
+	JOIN
+		cust_account t2 
+	ON
+	     t1.account_id= t2.id
+	 <if test="orgId != null and orgId > 0">
+       <!--  AND t2.org_id = #{orgId,jdbcType=BIGINT}-->
+       AND (t1.org_ex_id = #{orgId,jdbcType=BIGINT} OR t1.org_next_id = #{orgId,jdbcType=BIGINT})
+    </if>
+    <if test="accountName != null and accountName != ''">
+      AND t2.name LIKE CONCAT('%',#{accountName,jdbcType=VARCHAR},'%')
+    </if>
+  </select>
+  <!-- modify by zhoucai@prcsteel.com 注释查询客户划转历史的sql，需求变更，不需要展示交易员，重写sql -->
+  <select id="queryAccountAssignLogByParam" resultType="com.prcsteel.platform.account.model.dto.AccountAssignLogDto" parameterType="com.prcsteel.platform.account.model.query.AccountAssignLogQuery">
+  	SELECT 
+		t2.name AS accountName,
+		t1.org_next_name AS orgNextName,
+		t1.org_ex_name AS orgExName,
+		t1.created AS created,
+	    t1.assigner_name AS assignName    
+	FROM 
+		cust_account_assign_logs t1
+	JOIN
+		cust_account t2 
+	ON
+	     t1.account_id= t2.id
+	 <if test="orgId != null and orgId > 0">
+     <!--  AND t2.org_id = #{orgId,jdbcType=BIGINT}--> 
+      AND (t1.org_ex_id = #{orgId,jdbcType=BIGINT} OR t1.org_next_id = #{orgId,jdbcType=BIGINT})
+    </if>
+    <if test="accountName != null and accountName != ''">
+      AND t2.name LIKE CONCAT('%',#{accountName,jdbcType=VARCHAR},'%')
+    </if>
+    GROUP BY t1.id
+    ORDER BY t1.created DESC
+    limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER}
+   <!--   SELECT t2.name AS accountName,t1.org_next_name AS orgNextName,t1.org_ex_name AS orgExName,t1.created AS created
+    ,t1.assigner_name AS assignName
+    ,GROUP_CONCAT(DISTINCT t3.manager_name ORDER BY t3.id SEPARATOR '  '  ) AS managerExName
+    ,GROUP_CONCAT(DISTINCT t4.manager_name ORDER BY t4.id SEPARATOR '  ') AS managerNextName
+    FROM cust_account_assign_logs t1
+    JOIN cust_account t2 ON  1=1
+    <if test="orgId != null and orgId > 0">
+      AND t2.org_id = #{orgId,jdbcType=BIGINT}
+    </if>
+    AND t1.account_id= t2.id
+    LEFT JOIN cust_account_manager_assign_logs t3 ON t3.assign_logs_type='0'  AND t3.assign_logs = t1.id
+    LEFT JOIN cust_account_manager_assign_logs t4 ON t4.assign_logs_type='1'  AND t4.assign_logs = t1.id
+    WHERE 1=1
+    <if test="accountName != null and accountName != ''">
+      AND t2.name LIKE CONCAT('%',#{accountName,jdbcType=VARCHAR},'%')
+    </if>
+    GROUP BY t1.id
+    ORDER BY t1.created DESC
+    limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER}-->
+  </select>
+  
+  <select id="queryAccountContactAssignLogTotalByParam" resultType="int" parameterType="com.prcsteel.platform.account.model.query.AccountContactAssignLogQuery">
+    SELECT count(1)
+    FROM cust_account_contact_assign_logs t1
+    JOIN cust_account t2 ON t2.id = t1.account_id
+    JOIN cust_account p ON p.id=t2.parent_id
+    LEFT JOIN acl_user t3 ON t3.id = t1.manager_ex_id 
+	LEFT JOIN acl_user t4 ON t4.id = t1.manager_next_id 
+    <where>
+	    <if test="orgId != null and orgId > 0">
+	      AND ( t3.org_id = #{orgId,jdbcType=BIGINT}
+	      OR t4.org_id = #{orgId,jdbcType=BIGINT} ) 
+	    </if>
+	    <if test="userIds != null ">
+	       and ( t3.id in
+	       <foreach item="userId" index="index" collection="userIds" open="(" separator="," close=")">
+	           #{userId}
+	       </foreach>
+	       or t4.id in
+	       <foreach item="userId" index="index" collection="userIds" open="(" separator="," close=")">
+	           #{userId}
+	       </foreach>
+	       )
+	    </if>
+	    <if test="accountName != null and accountName != ''">
+	      AND t2.name LIKE CONCAT('%',#{accountName,jdbcType=VARCHAR},'%')
+	    </if>
+    </where>
+  </select>
+  
+  <select id="queryAccountContactAssignLogByParam" resultType="com.prcsteel.platform.account.model.dto.AccountAssignLogDto" parameterType="com.prcsteel.platform.account.model.query.AccountContactAssignLogQuery">
+    SELECT p.name AS accountName,t6.name AS orgNextName,t4.name AS orgExName,t1.contact_name AS contactName,t1.created AS created
+    ,t1.assigner_name AS assignName, t1.manager_ex_name AS managerExName, t1.manager_next_name AS managerNextName
+    FROM cust_account_contact_assign_logs t1
+    JOIN cust_account t2 ON t1.account_id= t2.id
+    JOIN cust_account p ON p.id=t2.parent_id
+    LEFT JOIN acl_user t3 ON t3.id = t1.manager_ex_id 
+	LEFT JOIN base_organization t4 ON t4.id = t3.org_id
+	LEFT JOIN acl_user t5 ON t5.id = t1.manager_next_id 
+	LEFT JOIN base_organization t6 ON t6.id = t5.org_id
+    WHERE 1=1
+    <if test="orgId != null and orgId > 0">
+      AND ( t3.org_id = #{orgId,jdbcType=BIGINT}
+      OR t5.org_id = #{orgId,jdbcType=BIGINT} )
+    </if>
+    <if test="userIds != null ">
+       and ( t3.id in
+       <foreach item="userId" index="index" collection="userIds" open="(" separator="," close=")">
+           #{userId}
+       </foreach>
+       or t5.id in
+       <foreach item="userId" index="index" collection="userIds" open="(" separator="," close=")">
+           #{userId}
+       </foreach>
+       )
+    </if>
+    <if test="accountName != null and accountName != ''">
+      AND p.name LIKE CONCAT('%',#{accountName,jdbcType=VARCHAR},'%')
+    </if>
+    GROUP BY t1.id
+    ORDER BY t1.created DESC
+    limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER}
+  </select>
+  
+</mapper>

@@ -1,0 +1,552 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.order.persist.dao.PoolInDao">
+    <resultMap id="BaseResultMap" type="com.prcsteel.platform.order.model.model.PoolIn">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="org_id" property="orgId" jdbcType="BIGINT"/>
+        <result column="org_name" property="orgName" jdbcType="VARCHAR"/>
+        <result column="seller_id" property="sellerId" jdbcType="BIGINT"/>
+        <result column="seller_name" property="sellerName" jdbcType="VARCHAR"/>
+        <result column="department_id" property="departmentId" jdbcType="BIGINT"/>
+        <result column="department_name" property="departmentName" jdbcType="VARCHAR"/>
+        <result column="total_amount" property="totalAmount" jdbcType="DECIMAL"/>
+        <result column="total_weight" property="totalWeight" jdbcType="DECIMAL"/>
+        <result column="total_received_amount" property="totalReceivedAmount" jdbcType="DECIMAL"/>
+        <result column="total_received_weight" property="totalReceivedWeight" jdbcType="DECIMAL"/>
+        <result column="created" property="created" jdbcType="TIMESTAMP"/>
+        <result column="created_by" property="createdBy" jdbcType="VARCHAR"/>
+        <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP"/>
+        <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR"/>
+        <result column="modification_number" property="modificationNumber" jdbcType="INTEGER"/>
+        <result column="row_id" property="rowId" jdbcType="VARCHAR"/>
+        <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR"/>
+        <result column="ext1" property="ext1" jdbcType="VARCHAR"/>
+        <result column="ext2" property="ext2" jdbcType="VARCHAR"/>
+        <result column="ext3" property="ext3" jdbcType="VARCHAR"/>
+        <result column="ext4" property="ext4" jdbcType="INTEGER"/>
+        <result column="ext5" property="ext5" jdbcType="INTEGER"/>
+        <result column="ext6" property="ext6" jdbcType="INTEGER"/>
+        <result column="ext7" property="ext7" jdbcType="TIMESTAMP"/>
+        <result column="ext8" property="ext8" jdbcType="BIGINT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, org_id, org_name, seller_id, seller_name, department_id, department_name, total_amount, total_weight, total_received_amount, 
+    total_received_weight, created, created_by, last_updated, last_updated_by, modification_number, 
+    row_id, parent_row_id, ext1, ext2, ext3, ext4, ext5, ext6, ext7, ext8
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from inv_pool_in
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from inv_pool_in
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.prcsteel.platform.order.model.model.PoolIn">
+    insert into inv_pool_in (id, org_id, org_name, 
+      seller_id, seller_name, department_id, department_name,total_amount,
+      total_weight, total_received_amount, total_received_weight, 
+      created, created_by, last_updated, 
+      last_updated_by, modification_number, row_id, 
+      parent_row_id, ext1, ext2, 
+      ext3, ext4, ext5, ext6, 
+      ext7, ext8)
+    values (#{id,jdbcType=BIGINT}, #{orgId,jdbcType=BIGINT}, #{orgName,jdbcType=VARCHAR},
+      #{sellerId,jdbcType=BIGINT}, #{sellerName,jdbcType=VARCHAR}, #{departmentId,jdbcType=BIGINT}, #{departmentName,jdbcType=VARCHAR}, #{totalAmount,jdbcType=DECIMAL}, 
+      #{totalWeight,jdbcType=DECIMAL}, #{totalReceivedAmount,jdbcType=DECIMAL}, #{totalReceivedWeight,jdbcType=DECIMAL}, 
+      #{created,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, #{lastUpdated,jdbcType=TIMESTAMP}, 
+      #{lastUpdatedBy,jdbcType=VARCHAR}, #{modificationNumber,jdbcType=INTEGER}, #{rowId,jdbcType=VARCHAR}, 
+      #{parentRowId,jdbcType=VARCHAR}, #{ext1,jdbcType=VARCHAR}, #{ext2,jdbcType=VARCHAR}, 
+      #{ext3,jdbcType=VARCHAR}, #{ext4,jdbcType=INTEGER}, #{ext5,jdbcType=INTEGER}, #{ext6,jdbcType=INTEGER}, 
+      #{ext7,jdbcType=TIMESTAMP}, #{ext8,jdbcType=BIGINT})
+  </insert>
+    <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="com.prcsteel.platform.order.model.model.PoolIn">
+        insert into inv_pool_in
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="orgId != null">
+                org_id,
+            </if>
+            <if test="orgName != null">
+                org_name,
+            </if>
+            <if test="sellerId != null">
+                seller_id,
+            </if>
+            <if test="sellerName != null">
+                seller_name,
+            </if>
+            <if test="departmentId != null">
+                department_id,
+            </if>
+            <if test="departmentName != null">
+                department_name,
+            </if>
+            <if test="totalAmount != null">
+                total_amount,
+            </if>
+            <if test="totalWeight != null">
+                total_weight,
+            </if>
+            <if test="totalReceivedAmount != null">
+                total_received_amount,
+            </if>
+            <if test="totalReceivedWeight != null">
+                total_received_weight,
+            </if>
+            <if test="created != null">
+                created,
+            </if>
+            <if test="createdBy != null">
+                created_by,
+            </if>
+            <if test="lastUpdated != null">
+                last_updated,
+            </if>
+            <if test="lastUpdatedBy != null">
+                last_updated_by,
+            </if>
+            <if test="modificationNumber != null">
+                modification_number,
+            </if>
+            <if test="rowId != null">
+                row_id,
+            </if>
+            <if test="parentRowId != null">
+                parent_row_id,
+            </if>
+            <if test="ext1 != null">
+                ext1,
+            </if>
+            <if test="ext2 != null">
+                ext2,
+            </if>
+            <if test="ext3 != null">
+                ext3,
+            </if>
+            <if test="ext4 != null">
+                ext4,
+            </if>
+            <if test="ext5 != null">
+                ext5,
+            </if>
+            <if test="ext6 != null">
+                ext6,
+            </if>
+            <if test="ext7 != null">
+                ext7,
+            </if>
+            <if test="ext8 != null">
+                ext8,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="orgId != null">
+                #{orgId,jdbcType=BIGINT},
+            </if>
+            <if test="orgName != null">
+                #{orgName,jdbcType=VARCHAR},
+            </if>
+            <if test="sellerId != null">
+                #{sellerId,jdbcType=BIGINT},
+            </if>
+            <if test="sellerName != null">
+                #{sellerName,jdbcType=VARCHAR},
+            </if>
+            <if test="departmentId != null">
+                #{departmentId,jdbcType=BIGINT},
+            </if>
+            <if test="departmentName != null">
+                #{departmentName,jdbcType=VARCHAR},
+            </if>
+            <if test="totalAmount != null">
+                #{totalAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="totalWeight != null">
+                #{totalWeight,jdbcType=DECIMAL},
+            </if>
+            <if test="totalReceivedAmount != null">
+                #{totalReceivedAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="totalReceivedWeight != null">
+                #{totalReceivedWeight,jdbcType=DECIMAL},
+            </if>
+            <if test="created != null">
+                #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdBy != null">
+                #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdated != null">
+                #{lastUpdated,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdatedBy != null">
+                #{lastUpdatedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modificationNumber != null">
+                #{modificationNumber,jdbcType=INTEGER},
+            </if>
+            <if test="rowId != null">
+                #{rowId,jdbcType=VARCHAR},
+            </if>
+            <if test="parentRowId != null">
+                #{parentRowId,jdbcType=VARCHAR},
+            </if>
+            <if test="ext1 != null">
+                #{ext1,jdbcType=VARCHAR},
+            </if>
+            <if test="ext2 != null">
+                #{ext2,jdbcType=VARCHAR},
+            </if>
+            <if test="ext3 != null">
+                #{ext3,jdbcType=VARCHAR},
+            </if>
+            <if test="ext4 != null">
+                #{ext4,jdbcType=INTEGER},
+            </if>
+            <if test="ext5 != null">
+                #{ext5,jdbcType=INTEGER},
+            </if>
+            <if test="ext6 != null">
+                #{ext6,jdbcType=INTEGER},
+            </if>
+            <if test="ext7 != null">
+                #{ext7,jdbcType=TIMESTAMP},
+            </if>
+            <if test="ext8 != null">
+                #{ext8,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.order.model.model.PoolIn">
+        update inv_pool_in
+        <set>
+            <if test="orgId != null">
+                org_id = #{orgId,jdbcType=BIGINT},
+            </if>
+            <if test="orgName != null">
+                org_name = #{orgName,jdbcType=VARCHAR},
+            </if>
+            <if test="sellerId != null">
+                seller_id = #{sellerId,jdbcType=BIGINT},
+            </if>
+            <if test="sellerName != null">
+                seller_name = #{sellerName,jdbcType=VARCHAR},
+            </if>
+            <if test="departmentId != null">
+                department_id = #{departmentId,jdbcType=BIGINT},
+            </if>
+            <if test="departmentName != null">
+                department_name = #{departmentName,jdbcType=VARCHAR},
+            </if>
+            <if test="totalAmount != null">
+                total_amount = #{totalAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="totalWeight != null">
+                total_weight = #{totalWeight,jdbcType=DECIMAL},
+            </if>
+            <if test="totalReceivedAmount != null">
+                total_received_amount = #{totalReceivedAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="totalReceivedWeight != null">
+                total_received_weight = #{totalReceivedWeight,jdbcType=DECIMAL},
+            </if>
+            <if test="created != null">
+                created = #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdBy != null">
+                created_by = #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdated != null">
+                last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdatedBy != null">
+                last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modificationNumber != null">
+                modification_number = #{modificationNumber,jdbcType=INTEGER},
+            </if>
+            <if test="rowId != null">
+                row_id = #{rowId,jdbcType=VARCHAR},
+            </if>
+            <if test="parentRowId != null">
+                parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+            </if>
+            <if test="ext1 != null">
+                ext1 = #{ext1,jdbcType=VARCHAR},
+            </if>
+            <if test="ext2 != null">
+                ext2 = #{ext2,jdbcType=VARCHAR},
+            </if>
+            <if test="ext3 != null">
+                ext3 = #{ext3,jdbcType=VARCHAR},
+            </if>
+            <if test="ext4 != null">
+                ext4 = #{ext4,jdbcType=INTEGER},
+            </if>
+            <if test="ext5 != null">
+                ext5 = #{ext5,jdbcType=INTEGER},
+            </if>
+            <if test="ext6 != null">
+                ext6 = #{ext6,jdbcType=INTEGER},
+            </if>
+            <if test="ext7 != null">
+                ext7 = #{ext7,jdbcType=TIMESTAMP},
+            </if>
+            <if test="ext8 != null">
+                ext8 = #{ext8,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.order.model.model.PoolIn">
+    update inv_pool_in
+    set org_id = #{orgId,jdbcType=BIGINT},
+      org_name = #{orgName,jdbcType=VARCHAR},
+      seller_id = #{sellerId,jdbcType=BIGINT},
+      seller_name = #{sellerName,jdbcType=VARCHAR},
+      department_id = #{departmentId,jdbcType=BIGINT},
+      department_name = #{departmentName,jdbcType=VARCHAR},
+      total_amount = #{totalAmount,jdbcType=DECIMAL},
+      total_weight = #{totalWeight,jdbcType=DECIMAL},
+      total_received_amount = #{totalReceivedAmount,jdbcType=DECIMAL},
+      total_received_weight = #{totalReceivedWeight,jdbcType=DECIMAL},
+      created = #{created,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      modification_number = #{modificationNumber,jdbcType=INTEGER},
+      row_id = #{rowId,jdbcType=VARCHAR},
+      parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      ext1 = #{ext1,jdbcType=VARCHAR},
+      ext2 = #{ext2,jdbcType=VARCHAR},
+      ext3 = #{ext3,jdbcType=VARCHAR},
+      ext4 = #{ext4,jdbcType=INTEGER},
+      ext5 = #{ext5,jdbcType=INTEGER},
+      ext6 = #{ext6,jdbcType=INTEGER},
+      ext7 = #{ext7,jdbcType=TIMESTAMP},
+      ext8 = #{ext8,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <!--按公司查询-->
+    <select id="queryByCompany" resultMap="BaseResultMap" parameterType="map">
+		select temp.*,sum(temp.weight) as totalWeight, sum(temp.amount) as totalAmount from(
+			select t.seller_name,t.department_id,t.department_name,t.created,
+			(t.actual_pick_weight_server+t.allowance_weight-t.invoice_weight) AS weight,
+			(t.actual_pick_weight_server * t.cost_price +t.allowance_amount-t.invoice_amount) as amount,
+			(select count(id) from cust_account t where t.parent_id = t.seller_id) as totaldepartment
+			from busi_consign_order_items t 
+			left join busi_consign_order t1 ON t.order_id = t1.id
+			where  t1.status in(7,8)
+			<if test="ownerIdList != null ">
+	            and (t1.owner_id in
+	            <foreach item="ownerId" index="index" collection="ownerIdList" open="(" separator="," close=")">
+	                #{ownerId}
+	            </foreach>
+	            <if test="orgIdList != null">
+		            or t.seller_org_id in
+		            <foreach item="orgId" index="index" collection="orgIdList" open="(" separator="," close=")">
+		                #{orgId}
+		            </foreach>
+	        	</if>
+	        	)
+	        </if>
+			) as temp
+		 <where>
+            <if test="checkAmount == null">
+                (temp.amount > 0 OR temp.weight > 0)
+            </if>
+	        <if test="sellerName != null and sellerName!='' ">
+	            and temp.seller_name like  '%${sellerName}%'
+	        </if>            
+         </where>
+		group by temp.department_id
+		order by temp.created desc 	
+        <if test="start!=null and length !=null">
+            limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+        </if>
+    </select>
+    <!--按公司查询总数-->
+    <select id="queryTotalByCompany" resultType="java.lang.Integer" parameterType="map">
+    	select count(*) from(
+			select temp.department_id from(
+				select t.seller_name,t.department_id,t.department_name,
+				(t.actual_pick_weight_server+t.allowance_weight-t.invoice_weight) AS weight,
+				(t.actual_pick_weight_server * t.cost_price +t.allowance_amount-t.invoice_amount) as amount
+				from busi_consign_order_items t 
+				left join busi_consign_order t1 ON t.order_id = t1.id
+				where  t1.status in(7,8)
+				<if test="ownerIdList != null ">
+		            and (t1.owner_id in
+		            <foreach item="ownerId" index="index" collection="ownerIdList" open="(" separator="," close=")">
+		                #{ownerId}
+		            </foreach>
+		            <if test="orgIdList != null">
+			            or t.seller_org_id in
+			            <foreach item="orgId" index="index" collection="orgIdList" open="(" separator="," close=")">
+			                #{orgId}
+			            </foreach>
+		        	</if>
+		        	)
+		        </if>
+				) as temp
+			 <where>
+	            <if test="checkAmount == null">
+                    (temp.amount > 0 OR temp.weight > 0)
+	            </if>
+		        <if test="sellerName != null and sellerName!='' ">
+		            and temp.seller_name like  '%${sellerName}%'
+		        </if>            
+	         </where>			 
+			group by temp.department_id) temp1
+    </select>
+
+	<!--按服务中心查询总数-->
+    <select id="queryTotalByOrg" resultType="java.util.HashMap" parameterType="java.lang.Long">
+        select sum(total_received_amount) total_received_amount,sum(total_received_weight) total_received_weight
+		from inv_pool_in
+		where org_id=#{orgId,jdbcType=BIGINT}
+    </select>
+    
+    <!--更新发票池中的已收票总额-->
+    <update id="modifyTotalReceived" parameterType="com.prcsteel.platform.order.model.dto.PoolInTotalModifier">
+        UPDATE inv_pool_in
+		SET 
+			total_received_amount = total_received_amount + #{changeAmount},
+			total_received_weight = total_received_weight + #{changeWeight}
+		WHERE
+			seller_id = #{sellerId} AND
+			department_id = #{departmentId} AND
+			total_received_amount = #{originalAmount} AND
+			total_received_weight = #{originalWeight}
+    </update>  
+    <!--根据poolId更新发票池中的已收票总额-->
+    <update id="modifyTotalReceivedByPoolInId" parameterType="com.prcsteel.platform.order.model.dto.PoolInModifier">
+        UPDATE inv_pool_in
+        SET
+        total_received_amount = total_received_amount + #{changeAmount},
+        total_received_weight = total_received_weight + #{changeWeight}
+        WHERE id = #{poolInId}
+    </update>
+    <select id="queryBySellerIds" resultMap="BaseResultMap" parameterType="java.util.List">
+        SELECT 
+        <include refid="Base_Column_List"/>
+        FROM inv_pool_in
+        WHERE seller_id in
+        <foreach collection="list" item="id" open="(" separator="," close=")">#{id}</foreach>
+    </select>
+
+    <select id="queryByDepartmentIds" resultMap="BaseResultMap" parameterType="java.util.List">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM inv_pool_in
+        WHERE department_id in
+        <foreach collection="list" item="id" open="(" separator="," close=")">#{id}</foreach>
+    </select>
+
+    <select id="queryPoolinIdByInvoiceInDetailId" resultType="java.lang.Long" parameterType="java.lang.Long">
+        SELECT p.id
+        FROM inv_invoice_in i 
+        	INNER JOIN inv_invoice_in_detail d ON i.id=d.invoice_in_id 
+        	INNER JOIN inv_pool_in p ON i.seller_id = p.seller_id
+        WHERE d.id=#{invoiceInDetailId} 
+        LIMIT 1
+    </select>
+    
+    <select id="queryByInvoiceInDetailIds" resultType="com.prcsteel.platform.order.model.model.PoolInIdAndInvoiceInDetail" parameterType="java.util.List">
+        SELECT p.id poolInId,d.id invoiceInDetailId
+        FROM inv_pool_in p
+        	INNER JOIN inv_invoice_in i ON i.seller_id = p.seller_id
+        	INNER JOIN inv_invoice_in_detail d ON i.id=d.invoice_in_id 
+        WHERE d.id in
+        <foreach collection="list" open="(" close=")" separator="," item="it">#{it}</foreach>
+    </select>
+
+    <update id="modifyPoolin" parameterType="com.prcsteel.platform.order.model.dto.PoolInAndOutModifier">
+        UPDATE inv_pool_in
+        SET
+        total_amount = total_amount + #{changeAmount},
+        total_weight = total_weight + #{changeWeight},
+        last_updated = NOW(),
+        last_updated_by = #{lastUpdatedBy},
+        modification_number = modification_number +1
+        WHERE
+        id = #{id} and total_amount = #{originalAmount} and total_weight = #{originalWeight}
+    </update>
+    
+    <select id="selectSellerId" resultMap="BaseResultMap">
+    	SELECT
+        <include refid="Base_Column_List"/>
+        FROM inv_pool_in
+        WHERE seller_id = #{sellerId,jdbcType=BIGINT}
+        <if test="departmentId !=null">
+        	AND department_id = #{departmentId,jdbcType=BIGINT}
+        </if>
+    </select>
+    
+    <update id="updatePoolIn" parameterType="com.prcsteel.platform.order.model.dto.PoolInModifier">
+		update inv_pool_in
+		set
+		total_amount = total_amount + #{changeAmount}
+		,
+		total_weight = total_weight + #{changeWeight}
+		where id = #{poolInId}
+	</update>
+
+    <select id="selectByDepartmentId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from inv_pool_in
+        where department_id = #{departmentId,jdbcType=BIGINT}
+    </select>
+
+    <!--按部门查询-->
+    <select id="queryByDepartment" resultMap="BaseResultMap" parameterType="map">
+        select t1.id,t1.org_id,t1.org_name,t1.seller_id,t1.seller_name, t1.department_id, t1.department_name,
+        t1.total_amount,t1.total_weight,t1.total_received_amount,t1.total_received_weight,t1.created,
+        t1.created_by, t1.last_updated, t1.last_updated_by, t1.modification_number,
+        (select count(id) from cust_account t where t.parent_id = t1.seller_id) as totaldepartment
+        from inv_pool_in t1
+        left join (select distinct t2.seller_id,t2.order_id  from busi_consign_order_items t2 ) as t2
+        on t2.seller_id = t1.seller_id
+        left join busi_consign_order t3
+        on t3.id = t2.order_id
+        left join (select distinct contact_id,manager  from  cust_account_contact) as t4
+        on t4.contact_id = t3.contact_id
+        <where>
+            <if test="checkAmount == null">
+                t1.total_amount>t1.total_received_amount and t1.total_weight>t1.total_received_weight
+            </if>
+            <if test="sellerName != null and sellerName!='' ">
+                and t1.seller_name like '%${sellerName}%'
+            </if>
+            <if test="sellerId != null ">
+                and t1.seller_id=#{sellerId,jdbcType=BIGINT}
+            </if>
+            <if test="departmentId != null ">
+                and t1.department_id=#{departmentId,jdbcType=BIGINT}
+            </if>
+            <if test="ownerName != null and ownerName!='' ">
+                and t3.name=#{ownerName,jdbcType=VARCHAR}
+            </if>
+            <if test="ownerIdList != null ">
+                and t4.manager in
+                <foreach item="ownerId" index="index" collection="ownerIdList" open="(" separator="," close=")">
+                    #{ownerId}
+                </foreach>
+            </if>
+        </where>
+        group by t1.id order by t1.created desc
+        <if test="start!=null and length !=null">
+            limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+        </if>
+    </select>
+</mapper>

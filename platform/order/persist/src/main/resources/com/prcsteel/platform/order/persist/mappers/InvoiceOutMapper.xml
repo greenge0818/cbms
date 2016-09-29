@@ -1,0 +1,544 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.order.persist.dao.InvoiceOutDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.order.model.model.InvoiceOut" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="org_id" property="orgId" jdbcType="BIGINT" />
+    <result column="org_name" property="orgName" jdbcType="VARCHAR" />
+    <result column="buyer_id" property="buyerId" jdbcType="BIGINT" />
+    <result column="buyer_name" property="buyerName" jdbcType="VARCHAR" />
+    <result column="amount" property="amount" jdbcType="DECIMAL" />
+    <result column="check_amount" property="checkAmount" jdbcType="DECIMAL" />
+    <result column="check_user_id" property="checkUserId" jdbcType="BIGINT" />
+    <result column="check_user_name" property="checkUserName" jdbcType="VARCHAR" />
+    <result column="check_date" property="checkDate" jdbcType="TIMESTAMP" />
+    <result column="invoice_date" property="invoiceDate" jdbcType="TIMESTAMP" />
+    <result column="input_user_id" property="inputUserId" jdbcType="BIGINT" />
+    <result column="input_user_name" property="inputUserName" jdbcType="VARCHAR" />
+    <result column="input_user_mobil" property="inputUserMobil" jdbcType="VARCHAR" />
+    <result column="express_id" property="expressId" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="print_status" property="printStatus" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+    <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+    <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+    <result column="ext1" property="ext1" jdbcType="VARCHAR" />
+    <result column="ext2" property="ext2" jdbcType="VARCHAR" />
+    <result column="ext3" property="ext3" jdbcType="VARCHAR" />
+    <result column="ext4" property="ext4" jdbcType="INTEGER" />
+    <result column="ext5" property="ext5" jdbcType="INTEGER" />
+    <result column="ext6" property="ext6" jdbcType="INTEGER" />
+    <result column="ext7" property="ext7" jdbcType="TIMESTAMP" />
+    <result column="ext8" property="ext8" jdbcType="BIGINT" />
+  </resultMap>
+
+  <resultMap id="PrintInvoiceOutMap" type="com.prcsteel.platform.order.model.dto.ConfirmedInvoiceOutDto" >
+    <result column="id" property="id" jdbcType="BIGINT" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="buyer_name" property="buyerName" jdbcType="VARCHAR" />
+    <result column="check_amount" property="amount" jdbcType="DECIMAL" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, code, org_id, org_name, buyer_id, buyer_name, amount, check_amount, check_user_id, 
+    check_user_name, check_date, invoice_date, input_user_id, input_user_name, input_user_mobil, 
+    express_id, status, print_status, created, created_by, last_updated, last_updated_by, 
+    modification_number, row_id, parent_row_id, ext1, ext2, ext3, ext4, ext5, ext6, ext7, 
+    ext8
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from inv_invoice_out
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from inv_invoice_out
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.prcsteel.platform.order.model.model.InvoiceOut" >
+    insert into inv_invoice_out (id, code, org_id, 
+      org_name, buyer_id, buyer_name, 
+      amount, check_amount, check_user_id, 
+      check_user_name, check_date, invoice_date, 
+      input_user_id, input_user_name, input_user_mobil, 
+      express_id, status, print_status, 
+      created, created_by, last_updated, 
+      last_updated_by, modification_number, row_id, 
+      parent_row_id, ext1, ext2, 
+      ext3, ext4, ext5, ext6, 
+      ext7, ext8)
+    values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{orgId,jdbcType=BIGINT}, 
+      #{orgName,jdbcType=VARCHAR}, #{buyerId,jdbcType=BIGINT}, #{buyerName,jdbcType=VARCHAR}, 
+      #{amount,jdbcType=DECIMAL}, #{checkAmount,jdbcType=DECIMAL}, #{checkUserId,jdbcType=BIGINT}, 
+      #{checkUserName,jdbcType=VARCHAR}, #{checkDate,jdbcType=TIMESTAMP}, #{invoiceDate,jdbcType=TIMESTAMP}, 
+      #{inputUserId,jdbcType=BIGINT}, #{inputUserName,jdbcType=VARCHAR}, #{inputUserMobil,jdbcType=VARCHAR}, 
+      #{expressId,jdbcType=BIGINT}, #{status,jdbcType=VARCHAR}, #{printStatus,jdbcType=VARCHAR}, 
+      #{created,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, #{lastUpdated,jdbcType=TIMESTAMP}, 
+      #{lastUpdatedBy,jdbcType=VARCHAR}, #{modificationNumber,jdbcType=INTEGER}, #{rowId,jdbcType=VARCHAR}, 
+      #{parentRowId,jdbcType=VARCHAR}, #{ext1,jdbcType=VARCHAR}, #{ext2,jdbcType=VARCHAR}, 
+      #{ext3,jdbcType=VARCHAR}, #{ext4,jdbcType=INTEGER}, #{ext5,jdbcType=INTEGER}, #{ext6,jdbcType=INTEGER}, 
+      #{ext7,jdbcType=TIMESTAMP}, #{ext8,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.order.model.model.InvoiceOut">
+    insert into inv_invoice_out
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="orgId != null" >
+        org_id,
+      </if>
+      <if test="orgName != null" >
+        org_name,
+      </if>
+      <if test="buyerId != null" >
+        buyer_id,
+      </if>
+      <if test="buyerName != null" >
+        buyer_name,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="checkAmount != null" >
+        check_amount,
+      </if>
+      <if test="checkUserId != null" >
+        check_user_id,
+      </if>
+      <if test="checkUserName != null" >
+        check_user_name,
+      </if>
+      <if test="checkDate != null" >
+        check_date,
+      </if>
+      <if test="invoiceDate != null" >
+        invoice_date,
+      </if>
+      <if test="inputUserId != null" >
+        input_user_id,
+      </if>
+      <if test="inputUserName != null" >
+        input_user_name,
+      </if>
+      <if test="inputUserMobil != null" >
+        input_user_mobil,
+      </if>
+      <if test="expressId != null" >
+        express_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="printStatus != null" >
+        print_status,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by,
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number,
+      </if>
+      <if test="rowId != null" >
+        row_id,
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id,
+      </if>
+      <if test="ext1 != null" >
+        ext1,
+      </if>
+      <if test="ext2 != null" >
+        ext2,
+      </if>
+      <if test="ext3 != null" >
+        ext3,
+      </if>
+      <if test="ext4 != null" >
+        ext4,
+      </if>
+      <if test="ext5 != null" >
+        ext5,
+      </if>
+      <if test="ext6 != null" >
+        ext6,
+      </if>
+      <if test="ext7 != null" >
+        ext7,
+      </if>
+      <if test="ext8 != null" >
+        ext8,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null" >
+        #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="orgName != null" >
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerId != null" >
+        #{buyerId,jdbcType=BIGINT},
+      </if>
+      <if test="buyerName != null" >
+        #{buyerName,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="checkAmount != null" >
+        #{checkAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="checkUserId != null" >
+        #{checkUserId,jdbcType=BIGINT},
+      </if>
+      <if test="checkUserName != null" >
+        #{checkUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="checkDate != null" >
+        #{checkDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="invoiceDate != null" >
+        #{invoiceDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="inputUserId != null" >
+        #{inputUserId,jdbcType=BIGINT},
+      </if>
+      <if test="inputUserName != null" >
+        #{inputUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="inputUserMobil != null" >
+        #{inputUserMobil,jdbcType=VARCHAR},
+      </if>
+      <if test="expressId != null" >
+        #{expressId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="printStatus != null" >
+        #{printStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        #{parentRowId,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null" >
+        #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3 != null" >
+        #{ext3,jdbcType=VARCHAR},
+      </if>
+      <if test="ext4 != null" >
+        #{ext4,jdbcType=INTEGER},
+      </if>
+      <if test="ext5 != null" >
+        #{ext5,jdbcType=INTEGER},
+      </if>
+      <if test="ext6 != null" >
+        #{ext6,jdbcType=INTEGER},
+      </if>
+      <if test="ext7 != null" >
+        #{ext7,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ext8 != null" >
+        #{ext8,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.order.model.model.InvoiceOut" >
+    update inv_invoice_out
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null" >
+        org_id = #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="orgName != null" >
+        org_name = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerId != null" >
+        buyer_id = #{buyerId,jdbcType=BIGINT},
+      </if>
+      <if test="buyerName != null" >
+        buyer_name = #{buyerName,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="checkAmount != null" >
+        check_amount = #{checkAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="checkUserId != null" >
+        check_user_id = #{checkUserId,jdbcType=BIGINT},
+      </if>
+      <if test="checkUserName != null" >
+        check_user_name = #{checkUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="checkDate != null" >
+        check_date = #{checkDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="invoiceDate != null" >
+        invoice_date = #{invoiceDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="inputUserId != null" >
+        input_user_id = #{inputUserId,jdbcType=BIGINT},
+      </if>
+      <if test="inputUserName != null" >
+        input_user_name = #{inputUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="inputUserMobil != null" >
+        input_user_mobil = #{inputUserMobil,jdbcType=VARCHAR},
+      </if>
+      <if test="expressId != null" >
+        express_id = #{expressId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="printStatus != null" >
+        print_status = #{printStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number = #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        row_id = #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null" >
+        ext1 = #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        ext2 = #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3 != null" >
+        ext3 = #{ext3,jdbcType=VARCHAR},
+      </if>
+      <if test="ext4 != null" >
+        ext4 = #{ext4,jdbcType=INTEGER},
+      </if>
+      <if test="ext5 != null" >
+        ext5 = #{ext5,jdbcType=INTEGER},
+      </if>
+      <if test="ext6 != null" >
+        ext6 = #{ext6,jdbcType=INTEGER},
+      </if>
+      <if test="ext7 != null" >
+        ext7 = #{ext7,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ext8 != null" >
+        ext8 = #{ext8,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.order.model.model.InvoiceOut" >
+    update inv_invoice_out
+    set code = #{code,jdbcType=VARCHAR},
+      org_id = #{orgId,jdbcType=BIGINT},
+      org_name = #{orgName,jdbcType=VARCHAR},
+      buyer_id = #{buyerId,jdbcType=BIGINT},
+      buyer_name = #{buyerName,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=DECIMAL},
+      check_amount = #{checkAmount,jdbcType=DECIMAL},
+      check_user_id = #{checkUserId,jdbcType=BIGINT},
+      check_user_name = #{checkUserName,jdbcType=VARCHAR},
+      check_date = #{checkDate,jdbcType=TIMESTAMP},
+      invoice_date = #{invoiceDate,jdbcType=TIMESTAMP},
+      input_user_id = #{inputUserId,jdbcType=BIGINT},
+      input_user_name = #{inputUserName,jdbcType=VARCHAR},
+      input_user_mobil = #{inputUserMobil,jdbcType=VARCHAR},
+      express_id = #{expressId,jdbcType=BIGINT},
+      status = #{status,jdbcType=VARCHAR},
+      print_status = #{printStatus,jdbcType=VARCHAR},
+      created = #{created,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      modification_number = #{modificationNumber,jdbcType=INTEGER},
+      row_id = #{rowId,jdbcType=VARCHAR},
+      parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      ext1 = #{ext1,jdbcType=VARCHAR},
+      ext2 = #{ext2,jdbcType=VARCHAR},
+      ext3 = #{ext3,jdbcType=VARCHAR},
+      ext4 = #{ext4,jdbcType=INTEGER},
+      ext5 = #{ext5,jdbcType=INTEGER},
+      ext6 = #{ext6,jdbcType=INTEGER},
+      ext7 = #{ext7,jdbcType=TIMESTAMP},
+      ext8 = #{ext8,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+    t1.id, t1.code, t1.org_id, t1.org_name, t1.buyer_id, t1.buyer_name, t1.amount, t1.check_amount, t1.check_user_id,
+    t1.check_user_name, t1.check_date, t1.invoice_date, t1.input_user_id, t1.input_user_name, t1.input_user_mobil,
+    t1.express_id, t1.status, t1.print_status, t1.created, t1.created_by, t1.last_updated, t1.last_updated_by,
+    t1.modification_number, t1.row_id, t1.parent_row_id
+    from inv_invoice_out t1
+    left join inv_express t2 on t1.express_id = t2.id
+    where t1.status = #{status}
+    <if test="id != null">
+      and t1.id = #{id}
+    </if>
+    <if test="buyerName != null">
+        and t1.buyer_name = #{buyerName}
+    </if>
+    <if test="expressName != null">
+        and t2.express_name = #{expressName}
+    </if>
+    <if test="sendTimeFrom != null and sendTimeTo != null">
+        and t2.send_time between #{sendTimeFrom} and #{sendTimeTo}
+    </if>
+    <if test="checkTimeFrom != null and checkTimeTo != null">
+      and t1.check_date between #{checkTimeFrom} and #{checkTimeTo}
+    </if>
+    <if test="printStatus != null">
+      and t1.print_status = #{printStatus}
+    </if>
+    <if test="userIds != null">
+      and t1.org_id in ( select distinct(u.org_id) from acl_user u where u.id in
+      <foreach item="id" index="index" collection="userIds" open="(" separator="," close=")">
+        #{id}
+      </foreach>
+      )
+    </if>
+    order by t2.send_time asc
+    <if test="start != null and length != null">
+        limit #{start},#{length}
+    </if>
+  </select>
+  <select id="countByParams" resultType="java.lang.Integer" parameterType="java.util.Map" >
+    select count(t1.id)
+    from inv_invoice_out t1
+    left join inv_express t2 on t1.express_id = t2.id
+    where t1.status = #{status}
+    <if test="id != null">
+      and t1.id = #{id}
+    </if>
+    <if test="buyerName != null">
+      and t1.buyer_name = #{buyerName}
+    </if>
+    <if test="expressName != null">
+      and t2.express_name = #{expressName}
+    </if>
+    <if test="sendTimeFrom != null and sendTimeTo != null">
+      and t2.send_time between #{sendTimeFrom} and #{sendTimeTo}
+    </if>
+    <if test="checkTimeFrom != null and checkTimeTo != null">
+      and t1.check_date between #{checkTimeFrom} and #{checkTimeTo}
+    </if>
+    <if test="printStatus != null">
+      and t1.print_status = #{printStatus}
+    </if>
+    <if test="userIds != null">
+      and t1.org_id in ( select distinct(u.org_id) from acl_user u where u.id in
+      <foreach item="id" index="index" collection="userIds" open="(" separator="," close=")">
+        #{id}
+      </foreach>
+      )
+    </if>
+    order by t2.send_time asc
+    <if test="start != null and length != null">
+      limit #{start},#{length}
+    </if>
+  </select>
+  <select id="selectByCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from inv_invoice_out
+    where code = #{code}
+  </select>
+  <select id="selectByIds" resultMap="PrintInvoiceOutMap" parameterType="java.util.List">
+    select
+    id, buyer_name, code, check_amount
+    from inv_invoice_out
+    where id in
+    <foreach item="id" index="index" collection="list" open="(" separator="," close=")">
+        #{id}
+    </foreach>
+  </select>
+
+  <update id="updateExpressIdById" parameterType="map" >
+    UPDATE inv_invoice_out
+    SET express_id = #{expressId,jdbcType=BIGINT},
+        status = '2'
+    WHERE id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="query" resultMap="BaseResultMap" parameterType="map" >
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM inv_invoice_out
+    WHERE status = '1'
+    <if test="orgId != null" >
+      AND org_id = #{orgId,jdbcType=BIGINT}
+    </if>
+    <if test="buyerName != null and buyerName != ''">
+      AND buyer_name LIKE #{buyerName,jdbcType=VARCHAR}
+    </if>
+      <if test="startTime != null and startTime != '' and endTime != null and endTime !=''">
+        AND created >= CONCAT(#{startTime}, ' 00:00:00')
+        AND CONCAT(#{endTime}, ' 23:59:59') > created
+    </if>
+  </select>
+</mapper>

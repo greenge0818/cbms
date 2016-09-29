@@ -1,0 +1,388 @@
+#if($orderChange)
+<div class="main-content-inner">
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try {
+                ace.settings.check('breadcrumbs', 'fixed')
+            } catch (e) {
+            }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                交易管理
+            </li>
+            <li>
+                <a href="$link.getContextPath()/common/menu/order-view/order-query-index-page.html">交易单管理</a>
+            </li>
+            <li>
+                <a  #if($shiro.hasPermission("order:query:changelist:page"))
+                        href="$link.getContextPath()/order/changecontract/changelist.html"
+                #elseif($shiro.hasPermission("order:query:auditlist:page"))
+                        href="$link.getContextPath()/order/changecontract/auditlist.html"
+                #elseif($shiro.hasPermission("order:query:relatelist:page"))
+                        href="$link.getContextPath()/order/changecontract/relatelist.html"
+                #elseif($shiro.hasPermission("order:query:payapplylist:page"))
+                        href="$link.getContextPath()/order/changecontract/payapplylist.html"
+                #end>合同变更</a>
+            </li>
+            <li>
+                <a href="$link.getContextPath()/order/changecontract/payapplylist.html">待申请付款变更交易单</a>
+            </li>
+            #* 面包屑 *#
+            
+
+            <li class="active">待申请付款详情（合同变更付款）</li>
+        </ul>
+        <!-- /.breadcrumb -->
+
+        
+        <!-- /.nav-search -->
+    </div>
+    <div class="page-content">
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+                <div class="page-content">
+                    <div class="col-xs-12">
+                        <div class="step-bar">
+                            <div class="ystep4"></div>
+
+                            <div class="ystep1" style="margin-left:200px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.col -->
+            <div class="table-bar">
+                <span class="pull-left">
+                    <h5 class="h5 bolder">
+						订单信息
+                    </h5>
+                </span>
+                <!-- 增加合同查看页链接(待审核除外) -->
+                #if($!{order.status} != 1)
+                    <span class="pull-right">
+                        <a href="$link.getContextPath()/order/changecontract/print/contract.html?orderChangeId=$!{orderChange.id}">查看合同</a>
+                    </span>
+                #end
+                <span id="order_id" class="none">$!{order.id}</span>
+                <span id="account_id" class="none">$!{order.accountId}</span>
+				<span id="order_change_id" class="none">$!{orderChange.id}</span>
+                <table class="contable">
+                    <tbody>
+                    <tr>
+                        <td class="bg-gray">交易单号：</td>
+                        <td>$!{order.code}</td>
+                        <td class="bg-gray">来源：</td>
+                        <td>网站</td>
+                        <td class="bg-gray">开单时间：</td>
+                        <td>
+                            #if($order && $order.created)
+                                ${date.format("yyyy-MM-dd HH:mm:ss",$order.created)}
+                            #end
+                        </td>
+                        <td class="bg-gray">备注：</td>
+                        <td width="200">$!{order.note}</td>
+                    </tr>
+                    <tr>
+                        <td class="bg-gray">买家全称：</td>
+                        <td>$!{order.accountName}</td>
+                        <td class="bg-gray">买家部门：</td>
+                        <td>$!{order.departmentName}</td>
+                        <td class="bg-gray">买方联系人：</td>
+                        <td>$!{order.contactName}</td>
+                        <td class="bg-gray">买家联系电话：</td>
+                        <td>$!{order.contactTel}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!--/table-bar  1-->
+
+            <div class="table-bar">
+                #set($Integer=0)
+                <h5 class="h5 bolder">资源信息</h5>
+                <table class="table table-striped table-bordered table-hover orderItemsTable" id="orderItemsTable">
+                    <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>卖家全称</th>
+                        <th>部门</th>
+                        <th>联系人</th>
+                        <th>品名</th>
+                        <th>材质</th>
+                        <th>规格</th>
+                        <th>厂家</th>
+                        <th>仓库</th>
+                        <th>数量</th>
+                        <th>重量<br/>（吨）</th>
+                        <th>计重<br>方式</th>
+                        <th>销售价<br>（元/吨）</th>
+                        <th>采购价<br>（元/吨）</th>
+                        <th>销售金额<br>（元）</th>
+                        <th>采购金额<br>（元）</th>
+                        <th class="none">id</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody id="itemsdatabody" class="itemsdatabody">
+                        #set($totalCostAmount = 0)
+                        #if($orderItemsChange)
+                            #set ($i=0)
+                            #foreach($item in $orderItemsChange)
+                                #if($!{item.status}!="PENDING_DEL_APPROVAL"&&$!{item.status}!="DEL")
+                                    #set($i=$i+1)
+                                        <tr itemid="$!{item.id}">
+                                <td>$i</td>
+                                <td>
+                                    #if(${order.consignType} == 'temp')
+                                        <span><em class='label-orange white'>临</em>$item.sellerName</span>
+                                    #else
+                                        $item.sellerName
+                                    #end
+                                </td>
+                                <td>$!item.departmentName</td>
+                                <td>$!item.contactName</td>
+                                <td>$!item.nsortName</td>
+                                <td>$!item.material</td>
+                                <td>$!item.spec</td>
+                                <td>$!item.factory</td>
+                                <td>$!item.warehouse</td>
+                                <td>$!item.quantity</td>
+                                <td class="text-left">$NumberTool.format("#0.000000",$!{item.weight})</td>
+                                <td>$!item.weightConcept</td>
+                                <td class="text-right">$NumberTool.format("#0.00",$!{item.dealPrice})
+                                    #if($!{item.isPayedByAcceptDraft})
+                                        <br /><em class="label-orange" draftrelated="${item.isPayedByAcceptDraft}" draftid="$!{item.acceptDraftId}">银票支付</em>
+                                    #end
+                                </td>
+                                <td class="text-right">$NumberTool.format("#0.00",$!{item.costPrice})</td>
+                                <td dt="money" class="text-right">$NumberTool.format("#0.00",$!{item.saleAmount})</td>
+                                <td dt="money" class="text-right">$NumberTool.format("#0.00",$!{item.purchaseAmount})</td>
+                                <td class="none orderItemsId">$!{item.id}</td>
+                                <td>订单未二结 </td>
+                            </tr>
+                                #end
+                            #end
+                        #end
+                    </tbody>
+                    <tbody class="tbody-border0">
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="text-right">
+                            #if($orderItemsChange&&$orderItemsChange.size()>0)
+                                合计:
+                            #else
+                                暂无卖家信息
+                            #end
+                        </td>
+                        <td>$!{totalItem.quantity}</td>
+                        <td class="text-left">$!NumberTool.format("#0.000000",$!{totalItem.weight})</td>
+                        <td>/</td>
+                        <td>/</td>
+						<td>/</td>
+                        <td class="text-right"><em dt="money">$NumberTool.format("#0.00",$!{totalItem.saleAmount})</em><input type="hidden" id="order_total_amount" value="$!{totalItem.purchaseAmount}"></td>
+                        <td class="text-right"><em dt="money">$NumberTool.format("#0.00",$!{totalItem.purchaseAmount})</em></td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="invoiceView" style="display: none"></div>
+            <!--/table-bar 2-->
+            <div class=" recordbar col-xs-12 text-left">
+                <span class="bolder">交（提）货信息：</span>
+                <span>交货方式：<span class="bolder">$!{order.deliveryType}</span></span>
+                <span>交货地址：<span class="bolder">#if($!{order.transArea}) $!{order.transArea} #else 货物所在仓库 #end</span></span>
+                <span>交货时间：<span class="bolder">
+                    #if($order.deliveryEndDate)
+                       $date.format("yyyy-MM-dd",$!{order.deliveryEndDate})
+                    #end
+                </span></span>
+                <span>运费：由
+                    <em class="bolder">&nbsp;$!{order.feeTaker}&nbsp;</em>承担
+                    <span class="bolder">$NumberTool.format("#0.00",$!{order.shipFee})元</span>
+                </span>
+                <span>出库费：由
+                    <em class="bolder">&nbsp;$!{order.outboundTaker}&nbsp;</em>承担
+                    <span class="bolder">$NumberTool.format("#0.00",$!{order.outboundFee})元</span>
+                </span>
+            </div>
+
+        </div>
+        <!-- /.row -->
+     
+        <div class="row">
+            <div class="table-bar">
+                <h5 class="h5 bolder">付款信息</h5>
+                <table class="table table-striped table-bordered table-hover" id="payment_table">
+                    <thead>
+                    <tr>
+                        <th>付款单位</th>
+                        <th>付款单位开户行</th>
+                        <th>付款银行账号</th>
+                        <th class="none">联系电话</th>
+                        <th class="none">注册地址</th>
+                        <th>合同付款金额</th>
+						<th>已申请付款金额</th>
+						<th>待付款金额</th>
+                        <th>抵扣二次结算账户欠款</th>
+                        <th>还信用额度</th>
+                        <th>申请付款金额</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+						#set($contractAmount = 0)
+						#set($pedingAmount = 0)
+                        #foreach($item in $sellerInfoList)
+                        <tr accountid="$!{item.sellerId}" departmentId="$!{item.sellerDepartmentId}" contractid="$!{item.contractId}">
+                            <td>$!{item.companyName}$!{item.sellerDepartmentName}</td>
+                            <td><select class="" style="width:220px;">
+                                <option value=''>未找到银行账号信息</option>
+                            </select></td>
+                            <td><span></span></td>
+                            <td class="none">$!{item.tel}</td>
+                            <td class="none">$!{item.regAddress}</td>
+                            <td dt="money" class="text-right">$!NumberTool.format("#0.00",$!{item.contractAmount})</td>
+							<td dt="money" class="text-right">$!NumberTool.format("#0.00",$!{item.orderAmount})</td>
+							<td dt="money" class="text-right">$!NumberTool.format("#0.00",$!{item.pedingAmount})</td>
+                            </td>
+                            <td class="text-right">
+                                #if($item.balanceSecondSettlement < 0)
+                                    <input type="checkbox" name="secondSettlementCheck" cbsecondsettlement="$!{item.balanceSecondSettlement}" />
+                                    <span dt="money">$!{NumberTool.toThousandth($!{item.balanceSecondSettlement})}</span>
+                                #else
+                                    $!{NumberTool.toThousandth(0)}
+                                #end
+                            </td>
+                            <td class="text-right">
+                                #if($item.creditUsed > 0)
+                                    <input type="checkbox" name="refundcredit" cbrefundcredit="$!{item.creditUsed}"/>
+                                    <span dt="money">$!{NumberTool.toThousandth($!{item.creditUsed})}</span>
+                                #else
+                                    $!{NumberTool.toThousandth(0)}
+                                #end
+                            </td>
+                            <td>
+								#set($pedingAmount = $pedingAmount + $!{item.pedingAmount})
+                                <input type="text" verify="rmb" name="paymentAmount" contractAmount="$!{item.pedingAmount}"/></td>
+                            <td><span style="style">未申请付款</span><br/>
+                                #if($!{item.contractStatus}==0)
+                                    待上传合同
+                                #elseif($!{item.contractStatus}==1)
+                                    合同已上传
+								#elseif($!{item.contractStatus}==2)
+                                    已申请付款
+                                #end
+                            </td>
+                            <td class="text-center">
+                                #if($!{item.contractStatus}==0)
+                                    <a href="javascript:void(0)" class="applypay_contract_upload  btn-info btn-sm">上传变更合同</a>
+                                #elseif($!{item.contractStatus}==1)
+                                    <a href="javascript:void(0)" class="applypay_contract_view  btn-info btn-sm" >查看合同</a>&nbsp;&nbsp;
+                                    <a href="javascript:void(0)" class="applypay_contract_upload  btn-info btn-sm" > 重新上传 </a>
+                                #end
+                            </td>
+                        </tr>
+                        #end
+                    </tbody>
+				</table>
+            </div>
+        </div>
+
+        
+        <!-- 核算会计打回 -->
+         #if($!{order.callBackStatus} == "Back")
+            <div class="settlement-info bg-yellow-style row" id="order_fightback_show">
+                <div class="clearfix">
+                    该笔交易单付款申请被核算会计打回，打回原因：<span class="bolder red">$!{order.callBackNote}</span>
+                </div>
+            </div>
+		 #end
+		<!--交易单是否亏损 -->
+		 #if($!{totalItem.purchaseAmount} > $!{totalItem.saleAmount})
+            <div class="settlement-info bg-yellow-style row" id="order_fightback_show">
+                <div class="clearfix">
+                    <span class="bolder red">该交易单收到买家货款为：$NumberTool.format("#0.00",$!{totalItem.saleAmount})元，
+					申请付款的总金额为：$NumberTool.format("#0.00",$!{totalItem.purchaseAmount})元，该笔交易单亏损！
+					</span>
+                </div>
+            </div>
+		 #end
+		 
+		 #if($!{hint})
+            <div class="settlement-info bg-yellow-style row " id="new_order_hint">
+                <div class="clearfix">
+                    <span class="bolder red" >$!{hint.description}</span>
+					 <input type="hidden"  id="print_float_layer" value="$!{print_float_layer.description}"/>
+                </div>
+            </div>
+        #end
+
+    </div>
+
+    <!-- /.page-content -->
+    <div class="text-center" style="padding: 10px;">
+        <button type="button" class="btn btn-info btn-sm" id="order_applypay">申请付款</button>
+		<button type="button" class="btn btn-danger btn-sm" id="order_pay_close">关闭本次变更</button>
+        <a href="javascript:history.go(-1);" class="btn btn-default btn-sm">返回</a>
+    </div>
+</div>
+#else
+<div class="main-content-inner">
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try {
+                ace.settings.check('breadcrumbs', 'fixed')
+            } catch (e) {
+            }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="#">交易管理</a>
+            </li>
+
+            <li class="active">待申请付款详情（合同变更付款）</li>
+        </ul>
+        <!-- /.breadcrumb -->
+
+       
+        <!-- /.nav-search -->
+    </div>
+
+    <div class="page-content">
+        <div class="settlement-info bg-yellow-style row">
+            <div class="clearfix">
+                <span class="bolder red"><em>没有找到该订单或您没有权限查看。</em></span>
+            </div>
+        </div>
+    </div>
+</div>
+#end
+
+<input type="hidden" id="orderid" value=$!{order.id}>
+<input type="hidden" id="accountId" value=$!{account.id}>
+<input type="hidden" id="paymentType" value=$!{order.paymentType}>
+<input type="hidden" id="delayNums" value=$!{order.delayNum}>
+<input type="hidden" id="buyerId" value="$!{order.accountId}"/>
+<input type="hidden" id="alterStatus" value="$!{order.alterStatus}"/>
+<input type="hidden" id="sellerLabel" value=$!{sellerLabel}>
+<input type="hidden" id="settingValue" value=$!{settingValue}>
+<script src="$link.getContextPath()/js/views/order/searchacceptdraft.js"></script>
+<script src="$link.getContextPath()/js/views/order/changecontract/paypplydetail.js"></script>
+<script src="$link.getContextPath()/theme/default/js/ystep.js"></script>
+

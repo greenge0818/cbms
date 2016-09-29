@@ -1,0 +1,74 @@
+<div class="breadcrumbs" id="breadcrumbs">
+			<script type="text/javascript">
+				try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+			</script>
+
+			<ul class="breadcrumb">
+				<li>
+					<i class="ace-icon fa fa-home home-icon"></i>
+					客户管理
+				</li>
+
+				<li><a href="$link.getContextPath()/account/${type}.html">我的#if($type=="buyer")买#else卖#end家客户</a></li>
+				<li><a href="$link.getContextPath()/account/${type}/${account.id}.html">$!{account.name}</a></li>
+				<li><a href="$link.getContextPath()/account/${type}/${account.id}/contracttemplate.html">合同模板列表</a></li>
+				<li class="active">新增合同模板</li>
+			</ul><!-- /.breadcrumb -->
+        #parse("layout/topbtn.vm")<!-- /.nav-search -->
+		</div>
+
+<div class="page-content">
+    <!--TAPBAR-->
+    <div class="tabbar">
+        <ul class="nav nav-tabs padding-12 tab-color-blue" id="myTab4">
+            <li>
+                <a href="$link.getContextPath()/account/${type}/${account.id}.html">企业基本信息</a>
+            </li>
+            <li>
+                <a href="$link.getContextPath()/account/${type}/${account.id}/contactlist.html">联系人信息</a>
+            </li>
+            <li>
+                <a href="$link.getContextPath()/account/${type}/${account.id}/assignlog.html">客户划转记录</a>
+            </li>
+            <li>
+				#if($type=="buyer")
+                    <a href="$link.getContextPath()/account/buyer/${account.id}/purchaselist.html">采购记录</a>
+				#else
+                    <a href="$link.getContextPath()/account/seller/${account.id}/salelist.html">销售记录</a>
+				#end
+            </li>
+            <li class="active">
+                <a href="$link.getContextPath()/account/${type}/${account.id}/contracttemplate.html">合同模板</a>
+            </li>
+            <li>
+                <a href="$link.getContextPath()/account/${type}/${account.id}/translog.html">账户信息</a>
+            </li>
+            <li>
+                <a href="$link.getContextPath()/account/${type}/${account.id}/bankinfo.html">银行信息</a>
+            </li>
+        </ul>
+    </div>
+	<form id="contracttemplateForm" action="$link.getContextPath()/account/contracttemplate/save.html" method="POST" enctype="multipart/form-data">
+		<input type="hidden" name="accountId" value="${accountId}" id="accountId"/>
+		<input type="hidden" name="type" value="${type}" id="type"/>
+		<div class="col-xs-12"> 
+			名称：<input name="name"><br/>
+			缩略图：<input name="file" type="file"/>
+			默认：<input type="checkbox" name="isEnabled" checked/>
+			<textarea cols="150" rows="70" name="content" id="content"></textarea>
+		</div>
+		<div class="clearfix">
+            <div class="pull-left">
+                <button class="btn btn-primary" id="saveInfoBtn" type="submit"  title="保存">保存</button>
+            </div>
+        </div>
+	</form>
+</div><!-- /.page-content -->
+
+<script src="$link.getContextPath()/theme/default/js/kindeditor-4.1.9/kindeditor.js"></script>
+<script src="$link.getContextPath()/theme/default/js/kindeditor-4.1.9/lang/zh_CN.js"></script>
+<script src="$link.getContextPath()/theme/default/js/kindeditor-4.1.9/plugins/code/prettify.js"></script>
+<link rel="stylesheet" href="$link.getContextPath()/theme/default/js/kindeditor-4.1.9/themes/default/default.css" />
+<link rel="stylesheet" href="$link.getContextPath()/theme/default/js/kindeditor-4.1.9/plugins/code/prettify.css" />
+<script src="$link.getContextPath()/js/views/account/contracttemplate.js"></script>
+

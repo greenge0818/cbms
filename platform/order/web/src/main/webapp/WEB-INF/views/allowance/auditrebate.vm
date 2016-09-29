@@ -1,0 +1,340 @@
+<div class="breadcrumbs" id="breadcrumbs">
+	<script type="text/javascript">
+		try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+	</script>
+
+	<ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+			交易管理
+		</li>
+		<li>
+			<a href="/order/allowance/list/seller.html">折让单管理</a>
+
+		</li>
+		<li>
+            	#if($!allowance.allowanceType == "seller")
+            		<a href="$link.getContextPath()/allowance/list/seller.html">卖家折让单管理
+            	#else
+            		<a href="$link.getContextPath()/allowance/list/buyer.html">买家折让单管理
+            	#end
+            		</a>
+        </li>
+        <li class="active">
+           	#if($!allowance.status == "approved")取消#end审核通过#if($!allowance.allowanceType == "seller")卖家折让单#else买家折让单#end
+        </li>
+	</ul><!-- /.breadcrumb -->
+
+		#parse("layout/topbtn.vm")<!-- /.nav-search -->
+</div>
+#if($permission_approval|| $permission_cancel)
+<div class="page-content">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="table-bar">
+						<input type="hidden" value="$!{allowance.id}" id="allowance_id"/>
+						<input type="hidden" value="$!{allowance.allowanceManner}" id="allowance_manner"/>
+						<input type="hidden" value="$!{allowance.allowanceType}" id="allowance_type"/>
+						<span class="bolder">#if($!allowance.allowanceType == "seller")卖家全称#else 买家全称#end：$allowance.accountName</span>
+                        #if($!departmentNums > 1)
+							<span class="bolder">&nbsp;&nbsp;&nbsp;【$!allowance.departmentName】</span>
+						#end
+						<table id="dynamic-table" class="table table-striped table-bordered table-hover">
+							<thead>
+								<tr>
+									<th>开单时间</th>
+									<th>寄售交易单号</th>
+									<th>买家全称</th>
+									<th>品名</th>
+									<th>材质</th>
+									<th>规格</th>
+									<th>实提重量</th>
+									#if($!allowance.allowanceManner == "weight" || $!allowance.allowanceManner == "all")
+										<th>折扣重量</th>
+										<th>折后重量</th>
+									#end
+									<th>实提金额</th>
+									#if($!allowance.allowanceManner == "amount" || $!allowance.allowanceManner == "all")
+										<th>折扣金额</th>
+										<th>折后金额</th>
+									#end
+								</tr>
+							</thead>
+							<tbody class="secondpayment_datarow">
+							#foreach($item in $list)
+								<tr>
+									<td>$!date.format('yyyy-MM-dd HH:mm:ss ',$item.orderTime)</td>
+									<td>$item.orderCode</td>
+									<td>$item.buyerName
+										#if($item.isShowBuyerDept)
+											&nbsp;&nbsp;【$!item.buyerDepartmentName】
+										#end
+									</td>
+									<td>$item.nsortName</td>
+									<td>$item.material</td>
+									<td>$item.spec</td>
+									<td class="text-left">$NumberTool.format("#0.000000",$item.actualWeight)<input type="hidden" name='actual_weight' value="$item.actualWeight"></td>
+									#if($!allowance.allowanceManner == "weight" || $!allowance.allowanceManner == "all")
+										<td class="text-left">$NumberTool.format("#0.000000",$item.allowanceWeight)<input type="hidden" name='allowance_weight' value="$item.allowanceWeight"></td>
+										<td class="text-left">$NumberTool.format("#0.000000",$item.unAllowanceWeight)<input type="hidden" name='discounted_weight' value="$item.unAllowanceWeight"></td>
+									#end
+									<td class="text-right">$NumberTool.toThousandth($item.actualAmount)<input type="hidden" name='actual_money' value="$item.actualAmount"></td>
+									#if($!allowance.allowanceManner == "amount" || $!allowance.allowanceManner == "all")
+										<td class="text-right">$NumberTool.toThousandth($item.allowanceAmount)<input type="hidden" name='allowance_money' value="$item.allowanceAmount"></td>
+										<td class="text-right">$NumberTool.toThousandth($item.unAllowanceAmount)<input type="hidden" name='discounted_money' value="$item.unAllowanceAmount"></td>
+									#end
+								</tr>
+							#end
+							</tbody>
+							<tbody class="tbody-border0" id="secondpayment_footer">
+								<tr>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td>合计</td>
+									<td class="text-left"></td>
+									#if($!allowance.allowanceManner == "weight" || $!allowance.allowanceManner == "all")
+										<td class="text-left"></td>
+										<td class="text-left"></td>
+									#end
+									<td class="text-right"></td>
+									#if($!allowance.allowanceManner == "amount" || $!allowance.allowanceManner == "all")
+										<td class="text-right"></td>
+										<td class="text-right"></td>
+									#end
+								</tr>
+							</tbody>
+						</table>
+						#if($!allowance.allowanceManner == "weight" || $!allowance.allowanceManner == "all")
+						#if($!allowance.allowanceType == "buyer")
+							<h5 class="h5 bolder">关联的卖家折让单</h5><br>
+							<span class="bolder">卖家全称：$!sellerAllowance.accountName</span>
+							#if($!departmentNums > 1)
+								<span class="bolder">&nbsp;&nbsp;&nbsp;【$!sellerAllowance.departmentName】</span>
+							#end
+							<table id="dynamic-table" class="table table-striped table-bordered table-hover">
+								<thead>
+									<tr>
+										<th>开单时间</th>
+										<th>寄售交易单号</th>
+										<th>买家全称</th>
+										<th>品名</th>
+										<th>材质</th>
+										<th>规格</th>
+										<th>实提重量</th>
+										#if($!allowance.allowanceManner == "weight" || $!allowance.allowanceManner == "all")
+											<th>折扣重量</th>
+											<th>折后重量</th>
+										#end
+										<th>实提金额</th>
+										#if($!allowance.allowanceManner == "amount" || $!allowance.allowanceManner == "all")
+											<th>折扣金额</th>
+											<th>折后金额</th>
+										#end
+									</tr>
+								</thead>
+								<tbody class="secondpayment_datarow">
+									#foreach($selleritem in $sellerList)
+										<tr>
+											<td>$!date.format('yyyy-MM-dd HH:mm:ss ',$selleritem.orderTime)</td>
+											<td>$selleritem.orderCode</td>
+											<td>$selleritem.buyerName
+												#if($selleritem.isShowBuyerDept)
+													&nbsp;&nbsp;【$!selleritem.buyerDepartmentName】
+												#end
+											</td>
+											<td>$selleritem.nsortName</td>
+											<td>$selleritem.material</td>
+											<td>$selleritem.spec</td>
+											<td class="text-left">$NumberTool.format("#0.000000",$selleritem.actualWeight)<input type="hidden" name='actual_weight' value="$selleritem.actualWeight"></td>
+											#if($!allowance.allowanceManner == "weight" || $!allowance.allowanceManner == "all")
+												<td class="text-left">$NumberTool.format("#0.000000",$selleritem.allowanceWeight)<input type="hidden" name='allowance_weight' value="$selleritem.allowanceWeight"></td>
+												<td class="text-left">$NumberTool.format("#0.000000",$selleritem.unAllowanceWeight)<input type="hidden" name='discounted_weight' value="$selleritem.unAllowanceWeight"></td>
+											#end
+											<td class="text-right">$NumberTool.toThousandth($selleritem.actualAmount)<input type="hidden" name='actual_money' value="$selleritem.actualAmount"></td>
+											#if($!allowance.allowanceManner == "amount" || $!allowance.allowanceManner == "all")
+												<td class="text-right">$NumberTool.toThousandth($selleritem.allowanceAmount)<input type="hidden" name='allowance_money' value="$selleritem.allowanceAmount"></td>
+												<td class="text-right">$NumberTool.toThousandth($selleritem.unAllowanceAmount)<input type="hidden" name='discounted_money' value="$selleritem.unAllowanceAmount"></td>
+											#end
+										</tr>
+									 #end
+								</tbody>
+								<tbody class="tbody-border0" id="secondpayment_footer">
+									<tr>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td>合计</td>
+										<td class="text-left"></td>
+										#if($!allowance.allowanceManner == "weight" || $!allowance.allowanceManner == "all")
+											<td class="text-left"></td>
+											<td class="text-left"></td>
+										#end
+										<td class="text-right"></td>
+										#if($!allowance.allowanceManner == "amount" || $!allowance.allowanceManner == "all")
+											<td class="text-right"></td>
+											<td class="text-right"></td>
+										#end
+									</tr>
+								</tbody>
+							</table>
+						#end
+						#if($!allowance.allowanceType == "seller")
+							<h5 class="h5 bolder">关联的买家折让单</h5><br>
+							#set($buyercompanyid = 0)
+								#foreach($item in $buyerList)
+									#if($buyercompanyid == 0 || $buyercompanyid != $item.buyerId)
+									<input type="hidden" value="$!{item.id}" name="buyerAllowance_id"/>
+									#set($buyercompanyid = $item.buyerId)
+									<span class="bolder">买家全称：$item.buyerName</span>
+									#if($item.isShowBuyerDept)
+										<span class="bolder">&nbsp;&nbsp;&nbsp;【$item.buyerDepartmentName】</span>
+									#end
+									<table id="dynamic-table" class="table table-striped table-bordered table-hover">
+										<thead>
+											<tr>
+												<th>开单时间</th>
+												<th>寄售交易单号</th>
+												<th>买家全称</th>
+												<th>品名</th>
+												<th>材质</th>
+												<th>规格</th>
+												<th>实提重量</th>
+												#if($!allowance.allowanceManner == "weight" || $!allowance.allowanceManner == "all")
+													<th>折扣重量</th>
+													<th>折后重量</th>
+												#end
+												<th>实提金额</th>
+												#if($!allowance.allowanceManner == "amount" || $!allowance.allowanceManner == "all")
+													<th>折扣金额</th>
+													<th>折后金额</th>
+												#end
+											</tr>
+										</thead>
+										<tbody class="secondpayment_datarow">
+											#foreach($subitem in $buyerList)
+												#if($subitem.buyerId == $item.buyerId)
+													<tr>
+														<td>$!date.format('yyyy-MM-dd HH:mm:ss ',$subitem.orderTime)</td>
+														<td>$subitem.orderCode</td>
+														<td>$subitem.buyerName
+															#if($subitem.isShowBuyerDept)
+																&nbsp;&nbsp;【$!subitem.buyerDepartmentName】
+															#end
+														</td>
+														<td>$subitem.nsortName</td>
+														<td>$subitem.material</td>
+														<td>$subitem.spec</td>
+														<td class="text-left">$NumberTool.format("#0.000000",$subitem.actualWeight)<input type="hidden" name='actual_weight' value="$subitem.actualWeight"></td>
+														#if($!allowance.allowanceManner == "weight" || $!allowance.allowanceManner == "all")
+															<td class="text-left">$NumberTool.format("#0.000000",$subitem.allowanceWeight)<input type="hidden" name='allowance_weight' value="$subitem.allowanceWeight"></td>
+															<td class="text-left">$NumberTool.format("#0.000000",$subitem.unAllowanceWeight)<input type="hidden" name='discounted_weight' value="$subitem.unAllowanceWeight"></td>
+														#end
+														<td class="text-right">$NumberTool.toThousandth($subitem.actualAmount)<input type="hidden" name='actual_money' value="$subitem.actualAmount"></td>
+														#if($!allowance.allowanceManner == "amount" || $!allowance.allowanceManner == "all")
+															<td class="text-right">$NumberTool.toThousandth($subitem.allowanceAmount)<input type="hidden" name='allowance_money' value="$subitem.allowanceAmount"></td>
+															<td class="text-right">$NumberTool.toThousandth($subitem.unAllowanceAmount)<input type="hidden" name='discounted_money' value="$subitem.unAllowanceAmount"></td>
+														#end
+													</tr>
+												#end
+											 #end
+										</tbody>
+										<tbody class="tbody-border0" id="secondpayment_footer">
+											<tr>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td>合计</td>
+												<td class="text-left"></td>
+												#if($!allowance.allowanceManner == "weight" || $!allowance.allowanceManner == "all")
+													<td class="text-left"></td>
+													<td class="text-left"></td>
+												#end
+												<td class="text-right"></td>
+												#if($!allowance.allowanceManner == "amount" || $!allowance.allowanceManner == "all")
+													<td class="text-right"></td>
+													<td class="text-right"></td>
+												#end
+											</tr>
+										</tbody>
+									</table>
+								#end
+							#end
+						#end
+						#end
+					</div>
+					#if($!allowance.allowanceType == "seller")
+					<div class="clearfix">
+						<div class="pull-left img-list">
+							<h5 class="h5 bolder">折让单：</h5>
+							<a target="_blank" class="img-box">
+	                   			<img id="turnImg"  width="200" height="200"
+	                   				src="#if(${allowance.imgUrl})$link.getContextPath()/common/getfile.html?key=$!{allowance.imgUrl} #end">
+							</a>  
+						</div>
+						#end
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="pull-left" style="padding:10px;height:150px;width:350px;overflow:auto;overflow-x:hidden;">
+	<td class="bg-gray" rowspan="2">备注：</td>
+	<td rowspan="2" width="200">
+	    <textarea class="remarks-textarea" placeholder="可输入备注信息"
+	              id="allowance_note" disabled='disabled'>$!{allowance.note}</textarea>
+	</td>
+</div>
+
+<div class=" text-center" >
+	#if($!allowance.status == "to_audit")
+		<span>
+			<button type="button" class="btn btn-info btn-sm" id="payBtnPass">通过</button>
+		</span>
+		<span>
+			<button type="button" class="btn btn-info btn-sm" id="payBtnNoPass">不通过</button>
+		</span>
+	#end
+	#if($!allowance.status == "approved")
+		<span>
+			<button type="button" class="btn btn-info btn-sm" id="cancelAudit">取消审核通过</button>
+		</span>
+	#end
+	<a href="javascript:history.back(-1);" class="btn btn-default btn-sm">返回</a>
+</div>
+#else
+<div class="page-content">
+    <div class="settlement-info bg-yellow-style row">
+        <div class="clearfix">
+            <span class="bolder red"><em>您没有该权限,请返回重试！&nbsp;&nbsp;<a class="link" href="javascript:history.back(-1);">返回</a></em></span>
+        </div>
+    </div>
+</div>
+#end
+
+<div id="addreason" class='well' style='margin-top:25px;display: none;'>
+	<div style='margin-top:25px;width: 400px;'>
+	    <form id='form-horizontal' class='form-horizontal' role='form'>
+	        <div class='form-group'><label class='col-sm-3 control-label no-padding-right' for='txtNewPwd2'>理由：</label>
+	            <div class='col-sm-9'><textarea id="reason" must='1' type='text' name="name" must='1' placeholder='请填写不通过的理由。' class='col-xs-10 col-sm-10'></textarea></div>
+	        </div>
+	        <div class="table-bar text-center"><button id="btncommit" type="button" class="btn btn-sm btn-primary"><i class="ace-icon fa fa-check"></i>确定</button>
+	            <button id="btnClose" data-bb-handler="button" type="button" class="btn btn-sm">取消</button>
+	        </div>
+	    </form>
+	</div>
+</div>
+
+<script src="$link.getContextPath()/js/views/allowance/totalcost.js"></script>
+<script src="$link.getContextPath()/js/views/allowance/not_through.js"></script>
+<script src="$link.getContextPath()/js/views/allowance/audit.js"></script>
+<script src="$link.getContextPath()/js/views/allowance/cancel_audit.js"></script>

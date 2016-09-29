@@ -1,0 +1,24 @@
+#set($layout="layout/blank.vm")
+<div id="status-dialog" class="status-dialog">
+	<table id="dynamic-table" class="table table-striped table-bordered table-hover">
+		<thead>
+		<tr><th colspan=4>该进项票所关联订单的买家客户信息</th></tr>
+		<tr>
+			<th>买家全称</th>
+			<!--<th>开票资料</th>-->
+			<!--<th>买家欠款金额（元）</th>-->
+			<th>开票申请</th>
+		</tr>
+		</thead>
+		<tbody>
+			#foreach($item in $!list)
+				<tr class="text-left" style="padding:5px;">
+					<td>$!item.accountName</td>
+					## <td>$!item.invoiceInformation</td>
+					## <td class="text-right">$!item.balanceSecondSettlementStr</td>
+					<td>$!item.applyInvocieType</td>
+				</tr>
+			#end
+		</tbody>
+	</table>
+</div>

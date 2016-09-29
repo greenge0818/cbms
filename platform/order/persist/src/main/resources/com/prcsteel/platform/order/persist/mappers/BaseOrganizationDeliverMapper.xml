@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.acl.persist.dao.BaseOrganizationDeliverDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.acl.model.model.BaseOrganizationDeliver" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="org_id" property="orgId" jdbcType="BIGINT" />
+    <result column="org_name" property="orgName" jdbcType="VARCHAR" />
+    <result column="deliver_id" property="deliverId" jdbcType="BIGINT" />
+    <result column="deliver_days" property="deliverDays" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="is_deleted" property="isDeleted" jdbcType="BIT" />
+  </resultMap>
+  <resultMap id="orgDeliverMap" type="com.prcsteel.platform.acl.model.dto.BaseOrganizationDeliverDto"
+             extends="BaseResultMap">
+    <result column="name" property="name" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, org_id, org_name, deliver_id, deliver_days, created, created_by, last_updated, 
+    last_updated_by, is_deleted
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from base_organization_deliver
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByOrgId" resultMap="orgDeliverMap" parameterType="java.lang.Long" >
+    select 
+    d.org_id,d.org_name,d.deliver_id,b.name,d.deliver_days
+    from base_organization_deliver d
+    left join base_deliver b
+    on d.deliver_id = b.id
+    where d.org_id = #{orgId,jdbcType=BIGINT} and d.is_deleted ='0'
+    order by  b.created desc
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    UPDATE  base_organization_deliver set is_deleted=1
+    where deliver_id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.prcsteel.platform.acl.model.model.BaseOrganizationDeliver" >
+    insert into base_organization_deliver (id, org_id, org_name, 
+      deliver_id, deliver_days, created, 
+      created_by, last_updated, last_updated_by, 
+      is_deleted)
+    values (#{id,jdbcType=BIGINT}, #{orgId,jdbcType=BIGINT}, #{orgName,jdbcType=VARCHAR}, 
+      #{deliverId,jdbcType=BIGINT}, #{deliverDays,jdbcType=INTEGER}, #{created,jdbcType=TIMESTAMP}, 
+      #{createdBy,jdbcType=VARCHAR}, #{lastUpdated,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}, 
+      #{isDeleted,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.acl.model.model.BaseOrganizationDeliver" >
+    insert into base_organization_deliver
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orgId != null" >
+        org_id,
+      </if>
+      <if test="orgName != null" >
+        org_name,
+      </if>
+      <if test="deliverId != null" >
+        deliver_id,
+      </if>
+      <if test="deliverDays != null" >
+        deliver_days,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orgId != null" >
+        #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="orgName != null" >
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverId != null" >
+        #{deliverId,jdbcType=BIGINT},
+      </if>
+      <if test="deliverDays != null" >
+        #{deliverDays,jdbcType=INTEGER},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.acl.model.model.BaseOrganizationDeliver" >
+    update base_organization_deliver
+    <set >
+      <if test="orgId != null" >
+        org_id = #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="orgName != null" >
+        org_name = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverId != null" >
+        deliver_id = #{deliverId,jdbcType=BIGINT},
+      </if>
+      <if test="deliverDays != null" >
+        deliver_days = #{deliverDays,jdbcType=INTEGER},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.acl.model.model.BaseOrganizationDeliver" >
+    update base_organization_deliver
+    set org_id = #{orgId,jdbcType=BIGINT},
+      org_name = #{orgName,jdbcType=VARCHAR},
+      deliver_id = #{deliverId,jdbcType=BIGINT},
+      deliver_days = #{deliverDays,jdbcType=INTEGER},
+      created = #{created,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      is_deleted = #{isDeleted,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <!--根据服务中心和快递id更新服务中心快递时间表-->
+  <update id="batchUpdateOrgDeliver" parameterType="java.util.List">
+    <foreach collection="list" item="item" index="index" open="" close=";" separator=";" >
+      update base_organization_deliver
+      <set>
+        deliver_days = #{item.deliverDays},
+        last_updated = #{item.lastUpdated},
+        last_updated_by = #{item.lastUpdatedBy}
+      </set>
+      where org_id = #{item.orgId}
+        and deliver_id = #{item.deliverId}
+        and is_deleted = 0
+    </foreach>
+  </update>
+</mapper>

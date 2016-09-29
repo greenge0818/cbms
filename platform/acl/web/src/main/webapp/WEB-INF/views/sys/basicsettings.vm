@@ -1,0 +1,88 @@
+
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+
+    </script>
+
+    <ul class="breadcrumb">
+        <li><i class="ace-icon fa fa-home home-icon"></i>系统管理</li>
+        <li>系统设置</li>
+        <li class="active">基础配置设置</li>
+    </ul>
+    <!-- /.breadcrumb -->
+    #parse("layout/topbtn.vm")
+    <!-- /.nav-search -->
+</div>
+<div class="page-content">
+
+    <div class="row">
+        <div class="col-xs-12">
+            <!--TAPBAR-->
+            #parse("sys/systemmenu.vm")
+##            <form method="post" id="savaRisk" action="$link.getContextPath()/sys/savabasicsettings.html">
+                <div class="recordbar  text-left col-xs-12">
+                    <span class="bolder">开单页面支付方式设置：</span>
+                </div>
+                <table id="" class="contable table"   style="">
+                    <thead>
+                    <tr>
+                        <th class="text-center">支付名称</th>
+                        <th class="text-center" >操作人</th>
+                        <th class="text-center" >操作</th>
+                    </tr>
+                    </thead>
+                    <tbody class="text-center">
+                    #foreach( $settings in $BasicSettings)
+                    <tr class="bolder-b-dashed">
+
+                        <td>$!settings.displayName</td>
+                        <td >$!settings.createdBy</td>
+                        <td><a href="javascript:void(0);"  settingsname="$!settings.displayName"   settingsid="$!settings.id" onclick="editPaymentSort(this)">编辑</a></td>
+                    </tr>
+                    #end
+                    <tr class="bolder-b-dashed">
+
+                        <td></td>
+                        <td ></td>
+                        <td><a href="javascript:void(0);"   onclick="addPaymentSort()">新增</a></td>
+                    </tr>
+                </tbody> </table>
+##                </form>
+	
+##               <div class="recordbar  text-left col-xs-12">
+##                    <span class="bolder">支付管理付款类型配置设置：</span>
+##                </div>
+##                <table id="" class="contable table"   style="">
+##                    <thead>
+##                    <tr>
+##                        <th class="text-center">付款类型</th>
+##                        <th class="text-center" >添加人</th>
+##                       <th class="text-center" >操作</th>
+##                    </tr>
+##                   </thead>
+##                   <tbody class="text-center">
+##                    #foreach( $types in $!payMentTypes)
+##                  <tr class="bolder-b-dashed">
+##                       <td>$types.displayName</td>
+##                     <td>$types.createdBy</td>
+##                        <td><a href="javascript:void(0);"  settingsname="$!types.displayName"   settingsid="$!types.id" onclick="editPaymentType(this)">禁用</a></td>
+##                  </tr>
+##                  #end
+##                   <tr class="bolder-b-dashed">
+##
+##                      <td></td>
+##                       <td ></td>
+##                       <td><a href="javascript:void(0);"   onclick="addPaymentType()">添加</a></td>
+##                   </tr>
+##                </tbody> </table>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+<!-- /.page-content -->
+<script type="text/javascript" src="$link.getContextPath()/js/views/sys/basicsettings.js"></script>

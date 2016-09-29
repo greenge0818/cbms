@@ -1,0 +1,100 @@
+<!--确认发票-->
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="#">发票管理</a>
+        </li>
+        <li>
+            <a href="$link.getContextPath()/invoice/in/awaits.html">进项票管理</a>
+        </li>
+        <li class="active"><a href="$link.getContextPath()/invoice/in/confirm.html">待确认</a></li>
+        <li class="active">核对进项票</li>
+    </ul>
+    <!-- /.breadcrumb -->
+</div>
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <form id="invoiceForm">
+                    <div class="col-xs-12">
+                        <div class="clearfix">
+                            <div class="input-group pull-right col-md-12 col-sm-12 col-lg-12 search-bar text-left">
+                                <label class="red">说明：进项票，系统读取内勤已录入的信息，核算会计确认，如果内勤第一次输入有误，核算会计直接修改为准。</label>
+                            </div>
+                            <div>
+                                <span class="h5Tit bolder">请先录入进项发票上的基本信息：</span><br/>
+                                <label>发票号：
+                                    <input type="text" id="invoiceCode" must="1" verify='numeric' class="c-text" readonly="readonly"
+                                           value="$!{invoiceIn.code}"/>
+                                </label>
+                                <label>发票重量：
+                                    <input type="text" id="invoiceWeight" must="1" verify='numeric' class="c-text" value="$!{NumberTool.format("#0.0000",$!{invoiceIn.totalWeight})}" />
+                                </label>
+                                <label>发票金额：
+                                    <input type="text" id="invoiceAmount" must="1" verify='numeric' class="c-text" value="$!{NumberTool.format("#0.00",$!{invoiceIn.totalAmount})}" />
+                                </label>
+                                <label>开票日期：</label>
+                                <input id="invoiceDate" type="text" readonly="readonly" class="c-text" must="1"
+                                       value="$!date.format('yyyy-MM-dd',$!{invoiceIn.invoiceDate})"
+                                       onFocus="WdatePicker({maxDate:'%y-%M-%d',dateFmt:'yyyy-MM-dd'})"/>
+                            </div>
+                        </div>
+                        <!-- div.dataTables_borderWrap -->
+                        <div class="table-bar">
+                            <label>卖家全称：<span id="sellerName"
+                                              class="h5Tit bolder">$!{invoiceIn.sellerName}</span></label><br/>
+                            <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>品名</th>
+                                    <th>规格</th>
+                                    <th>材质</th>
+                                    <th>应收进项票<br>重量（吨）</th>
+                                    <th>应收进项票<br>金额（元）</th>
+                                    <th>已录入的发票<br>重量（吨）</th>
+                                    <th>已录入的发票<br>金额（元）</th>
+                                    <th>核实发票<br>重量（吨）</th>
+                                    <th>核实发票<br>无税金额（元）</th>
+                                    <th>核实发票<br>税金（元）</th>
+                                </tr>
+                                </thead>
+                                <!--录入合计信息-->
+                                <tfoot>
+                                <tr>
+                                    <td class="text-right" colspan="8"><label class="bolder">录入合计：</label></td>
+                                    <td class="text-right"><span class="red" id="totalWeight"></span> 吨</td>
+                                    <td class="text-right"><span class="red" id="totalAmount"></span> 元</td>
+                                </tr>
+                                </tfoot>
+                            </table
+                        </div>
+
+                        <div class="text-center" style="height: 100px;">
+                            <button type="button" class="btn btn-info btn-sm" id="confirm">确 认</button>
+                            <a href="$link.getContextPath()/invoice/in/confirm.html">返回</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+<input type="hidden" id="invoiceInId" value="$!{invoiceIn.id}">
+<input type="hidden" id="sellerId" value="$!{invoiceIn.sellerId}">
+<input type="hidden" id="nextInvoiceIn" value="$!{nextInvoiceIn.id}" code="$!{nextInvoiceIn.code}"
+       sellername="$!{nextInvoiceIn.sellerName}" amount="$!{nextInvoiceIn.totalAmount}">
+<script src="$link.getContextPath()/js/views/invoice/invoiceinpublic.js"></script>
+<script src="$link.getContextPath()/js/views/invoice/checkinvoicein.js"></script>

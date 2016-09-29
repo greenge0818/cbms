@@ -1,0 +1,66 @@
+<!--TAPBAR-->
+<div class="tabbar">
+    <ul class="nav nav-tabs tab-color-blue" id="myTab4">
+        #if($shiro.hasPermission("kuandao:payment:index:page"))
+            <li
+                #if(${tab} == 'index')
+                        class="active"
+                #end>
+                <a
+                    #if(${tab} == 'index')
+                            href="javascript:;"
+                    #else
+                            href="$link.getContextPath()/kuandao/payment/index.html"
+                    #end>支付单</a>
+
+            </li>
+		#end
+		#if($shiro.hasPermission("kuandao:payment:finishedpaymentorder:page"))
+            <li
+                #if(${tab} == 'finishedpaymentorder')
+                        class="active"
+                #end>
+                <a
+                    #if(${tab} == 'finishedpaymentorder')
+                            href="javascript:;"
+                    #else
+                            href="$link.getContextPath()/kuandao/payment/finishedpaymentorder.html"
+                    #end>已完成支付单</a>
+
+            </li>
+        #end
+        #if($shiro.hasPermission("kuandao:payment:abnormalpaymentorder:page"))
+            <li
+                #if(${tab} == 'abnormalpaymentorder')
+                        class="active"
+                #end>
+                <a
+                    #if(${tab} == 'abnormalpaymentorder')
+                            href="javascript:;"
+                    #else
+                            href="$link.getContextPath()/kuandao/payment/abnormalpaymentorder.html"
+                    #end
+                        >异常支付单
+                </a>
+            </li>
+        #end
+
+        #if($shiro.hasPermission("kuandao:payment:paymentordersynchronizelog:page"))
+            <li
+                #if(${tab} == 'paymentordersynchronizelog')
+                        class="active"
+                #end>
+                <a
+                    #if(${tab} == 'paymentordersynchronizelog')
+                            href="javascript:;"
+                    #else
+                            href="$link.getContextPath()/kuandao/payment/paymentordersynchronizelog.html"
+                    #end
+                        >支付单同步日志</a>
+            </li>
+        #end
+
+    </ul>
+</div>
+#* tab,用于订单详情的面包屑 *#
+<input type="hidden" id="pageTab" value="${tab}"/>

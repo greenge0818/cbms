@@ -1,0 +1,2 @@
+执行顺序说明：
+先执行脚本init_schema_cbms.sql和init_schema_receipt.sql，再执行所以以init_cbms_data开头的脚本。

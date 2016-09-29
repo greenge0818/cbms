@@ -1,0 +1,142 @@
+<!-- 协议界面 -->
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li><i class="ace-icon fa fa-home home-icon"></i>系统管理</li>
+        <li>系统设置</li>
+        <li class="active">模板设置</li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+</div>
+
+<div class="page-content print-page">
+    <div class="row">
+        <div class="col-xs-12">
+
+            <!-- PAGE CONTENT BEGINS -->
+            <!-- table-bar-->
+            <div id="print1" class="table-bar tab-pane in active">
+                #if($!{type} == "consign")
+                    <h1 class="bolder text-center clearfix"><span class="logo-bar print-logo pull-left"><img
+                            src="$link.getContextPath()/img/print-logo.png"/></span><span style="margin-right:100px">钢为网代运营委托协议</span>
+                    </h1>
+                    <table class="contable print-table border0 mg-t-35">
+                        <tbody class="border0">
+                        <tr>
+                            <td colspan="5">甲方：</td>
+                            <td colspan="5">合同编号：--</td>
+                        </tr>
+                        <tr>
+                            <td colspan="10">乙方：杭州钢为网络科技有限公司</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                #elseif($!{type} == "yearPurcharse")
+                    <h1 class="bolder text-center clearfix"><span class="logo-bar print-logo pull-left"><img src="$link.getContextPath()/img/print-logo.png" /></span><span style="margin-right:100px">钢材销售协议</span></h1>
+                    <table class="contable print-table border0 mg-t-35">
+                        <tbody class="border0">
+                        <tr>
+                            <td colspan="5">需方(甲方)： $!{contractInfo.companyName}</td>
+                            <td colspan="5">合同编号：  </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5">供方(乙方)： 杭州钢为网络科技有限公司</td>
+                            <td colspan="5">签订时间：　　　年　　　月　　　日</td>
+                        </tr>
+                        <tr>
+                            <td colspan="5"></td>
+                            <td colspan="5">签订地点： 杭州市下城区</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                #end
+
+                <form id="contracttemplateForm" action="$link.getContextPath()/sys/agreement/save.html"
+                      method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="id" value="$!{id}" id="id"/>
+                    <input type="hidden" name="type" value="$!{type}" id="type"/>
+                    #if($action == "edit")
+                        <textarea cols="150" rows="70" name="preContent" id="preContent" must="1">
+                            $!{detail}
+                        </textarea>
+                    #else
+                        $!{detail}
+                    #end
+
+                    <div class="pd-t-15">
+                        #if($!{type} == "consign")
+                            <table class="contable print-table border0">
+                                <tbody>
+                                <tr>
+                                    <td width="90">甲方：</td><td colspan="5" width="200"></td><td width="90">乙方：</td><td colspan="3" width="200">杭州钢为网络科技有限公司</td>
+                                </tr>
+
+                                <tr>
+                                    <td>法定代表人<br>(授权代表)：</td><td colspan="5"></td><td>法定代表人<br>(授权代表)：</td><td colspan="3"></td>
+                                </tr>
+                                <tr>
+                                    <td>日期：</td><td colspan="5"></td>
+                                    <td>日期：</td><td colspan="3"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        #elseif($!{type} == "yearPurcharse")
+                            <table class="contable print-table border0">
+                                <tbody>
+                                <tr>
+                                    <td width="90">需方（章）：</td><td colspan="5" width="200"></td><td width="90">供方（章）：</td><td colspan="3" width="200">杭州钢为网络科技有限公司</td>
+                                </tr>
+
+                                <tr>
+                                    <td>签约代表人：</td><td colspan="5"></td><td>签约代表人：</td><td colspan="3"></td>
+                                </tr>
+                                <tr>
+                                    <td class="lh-25">日期：</td><td colspan="5" class="lh-25">2016年　　　月　　　日</td>
+                                    <td class="lh-25">日期：</td><td colspan="3" class="lh-25">2016年　　　月　　　日</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        #end
+
+                    </div>
+
+                    <div class="btn-bar text-center">
+                        <button type="button" id="btnBack" class="btn btn-primary" title="返回"
+                                onclick="location.href='$link.getContextPath()/sys/template.html'">
+                            返回
+                        </button>
+                        #if($action=="edit")
+                            <button type="submit" id="btnSave" class="btn btn-primary"><i class="fa fa-submit"></i>提交
+                            </button>
+                        #elseif($action=="release")
+                            <button type="button" id="btnRelease" class="btn btn-primary"><i class="fa fa-submit"></i>发布
+                            </button>
+                            <button type="button" id="btnNotRelease" class="btn btn-primary"><i class="fa fa-submit"></i>不发布
+                            </button>
+                        #end
+                    </div>
+                </form>
+            </div>
+            <!-- /.table-bar -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div><!-- /.page-content -->
+
+<script src="$link.getContextPath()/theme/default/js/kindeditor-4.1.9/kindeditor.js"></script>
+<script src="$link.getContextPath()/theme/default/js/kindeditor-4.1.9/lang/zh_CN.js"></script>
+<script src="$link.getContextPath()/theme/default/js/kindeditor-4.1.9/plugins/code/prettify.js"></script>
+<script src="$link.getContextPath()/js/views/sys/agreementDetail.js"></script>
+<link rel="stylesheet" href="$link.getContextPath()/theme/default/js/kindeditor-4.1.9/themes/default/default.css"/>
+<link rel="stylesheet" href="$link.getContextPath()/theme/default/js/kindeditor-4.1.9/plugins/code/prettify.css"/>
+
+
+

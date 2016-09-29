@@ -1,0 +1,26 @@
+#set($layout="layout/blank.vm")
+<form action="$link.getContextPath()/common/uploadfile.html" method="POST" enctype="multipart/form-data"
+      id="uploadForm">
+    <div class="amount-box">
+        <input type="hidden" id="accountId" name="accountId" value="$!{accountId}"/>
+        <div class="category-box">上传资料：<input type="file" name="uploadFile" id="uploadFile" class="inline"/>
+            <br/>盖章扫描件或数码照，支持jpeg、jpg、png、gif图片格式，小于2M；
+            <div class="category-box" style="width:500px;">
+                <div id="imageview">
+                    #if($attachmentlist)
+                        #foreach($item in $attachmentlist)
+                            <span class="img-ctrl pos-rel" cid="$!{item.id}"><img src="$link.getContextPath()/common/getfile.html?key=$!{item.url}" style="width:70px;height:70px"/><a
+                                    class="close-box pos-abs"><i class="fa fa-close red"></i></a></span>
+                        #end
+                    #end
+                </div>
+            </div>
+            <div class="btn-bar text-center">
+                <button type="button" class="btn btn-info btn-sm" id="btnSubmit">确定</button>
+                <button type="button" class="btn btn-info btn-sm" id="btnCancel">取消</button>
+            </div>
+        </div>
+        <input type="hidden" id="fileUrl" value="$!{fileUrl}" />
+</form>
+
+<script src="$link.getContextPath()/js/views/company/imagesupload.js"></script>

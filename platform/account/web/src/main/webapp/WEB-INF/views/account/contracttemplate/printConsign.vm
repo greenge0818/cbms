@@ -1,0 +1,152 @@
+<!-- 代运运营协议界面 -->
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="#">客户管理</a>
+        </li>
+        <li>
+            <i class="ace-icon fa"></i>
+            <a href="$link.getContextPath()/company/list.html">我的客户</a>
+        </li>
+        <li class="active">
+            打印卖家代运营协议
+        </li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+</div>
+
+<div class="page-content print-page" id="exportthis">
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- PAGE CONTENT BEGINS -->
+            <!-- table-bar-->
+            <div id="print1" class="table-bar tab-pane in active">
+                <div style="width:auto; height:40px;">
+                    <span class="logo-bar print-logo pull-left" style="float:left;"><img src="$link.getContextPath()/img/print-logo.png"" />
+                    </span><span style="width:142px; height:39px; float:right; background-color:#CCC; color:#FFF; font-size:12px; font-weight: normal;">
+                    <span id="contractNo" style="float:right">$!{info.barCode}</span></span>
+                </div>
+                <h1 class="bolder text-center clearfix">钢为网代运营委托协议</h1>
+                <div style="height:40px;"></div>
+                <table class="contable print-table border0 mg-t-35">
+                    <tbody class="border0">
+                    <tr>
+                        <td colspan="5">甲方：$!{info.companyName}</td>
+                        <td colspan="5">合同编号：</td>
+                    </tr>
+                    <tr>
+                        <td colspan="10">乙方：杭州钢为网络科技有限公司</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                $!{info.content}
+
+                <table class="contable print-table border0">
+                    <tbody>
+                    <tr>
+                        <td width="90">甲方：</td><td colspan="5" width="200">$!{info.companyName}</td><td width="90">乙方：</td><td colspan="3" width="200">杭州钢为网络科技有限公司</td>
+                    </tr>
+
+                    <tr>
+                        <td>法定代表人<br>(授权代表)：</td><td colspan="5"></td><td>法定代表人<br>(授权代表)：</td><td colspan="3"></td>
+                    </tr>
+                    <tr>
+                        <td>日期：</td><td colspan="5"></td>
+                        <td>日期：</td><td colspan="3"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.table-bar -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div><!-- /.page-content -->
+<div class="text-center">
+                <span>已打印<em id="printTimes" class="red">$!{info.printTimes}</em>次，上次打印时间：
+                <em id="lastPrintDate">$!date.format("yyyy-MM-dd HH:mm:ss",$!{info.lastPrintDate})</em></span>
+
+    <button type="button" id="btnPrint" class="btn btn-primary"><i class="fa fa-print"></i>打印
+    </button>
+    <button type="button" id="btnBack" class="btn btn-primary" title="返回"
+            onclick="location.href='$link.getContextPath()/company/$!{info.currentCompanyId}/credentialsinfo.html'">
+        返回
+    </button>
+    <button type="button" id="btnExport" class="btn btn-primary">导出PDF</button>
+</div>
+<input type="hidden" name="accountId" value="$!{info.currentCompanyId}" id="accountId"/>
+<input type="hidden" name="barCode" value="$!{info.barCode}" id="barCode"/>
+
+<script type="text/javascript" src="$link.getContextPath()/js/views/contracttemplate/jquery.min.js"></script>
+<script type="text/javascript" src="$link.getContextPath()/js/views/contracttemplate/html2canvas.min.js"></script>
+<script type="text/javascript" src="$link.getContextPath()/js/views/contracttemplate/pdfmake.min.js"></script>
+<script type="text/javascript" src="$link.getContextPath()/js/views/contracttemplate/jquery-barcode.js"></script>
+<script type="text/javascript" src="$link.getContextPath()/js/views/jquery.print.js"></script>
+<script type="application/javascript">
+    $(document).ready(function() {
+        $("#contractNo").barcode($("#contractNo").text(), "code128",{barWidth:1, barHeight:30,showHRI:true});
+
+        //打印
+        $(document).on("click", "#btnPrint", function() {
+            $('#print1').print();
+            //打印
+            $.ajax({
+                type : "POST",
+                url : Context.PATH + "/agreementTemplate/"+$("#barCode").val()+"/doprintconsign.html",
+                success : function(result) {
+                    if (result) {
+                        if (result.success) {
+                            var data = result.data;
+                            $("#printTimes").text(data.printTimes);
+                            $("#lastPrintDate").text(formatDay(data.lastPrintDate));
+                        } else {
+                            cbms.alert(result.data);
+                        }
+                    }
+                },
+                error : function(xhr, textStatus, errorThrown) {
+
+                }
+            });
+        });
+
+        //导出PDF
+        $(document).on("click", "#btnExport", function() {
+            $("div").css("font-size","14px");
+            html2canvas(document.getElementById('exportthis'), {
+                onrendered: function (canvas) {
+                    var data = canvas.toDataURL();
+                    var docDefinition = {
+                        content: [{
+                            image: data,
+                            width: 500,
+                        }]
+                    };
+                    pdfMake.createPdf(docDefinition).download("钢为网代运营委托协议.pdf");
+                }
+            });
+        });
+    });
+
+    function formatDay(data) {
+        var dt = new Date(data);
+        var time = dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate() + " " +
+                ((dt.getHours()/1)<10?("0"+dt.getHours()):dt.getHours()) + ":" + ((dt.getMinutes()/1)<10?("0"+dt.getMinutes()):dt.getMinutes()) + ":"
+                + ((dt.getSeconds()/1)<10?("0"+dt.getSeconds()):dt.getSeconds());
+        return time;
+    }
+
+
+</script>
+

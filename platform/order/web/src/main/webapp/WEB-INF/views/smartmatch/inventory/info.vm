@@ -1,0 +1,141 @@
+ <div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            基础管理
+        </li>
+
+        <li>资源管理</li>
+
+        <li class="active">库存监控</li>
+    </ul>
+    <!-- /.breadcrumb -->
+</div>
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- PAGE CONTENT BEGINS -->
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="clearfix">
+
+                        #resManagerTbar("info")
+
+                        <div class="input-group pull-left" col-md-12 col-sm-12 col-lg-12 search-bar">
+                            <form class="form-inline">
+                                <label>地区：</label>
+                                <select id="area">
+                                    #foreach($city in $cities)
+                                        <option value="$!{city.id}" #if($areaId==$city.id) selected #end>$!{city.name}</option>
+                                    #end
+                                    <option value="" #if($areaId=='') selected #end>全国</option>
+                                </select>
+                                <label>时间：</label>
+                                <input id="dt" name="dt" class="Wdate" type="text" value="$!{dt}" readonly onFocus="WdatePicker()"/>
+    
+                                <button class="btn btn-sm btn-default ok-btn" type="button" id="btnSearch">
+                                    <i class="aace-icon fa fa-search bigger-110"></i>搜索
+                                </button>
+                            </form>
+                        </div>
+					<span class="pull-right">
+                        <button class="btn btn-sm btn-default ok-btn" type="button" id="sellerResourceStatisticBtn">
+                            <i class="aace-icon fa bigger-110"></i>卖家资源统计
+                        </button>
+                    </span>
+                </div>
+                <!-- div.dataTables_borderWrap -->
+                <div>
+                    #if($info)
+                        <span id="cityName">全国</span>统计：共 $!{info.totalAccount}个卖家，库存资源共 $!{info.totalResource}条，$!{info.totalWeight}万吨，品规覆盖率 $NumberTool.getDoubleToPercent($info.totalSpecCoverageRate, 0)，成交覆盖率 $NumberTool.getDoubleToPercent($info.totalTransactionCoverageRate,0)，价格偏差条数$!{info.totalTransactionCoverageRate}条，价格偏率$NumberTool.getDoubleToPercent($info.totalDeviationRate,0)。
+                    #end
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>大类</th>
+                            <th>品名</th>
+                            <th>资源条数</th>
+                            <th>品规总数</th>
+                            <th>库存品规数</th>
+                            <th>品规覆盖率</th>
+                            <th>成交条数</th>
+                            <th>成交覆盖率</th>
+                            <th>价格偏差条数</th>
+                            <th>价格偏差率</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        #foreach($group in $info.categoryGroup)
+                        <tr>
+                            <td bgcolor="$math.random(100000, 999999)">${group.categoryGroupName}</td>
+                            <td colspan="10">
+                                <table width="100%">
+                                    #foreach($res in $group.resources)
+
+                                        <tr #if($velocityCount%2==0)
+                                                bgcolor="#a9a9a9"
+                                            #end>
+                                            <td width="10%">$!{res.categoryName}</td>
+                                            <td width="10%">$!{res.totalResource}</td>
+                                            <td width="10%">
+                                                #if($res.totalSpec)
+                                                    $!{res.totalSpec}
+                                                #else
+                                                    -
+                                                #end
+                                            </td>
+                                            <td width="10%">${res.totalStockSpec}</td>
+                                            <td width="10%">
+                                                #if($res.specCoverageRate)
+                                                    $NumberTool.getDoubleToPercent($res.specCoverageRate, 0)
+                                                #else
+                                                    -
+                                                #end
+                                            </td>
+                                            <td width="10%">${res.totalTransaction}</td>
+                                            <td width="10%">
+                                                #if($res.transactionCoverageRate)
+                                                    $NumberTool.getDoubleToPercent($res.transactionCoverageRate, 0)
+                                                #else
+                                                   -
+                                                #end
+                                            </td>
+                                            <td width="10%">$!{res.totalDeviation}</td>
+                                            <td width="10%">
+                                                #if($res.deviationRate)
+                                                    $NumberTool.getDoubleToPercent($res.deviationRate, 0)
+                                                #else
+                                                    -
+                                                #end
+                                            </td>
+                                            <td width="4%"><a href="$link.getContextPath()/smartmatch/abnormal/detail/$!{res.id}.html">查看异常</a></td>
+                                        </tr>
+                                    #end
+                                </table>
+                            </td>
+                        </tr>
+                        #end
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE CONTENT ENDS -->
+
+    </div>
+    <!-- /.col -->
+</div><!-- /.row -->
+</div><!-- /.page-content -->
+
+<script src="$link.getContextPath()/js/views/smartmatch/inventory/info.js"></script>

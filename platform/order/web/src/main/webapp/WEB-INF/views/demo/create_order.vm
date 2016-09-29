@@ -1,0 +1,47 @@
+
+<div class="main-content">
+	<script type="text/javascript">
+		try {
+			ace.settings.check('breadcrumbs', 'fixed')
+		} catch (e) {
+		}
+	</script>
+	<div class="main-content-inner">
+		<!-- content S -->
+		<div class="breadcrumbs" id="breadcrumbs">
+			<ul class="breadcrumb">
+				<li><i class="ace-icon fa fa-home home-icon"></i> <a
+					class="active">控制台</a></li>
+				<li class="active">主页</li>
+			</ul>
+			<div class="page-content">
+				<div class="row">
+					<div class="col-xs-12" style="line-height: 22px;">
+						<!-- PAGE CONTENT BEGINS -->
+						<form action="$link.getContextPath()/activiti/order/save.html" method="post">
+							<div class="row">
+								总经理：<input type="text" style="height:22px;" value="cbadmin" name="manager"/>
+							</div>
+							<div class="row">
+								交易员：<input type="text" style="height:22px;" value="cbadmin" name="trader"/>
+							</div>
+							<div class="row">
+								内勤：<input type="text" style="height:22px;" value="cbadmin" name="secretary"/>
+							</div>
+							<div class="row">
+								财务主管：<input type="text" style="height:22px;" value="cbadmin" name="treasurer"/>
+							</div>
+							<div class="row">
+								出纳：<input type="text" style="height:22px;" value="cbadmin" name="cashier"/>
+							</div>
+							<input type="submit" value="创建订单" />
+						</form>
+					</div>
+					<!-- /.col -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.page-content -->
+		</div>
+	</div>
+</div>

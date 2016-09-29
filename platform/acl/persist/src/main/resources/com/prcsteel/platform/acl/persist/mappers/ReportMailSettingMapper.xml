@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.acl.persist.dao.ReportMailSettingDao">
+    <resultMap id="BaseResultMap" type="com.prcsteel.platform.acl.model.model.ReportMailSetting">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="attachment" property="attachment" jdbcType="VARCHAR"/>
+        <result column="send_time" property="sendTime" jdbcType="VARCHAR"/>
+        <result column="receiver" property="receiver" jdbcType="VARCHAR"/>
+        <result column="last_send" property="lastSend" jdbcType="TIMESTAMP"/>
+        <result column="period_type" property="periodType" jdbcType="VARCHAR"/>
+        <result column="weeks" property="weeks" jdbcType="VARCHAR"/>
+        <result column="week_duration" property="weekDuration" jdbcType="INTEGER"/>
+        <result column="month_duration" property="monthDuration" jdbcType="INTEGER"/>
+        <result column="day" property="day" jdbcType="INTEGER"/>
+        <result column="ext" property="ext" jdbcType="VARCHAR"/>
+        <result column="created" property="created" jdbcType="TIMESTAMP"/>
+        <result column="created_by" property="createdBy" jdbcType="VARCHAR"/>
+        <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP"/>
+        <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR"/>
+        <result column="modification_number" property="modificationNumber" jdbcType="INTEGER"/>
+        <result column="row_id" property="rowId" jdbcType="VARCHAR"/>
+        <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="QueryResultMap" type="com.prcsteel.platform.acl.model.dto.ReportMailSettingDto"
+               extends="BaseResultMap"></resultMap>
+    <sql id="Base_Column_List">id, title, content, attachment, send_time, receiver, last_send, 
+    	period_type, weeks, week_duration, month_duration, day, ext, 
+    	created, created_by, last_updated, last_updated_by, modification_number, row_id, parent_row_id
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="QueryResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from base_sys_report_mail_setting
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="delete" parameterType="java.lang.Long">
+    delete from base_sys_report_mail_setting
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.prcsteel.platform.acl.model.model.ReportMailSetting">
+	    insert into base_sys_report_mail_setting (title, content,
+	    attachment, send_time, receiver, last_send, period_type, weeks,
+	    week_duration, month_duration, day, ext, 
+	    created, created_by, last_updated, last_updated_by, modification_number, row_id, parent_row_id)
+	    values (#{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR},
+	    #{attachment,jdbcType=VARCHAR}, #{sendTime,jdbcType=VARCHAR}, #{receiver,jdbcType=VARCHAR}, #{lastSend,jdbcType=TIMESTAMP}, 
+	    #{periodType,jdbcType=VARCHAR}, #{weeks,jdbcType=VARCHAR}, #{weekDuration,jdbcType=INTEGER}, 
+	    #{monthDuration,jdbcType=INTEGER}, #{day,jdbcType=INTEGER}, #{ext,jdbcType=VARCHAR},
+	    #{created,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR},
+      	#{lastUpdated,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}, #{modificationNumber,jdbcType=INTEGER},
+      	#{rowId,jdbcType=VARCHAR}, #{parentRowId,jdbcType=VARCHAR})
+  </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.acl.model.model.ReportMailSetting">
+        update base_sys_report_mail_setting
+        <set>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="attachment != null">
+                attachment = #{attachment,jdbcType=VARCHAR},
+            </if>
+            <if test="sendTime != null">
+                send_time = #{sendTime,jdbcType=VARCHAR},
+            </if>
+            <if test="receiver != null">
+                receiver = #{receiver,jdbcType=VARCHAR},
+            </if>
+            <if test="lastSend != null">
+                last_send = #{lastSend,jdbcType=TIMESTAMP},
+            </if>
+            <if test="periodType != null">
+                period_type = #{periodType,jdbcType=VARCHAR},
+            </if>
+            <if test="weeks != null">
+                weeks = #{weeks,jdbcType=VARCHAR},
+            </if>
+            <if test="monthDuration != null">
+                month_duration = #{monthDuration,jdbcType=INTEGER},
+            </if>
+            <if test="day != null">
+                day = #{day,jdbcType=INTEGER},
+            </if>
+            <if test="weekDuration != null">
+                week_duration = #{weekDuration,jdbcType=INTEGER},
+            </if>
+            <if test="ext != null">
+                ext = #{ext,jdbcType=VARCHAR},
+            </if>
+            <if test="created != null">
+                created = #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdBy != null">
+                created_by = #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdated != null">
+                last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdatedBy != null">
+                last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modificationNumber != null">
+                modification_number = #{modificationNumber,jdbcType=INTEGER},
+            </if>
+            <if test="rowId != null">
+                row_id = #{rowId,jdbcType=VARCHAR},
+            </if>
+            <if test="parentRowId != null">
+                parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="selectByParam" resultMap="QueryResultMap" parameterType="com.prcsteel.platform.acl.model.dto.ReportMailSettingDto">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM base_sys_report_mail_setting
+        WHERE 1=1 
+        <if test="title != null">
+           and title = #{title,jdbcType=VARCHAR}
+        </if>
+        <if test="content != null">
+           and content = #{content,jdbcType=VARCHAR}
+        </if>
+        <if test="attachment != null">
+           and attachment = #{attachment,jdbcType=VARCHAR}
+        </if>
+        <if test="sendTime != null">
+           and send_time = #{sendTime,jdbcType=VARCHAR}
+        </if>
+        <if test="receiver != null">
+           and receiver = #{receiver,jdbcType=VARCHAR}
+        </if>
+        <if test="lastSend != null">
+           and last_send = #{lastSend,jdbcType=TIMESTAMP}
+        </if>
+        <if test="periodType != null">
+           and period_type = #{periodType,jdbcType=VARCHAR}
+        </if>
+        ORDER BY ID DESC
+        limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+    </select>
+    
+    <select id="totalByParam" resultType="Integer" parameterType="com.prcsteel.platform.acl.model.dto.ReportMailSettingDto">
+        SELECT count(distinct id)
+        FROM base_sys_report_mail_setting
+        <where>
+	        <if test="title != null">
+	           and title = #{title,jdbcType=VARCHAR}
+	        </if>
+	        <if test="content != null">
+	           and content = #{content,jdbcType=VARCHAR}
+	        </if>
+	        <if test="attachment != null">
+	           and attachment = #{attachment,jdbcType=VARCHAR}
+	        </if>
+	        <if test="sendTime != null">
+	           and send_time = #{sendTime,jdbcType=VARCHAR}
+	        </if>
+	        <if test="receiver != null">
+	           and receiver = #{receiver,jdbcType=VARCHAR}
+	        </if>
+	        <if test="lastSend != null">
+	           and last_send = #{lastSend,jdbcType=TIMESTAMP}
+	        </if>
+	        <if test="periodType != null">
+	           and period_type = #{periodType,jdbcType=VARCHAR}
+	        </if>
+	    </where>
+    </select>
+</mapper>

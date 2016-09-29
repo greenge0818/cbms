@@ -1,0 +1,99 @@
+<!-- 待审核-->
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            财务报表
+        </li>
+        <li>
+            货币资金报表
+        </li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+    #parse("layout/topbtn.vm")
+    <!-- /.nav-search -->
+</div>
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="clearfix">
+                        <div class="input-group pull-left col-md-12 col-sm-12 col-lg-12">
+                            <label>往来单位：</label>
+                            <input type="text" search='account' id="account_name"/>
+                            <label>时间：</label>
+                            <input id="startTime" class="Wdate" type="text" value="$startTime"
+                                   onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')||\'2020-10-01\'}'})"/> -
+                            <input id="endTime" class="Wdate" type="text" value="$endTime"
+                                   onFocus="WdatePicker({minDate:'#F{$dp.$D(\'startTime\')}',maxDate:'2020-10-01'})"/>
+                            <button id="queryBtn" class="btn btn-sm btn-default" type="button" title="搜索">
+                                <i class="aace-icon fa fa-search bigger-110"></i>搜索
+                            </button>
+                            <button id="exportexcel" class="btn btn-sm btn-default" type="button" title="导出excel">
+                                <i class="aace-icon fa fa-search bigger-110"></i>导出excel
+                            </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- div.dataTables_borderWrap -->
+                    <div>
+                        <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th rowspan="2">往来单位</th>
+                                <th rowspan="2">时间</th>
+                                <th colspan="4">浦发银行</th>
+                                <th colspan="4">工商银行</th>
+                            </tr>
+                            <tr>
+                                <th>收款金额(元)</th>
+                                <th>应付金额(元)</th>
+                                <th>实付金额(元)</th>
+                                <th>差异(元)</th>
+                                <th>收款金额(元)</th>
+                                <th>应付金额(元)</th>
+                                <th>实付金额(元)</th>
+                                <th>差异(元)</th>
+                            </tr>
+                            </thead>
+                            <thead>
+                            <tr>
+                                <td>合计</td>
+                                <td></td>
+                                <td><span id="spd_totalReceiptAmount"></span></td>
+                                <td><span id="spd_totalPaymentAmount"></span></td>
+                                <td><span id="spd_totalDealAmount"></span></td>
+                                <td><span id="spd_diffAmount"></span></td>
+                                <td><span id="icbc_totalReceiptAmount"></span></td>
+                                <td><span id="icbc_totalPaymentAmount"></span></td>
+                                <td><span id="icbc_totalDealAmount"></span></td>
+                                <td><span id="icbc_diffAmount"></span></td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+
+<script src="$link.getContextPath()/js/views/account/searchaccount.js"></script>
+<script src="$link.getContextPath()/js/views/report/account/fundsinandout.js"></script>

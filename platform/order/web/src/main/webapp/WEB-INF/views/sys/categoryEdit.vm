@@ -1,0 +1,91 @@
+#set($layout="/sys/default.vm")
+<div class="breadcrumbs" id="breadcrumbs">
+	<script type="text/javascript">
+		try {
+			ace.settings.check('breadcrumbs', 'fixed')
+		} catch (e) {
+		}
+	</script>
+
+	<ul class="breadcrumb">
+        <li><i class="ace-icon fa fa-home home-icon"></i>系统管理</li>
+        <li>系统设置</li>
+        <li class="active">编辑分类</li>
+	</ul>
+	<!-- /.breadcrumb -->
+
+	#parse("layout/topbtn.vm")
+	<!-- /.nav-search -->
+</div>
+
+<div class="page-content">
+
+	<div class="row">
+		<div class="col-xs-12">
+			<!--TAPBAR-->
+			<div class="tabbar order-tab">
+				<ul class="nav nav-tabs padding-12 tab-color-blue" id="myTab4">
+						<li ><a data-toggle="tab" onclick="javascript:window.location.href='$link.getContextPath()/reward/showreward.html'" href="">提成设置</a></li>
+					<li><a data-toggle="tab" onclick="javascript:window.location.href='$link.getContextPath()/rebate/showrebate.html'" href="">返利设置</a></li>
+                    <li><a data-toggle="tab" onclick="javascript:window.location.href='$link.getContextPath()/sys/filterClient.html'">客户过滤设置</a></li>
+                    <li><a data-toggle="tab" onclick="javascript:window.location.href='$link.getContextPath()/sys/setInvoice.html'">发票设置</a></li>
+					<li class="active"><a data-toggle="tab" onclick="javascript:window.location.href='$link.getContextPath()/category/showcategory.html'" href="category.html">品类归属设置</a>
+					</li>
+                    <li data-toggle="tab"><a data-toggle="tab" onclick="javascript:window.location.href='$link.getContextPath()/sys/template.html'">模板设置</a></li>
+                    <li data-toggle="tab"><a data-toggle="tab" onclick="javascript:window.location.href='$link.getContextPath()/sys/toleranceamountsetting.html'">金额容差设置</a></li>
+                    <li data-toggle="tab"><a data-toggle="tab" onclick="javascript:window.location.href='$link.getContextPath()/sys/smartweightwarningsetting.html">智能匹配重量容差报警设置</a></li>
+                    <li data-toggle="tab"><a data-toggle="tab" onclick="javascript:window.location.href='$link.getContextPath()/sys/settinglist.html'">系统配置设置</a></li>
+                    <li><a href="$link.getContextPath()/sys/creditlimit.html">信用额度设置</a></li>
+					<li><a href="$link.getContextPath()/sys/createdate.html">服务中心日报时间节点设置</a></li>
+					<li><a href="$link.getContextPath()/category/categoryalias.html">进项票品名映射设置</a></li>
+				</ul>
+			</div>
+					<form method="post" id="addCategory" action="$link.getContextPath()/category/saveCategoryEdit.html" enctype="multipart/form-data"
+					>
+			<!-- PAGE CONTENT BEGINS -->
+
+			<div class="row">
+				<div class="col-xs-12">
+
+					<div>
+						<span class="bolder">大类：</span><input name="categoryName" type="text" value="$group.name"
+							class="c-text" must="1"/>
+							<input type="hidden" name="group_uuid" value="$group.uuid"/>
+					</div>
+					<dl class="category-box clearfix" style="clear: left">
+						<dt class="pull-left">品种：</dt>
+						<dd class="pull-left">
+							<ul class="dotted-border-bottom">
+								<li>
+								#foreach( $cat in $category)
+									
+								<label title="$!cat.inner_group.name" class="pos-rel">
+								<input #if($cat.inner_group&&!$group.uuid.equals($cat.inner_group.uuid))  disabled="disabled" #end value="$cat.uuid" type="checkbox" name="cateCheck" 
+							#if($group.uuid.equals($cat.inner_group.uuid)) checked='checked' #end class="ace">
+								<span class="lbl">$cat.name</span></label>
+								#end								
+									
+								</li>
+							</ul>
+							
+						</dd>
+					</dl>
+					<!--.recordbar-->
+					<div class="btn-bar">
+						<button type="submit" class="btn btn-info btn-sm">确定</button>
+					</div>
+					<!--/.recordbar-->
+				</div>
+			</div>
+
+		</div>
+		<!-- /.col -->
+	</div>
+	<!-- /.row -->
+</div>
+<!-- /.page-content -->
+				</form>
+<script type="text/javascript" src="$link.getContextPath()/js/views/category/category.js"></script>
+<script type="text/javascript">
+	$("#addCategory").verifyForm();
+</script>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nido
+	xmlns="http://www.prcsteel.com/nido/tasks"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.prcsteel.com/nido/tasks http://192.168.0.205:8090/tasks.xsd">
+	
+	<method id="addRebateInMarket" method="addRebate" desc="添加返利" 
+		class="com.prcsteel.platform.order.service.FinanceService"
+		builder="financeServiceBuilder">
+		<param name="key" type="java.lang.String"/>
+		<param name="money" type="java.lang.Double"/>
+		<param name="phone" type="java.lang.String"/>
+		<param name="userName" type="java.lang.String"/>
+		<param name="companyName" type="java.lang.String"/>
+		<param name="provinceName" type="java.lang.String"/>
+		<param name="result" type="java.lang.String" direction="Out"/>
+	</method>
+	<task id="addRebateInMarketTask" desc="添加返利" async="true">
+		<steps>
+			<call refId="addRebateInMarket"/>
+		</steps>
+	</task>
+</nido>

@@ -1,0 +1,84 @@
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            客户管理
+        </li>
+        <li>
+            <a href="$link.getContextPath()/account/contact/accountcontact.html">联系人划转</a>
+        </li>
+        <li class="active">
+            联系人划转历史
+        </li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+    <!-- /.nav-search -->
+
+</div>
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="clearfix">
+                        <div class="input-group  col-md-12 col-sm-12 col-lg-12 search-bar">
+                            <form class="form-inline checkbox">
+                                <label>客户名称：</label>
+                                <input id="accountName" type="text"/>
+                                <label>服务中心：</label>
+                                <select id="org">
+                                	#if($orgs.size() > 1)
+	                                    <option value="-1">请选择</option>
+                                    #end
+                                    #foreach($org in $orgs)
+                                    	<option value="$org.id">$org.name</option>
+                                	#end
+                                </select>
+                                <button id="queryBtn" class="btn btn-sm btn-default" type="button" title="搜索">
+                                    <i class="aace-icon fa fa-search bigger-110"></i>搜索
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- div.dataTables_borderWrap table-striped(隔行变色)-->
+                    <div>
+                        <table id="dynamic-table" class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>客户名称</th>
+                                <th>联系人</th>
+                                <th>前交易员</th>
+                                <th>现交易员</th>
+                                <th>划转时间</th>
+                                <th>划转人</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    </br>
+    <div class="align-center">
+        <a href="#" onclick="javascript:history.go(-1)">返回</a>
+    </div>
+    <!-- /.row -->
+</div>
+
+<script src="$link.getContextPath()/js/views/account/accoutcontactassignlog.js"></script>

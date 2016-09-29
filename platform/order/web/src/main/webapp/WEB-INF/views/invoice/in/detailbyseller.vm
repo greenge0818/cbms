@@ -1,0 +1,96 @@
+<!-- 待收票详情(按公司) -->
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="#">发票管理</a>
+        </li>
+        <li>
+            <a href="$link.getContextPath()/invoice/in/awaits.html">进项票管理</a>
+        </li>
+        <li class="active"><a href="$link.getContextPath()/invoice/in/awaits.html">待收票</a></li>
+        <li class="active">详情</li>
+    </ul>
+    <!-- /.breadcrumb -->
+</div>
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="clearfix">
+                    	
+						<div class="clearfix">
+							<form id="searchForm" class="form-inline">
+								#if($shiro.hasPermission("sys:field:org")=='false')
+	                            <label >
+					        		服务中心：<input placeholder="请选择上级服务中心" id="sorganization" type="text" class="ipt-text" readonly="" value="" onclick="showMenu();">
+					        		<input type='hidden' id='sorganizationHidden' value='0'/>
+								</label>
+								#end
+								<label>买家全称：<input id="buyer_name" class="ipt-text" type="text" value="" /></label>
+								<label>交易单号：</label><input class="ipt-text" type="text" value="" id="code"/></label>
+								<label>开单日期：</label>
+								<input id="startTime" class="ipt-text" type="text" value=""
+                               		onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')||\'2020-10-01\'}'})"/> -
+                        		<input id="endTime" class="ipt-text" type="text" value=""
+                               		onFocus="WdatePicker({minDate:'#F{$dp.$D(\'startTime\')}',maxDate:'2020-10-01'})"/>
+								
+								<button class="btn btn-sm btn-default ok-btn" type="button" id="btn">
+									<i class="aace-icon fa fa-search bigger-110"></i>搜索
+								</button>
+							</form>
+                        </div>
+                        <div class="input-group pull-right col-md-12 col-sm-12 col-lg-12 search-bar text-left">
+                            <label>公司全称：<span>$!{account.name}#if($departmentTotal > 1)【$!{department.name}】#end</span></label>
+                        </div>
+                    </div>
+                    <!-- div.dataTables_borderWrap -->
+                    <div>
+                        <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+                            	<th>开单时间</th>
+                            	<th>交易单号</th>
+                            	<th>买家全称</th>
+                                <th>品名</th>
+                                <th>材质</th>
+                                <th>规格</th>
+                                <th>应收进项票重量（吨）</th>
+                                <th>折让重量（吨）</th>
+                                <th>应收进项票金额（元）</th>
+                                <th>折让金额（元）</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="input-group pull-right col-md-12 col-sm-12 col-lg-12 search-bar text-right">
+                        <label>应收发票合计：<span class="red" id="totalWeight">$!{NumberTool.format("#0.000000",$!{poolInDetailDto.totalWeight})}</span> 吨</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <label><span class="red" id="totalAmount">$!{NumberTool.toThousandth($!{poolInDetailDto.totalAmount})}</span>元</label>
+                    </div>
+                    <div class="text-center">
+                        <a href="$link.getContextPath()/invoice/in/awaits.html">返回</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+<input type="hidden" id="sellerId" value="$!{account.id}">
+<input type="hidden" id="departmentId" value="$!{department.id}">
+<script src="$link.getContextPath()/js/views/invoice/detailbyseller.js"></script>
+<div id="menuContent" class="menuContent" style="display:none; position: absolute;">
+    <ul id="orgTree" class="ztree" style="margin-top:0; width:160px;"></ul>
+</div>
+<script src="$link.getContextPath()/js/views/invoice/out/checklist.js"></script>

@@ -1,0 +1,35 @@
+<div class="tabbar order-tab">
+    <ul class="nav nav-tabs padding-12 tab-color-blue" id="myTab4">
+        <li><a href="$link.getContextPath()/reward/showreward.html#idx=0">提成设置</a></li>
+        <li><a href="$link.getContextPath()/rebate/showrebate.html#idx=1">返利设置</a></li>
+        <li><a href="$link.getContextPath()/sys/filterClient.html#idx=2">客户过滤设置</a></li>
+        <li><a href="$link.getContextPath()/sys/setInvoice.html#idx=3">发票设置</a></li>
+      #*  <li><a href="$link.getContextPath()/category/showcategory.html#idx=4">品类归属设置</a></li>*#
+        <li><a href="$link.getContextPath()/sys/template.html#idx=4">模板设置</a></li>
+        <li><a href="$link.getContextPath()/sys/toleranceamountsetting.html#idx=5">金额容差设置</a></li>
+        <li><a href="$link.getContextPath()/sys/smartweightwarningsetting.html#idx=6">智能匹配重量容差报警设置</a></li>
+        <li><a href="$link.getContextPath()/sys/settinglist.html#idx=7">系统配置设置</a></li>
+        <li><a href="$link.getContextPath()/sys/creditlimit.html#idx=8">信用额度设置</a></li>
+        <li><a href="$link.getContextPath()/sys/reportmail.html#idx=9">邮件设置</a></li>
+        <li><a href="$link.getContextPath()/sys/createdate.html#idx=10">服务中心日报时间节点设置</a></li>
+        <li><a href="$link.getContextPath()/sys/expresstime.html#idx=11">服务中心快递时间表</a></li>
+        <li><a href="$link.getContextPath()/sys/expressfirmset.html#idx=12">快递公司设置</a></li>
+        <li><a href="$link.getContextPath()/category/categoryalias.html#idx=13">进项票品名映射设置</a></li>
+        <li><a href="$link.getContextPath()/sys/riskcontrol.html#idx=14">风控设置</a></li>
+        <li><a href="$link.getContextPath()/sys/targetweight.html#idx=15">服务中心目标交易量设置</a></li>
+        <li><a href="$link.getContextPath()/sys/basicsettings.html#idx=16">基础配置设置</a></li>
+		<li><a href="$link.getContextPath()/sys/holidaysettings.html#idx=17">假期设置</a></li>
+    </ul>
+</div>
+<script type="text/javascript">
+    jQuery(function ($) {
+        //绑定确认方法
+        var hashIdx=location.hash;
+        var  idx = hashIdx.split("="),index = parseInt(idx[1]);
+        if (hashIdx==""){
+            index=0;
+        }
+        $("#myTab4").children("li").eq(index).addClass("active");
+        // $(".active").removeClass("active")
+    });
+</script>

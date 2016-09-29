@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.core.persist.dao.GroupForCategoryDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.core.model.model.GroupForCategory" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="category_uuid" property="categoryUuid" jdbcType="VARCHAR" />
+    <result column="category_group_uuid" property="categoryGroupUuid" jdbcType="VARCHAR" />
+    <result column="is_deleted" property="isDeleted" jdbcType="BIT" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+    <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+    <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, category_uuid, category_group_uuid, is_deleted, created, created_by, last_updated, 
+    last_updated_by, modification_number, row_id, parent_row_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from common_group_for_category
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from common_group_for_category
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.prcsteel.platform.core.model.model.GroupForCategory" >
+    insert into common_group_for_category (id, category_uuid, category_group_uuid, 
+      is_deleted, created, created_by, 
+      last_updated, last_updated_by, modification_number, 
+      row_id, parent_row_id)
+    values (#{id,jdbcType=INTEGER}, #{categoryUuid,jdbcType=VARCHAR}, #{categoryGroupUuid,jdbcType=VARCHAR}, 
+      #{isDeleted,jdbcType=BIT}, #{created,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, 
+      #{lastUpdated,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}, #{modificationNumber,jdbcType=INTEGER}, 
+      #{rowId,jdbcType=VARCHAR}, #{parentRowId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.core.model.model.GroupForCategory" >
+    insert into common_group_for_category
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="categoryUuid != null" >
+        category_uuid,
+      </if>
+      <if test="categoryGroupUuid != null" >
+        category_group_uuid,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by,
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number,
+      </if>
+      <if test="rowId != null" >
+        row_id,
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="categoryUuid != null" >
+        #{categoryUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryGroupUuid != null" >
+        #{categoryGroupUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        #{parentRowId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.core.model.model.GroupForCategory" >
+    update common_group_for_category
+    <set >
+      <if test="categoryUuid != null" >
+        category_uuid = #{categoryUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryGroupUuid != null" >
+        category_group_uuid = #{categoryGroupUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number = #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        row_id = #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.core.model.model.GroupForCategory" >
+    update common_group_for_category
+    set category_uuid = #{categoryUuid,jdbcType=VARCHAR},
+      category_group_uuid = #{categoryGroupUuid,jdbcType=VARCHAR},
+      is_deleted = #{isDeleted,jdbcType=BIT},
+      created = #{created,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      modification_number = #{modificationNumber,jdbcType=INTEGER},
+      row_id = #{rowId,jdbcType=VARCHAR},
+      parent_row_id = #{parentRowId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <update id="deleteRecordByGroupUUID" parameterType="map" >
+    update common_group_for_category
+    set 
+      is_deleted = 1,
+      last_updated = CURRENT_TIMESTAMP,
+      last_updated_by = #{opt,jdbcType=VARCHAR}
+     
+    where category_group_uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+  
+    <!--记录超市的对应类别-->
+    <resultMap id="CategoryGroupRecordMap" type="com.prcsteel.platform.core.model.dto.CategoryGroupRecordDto">
+         <id column="id" property="id" jdbcType="BIGINT"/>
+         <result column="category_id" property="categoryId" jdbcType="BIGINT"/>
+         <result column="category_uuid" property="categoryUuid" jdbcType="VARCHAR" />
+         <result column="category_group_uuid" property="categoryGroupUuid" jdbcType="VARCHAR" />
+         <result column="cate_name" property="categoryName" jdbcType="VARCHAR"/>
+         <result column="group_name" property="categoryGroupName" jdbcType="VARCHAR"/> 
+         <result column="site_uuid" property="siteUuid" jdbcType="VARCHAR"/>           
+    </resultMap>
+ 
+  <!--查找所有超市对应的类别-->
+   <select id="queryAllOuterRecord" resultMap="CategoryGroupRecordMap" >
+select t1.id,t1.category_group_uuid,t1.category_uuid,t2.`name` as group_name,t3.`name` as cate_name from common_group_for_category t1
+join common_category_group t2 on t1.category_group_uuid=t2.uuid
+join common_category t3 on t1.category_uuid=t3.uuid
+where t2.site_uuid='inner_cbms'
+order by t1.category_group_uuid   
+    </select>
+    
+    <select id="queryAllReord" resultMap="CategoryGroupRecordMap" >
+ 		select 
+ 		t1.id,t1.category_uuid,
+ 		t3.`name` as cate_name,
+ 		t1.category_group_uuid,
+ 		t2.`name` as group_name,
+ 		t2.site_uuid 
+ 		from common_group_for_category t1
+		join common_category_group t2 on t1.category_group_uuid=t2.uuid
+		join common_category t3 on t1.category_uuid=t3.uuid
+		where t1.is_deleted=0
+    </select>
+    
+        <select id="queryAllReordBySite" resultMap="CategoryGroupRecordMap" parameterType="java.lang.String">
+ 		select 
+ 		t1.id,t1.category_uuid,
+ 		t3.`name` as cate_name,
+ 		t1.category_group_uuid,
+ 		t2.`name` as group_name,
+ 		t2.site_uuid 
+ 		from common_group_for_category t1
+		join common_category_group t2 on t1.category_group_uuid=t2.uuid
+		join common_category t3 on t1.category_uuid=t3.uuid
+		where t2.site_uuid =#{site_uuid,jdbcType=VARCHAR}
+		t1.is_deleted=0
+		order by t1.category_uuid;
+    </select>
+    
+      <select id="queryRecordByCateGroupUUID" resultMap="CategoryGroupRecordMap" parameterType="java.lang.String">
+ 		select 
+ 		t1.id,t1.category_uuid,
+ 		t3.`name` as cate_name,
+ 		t1.category_group_uuid,
+ 		t2.`name` as group_name,
+ 		t2.site_uuid, t3.id as category_id
+ 		from common_group_for_category t1
+		join common_category_group t2 on t1.category_group_uuid=t2.uuid
+		join common_category t3 on t1.category_uuid=t3.uuid
+		where t1.category_group_uuid=#{category_group_uuid,jdbcType=VARCHAR} and site_uuid='inner_cbms' and 
+		t1.is_deleted=0		
+    </select>
+
+</mapper>

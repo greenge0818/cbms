@@ -1,0 +1,103 @@
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+       <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="#">业务报表</a>
+        </li>
+        <li>
+            <a href="#">合同清单</a>
+        </li>
+    </ul>
+    <!-- /.breadcrumb -->
+</div>
+#if($error)
+    <p>非法请求！</p>
+#else
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <!--TAPBAR-->
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+
+                    <div class="clearfix">
+                        <div class="input-group pull-right col-md-12 col-sm-12 col-lg-12 search-bar text-left">
+                            <form class="form-inline">
+                                <label >合同类型：<select name="contractType" id="contractType" >
+											        <option value ="buyer">销售合同</option>
+                                                    <option value ="seller">采购合同</option>
+                                               </select></label>
+											   
+                                <label class="pos-rel" id="org_options">经办部门：
+								<a id="orgSelectBtn" href="javascript:void(0);">选择服务中心</a>
+	                            <div id="orgSelect" class='pos-abs none' style="z-index:10;top:28px;left:70px;width:120px;background:#fff;border:1px solid #ccc">
+	                                <ul>
+	                                #if($!isAll)
+									    <li class="text-left" style="padding:5px;">
+	                                   		<label class="pos-rel">
+	                                   			<input type="checkbox" id="selectAllOrg" class="ace" value="all">
+	                                   			<span class="lbl">全部服务中心</span>
+	                                   		</label>
+	                                    </li>
+									#end
+	                                #foreach($org in $!orgs)
+	                                    <li class="text-left" style="padding:5px;">
+	                                   		<label class="pos-rel">
+	                                   			<input type="checkbox" class="ace" value="$org.orgId">
+	                                   			<span class="lbl">$org.orgName</span>
+	                                   		</label>
+	                                    </li>
+	                                #end
+	                                </ul>
+	                            </div>
+                                <label>客户名称：<input  id="accountName" style="width:120px" class="ipt-text" type="text" maxlength='50' value=""/></label>
+								<label>合同编号：<input id="contractNo" style="width:120px" class="ipt-text" type="text" maxlength='50' value=""/></label>
+								<label >签订时间：</label>
+                                <input id="beginTime" style="width:85px" class="Wdate" type="text" value="$!{startTime}"
+                                       onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')||\'2030-10-01\'}'})"/> -
+                                <input id="endTime" style="width:85px" class="Wdate" type="text"  value="$!{endTime}"
+                                       onFocus="WdatePicker({minDate:'#F{$dp.$D(\'beginTime\')}',maxDate:'2030-10-01'})"/>       
+                            
+                                <button id="queryBtn" class="btn btn-sm btn-default" type="button" title="搜索">
+                                    <i class="aace-icon fa fa-search bigger-110"></i>搜索
+                                </button>
+                                <button type="button" class="btn btn-info btn-sm btn-export" >导出EXCEL</button>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- div.dataTables_borderWrap -->
+                    <div>
+                        <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>合同类型</th>
+                                <th>合同编号</th>
+                                <th width="200">客户名称</th>
+                                <th>经办部门</th>
+                                <th>经办人</th>
+                                <th>签订日期</th>
+                                <th>金额（元）</th>
+                                <th>客户标示</th>
+                                <th>备注</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+
+<script src="$link.getContextPath()/js/views/report/business/contractlist.js"></script>
+#end

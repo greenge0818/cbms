@@ -1,0 +1,87 @@
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+				基础数据
+        </li>
+        <li>模板管理</li>
+    </ul>
+    <!-- /.breadcrumb -->
+</div>
+<div class="main">
+    <div class="com-bar">
+        <h1 class="t1"><em class="icon icon-t1">1</em>下载资源模版</h1>
+        <p class="grayF">请根据您经营的品类选择下载相应资源表格标准模板</p>
+        <div class="module-bar">
+            <div class="module-p-bar">
+                <p>
+                    <a href="#" class="standard-model"><em class="icon icon-excel "></em>标准模板</a>
+                </p>
+            </div>
+
+        </div>
+        <h1 class="t1"><em class="icon icon-t1">2</em>编辑资源清单</h1>
+        <p class="grayF">根据模板格式，在您的电脑上制作上传资源清单</p>
+        <h1 class="t1"><em class="icon icon-t1">3</em>上传资源清单</h1>
+        <!--选择文件上传 S-->
+        <div class="form-bar clearfix">
+        	<form id="fileForm" method="post">
+	            <span class="upfile-box">
+	                 <span class="upload-excel grayF">选择Excel文件：</span>
+	                 <input type="text" name="copyFile" id="copyFile" class="textbox" />
+	                 <input type="file" class="uploadFile" id="uploadFile" name="uploadFile" />
+	                  <a href="javascript:void(0);"  class="link">选择文件</a>
+	                  <button id="saveFile" class="btn btn-mini" title="解析Excel" style="margin-left:5px;">
+	                    <i class="ace-icon glyphicon glyphicon-plus align-top"></i>
+	                   	 解析excel
+	                 </button>
+	            </span>
+           </form>
+        </div>
+        <!--选择文件上传 E-->
+        <p class="grayF">
+        </p>
+    </div>
+    <!--table-bar S-->
+    <div class="table-bar">
+        <table id="dynamic-table" class="tableList grid table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <td class="batch-err-td"></td>
+                    <td>卖家全称</td>
+                    <td>品名</td>
+                    <td>材质</td>
+                    <td>规格</td>
+                    <td>厂家</td>
+                    <td>提货仓库</td>
+                    <td>计重方式</td>
+                    <td>件数(件)</td>
+                    <td>总重(吨)</td>
+                    <td>单价(元/吨)</td>
+                    <td>备注</td>
+                </tr>
+            </thead>
+        </table>
+       
+    </div>
+    <div class="tableTool clearfix">
+        <label>一共解析出&nbsp;<em class="redF">0</em>&nbsp;条正确数据</label>
+        <button class="com-btn pink-btn importAndunListed" type="button" name="" value="">导入资源待审核</button>
+       <!-- <button class="com-btn pink-btn importAndListed" type="button" name="" value="">导入资源并挂牌</button>-->
+        <button class="com-btn pink-btn clearBtn" type="button" name="" value="">清空</button>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button class="com-btn pink-btn returnBtn" type="button" name="" value="">返回</button>
+		&nbsp;&nbsp;&nbsp;
+		<label class="upload ">当前上传进度为&nbsp;<em style="color:red">0</em>&nbsp;%</label>
+    </div>
+    <!--table-bar E-->
+</div>
+<link rel="stylesheet" href="$link.getContextPath()/css/batch.css" />
+<script src="$link.getContextPath()/js/views/resource/templet/index.js"></script>

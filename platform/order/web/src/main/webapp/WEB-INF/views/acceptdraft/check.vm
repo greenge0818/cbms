@@ -1,0 +1,96 @@
+<!--银票充值审核-->
+
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            银票管理
+        </li>
+        <li class="active">
+            银票审核
+        </li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+        #parse("layout/topbtn.vm")<!-- /.nav-search -->
+</div>
+#if(${acceptDraft})
+<div class="page-content">
+    <form id="form1" action="$link.getContextPath()/acceptdraft/confirmrecharge.html" method="POST">
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- div.table-bar -->
+                <div class="col-sm-12 clearfix">
+                    <div class="table-bar pull-left font2" style="width: 230px;margin-left:10px">
+                        <label> 服务中心：
+                            <input type="hidden" name="orgName" value="$!{acceptDraft.orgName}">
+                            <span>$!{acceptDraft.orgName}</span>
+                        </label>
+                        <label> 客户名称：
+                            <input type="hidden" name="accountId" value="$!{acceptDraft.accountId}">
+                            <span>$!{acceptDraft.accountName}</span>
+                        </label>
+                        <label> 银票票号：
+                            <input type="text" id="codeApprove" name="codeApprove" must="1" />
+                        </label>
+                        <label> 出票金额：
+                            <input type="text" id="amountApprove" name="amountApprove" must="1" verify="numeric" /> 元
+                        </label>
+                        <label> 银票到期日：
+                            <input type="text" id="endDateApprove" name="endDateApprove" must="1" readonly="readonly"
+                                   onFocus="WdatePicker({minDate:'2015-01-01',maxDate:'%y-%M-{%d+184} %H:%m:%s'}) " />
+                        </label>
+                         <label> 贴现率：<br>
+                            <input type="text" id="discountRate" name="discountRate" must="1" verify="numeric" msg="贴现率最多6位小数"/>&nbsp;‰
+                       </label>
+                        <label><em class="bolder">银票状态：　</em>
+                            <span class="orange">
+                                $!{acceptDraft.statusForShow}
+                            </span>
+                        </label>
+                        <div class="clearfix btn-bar">
+                            <a class="link" href="$link.getContextPath()/acceptdraft/list.html">返回</a>&nbsp;&nbsp;
+                            <a href="javascript:;" title="旋转" class="revolveImg">旋转图片</a>&nbsp;&nbsp;
+                            #if($shiro.hasPermission("acceptdraft:check:submit"))
+                                <input type="hidden" id="id" name="id" value="$!{acceptDraft.id}" )">
+                                <button type="button" id="submit" class="btn btn-sm btn-primary">
+                                    提交确认
+                                </button>
+
+                                <script src="$link.getContextPath()/js/views/acceptraft/check.js"></script>
+                            #end
+                        </div>
+                        <div class="img-sliders-nav clearfix" id="img_pics">
+                            #foreach($attachment in $attachments)
+                                <a href="javascript:;" class="pull-left">
+                                    <img #if($attachment.url)src="$link.getContextPath()/common/getfile.html?key=$attachment.url" #end alt="发票" width="100px" height="70px" style="border: 2px solid rgb(51, 122, 183);"/>
+                                </a>
+                            #end
+                        </div>
+                    </div>
+
+                    <div class="table-bar pull-left pos-rel" style="min-height:770px;margin-left:100px;background:#ccc;">
+                        <div>银票图片：</div>
+                        <img id="turnImg" #if($attachments[0].url)src="$link.getContextPath()/common/getfile.html?key=$attachments[0].url" #end alt="发票" rel="0" width="745" height="428" style="margin-top:160px;margin-bottom:100px;" />
+                        <a href="javascript:;" class="sliders-prve"></a>
+                        <a href="javascript:;" class="sliders-next"></a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+</div><!-- /.page-content -->
+#else
+<p>数据不存在或者状态已经更新，请返回重试！&nbsp;&nbsp;<a class="link" href="$link.getContextPath()/acceptdraft/list.html">返回</a></p>
+#end
+<script src="$link.getContextPath()/js/views/common/turnImg.js"></script>

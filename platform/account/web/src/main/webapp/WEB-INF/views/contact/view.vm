@@ -1,0 +1,257 @@
+#set($account=$accountdto.account)
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            客户管理
+        </li>
+        <li>
+            <a href="$link.getContextPath()/company/list.html">我的客户</a>
+        </li>
+        <li>
+            <a href="$link.getContextPath()/accountinfo/$!{account.id}/accountinfo.html">$!{account.name}</a>
+        </li>
+        <li class="active">
+            联系人
+        </li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+    #parse("layout/topbtn.vm")
+    <!-- /.nav-search -->
+
+</div>
+<div class="page-content">
+    #parse("baseinfo.vm")
+    <!-- /.page-header -->
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="clearfix">
+                        <div class="pull-left toolsbar">
+                            <button id="addDept" class="btn btn-xs btn-primary margin-top10" title="添加部门">
+                                添加部门
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- div.dataTables_borderWrap -->
+                    <div>
+                        <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+                            <thead class="none">
+                            <tr>
+                                <th></th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    </br>
+    <div>
+        
+        <a href="$accountDomain/account/contact/accountcontactassignlog.html">[联系人划转记录]</a>
+    </div>
+    <!-- /.row -->
+</div>
+
+<!-- 部门模板 -->
+<div id="contacts" class="none dept-template">
+    <div class="department-bar clearfix">
+
+        <a href="javascript:;" class="department-name pull-left">
+            <i class="fa fa-angle-up fa-lg"></i>
+            <span class="dept-name"></span>
+        </a>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="javascript:;" class="department-fax pull-right">
+            <i class="fa fa-group fa-lg"></i>
+            <span class="dept-fax"></span>
+        </a>
+
+
+            <a href="javascript:;" class="dept-edit">
+            <i class="fa fa-pencil"> 编辑</i>
+           </a>
+            <a href="javascript:;" class="user-add">
+                <i class="fa fa-plus"> 添加人员</i>
+               </a>
+            <a href="javascript:;" class="dept-del">
+                锁定</a>
+        <input type="hidden" class="dept-id"/>
+    </div>
+    <table class="table table-striped table-bordered table-hover shown">
+        <thead>
+            <tr></tr>
+        </thead>
+    </table>
+</div>
+
+<!-- 部门编辑弹框 -->
+<div id='editDeptDiv' class='well none' style='margin-top:25px; width:400px;'>
+ <div class="userMode-layer" style="width:380px; height: 540px;">
+    <form id='editDeptForm' class='form-horizontal' role='form'>
+        <input type="hidden" id="deptId" name="id"/>
+        <div class='form-group'>
+
+            <label class= 'control-label no-padding-right' id='belongOrg'>归属服务中心：
+                <span class="pos-rel"><a id="belongOrgBtn" href="javascript:void(0);">选择</a>
+                    <div id="belongOrgList" class='pos-abs none' style="z-index:10;top:15px;left:0px;width:185px;background:#fff;border:1px solid #ccc">
+                        <ul>
+                            #if($orgs.size() > 1)
+                                <li class="text-left" style="padding:5px;">
+                                    <label class="pos-rel">
+                                        <input type="checkbox" id="selectAllOrg" class="ace" value="$orgIdsStr">
+                                        <span class="lbl">全部服务中心</span>
+                                    </label>
+                                </li>
+                            #end
+
+                            #foreach($org in $orgs)
+                                <li class="text-left" style="padding:5px;">
+                                    <label class="pos-rel">
+                                        <input type="checkbox"  class="ace" value="$org.id">
+                                        <span class="lbl">$org.name</span>
+                                    </label>
+                                </li>
+                            #end
+
+
+
+                        </ul>
+                    </div>
+                </span>
+                <span class="show_options" id="show_options" style="display: none"></span>
+            </label>
+
+
+            <label class= 'control-label no-padding-right' for='deptName'>部门名称：
+                <input type='text' id='deptName' name="name" placeholder='最多输入6个汉字' must='1'
+                      maxLength="6"/>
+            </label>
+            <label class= 'control-label no-padding-right' for='deptName'>部门传真：
+                <input type="text" id="deptFax" name="deptFax" placeholder="正确的传真号码" value="$!{accountdto.account.deptFax}" verify="phone"  must="1" >
+            </label>
+
+        </div>
+       #* #if(${accountdto.account.creditAmount})
+            <div class='form-group'>
+                <label class=control-label no-padding-right' for='creditAmount'>信用额度：
+
+                    <input type='text' id='creditAmount' name="creditAmount" verify="rmb" msg="必须是大于等于0的数值，格式如：0.00"/>
+               </label>
+            </div>
+        #end*#
+    </form>
+    #*#if(${accountdto.account.creditAmount})
+        <div>
+            <em class="bolder">（$!{accountdto.account.name}可分配总信用额度为$!{accountdto.account.creditAmount}元）</em>
+        </div>
+    #end*#
+    <div class='text-center'>
+        <button data-bb-handler='success' id='saveDept' class='btn btn-sm btn-info'>保存
+        </button>
+        <button data-bb-handler='button' id='cancelDept' class='btn btn-sm'
+                onclick="javascript:cbms.closeDialog();">取消
+        </button>
+    </div>
+    </div>
+</div>
+
+<!-- 添加联系人 -->
+<div id="addUserMode" class="addUserMode none">
+    <div id="userMode" class="userMode-layer">
+        <div class="changeMode text-center dotted-border-bottom">
+            <label><input class="seluser" name="seluser" type="radio" value="0" checked="checked" />添加新的联系人</label>&nbsp;&nbsp;
+            <label><input class="seluser" name="seluser" type="radio" value="1" />选择已有的联系人</label>
+        </div>
+        <ul class="userMode-f">
+            <form id='addNewUserForm' class='form-horizontal' role='form'>
+            <li><label><span class="red">　　　*</span>姓名：<input type="text" name="name" value="" must="1"/></label></li>
+            <li><label><span class="red">　　*</span>手机号：<input type="text" name="tel" value="" must="1" verify='mobile'/></label></li>
+            <li class="parentLimit"><label><span class="red">*</span>对接交易员：&nbsp;<a class="menuBtn" href="javascript:;" >请选择</a></label>
+						<span class="setVal-bar">
+							<span class="first"></span>
+						</span>
+            </li>
+            <li>
+                <label>　　　  状态：
+                <select name="status">
+                    <option value="1">正常</option>
+                    <option value="0">锁定</option>
+                </select>
+                </label>
+            </li>
+            <li><label>　　　 Q  Q ： <input type="text" name="qq" value="" verify='qq'/></label></li>
+            <li><label>　　　  邮 箱：<input type="text" name="email" value="" verify='email'/></label></li>
+            <li><label>　　　  备 注：<input type="text" name="note" value="" /></label></li>
+            <li class="text-center"><button class="btn btn-info btn-xs" type="button" id="addNewUserBtn">确定</button></li>
+            </form>
+        </ul>
+        <ul class="userMode-s none">
+            <form id='addUserForm' class='form-horizontal' role='form'>
+            <li>
+                <label><span class="red">*</span>选择已有联系人： <select name="contact">
+                    <option value="">请选择</option>
+                </select>
+                </label>
+            </li>
+            <li class="parentLimit"><label><span class="red">　　*</span>对接交易员：&nbsp;<a class="menuBtn" href="javascript:;" >请选择</a></label>
+						<span class="setVal-bar">
+							<span class="first"></span>
+						</span>
+            </li>
+            <li class="text-center"><button class="btn btn-info btn-xs" type="button" id="addUserBtn">确定</button></li>
+            </form>
+        </ul>
+    </div>
+</div>
+
+<!-- 联系人编辑 -->
+<div id="editUserDiv" class="none">
+    <ul class="editUserMode">
+        <form id='editUserForm' class='form-horizontal' role='form'>
+            <input type="hidden" id="editDeptId"/>
+            <input type="hidden" id="editContactId"/>
+            <li><label><span class="red">　　　*</span>姓名：<input type="text" name="name" value="" must="1"/></label></li>
+            <li><label><span class="red">　　*</span>手机号：<input type="text" name="tel" value="" must="1" verify='mobile'/></label></li>
+            <li class="parentLimit"><label><span class="red">*</span>对接交易员：&nbsp;<a class="menuBtn" href="javascript:;" >请选择</a></label>
+                            <span class="setVal-bar">
+                                <span class="first"></span>
+                            </span>
+            </li>
+            <li>
+                <label>　　　  状态：
+                    <select name="status">
+                        <option value="1">正常</option>
+                        <option value="0">锁定</option>
+                    </select>
+                </label>
+            </li>
+            <li><label>　　　 Q  Q ： <input type="text" name="qq" value="" verify='qq'/></label></li>
+            <li><label>　　　  邮 箱：<input type="text" name="email" value="" verify='email'/></label></li>
+            <li><label>　　　  备 注：<input type="text" name="note" value="" /></label></li>
+            <li class="text-center"><button class="btn btn-info btn-xs" type="button" id="editUserBtn">确定</button></li>
+        </form>
+    </ul>
+</div>
+
+<input type="hidden" id="companyCreditAmount" value="$!{accountdto.account.creditAmount}"/>
+<input type="hidden" id="accountId" value="$!{accountdto.account.id}"/>
+<input type="hidden" id="orgId" value="$!{accountdto.account.orgId}"/>
+<input type="hidden" id="accountTagName" value="$!{accountdto.account.tagName}"/>
+<input type="hidden" id="permissionOrgId" value="$!{permissionOrgId}"/>
+<script src="$link.getContextPath()/js/views/contact/view.js"></script>
+<script src="$link.getContextPath()/js/views/contact/traderorg.js"></script>

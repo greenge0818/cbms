@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.prcsteel</groupId>
+    <artifactId>prcsteel-platform-account</artifactId>
+    <version>2.0.0</version>
+  </parent>
+
+  <artifactId>prcsteel-platform-account-web</artifactId>
+  <packaging>war</packaging>
+  <name>Prcsteel Platform - Account - Web</name>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.prcsteel</groupId>
+      <artifactId>prcsteel-platform-common</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.prcsteel</groupId>
+      <artifactId>prcsteel-platform-acl-model</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.prcsteel</groupId>
+      <artifactId>prcsteel-platform-account-model</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.prcsteel</groupId>
+      <artifactId>prcsteel-platform-account-persist</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.prcsteel</groupId>
+      <artifactId>prcsteel-platform-account-service</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.prcsteel</groupId>
+      <artifactId>prcsteel-platform-static</artifactId>
+      <version>${project.version}</version>
+      <type>war</type>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.apache.shiro</groupId>
+      <artifactId>shiro-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.shiro</groupId>
+      <artifactId>shiro-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.shiro</groupId>
+      <artifactId>shiro-spring</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.shiro</groupId>
+      <artifactId>shiro-cas</artifactId>
+    </dependency>
+    <!-- Atomikos -->
+    <dependency>
+      <groupId>com.atomikos</groupId>
+      <artifactId>transactions-jdbc</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.atomikos</groupId>
+      <artifactId>transactions-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.atomikos</groupId>
+      <artifactId>transactions-jta</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.atomikos</groupId>
+      <artifactId>transactions</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.atomikos</groupId>
+      <artifactId>atomikos-util</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>javax.transaction</groupId>  
+      <artifactId>jta</artifactId>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.tuckey</groupId>
+      <artifactId>urlrewritefilter</artifactId>
+    </dependency>
+    
+    <dependency>
+      <groupId>commons-fileupload</groupId>
+      <artifactId>commons-fileupload</artifactId>
+    </dependency>
+    
+    <dependency>
+      <groupId>commons-lang</groupId>
+      <artifactId>commons-lang</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-annotations</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.springfox</groupId>
+      <artifactId>springfox-swagger2</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.prcsteel</groupId>
+      <artifactId>prcsteel-rest</artifactId>
+      <version>${project.version}</version>
+      <type>jar</type>
+    </dependency>    
+
+    <!-- Camel -->
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-spring</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-jackson</artifactId>
+    </dependency>
+    <!--<dependency>
+        <groupId>org.apache.camel</groupId>
+        <artifactId>camel-jaxb</artifactId>
+    </dependency>-->
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-jms</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.activemq</groupId>
+      <artifactId>activemq-camel</artifactId>
+      <!-- <exclusions>
+           <exclusion>
+               <groupId>org.apache.camel</groupId>
+               <artifactId>camel-jms</artifactId>
+           </exclusion>
+       </exclusions>-->
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-jms</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-messaging</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-websocket</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-core</artifactId>
+    </dependency>
+
+    <!-- Xbean for spring -->
+    <dependency>
+      <groupId>org.apache.xbean</groupId>
+      <artifactId>xbean-spring</artifactId>
+    </dependency>
+
+    <!-- Reactor -->
+    <dependency>
+      <groupId>org.projectreactor</groupId>
+      <artifactId>reactor-net</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+  
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>tomcat-maven-plugin</artifactId>
+        <version>1.1</version>
+        <configuration>
+          <url>http://localhost:8080/manager/text</url>
+          <server>tomcat</server>
+          <port>8002</port>
+          <path>/account</path>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-clean-plugin</artifactId>
+        <version>2.4.1</version>
+        <configuration>
+          <filesets>
+            <fileset>
+              <directory>${basedir}/src/main/webapp</directory>
+              <includes>
+                <include>css/**</include>
+                <include>img/**</include>
+                <include>theme/**</include>
+                <include>js/**</include>
+                <include>WEB-INF/classes/**</include>
+                <include>WEB-INF/lib/**</include>
+                <include>META-INF/**</include>
+                <include>favicon.ico</include>
+                <include>swagger-ui/**</include>
+              </includes>
+              <excludes>
+                <exclude>js/jquery-**.js</exclude>
+                <exclude>js/views/**</exclude>
+              </excludes>
+              <followSymlinks>false</followSymlinks>
+            </fileset>
+          </filesets>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>2.3</version>
+        <configuration>
+          <webappDirectory>${basedir}/src/main/webapp</webappDirectory>
+          <!--<warSourceDirectory>${basedir}/src/main/webapp</warSourceDirectory>-->
+          <archive>
+            <addMavenDescriptor>false</addMavenDescriptor>
+          </archive>
+          <overlays>
+            <overlay>
+              <groupId>com.prcsteel</groupId>
+              <artifactId>prcsteel-platform-static</artifactId>
+              <excludes>
+                <exclude>WEB-INF/web.xml</exclude>
+                <exclude>views/**</exclude>
+              </excludes>
+            </overlay>
+          </overlays>
+          <dependentWarExcludes>WEB-INF/web.xml,index.*,web.xml</dependentWarExcludes>
+          <webResources>
+            <resource>
+              <!-- this is relative to the pom.xml directory -->
+              <directory>src/main/resources/${package.environment}</directory>
+              <targetPath>WEB-INF/classes</targetPath>
+              <filtering>true</filtering>
+            </resource>
+          </webResources>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

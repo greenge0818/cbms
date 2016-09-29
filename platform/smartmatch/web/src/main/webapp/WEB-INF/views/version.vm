@@ -1,0 +1,4 @@
+#set($layout="layout/blank.vm")
+webVersion=$!{projectVersion}
+requiredDbVersion=$!{requiredDbVersion}
+databaseVersion=$!{databaseVersion}

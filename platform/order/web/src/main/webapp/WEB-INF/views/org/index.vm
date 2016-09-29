@@ -1,0 +1,227 @@
+#set($layout="layout/blank.vm")
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <title>品牌店代运营系统</title>
+    <!-- meta S -->
+    #parse("layout/meta.vm")
+    <!-- meta E -->
+
+    <!-- meta S -->
+    #parse("layout/context.vm")
+    <!-- meta E -->
+</head>
+
+<body class="no-skin">
+<!-- Header S-->
+    #parse("layout/header.vm")
+<!-- Header E -->
+
+<div class="main-container" id="main-container">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('main-container', 'fixed')
+        } catch (e) {
+        }
+    </script>
+    <!-- Sidebar S-->
+    #parse("layout/sidebar.vm")
+    <!-- Sidebar E -->
+    <div class="main-content">
+        <div class="main-content-inner">
+
+            <!-- content S -->
+            <div class="breadcrumbs" id="breadcrumbs">
+                <script type="text/javascript">
+                    try {
+                        ace.settings.check('breadcrumbs', 'fixed')
+                    } catch (e) {
+                    }
+                </script>
+
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="ace-icon fa fa-home home-icon"></i>
+                        <a href="#">系统管理</a>
+                    </li>
+
+                    <li class="active">服务中心管理</li>
+                </ul>
+                <!-- /.breadcrumb -->
+
+                #parse("layout/topbtn.vm")
+                <!-- /.nav-search -->
+            </div>
+
+            <div class="page-content">
+                <div class="col-xs-12 clearfix">
+                    <!-- PAGE CONTENT BEGINS -->
+                    <div class="menuContent  pull-left" style="margin-right:15px;margin-top:10px;">
+                        <ul id="show" class="ztree" style="margin-top:0;"></ul>
+                        <div>
+                            <a class="button btn-sm btn-info" id="addOrg">添加</a>
+
+                        </div>
+                    </div>
+                    <div class="pull-left">
+                        <div class="tab bot-info print-finfo">
+                            <input id="selectOrgId" type="hidden" value="#if($orgId)$!orgId#else 0#end"/>    ##获取当前选中的服务中心id
+                            <span id="orgName" style="font-weight: bold"></span>（代码：<span id="orgCode"></span>） 负责人：<span id="orgCharger"></span>
+                            备用金额度（元）：<span id="orgCreditLimit"></span>
+                            人员统计：<span id="orgUserCount"></span id="orgStatus"> 状态：<span id="orgStatus"></span><br/>
+                            可使用的提货单据：<span id="orgDeliveryType"></span>
+                            <br>
+                            <label>
+                                <input  type="checkbox"     class="ace" id="orgcheck" value="金额"/>
+                                <span class="lbl">显示被锁定角色信息</span>
+                            </label>
+                            <div class="pull-right">
+                                <a class="button btn-sm btn-info" id="editOrg">编辑</a>
+                            </div>
+                        </div>
+                        <!-- div.dataTables_borderWrap -->
+                        <div>
+                            <table id="dynamicTable" class="table table-striped table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>联系人姓名</th>
+                                    <th>手机号</th>
+                                    <th>角色</th>
+                                    <th>状态</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div>
+                            <a class="button btn-sm btn-info" id="addUser">添加用户</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.col -->
+                <!-- /.row -->
+            </div>
+            <!-- /.page-content -->
+            <!-- content E -->
+        </div>
+    </div>
+    <!-- /.main-content -->
+
+    <!-- Footer S -->
+    #parse("layout/footer.vm")
+    <!-- Footer E -->
+</div>
+<!-- /.main-container -->
+<div id="userDialog" style="display: none">
+    <div class='well'>
+        <form id='editUser'>
+            <input type="hidden" id="userId" value="">
+            <label style='width: 100px'>服务中心：</label><input placeholder="请选择服务中心" id="sorganization" type="text"
+                                                            class="ipt-text" readonly="" value=""
+                                                            onclick="showMenu(); style='width: 200px'"/>
+            <input type='hidden' id='sorganizationHidden' value='0'/><br/>
+            <label style='width: 100px'>姓名</label><input type='text' must='1' id='userName' placeholder='请输入姓名'
+                                                         style='width: 200px'/><br/>
+            <label style='width: 100px'>手机</label><input type='text' must='1' verify='mobile' id='userTel' placeholder='请输入手机'
+                                                         style='width: 200px'/><br/>
+            <label style='width: 100px'>用户名</label><input type='text' must='1' id='userLoginId' placeholder='请输入用户名'
+                                                          style='width: 200px'/><br/>
+            <label style='width: 100px'>工号</label><input type='text' must='1' id='userJobNumber' placeholder='请输入工号'
+                                                         style='width: 200px'/><br/>
+            <label style='width: 100px'>角色</label><select id='userRole' style='width: 200px'></select>
+        </form>
+    </div>
+    <p align='center'><a class='button btn-info btn-lg' id='submit'>提交</a></p>
+</div>
+
+<div id="orgDialog" style="display: none">
+    <div class='well ' style='margin-top:25px;'>
+        <form id='editOrg'>
+            <label style='width: 100px'>上级服务中心：</label><input placeholder="请选择服务中心" id="sorganization" type="text"
+                                                            class="ipt-text" readonly="" value="无"
+                                                            onclick="showMenu(); style='width: 200px'"/>
+            <input type='hidden' id='sorganizationHidden' value='0'/><br/>
+            <label style='width: 100px'>服务中心名称</label><input must='1' type='text' id='orgNameDia' placeholder='请输入服务中心名称'
+                                                             style='width: 200px'/><br/>
+            <label style='width: 100px'>备用金额度</label><input must='1' verify='numeric' type='text' id='orgCreditLimitDia'
+                                                            placeholder='请输入备用金额度' style='width: 180px'/><label
+                style='width: 20px'>元</label><br/>
+            <label style='width: 100px'>服务中心代码</label><input must='1' type='text' id='orgCodeDia' placeholder='请输入服务中心代码'
+                                                             style='width: 200px'/><br/>
+            <label style='width: 100px'>负责人</label><select must='1' id='orgChargerListDia' style='width: 200px'></select><br/>
+
+            <label style='width: 100px'>地址</label><input must='1' type='text' id='orgAddressDia' placeholder='请输入服务中心地址'
+                                                             style='width: 200px'/><br/>
+            <label style='width: 100px'>城市</label>
+            <td class=>
+            <span class="vendor-edit">
+                <select id="province" name="provinceId">
+                    <option value="">==请选择==</option>
+                </select><br/>
+                <label style='width: 100px'></label>
+                <select id="city" name="cityId">
+
+                </select><br/>
+                <label style='width: 100px'></label>
+                <select id="district" name="districtId">
+
+                </select>
+            </span>
+            </td><br/>
+            <label style='width: 100px'>座机</label><input must='1' type='text' id='orgTel' placeholder='请输入服务中心座机号码'
+                                                         style='width: 200px'/><br/>
+            <label style='width: 100px'>传真</label><input must='1' type='text' id='orgFaxDia' placeholder='请输入服务中心传真'
+                                                         style='width: 200px'/><br/>
+            <label style='width: 100px'>合同签订地</label><input must='1' type='text' id='contractAddress' placeholder='请输入合同签订地'
+                                                         style='width: 200px'/><br/>
+
+            <label style='width: 100px'>开票主机</label><input must='1' type='text' id='invoicedHost' placeholder='请输入主机编号' style='width: 200px'/><br/>
+
+            <label style='width: 100px'>可使用的提货单据</label>
+            <label><input id="DELIVERYLETTER" class="check" type="checkbox" value="DELIVERYLETTER" disabled/>放货函</label>
+            <label><input id="DELIVERYORDER" class="check" type="checkbox" value="DELIVERYORDER" />放货单（给仓库）</label><br>
+            <label style='width: 103px'></label>
+            <label><input id="TRANSFERORDER" class="check" type="checkbox" value="TRANSFERORDER" />货权转让单</label>
+            <label><input id="TRANSFERLETTER" class="check" type="checkbox" value="TRANSFERLETTER" />货权转让函</label>
+            <label><input id="PICKUPFORBUYER" class="check" type="checkbox" value="PICKUPFORBUYER" />提货单（给买家）</label>
+            <br>
+            <label style='width: 100px'>是否启用</label>
+            <label><input type="radio" name="enabled" class="enabledOrg" value="1" checked="checked"  />是</label>
+            <label><input type="radio" name="enabled"  class="enabledOrg" value="0" />否</label>
+			<br>
+            <label style='width: 100px'>银票业务</label>
+            <label><input type="radio" name="isDraftAccepted" class="isDraftAccepted" value="1"  />启用</label>
+            <label><input type="radio" name="isDraftAccepted"  class="isDraftAccepted" value="0" checked="checked" />停用</label>
+        </form>
+    </div>
+</div>
+
+<div id="menuContent" class="menuContent" style="display:none; position: absolute;">
+    <ul id="tree" class="ztree" style="margin-top:0; width:160px;"></ul>
+</div>
+<!-- add department-->
+<div id="department" style="display: none">
+    <div class='well'>
+        <form id='formDepartment'>
+            <label style='width: 100px'>上级部门：</label><input placeholder="请选择服务中心" id="sorganization" type="text"
+                                                              class="ipt-text" readonly="" value="无"
+                                                              onclick="showMenu(); style='width: 200px'"/>
+            <input type='hidden' id='orgwanization' value='0'/><br/>
+            <label style='width: 100px'>部门名称</label><input type='text' must='1' id='departmentName' placeholder='请输入部门名称'
+                                                         style='width: 200px'/><br/>
+            <label style='width: 100px'>负责人</label><select must='1' id='orgChargerList' style='width: 200px'></select><br/>
+            <label style='width: 100px'>是否启用</label>
+            <label><input type="radio" name="enabled" class="enabled"  value="1" checked="checked" "/>是</label>
+            <label><input type="radio" name="enabled" class="enabled"  value="0" "/>否</label>
+        </form>
+    </div>
+    <p align='center'><a class='button btn-info btn-lg' id='submitDepartment'>提交</a></p>
+</div>
+<!-- basic scripts S -->
+    #parse("layout/scripts.vm")
+<!-- basic scripts E -->
+
+<script type="text/javascript" src="$link.getContextPath()/js/views/user/index.js"></script>
+<script src="$link.getContextPath()/js/views/common/regionallinkage.js"></script>
+</body>
+</html>

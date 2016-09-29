@@ -1,0 +1,248 @@
+<!-- 待审核-->
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="#">业务报表</a>
+        </li>
+        <li>
+            交易单明细
+        </li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+    #parse("layout/topbtn.vm")
+    <!-- /.nav-search -->
+</div>
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="clearfix">
+                        <div class="input-group pull-right text-left col-md-12 col-sm-12 col-lg-12 search-bar">
+                            #if(!$shiro.hasPermission("sys:field:org"))
+                                <label>服务中心：<input placeholder="全部" id="sorganization" type="text"
+                                                   class="ipt-text" readonly="" value="" onclick="showMenu();">
+                                    <input type='hidden' id='sorganizationHidden' value='-1'/>
+                                </label>
+                            #end
+                            #if(!$shiro.hasPermission("sys:field:user"))
+                                <label>交易员：</label><input id="traderName" search="userorg" class="ipt-text" type="text"
+                                                          value="" userid="0" readonly="true"/>
+                            #end
+                            <label>买家全称：</label><input id="accountid" search="account" accounttype="buyer"
+                                                       class="ipt-text" type="text" value=""/>
+                            <label>卖家全称：</label><input id="sellid" search="account" accounttype="seller"
+                                                       class="ipt-text" type="text" value=""/>
+                            <label id="order_status_options">交易状态：
+                            <span class="pos-rel"><a id="orderStatusBtn" href="javascript:void(0);">选择</a>
+                            <div id="orderStatusList" class='pos-abs none' style="z-index:10;top:15px;left:0px;width:185px;background:#fff;border:1px solid #ccc">
+                                <ul>
+                                    <li class="text-left" style="padding:5px;">
+                                        <label class="pos-rel">
+                                            <input type="checkbox"  class="ace" value="2,4,6,7,8,10">
+                                            <span class="lbl">全部</span>
+                                            <input type = "hidden" name = "index" value="1"
+                                        </label>
+                                    </li>
+                                    <li class="text-left" style="padding:5px;">
+                                        <label class="pos-rel">
+                                            <input type="checkbox"  class="ace" value="2">
+                                            <span class="lbl">待关联</span>
+                                            <input type = "hidden" name = "index" value="2"
+                                        </label>
+                                    </li>
+                                    <li class="text-left" style="padding:5px;">
+                                        <label class="pos-rel">
+                                            <input type="checkbox"  class="ace" value="PAY_APPLY">
+                                            <span class="lbl">待申请付款</span>
+                                            <input type = "hidden" name = "index" value="3"
+                                        </label>
+                                    </li>
+                                    <li class="text-left" style="padding:5px;">
+                                        <label class="pos-rel">
+                                            <input type="checkbox"  class="ace" value="PAY_REQUESTED">
+                                            <span class="lbl">已申请付款待审核</span>
+                                            <input type = "hidden" name = "index" value="4"
+                                        </label>
+                                    </li>
+                                    <li class="text-left" style="padding:5px;">
+                                        <label class="pos-rel">
+                                            <input type="checkbox"  class="ace" value="PAY_APPROVED">
+                                            <span class="lbl">已通过审核待打印付款申请单</span>
+                                            <input type = "hidden" name = "index" value="5"
+                                        </label>
+                                    </li>
+                                    <li class="text-left" style="padding:5px;">
+                                        <label class="pos-rel">
+                                            <input type="checkbox"  class="ace" value="PAY_APPLYPRINTED">
+                                            <span class="lbl">已打印付款申请单</span>
+                                            <input type = "hidden" name = "index" value="6"
+                                        </label>
+                                    </li>
+                                    <li class="text-left" style="padding:5px;">
+                                        <label class="pos-rel">
+                                            <input type="checkbox"  class="ace" value="PAY_PAYED">
+                                            <span class="lbl">已确认付款</span>
+                                            <input type = "hidden" name = "index" value="7"
+                                        </label>
+                                    </li>
+                                    <li class="text-left" style="padding:5px;">
+                                        <label class="pos-rel">
+                                            <input type="checkbox"  class="ace" value="FillUP_0,1,2,-1">
+                                            <span class="lbl">待出库</span>
+                                            <input type = "hidden" name = "index" value="8"
+                                        </label>
+                                    </li>
+                                    <li class="text-left" style="padding:5px;">
+                                        <label class="pos-rel">
+                                            <input type="checkbox"  class="ace" value="6">
+                                            <span class="lbl">待二次结算</span>
+                                            <input type = "hidden" name = "index" value="9"
+                                        </label>
+                                    </li>
+                                    <li class="text-left" style="padding:5px;">
+                                        <label class="pos-rel">
+                                            <input type="checkbox"  class="ace" value="7">
+                                            <span class="lbl">待开票申请</span>
+                                            <input type = "hidden" name = "index" value="10"
+                                        </label>
+                                    </li>
+                                    <li class="text-left" style="padding:5px;">
+                                        <label class="pos-rel">
+                                            <input type="checkbox"  class="ace" value="8">
+                                            <span class="lbl">待开票</span>
+                                            <input type = "hidden" name = "index" value="11"
+                                        </label>
+                                    </li>
+                                    <li class="text-left" style="padding:5px;">
+                                        <label class="pos-rel">
+                                            <input type="checkbox"  class="ace" value="10">
+                                            <span class="lbl">交易完成</span>
+                                            <input type = "hidden" name = "index" value="12"
+                                        </label>
+                                    </li>
+                                    <li class="text-left" style="padding:5px;">
+                                        <label class="pos-rel">
+                                            <input type="checkbox"  class="ace" value="3,5,-5,-6">
+                                            <span class="lbl">交易关闭待审核</span>
+                                            <input type = "hidden" name = "index" value="13"
+                                        </label>
+                                    </li>
+                                    <li class="text-left" style="padding:5px;">
+                                        <label class="pos-rel">
+                                            <input type="checkbox"  class="ace" value="-1,-2,-3,-4,-7,-8">
+                                            <span class="lbl">交易关闭</span>
+                                            <input type = "hidden" name = "index" value="14"
+                                        </label>
+                                    </li>
+                                </ul>
+                            </div></span>
+                                <span class="show_options" id="show_options" style="display: none">
+							</span>
+                            </label>
+                            <br/>
+                            <label>二结时间：</label>
+                            <input id="secStartTime" class="Wdate" type="text" value="$startTime"
+                                   onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'secEndTime\')||\'2020-10-01\'}'})"/> -
+                            <input id="secEndTime" class="Wdate" type="text" value="$endTime"
+                                   onFocus="WdatePicker({minDate:'#F{$dp.$D(\'secStartTime\')}',maxDate:'2020-10-01'})"/>
+
+                            <label>开单时间：</label>
+                            <input id="startTime" class="Wdate" type="text" value="$startTime"
+                                   onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')||\'2020-10-01\'}'})"/> -
+                            <input id="endTime" class="Wdate" type="text" value="$endTime"
+                                   onFocus="WdatePicker({minDate:'#F{$dp.$D(\'startTime\')}',maxDate:'2020-10-01'})"/>
+
+                            <button id="queryBtn" class="btn btn-sm btn-default" type="button" title="搜索">
+                                <i class="aace-icon fa fa-search bigger-110"></i>搜索
+                            </button>
+                            <button id="exportexcel" class="btn btn-sm btn-default" type="button" title="导出excel">
+                                <i class="aace-icon fa bigger-110"></i>导出excel
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- div.dataTables_borderWrap -->
+                    <div id="table-box">
+	                    <div style="width:2500px; ">
+	                        <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+	                            <thead class="none">
+	                            <th></th>
+	                            </thead>
+	                            <tfoot>
+	                            <td class="text-right"></td>
+	                            </tfoot>
+	                        </table>
+	                    </div><!--end wrapper-->
+                    </div><!-- end div.dataTables_borderWrap -->
+                </div>
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+<div id="menuContent" class="menuContent" style="display:none; position: absolute;">
+    <ul id="orgTree" class="ztree" style="margin-top:0; width:160px;"></ul>
+</div>
+<div id="order_items" class="none">
+    <div class=" pd-t-15 pd-b-15 col-xs-12 text-left">
+        <span>时间：<span class="bolder ordertime"></span></span>
+        <span>单号：<span class="bolder orderid"></span></span>
+        <span>买家合同号：<span class="bolder contractcode"></span></span>
+        <span>买家全称：<span class="bolder orderbuyercompany"></span></span>
+        <span>买家交易员：<span class="bolder orderbuyer"></span></span>
+        <span>交易状态：<span class="bolder orderstatus"></span></span>
+    </div>
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+	        <th style="width:120px;">卖家全称</th>
+	        <th>标示名称</th>
+	        <th>卖家合同号</th>
+	        <th>卖家交易员</th>
+	        <th>品名</th>
+	        <th>规格</th>
+	        <th>材质</th>
+	        <th>厂家</th>
+	        <th>仓库</th>
+	        <th>销售价(元/吨)</th>
+	        <th>采购价(元/吨)</th>
+	        <th>件数</th>
+	        <th>重量(吨)</th>
+	        <th>销售金额(元)</th>
+	        <th>采购金额(元)</th>
+	        <th>实提重量(吨)</th>
+	        <th>销售实提金额(元)</th>
+	        <th>采购实提金额(元)</th>
+	        <th>买家折扣金额(元)</th>
+	        <th>卖家折扣金额(元)</th>
+	        <th>销售结算金额(元)</th>
+	        <th>采购结算金额(元)</th>
+	        <th>毛利(元)</th>
+	        <th>银票支付</th>
+	        <th>结算时间</th>
+	        <th>开票时间</th>
+            <th>融资订单</th>
+        </thead>
+    </table>
+</div>
+<script src="$link.getContextPath()/js/views/report/business/businesscommon.js"></script>
+<script src="$link.getContextPath()/js/views/report/business/orderdetails.js"></script>
+<script src="$link.getContextPath()/js/views/user/userorg.js"></script>
+<script src="$link.getContextPath()/js/views/account/searchaccount.js"></script>
+
+
+
+

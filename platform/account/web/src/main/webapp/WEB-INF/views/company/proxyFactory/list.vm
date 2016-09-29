@@ -1,0 +1,109 @@
+#set($account=$accountdto.account)
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            客户管理
+        </li>
+        <li>
+            <a href="$link.getContextPath()/company/list.html">我的客户</a>
+        </li>
+        <li>
+            <a href="$link.getContextPath()/accountinfo/$!{account.id}/accountinfo.html">$!{account.name}</a>
+        </li>
+        <li class="active">
+            代理钢厂
+        </li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+	#parse("layout/topbtn.vm")
+    <!-- /.nav-search -->
+
+</div>
+<div class="page-content">
+#parse("baseinfo.vm")
+<div class="tableTwo" style="margin-top: 10px">
+	<form id="editFactoryDtoFrom">
+	    <table id="factoryInfoTable" class="contable">
+	        <tbody>
+	        	<thead id="appendFlag">
+	    			<tr>
+	        			<th>代理钢厂</th>
+	        			<th>经营品种</th>
+	        			<th>代理资质</th>
+	        			<th>代理量(吨)</th>
+	        			<th>常备库存(吨)</th>
+	        			<th>操作</th>
+	    			</tr>
+	    		</thead>
+	        #foreach($proxyFactory in $proxyFactoryList)
+		        <tr id="tr_$proxyFactory.id">
+		            <td>$!proxyFactory.factory</td>
+		            <td>$!proxyFactory.nsortName</td>
+		            <td>$!proxyFactory.qualification</td>
+		            <td quantityUnit=$!proxyFactory.quantityUnit quantity=$!proxyFactory.quantity>$!proxyFactory.quantityUnit $!proxyFactory.quantity</td>
+		            <td>$!proxyFactory.stock</td>
+		            <td>
+		                <a href="javascript:void(0)" onclick="doEdit($proxyFactory.id)">编辑</a>
+		                <a href="javascript:void(0)" onclick="doDelete($proxyFactory.id)">删除</a>
+		            </td>
+		        </tr>
+	        #end
+	        </tbody>
+	    </table>
+	</form>
+	<input id="addBtn" type="button" onclick="doAdd()" value="+添加" style="margin-top: 10px"/>
+</div>
+<div id="addFactoryInfoDiv" class="tableTwo" style=" display: none;">
+    <form id="addFactoryDtoFrom" modelAttribute="proxyFactory" method="post">
+		<table id="tab-width">
+	        <tbody>
+		       	<input type="hidden" name="accountId" value="${accountdto.account.id}">
+		        <tr id="AddTr" class="row">
+		            <td><span class="xo">代理钢厂：</span></td>
+		            <td><input id="factory" name="factory" type="text" class="c-text" must="1"/></td>
+		            <td><span class="xo">经营品种：</span></td>
+		            <td><input type="text" id="nsortName" name="nsortName" search="nsort" readonly="readonly" must="1" class="v-text"/>
+		            </td>
+		            <td>&nbsp;&nbsp;<span class="xo">代理资质：</span></td>
+		            <td>
+		                <label>
+		                    <select id="qualification" name="qualification" class="select-middlehalf">
+		                        <option value="一级代理">一级代理</option>
+		                        <option value="二级代理">二级代理</option>
+		                        <option value="三级代理">三级代理</option>
+		                        <option value="其他">其他</option>
+		                    </select>
+		                </label>
+		            </td>
+		            <td>&nbsp;&nbsp;<span class="xo">代理量：</span></td>
+		            <td>
+		                <select id="quantityUnit" name="quantityUnit">
+		                    <option value="一年">一年</option>
+		                    <option value="一月">一月</option>              
+		                </select>
+		                <input type="text" id="quantity" name="quantity" must="1" verify="weight" class="d-text"/>&nbsp吨
+		            </td>
+		            <td>&nbsp;&nbsp;<span class="xo">常备库存：</span></td>
+		            <td><input type="text" id="stock" name="stock" must="1" verify="weight" class="v-text"/>&nbsp;吨
+		            </td>
+		         	<td>
+		                <input type="button" onclick="doAddSave(-1)" value="确定"/>
+		                <input type="button" onclick="doCancel()" value="取消" />
+		            </td>
+		        </tr>
+	        </tbody>
+    	</table>
+    </form>
+</div>
+
+<script src="$link.getContextPath()/js/views/company/proxyFactory/list.js"></script>
+<script src="$link.getContextPath()/js/views/common/searchnsort.js"></script>

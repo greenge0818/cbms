@@ -1,0 +1,190 @@
+#set($layout="/sys/default.vm")
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li><i class="ace-icon fa fa-home home-icon"></i>系统管理</li>
+        <li>系统设置</li>
+        <li class="active">提成设置</li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+	#parse("layout/topbtn.vm")
+    <!-- /.nav-search -->
+</div>
+
+
+<div class="page-content">
+
+    <div class="row">
+        <div class="col-xs-12">
+            <!--TAPBAR-->
+			#parse("sys/systemmenu.vm")
+            <!-- PAGE CONTENT BEGINS -->
+
+            <div class="row">
+                <div class="col-xs-12">
+
+                    <!-- div.dataTables_borderWrap -->
+                    <div class="table-bar" id="first-table">
+                        <form method="post" id="savaReward" action="$link.getContextPath()/reward/saveReward.html">
+                            <div class="recordbar  text-left col-xs-12">
+                                <span class="bolder">佣金标准设置</span>
+                            </div>
+                            <div class="print-finfo">
+                                <label>佣金标准：<input type="text" value="$!commissionStandard.rewardRole" class="d-text" name="commissionStandard"/>&nbsp;元/吨</label>
+                            </div>
+                            <table id="" class="contable border0" style="width: 400px">
+                                <thead>
+                                <div class="recordbar  text-left col-xs-12">
+                                    <span class="bolder">提成比例设置</span>
+                                </div>
+                                </thead>
+                                <tbody class="text-center">
+                                <tr>
+                                    <td class="border0"></td>
+                                    <td class="border0" colspan="2">本服务中心交易单</td>
+                                    <td class="border0" colspan="2">跨服务中心交易单</td>
+                                </tr>
+                                <tr>
+                                    <td class="border0"></td>
+                                    <td class="border0">临采卖家</td>
+                                    <td class="border0">品牌店卖家</td>
+                                    <td class="border0">临采卖家</td>
+                                    <td class="border0">品牌家卖家</td>
+                                </tr>
+                                <tr>
+                                    <td class="border0">买家提成：</td>
+                                    <td class="border0"><input type="text" name="buyer_temp_local_reward" must="1" verify="numeric" class="d-text" value="$!reward_rate.buyer_temp_local_reward[0]">%</td>
+                                    <td class="border0"><input type="text" name="buyer_consign_local_reward" must="1" verify="numeric" class="d-text" value="$!reward_rate.buyer_consign_local_reward[0]">%</td>
+                                    <td class="border0"><input type="text" name="buyer_temp_range_reward" must="1" verify="numeric" class="d-text" value="$!reward_rate.buyer_temp_range_reward[0]">%</td>
+                                    <td class="border0"><input type="text" name="buyer_consign_range_reward" must="1" verify="numeric" class="d-text" value="$!reward_rate.buyer_consign_range_reward[0]">%</td>
+                                </tr>
+                                <tr>
+                                    <td class="border0">卖家提成：</td>
+                                    <td class="border0"><input type="text" name="seller_temp_local_reward" must="1" verify="numeric" class="d-text" value="$!reward_rate.seller_temp_local_reward[0]">%</td>
+                                    <td class="border0"><input type="text" name="seller_consign_local_reward" must="1" verify="numeric" class="d-text" value="$!reward_rate.seller_consign_local_reward[0]">%</td>
+                                    <td class="border0"><input type="text" name="seller_temp_range_reward" must="1" verify="numeric" class="d-text" value="$!reward_rate.seller_temp_range_reward[0]">%</td>
+                                    <td class="border0"><input type="text" name="seller_consign_range_reward" must="1" verify="numeric" class="d-text" value="$!reward_rate.seller_consign_range_reward[0]">%</td>
+                                </tr>
+                            </table>
+                            <table id="dynamic-table" class="contable border0" style="width: 400px">
+                                <thead>
+                                <div class="recordbar  text-left col-xs-12">
+                                    <span class="bolder">成交量提成设置</span>
+                                </div>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td class="border0">品类</td>
+                                    <td class="border0">品类系数</td>
+                                    <td class="border0">卖家月寄售量上限（吨）</td>
+                                </tr>
+									#foreach( $rewardDto in $reward)
+                                    <tr class="bolder-b-dashed">
+                                        <td>$rewardDto.categoryName</td>
+                                        <td><input type="text" name="rewardRole" value="$rewardDto.rewardRole"   must="1" verify="numeric" /></td>
+                                        <input type="hidden" name="cat_uuid" value="$rewardDto.categoryUuid"/>
+                                        <td><input type="text" name="sellerLimit" value="$rewardDto.sellerLimit" class="c-text" must="1" verify="numeric"  /></td>
+                                    </tr>
+									#end
+
+									#foreach( $group in $reward_init)
+                                    <tr class="bolder-b-dashed">
+                                        <td>$group.name</td>
+                                        <td><input type="text" name="rewardRole" value="0"   must="1" verify="numeric" /></td>
+                                        <input type="hidden" name="cat_uuid" value="$group.uuid"/>
+                                        <td><input type="text" name="sellerLimit" value="0" class="c-text" must="1" verify="numeric"  /></td>
+                                    </tr>
+									#end
+                                </tbody>
+                            </table>
+                    </div>
+                    <!--.recordbar-->
+                    <div class="recordbar  text-left col-xs-12">
+                        <span class="bolder">发展新客户提成设置</span>
+                    </div>
+                    <div class="print-finfo">
+                        <label>买家客户：<input type="text" value="$!reward_rate.new_buyer_reward[0]" class="d-text" name="new_buyer_reward"/>&nbsp;元</label>
+                        <label>卖家客户：<input type="text" value="$!reward_rate.new_seller_reward[0]" class="d-text" name="new_seller_reward"/>&nbsp;元</label>
+                    </div>
+
+                    <div class="recordbar  text-left col-xs-12">
+                        <span class="bolder">买家交易量系数设置</span>
+                        <td class="border0">买家累积采购量区间：</td>
+                        <td class="border0" id=""><select name="category_UUID">
+							#if($commissionStandard.categoryUuid=="0")
+                                <option value="0">按全部</option>
+                                <option value="1">按年</option>
+                                <option value="2">按月</option>
+							#end
+							#if($commissionStandard.categoryUuid=="1")
+                                <option value="1">按年</option>
+                                <option value="0">按全部</option>
+                                <option value="2">按月</option>
+							#end
+							#if($commissionStandard.categoryUuid=="2")
+                                <option value="2">按月</option>
+                                <option value="1">按年</option>
+                                <option value="0">按全部</option>
+							#end
+                        </select></td>
+                    </div>
+                    <table id="lineRatio" class=""  border="2"  style="width: 600px ">
+                        <tbody class="text-center">
+                        <tr>
+
+                            <th  colspan="2">单个买家累积采购量（吨）</th>
+                            <th  rowspan="2">买家采购量系数</th>
+                            <th  rowspan="2">操作</th>
+                        </tr>
+                        <tr>
+                            <th >最低值（不含）</th>
+                            <th >最高值（含）</th>
+                        </tr>
+							#foreach( $list in $reward_radio)
+                            <tr class="bolder-b-dashed lineRatio" id="">
+
+                                <td><input type="text" value="$!list.sellerLimit" class="c-text ratio-region" name="minLimit"/></td>
+                                <td><input type="text" value="$!list.rewardRole" class="c-text ratio-region" name="maxLimit"/></td>
+                                <td><input type="text" value="$!list.buyRadio" class="c-text" name="buyRadio"/></td>
+                                <td>&nbsp;&nbsp;<a class="delectRatio">删除</a></td>
+                            </tr>
+							#end
+
+
+                    </table><br>
+                    <a id="addRatio">+添加</a>
+
+                    <div class="recordbar  text-left col-xs-12">
+                        <span class="bolder">交易员差价利润百分比设置：</span>
+                    </div>
+                    <div class="print-finfo">
+                        <label>百分比：<input type="text" value="$!commissionStandard.buyRadio" class="d-text" name="buy_radio"/>%</label>
+                    </div>
+
+
+                    <div class="btn-bar">
+                        <button type="button" id="sure" class="btn btn-info btn-sm">确定</button>
+                        <span class="warning-info">确认提交后,下月1号00:00:00开始生效</span>
+                    </div>
+                    </form>
+                    <!--/.recordbar-->
+                </div>
+            </div>
+
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+<!-- /.page-content -->
+<script type="text/javascript" src="$link.getContextPath()/js/views/reward/reward.js"></script>
+<script type="text/javascript">
+    $("#savaReward").verifyForm();
+</script>

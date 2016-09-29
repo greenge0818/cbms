@@ -1,0 +1,730 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.smartmatch.persist.dao.ResourceBaseDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.smartmatch.model.model.ResourceBase" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="cust_resource_id" property="custResourceId" jdbcType="BIGINT" />
+    <result column="oper_type" property="operType" jdbcType="VARCHAR" />
+    <result column="account_id" property="accountId" jdbcType="BIGINT" />
+    <result column="account_name" property="accountName" jdbcType="VARCHAR" />
+    <result column="category_uuid" property="categoryUuid" jdbcType="VARCHAR" />
+    <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+    <result column="material_uuid" property="materialUuid" jdbcType="VARCHAR" />
+    <result column="material_name" property="materialName" jdbcType="VARCHAR" />
+    <result column="factory_id" property="factoryId" jdbcType="BIGINT" />
+    <result column="factory_name" property="factoryName" jdbcType="VARCHAR" />
+    <result column="weight" property="weight" jdbcType="DECIMAL" />
+    <result column="city_id" property="cityId" jdbcType="BIGINT" />
+    <result column="city_name" property="cityName" jdbcType="VARCHAR" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="BIGINT" />
+    <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+    <result column="weight_concept" property="weightConcept" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="quantity" property="quantity" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="is_exception" property="isException" jdbcType="VARCHAR" />
+    <result column="source_type" property="sourceType" jdbcType="VARCHAR" />
+    <result column="user_ids" property="userIds" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="mgt_last_updated" property="mgtLastUpdated" jdbcType="TIMESTAMP" />
+    <result column="mgt_last_updated_by" property="mgtLastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+    <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+    <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+    <result column="ext1" property="ext1" jdbcType="VARCHAR" />
+    <result column="ext2" property="ext2" jdbcType="VARCHAR" />
+    <result column="ext3" property="ext3" jdbcType="VARCHAR" />
+    <result column="ext4" property="ext4" jdbcType="INTEGER" />
+    <result column="ext5" property="ext5" jdbcType="INTEGER" />
+    <result column="ext6" property="ext6" jdbcType="INTEGER" />
+    <result column="ext7" property="ext7" jdbcType="TIMESTAMP" />
+    <result column="ext8" property="ext8" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, cust_resource_id, oper_type, account_id, account_name, category_uuid, category_name, material_uuid, material_name,
+    factory_id, factory_name, weight, city_id, city_name, warehouse_id, warehouse_name, weight_concept,
+    price, quantity, remark, status, is_exception, source_type, user_ids, created, created_by, 
+    last_updated, last_updated_by, mgt_last_updated, mgt_last_updated_by, modification_number, 
+    row_id, parent_row_id, ext1, ext2, ext3, ext4, ext5, ext6, ext7, ext8
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from cust_resource_base
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from cust_resource_base
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.prcsteel.platform.smartmatch.model.model.ResourceBase" >
+    insert into cust_resource_base (id, cust_resource_id, oper_type, 
+      account_id, account_name, category_uuid, category_name, material_uuid,
+      material_name, factory_id, factory_name, 
+      weight, city_id, city_name, warehouse_id,
+      warehouse_name, weight_concept, price, 
+      quantity, remark, status, 
+      is_exception, source_type, user_ids, 
+      created, created_by, last_updated, 
+      last_updated_by, mgt_last_updated, mgt_last_updated_by, 
+      modification_number, row_id, parent_row_id, 
+      ext1, ext2, ext3, ext4, 
+      ext5, ext6, ext7, 
+      ext8)
+    values (#{id,jdbcType=BIGINT}, #{custResourceId,jdbcType=BIGINT}, #{operType,jdbcType=VARCHAR}, 
+      #{accountId,jdbcType=BIGINT}, #{accountName,jdbcType=VARCHAR}, #{categoryUuid,jdbcType=VARCHAR}, #{categoryName,jdbcType=VARCHAR}, #{materialUuid,jdbcType=VARCHAR},
+      #{materialName,jdbcType=VARCHAR}, #{factoryId,jdbcType=BIGINT}, #{factoryName,jdbcType=VARCHAR}, 
+      #{weight,jdbcType=DECIMAL}, #{cityId,jdbcType=BIGINT}, #{cityName,jdbcType=VARCHAR}, #{warehouseId,jdbcType=BIGINT},
+      #{warehouseName,jdbcType=VARCHAR}, #{weightConcept,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
+      #{quantity,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{isException,jdbcType=VARCHAR}, #{sourceType,jdbcType=VARCHAR}, #{userIds,jdbcType=VARCHAR}, 
+      #{created,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, #{lastUpdated,jdbcType=TIMESTAMP}, 
+      #{lastUpdatedBy,jdbcType=VARCHAR}, #{mgtLastUpdated,jdbcType=TIMESTAMP}, #{mgtLastUpdatedBy,jdbcType=VARCHAR}, 
+      #{modificationNumber,jdbcType=INTEGER}, #{rowId,jdbcType=VARCHAR}, #{parentRowId,jdbcType=VARCHAR}, 
+      #{ext1,jdbcType=VARCHAR}, #{ext2,jdbcType=VARCHAR}, #{ext3,jdbcType=VARCHAR}, #{ext4,jdbcType=INTEGER}, 
+      #{ext5,jdbcType=INTEGER}, #{ext6,jdbcType=INTEGER}, #{ext7,jdbcType=TIMESTAMP}, 
+      #{ext8,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.smartmatch.model.model.ResourceBase"  useGeneratedKeys="true"
+          keyProperty="id">
+    insert into cust_resource_base
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="custResourceId != null" >
+        cust_resource_id,
+      </if>
+      <if test="operType != null" >
+        oper_type,
+      </if>
+      <if test="accountId != null" >
+        account_id,
+      </if>
+      <if test="accountName != null" >
+        account_name,
+      </if>
+      <if test="categoryUuid != null" >
+        category_uuid,
+      </if>
+      <if test="categoryName != null" >
+        category_name,
+      </if>
+      <if test="materialUuid != null" >
+        material_uuid,
+      </if>
+      <if test="materialName != null" >
+        material_name,
+      </if>
+      <if test="factoryId != null" >
+        factory_id,
+      </if>
+      <if test="factoryName != null" >
+        factory_name,
+      </if>
+      <if test="weight != null" >
+        weight,
+      </if>
+      <if test="cityId != null" >
+        city_id,
+      </if>
+      <if test="cityName != null" >
+        city_name,
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id,
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name,
+      </if>
+      <if test="weightConcept != null" >
+        weight_concept,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="quantity != null" >
+        quantity,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="isException != null" >
+        is_exception,
+      </if>
+      <if test="sourceType != null" >
+        source_type,
+      </if>
+      <if test="userIds != null" >
+        user_ids,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by,
+      </if>
+      <if test="mgtLastUpdated != null" >
+        mgt_last_updated,
+      </if>
+      <if test="mgtLastUpdatedBy != null" >
+        mgt_last_updated_by,
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number,
+      </if>
+      <if test="rowId != null" >
+        row_id,
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id,
+      </if>
+      <if test="ext1 != null" >
+        ext1,
+      </if>
+      <if test="ext2 != null" >
+        ext2,
+      </if>
+      <if test="ext3 != null" >
+        ext3,
+      </if>
+      <if test="ext4 != null" >
+        ext4,
+      </if>
+      <if test="ext5 != null" >
+        ext5,
+      </if>
+      <if test="ext6 != null" >
+        ext6,
+      </if>
+      <if test="ext7 != null" >
+        ext7,
+      </if>
+      <if test="ext8 != null" >
+        ext8,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="custResourceId != null" >
+        #{custResourceId,jdbcType=BIGINT},
+      </if>
+      <if test="operType != null" >
+        #{operType,jdbcType=VARCHAR},
+      </if>
+      <if test="accountId != null" >
+        #{accountId,jdbcType=BIGINT},
+      </if>
+      <if test="accountName != null" >
+        #{accountName,jdbcType=BIGINT},
+      </if>
+      <if test="categoryUuid != null" >
+        #{categoryUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryName != null" >
+        #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="materialUuid != null" >
+        #{materialUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="materialName != null" >
+        #{materialName,jdbcType=VARCHAR},
+      </if>
+      <if test="factoryId != null" >
+        #{factoryId,jdbcType=BIGINT},
+      </if>
+      <if test="factoryName != null" >
+        #{factoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null" >
+        #{weight,jdbcType=DECIMAL},
+      </if>
+      <if test="cityId != null" >
+        #{cityId,jdbcType=BIGINT},
+      </if>
+      <if test="cityName != null" >
+        #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseId != null" >
+        #{warehouseId,jdbcType=BIGINT},
+      </if>
+      <if test="warehouseName != null" >
+        #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="weightConcept != null" >
+        #{weightConcept,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="quantity != null" >
+        #{quantity,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="isException != null" >
+        #{isException,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceType != null" >
+        #{sourceType,jdbcType=VARCHAR},
+      </if>
+      <if test="userIds != null" >
+        #{userIds,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="mgtLastUpdated != null" >
+        #{mgtLastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mgtLastUpdatedBy != null" >
+        #{mgtLastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        #{parentRowId,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null" >
+        #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3 != null" >
+        #{ext3,jdbcType=VARCHAR},
+      </if>
+      <if test="ext4 != null" >
+        #{ext4,jdbcType=INTEGER},
+      </if>
+      <if test="ext5 != null" >
+        #{ext5,jdbcType=INTEGER},
+      </if>
+      <if test="ext6 != null" >
+        #{ext6,jdbcType=INTEGER},
+      </if>
+      <if test="ext7 != null" >
+        #{ext7,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ext8 != null" >
+        #{ext8,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.smartmatch.model.model.ResourceBase" >
+    update cust_resource_base
+    <set >
+      <if test="custResourceId != null" >
+        cust_resource_id = #{custResourceId,jdbcType=BIGINT},
+      </if>
+      <if test="operType != null" >
+        oper_type = #{operType,jdbcType=VARCHAR},
+      </if>
+      <if test="accountId != null" >
+        account_id = #{accountId,jdbcType=BIGINT},
+      </if>
+      <if test="accountName != null" >
+        account_name = #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryUuid != null" >
+        category_uuid = #{categoryUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryName != null" >
+        category_name = #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="materialUuid != null" >
+        material_uuid = #{materialUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="materialName != null" >
+        material_name = #{materialName,jdbcType=VARCHAR},
+      </if>
+      <if test="factoryId != null" >
+        factory_id = #{factoryId,jdbcType=BIGINT},
+      </if>
+      <if test="factoryName != null" >
+        factory_name = #{factoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null" >
+        weight = #{weight,jdbcType=DECIMAL},
+      </if>
+      <if test="cityId != null" >
+        city_id = #{cityId,jdbcType=BIGINT},
+      </if>
+      <if test="cityName != null" >
+        city_name = #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id = #{warehouseId,jdbcType=BIGINT},
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="weightConcept != null" >
+        weight_concept = #{weightConcept,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="quantity != null" >
+        quantity = #{quantity,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="isException != null" >
+        is_exception = #{isException,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceType != null" >
+        source_type = #{sourceType,jdbcType=VARCHAR},
+      </if>
+      <if test="userIds != null" >
+        user_ids = #{userIds,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="mgtLastUpdated != null" >
+        mgt_last_updated = #{mgtLastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mgtLastUpdatedBy != null" >
+        mgt_last_updated_by = #{mgtLastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number = #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        row_id = #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null" >
+        ext1 = #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        ext2 = #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3 != null" >
+        ext3 = #{ext3,jdbcType=VARCHAR},
+      </if>
+      <if test="ext4 != null" >
+        ext4 = #{ext4,jdbcType=INTEGER},
+      </if>
+      <if test="ext5 != null" >
+        ext5 = #{ext5,jdbcType=INTEGER},
+      </if>
+      <if test="ext6 != null" >
+        ext6 = #{ext6,jdbcType=INTEGER},
+      </if>
+      <if test="ext7 != null" >
+        ext7 = #{ext7,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ext8 != null" >
+        ext8 = #{ext8,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.smartmatch.model.model.ResourceBase" >
+    update cust_resource_base
+    set cust_resource_id = #{custResourceId,jdbcType=BIGINT},
+      oper_type = #{operType,jdbcType=VARCHAR},
+      account_id = #{accountId,jdbcType=BIGINT},
+      account_name = #{accountName,jdbcType=BIGINT},
+      category_uuid = #{categoryUuid,jdbcType=VARCHAR},
+      category_name = #{categoryName,jdbcType=VARCHAR},
+      material_uuid = #{materialUuid,jdbcType=VARCHAR},
+      material_name = #{materialName,jdbcType=VARCHAR},
+      factory_id = #{factoryId,jdbcType=BIGINT},
+      factory_name = #{factoryName,jdbcType=VARCHAR},
+      weight = #{weight,jdbcType=DECIMAL},
+      city_id = #{cityId,jdbcType=BIGINT},
+      city_name = #{cityName,jdbcType=VARCHAR},
+      warehouse_id = #{warehouseId,jdbcType=BIGINT},
+      warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      weight_concept = #{weightConcept,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      quantity = #{quantity,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      is_exception = #{isException,jdbcType=VARCHAR},
+      source_type = #{sourceType,jdbcType=VARCHAR},
+      user_ids = #{userIds,jdbcType=VARCHAR},
+      created = #{created,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      mgt_last_updated = #{mgtLastUpdated,jdbcType=TIMESTAMP},
+      mgt_last_updated_by = #{mgtLastUpdatedBy,jdbcType=VARCHAR},
+      modification_number = #{modificationNumber,jdbcType=INTEGER},
+      row_id = #{rowId,jdbcType=VARCHAR},
+      parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      ext1 = #{ext1,jdbcType=VARCHAR},
+      ext2 = #{ext2,jdbcType=VARCHAR},
+      ext3 = #{ext3,jdbcType=VARCHAR},
+      ext4 = #{ext4,jdbcType=INTEGER},
+      ext5 = #{ext5,jdbcType=INTEGER},
+      ext6 = #{ext6,jdbcType=INTEGER},
+      ext7 = #{ext7,jdbcType=TIMESTAMP},
+      ext8 = #{ext8,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  
+  
+  <!-- 基础资源查询resultDto -->
+  <resultMap id="ResourceBaseResultMap" type="com.prcsteel.platform.smartmatch.model.dto.ResourceBaseDto" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="accountId" property="accountId" jdbcType="BIGINT"/>
+    <result column="accountName" property="accountName" jdbcType="VARCHAR" />
+    <result column="categoryUuid" property="categoryUuid" jdbcType="VARCHAR" />
+    <result column="categoryName" property="categoryName" jdbcType="VARCHAR" />
+    <result column="materialUuid" property="materialUuid" jdbcType="VARCHAR" />
+    <result column="materialName" property="materialName" jdbcType="VARCHAR" />
+    <result column="spec" property="spec" jdbcType="VARCHAR" />
+    <result column="factoryId" property="factoryId" jdbcType="BIGINT"/>
+    <result column="factoryName" property="factoryName" jdbcType="VARCHAR" />
+
+    <result column="warehouseId" property="warehouseId" jdbcType="BIGINT"/>
+    <result column="warehouseName" property="warehouseName" jdbcType="VARCHAR" />
+    <result column="area" property="area" jdbcType="VARCHAR" />
+
+    <result column="weight" property="weight" jdbcType="DECIMAL" />
+    <result column="weightConpect" property="weightConpect" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="quantity" property="quantity" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="sourceType" property="sourceType" jdbcType="VARCHAR" />
+    <result column="userIds" property="userIds" jdbcType="VARCHAR" />
+    <result column="total" property="total" jdbcType="BIGINT" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="mgt_last_updated" property="mgtLastUpdated" jdbcType="TIMESTAMP" />
+    
+    <!-- add by caosulin 2016.6.2 增加3个前台显示的字段 -->
+    <result column="is_exception" property="isException" jdbcType="VARCHAR" />
+    <result column="cityName" property="cityName" jdbcType="VARCHAR" />
+    <result column="priceChange" property="priceChange" jdbcType="VARCHAR" />
+     <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+  </resultMap>
+  
+	<!--  基础资源列表查询，采用 SQL_CALC_FOUND_ROWS和FOUND_ROWS() 方式优化加载分页 -->
+  <select id="selectResourceBaseList" resultMap="ResourceBaseResultMap" parameterType="map">
+    SELECT SQL_CALC_FOUND_ROWS * FROM ( SELECT 
+    x.resid id,
+    x.account_name as accountName,
+    x.account_id as accountId,
+    x.category_name as categoryName,
+    x.category_uuid as categoryUuid,
+    ifnull(mat. NAME,x.material_name) materialName,
+    mat.uuid materialUuid,
+    IFNULL(x.spec,'') spec,
+    ifnull(fac. NAME, x.factory_name) factoryName,
+    fac.id factoryId,
+    x.quantity,
+    ifnull(concat(ifnull(city. NAME, '未设置'),'-',ware. NAME), x.warehouse_name) warehouseName,
+    ware.id warehouseId,
+    weight,
+    weight_concept weightConcept,
+    price,
+    x.remark remark,
+    x. STATUS statusNum,
+    x.mgt_last_updated,
+    x.last_updated,
+    x.is_exception,
+    city.name cityName,
+    '-' as priceChange,
+    x.last_updated_by,
+    x.source_type sourceType,
+    x.source_type,
+    NULL AS TOTAL
+    FROM
+    (
+    SELECT
+    y.*
+    FROM
+    (
+    SELECT
+    res.id resid,
+    res.account_id,
+    res.account_name,
+    res.category_uuid,
+    res.category_name,
+    res.material_uuid,
+    res.material_name,
+    res.warehouse_id,
+    res.warehouse_name,
+    res.factory_id,
+    res.factory_name,
+    res.quantity,
+    res.weight,
+    res.weight_concept,
+    res.price,
+    res.remark,
+    res.user_ids,
+    res.status,
+    res.last_updated_by,
+    res.last_updated,
+    res.mgt_last_updated,
+    res.source_type,
+    res.is_exception,
+    res.created,
+    group_concat(norm. VALUE  order by norm.priority SEPARATOR '*') spec
+    FROM
+    cust_resource_base res
+    LEFT JOIN cust_resource_norms_base norm ON res.id = norm.resource_id
+    GROUP BY
+    res.id 
+    ) y
+    <where>
+        <if test="spec != null and spec != ''">
+          and y.spec LIKE '%' #{spec} '%'
+        </if>
+	   <!--  
+	 
+	   source_type:
+	  	 INQUIRY("inquiry","询价資源"),//询价;
+		 DAILY_COMMON("daily_common","日常资源"),
+	     HISTORY_TRANSACTION("history_transaction", "历史成交资源")
+	   status :
+	   	 APPROVED("approved", "审核通过"), 
+		 DECLINED("declined", "审核未通过");
+	   --> 
+	    	<!--0: 待审核 1：日常资源 2：询价资源 3：历史成交	 4：异常资源 5：缺失资源  空是全部资源 -->
+	   	<if test="sourceType != null and sourceType !=''">
+	   	   and y.source_type =#{sourceType}
+	    </if>
+        
+	    
+    </where>
+    ) x
+    LEFT JOIN common_materials mat ON x.material_uuid = mat.uuid
+    LEFT JOIN base_factory fac ON x.factory_id = fac.id
+    LEFT JOIN base_warehouse ware ON x.warehouse_id = ware.id
+    LEFT JOIN base_city city ON city.id = ware.city_id
+    LEFT JOIN acl_user user ON x.last_updated_by = user.login_id
+    <where>
+      <if test="orgId != null and orgId > 0">
+      	and user.org_id = #{orgId}
+      </if>  
+      <if test="accountName != null and accountName != ''">
+        and x.account_name LIKE '%' #{accountName} '%'
+      </if>
+      <if test="warehouseName != null and warehouseName != ''">
+        and (concat(city.name,'-',ware.name) LIKE '%' #{warehouseName} '%'  or x.warehouse_name LIKE '%' #{warehouseName} '%' )
+      </if>
+      <if test="lastUpdatedBy != null and lastUpdatedBy != ''">
+        and user.name LIKE '%' #{lastUpdatedBy} '%'
+      </if>
+      <if test="categoryName != null and categoryName != ''">
+        and x.category_name LIKE '%' #{categoryName} '%'
+      </if>
+      <if test="materialName != null and materialName != ''">
+        and mat.name LIKE '%' #{materialName} '%'
+      </if>
+      <if test="factoryName != null and factoryName != ''">
+        and (fac.name LIKE '%' #{factoryName} '%' or x.factory_name LIKE '%' #{factoryName} '%')
+      </if>
+      <if test="area != null and area != ''">
+        and city.name LIKE '%' #{area} '%'
+      </if> 
+    
+      	<if test="upStart !=null and upStart !=''">
+      		<![CDATA[ AND DATE_FORMAT(x.mgt_last_updated,'%Y-%m-%d %H:%i')>= #{upStart} ]]>
+      	</if>
+      	<if test="upEnd !=null and upEnd !=''">
+      		<![CDATA[ AND DATE_FORMAT(x.mgt_last_updated,'%Y-%m-%d %H:%i')<= #{upEnd}  ]]>
+      	</if>
+   
+    </where>
+   	order by mgt_last_updated desc ,last_updated desc
+   
+    ) t
+    limit
+    #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }  
+     UNION 
+    SELECT NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,FOUND_ROWS() TOTAL
+  </select>
+  
+  
+  <!-- 批量插入 -->
+  <insert id="batchInsertResourceBase" useGeneratedKeys="true" parameterType="java.util.List">
+	<selectKey resultType="long" keyProperty="id" order="AFTER">
+		SELECT
+		LAST_INSERT_ID()
+	</selectKey>
+	insert into cust_resource_base (id, cust_resource_id, oper_type, 
+      account_id, account_name, category_uuid, category_name, material_uuid,
+      material_name, factory_id, factory_name, 
+      weight, city_id, city_name, warehouse_id,
+      warehouse_name, weight_concept, price, 
+      quantity, remark, status, 
+      is_exception, source_type, user_ids, 
+      created, created_by, last_updated, 
+      last_updated_by, mgt_last_updated, mgt_last_updated_by, 
+      modification_number, row_id, parent_row_id, 
+      ext1, ext2, ext3, ext4, 
+      ext5, ext6, ext7, 
+      ext8)
+	values
+	<foreach collection="baseList" item="item" index="index" separator="," >
+	(#{item.id,jdbcType=BIGINT}, #{item.custResourceId,jdbcType=BIGINT}, #{item.operType,jdbcType=VARCHAR}, 
+      #{item.accountId,jdbcType=BIGINT}, #{item.accountName,jdbcType=VARCHAR}, #{item.categoryUuid,jdbcType=VARCHAR}, #{item.categoryName,jdbcType=VARCHAR}, #{item.materialUuid,jdbcType=VARCHAR},
+      #{item.materialName,jdbcType=VARCHAR}, #{item.factoryId,jdbcType=BIGINT}, #{item.factoryName,jdbcType=VARCHAR}, 
+      #{item.weight,jdbcType=DECIMAL}, #{item.cityId,jdbcType=BIGINT}, #{item.cityName,jdbcType=VARCHAR}, #{item.warehouseId,jdbcType=BIGINT},
+      #{item.warehouseName,jdbcType=VARCHAR}, #{item.weightConcept,jdbcType=VARCHAR}, #{item.price,jdbcType=DECIMAL}, 
+      #{item.quantity,jdbcType=INTEGER}, #{item.remark,jdbcType=VARCHAR}, #{item.status,jdbcType=VARCHAR}, 
+      #{item.isException,jdbcType=VARCHAR}, #{item.sourceType,jdbcType=VARCHAR}, #{item.userIds,jdbcType=VARCHAR}, 
+      #{item.created,jdbcType=TIMESTAMP}, #{item.createdBy,jdbcType=VARCHAR}, #{item.lastUpdated,jdbcType=TIMESTAMP}, 
+      #{item.lastUpdatedBy,jdbcType=VARCHAR}, #{item.mgtLastUpdated,jdbcType=TIMESTAMP}, #{item.mgtLastUpdatedBy,jdbcType=VARCHAR}, 
+      #{item.modificationNumber,jdbcType=INTEGER}, #{item.rowId,jdbcType=VARCHAR}, #{item.parentRowId,jdbcType=VARCHAR}, 
+      #{item.ext1,jdbcType=VARCHAR}, #{item.ext2,jdbcType=VARCHAR}, #{item.ext3,jdbcType=VARCHAR}, #{item.ext4,jdbcType=INTEGER}, 
+      #{item.ext5,jdbcType=INTEGER}, #{item.ext6,jdbcType=INTEGER}, #{item.ext7,jdbcType=TIMESTAMP}, 
+      #{item.ext8,jdbcType=BIGINT})
+	</foreach>
+</insert>
+</mapper>

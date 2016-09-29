@@ -1,0 +1,37 @@
+<!--TAPBAR-->
+<div class="tabbar">
+    <ul class="nav nav-tabs tab-color-blue" id="myTab4">
+        #if($shiro.hasPermission("kuandao:refund:index:page"))
+            <li
+                #if(${tab} == 'index')
+                        class="active"
+                #end>
+                <a
+                    #if(${tab} == 'index')
+                            href="javascript:;"
+                    #else
+                            href="$link.getContextPath()/kuandao/refund/index.html"
+                    #end>汇入流水查询</a>
+
+            </li>
+        #end
+        #if($shiro.hasPermission("kuandao:refund:hadRefund:page"))
+            <li
+                #if(${tab} == 'hadRefund')
+                        class="active"
+                #end>
+                <a
+                    #if(${tab} == 'hadRefund')
+                            href="javascript:;"
+                    #else
+                            href="$link.getContextPath()/kuandao/refund/hadRefund.html"
+                    #end
+                        >已退款退货
+                </a>
+            </li>
+        #end
+
+    </ul>
+</div>
+#* tab,用于订单详情的面包屑 *#
+<input type="hidden" id="pageTab" value="${tab}"/>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.smartmatch.persist.dao.AbnormalTradingDetailDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.smartmatch.model.model.AbnormalTradingDetail" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="report_resource_inventory_id" property="reportResourceInventoryId" jdbcType="BIGINT" />
+    <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+    <result column="material_name" property="materialName" jdbcType="VARCHAR" />
+    <result column="spec" property="spec" jdbcType="VARCHAR" />
+    <result column="factory" property="factory" jdbcType="VARCHAR" />
+    <result column="warehouse" property="warehouse" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="seller_name" property="sellerName" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, report_resource_inventory_id, category_name, material_name, spec, factory, warehouse,
+    price, seller_name, created, created_by
+  </sql>
+  <select id="queryListByReportResourceInventory" resultMap="BaseResultMap" parameterType="com.prcsteel.platform.smartmatch.model.model.AbnormalTradingDetail" >
+    select
+    <include refid="Base_Column_List" />
+    from busi_abnormal_trading_detail
+    <where>
+      <if test="reportResourceInventoryId != null and reportResourceInventoryId != ''">
+        report_resource_inventory_id = #{reportResourceInventoryId}
+      </if>
+      <if test="sellerName != null and sellerName!= ''">
+        and seller_name LIKE '%' #{sellerName} '%'
+      </if>
+      <if test="factory != null and factory != ''">
+        and factory LIKE '%' #{factory} '%'
+      </if>
+      <if test="warehouse != null and warehouse != ''">
+        and warehouse LIKE '%' #{warehouse} '%'
+      </if>
+    </where>
+  </select>
+
+  <insert id="batchInsert" parameterType="java.util.List">
+    INSERT INTO busi_abnormal_trading_detail(
+    report_resource_inventory_id,category_name,material_name,spec,factory,warehouse,price,seller_name,created,created_by
+    )
+    VALUES
+    <foreach collection="list" item="item" index="index" separator=",">
+      (
+        #{item.reportResourceInventoryId},#{item.categoryName},
+        #{item.materialName},#{item.spec},#{item.factory},#{item.warehouse},
+        #{item.price},#{item.sellerName},NOW(),'system'
+      )
+    </foreach>
+  </insert>
+</mapper>

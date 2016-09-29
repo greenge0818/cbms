@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.prcsteel.platform.acl.persist.dao.SecurityUserDao">
+
+    <resultMap id="baseResultMap" type="com.prcsteel.platform.acl.model.model.SecurityUser">
+        <result property="id" column="id" />
+        <result property="username" column="username" />
+        <result property="password" column="password" />
+        <result property="locked" column="locked" />
+        <result property="roleId" column="role_id" />
+    </resultMap>
+
+    <select id="queryByUserName" parameterType="String" resultType="com.prcsteel.platform.acl.model.model.SecurityUser">
+        SELECT id, username, password, locked, role_id
+        FROM security_user
+        WHERE username=#{username}
+    </select>
+
+</mapper>

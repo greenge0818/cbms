@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.account.persist.dao.GlobalIdDao" >
+
+  <insert id="addGlobalId" parameterType="com.prcsteel.platform.account.model.model.GlobalId" >
+    INSERT INTO base_global_id 
+    	(module_name,current_id,remark)
+    VALUES
+    	(#{moduleName},#{currentId},#{remark})
+  </insert>
+  
+  <select id="selectByModuleName" resultType="com.prcsteel.platform.account.model.model.GlobalId" parameterType="java.lang.String" >
+    SELECT 
+   		module_name moduleName,
+   		current_id currentId,
+   		remark remark
+    FROM 
+    	base_global_id
+    WHERE 
+    	module_name = #{moduleName}
+  </select>
+  
+  <select id="selectAll" resultType="com.prcsteel.platform.account.model.model.GlobalId">
+    SELECT 
+   		module_name moduleName,
+   		current_id currentId,
+   		remark remark
+    FROM 
+    	base_global_id
+  </select>
+
+  <update id="setCurrentId" parameterType="com.prcsteel.platform.account.model.dto.GlobalIdModifier">
+	UPDATE 
+		base_global_id
+    SET 
+    	current_id = #{newId}
+	WHERE
+		module_name = #{moduleName} AND
+		current_id = #{currentId}
+  </update >
+  
+</mapper>

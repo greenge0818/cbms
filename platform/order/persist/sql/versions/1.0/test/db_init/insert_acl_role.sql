@@ -1,0 +1,17 @@
+INSERT INTO `acl_role` VALUES ('1', 'CEO', 'CEO', '0', '0', '2015-07-14 16:19:51', 'admin', '2015-07-27 13:55:23', 'cbadmin', '1', null, null, '1');
+INSERT INTO `acl_role` VALUES ('10', 'COO', 'COO', '1', '0', '2015-07-27 13:54:44', 'cbadmin', '2015-07-27 13:55:36', 'cbadmin', '1', null, null, '1');
+INSERT INTO `acl_role` VALUES ('11', 'CFO', 'CFO', '1', '0', '2015-07-27 13:55:50', 'cbadmin', '2015-07-27 13:55:50', 'cbadmin', '0', null, null, '1');
+INSERT INTO `acl_role` VALUES ('12', '杭州办事处总经理', '杭州办事处总经理', '10', '0', '2015-07-27 13:56:15', 'cbadmin', '2015-07-30 10:22:18', 'cbadmin', '2', null, null, '1');
+INSERT INTO `acl_role` VALUES ('13', '杭州交易员', '杭州交易员', '12', '0', '2015-07-27 13:56:29', 'cbadmin', '2015-07-27 13:56:29', 'cbadmin', '0', null, null, '1');
+INSERT INTO `acl_role` VALUES ('14', '杭州内勤', '杭州内勤', '12', '0', '2015-07-27 13:56:42', 'cbadmin', '2015-07-27 13:56:42', 'cbadmin', '0', null, null, '1');
+INSERT INTO `acl_role` VALUES ('15', '无锡办事处总经理', '无锡办事处总经理', '10', '0', '2015-07-27 13:57:16', 'cbadmin', '2015-07-27 13:57:16', 'cbadmin', '0', null, null, '1');
+INSERT INTO `acl_role` VALUES ('16', '无锡交易员', '无锡交易员', '15', '0', '2015-07-27 13:57:53', 'cbadmin', '2015-07-27 13:57:53', 'cbadmin', '0', null, null, '1');
+INSERT INTO `acl_role` VALUES ('17', '无锡内勤', '无锡内勤', '15', '0', '2015-07-27 13:58:01', 'cbadmin', '2015-07-27 13:58:01', 'cbadmin', '0', null, null, '1');
+INSERT INTO `acl_role` VALUES ('18', '核算会计', '核算会计', '11', '0', '2015-07-27 14:07:25', 'cbadmin', '2015-07-27 14:07:25', 'cbadmin', '0', null, null, '1');
+INSERT INTO `acl_role` VALUES ('19', '出纳', '出纳', '11', '0', '2015-07-27 14:09:31', 'cbadmin', '2015-07-27 14:09:31', 'cbadmin', '0', null, null, '1');
+INSERT INTO `acl_role` VALUES ('20', '开票专员', '开票专员', '11', '0', '2015-07-27 14:09:39', 'cbadmin', '2015-07-27 16:43:14', 'cbadmin', '1', null, null, '0');
+INSERT INTO `acl_role` VALUES ('21', '长沙办事处总经理', '长沙办事处总经理', '10', '0', '2015-07-27 14:13:12', 'cbadmin', '2015-07-27 14:13:12', 'cbadmin', '0', null, null, '1');
+INSERT INTO `acl_role` VALUES ('22', '长沙交易员', '长沙交易员', '21', '0', '2015-07-28 16:13:08', 'cbadmin', '2015-07-28 16:13:08', 'cbadmin', '0', null, null, '1');
+INSERT INTO `acl_role` VALUES ('23', '长沙内勤', '长沙内勤', '21', '0', '2015-07-28 16:13:19', 'cbadmin', '2015-07-28 16:13:19', 'cbadmin', '0', null, null, '1');
+INSERT INTO `acl_role` VALUES ('24', '1112', '1112', '12', '0', '2015-07-31 10:13:34', 'zhanglong', '2015-07-31 10:13:49', 'zhanglong', '2', null, null, '0');
+INSERT INTO `acl_role` VALUES ('25', '1', '1', '24', '0', '2015-07-31 10:13:44', 'zhanglong', '2015-07-31 10:13:49', 'zhanglong', '1', null, null, '0');

@@ -1,0 +1,39 @@
+<div class="breadcrumbs" id="breadcrumbs">
+			<script type="text/javascript">
+				try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+			</script>
+
+			<ul class="breadcrumb">
+				<li>
+					<i class="ace-icon fa fa-home home-icon"></i>
+					系统管理
+				</li>
+				<li><a href="$link.getContextPath()/sys/userorg/index.html">业务节点设置</a></li>
+				<li class="active">新增用户管理的服务中心</li>
+			</ul><!-- /.breadcrumb -->
+        #parse("layout/topbtn.vm")<!-- /.nav-search -->
+		</div>
+
+<div class="page-content">
+        用户：<input placeholder="请选择服务中心" must="1" id="sorganization" type="text"
+			class="ipt-text" readonly="" value=""
+           onclick="showMenu(this);" style="width: 200px"/>
+	<select id="userIds"></select>
+	<form id="form1" action="$link.getContextPath()/sys/busiprocess/save.html" method="POST">
+		<input type="hidden" name="userId" id="userId" value=""/>
+		<div id="checklist">
+			#foreach($org in $orgList)
+                <span style="white-space:nowrap"><input name="orgIds" type="checkbox" value="$!{org.id}"/>$!{org.name}</span>
+			#end
+		</div>
+		<div class="clearfix">
+            <div class="pull-left">
+                <button class="btn btn-primary" id="saveInfoBtn" type="button">保存</button>
+            </div>
+        </div>
+	</form>
+</div><!-- /.page-content -->
+<div id="menuContent" class="menuContent" style="display:none; position: absolute;">
+    <ul id="tree" class="ztree" style="margin-top:0; width:160px;"></ul>
+</div>
+<script src="$link.getContextPath()/js/views/sys/userorg/userSelector.js"></script>

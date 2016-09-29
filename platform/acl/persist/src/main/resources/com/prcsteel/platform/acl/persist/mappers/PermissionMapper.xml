@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.acl.persist.dao.PermissionDao">
+    <resultMap id="BaseResultMap" type="com.prcsteel.platform.acl.model.model.Permission">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="url" property="url" jdbcType="VARCHAR"/>
+        <result column="parent_id" property="parentId" jdbcType="BIGINT"/>
+        <result column="created" property="created" jdbcType="TIMESTAMP"/>
+        <result column="created_by" property="createdBy" jdbcType="VARCHAR"/>
+        <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP"/>
+        <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR"/>
+        <result column="modification_number" property="modificationNumber" jdbcType="INTEGER"/>
+        <result column="row_id" property="rowId" jdbcType="VARCHAR"/>
+        <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, name, code, url, parent_id, created, created_by, last_updated, last_updated_by, modification_number,
+        row_id, parent_row_id
+    </sql>
+
+    <select id="queryByParentId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from acl_permission
+        where parent_id = #{parentId,jdbcType=BIGINT}
+    </select>
+
+    <select id="queryById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from acl_permission
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <sql id="Permission_Column_List">
+        ap.id, ap.name, ap.code, ap.url, ap.parent_id, ap.created, ap.created_by,
+        ap.last_updated, ap.last_updated_by, ap.modification_number,
+        ap.row_id, ap.parent_row_id
+    </sql>
+
+    <select id="queryByUserIdAndType" resultMap="BaseResultMap" parameterType="map">
+        SELECT
+        <include refid="Permission_Column_List"/>
+        FROM acl_permission ap
+        WHERE ap.id IN (SELECT aup.permission_id FROM acl_user_permission aup WHERE aup.user_id = #{userId} AND aup.type = #{type})
+    </select>
+
+    <select id="queryByRoleId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        SELECT
+        <include refid="Permission_Column_List"/>
+        FROM acl_role_permission arp
+        INNER JOIN acl_permission ap ON ap.id = arp.permission_id
+        WHERE arp.role_id = #{roleId,jdbcType=BIGINT}
+    </select>
+
+    <resultMap id="minResultMap" type="com.prcsteel.platform.acl.model.model.Permission">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="url" property="url" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Min_Permission_Column_List">
+        ap.id, ap.code, ap.url
+    </sql>
+
+    <select id="queryAll" resultMap="minResultMap">
+        SELECT
+        <include refid="Min_Permission_Column_List"/>
+        FROM acl_permission ap
+    </select>
+
+    <select id="query" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from acl_permission
+    </select>
+
+    <insert id="insert" parameterType="com.prcsteel.platform.acl.model.model.Permission" >
+        INSERT INTO acl_permission (name,code,url,parent_id,created,created_by,last_updated,last_updated_by,modification_number)
+        VALUES (#{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR},  #{url,jdbcType=VARCHAR}, #{parentId,jdbcType=BIGINT},
+        NOW(), #{createdBy,jdbcType=VARCHAR}, NOW(), #{lastUpdatedBy,jdbcType=VARCHAR}, 0)
+    </insert>
+
+    <update id="update" parameterType="com.prcsteel.platform.acl.model.model.Permission" >
+        UPDATE acl_permission
+        SET name = #{name,jdbcType=VARCHAR},
+        code = #{code,jdbcType=VARCHAR},
+        url = #{url,jdbcType=VARCHAR}
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        DELETE FROM acl_permission
+        WHERE id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByParentId" parameterType="java.lang.Long">
+        DELETE FROM acl_permission
+        WHERE parent_id = #{parentId,jdbcType=BIGINT}
+    </delete>
+
+    <select id="queryByCodeAndUrl" resultMap="BaseResultMap" parameterType="map">
+        SELECT
+        <include refid="Permission_Column_List"/>
+        FROM acl_permission ap
+        WHERE 1=1
+        <if test="code != null and code !=''" >
+            AND code = #{code, jdbcType=VARCHAR}
+        </if>
+        <if test="url != null and url !=''" >
+            AND url = #{url, jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <select id="queryPermissionByUserId" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Permission_Column_List"/>
+        FROM acl_permission ap
+        INNER JOIN (
+        SELECT u.id AS user_id,
+        rp.permission_id
+        FROM acl_role_permission rp
+        INNER JOIN acl_user u ON rp.role_id = u.role_id
+        WHERE u.id = #{userId}
+        UNION
+        SELECT user_id,
+        permission_id
+        FROM acl_user_permission
+        WHERE type = '1'
+        AND user_id = #{userId}
+        ) t ON ap.id = t.permission_id
+        WHERE t.user_id = #{userId}
+    </select>
+
+    <select id="queryParentPermissionByRoleId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        SELECT
+        <include refid="Permission_Column_List"/>
+        FROM acl_role_permission arp
+        INNER JOIN acl_permission ap ON ap.id = arp.permission_id
+        WHERE arp.role_id = #{roleId,jdbcType=BIGINT} and ap.parent_id = 0
+    </select>
+</mapper>

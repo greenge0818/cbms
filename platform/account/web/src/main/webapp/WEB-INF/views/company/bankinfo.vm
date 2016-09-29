@@ -1,0 +1,142 @@
+#set($account=$accountdto.account)
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            客户管理
+        </li>
+        <li>
+            <i class="ace-icon"></i>
+            <a href="$link.getContextPath()/company/list.html">我的客户</a>
+        </li>
+        <li>
+            <i class="ace-icon"></i>
+            <a href="$link.getContextPath()/accountinfo/$!{account.id}/accountinfo.html">$!{account.name}</a>
+        </li>
+        <li class="active">银行信息
+        </li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+     #parse("layout/topbtn.vm")<!-- /.nav-search -->
+</div>
+
+<div class="page-content">
+    #parse("baseinfo.vm")
+
+    <!--弹框  S-->
+    <div id="tanktianjia" style="display: none;">
+        <form action="$link.getContextPath()/company/savebankinfo.html" method="POST" enctype="multipart/form-data"
+              id="bankForm">
+        <input type="hidden" id="bankId"/>
+        <div class="row tank topbottom10">
+            <div class="col-sm-4 height-b27">
+                <span class="xo">开户行：</span>
+            </div>
+            <div class="col-sm-8">
+                <input type="text" class="z-text" id="bankName" must="1"/>
+            </div>
+        </div>
+        <div class="row tank topbottom10">
+            <div class="col-sm-4 height-b27">
+                <span class="xo">支行：</span>
+            </div>
+            <div class="col-sm-8">
+                <input type="text" class="z-text" id="bankNameBranch" must="1"/>
+            </div>
+        </div>
+        <div class="row tank topbottom10">
+            <div class="col-sm-4 height-b27">
+                <span class="xo">开户银行所在城市：</span>
+            </div>
+            <div class="col-sm-8">
+                <select class="select-middlehalf" id="bankProvinceId" must="1">
+                    <option>请选择</option>
+                </select>
+                <select class="select-middlehalf" id="bankCityId" must="1">
+                </select>
+            </div>
+        </div>
+        <div class="row tank topbottom10">
+            <div class="col-sm-4 height-b27">
+                <span class="xo">行号：</span>
+            </div>
+            <div class="col-sm-8">
+                <input type="text" class="z-text" id="bankCode"/>
+            </div>
+        </div>
+        <div class="row tank topbottom10">
+            <div class="col-sm-4 height-b27">
+                <span class="xo">银行账号：</span>
+            </div>
+            <div class="col-sm-8">
+                <input type="text" class="z-text" id="bankAccountCode" must="1"/>
+            </div>
+        </div>
+        <div class="row tank topbottom10">
+            <div class="col-sm-4 height-b27">
+                <span class="xo">打款资料：</span>
+            </div>
+            <div class="col-sm-8">
+                <input type="hidden" id="oldImgUrl"/>
+                <img src=""  id="turnImg"  width="50" height="50" class="pull-left">
+                <input type="file" name="image" id="tianjiaz" onchange="preImg(this.id,'turnImg');"/>
+                <p class="po pull-left marginbottom" onclick="getElementById('tianjiaz').click()"><span class="may"><label class="marginbottom marginleft0">选择文件</label></span></p>
+                <span class="height-b27 eo" id="fileInfo">未选择任何文件</span>
+            </div>
+        </div>
+         </form>
+        <div class="row topbottom10">
+            <div class="col-sm-5">
+                <span class="btn btn-sm btn-primary pull-right" id="saveBankBtn">确认</span>
+            </div>
+            <div class="col-sm-5">
+                <span class="btn btn-sm" onclick="javascript:cbms.closeDialog();">取消</span>
+            </div>
+        </div>
+
+    </div>
+    <!--弹框  E-->
+
+    <!--添加 S-->
+    <div class="tianjia ckeckTB">
+        <span class="btn btn-sm btn-primary">添加</span>
+    </div>
+    <!--添加 E-->
+
+    <!--row S-->
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- PAGE CONTENT BEGINS -->
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <!-- div.dataTables_borderWrap S-->
+                    <table class="table ">
+                        <tr>
+                            <td class="tabletd">
+                                <div class="department-box clearfix">
+                                    <table class="table table-striped table-bordered table-hover text-center margin-top5" id="dynamic-table">
+                                        <thead>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <!-- div.dataTables_borderWrap E-->
+                </div>
+            </div>
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+</div><!-- /.page-content -->
+
+<input type="hidden" id="accountId" value="$!{account.id}">
+<script src="$link.getContextPath()/js/views/common/regionallinkage.js"></script>
+<script src="$link.getContextPath()/js/views/company/bankinfo.js"></script>

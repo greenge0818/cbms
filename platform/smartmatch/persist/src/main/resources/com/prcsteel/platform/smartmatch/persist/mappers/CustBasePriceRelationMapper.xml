@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.smartmatch.persist.dao.BasePriceRelationDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.smartmatch.model.model.CustBasePriceRelation" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="account_id" property="accountId" jdbcType="BIGINT" />
+    <result column="account_name" property="accountName" jdbcType="VARCHAR" />
+    <result column="base_price_id" property="basePriceId" jdbcType="BIGINT" />
+    <result column="base_price_name" property="basePriceName" jdbcType="VARCHAR" />
+    <result column="city_id" property="cityId" jdbcType="BIGINT" />
+    <result column="city_name" property="cityName" jdbcType="VARCHAR" />
+    <result column="category_uuid" property="categoryUuid" jdbcType="VARCHAR" />
+    <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+    <result column="factory_id" property="factoryId" jdbcType="BIGINT" />
+    <result column="factory_name" property="factoryName" jdbcType="VARCHAR" />
+    <result column="is_enable" property="isEnable" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="baseRelationDetailCount" property="baseRelationDetailCount" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, account_id, account_name, base_price_id,base_price_name, city_id, city_name,category_uuid,category_name,factory_id,factory_name,is_enable, 
+    created, created_by, last_updated, last_updated_by
+  </sql>
+  <!-- 连表查询基价名称 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+        r.id, r.account_id, r.account_name, r.base_price_id,
+		bp.base_price_name base_price_name, r.city_id, r.city_name,r.category_uuid,bp.category as category_name,bp.factory_id,bp.factory as factory_name,r.is_enable, 
+   		r.created, r.created_by, r.last_updated, r.last_updated_by
+    from cust_base_price_relation r
+	left join cust_base_price bp on bp.id = r.base_price_id
+    where r.id = #{r.id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from cust_base_price_relation
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.prcsteel.platform.smartmatch.model.model.CustBasePriceRelation" >
+    insert into cust_base_price_relation (id, account_id, account_name, 
+      base_price_id, city_id, city_name, 
+      category_uuid, factory_id, created, 
+      created_by, last_updated, last_updated_by
+      )
+    values (#{id,jdbcType=BIGINT}, #{accountId,jdbcType=BIGINT}, #{accountName,jdbcType=VARCHAR}, 
+      #{basePriceId,jdbcType=BIGINT}, #{cityId,jdbcType=BIGINT}, #{cityName,jdbcType=VARCHAR}, 
+      #{categoryUuid,jdbcType=VARCHAR}, #{factoryId,jdbcType=BIGINT}, #{created,jdbcType=TIMESTAMP}, 
+      #{createdBy,jdbcType=VARCHAR}, #{lastUpdated,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.smartmatch.model.model.CustBasePriceRelation" >
+    insert into cust_base_price_relation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="accountId != null" >
+        account_id,
+      </if>
+      <if test="accountName != null" >
+        account_name,
+      </if>
+      <if test="basePriceId != null" >
+        base_price_id,
+      </if>
+      <if test="basePriceName != null" >
+        base_price_name,
+      </if>
+      <if test="cityId != null" >
+        city_id,
+      </if>
+      <if test="cityName != null" >
+        city_name,
+      </if>
+      <if test="categoryUuid != null" >
+        category_uuid,
+      </if>
+      <if test="categoryName != null" >
+        category_name,
+      </if>
+      <if test="factoryId != null" >
+        factory_id,
+      </if>
+      <if test="factoryName != null" >
+        factory_name,
+      </if>
+      <if test="isEnable != null" >
+        is_enable,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="accountId != null" >
+        #{accountId,jdbcType=BIGINT},
+      </if>
+      <if test="accountName != null" >
+        #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="basePriceId != null" >
+        #{basePriceId,jdbcType=BIGINT},
+      </if>
+      <if test="basePriceName != null" >
+        #{basePriceName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null" >
+        #{cityId,jdbcType=BIGINT},
+      </if>
+      <if test="cityName != null" >
+        #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryUuid != null" >
+        #{categoryUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryName != null" >
+        #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="factoryId != null" >
+        #{factoryId,jdbcType=BIGINT},
+      </if>
+      <if test="factoryName != null" >
+        #{factoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="isEnable != null" >
+        #{isEnable,jdbcType=BIGINT},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+   	<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+		SELECT LAST_INSERT_ID() AS id
+	</selectKey>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.smartmatch.model.model.CustBasePriceRelation" >
+    update cust_base_price_relation
+    <set >
+      <if test="accountId != null" >
+        account_id = #{accountId,jdbcType=BIGINT},
+      </if>
+      <if test="accountName != null" >
+        account_name = #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="basePriceId != null" >
+        base_price_id = #{basePriceId,jdbcType=BIGINT},
+      </if>
+      <if test="cityId != null" >
+        city_id = #{cityId,jdbcType=BIGINT},
+      </if>
+      <if test="cityName != null" >
+        city_name = #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryUuid != null" >
+        category_uuid = #{categoryUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="factoryId != null" >
+        factory_id = #{factoryId,jdbcType=BIGINT},
+      </if>
+      <if test="isEnable != null" >
+        is_enable = #{isEnable,jdbcType=INTEGER},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.smartmatch.model.model.CustBasePriceRelation" >
+    update cust_base_price_relation
+    set account_id = #{accountId,jdbcType=BIGINT},
+      account_name = #{accountName,jdbcType=VARCHAR},
+      base_price_id = #{basePriceId,jdbcType=BIGINT},
+      city_id = #{cityId,jdbcType=BIGINT},
+      city_name = #{cityName,jdbcType=VARCHAR},
+      category_uuid = #{categoryUuid,jdbcType=VARCHAR},
+      factory_id = #{factoryId,jdbcType=BIGINT},
+      created = #{created,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="getBasePriceRelationByParams" resultMap="BaseResultMap" parameterType="com.prcsteel.platform.smartmatch.model.dto.CustBasePriceRelationDto" >
+    select 
+    <include refid="Base_Column_List" />
+    from cust_base_price_relation
+    where account_id = #{accountId,jdbcType=BIGINT}
+    and city_id = #{cityId,jdbcType=BIGINT}
+	and base_price_id = #{basePriceId,jdbcType=BIGINT}
+  </select>
+  
+  <!-- 基价关联设置统计查询-->
+  <select id="getBasePriceRelationListTotal" parameterType="com.prcsteel.platform.smartmatch.model.query.CustBasePriceRelationQuery" resultType="java.lang.Integer">
+	select count(t.id) from cust_base_price_relation t 
+	left join cust_base_price t1 on t.base_price_id = t1.id
+	<where>
+	    <if test="accountName != null and accountName !=''">
+	      and t.account_name like '%' #{accountName} '%'
+	    </if>
+	    <if test="basePriceName != null and basePriceName !=''">
+	      and t1.base_price_name like '%' #{basePriceName} '%'
+	    </if>
+	    <if test="cityName != null and cityName !=''">
+	      and t.city_name like '%' #{cityName} '%'
+	    </if>
+	    <if test="categoryName != null and categoryName !=''">
+	      and t1.category like '%' #{categoryName} '%'
+	    </if>
+	    <if test="factoryName != null and factoryName !=''">
+	      and t1.factory like '%' #{factoryName} '%'
+	    </if>	    
+	</where> 
+  </select>
+  
+  <!-- 基价关联设置分页查询-->
+  <select id="getBasePriceRelationList" resultMap="BaseResultMap" parameterType="com.prcsteel.platform.smartmatch.model.query.CustBasePriceRelationQuery" >
+	select t.id,t.account_name,t1.base_price_name,t.city_name,t1.category as category_name,
+	t1.factory as factory_name,t.is_enable,(select count(id) from cust_base_price_relation_detail t1 where t1.base_price_relation_id = t.id ) as baseRelationDetailCount
+	from cust_base_price_relation t
+	left join cust_base_price t1 on t.base_price_id = t1.id
+	<where>
+	    <if test="accountName != null and accountName !=''">
+	      and t.account_name like '%' #{accountName} '%'
+	    </if>
+	    <if test="basePriceName != null and basePriceName !=''">
+	      and t1.base_price_name like '%' #{basePriceName} '%'
+	    </if>
+	    <if test="cityName != null and cityName !=''">
+	      and t.city_name like '%' #{cityName} '%'
+	    </if>
+	    <if test="categoryName != null and categoryName !=''">
+	      and t1.category like '%' #{categoryName} '%'
+	    </if>
+	    <if test="factoryName != null and factoryName !=''">
+	      and t1.factory like '%' #{factoryName} '%'
+	    </if>	    
+	</where>
+	limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }	  
+  </select>   
+</mapper>

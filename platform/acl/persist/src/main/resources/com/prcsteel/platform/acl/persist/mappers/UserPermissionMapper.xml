@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.acl.persist.dao.UserPermissionDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.acl.model.model.UserPermission" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="permission_id" property="permissionId" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+    <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+    <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, permission_id, type, created, created_by, last_updated, last_updated_by, 
+    modification_number, row_id, parent_row_id
+  </sql>
+  <select id="queryByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from acl_user_permission
+    where user_id = #{userId,jdbcType=BIGINT}
+  </select>
+
+  <delete id="delete">
+    delete from acl_user_permission
+    where user_id = #{0,jdbcType=BIGINT} and permission_id = #{1,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="deleteByUserId" parameterType="java.lang.Long">
+    delete from acl_user_permission
+    where user_id = #{userId,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insert" parameterType="com.prcsteel.platform.acl.model.model.UserPermission" >
+    insert into acl_user_permission (user_id, permission_id,
+      type, created, created_by, 
+      last_updated, last_updated_by)
+    values (#{userId,jdbcType=BIGINT}, #{permissionId,jdbcType=BIGINT},
+      #{type,jdbcType=INTEGER}, #{created,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, 
+      #{lastUpdated,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR})
+  </insert>
+
+  <select id="count" resultType="java.lang.Integer">
+    select count(id)
+    <include refid="Base_Column_List"/>
+    from acl_user_permission
+    where user_id = #{0,jdbcType=BIGINT} and permission_id = #{1,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryByPermissionId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from acl_user_permission
+    where permission_id = #{permissionId,jdbcType=BIGINT}
+  </select>
+  
+  <select id="hasPermission" resultType="java.lang.Integer">
+    select ifnull(sum(sum),0) from(
+	select sum(1) as sum from acl_role_permission a,acl_permission b 
+	 where a.permission_id=b.id 
+	and role_id=#{1,jdbcType=BIGINT}
+	and b.code=#{2,jdbcType=VARCHAR}
+	union all
+	select sum(case a.type when 1 then 1 else -1 end) a
+	from acl_user_permission a,acl_permission b 
+	 where a.permission_id=b.id 
+	and a.user_id=#{0,jdbcType=BIGINT} 
+	and b.code=#{2,jdbcType=VARCHAR}
+	) t
+  </select>
+  
+</mapper>

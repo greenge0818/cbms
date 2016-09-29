@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.account.persist.dao.AccountContractTemplateBarcodeHistoryDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.account.model.model.AccountContractTemplateBarcodeHistory" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="account_id" property="accountId" jdbcType="BIGINT" />
+    <result column="bar_code" property="barCode" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="CHAR" />
+    <result column="print_times" property="printTimes" jdbcType="BIGINT" />
+    <result column="last_print_date" property="lastPrintDate" jdbcType="TIMESTAMP" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+    <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+    <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, account_id, bar_code, type, print_times, last_print_date, created, created_by,
+    last_updated, last_updated_by, modification_number, row_id, parent_row_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from cust_account_contract_template_barcode_history
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from cust_account_contract_template_barcode_history
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.prcsteel.platform.account.model.model.AccountContractTemplateBarcodeHistory" >
+    insert into cust_account_contract_template_barcode_history (id, account_id, bar_code,
+    type, print_times, last_print_date,
+    created, created_by, last_updated,
+    last_updated_by, modification_number, row_id,
+    parent_row_id)
+    values (#{id,jdbcType=BIGINT}, #{accountId,jdbcType=BIGINT}, #{barCode,jdbcType=VARCHAR},
+    #{type,jdbcType=CHAR}, #{printTimes,jdbcType=BIGINT}, #{lastPrintDate,jdbcType=TIMESTAMP},
+    #{created,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, #{lastUpdated,jdbcType=TIMESTAMP},
+    #{lastUpdatedBy,jdbcType=VARCHAR}, #{modificationNumber,jdbcType=INTEGER}, #{rowId,jdbcType=VARCHAR},
+    #{parentRowId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.account.model.model.AccountContractTemplateBarcodeHistory" useGeneratedKeys="true">
+    insert into cust_account_contract_template_barcode_history
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="accountId != null" >
+        account_id,
+      </if>
+      <if test="barCode != null" >
+        bar_code,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="printTimes != null" >
+        print_times,
+      </if>
+      <if test="lastPrintDate != null" >
+        last_print_date,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by,
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number,
+      </if>
+      <if test="rowId != null" >
+        row_id,
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="accountId != null" >
+        #{accountId,jdbcType=BIGINT},
+      </if>
+      <if test="barCode != null" >
+        #{barCode,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=CHAR},
+      </if>
+      <if test="printTimes != null" >
+        #{printTimes,jdbcType=BIGINT},
+      </if>
+      <if test="lastPrintDate != null" >
+        #{lastPrintDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        #{parentRowId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.account.model.model.AccountContractTemplateBarcodeHistory" >
+    update cust_account_contract_template_barcode_history
+    <set >
+      <if test="accountId != null" >
+        account_id = #{accountId,jdbcType=BIGINT},
+      </if>
+      <if test="barCode != null" >
+        bar_code = #{barCode,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=CHAR},
+      </if>
+      <if test="printTimes != null" >
+        print_times = #{printTimes,jdbcType=BIGINT},
+      </if>
+      <if test="lastPrintDate != null" >
+        last_print_date = #{lastPrintDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number = #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        row_id = #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.account.model.model.AccountContractTemplateBarcodeHistory" >
+    update cust_account_contract_template_barcode_history
+    set account_id = #{accountId,jdbcType=BIGINT},
+      bar_code = #{barCode,jdbcType=VARCHAR},
+      type = #{type,jdbcType=CHAR},
+      print_times = #{printTimes,jdbcType=BIGINT},
+      last_print_date = #{lastPrintDate,jdbcType=TIMESTAMP},
+      created = #{created,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      modification_number = #{modificationNumber,jdbcType=INTEGER},
+      row_id = #{rowId,jdbcType=VARCHAR},
+      parent_row_id = #{parentRowId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="queryLastRecordByType" resultMap="BaseResultMap" parameterType="java.lang.String">
+   select
+    <include refid="Base_Column_List" />
+   from cust_account_contract_template_barcode_history
+   where  type =  #{type,jdbcType=VARCHAR}
+   order by id DESC
+   limit 1
+  </select>
+  
+  <select id="queryRecordByBarcode" resultMap="BaseResultMap" parameterType="java.lang.String">
+   select
+    <include refid="Base_Column_List" />
+   from cust_account_contract_template_barcode_history
+   where bar_code =  #{barCode,jdbcType=VARCHAR}
+  </select>
+  
+</mapper>

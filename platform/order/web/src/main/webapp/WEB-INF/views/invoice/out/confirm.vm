@@ -1,0 +1,91 @@
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="#">发票管理</a>
+        </li>
+        <li>
+            <a href="#">销项票管理</a>
+        </li>
+        <li>
+            <a href="#">待确认</a>
+        </li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+    #parse("layout/topbtn.vm")<!-- /.nav-search -->
+</div>
+
+##<div class="page-content">
+##    <div class="row">
+##        <div class="col-xs-12">
+##            <!--TAPBAR-->
+##            <!-- tapbar S -->
+##            #parse("/layout/order/tapbar.vm")
+##            <!-- tapbar E -->
+##        </div>
+##    </div>
+##</div>
+
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            #invoiceTopBar(7, 0)
+            <div class="clearfix">
+                <div class="input-group pull-right col-md-12 col-sm-12 col-lg-12 search-bar">
+                    <form class="form-inline" id="searchForm">
+                        <label>买家名称：</label><input id="sbuyerName" class="ipt-text" type="text"/>
+                        <label>快递单号：</label><input id="sexpressName" class="ipt-text" type="text"/>
+                        <label>寄出时间：</label>
+                        <input id="stimefrom" class="Wdate" type="text" onFocus="WdatePicker()"/> -
+                        <input id="stimeto" class="Wdate" type="text" onFocus="WdatePicker()"/>
+
+                        <button class="btn btn-sm btn-default" type="button" title="搜索" id="search">
+                            <i class="aace-icon fa fa-search bigger-110"></i>搜索
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- div.dataTables_borderWrap -->
+            <div>
+                <table id="dynamicTable" class="table table-striped table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th>销项发票号</th>
+                        <th>买家全称</th>
+                        <th>发票金额</th>
+                        <th>录入人员</th>
+                        <th>联系电话</th>
+                        <th>寄出时间</th>
+                        <th>快递单号</th>
+                        <th>发票状态</th>
+                        <th>操作</th>
+                    </tr>
+                </table>
+            </div>
+            <!--/.recordbar-->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+    <div>
+        #if($shiro.hasPermission("invoice:out:batchConfirm"))
+            <a class="button btn-sm btn-info" id="batchConfirm" href="$link.getContextPath()/invoice/out/batchConfirm.html">批量确认发票</a>
+        #end
+        #if($shiro.hasPermission("invoice:out:confirm:print"))
+            <a class="button btn-sm btn-info" id="print">打印清单</a>
+        #end
+    </div>
+</div>
+
+<script src="$link.getContextPath()/js/views/invoice/confirm.js"></script>
+<script src="$link.getContextPath()/js/views/order/commonquery.js"></script>

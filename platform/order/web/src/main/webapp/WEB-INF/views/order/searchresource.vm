@@ -1,0 +1,43 @@
+#set($layout="layout/blank.vm")
+<div class="page-content dialog-m">
+    <div class="">
+        <label>卖家公司：
+            <input type="text" id="sellerCompany" accountid="0" consigntype="" maxlength="50" must="1" search="account" accounttype="seller" class="c-text"/>
+        </label>
+        <label>品名：
+            <input type="text" id="nsortName" nsortid="0" nsortid="0" maxlength="20" search="nsort" readonly="readonly" value="请选择品名" class="c-text"/>
+        </label>
+        <label>材质：
+            <input type="text" id="material" maxlength="20" class="c-text"/>
+        </label>
+        <label>规格：
+            <input type="text" id="spec" maxlength="20" class="c-text"/>
+        </label>
+        <label>厂家：
+            <input type="text" id="factory" maxlength="20" class="c-text"/>
+        </label>
+        <button type="button" id="searchResource" class="btn btn-sm btn-info" >搜索</button>
+    </div>
+    <div class="table-bar">
+        <table id="resourceTable" class="table">
+            <thead>
+            <th><input type="checkbox" id="allCheck"/></th>
+            <th>供应商</th>
+            <th>品名</th>
+            <th>材质</th>
+            <th>规格</th>
+            <th>厂家</th>
+            <th>仓库</th>
+            <th>重量（吨）</th>
+            <th>计重方式</th>
+            <th>挂牌价格</th>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <button type="button" id="addBuy" class="btn btn-sm btn-info" >加入购买</button>
+    </div>
+</div>
+<script src="$link.getContextPath()/js/views/order/searchresource.js"></script>

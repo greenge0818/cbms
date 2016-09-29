@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:amq="http://activemq.apache.org/schema/core"
+       xmlns:jms="http://www.springframework.org/schema/jms"
+       xmlns:websocket="http://www.springframework.org/schema/websocket"
+       xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd
+
+        http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-2.5.xsd">
+
+
+
+    <!-- EC2.0 -->
+    <!--JMS broker, sample for CLUSTER URL: 'failover:(tcp://12.13.14.100:61616,tcp://12.13.14.101:61616)?randomize=true'-->
+    <amq:connectionFactory id="ecmqConnectionFactory" brokerURL="${ecUrl}"/>
+    <!-- ConnectionFactory Definition -->
+    <bean id="ecConnectionFactory" class="org.springframework.jms.connection.CachingConnectionFactory">
+        <constructor-arg ref="ecmqConnectionFactory"/>
+    </bean>
+    <bean id="ecactivemq" class="org.apache.activemq.camel.component.ActiveMQComponent">
+        <property name="connectionFactory" ref="ecmqConnectionFactory"/>
+    </bean>
+
+    <!-- JmsTemplate Definition -->
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="ecmqConnectionFactory"/>
+    </bean>
+    <!-- send repeatedly permitting  -->
+    <bean id="ecJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="ecmqConnectionFactory"/>
+        <property name= "sessionAcknowledgeMode" value="3"/>
+    </bean>
+
+    <!-- 需求单状态更新推送MQ -->
+    <bean id="cbmsRequirementStatusSender" class="com.prcsteel.platform.order.web.mq.CbmsRequirementStatusSender">
+        <property name="jmsTemplate" ref="ecJmsTemplate" />
+        <property name="queue" value="${jms.cbmsRequirementStatus}" />
+    </bean>
+    <!-- cbms新增联系人后，推送到超市系统 -->
+    <bean id="marketAddUserSender" class="com.prcsteel.platform.order.web.mq.MarketAddUserSender">
+        <property name="jmsTemplate" ref="ecJmsTemplate" />
+        <property name="queue" value="${jms.marketAddUser}" />
+    </bean>
+
+</beans>

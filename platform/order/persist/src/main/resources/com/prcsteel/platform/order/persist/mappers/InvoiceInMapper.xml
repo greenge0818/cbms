@@ -1,0 +1,1297 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.order.persist.dao.InvoiceInDao">
+    <resultMap id="BaseResultMap" type="com.prcsteel.platform.order.model.model.InvoiceIn">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="area_code" property="areaCode" jdbcType="VARCHAR"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="org_id" property="orgId" jdbcType="BIGINT"/>
+        <result column="org_name" property="orgName" jdbcType="VARCHAR"/>
+        <result column="seller_id" property="sellerId" jdbcType="BIGINT"/>
+        <result column="department_id" property="departmentId" jdbcType="BIGINT"/>
+        <result column="department_name" property="departmentName" jdbcType="VARCHAR"/>
+        <result column="seller_name" property="sellerName" jdbcType="VARCHAR"/>
+        <result column="total_amount" property="totalAmount" jdbcType="DECIMAL"/>
+        <result column="total_weight" property="totalWeight" jdbcType="DECIMAL"/>
+        <result column="check_total_amount" property="checkTotalAmount" jdbcType="DECIMAL"/>
+        <result column="check_total_weight" property="checkTotalWeight" jdbcType="DECIMAL"/>
+        <result column="invoice_date" property="invoiceDate" jdbcType="TIMESTAMP"/>
+        <result column="check_date" property="checkDate" jdbcType="TIMESTAMP"/>
+        <result column="check_user_id" property="checkUserId" jdbcType="BIGINT"/>
+        <result column="check_user_name" property="checkUserName" jdbcType="VARCHAR"/>
+        <result column="check_user_mobil" property="checkUserMobil" jdbcType="VARCHAR"/>
+        <result column="input_user_id" property="inputUserId" jdbcType="BIGINT"/>
+        <result column="input_user_name" property="inputUserName" jdbcType="VARCHAR"/>
+        <result column="input_user_mobil" property="inputUserMobil" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="relation_status" property="relationStatus" jdbcType="VARCHAR"/>
+        <result column="express_id" property="expressId" jdbcType="BIGINT"/>
+        <result column="print_status" property="printStatus" jdbcType="VARCHAR"/>
+        <result column="memo" property="memo" jdbcType="VARCHAR"/>
+        <result column="created" property="created" jdbcType="TIMESTAMP"/>
+        <result column="created_by" property="createdBy" jdbcType="VARCHAR"/>
+        <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP"/>
+        <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR"/>
+        <result column="modification_number" property="modificationNumber" jdbcType="INTEGER"/>
+        <result column="row_id" property="rowId" jdbcType="VARCHAR"/>
+        <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR"/>
+        <result column="ext1" property="ext1" jdbcType="VARCHAR"/>
+        <result column="ext2" property="ext2" jdbcType="VARCHAR"/>
+        <result column="ext3" property="ext3" jdbcType="VARCHAR"/>
+        <result column="ext4" property="ext4" jdbcType="INTEGER"/>
+        <result column="ext5" property="ext5" jdbcType="INTEGER"/>
+        <result column="ext6" property="ext6" jdbcType="INTEGER"/>
+        <result column="ext7" property="ext7" jdbcType="TIMESTAMP"/>
+        <result column="ext8" property="ext8" jdbcType="BIGINT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, area_code, code, org_id, org_name, seller_id, seller_name, department_id, department_name, total_amount, total_weight, check_total_amount,
+    check_total_weight, invoice_date, check_date, check_user_id, check_user_name, check_user_mobil, 
+    input_user_id, input_user_name, input_user_mobil, status, express_id,relation_status, print_status, memo,
+    created, created_by, last_updated, last_updated_by, modification_number, row_id, 
+    parent_row_id, ext1, ext2, ext3, ext4, ext5, ext6, ext7, ext8
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from inv_invoice_in
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from inv_invoice_in
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.prcsteel.platform.order.model.model.InvoiceIn">
+    insert into inv_invoice_in (id, area_code, code, org_id,
+      org_name, seller_id, seller_name, department_id, department_name,
+      total_amount, total_weight, check_total_amount, 
+      check_total_weight, invoice_date, check_date, 
+      check_user_id, check_user_name, check_user_mobil, 
+      input_user_id, input_user_name, input_user_mobil, 
+      status,relation_status, express_id, print_status, memo, 
+      created, created_by, last_updated, 
+      last_updated_by, modification_number, row_id, 
+      parent_row_id, ext1, ext2, 
+      ext3, ext4, ext5, ext6, 
+      ext7, ext8)
+    values (#{id,jdbcType=BIGINT}, #{areaCode,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{orgId,jdbcType=BIGINT},
+      #{orgName,jdbcType=VARCHAR}, #{sellerId,jdbcType=BIGINT}, #{sellerName,jdbcType=VARCHAR}, #{departmentId,jdbcType=BIGINT}, #{departmentName,jdbcType=VARCHAR}, 
+      #{totalAmount,jdbcType=DECIMAL}, #{totalWeight,jdbcType=DECIMAL}, #{checkTotalAmount,jdbcType=DECIMAL}, 
+      #{checkTotalWeight,jdbcType=DECIMAL}, #{invoiceDate,jdbcType=TIMESTAMP}, #{checkDate,jdbcType=TIMESTAMP}, 
+      #{checkUserId,jdbcType=BIGINT}, #{checkUserName,jdbcType=VARCHAR}, #{checkUserMobil,jdbcType=VARCHAR}, 
+      #{inputUserId,jdbcType=BIGINT}, #{inputUserName,jdbcType=VARCHAR}, #{inputUserMobil,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR},#{relationStatus,jdbcType=VARCHAR}, #{expressId,jdbcType=BIGINT}, #{printStatus,jdbcType=VARCHAR},  #{memo,jdbcType=VARCHAR}, 
+      NOW(), #{createdBy,jdbcType=VARCHAR}, NOW(), 
+      #{lastUpdatedBy,jdbcType=VARCHAR}, 0, #{rowId,jdbcType=VARCHAR}, 
+      #{parentRowId,jdbcType=VARCHAR}, #{ext1,jdbcType=VARCHAR}, #{ext2,jdbcType=VARCHAR}, 
+      #{ext3,jdbcType=VARCHAR}, #{ext4,jdbcType=INTEGER}, #{ext5,jdbcType=INTEGER}, #{ext6,jdbcType=INTEGER}, 
+      #{ext7,jdbcType=TIMESTAMP}, #{ext8,jdbcType=BIGINT})
+  </insert>
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id"
+            parameterType="com.prcsteel.platform.order.model.model.InvoiceIn">
+        insert into inv_invoice_in
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="areaCode != null">
+                area_code,
+            </if>
+            <if test="code != null">
+                code,
+            </if>
+            <if test="orgId != null">
+                org_id,
+            </if>
+            <if test="orgName != null">
+                org_name,
+            </if>
+            <if test="sellerId != null">
+                seller_id,
+            </if>
+            <if test="sellerName != null">
+                seller_name,
+            </if>
+             <if test="departmentId != null">
+                department_id,
+            </if>
+            <if test="departmentName != null">
+                department_name,
+            </if>
+            <if test="totalAmount != null">
+                total_amount,
+            </if>
+            <if test="totalWeight != null">
+                total_weight,
+            </if>
+            <if test="checkTotalAmount != null">
+                check_total_amount,
+            </if>
+            <if test="checkTotalWeight != null">
+                check_total_weight,
+            </if>
+            <if test="invoiceDate != null">
+                invoice_date,
+            </if>
+            <if test="checkDate != null">
+                check_date,
+            </if>
+            <if test="checkUserId != null">
+                check_user_id,
+            </if>
+            <if test="checkUserName != null">
+                check_user_name,
+            </if>
+            <if test="checkUserMobil != null">
+                check_user_mobil,
+            </if>
+            <if test="inputUserId != null">
+                input_user_id,
+            </if>
+            <if test="inputUserName != null">
+                input_user_name,
+            </if>
+            <if test="inputUserMobil != null">
+                input_user_mobil,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="relationStatus != null">
+                relation_status,
+            </if>
+            <if test="expressId != null">
+                express_id,
+            </if>
+            <if test="printStatus != null">
+                print_status,
+            </if>
+            <if test="memo != null">
+                memo,
+            </if>
+            created,
+            <if test="createdBy != null">
+                created_by,
+            </if>
+            last_updated,
+            <if test="lastUpdatedBy != null">
+                last_updated_by,
+            </if>
+            modification_number,
+            <if test="rowId != null">
+                row_id,
+            </if>
+            <if test="parentRowId != null">
+                parent_row_id,
+            </if>
+            <if test="ext1 != null">
+                ext1,
+            </if>
+            <if test="ext2 != null">
+                ext2,
+            </if>
+            <if test="ext3 != null">
+                ext3,
+            </if>
+            <if test="ext4 != null">
+                ext4,
+            </if>
+            <if test="ext5 != null">
+                ext5,
+            </if>
+            <if test="ext6 != null">
+                ext6,
+            </if>
+            <if test="ext7 != null">
+                ext7,
+            </if>
+            <if test="ext8 != null">
+                ext8,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="areaCode != null">
+                #{areaCode,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null">
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="orgId != null">
+                #{orgId,jdbcType=BIGINT},
+            </if>
+            <if test="orgName != null">
+                #{orgName,jdbcType=VARCHAR},
+            </if>
+            <if test="sellerId != null">
+                #{sellerId,jdbcType=BIGINT},
+            </if>
+            <if test="sellerName != null">
+                #{sellerName,jdbcType=VARCHAR},
+            </if>
+            <if test="departmentId != null">
+                #{departmentId,jdbcType=BIGINT},
+            </if>
+            <if test="departmentName != null">
+                #{departmentName,jdbcType=VARCHAR},
+            </if>
+            <if test="totalAmount != null">
+                #{totalAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="totalWeight != null">
+                #{totalWeight,jdbcType=DECIMAL},
+            </if>
+            <if test="checkTotalAmount != null">
+                #{checkTotalAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="checkTotalWeight != null">
+                #{checkTotalWeight,jdbcType=DECIMAL},
+            </if>
+            <if test="invoiceDate != null">
+                #{invoiceDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="checkDate != null">
+                #{checkDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="checkUserId != null">
+                #{checkUserId,jdbcType=BIGINT},
+            </if>
+            <if test="checkUserName != null">
+                #{checkUserName,jdbcType=VARCHAR},
+            </if>
+            <if test="checkUserMobil != null">
+                #{checkUserMobil,jdbcType=VARCHAR},
+            </if>
+            <if test="inputUserId != null">
+                #{inputUserId,jdbcType=BIGINT},
+            </if>
+            <if test="inputUserName != null">
+                #{inputUserName,jdbcType=VARCHAR},
+            </if>
+            <if test="inputUserMobil != null">
+                #{inputUserMobil,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="relationStatus != null">
+                #{relationStatus,jdbcType=VARCHAR},
+            </if>
+
+
+            <if test="expressId != null">
+                #{expressId,jdbcType=BIGINT},
+            </if>
+            <if test="printStatus != null">
+                #{printStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="memo != null">
+                #{memo,jdbcType=VARCHAR},
+            </if>
+            NOW(),
+
+
+            <if test="createdBy != null">
+                #{createdBy,jdbcType=VARCHAR},
+            </if>
+            NOW(),
+
+
+            <if test="lastUpdatedBy != null">
+                #{lastUpdatedBy,jdbcType=VARCHAR},
+            </if>
+            0,
+
+
+            <if test="rowId != null">
+                #{rowId,jdbcType=VARCHAR},
+            </if>
+            <if test="parentRowId != null">
+                #{parentRowId,jdbcType=VARCHAR},
+            </if>
+            <if test="ext1 != null">
+                #{ext1,jdbcType=VARCHAR},
+            </if>
+            <if test="ext2 != null">
+                #{ext2,jdbcType=VARCHAR},
+            </if>
+            <if test="ext3 != null">
+                #{ext3,jdbcType=VARCHAR},
+            </if>
+            <if test="ext4 != null">
+                #{ext4,jdbcType=INTEGER},
+            </if>
+            <if test="ext5 != null">
+                #{ext5,jdbcType=INTEGER},
+            </if>
+            <if test="ext6 != null">
+                #{ext6,jdbcType=INTEGER},
+            </if>
+            <if test="ext7 != null">
+                #{ext7,jdbcType=TIMESTAMP},
+            </if>
+            <if test="ext8 != null">
+                #{ext8,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.order.model.model.InvoiceIn">
+        update inv_invoice_in
+        <set>
+            <if test="areaCode != null">
+                area_code = #{areaCode,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null">
+                code = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="orgId != null">
+                org_id = #{orgId,jdbcType=BIGINT},
+            </if>
+            <if test="orgName != null">
+                org_name = #{orgName,jdbcType=VARCHAR},
+            </if>
+            <if test="sellerId != null">
+                seller_id = #{sellerId,jdbcType=BIGINT},
+            </if>
+            <if test="sellerName != null">
+                seller_name = #{sellerName,jdbcType=VARCHAR},
+            </if>
+            <if test="departmentId != null">
+                department_id = #{departmentId,jdbcType=BIGINT},
+            </if>
+            <if test="departmentName != null">
+                department_name = #{departmentName,jdbcType=VARCHAR},
+            </if>
+            <if test="totalAmount != null">
+                total_amount = #{totalAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="totalWeight != null">
+                total_weight = #{totalWeight,jdbcType=DECIMAL},
+            </if>
+            <if test="checkTotalAmount != null">
+                check_total_amount = #{checkTotalAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="checkTotalWeight != null">
+                check_total_weight = #{checkTotalWeight,jdbcType=DECIMAL},
+            </if>
+            <if test="invoiceDate != null">
+                invoice_date = #{invoiceDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="checkDate != null">
+                check_date = #{checkDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="checkUserId != null">
+                check_user_id = #{checkUserId,jdbcType=BIGINT},
+            </if>
+            <if test="checkUserName != null">
+                check_user_name = #{checkUserName,jdbcType=VARCHAR},
+            </if>
+            <if test="checkUserMobil != null">
+                check_user_mobil = #{checkUserMobil,jdbcType=VARCHAR},
+            </if>
+            <if test="inputUserId != null">
+                input_user_id = #{inputUserId,jdbcType=BIGINT},
+            </if>
+            <if test="inputUserName != null">
+                input_user_name = #{inputUserName,jdbcType=VARCHAR},
+            </if>
+            <if test="inputUserMobil != null">
+                input_user_mobil = #{inputUserMobil,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="relationStatus != null">
+                relation_status = #{relationStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="expressId != null">
+                express_id = #{expressId,jdbcType=BIGINT},
+            </if>
+            <if test="printStatus != null">
+                print_status = #{printStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="memo != null">
+                memo = #{memo,jdbcType=VARCHAR},
+            </if>
+            <if test="created != null">
+                created = #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdBy != null">
+                created_by = #{createdBy,jdbcType=VARCHAR},
+            </if>
+            last_updated = NOW(),
+            <if test="lastUpdatedBy != null">
+                last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modificationNumber != null">
+                modification_number = #{modificationNumber,jdbcType=INTEGER},
+            </if>
+            <if test="rowId != null">
+                row_id = #{rowId,jdbcType=VARCHAR},
+            </if>
+            <if test="parentRowId != null">
+                parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+            </if>
+            <if test="ext1 != null">
+                ext1 = #{ext1,jdbcType=VARCHAR},
+            </if>
+            <if test="ext2 != null">
+                ext2 = #{ext2,jdbcType=VARCHAR},
+            </if>
+            <if test="ext3 != null">
+                ext3 = #{ext3,jdbcType=VARCHAR},
+            </if>
+            <if test="ext4 != null">
+                ext4 = #{ext4,jdbcType=INTEGER},
+            </if>
+            <if test="ext5 != null">
+                ext5 = #{ext5,jdbcType=INTEGER},
+            </if>
+            <if test="ext6 != null">
+                ext6 = #{ext6,jdbcType=INTEGER},
+            </if>
+            <if test="ext7 != null">
+                ext7 = #{ext7,jdbcType=TIMESTAMP},
+            </if>
+            <if test="ext8 != null">
+                ext8 = #{ext8,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByConditionSelective" parameterType="com.prcsteel.platform.order.model.dto.InvoiceInUpdateDto">
+        update inv_invoice_in
+        <set>
+            <if test="areaCode != null">
+                area_code = #{areaCode,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null">
+                code = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="orgId != null">
+                org_id = #{orgId,jdbcType=BIGINT},
+            </if>
+            <if test="orgName != null">
+                org_name = #{orgName,jdbcType=VARCHAR},
+            </if>
+            <if test="sellerId != null">
+                seller_id = #{sellerId,jdbcType=BIGINT},
+            </if>
+            <if test="sellerName != null">
+                seller_name = #{sellerName,jdbcType=VARCHAR},
+            </if>
+            <if test="departmentId != null">
+                department_id = #{departmentId,jdbcType=BIGINT},
+            </if>
+            <if test="departmentName != null">
+                department_name = #{departmentName,jdbcType=VARCHAR},
+            </if>
+            <if test="totalAmount != null">
+                total_amount = #{totalAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="totalWeight != null">
+                total_weight = #{totalWeight,jdbcType=DECIMAL},
+            </if>
+            <if test="checkTotalAmount != null">
+                check_total_amount = #{checkTotalAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="checkTotalWeight != null">
+                check_total_weight = #{checkTotalWeight,jdbcType=DECIMAL},
+            </if>
+            <if test="invoiceDate != null">
+                invoice_date = #{invoiceDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="checkDate != null">
+                check_date = #{checkDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="checkUserId != null">
+                check_user_id = #{checkUserId,jdbcType=BIGINT},
+            </if>
+            <if test="checkUserName != null">
+                check_user_name = #{checkUserName,jdbcType=VARCHAR},
+            </if>
+            <if test="checkUserMobil != null">
+                check_user_mobil = #{checkUserMobil,jdbcType=VARCHAR},
+            </if>
+            <if test="inputUserId != null">
+                input_user_id = #{inputUserId,jdbcType=BIGINT},
+            </if>
+            <if test="inputUserName != null">
+                input_user_name = #{inputUserName,jdbcType=VARCHAR},
+            </if>
+            <if test="inputUserMobil != null">
+                input_user_mobil = #{inputUserMobil,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="relationStatus != null">
+                relation_status = #{relationStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="expressId != null">
+                express_id = #{expressId,jdbcType=BIGINT},
+            </if>
+            <if test="printStatus != null">
+                print_status = #{printStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="memo != null">
+                memo = #{memo,jdbcType=VARCHAR},
+            </if>
+            <if test="created != null">
+                created = #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdBy != null">
+                created_by = #{createdBy,jdbcType=VARCHAR},
+            </if>
+            last_updated = NOW(),
+            <if test="lastUpdatedBy != null">
+                last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modificationNumber != null">
+                modification_number = #{modificationNumber,jdbcType=INTEGER},
+            </if>
+            <if test="rowId != null">
+                row_id = #{rowId,jdbcType=VARCHAR},
+            </if>
+            <if test="parentRowId != null">
+                parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+            </if>
+            <if test="ext1 != null">
+                ext1 = #{ext1,jdbcType=VARCHAR},
+            </if>
+            <if test="ext2 != null">
+                ext2 = #{ext2,jdbcType=VARCHAR},
+            </if>
+            <if test="ext3 != null">
+                ext3 = #{ext3,jdbcType=VARCHAR},
+            </if>
+            <if test="ext4 != null">
+                ext4 = #{ext4,jdbcType=INTEGER},
+            </if>
+            <if test="ext5 != null">
+                ext5 = #{ext5,jdbcType=INTEGER},
+            </if>
+            <if test="ext6 != null">
+                ext6 = #{ext6,jdbcType=INTEGER},
+            </if>
+            <if test="ext7 != null">
+                ext7 = #{ext7,jdbcType=TIMESTAMP},
+            </if>
+            <if test="ext8 != null">
+                ext8 = #{ext8,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+        <if test="oldStatus != null">
+           and status = #{oldStatus,jdbcType=VARCHAR}
+        </if>
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.order.model.model.InvoiceIn">
+    update inv_invoice_in
+    set area_code = #{areaCode,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      org_id = #{orgId,jdbcType=BIGINT},
+      org_name = #{orgName,jdbcType=VARCHAR},
+      seller_id = #{sellerId,jdbcType=BIGINT},
+      seller_name = #{sellerName,jdbcType=VARCHAR},
+      department_id = #{departmentId,jdbcType=BIGINT},
+      department_name = #{departmentName,jdbcType=VARCHAR},
+      total_amount = #{totalAmount,jdbcType=DECIMAL},
+      total_weight = #{totalWeight,jdbcType=DECIMAL},
+      check_total_amount = #{checkTotalAmount,jdbcType=DECIMAL},
+      check_total_weight = #{checkTotalWeight,jdbcType=DECIMAL},
+      invoice_date = #{invoiceDate,jdbcType=TIMESTAMP},
+      check_date = #{checkDate,jdbcType=TIMESTAMP},
+      check_user_id = #{checkUserId,jdbcType=BIGINT},
+      check_user_name = #{checkUserName,jdbcType=VARCHAR},
+      check_user_mobil = #{checkUserMobil,jdbcType=VARCHAR},
+      input_user_id = #{inputUserId,jdbcType=BIGINT},
+      input_user_name = #{inputUserName,jdbcType=VARCHAR},
+      input_user_mobil = #{inputUserMobil,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+	  relation_status = #{relationStatus,jdbcType=VARCHAR},
+      express_id = #{expressId,jdbcType=BIGINT},
+      print_status = #{printStatus,jdbcType=VARCHAR},
+      memo = #{memo,jdbcType=VARCHAR},
+      created = #{created,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      modification_number = #{modificationNumber,jdbcType=INTEGER},
+      row_id = #{rowId,jdbcType=VARCHAR},
+      parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      ext1 = #{ext1,jdbcType=VARCHAR},
+      ext2 = #{ext2,jdbcType=VARCHAR},
+      ext3 = #{ext3,jdbcType=VARCHAR},
+      ext4 = #{ext4,jdbcType=INTEGER},
+      ext5 = #{ext5,jdbcType=INTEGER},
+      ext6 = #{ext6,jdbcType=INTEGER},
+      ext7 = #{ext7,jdbcType=TIMESTAMP},
+      ext8 = #{ext8,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <update id="updateStatusByIds">
+        UPDATE inv_invoice_in
+        SET
+        status = #{status},
+        last_updated = NOW(),
+        last_updated_by = #{userName},
+        modification_number = modification_number + 1
+        WHERE id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">#{id}</foreach>
+        <if test="limitOldStatus != null and limitOldStatus!='' ">
+            AND status=#{limitOldStatus}
+        </if>
+        <if test="limitOldRelationStatus != null and limitOldRelationStatus!='' ">
+            AND relation_status=#{limitOldRelationStatus}
+        </if>
+    </update>
+    <update id="updateStatusByIdsWithInvoiceOut">
+        UPDATE inv_invoice_in t1
+        SET
+        t1.status = #{status},
+        t1.last_updated = NOW(),
+        t1.last_updated_by = #{userName},
+        t1.modification_number = t1.modification_number + 1
+        where t1.id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">#{id}</foreach>
+        <if test="limitOldStatus != null and limitOldStatus!='' ">
+            AND t1.status=#{limitOldStatus}
+        </if>
+        <if test="limitOldRelationStatus != null and limitOldRelationStatus!='' ">
+            AND t1.relation_status=#{limitOldRelationStatus}
+        </if>
+        AND t1.id NOT IN(
+        SELECT t1.inv_invoice_in_id FROM inv_invoice_out_item_detail t1
+        INNER JOIN inv_invoice_out_checklist_detail t2 ON t1.id=t2.item_detail_id
+        WHERE t1.is_deleted=0 and  t1.inv_invoice_in_id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">#{id}</foreach>
+        GROUP BY t1.inv_invoice_in_id)
+    </update>
+    <update id="updateRelationStatusByIds">
+        UPDATE inv_invoice_in
+        SET
+        relation_status = #{relationStatus},
+        last_updated = NOW(),
+        last_updated_by = #{userName},
+        modification_number = modification_number + 1
+        WHERE id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">#{id}</foreach>
+    </update>
+    <resultMap id="DtoResultMap" extends="BaseResultMap" type="com.prcsteel.platform.order.model.dto.InvoiceInDto">
+        <result column="company" property="company" jdbcType="VARCHAR"/>
+        <result column="send_time" property="sendTime" jdbcType="TIMESTAMP"/>
+        <result column="express_name" property="expressName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <!-- 根据发票号查询发票 -->
+    <select id="selectByCode" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM inv_invoice_in
+        WHERE code = #{invoiceCode} and area_code = #{areaCode}
+    </select>
+    <!-- 查询 -->
+    <select id="query" resultMap="DtoResultMap" parameterType="map">
+        select
+        t1.id, t1.area_code, t1.code, t1.org_id, t1.seller_id, t1.seller_name,
+        t1.department_id, t1.department_name, t1.invoice_date,
+        t1.area_code,
+        t1.total_amount,t1.total_weight,t1.check_total_amount,t1.check_total_weight, t1.invoice_date, t1.check_date,
+        t1.check_user_id, t1.check_user_name,t1.check_user_mobil,t1.input_user_id, t1.input_user_name,
+        t1.input_user_mobil, t1.status, t1.relation_status, t1.express_id,t1.print_status,t1.created,t1.created_by,
+        t1.last_updated,
+        t1.last_updated_by,t2.company,t2.express_name,t2.send_time,
+        (select count(id) from cust_account t where t.parent_id = t1.seller_id) as totaldepartment
+        ,GROUP_CONCAT(DISTINCT t7.seller_org_name)AS org_name  <!--根据订单去查服务中心-->
+        from inv_invoice_in t1
+        left join inv_express t2 on t1.express_id=t2.id
+        LEFT JOIN inv_invoice_in_detail t5 ON t1.id=t5.invoice_in_id
+        LEFT JOIN inv_invoice_in_detail_orderitem t6 ON t5.id=t6.invoice_detail_id AND active=1
+        LEFT JOIN busi_consign_order_items t7 ON t7.id=t6.orderitem_id
+        <where>
+            <if test="status != null and status!='' ">
+                t1.status=#{status,jdbcType=VARCHAR}
+            </if>
+            <if test="relationStatus != null and relationStatus!='' ">
+                and t1.relation_status=#{relationStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="departmentId != null">
+                and t1.department_id=#{departmentId,jdbcType=BIGINT}
+            </if>
+            <if test="id != null">
+                and t1.id=#{id,jdbcType=BIGINT}
+            </if>
+            <if test="notId != null">
+                and t1.id &lt;&gt; #{notId,jdbcType=BIGINT}
+            </if>
+            <if test="sellerName != null and sellerName!='' ">
+                and t1.seller_name like CONCAT('%',#{sellerName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="startTime != null and startTime != '' ">
+                and str_to_date(t1.created,'%Y-%m-%d') &gt;= #{startTime,jdbcType=VARCHAR}
+            </if>
+            <if test="endTime != null and endTime != '' ">
+                and str_to_date(t1.created,'%Y-%m-%d') &lt;= #{endTime,jdbcType=VARCHAR}
+            </if>
+            <if test="sendStartTime != null and sendStartTime != '' ">
+                and str_to_date(t2.send_time,'%Y-%m-%d') &gt;= #{sendStartTime,jdbcType=VARCHAR}
+            </if>
+            <if test="sendEndTime != null and sendEndTime != '' ">
+                and str_to_date(t2.send_time,'%Y-%m-%d') &lt;= #{sendEndTime,jdbcType=VARCHAR}
+            </if>
+            <if test="ownerIdList != null ">
+                and t1.input_user_id in
+                <foreach item="ownerId" index="index" collection="ownerIdList" open="(" separator="," close=")">
+                    #{ownerId}
+                </foreach>
+            </if>
+            <if test="code != null and code != ''">
+                and t1.code like CONCAT('%',#{code,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="expressName != null and expressName != ''">
+                and t2.express_name=#{expressName,jdbcType=VARCHAR}
+            </if>
+            <if test="ids != null ">
+                and t1.id in
+                <foreach item="id" index="index" collection="ids" open="(" separator="," close=")">
+                    #{id}
+                </foreach>
+            </if>
+            <if test="orgid != null and orgid != 0">
+                AND t7.seller_org_id=#{orgid,jdbcType=VARCHAR}
+            </if>
+            <if test="orgIds != null">
+                AND t7.seller_org_id IN
+                <foreach item="id" index="index" collection="orgIds" open="(" separator="," close=")">
+                    #{id}
+                </foreach>
+            </if>
+            <if test="uid != null and uid != 0">
+                and t1.input_user_id=#{uid}
+            </if>
+            <if test="inputUserName != null and inputUserName != ''">
+                and t1.input_user_name like CONCAT('%',#{inputUserName,jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+        group by t1.id order by t2.send_time asc,t1.invoice_date desc,t1.seller_name asc,t1.created desc
+        <if test="start!=null and length !=null">
+            limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+        </if>
+    </select>
+    <!-- 查询总数 -->
+    <select id="queryTotal" resultType="java.lang.Integer" parameterType="map">
+        select count(distinct t1.id)
+        from inv_invoice_in t1
+        left join inv_express t2
+        on t1.express_id=t2.id
+       	left join (select distinct seller_id,order_id from busi_consign_order_items ) as temp2 
+				on t1.seller_id = temp2.seller_id
+        left join busi_consign_order temp3
+        		on temp3.id = temp2.order_id
+        left join (select distinct contact_id,manager  from  cust_account_contact) as temp4  
+				on temp4.contact_id = temp3.contact_id            
+        <where>
+            <if test="status != null and status!='' ">
+                t1.status=#{status,jdbcType=VARCHAR}
+            </if>
+
+            <if test="relationStatus != null and relationStatus!='' ">
+                and t1.relation_status=#{relationStatus,jdbcType=VARCHAR}
+            </if>
+			<if test="departmentId != null">
+                and t1.department_id=#{departmentId,jdbcType=BIGINT}
+            </if>
+            <if test="id != null">
+                and t1.id=#{id,jdbcType=BIGINT}
+            </if>
+            <if test="notId != null">
+                and t1.id &lt;&gt; #{notId,jdbcType=BIGINT}
+            </if>
+            <if test="sellerName != null and sellerName!='' ">
+                and t1.seller_name like CONCAT('%',#{sellerName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="startTime != null and startTime != '' ">
+                and str_to_date(t1.created,'%Y-%m-%d') &gt;= #{startTime,jdbcType=VARCHAR}
+            </if>
+            <if test="endTime != null and endTime != '' ">
+                and str_to_date(t1.created,'%Y-%m-%d') &lt;= #{endTime,jdbcType=VARCHAR}
+            </if>
+            <if test="sendStartTime != null and sendStartTime != '' ">
+                and str_to_date(t2.send_time,'%Y-%m-%d') &gt;= #{sendStartTime,jdbcType=VARCHAR}
+            </if>
+            <if test="sendEndTime != null and sendEndTime != '' ">
+                and str_to_date(t2.send_time,'%Y-%m-%d') &lt;= #{sendEndTime,jdbcType=VARCHAR}
+            </if>
+            <if test="ownerIdList != null ">
+                and temp4.manager in
+                <foreach item="ownerId" index="index" collection="ownerIdList" open="(" separator="," close=")">
+                    #{ownerId}
+                </foreach>
+            </if>
+            <if test="code != null and code != ''">
+                and t1.code like CONCAT('%',#{code,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="expressName != null and expressName != ''">
+                and t2.express_name=#{expressName,jdbcType=VARCHAR}
+            </if>
+            <if test="ids != null ">
+                and t1.id in
+                <foreach item="id" index="index" collection="ids" open="(" separator="," close=")">
+                    #{id}
+                </foreach>
+            </if>
+            <if test="orgid != null and orgid != 0">
+                and t1.org_id=#{orgid}
+            </if>
+            <if test="uid != null and uid != 0">
+                and t1.input_user_id=#{uid}
+            </if>
+        </where>
+    </select>
+
+
+    <select id="selectLastBySellerId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM inv_invoice_in
+        WHERE
+        seller_id = #{sellerId}
+        AND status != 'CANCEL'
+        ORDER BY ID DESC
+        LIMIT 1
+    </select>
+
+    <!-- 根据销项发票申请ID查询相关的进项票 -->
+    <select id="queryByInvOutApplyIds" resultMap="DtoResultMap" parameterType="map">
+        SELECT
+        t1.id, t1.area_code, t1.code, t1.org_id, t1.org_name, t1.seller_id, t1.seller_name, 
+        t1.department_id, t1.department_name,t1.invoice_date,t1.is_defer,
+        t1.area_code,t1.total_amount,t1.total_weight,t1.check_total_amount,t1.check_total_weight, t1.invoice_date,
+        t1.check_date,t1.check_user_id, t1.check_user_name,t1.check_user_mobil,t1.input_user_id, t1.input_user_name,
+        t1.input_user_mobil, t1.status, t1.relation_status, t1.express_id,t1.print_status,t1.created,t1.created_by,
+        t1.last_updated, t1.last_updated_by,t4.company,t4.express_name,t4.send_time
+        FROM inv_invoice_in t1
+        LEFT JOIN inv_express t4
+        ON t1.express_id=t4.id
+        <where>
+            <if test="status != null and status.size() > 0 ">
+                t1.status in
+                <foreach item="s" index="index" collection="status" open="(" separator="," close=")">
+                #{s}
+                </foreach>
+            </if>
+            <if test="relationStatus != null and relationStatus!='' ">
+                AND t1.relation_status=#{relationStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="applyIds != null ">
+                AND t1.id IN
+                (
+                SELECT t2.inv_invoice_in_id FROM inv_invoice_out_item_detail t2
+                LEFT JOIN inv_invoice_out_apply_detail t3 on t2.apply_detail_id=t3.id
+                where t3.invoice_out_apply_id in
+                <foreach item="applyId" index="index" collection="applyIds" open="(" separator="," close=")">
+                    #{applyId}
+                </foreach>
+                AND t2.is_deleted = 0
+                AND t3.is_deleted = 0
+                )
+            </if>
+            <if test="isDefer != null ">
+                AND t1.is_defer = #{isDefer,jdbcType=INTEGER}
+            </if>
+        </where>
+        ORDER BY t1.invoice_date ASC, t1.code ASC, t1.seller_name ASC
+        <if test="start!=null and length !=null">
+            limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+        </if>
+    </select>
+
+
+    <select id="queryExpressDeliverDays" resultType="java.lang.Integer" >
+        select  distinct deliver_days from
+           base_organization_deliver b
+           left join base_deliver d
+          on b.deliver_id = d.id
+        left join inv_express i on i.company = d.name
+         where express_name =#{expressName,jdbcType=VARCHAR}
+          and d.is_deleted=0
+          and b.is_deleted=0
+          and b.org_id=#{orgid}
+    </select>
+    <!-- 根据销项发票申请ID查询相关的进项票总数 -->
+    <select id="queryByInvOutApplyIdsTotal" resultType="java.lang.Integer" parameterType="map">
+        SELECT count(t1.id)
+        FROM inv_invoice_in t1
+        <where>
+            <if test="status != null and status.size() > 0 ">
+                t1.status in
+                <foreach item="s" index="index" collection="status" open="(" separator="," close=")">
+                #{s}
+                </foreach>
+            </if>
+            <if test="relationStatus != null and relationStatus!='' ">
+                AND t1.relation_status=#{relationStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="applyIds != null ">
+                AND t1.id IN
+                (
+                SELECT t2.inv_invoice_in_id FROM inv_invoice_out_item_detail t2
+                LEFT JOIN inv_invoice_out_apply_detail t3 on t2.apply_detail_id=t3.id
+                where t3.invoice_out_apply_id in
+                <foreach item="applyId" index="index" collection="applyIds" open="(" separator="," close=")">
+                    #{applyId}
+                </foreach>
+                AND t3.is_deleted = 0
+                )
+            </if>
+            <if test="isDefer != null ">
+                AND t1.is_defer = #{isDefer,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+    <!-- 根据ID列表查询进项票信息 -->
+    <select id="queryByIds" resultMap="BaseResultMap" parameterType="java.util.List">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM inv_invoice_in
+        WHERE id in
+        <foreach collection="list" item="id" open="(" separator="," close=")">#{id}</foreach>
+    </select>
+
+    <!-- 查询进项票总金额 -->
+    <select id="querySumAmount" resultType="java.math.BigDecimal" parameterType="map">
+        SELECT IFNULL(SUM(CASE IFNULL(check_total_amount, 0)
+        WHEN 0 THEN total_amount
+        ELSE check_total_amount
+        END), 0) total_amount
+        FROM inv_invoice_in
+        <where>
+        	<if test="relationStatus != null and relationStatus != '' ">
+                relation_status = #{relationStatus}
+            </if>
+            <if test="status != null and status.size() > 0 ">
+                AND status in
+                <foreach item="s" index="index" collection="status" open="(" separator="," close=")">
+                #{s}
+                </foreach>
+            </if>
+            <if test="invoiceStartTime != null and invoiceStartTime != '' ">
+                AND str_to_date(invoice_date,'%Y-%m-%d') &gt;= #{invoiceStartTime,jdbcType=VARCHAR}
+            </if>
+            <if test="invoiceEndTime != null and invoiceEndTime != '' ">
+                AND str_to_date(invoice_date,'%Y-%m-%d') &lt;= #{invoiceEndTime,jdbcType=VARCHAR}
+            </if>
+            <if test="applyIds != null ">
+                AND id IN
+                (
+                SELECT t2.inv_invoice_in_id FROM inv_invoice_out_item_detail t2
+                LEFT JOIN inv_invoice_out_apply_detail t3 on t2.apply_detail_id=t3.id
+                where t3.invoice_out_apply_id in
+                <foreach item="applyId" index="index" collection="applyIds" open="(" separator="," close=")">
+                    #{applyId}
+                </foreach>
+                AND t3.is_deleted = 0
+                )
+            </if>
+            <if test="isDefer != null ">
+                AND is_defer = #{isDefer,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+    <select id="checkInvoiceOut" resultType="java.lang.Long" parameterType="java.util.List">
+        SELECT 
+			DISTINCT i.inv_invoice_in_id 
+		FROM 
+			inv_invoice_out_checklist_detail c 
+			INNER JOIN inv_invoice_out_item_detail i ON c.item_detail_id=i.id
+		WHERE 
+			i.is_deleted=0 AND
+			i.inv_invoice_in_id IN
+			<foreach collection="list" item="id" open="(" separator="," close=")">#{id}</foreach>
+    </select>
+    
+    <update id="updateIsDeferForIds" parameterType="map">
+   		UPDATE inv_invoice_in
+    	<set>
+           	 is_defer = #{isDefer}
+        </set>
+        WHERE id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">#{id}</foreach>
+    </update>
+    
+    <delete id="deleteByIds" parameterType="map">
+	    DELETE FROM inv_invoice_in
+	    WHERE status = #{status}
+	    AND id IN
+    	<foreach collection="inIds" item="id" open="(" separator="," close=")">#{id}</foreach>
+  	</delete>
+  	
+  	<select id="querySumAmountBySellerId" resultType="java.math.BigDecimal" parameterType="com.prcsteel.platform.order.model.query.ReportSellerInvoiceInQuery" >
+		SELECT
+			SUM(i.total_amount)
+		FROM inv_invoice_in i
+		WHERE 1=1
+		AND i.seller_id = #{sellerId,jdbcType=BIGINT}
+		AND i.status IN
+		<foreach collection="statusList" item="status" open="(" separator="," close=")">
+  			#{status,jdbcType=VARCHAR}
+  		</foreach>
+		GROUP BY i.seller_id
+  	</select>
+  	
+  	 <resultMap id="InvoiceKeepMap" type="com.prcsteel.platform.order.model.dto.InvoiceKeepingDto">
+  	 	 <result column="invoice_date" property="invoiceDate" jdbcType="TIMESTAMP"/>
+         <result column="code" property="code" jdbcType="VARCHAR"/>
+  	 	 <result column="seller_id" property="sellerId" jdbcType="BIGINT"/>
+  	 	 <result column="seller_name" property="sellerName" jdbcType="VARCHAR"/>
+  	 	 <result column="no_tax_amount" property="noTaxAmount" jdbcType="DECIMAL"/>
+  	 	 <result column="tax_amount" property="taxAmount" jdbcType="DECIMAL"/>
+  	 	 <result column="amount" property="amount" jdbcType="DECIMAL"/>
+  	 	 <result column="check_user_name" property="checkUserName" jdbcType="VARCHAR"/>
+  	 	 <result column="check_date" property="checkDate" jdbcType="TIMESTAMP"/>
+  	 	 <result column="status" property="status" jdbcType="VARCHAR"/>
+  	 	 <result column="id" property="id" jdbcType="BIGINT"/>
+  	 	 <result column="name" property="name" jdbcType="VARCHAR"/>
+  	 	 <result column="nsort_name" property="nsortName" jdbcType="VARCHAR"/>
+  	 	 <result column="check_user_id" property="checkUserId" jdbcType="BIGINT"/>
+  	 </resultMap>
+  	
+  	<select id="invoiceKeeping" resultMap="InvoiceKeepMap" parameterType="com.prcsteel.platform.order.model.query.InvoiceKeepingQuery" >
+	  	select k.invoice_date, k.code, k.seller_id, k.seller_name,
+			sum(IFNULL(k1.no_tax_amount, 0)) AS no_tax_amount, 
+			sum(IFNULL(k1.tax_amount, 0)) AS tax_amount, sum(IFNULL(k1.amount, 0)) AS amount, 
+			k.check_user_name, k.check_date, 
+			k.status, k.id, TT.nsort as nsort_name, TT.cbname as name
+		from inv_invoice_in as k
+			left join inv_invoice_in_detail as k1 on k1.invoice_in_id = k.id
+			left join base_sys_category_alias as k2 on k1.alias_id = k2.id	
+			left join (
+				SELECT A.name AS nsort, B.name AS cbname, B.uuid as uuid
+			    FROM common_category A
+					LEFT JOIN common_group_for_category C ON A.uuid = C.category_uuid and C.is_deleted = 0
+					LEFT JOIN common_category_group B ON C.category_group_uuid = B.uuid and B.is_deleted = 0
+					LEFT JOIN common_site D ON B.site_uuid=D.uuid and D.is_deleted = 0
+			    WHERE d.name= '寄售系统' and A.is_deleted = 0
+			) as TT ON TT.nsort = k2.category_name
+		where 
+		k.status in ('WAIT','ALREADY')
+		AND k.check_date between #{startDate,jdbcType=VARCHAR} and #{endDate,jdbcType=VARCHAR}
+		<if test="checkUserId != null">
+			AND k.check_user_id = #{checkUserId,jdbcType=INTEGER}
+		</if>
+		<if test="category != null and category!='isNull'">
+			AND TT.uuid = #{category,jdbcType=VARCHAR}
+		</if>
+		<if test="category != null and category=='isNull'">
+			AND TT.cbname is null 
+		</if>
+		<if test="invoiceNo != null">
+			AND k.code = #{invoiceNo,jdbcType=INTEGER}
+		</if>
+		<if test="seller != null">
+			AND k.seller_name like CONCAT('%',#{seller},'%')
+		</if>
+		group by TT.cbname, k.id
+		ORDER BY k.invoice_date
+		<if test="start!=null and length !=null">
+           limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+        </if>
+  	</select>
+  	
+  	<select id="invoiceKeepingCount" resultType="java.lang.Integer" parameterType="com.prcsteel.platform.order.model.query.InvoiceKeepingQuery" >
+	  	select count(1) FROM (SELECT k.id
+				from inv_invoice_in as k
+		left join inv_invoice_in_detail as k1 on k1.invoice_in_id = k.id
+		left join (
+			select a1.name as name,a1.uuid as uuid, a3.name as subname from common_category as a3
+			left join common_group_for_category as a2 on a2.category_uuid = a3.uuid
+			left join common_category_group as a1 on a1.uuid = a2.category_group_uuid
+			where a1.site_uuid='inner_cbms'  -- outer_market, 
+			and a1.parent_uuid=0
+			group by a3.id
+			order by a3.id asc
+		) as f on f.subname = k1.nsort_name
+		where 
+		k.status in ('WAIT','ALREADY')
+		AND k.check_date between #{startDate,jdbcType=VARCHAR} and #{endDate,jdbcType=VARCHAR}
+		<if test="checkUserId != null">
+			AND k.check_user_id = #{checkUserId,jdbcType=INTEGER}
+		</if>
+		<if test="category != null and category!='isNull'">
+			AND f.uuid = #{category,jdbcType=VARCHAR}
+		</if>
+		<if test="category != null and category=='isNull'">
+			AND f.name is null 
+		</if>
+		<if test="invoiceNo != null">
+			AND k.code = #{invoiceNo,jdbcType=INTEGER}
+		</if>
+		<if test="seller != null">
+			AND k.seller_name like CONCAT('%',#{seller},'%')
+		</if>
+        group by f.name, k.id
+        )f
+  	</select>
+  	
+  	<select id="queryCheckName"  resultMap="InvoiceKeepMap" parameterType="com.prcsteel.platform.order.model.query.InvoiceKeepingQuery" >
+  		select check_user_id, check_user_name 
+  		from inv_invoice_in 
+  		where check_user_id is not null
+  		<if test="checkUserId != null">
+			AND check_user_id = #{checkUserId,jdbcType=INTEGER}
+		</if>
+  		group by check_user_id 
+  	</select>
+    <resultMap id="InvoiceNoPassMap" type="com.prcsteel.platform.order.model.dto.AccountInvoiceNoPassDto">
+        <result column="account_name" property="accountName" jdbcType="VARCHAR"/>
+        <result column="buyer_org_name" property="buyerOrgName" jdbcType="VARCHAR"/>
+        <result column="invoice_data_status" property="invoiceDataStatus" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="balance_second_settlement" property="balanceSecondSettlement" jdbcType="DECIMAL"/>
+        <result column="apply_amount" property="applyAmount" jdbcType="DECIMAL"/>
+    </resultMap>
+    <select id="queryNoPassInvoiceReason"  resultMap="InvoiceNoPassMap" parameterType="com.prcsteel.platform.order.model.query.AccountInvoiceNoPassQuery" >
+        select (case when t.num > 1 then CONCAT(a.account_name,'【',a.department_name,'】')  else a.account_name end) account_name,a.buyer_org_name,a.invoice_data_status,a.status,a.balance_second_settlement,a.apply_amount
+        from (select distinct o.buyer_org_id,o.account_id,o.account_name,o.department_name,o.buyer_org_name,e.invoice_data_status , oi.status,
+        (case when c.balance_second_settlement &lt; 0 then (0 - c.balance_second_settlement) else 0.00 end ) AS balance_second_settlement , b.apply_amount
+        from inv_invoice_in i
+        left join  inv_invoice_in_detail d on  i.id= d.invoice_in_id
+        left join inv_invoice_in_detail_orderitem it on d.id = it.invoice_detail_id
+        left join busi_consign_order o on it.order_id = o.id
+        left join cust_account c on o.account_id = c.id
+        left join cust_account_ext e on c.id = e.cust_account_id
+        left join (
+        <!-- 得到未开销项金额，即为该买家指定的结束时间的之前的第一条 -->
+        select k.buyer_id,
+        SUBSTRING_INDEX(GROUP_CONCAT(k.invoice_out_balance ORDER BY k.created DESC),',',1) AS apply_amount
+        from report_buyer_invoice_out as k
+        group by k.buyer_id
+        ) b
+        on  b.buyer_id = o.account_id
+        left join inv_invoice_out_apply_detail od on o.account_id = od.buyer_id
+        left join inv_invoice_out_apply oi on od.invoice_out_apply_id = oi.id
+        where oi.status in ('PENDING_SUBMIT','PENDING_APPROVAL','DISAPPROVE','REVOKED')
+        and od.is_deleted =0 and it.active = 1
+        <if test="orgList != null and orgList.size > 0 ">
+            and o.buyer_org_id in
+            <foreach item="org" index="index" collection="orgList" open="(" separator="," close=")">
+                #{org}
+            </foreach>
+        </if>
+        <if test="buyerId != null">
+            AND o.account_id = #{buyerId}
+        </if>
+        <if test="invoiceStatus != null">
+            AND e.invoice_data_status = #{invoiceStatus}
+        </if>
+        union ALL
+        select distinct o.buyer_org_id,o.account_id,o.account_name,o.department_name,o.buyer_org_name,e.invoice_data_status ,  'PENDING_SUBMIT' status,
+        (case when c.balance_second_settlement &lt; 0 then (0 - c.balance_second_settlement) else 0.00 end ) AS balance_second_settlement , b.apply_amount
+        from inv_invoice_in i
+        left join  inv_invoice_in_detail d on  i.id= d.invoice_in_id
+        left join inv_invoice_in_detail_orderitem it on d.id = it.invoice_detail_id
+        left join busi_consign_order o on it.order_id = o.id
+        INNER JOIN busi_consign_order_items s on s.order_id=o.id
+        left join cust_account c on o.account_id = c.id
+        left join cust_account_ext e on c.id = e.cust_account_id
+        left join (
+        <!-- 得到未开销项金额，即为该买家指定的结束时间的之前的第一条 -->
+        select k.buyer_id,
+        SUBSTRING_INDEX(GROUP_CONCAT(k.invoice_out_balance ORDER BY k.created DESC),',',1) AS apply_amount
+        from report_buyer_invoice_out as k
+        group by k.buyer_id
+        ) b
+        on  b.buyer_id = o.account_id
+        WHERE it.active = 1
+        and s.used_amount = 0
+        and s.used_weight = 0
+        and s.id not in (select order_detail_id from inv_invoice_out_item_detail where is_deleted=0)
+
+        <if test="orgList != null and orgList.size > 0 ">
+            and o.buyer_org_id in
+            <foreach item="org" index="index" collection="orgList" open="(" separator="," close=")">
+                #{org}
+            </foreach>
+        </if>
+        <if test="buyerId != null">
+            AND o.account_id = #{buyerId}
+        </if>
+        <if test="invoiceStatus != null">
+            AND e.invoice_data_status = #{invoiceStatus}
+        </if>
+        ) a
+        LEFT JOIN (
+        SELECT parent_id , count(1) num FROM cust_account
+        where  parent_id <![CDATA[ <> ]]> 0
+        group by parent_id
+        ) t ON t.parent_id = a.account_id
+        order by a.buyer_org_id
+        limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+    </select>
+
+    <select id="queryNoPassReasonCount" resultType="int" parameterType="com.prcsteel.platform.order.model.query.AccountInvoiceNoPassQuery" >
+        select count(1) from
+        (select distinct o.account_name,o.buyer_org_name,e.invoice_data_status , oi.status,
+        c.balance_second_settlement
+        from inv_invoice_in i
+        left join inv_invoice_in_detail d on i.id= d.invoice_in_id
+        left join inv_invoice_in_detail_orderitem it on d.id = it.invoice_detail_id
+        left join busi_consign_order o on it.order_id = o.id
+        left join cust_account c on o.account_id = c.id
+        left join cust_account_ext e on c.id = e.cust_account_id
+        left join inv_invoice_out_apply_detail od on o.account_id = od.buyer_id
+        left join inv_invoice_out_apply oi on od.invoice_out_apply_id = oi.id
+        where oi.status in ('PENDING_SUBMIT','PENDING_APPROVAL','DISAPPROVE','REVOKED')
+        and od.is_deleted =0 and it.active = 1
+        <if test="orgList != null and orgList.size > 0 ">
+            and o.buyer_org_id in
+            <foreach item="org" index="index" collection="orgList" open="(" separator="," close=")">
+                #{org}
+            </foreach>
+        </if>
+        <if test="buyerId != null">
+            AND o.account_id = #{buyerId}
+        </if>
+        <if test="invoiceStatus != null">
+            AND e.invoice_data_status = #{invoiceStatus}
+        </if>
+        union ALL
+        select distinct o.account_name,o.buyer_org_name,e.invoice_data_status, 'PENDING_SUBMIT' AS status,
+        c.balance_second_settlement
+        from inv_invoice_in i
+        left join  inv_invoice_in_detail d on  i.id= d.invoice_in_id
+        left join inv_invoice_in_detail_orderitem it on d.id = it.invoice_detail_id
+        left join busi_consign_order o on it.order_id = o.id
+        INNER JOIN busi_consign_order_items s on s.order_id=o.id
+        left join cust_account c on o.account_id = c.id
+        left join cust_account_ext e on c.id = e.cust_account_id
+        WHERE it.active = 1
+        and s.used_amount = 0
+        and s.used_weight = 0
+        and s.id not in (select order_detail_id from inv_invoice_out_item_detail where is_deleted=0)
+        <if test="orgList != null and orgList.size > 0 ">
+            and o.buyer_org_id in
+            <foreach item="org" index="index" collection="orgList" open="(" separator="," close=")">
+                #{org}
+            </foreach>
+        </if>
+        <if test="buyerId != null">
+            AND o.account_id = #{buyerId}
+        </if>
+        <if test="invoiceStatus != null">
+            AND e.invoice_data_status = #{invoiceStatus}
+        </if>
+        ) a
+    </select>
+    <!-- add by zhoucai@prcsteel.com 2016-3-24 根据发票号模糊查询发票列表 -->
+	<select id="queryInvoiceCodeList" resultMap="BaseResultMap" parameterType="map">
+        select
+        t1.code
+        from inv_invoice_in t1
+        where t1.code like CONCAT('%',#{code,jdbcType=VARCHAR},'%')
+        order by t1.invoice_date desc
+        limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+    </select>
+</mapper>

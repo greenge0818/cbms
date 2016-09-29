@@ -1,0 +1,102 @@
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            银票管理
+        </li>
+        <li class="active">
+            银票管理
+        </li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+        #parse("layout/topbtn.vm")<!-- /.nav-search -->
+</div>
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- PAGE CONTENT BEGINS -->
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="clearfix">
+                        <div class="clearfix" align="right">
+                            <form id="searchForm" class="form-inline">
+                                <label>服务中心：</label>
+                                     <select id="org" value="$!org">
+                                     </select>
+                                </label>
+                                <label>录入时间：</label>
+                                <input id="stimefrom" class="ipt-text" type="text" value="$!startTime"
+                                       onFocus="WdatePicker()"/> -
+                                <input id="stimeto" class="ipt-text" type="text" value="$!endTime"
+                                       onFocus="WdatePicker()"/>
+                                <label>客户名称：</label><input class="ipt-text" type="text" value="" id="accountName"/></label>
+                                <label>银票状态：</label>
+                                    <select id="status">
+                                        <option value="">全部</option>
+                                        #foreach($st in $!status)
+                                            <option value="$st.code">$st.name</option>
+                                        #end
+                                    </select>
+                                </label>
+                                <button id="search" class="btn btn-sm btn-default" type="button" title="搜索">
+                                    <i class="aace-icon fa fa-search bigger-110"></i>搜索
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- div.dataTables_borderWrap -->
+                    <div>
+                        <table id="forShow" class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>银票票号</th>
+                                <th>客户名称</th>
+                                <th>出票银行</th>
+                                <th>出票金额（元）</th>
+                                <th>银票到期日</th>
+                                <th>贴现率（‰）</th>
+                                <th>贴现率成本（‰）</th>
+                                <th>录入时间</th>
+                                <th>服务中心</th>
+                                <th>银票状态</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tfoot class="tbody-border0" id="secondpayment_footer">
+                            <tr>
+                                <td class="text-right bolder" colspan="11">当前页一共<span id="count">0</span>张银票，合计金额<span id="amount">0</span>元</td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+    #if($shiro.hasPermission("acceptdraft:create:add"))
+        <div class="btn-bar text-left">
+            <a class="button btn-sm btn-info" id="new">添加新的银票</a>
+        </div>
+    #end
+    <input type="hidden" id="add" value="$shiro.hasPermission("acceptdraft:create:add")"/>  <!-- 新增银票 -->
+    <input type="hidden" id="submit" value="$shiro.hasPermission("acceptdraft:create:submit")"/>  <!-- 银票提交审核 -->
+    <input type="hidden" id="withdraw" value="$shiro.hasPermission("acceptdraft:auditrecharge:withdraw")"/>  <!-- 撤回充值申请 -->
+    <input type="hidden" id="check" value="$shiro.hasPermission("acceptdraft:check:submit")"/>  <!-- 银票充值审核 -->
+    <input type="hidden" id="cancel" value="$shiro.hasPermission("acceptdraft:auditrecharge:cancel")"/>  <!-- 申请取消充值 -->
+    <input type="hidden" id="audit" value="$shiro.hasPermission("acceptdraft:auditrecharge:audit")"/>  <!-- 取消充值审核 -->
+</div><!-- /.page-content -->
+
+<script src="$link.getContextPath()/js/views/acceptraft/list.js"></script>

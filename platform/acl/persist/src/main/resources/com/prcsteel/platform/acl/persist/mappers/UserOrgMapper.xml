@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.acl.persist.dao.UserOrgDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.acl.model.model.UserOrg" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="org_id" property="orgId" jdbcType="BIGINT" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="userOrgsDto" type="com.prcsteel.platform.acl.model.dto.UserOrgsDto" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="role_id" property="roleId" jdbcType="BIGINT" />
+    <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+    <result column="org_id" property="orgId" jdbcType="BIGINT" />
+    <result column="org_name" property="orgName" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, org_id, created, created_by, last_updated, last_updated_by
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from acl_user_org
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from acl_user_org
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByUserId" parameterType="java.lang.Long" >
+    delete from acl_user_org
+    where user_id = #{userId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.prcsteel.platform.acl.model.model.UserOrg" >
+    insert into acl_user_org (id, user_id, org_id, 
+      created, created_by, last_updated, 
+      last_updated_by)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{orgId,jdbcType=BIGINT}, 
+      now(), #{createdBy,jdbcType=VARCHAR}, now(), 
+      #{lastUpdatedBy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.prcsteel.platform.acl.model.model.UserOrg" >
+    insert into acl_user_org
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="orgId != null" >
+        org_id,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="orgId != null" >
+        #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.acl.model.model.UserOrg" >
+    update acl_user_org
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="orgId != null" >
+        org_id = #{orgId,jdbcType=BIGINT},
+      </if>
+        last_updated = now(),
+      <if test="lastUpdatedBy != null" >
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.acl.model.model.UserOrg" >
+    update acl_user_org
+    set user_id = #{userId,jdbcType=BIGINT},
+      org_id = #{orgId,jdbcType=BIGINT},
+      last_updated = now(),
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <!-- 获取所有已设业务员 -->
+  <select id="getSetUser" parameterType="map" resultMap="com.prcsteel.platform.acl.persist.dao.UserDao.showMap">
+  	select distinct u.login_id as login_id,
+        u.name as user_name,
+        u.tel as tel,
+        u.status as status,
+        u.id as user_id,
+        r.name as role_name,
+        u.role_id as role_id,
+        o.name as org_name,
+        o.id as org_id 
+        from acl_user_org a
+        LEFT JOIN acl_user u on a.user_id=u.id
+        LEFT JOIN acl_role r on r.id = u.role_id
+        LEFT JOIN base_organization o on o.id = u.org_id
+  	<where>
+  		<if test="orgName != null and orgName != ''">
+            and o.name like concat('%',TRIM(#{orgName,jdbcType=VARCHAR}),'%')
+        </if>
+        <if test="userName != null and userName != ''">
+            and u.name like concat('%',TRIM(#{userName,jdbcType=VARCHAR}),'%')
+        </if>
+  	</where>
+  	limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+  </select>
+  <!-- 获取所有未设业务员 -->
+  <select id="getUnsetUser" resultMap="com.prcsteel.platform.acl.persist.dao.UserDao.showMap">
+  	select distinct u.login_id as login_id,
+        u.name as user_name,
+        u.tel as tel,
+        u.status as status,
+        u.id as user_id,
+        r.name as role_name,
+        u.role_id as role_id,
+        o.name as org_name,
+        o.id as org_id 
+        from acl_user u
+        LEFT JOIN acl_user_org a on a.user_id=u.id
+        LEFT JOIN acl_role r on r.id = u.role_id
+        LEFT JOIN base_organization o on o.id = u.org_id
+  	where a.id is null and u.status=1
+  	order by u.org_id
+  </select>
+  
+  <select id="getSetUserTotal" resultType="java.lang.Integer">
+  	select count(distinct a.user_id) 
+  		from acl_user_org a
+        LEFT JOIN acl_user u on a.user_id=u.id
+        LEFT JOIN acl_role r on r.id = u.role_id
+        LEFT JOIN base_organization o on o.id = u.org_id
+	  	<where>
+	  		<if test="orgName != null and orgName != ''">
+	            and o.name like concat('%',TRIM(#{orgName,jdbcType=VARCHAR}),'%')
+	        </if>
+	        <if test="userName != null and userName != ''">
+	            and u.name like concat('%',TRIM(#{userName,jdbcType=VARCHAR}),'%')
+	        </if>
+	  	</where>
+  </select>
+  
+  <select id="getConfigByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List" />
+			from acl_user_org a where a.user_id = #{userId,jdbcType=INTEGER}
+    order by a.id
+  </select>
+  
+  <select id="getConfigOrgsByUserId" parameterType="java.lang.Long" resultMap="userOrgsDto">
+  	select a.id, a.user_id, u.name as user_name, u.role_id, a.org_id, b.name as org_name
+	from acl_user_org a
+		left join acl_user as u on u.id = a.user_id 
+		left join base_organization as b on b.id = a.org_id 
+	where a.user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <!--查询当前用户所在的服务中心 add by wangxianjun-->
+  <select id="getConfigBusinessOrgByUserId" parameterType="java.lang.Long" resultMap="userOrgsDto">
+    select a.id, a.user_id, u.name as user_name, u.role_id, a.org_id, b.name as org_name
+    from acl_user_org a
+    left join acl_user as u on u.id = a.user_id
+    left join base_organization as b on b.id = a.org_id
+    where a.user_id = #{userId,jdbcType=INTEGER}
+    AND b.is_org = '1' AND b.enabled = '1' AND b.status='1'
+  </select>
+  
+  
+</mapper>

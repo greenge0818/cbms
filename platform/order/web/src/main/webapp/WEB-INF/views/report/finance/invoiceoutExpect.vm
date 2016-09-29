@@ -1,0 +1,96 @@
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            报表管理
+        </li>
+        <li>
+            财务报表
+        </li>
+        <li>
+             待开销项发票清单
+        </li>
+    </ul>
+    <!-- /.breadcrumb -->
+
+    #parse("layout/topbtn.vm")
+    <!-- /.nav-search -->
+</div>
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="clearfix">
+                        <div class="input-group pull-right col-md-12 col-sm-12 col-lg-12 search-bar">
+                            #if(!$shiro.hasPermission("sys:field:org"))
+                                <label>服务中心：<input placeholder="全部" id="sorganization" type="text"
+                                                   class="ipt-text" readonly="" value="" onclick="showMenu();">
+                                    <input type='hidden' id='sorganizationHidden' value='0'/>
+                                </label>
+                            #end
+                            <label>买家全称：</label><input id="accountid" search="account" accounttype="buyer"
+                                                       class="ipt-text" type="text" value=""/>
+                            <label>时间：</label>
+                            <input id="startTime" class="Wdate" type="text" value="$startTime"
+                                   onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')||\'2020-10-01\'}'})"/> -
+                            <input id="endTime" class="Wdate" type="text" value="$endTime"
+                                   onFocus="WdatePicker({minDate:'#F{$dp.$D(\'startTime\')}',maxDate:'2020-10-01'})"/>
+                            <button id="btnsearch" class="btn btn-sm btn-default" type="button" title="搜索">
+                                <i class="aace-icon fa fa-search bigger-110"></i>搜索
+                            </button>
+                            <button id="exportexcel" class="btn btn-sm btn-default" type="button" title="导出到excel">
+                                <i class="aace-icon fa bigger-110"></i>导出到excel
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- div.dataTables_borderWrap -->
+                    <div>
+                        <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <th>编号</th>
+                            <th>买家全称</th>
+                            <th>品名</th>
+                            <th>规格</th>
+                            <th>材质</th>
+                            <th>数量(吨)</th>
+                            <th>单价(元)</th>
+                            <th>金额(元)</th>
+                            <th>税额</th>
+                            <th>价税合计</th>
+                            <th>交易单号</th>
+                            </thead>
+                            <tfoot>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+<div id="menuContent" class="menuContent" style="display:none; position: absolute;">
+    <ul id="orgTree" class="ztree" style="margin-top:0; width:160px;"></ul>
+</div>
+
+<script src="$link.getContextPath()/js/views/report/business/businesscommon.js"></script>
+<script src="$link.getContextPath()/js/views/report/finance/invoiceoutexpect.js"></script>
+<script src="$link.getContextPath()/js/views/user/userorg.js"></script>
+<script src="$link.getContextPath()/js/views/account/searchaccount.js"></script>
+
+
+
+

@@ -1,0 +1,346 @@
+<div class="main-content">
+    <div class="main-content-inner">
+        <div class="breadcrumbs" id="breadcrumbs">
+            <script type="text/javascript">
+                try {
+                    ace.settings.check('breadcrumbs', 'fixed')
+                } catch (e) {
+                }
+            </script>
+
+            <ul class="breadcrumb">
+                <li>
+                    <i class="ace-icon fa fa-home home-icon"></i>
+                    	交易管理
+                </li>
+                <li>
+                    <a href="$link.getContextPath()/common/menu/order-view/order-query-index-page.html">交易单管理</a>
+                </li>
+                <li class="active">
+                    打印放货单
+                </li>
+            </ul>
+            <!-- /.breadcrumb -->
+
+        </div>
+        <style type="text/css">
+            .zprint {
+                width: 241mm;
+                max-height: 140mm;
+                border: 0 !important;
+            }
+        </style>
+        <div class="page-content">
+            <div class="row">
+                <div class="col-xs-12">
+
+                    <!-- PAGE CONTENT BEGINS -->
+                    <div class="tabbar">
+                        <ul class="nav nav-tabs padding-12 tab-color-blue" id="myTab4">
+                            #foreach($setting in $!{settings})
+                                #if($setting == "DELIVERYLETTER")
+                                    <li>
+                                        <a href="$link.getContextPath()/order/pickup/delivery/order/$orderId/showprint.html">放货函</a>
+                                    </li>
+                                #end
+                                #if($setting == "DELIVERYORDER")
+                                    <li>
+                                        <a href="$link.getContextPath()/order/pickup/delivery/order/$orderId/showprint.html?delivery=DELIVERYORDER">提货单（给仓库）</a>
+                                    </li>
+                                #end
+                                #if($setting == "TRANSFERORDER")
+                                    <li class="active">
+                                        <a href="#">货权转让单（给仓库）</a>
+                                    </li>
+                                #end
+                                #if($setting == "TRANSFERLETTER")
+                                    <li>
+                                        <a href="$link.getContextPath()/order/pickup/delivery/order/$orderId/showprint.html?delivery=TRANSFERLETTER">货权转让函</a>
+                                    </li>
+                                #end
+                                #if($setting == "PICKUPFORBUYER")
+				                    <li>
+				                        <a href="$link.getContextPath()/order/pickup/delivery/order/$orderId/showprint.html?delivery=PICKUPFORBUYER">提货单（给买家）</a>
+				                    </li>
+				                #end
+                            #end
+                        </ul>
+                    </div>
+                    <div class="tabbable tabs-left">
+                        <ul class="nav nav-tabs" id="myTab3">
+                            #foreach($delivery in $printInfo)
+                                #if($deliveryId)
+                                    <li #if($delivery.head.id == $deliveryId) class="active"#end>
+                                        <a data-toggle="tab" href="#print$velocityCount"> <i
+                                                class="blue ace-icon fa fa-file-word-o bigger-110"></i>
+                                            货权转让货单$NumberTool.format("#00",$velocityCount)
+                                            打印次数:<em>$!{delivery.head.print_times}</em>
+                                            <br/>转让单号:$!delivery.head.code
+                                        </a>
+                                    </li>
+                                #else
+                                    <li #if($velocityCount==1) class="active"#end>
+                                        <a data-toggle="tab" href="#print$velocityCount"> <i
+                                                class="blue ace-icon fa fa-file-word-o bigger-110"></i>
+                                            货权转让货单$NumberTool.format("#00",$velocityCount)
+                                            打印次数:<em>$!{delivery.head.print_times}</em>
+                                            <br/>转让单号:$!delivery.head.code
+                                        </a>
+                                    </li>
+                                #end
+
+                            #end
+                        </ul>
+
+                        <div class="tab-content print-page">
+                            #foreach($delivery in $printInfo)
+                                #set($head = $delivery.head)
+                                #set($details = $delivery.details)
+                                #if($deliveryId)
+                                <div id="print$velocityCount"
+                                     class="table-bar tab-pane #if($!delivery.head.id == $!deliveryId) in active#end"
+                                     deliveryId="$!{head.id}">
+                                #else
+                                <div id="print$velocityCount"
+                                     class="table-bar tab-pane #if($velocityCount==1) in active#end"
+                                     deliveryId="$!{head.id}">
+                                #end
+                                <div class="print">
+                                #foreach($key in $details.keySet())
+                                    #set($detail = $!details.get($key))
+                                    #set($tableCount = ($detail.size()+6)/7+(-1))
+                                    #set($count = 0)    ##页码
+                                    #foreach($count in [0 .. $!tableCount])
+                                    	
+                                    	 #if($count > 0)
+										 	<div style="page-break-before:always;height:1px; font-size:1px; width:100px;">&nbsp;</div>
+										 #end
+                                    
+                                            <div style="width: 241mm; height: 140mm">
+                                                <table class="zprint contable text-center zprint-table">
+                                                    <thead>
+                                                    <tr>
+	                                                	<td style="border: none;height:20px;" colspan="7">&nbsp;</td>
+	                                                </tr>
+                                                    <tr>
+                                                        <td style="border:0 !important;" colspan="7">
+                                                    <span class="pull-left"><img
+                                                            src="../../../../../img/print-logo.png"></span>
+                                            <span class="pull-right"><H6 class="text-right">
+                                                服务热线：400-705-9515</H6></span>
+                                            <span class="text-center h1 bolder"
+                                                  style="font-size:22px">杭州钢为网络科技有限公司货权转让单</span>
+                                                        </td>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                    <tr>
+                                                        <td colspan="7" style="border:0 !important;">
+                                        <span class="pull-left">
+                                            开单日期：<span>$date.format("yyyy-MM-dd HH:mm:ss",$!head.created)</span>
+                                        </span>
+                                        <span class="pull-right">
+                                            转让单编号：<span>$!{head.code}</span>
+                                        </span>
+                                        <span>
+                                            有效时间：2天内有效(含当天)
+                                        </span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="7" style="border:0 !important;" class="text-left">
+                                            <span class="bolder">致：$!{key}
+                                                ，请将我司以下规格货物货权转给：【$!head.account_name  $!head.contact_name  $!head.contact_tel
+                                                】</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th width="100">品名</th>
+                                                        <th>材质</th>
+                                                        <th>规格</th>
+                                                        <th>厂家</th>
+                                                        <th>数量</th>
+                                                        <th>重量（吨）</th>
+                                                        <th>备注</th>
+                                                    </tr>
+                                                        #set($endCount = ($count+1)*7)   ##7,14
+                                                        #set($startCount = $count*7)   ##0,7
+                                                        #set($elemCount = 0)
+                                                        #set($quantity = 0)
+                                                        #set($weight = 0)
+                                                        #foreach($elem in $detail)
+                                                        <tr>
+                                                            #if($elemCount >= $startCount and $elemCount < $endCount)
+                                                            <tr>
+                                                                <td>$!elem.nsort_name</td>
+                                                                <td>$!elem.material</td>
+                                                                <td>$!elem.spec</td>
+                                                                <td>$!elem.factory</td>
+                                                                <td>$!elem.pick_quantity</td>
+                                                                #set($quantity = $quantity + $elem.pick_quantity)
+                                                                <td>$NumberTool.format(
+                                                                    "#0.000000",$!elem.pick_weight)</td>
+                                                                #set($weight = $weight + $elem.pick_weight)
+                                                                <td>$!elem.package_no</td>
+                                                            </tr>
+                                                            #end
+                                                            #set($elemCount = $elemCount+1)
+                                                        </tr>
+                                                        #end
+                                                        #if($!elemCount < $endCount)
+                                                            #set($loopNum = $endCount - $elemCount - 1)
+                                                            #foreach($i in [0 .. $!loopNum])
+                                                            <tr>
+                                                                <td><span class="bolder">#if($velocityCount==1)
+                                                                    以下为空白#end</span>
+                                                                </td>
+                                                                <td>&nbsp;</td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </tr>
+                                                            #end
+                                                        #end
+                                                        #set($rowSpanSize = $delivery.persons.size() + 1)
+                                                    <tr>
+                                                        <td><span class="bolder">合计</span></td>
+                                                        <td>/</td>
+                                                        <td>/</td>
+                                                        <td>/</td>
+                                                        <td>$quantity</td>
+                                                        <td>$NumberTool.format("#0.000000",$!weight)</td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><span class="bolder">注意事项</span></td>
+                                                        <td colspan="6" class="text-left">
+                                                            1.本单据未签字、缺联、涂改均为无效；2.本单据须加盖杭州钢为“提货专用章”后生效，杭州钢为对该批次货物概不负责；
+                                                            3.本单据一式四联 第一联(白)：留底联 第二联(红)：财务联 第三联(蓝)：客户联
+                                                            第四联(黄)：仓库联，各方各自妥善保管。
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="7" class="text-left">
+                                                            <span class="bolder">公司地址：</span>$!head.owner_address　　　
+                                                            <span class="bolder">业务员：</span>$!head.owner_name　　　
+                                                            <span class="bolder">电话：</span>$!head.owner_tel　　　
+                                                            <span class="bolder">传真：</span>$!head.owner_fax　
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><span class="bolder">备注</span></td>
+                                                        <td colspan="6" class="text-left">$!head.note
+                                                            <!--
+                                                        	<div style="position:relative;">
+                                                            	<div class="marker" style="position: absolute; z-index: 10; bottom: 50px; right: 11px;;">
+																	<img style='width:150px; height:150px;' src="$link.getContextPath()/img/cachet.png"/>
+																</div>　
+                                                            </div>
+                                                            -->
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        #set($count = $count+1)
+                                    #end
+                                #end
+                                </div>
+                            </div>
+                            #end
+                            <!-- /.col -->
+                        </div>
+                            <!-- /.row -->
+                        </div>
+                        <div class="btn-bar text-center">
+                            <!-- 有打印权限；且没有“只查看融资订单”权限） -->
+                            #if($shiro.hasPermission("order:query:fillup:print") && !$financeorder)
+                                <button id="prints" class="btn btn-info"><i class="fa fa-print"></i>打印</button>
+                            #end
+                            &nbsp;
+                            <button id="back" type="button" class="btn btn-default">返回</button>
+                        </div>
+
+                        <input id="alterStatus" value="$!{order.alterStatus}" type="hidden"/>
+
+                        <!-- /.page-content -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.main-content -->
+<script type="application/javascript">
+    var deliveryType = "TRANSFERORDER";
+
+    $(document).ready(function () {
+        $(document).on("click", "#prints", function () {
+            if(!showButtons()){
+                return false;
+            }
+
+            var printDiv = $("div.table-bar.active");
+
+            var print_times = $(".nav-tabs li.active a").find("em");
+
+            $.get("$link.getContextPath()/order/pickup/delivery/" + $(printDiv).attr("deliveryId") + "/" + deliveryType + "/print.html", function (data) {
+                if (data.success) {
+                    printDiv.find(".print").print();
+                    print_times.text(print_times.text() * 1 + 1);
+                } else {
+                    cbms.alert(data.data, function () {
+                        location.href = "$link.getContextPath()/order/pickup/delivery/order/$!{orderId}/showprint.html"
+                    });
+                }
+            });
+        });
+        $(document).on("click", "#back", function () {
+            location.href = "$link.getContextPath()/order/query/fillup.html";
+        });
+    });
+
+    /**
+     * 正在进行合同变更的订单，禁止除“返回”外的按钮操作
+     */
+    function showButtons() {
+        //var type = $("#alterStatus").val();
+        var orderId = $!{orderId};
+        var returnFlag = true;
+        /*if(type == "PENDING_APPROVAL" || type == "PENDING_RELATE" || type=="PENDING_APPLY" || type=="PAYED_DISAPPROVE" ||type=="PENDING_APPR_PAY" || type =="PENDING_PRINT_PAY" || type =="PENDING_CONFIRM_PAY"){
+     cbms.alert("该交易单正在进行合同变更，请变更完成后操作！");
+     return false;
+     }else{*/
+        $.ajax({
+            type: 'post',
+            async: false,
+            url: Context.PATH + '/order/changecontract/queryorderpaystatus.html',
+            data: {
+                orderId: orderId,
+                origin:"origin"
+            },
+            error: function (s) {
+                cbms.alert("查询订单信息报错！");
+                returnFlag = false;
+            }
+            , success: function (re) {
+                if (re.success) {
+                    if(re.data == "PENDING_APPROVAL" || re.data == "PENDING_RELATE" || re.data=="PENDING_APPLY" || re.data=="PAYED_DISAPPROVE" || re.data=="PENDING_APPR_PAY" || re.data =="PENDING_PRINT_PAY" || re.data =="PENDING_CONFIRM_PAY"){
+                        cbms.alert("该交易单正在进行合同变更，请变更完成后操作！");
+                        returnFlag = false;
+                    }else{
+                        returnFlag = true;
+                    }
+                }else{
+                    cbms.alert("查询订单信息报错！");
+                    returnFlag = false;
+                }
+            }
+        });
+        //}
+        return returnFlag;
+    }
+</script>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nido
+	xmlns="http://www.prcsteel.com/nido/tasks"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.prcsteel.com/nido/tasks http://192.168.0.205:8090/tasks.xsd">
+	
+	<method id="addRebateByOrder" method="addRebateByOrder" desc="添加返利" class="com.prcsteel.platform.order.service.rebate.impl.RebateServiceImpl">
+		<param name="orderId" type="java.lang.String"/>
+		<param name="user" type="com.prcsteel.platform.acl.model.model.User"/>
+		<param name="sellerId" type="java.lang.String"/>
+	</method>
+	<task id="addRebateByOrderTask" desc="添加返利" async="true">
+		<steps>
+			<call refId="addRebateByOrder"/>
+		</steps>
+	</task>
+</nido>

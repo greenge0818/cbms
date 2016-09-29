@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.order.persist.dao.CustomerAccountDao">
+    <resultMap id="CustomerMap" type="com.prcsteel.platform.order.model.dto.CustomerDto">
+    	<result column="account_id" property="accountId" jdbcType="BIGINT"/>
+        <result column="c_name" property="cName" jdbcType="VARCHAR"/>
+		<result column="total_amount" property="totalAmount" jdbcType="DECIMAL"/>
+		<result column="actual_pick_weight_salesman" property="actualPickWeightSalesman" jdbcType="DECIMAL"/>
+		<result column="deal_price" property="dealPrice" jdbcType="DECIMAL"/>
+		<result column="base_name" property="baseName" jdbcType="VARCHAR"/>
+		<result column="amount" property="amount" jdbcType="DECIMAL"/>
+		<result column="bringamount" property="bringAmount" jdbcType="DECIMAL"/>
+    </resultMap>
+    
+    <resultMap id="orderMap" type="com.prcsteel.platform.order.model.dto.OrderItemDto">
+    	<result column="accountId" property="accountId" jdbcType="BIGINT"/>
+		<result column="total_amount" property="totalAmount" jdbcType="DECIMAL"/>
+		<result column="actual_pick_weight_salesman" property="actualPickWeightSalesman" jdbcType="DECIMAL"/>
+		<result column="deal_price" property="dealPrice" jdbcType="DECIMAL"/>
+		<result column="amount" property="amount" jdbcType="DECIMAL"/>
+		<result column="bringamount" property="bringAmount" jdbcType="DECIMAL"/>
+    </resultMap>
+	
+	<resultMap id="AccountMap" type="com.prcsteel.platform.account.model.model.Account" >
+		<result column="name" property="name" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<resultMap id="AccountTransLogMap" type="com.prcsteel.platform.account.model.model.AccountTransLog" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="account_id" property="accountId" jdbcType="BIGINT" />
+    <result column="consign_order_code" property="consignOrderCode" jdbcType="VARCHAR" />
+    <result column="serial_number" property="serialNumber" jdbcType="VARCHAR" />
+    <result column="apply_type" property="applyType" jdbcType="VARCHAR" />
+    <result column="amount" property="amount" jdbcType="DECIMAL" />
+    <result column="applyer_id" property="applyerId" jdbcType="BIGINT" />
+    <result column="applyer_name" property="applyerName" jdbcType="VARCHAR" />
+    <result column="serial_time" property="serialTime" jdbcType="TIMESTAMP" />
+    <result column="type" property="type" jdbcType="CHAR" />
+    <result column="current_balance" property="currentBalance" jdbcType="DECIMAL" />
+    <result column="pay_type" property="payType" jdbcType="CHAR" />
+    <result column="association_type" property="associationType" jdbcType="VARCHAR" />
+    <result column="cash_happen_balance" property="cashHappenBalance" jdbcType="DECIMAL" />
+    <result column="cash_current_balance" property="cashCurrentBalance" jdbcType="DECIMAL" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+    <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+    <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+    <result column="ext1" property="ext1" jdbcType="VARCHAR" />
+    <result column="ext2" property="ext2" jdbcType="VARCHAR" />
+    <result column="ext3" property="ext3" jdbcType="VARCHAR" />
+    <result column="ext4" property="ext4" jdbcType="INTEGER" />
+    <result column="ext5" property="ext5" jdbcType="INTEGER" />
+    <result column="ext6" property="ext6" jdbcType="INTEGER" />
+    <result column="ext7" property="ext7" jdbcType="TIMESTAMP" />
+    <result column="ext8" property="ext8" jdbcType="BIGINT" />
+  </resultMap>
+	<select id="queryForBuyer" resultMap="CustomerMap" parameterType="com.prcsteel.platform.account.model.query.AccountStateQuery">
+		SELECT c.id as account_id,c.name as c_name,base.name AS base_name
+		FROM cust_account c 
+		INNER JOIN acl_user u ON u.id = c.manager_id 
+		INNER JOIN base_organization base ON u.org_id = base.id 
+		INNER JOIN busi_consign_order o ON o.account_id = c.id 
+		INNER JOIN busi_consign_order_audit_trail a ON a.order_id = o.id
+		WHERE 
+		c.type IN (#{type,jdbcType=CHAR},'both') 
+		AND a.set_to_status = 7
+		AND a.status_type = 'MAIN'
+		AND o.status in(7,8,10)
+		AND a.created between #{dateStartStr,jdbcType=VARCHAR} and #{dateEndStr,jdbcType=VARCHAR}
+		<if test="userIds != null ">
+	        AND u.id in
+	        <foreach item="userId" index="index" collection="userIds" open="(" separator="," close=")">
+	            #{userId}
+	        </foreach>
+     	</if>
+     	<if test="accountName != null and accountName != ''">
+            and c.name like '%${accountName}%'
+        </if>
+        <if test="orgName != null and orgName != ''">
+            and base.name = #{orgName,jdbcType=VARCHAR}
+        </if>
+		GROUP BY c.id
+		ORDER BY c.id limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+	</select>
+	
+	<select id="queryForSeller" resultMap="CustomerMap" parameterType="com.prcsteel.platform.account.model.query.AccountStateQuery">
+		SELECT c.id as account_id,c.name as c_name,base.name AS base_name
+		FROM cust_account c 
+		INNER JOIN acl_user u ON u.id = c.manager_id 
+		INNER JOIN base_organization base ON u.org_id = base.id 
+		INNER JOIN busi_consign_order_items oitem ON oitem.seller_id = c.id 
+		INNER JOIN busi_consign_order o ON oitem.order_id = o.id 
+		INNER JOIN busi_consign_order_audit_trail a ON a.order_id = oitem.order_id
+		WHERE 
+		c.type IN (#{type,jdbcType=CHAR},'both') 
+		AND a.set_to_status = 7
+		AND a.status_type = 'MAIN'
+		AND o.status in(7,8,10)
+		AND a.created between #{dateStartStr,jdbcType=VARCHAR} and #{dateEndStr,jdbcType=VARCHAR}
+		<if test="userIds != null ">
+	        AND u.id in
+	        <foreach item="userId" index="index" collection="userIds" open="(" separator="," close=")">
+	            #{userId}
+	        </foreach>
+     	</if>
+     	<if test="accountName != null and accountName != ''">
+            and c.name like '%${accountName}%'
+        </if>
+        <if test="orgName != null and orgName != ''">
+            and base.name = #{orgName,jdbcType=VARCHAR}
+        </if>
+		GROUP BY c.id
+		ORDER BY c.id limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+	</select>
+	
+    <select id="queryOrderBuyer" resultMap="orderMap" parameterType="com.prcsteel.platform.account.model.query.AccountStateQuery">
+    	SELECT 
+        c.id as accountId,
+        SUM(o.total_amount) as total_amount,
+        SUM(o.total_contract_releted_amount) as amount,
+        SUM(ROUND(oitem.actual_pick_weight_server * oitem.deal_price,2)) as bringamount
+        FROM busi_consign_order o
+        INNER JOIN cust_account c ON o.account_id = c.id
+        INNER JOIN busi_consign_order_items oitem on oitem.order_id=o.id
+		INNER JOIN busi_consign_order_audit_trail a ON a.order_id = o.id
+		WHERE 
+	    a.set_to_status = 7
+		AND a.status_type = 'MAIN'
+		AND o.status in(7,8,10)
+		AND o.account_id 
+		IN
+		<foreach item="accountId" index="index" collection="accountIds" open="(" separator="," close=")">
+	        #{accountId}
+	    </foreach>
+		GROUP BY o.account_id
+		ORDER BY o.account_id
+    </select>
+    
+    <select id="queryOrderSeller" resultMap="orderMap" parameterType="com.prcsteel.platform.account.model.query.AccountStateQuery">
+    	SELECT 
+        c.id as accountId,c.name,
+        SUM(p.total_amount) as total_amount,
+        SUM(o.total_contract_releted_amount) as amount,
+        SUM(ROUND(oitem.actual_pick_weight_server * oitem.deal_price,2)) as bringamount
+        FROM busi_consign_order o
+        INNER JOIN busi_pay_request p ON p.consign_order_id = o.id
+        INNER JOIN busi_consign_order_items oitem on oitem.order_id=o.id
+		INNER JOIN busi_consign_order_audit_trail a ON a.order_id = o.id
+		INNER JOIN cust_account_trans_log log ON log.consign_order_code=o.code 
+		INNER JOIN cust_account c ON oitem.seller_id = c.id
+		WHERE 
+	    a.set_to_status = 7
+		AND a.status_type = 'MAIN'
+		AND o.status in(7,8,10)
+		AND oitem.seller_id
+		IN
+		<foreach item="accountId" index="index" collection="accountIds" open="(" separator="," close=")">
+	        #{accountId}
+	    </foreach>
+		GROUP BY oitem.seller_id 
+		ORDER BY oitem.seller_id 
+    </select>
+    
+    <resultMap id="balanceMap" type="com.prcsteel.platform.order.model.dto.OrderSerialDto">
+		<result column="account_id" property="accountId" jdbcType="BIGINT" />
+		<result column="balance" property="balance" jdbcType="DECIMAL"/>
+		<result column="balance_second_settlement" property="balanceSecondSettlement" jdbcType="DECIMAL"/>
+    </resultMap>
+    
+    <select id="totalBalance" resultMap="balanceMap" parameterType="com.prcsteel.platform.account.model.query.AccountStateQuery">
+    	SELECT account_id,SUM(current_balance) AS balance_second_settlement, SUM(cash_current_balance) AS balance
+    	FROM cust_account_trans_log 
+    	WHERE account_id 
+    	IN
+		<foreach item="accountId" index="index" collection="accountIds" open="(" separator="," close=")">
+	        #{accountId}
+	    </foreach>
+		AND serial_time between #{dateStartStr,jdbcType=VARCHAR} and #{dateEndStr,jdbcType=VARCHAR}
+		GROUP BY account_id
+    </select>
+
+    <select id="queryBuyerCount" resultType="java.lang.Integer" parameterType="com.prcsteel.platform.account.model.query.AccountStateQuery">
+        select count(1) FROM (SELECT c.id
+		FROM cust_account c 
+		INNER JOIN acl_user u ON u.id = c.manager_id 
+		INNER JOIN base_organization base ON u.org_id = base.id 
+		INNER JOIN busi_consign_order o ON o.account_id = c.id 
+		INNER JOIN busi_consign_order_audit_trail a ON a.order_id = o.id
+		WHERE 
+		c.type IN (#{type,jdbcType=CHAR},'both') 
+		AND a.set_to_status = 7
+		AND a.status_type = 'MAIN'
+		AND o.status in(7,8,10)
+		AND a.created between #{dateStartStr,jdbcType=VARCHAR} and #{dateEndStr,jdbcType=VARCHAR}
+		<if test="userIds != null ">
+	        AND u.id in
+	        <foreach item="userId" index="index" collection="userIds" open="(" separator="," close=")">
+	            #{userId}
+	        </foreach>
+     	</if>
+     	<if test="accountName != null and accountName != ''">
+            and c.name like '%${accountName}%'
+        </if>
+        <if test="orgName != null and orgName != ''">
+            and base.name = #{orgName,jdbcType=VARCHAR}
+        </if>
+		GROUP BY c.id
+		)f
+    </select>
+    
+    <select id="querySellerCount" resultType="java.lang.Integer" parameterType="com.prcsteel.platform.account.model.query.AccountStateQuery">
+        select count(1) FROM (SELECT c.id 
+		FROM cust_account c 
+		INNER JOIN acl_user u ON u.id = c.manager_id 
+		INNER JOIN base_organization base ON u.org_id = base.id 
+		INNER JOIN busi_consign_order_items oitem ON oitem.seller_id = c.id 
+		INNER JOIN busi_consign_order o ON oitem.order_id = o.id 
+		INNER JOIN busi_consign_order_audit_trail a ON a.order_id = oitem.order_id
+		WHERE 
+		c.type IN (#{type,jdbcType=CHAR},'both') 
+		AND a.set_to_status = 7
+		AND a.status_type = 'MAIN'
+		AND o.status in(7,8,10)
+		AND a.created between #{dateStartStr,jdbcType=VARCHAR} and #{dateEndStr,jdbcType=VARCHAR}
+		<if test="userIds != null ">
+	        AND u.id in
+	        <foreach item="userId" index="index" collection="userIds" open="(" separator="," close=")">
+	            #{userId}
+	        </foreach>
+     	</if>
+     	<if test="accountName != null and accountName != ''">
+            and c.name like '%${accountName}%'
+        </if>
+        <if test="orgName != null and orgName != ''">
+            and base.name = #{orgName,jdbcType=VARCHAR}
+        </if>
+		GROUP BY c.id
+		)f
+    </select>
+    
+     <select id="getAccountName" resultMap="AccountMap" parameterType="com.prcsteel.platform.account.model.query.AccountStateQuery">
+        SELECT name,balance,balance_second_settlement FROM cust_account 
+    	WHERE 
+    	id = #{id,jdbcType=BIGINT}
+    </select>
+    
+    <select id="queryForAmount" resultMap="AccountTransLogMap" parameterType="com.prcsteel.platform.account.model.query.AccountStateQuery">
+    	<![CDATA[
+    	SELECT current_balance,cash_current_balance 
+    	FROM cust_account_trans_log 
+		WHERE 
+		account_id = #{id,jdbcType=BIGINT}
+		AND serial_time < #{dateStart,jdbcType=TIMESTAMP} 
+		order by serial_time desc limit 1
+		]]> 
+    </select>
+    
+    <select id="queryByAccountId" resultMap="AccountTransLogMap" parameterType="com.prcsteel.platform.account.model.query.AccountStateQuery">
+    	SELECT serial_time,association_type,consign_order_code,amount,current_balance,cash_happen_balance,cash_current_balance,apply_type,applyer_name
+    	FROM cust_account_trans_log 
+		WHERE 
+		account_id = #{accountId,jdbcType=BIGINT}
+		AND serial_time between #{dateStart,jdbcType=TIMESTAMP} and #{dateEnd,jdbcType=TIMESTAMP}
+		ORDER BY serial_time
+		limit #{start,jdbcType=INTEGER},#{length,jdbcType=INTEGER }
+    </select>
+    
+    <select id="queryByAccountIdCount" resultType="java.lang.Integer" parameterType="com.prcsteel.platform.account.model.query.AccountStateQuery">
+    	SELECT count(consign_order_code) FROM cust_account_trans_log 
+		WHERE 
+		account_id = #{accountId,jdbcType=BIGINT}
+		AND serial_time between #{dateStart,jdbcType=TIMESTAMP} and #{dateEnd,jdbcType=TIMESTAMP}
+    </select>
+</mapper>

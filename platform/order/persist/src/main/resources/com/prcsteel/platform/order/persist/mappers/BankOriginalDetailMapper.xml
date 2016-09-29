@@ -1,0 +1,618 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prcsteel.platform.order.persist.dao.BankOriginalDetailDao" >
+  <resultMap id="BaseResultMap" type="com.prcsteel.platform.order.model.model.BankOriginalDetail" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="header_id" property="headerId" jdbcType="BIGINT" />
+    <result column="voucherNo" property="voucherno" jdbcType="VARCHAR" />
+    <result column="seqNo" property="seqno" jdbcType="VARCHAR" />
+    <result column="txAmount" property="txamount" jdbcType="VARCHAR" />
+    <result column="balance" property="balance" jdbcType="VARCHAR" />
+    <result column="tranFlag" property="tranflag" jdbcType="VARCHAR" />
+    <result column="transDate" property="transdate" jdbcType="VARCHAR" />
+    <result column="transTime" property="transtime" jdbcType="VARCHAR" />
+    <result column="note" property="note" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="payeeBankNo" property="payeebankno" jdbcType="VARCHAR" />
+    <result column="payeeBankName" property="payeebankname" jdbcType="VARCHAR" />
+    <result column="payeeAcctNo" property="payeeacctno" jdbcType="VARCHAR" />
+    <result column="payeeName" property="payeename" jdbcType="VARCHAR" />
+    <result column="transCode" property="transcode" jdbcType="VARCHAR" />
+    <result column="branchId" property="branchid" jdbcType="VARCHAR" />
+    <result column="customerAcctNo" property="customeracctno" jdbcType="VARCHAR" />
+    <result column="payeeAcctType" property="payeeaccttype" jdbcType="VARCHAR" />
+    <result column="transCounter" property="transcounter" jdbcType="VARCHAR" />
+    <result column="authCounter" property="authcounter" jdbcType="VARCHAR" />
+    <result column="otherChar10" property="otherchar10" jdbcType="VARCHAR" />
+    <result column="otherChar40" property="otherchar40" jdbcType="VARCHAR" />
+    <result column="seqNum" property="seqnum" jdbcType="VARCHAR" />
+    <result column="revFlag" property="revflag" jdbcType="VARCHAR" />
+    <result column="begin_number" property="beginNumber" jdbcType="INTEGER" />
+    <result column="begin_date" property="beginDate" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+    <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" />
+    <result column="modification_number" property="modificationNumber" jdbcType="INTEGER" />
+    <result column="row_id" property="rowId" jdbcType="VARCHAR" />
+    <result column="parent_row_id" property="parentRowId" jdbcType="VARCHAR" />
+    <result column="ext1" property="ext1" jdbcType="VARCHAR" />
+    <result column="ext2" property="ext2" jdbcType="VARCHAR" />
+    <result column="ext3" property="ext3" jdbcType="VARCHAR" />
+    <result column="ext4" property="ext4" jdbcType="INTEGER" />
+    <result column="ext5" property="ext5" jdbcType="INTEGER" />
+    <result column="ext6" property="ext6" jdbcType="INTEGER" />
+    <result column="ext7" property="ext7" jdbcType="TIMESTAMP" />
+    <result column="ext8" property="ext8" jdbcType="BIGINT" />
+  </resultMap>
+  <resultMap id="SendSMSMap" type="com.prcsteel.platform.order.model.dto.BankRechargeSMSDto" >
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="user_tel" property="userTel" jdbcType="VARCHAR" />
+    <result column="account_id" property="accountId" jdbcType="BIGINT" />
+    <result column="account_name" property="accountName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, header_id, voucherNo, seqNo, txAmount, balance, tranFlag, transDate, transTime, 
+    note, remark, payeeBankNo, payeeBankName, payeeAcctNo, payeeName, transCode, branchId, 
+    customerAcctNo, payeeAcctType, transCounter, authCounter, otherChar10, otherChar40, 
+    seqNum, revFlag, begin_number, begin_date, status, created, created_by, last_updated, last_updated_by, modification_number,
+    row_id, parent_row_id, ext1, ext2, ext3, ext4, ext5, ext6, ext7, ext8
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from busi_bank_transaction_original_detail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from busi_bank_transaction_original_detail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.prcsteel.platform.order.model.model.BankOriginalDetail" >
+    insert into busi_bank_transaction_original_detail (header_id, voucherNo,
+      seqNo, txAmount, balance, 
+      tranFlag, transDate, transTime, 
+      note, remark, payeeBankNo, 
+      payeeBankName, payeeAcctNo, payeeName, 
+      transCode, branchId, customerAcctNo, 
+      payeeAcctType, transCounter, authCounter, 
+      otherChar10, otherChar40, seqNum, 
+      revFlag, begin_number, begin_date, status, created, created_by,
+      last_updated, last_updated_by, modification_number, 
+      row_id, parent_row_id, ext1, 
+      ext2, ext3, ext4, ext5, 
+      ext6, ext7, ext8)
+    values (#{headerId,jdbcType=BIGINT}, #{voucherno,jdbcType=VARCHAR},
+      #{seqno,jdbcType=VARCHAR}, #{txamount,jdbcType=VARCHAR}, #{balance,jdbcType=VARCHAR}, 
+      #{tranflag,jdbcType=VARCHAR}, #{transdate,jdbcType=VARCHAR}, #{transtime,jdbcType=VARCHAR}, 
+      #{note,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{payeebankno,jdbcType=VARCHAR}, 
+      #{payeebankname,jdbcType=VARCHAR}, #{payeeacctno,jdbcType=VARCHAR}, #{payeename,jdbcType=VARCHAR}, 
+      #{transcode,jdbcType=VARCHAR}, #{branchid,jdbcType=VARCHAR}, #{customeracctno,jdbcType=VARCHAR}, 
+      #{payeeaccttype,jdbcType=VARCHAR}, #{transcounter,jdbcType=VARCHAR}, #{authcounter,jdbcType=VARCHAR}, 
+      #{otherchar10,jdbcType=VARCHAR}, #{otherchar40,jdbcType=VARCHAR}, #{seqnum,jdbcType=VARCHAR}, 
+      #{revflag,jdbcType=VARCHAR}, #{beginNumber,jdbcType=INTEGER}, #{beginDate,jdbcType=VARCHAR},
+      #{status,jdbcType=INTEGER}, #{created,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR},
+      #{lastUpdated,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}, #{modificationNumber,jdbcType=INTEGER}, 
+      #{rowId,jdbcType=VARCHAR}, #{parentRowId,jdbcType=VARCHAR}, #{ext1,jdbcType=VARCHAR}, 
+      #{ext2,jdbcType=VARCHAR}, #{ext3,jdbcType=VARCHAR}, #{ext4,jdbcType=INTEGER}, #{ext5,jdbcType=INTEGER}, 
+      #{ext6,jdbcType=INTEGER}, #{ext7,jdbcType=TIMESTAMP}, #{ext8,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true"
+          parameterType="com.prcsteel.platform.order.model.model.BankOriginalDetail"
+          keyProperty="id" >
+    insert into busi_bank_transaction_original_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="headerId != null" >
+        header_id,
+      </if>
+      <if test="voucherno != null" >
+        voucherNo,
+      </if>
+      <if test="seqno != null" >
+        seqNo,
+      </if>
+      <if test="txamount != null" >
+        txAmount,
+      </if>
+      <if test="balance != null" >
+        balance,
+      </if>
+      <if test="tranflag != null" >
+        tranFlag,
+      </if>
+      <if test="transdate != null" >
+        transDate,
+      </if>
+      <if test="transtime != null" >
+        transTime,
+      </if>
+      <if test="note != null" >
+        note,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="payeebankno != null" >
+        payeeBankNo,
+      </if>
+      <if test="payeebankname != null" >
+        payeeBankName,
+      </if>
+      <if test="payeeacctno != null" >
+        payeeAcctNo,
+      </if>
+      <if test="payeename != null" >
+        payeeName,
+      </if>
+      <if test="transcode != null" >
+        transCode,
+      </if>
+      <if test="branchid != null" >
+        branchId,
+      </if>
+      <if test="customeracctno != null" >
+        customerAcctNo,
+      </if>
+      <if test="payeeaccttype != null" >
+        payeeAcctType,
+      </if>
+      <if test="transcounter != null" >
+        transCounter,
+      </if>
+      <if test="authcounter != null" >
+        authCounter,
+      </if>
+      <if test="otherchar10 != null" >
+        otherChar10,
+      </if>
+      <if test="otherchar40 != null" >
+        otherChar40,
+      </if>
+      <if test="seqnum != null" >
+        seqNum,
+      </if>
+      <if test="revflag != null" >
+        revFlag,
+      </if>
+      <if test="beginNumber != null" >
+        begin_number,
+      </if>
+      <if test="beginDate != null" >
+        begin_date,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated,
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by,
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number,
+      </if>
+      <if test="rowId != null" >
+        row_id,
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id,
+      </if>
+      <if test="ext1 != null" >
+        ext1,
+      </if>
+      <if test="ext2 != null" >
+        ext2,
+      </if>
+      <if test="ext3 != null" >
+        ext3,
+      </if>
+      <if test="ext4 != null" >
+        ext4,
+      </if>
+      <if test="ext5 != null" >
+        ext5,
+      </if>
+      <if test="ext6 != null" >
+        ext6,
+      </if>
+      <if test="ext7 != null" >
+        ext7,
+      </if>
+      <if test="ext8 != null" >
+        ext8,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="headerId != null" >
+        #{headerId,jdbcType=BIGINT},
+      </if>
+      <if test="voucherno != null" >
+        #{voucherno,jdbcType=VARCHAR},
+      </if>
+      <if test="seqno != null" >
+        #{seqno,jdbcType=VARCHAR},
+      </if>
+      <if test="txamount != null" >
+        #{txamount,jdbcType=VARCHAR},
+      </if>
+      <if test="balance != null" >
+        #{balance,jdbcType=VARCHAR},
+      </if>
+      <if test="tranflag != null" >
+        #{tranflag,jdbcType=VARCHAR},
+      </if>
+      <if test="transdate != null" >
+        #{transdate,jdbcType=VARCHAR},
+      </if>
+      <if test="transtime != null" >
+        #{transtime,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null" >
+        #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="payeebankno != null" >
+        #{payeebankno,jdbcType=VARCHAR},
+      </if>
+      <if test="payeebankname != null" >
+        #{payeebankname,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeacctno != null" >
+        #{payeeacctno,jdbcType=VARCHAR},
+      </if>
+      <if test="payeename != null" >
+        #{payeename,jdbcType=VARCHAR},
+      </if>
+      <if test="transcode != null" >
+        #{transcode,jdbcType=VARCHAR},
+      </if>
+      <if test="branchid != null" >
+        #{branchid,jdbcType=VARCHAR},
+      </if>
+      <if test="customeracctno != null" >
+        #{customeracctno,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeaccttype != null" >
+        #{payeeaccttype,jdbcType=VARCHAR},
+      </if>
+      <if test="transcounter != null" >
+        #{transcounter,jdbcType=VARCHAR},
+      </if>
+      <if test="authcounter != null" >
+        #{authcounter,jdbcType=VARCHAR},
+      </if>
+      <if test="otherchar10 != null" >
+        #{otherchar10,jdbcType=VARCHAR},
+      </if>
+      <if test="otherchar40 != null" >
+        #{otherchar40,jdbcType=VARCHAR},
+      </if>
+      <if test="seqnum != null" >
+        #{seqnum,jdbcType=VARCHAR},
+      </if>
+      <if test="revflag != null" >
+        #{revflag,jdbcType=VARCHAR},
+      </if>
+      <if test="beginNumber != null" >
+        #{beginNumber,jdbcType=INTEGER},
+      </if>
+      <if test="beginDate != null" >
+        #{beginDate,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        #{parentRowId,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null" >
+        #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3 != null" >
+        #{ext3,jdbcType=VARCHAR},
+      </if>
+      <if test="ext4 != null" >
+        #{ext4,jdbcType=INTEGER},
+      </if>
+      <if test="ext5 != null" >
+        #{ext5,jdbcType=INTEGER},
+      </if>
+      <if test="ext6 != null" >
+        #{ext6,jdbcType=INTEGER},
+      </if>
+      <if test="ext7 != null" >
+        #{ext7,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ext8 != null" >
+        #{ext8,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prcsteel.platform.order.model.model.BankOriginalDetail" >
+    update busi_bank_transaction_original_detail
+    <set >
+      <if test="headerId != null" >
+        header_id = #{headerId,jdbcType=BIGINT},
+      </if>
+      <if test="voucherno != null" >
+        voucherNo = #{voucherno,jdbcType=VARCHAR},
+      </if>
+      <if test="seqno != null" >
+        seqNo = #{seqno,jdbcType=VARCHAR},
+      </if>
+      <if test="txamount != null" >
+        txAmount = #{txamount,jdbcType=VARCHAR},
+      </if>
+      <if test="balance != null" >
+        balance = #{balance,jdbcType=VARCHAR},
+      </if>
+      <if test="tranflag != null" >
+        tranFlag = #{tranflag,jdbcType=VARCHAR},
+      </if>
+      <if test="transdate != null" >
+        transDate = #{transdate,jdbcType=VARCHAR},
+      </if>
+      <if test="transtime != null" >
+        transTime = #{transtime,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null" >
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="payeebankno != null" >
+        payeeBankNo = #{payeebankno,jdbcType=VARCHAR},
+      </if>
+      <if test="payeebankname != null" >
+        payeeBankName = #{payeebankname,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeacctno != null" >
+        payeeAcctNo = #{payeeacctno,jdbcType=VARCHAR},
+      </if>
+      <if test="payeename != null" >
+        payeeName = #{payeename,jdbcType=VARCHAR},
+      </if>
+      <if test="transcode != null" >
+        transCode = #{transcode,jdbcType=VARCHAR},
+      </if>
+      <if test="branchid != null" >
+        branchId = #{branchid,jdbcType=VARCHAR},
+      </if>
+      <if test="customeracctno != null" >
+        customerAcctNo = #{customeracctno,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeaccttype != null" >
+        payeeAcctType = #{payeeaccttype,jdbcType=VARCHAR},
+      </if>
+      <if test="transcounter != null" >
+        transCounter = #{transcounter,jdbcType=VARCHAR},
+      </if>
+      <if test="authcounter != null" >
+        authCounter = #{authcounter,jdbcType=VARCHAR},
+      </if>
+      <if test="otherchar10 != null" >
+        otherChar10 = #{otherchar10,jdbcType=VARCHAR},
+      </if>
+      <if test="otherchar40 != null" >
+        otherChar40 = #{otherchar40,jdbcType=VARCHAR},
+      </if>
+      <if test="seqnum != null" >
+        seqNum = #{seqnum,jdbcType=VARCHAR},
+      </if>
+      <if test="revflag != null" >
+        revFlag = #{revflag,jdbcType=VARCHAR},
+      </if>
+      <if test="beginNumber != null" >
+        begin_number = #{beginNumber,jdbcType=INTEGER},
+      </if>
+      <if test="beginDate != null" >
+        begin_date = #{beginDate,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdated != null" >
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null" >
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modificationNumber != null" >
+        modification_number = #{modificationNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rowId != null" >
+        row_id = #{rowId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowId != null" >
+        parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null" >
+        ext1 = #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        ext2 = #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3 != null" >
+        ext3 = #{ext3,jdbcType=VARCHAR},
+      </if>
+      <if test="ext4 != null" >
+        ext4 = #{ext4,jdbcType=INTEGER},
+      </if>
+      <if test="ext5 != null" >
+        ext5 = #{ext5,jdbcType=INTEGER},
+      </if>
+      <if test="ext6 != null" >
+        ext6 = #{ext6,jdbcType=INTEGER},
+      </if>
+      <if test="ext7 != null" >
+        ext7 = #{ext7,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ext8 != null" >
+        ext8 = #{ext8,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prcsteel.platform.order.model.model.BankOriginalDetail" >
+    update busi_bank_transaction_original_detail
+    set header_id = #{headerId,jdbcType=BIGINT},
+      voucherNo = #{voucherno,jdbcType=VARCHAR},
+      seqNo = #{seqno,jdbcType=VARCHAR},
+      txAmount = #{txamount,jdbcType=VARCHAR},
+      balance = #{balance,jdbcType=VARCHAR},
+      tranFlag = #{tranflag,jdbcType=VARCHAR},
+      transDate = #{transdate,jdbcType=VARCHAR},
+      transTime = #{transtime,jdbcType=VARCHAR},
+      note = #{note,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      payeeBankNo = #{payeebankno,jdbcType=VARCHAR},
+      payeeBankName = #{payeebankname,jdbcType=VARCHAR},
+      payeeAcctNo = #{payeeacctno,jdbcType=VARCHAR},
+      payeeName = #{payeename,jdbcType=VARCHAR},
+      transCode = #{transcode,jdbcType=VARCHAR},
+      branchId = #{branchid,jdbcType=VARCHAR},
+      customerAcctNo = #{customeracctno,jdbcType=VARCHAR},
+      payeeAcctType = #{payeeaccttype,jdbcType=VARCHAR},
+      transCounter = #{transcounter,jdbcType=VARCHAR},
+      authCounter = #{authcounter,jdbcType=VARCHAR},
+      otherChar10 = #{otherchar10,jdbcType=VARCHAR},
+      otherChar40 = #{otherchar40,jdbcType=VARCHAR},
+      seqNum = #{seqnum,jdbcType=VARCHAR},
+      revFlag = #{revflag,jdbcType=VARCHAR},
+      begin_number = #{beginNumber,jdbcType=INTEGER},
+      begin_date = #{beginDate,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      created = #{created,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      modification_number = #{modificationNumber,jdbcType=INTEGER},
+      row_id = #{rowId,jdbcType=VARCHAR},
+      parent_row_id = #{parentRowId,jdbcType=VARCHAR},
+      ext1 = #{ext1,jdbcType=VARCHAR},
+      ext2 = #{ext2,jdbcType=VARCHAR},
+      ext3 = #{ext3,jdbcType=VARCHAR},
+      ext4 = #{ext4,jdbcType=INTEGER},
+      ext5 = #{ext5,jdbcType=INTEGER},
+      ext6 = #{ext6,jdbcType=INTEGER},
+      ext7 = #{ext7,jdbcType=TIMESTAMP},
+      ext8 = #{ext8,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectBeginNumber" resultType="int" >
+    select ifnull(MAX(begin_number), 0 )
+    from busi_bank_transaction_original_detail
+    where begin_date = #{beginDate,jdbcType=VARCHAR}
+  </select>
+  <update id="updateStatusById" >
+    update busi_bank_transaction_original_detail
+    set status = #{status,jdbcType=INTEGER},
+        last_updated = #{lastUpdated,jdbcType=TIMESTAMP},
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+        modification_number = ifnull(modification_number, 0) + 1
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="querySendSMS" resultMap="SendSMSMap" >
+      select a.owner_id AS user_id,
+              b.name AS user_name,
+              b.tel AS user_tel,
+              a.account_id AS account_id,
+              c.name AS account_name
+      from busi_consign_order a
+      left join acl_user b on b.id = a.owner_id
+      left join cust_account c on c.id = a.account_id
+      where a.status = 2
+        and a.account_id = #{accountId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryPreBlance" resultType="BigDecimal" parameterType="java.lang.String">
+    select balance from  busi_bank_transaction_original_detail where
+    <![CDATA[str_to_date(transDate,'%Y%m%d')<str_to_date(#{date},'%Y-%m-%d') ]]>
+    order by transDate desc,transTime desc,id desc
+    limit 0,1
+  </select>
+  <select id="queryLastBlance" resultType="BigDecimal" parameterType="java.lang.String">
+    select balance from  busi_bank_transaction_original_detail
+    where
+    <![CDATA[str_to_date(transDate,'%Y%m%d')<=str_to_date(#{date},'%Y-%m-%d') ]]>
+    order by transDate desc,transTime desc,id desc
+    limit 0,1
+  </select>
+
+  <!-- 出纳确认付款错误，72小时内如果有打款进来疑似支付错误 -->
+  <select id="totalErrorPay" resultType="int">
+    SELECT COUNT(1)
+    FROM busi_bank_transaction_original_detail
+    WHERE tranFlag = 0
+    AND txAmount = #{txAmount,jdbcType=VARCHAR}
+    AND payeeName = #{payeeName,jdbcType=VARCHAR}
+    <![CDATA[
+      AND TIMESTAMPDIFF(HOUR, date_format(created,'%Y-%m-%d %H:%i:%s'), date_format(#{transDate},'%Y-%m-%d %H:%i:%s')) <=
+      (SELECT setting_value from base_sys_setting WHERE setting_type = 'PayError')
+    ]]>
+  </select>
+  
+  <resultMap id="bankOriginalMap" type="com.prcsteel.platform.order.model.dto.BankOriginalDto" >
+  	<result column="transDateTime" property="transDateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <!-- 浦发回执单查询 -->
+  <select id="queryBankReceipts" resultMap="bankOriginalMap">
+  	SELECT voucherNo, seqNo, txAmount, balance, tranFlag, transDate, transTime, 
+    note, remark, payeeBankNo, payeeBankName, payeeAcctNo, payeeName, transCode, branchId, 
+    customerAcctNo, payeeAcctType, transCounter, authCounter, otherChar10, otherChar40, 
+    seqNum, revFlag, begin_number, begin_date, status,created,
+    STR_TO_DATE(concat(transDate,' ',LPAD(transTime, 6, 0)),'%Y%m%d %H%i%s') as transDateTime
+    FROM busi_bank_transaction_original_detail 
+	WHERE payeeName =#{payeeName,jdbcType=VARCHAR}
+	AND payeeAcctNo=#{payeeAcctNo,jdbcType=VARCHAR}
+	AND CAST(txAmount as decimal(18,6)) = CAST(#{txAmount,jdbcType=DECIMAL} as DECIMAL(18,6))
+	AND tranFlag = 0
+	ORDER BY created DESC LIMIT 1
+  </select>
+</mapper>

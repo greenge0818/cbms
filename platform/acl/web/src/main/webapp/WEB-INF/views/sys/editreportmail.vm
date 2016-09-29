@@ -1,0 +1,129 @@
+#set($layout="layout/blank.vm")
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#reportmailForm").verifyForm();
+	});
+</script>
+<div id="reportmailDialog">
+    <div style='width:900px;'>
+        <form id='reportmailForm'>
+            <table class="table" border="0">
+            	
+            	<tr>
+        		 	<td class="text-right" width="100px"><label>收件人：</label></td>
+                    <td colspan="2">
+                    	<input type="hidden" name="id" value="$!setting.id"/>
+                        <textarea id="report-mail-receiver" must="1" class="ipt-text" placeholder="请输入需要收件人的邮件地址，如果有多个，用英文(;)分割"
+                        	 rows="2" cols="80">$!setting.receiver</textarea>
+                    </td>
+            	</tr>
+            	<tr>
+            		<td class="text-right"><label>邮件主题：</label></td>
+                    <td width="220px">
+                        <input id="report-mail-title" type="text" value="$!setting.title"
+                               class="ipt-text" must="1"/>
+                    </td>
+                    <td rowspan="3">
+                    	<div  class="clearfix period_box">
+                       	<fieldset>
+                       		<legend style="font-size:12px;">定期模式</legend>
+                       		<div class="pull-left period_left">
+                       			<input type="radio" name="period_type" value="WEEK" #if($model || $!setting.periodType=="WEEK") checked="checked" #end/>&nbsp;按周 </br>
+                       			<br/>
+                       			<input type="radio" name="period_type" value="MONTH" #if($!setting.periodType=="MONTH1" || $!setting.periodType=="MONTH2") checked="checked" #end/>&nbsp;按月 </br>
+                       		</div>
+                       		<div class="pull-left period_right">
+                       			<div class="period_tab1" #if($!setting.periodType=="MONTH1" || $!setting.periodType=="MONTH2") style="display:none;" #end>
+                       				
+                   					<label>每周的：</label><br/>
+                   					<ul style="padding: 10px;" id="report-mail-weeks">
+                   						<li style="display:inline-block;"><input type="checkbox" name="weeks" value="2" #if($!Monday) checked="checked" #end/>星期一</li>
+                   						<li style="display:inline-block; margin-left:10px;"><input type="checkbox" name="weeks" value="3" #if($!Tuesday) checked="checked" #end/>星期二</li>
+                   						<li style="display:inline-block; margin-left:10px;"><input type="checkbox" name="weeks" value="4" #if($!Wednesday) checked="checked" #end/>星期三</li>
+                   						<li style="display:inline-block; margin-left:10px;"><input type="checkbox" name="weeks" value="5" #if($!Thursday) checked="checked" #end/>星期四</li>
+                   						<li style="display:inline-block; margin-left:10px;"><input type="checkbox" name="weeks" value="6" #if($!Friday) checked="checked" #end/>星期五</li>
+                   						<li style="display:inline-block; margin-left:10px;"><input type="checkbox" name="weeks" value="7" #if($!Saturday) checked="checked" #end/>星期六</li>
+                   						<li style="display:inline-block; margin-left:10px;"><input type="checkbox" name="weeks" value="1" #if($!Sunday) checked="checked" #end/>星期日</li>
+                   					</ul>
+                       				
+                       			</div><!--period_tab1-->
+                       			<div class="period_tab2" #if(!$setting.periodType || $!setting.periodType=="WEEK") style="display:none;" #end>
+                       				<div>
+                       					<input type="radio" name="period_type1" #if($!setting.periodType=="MONTH1") checked="checked" #end value="MONTH1" />每
+                       					<input type="text" class="ipt-text" id="month-duration-1" #if($!setting.periodType=="MONTH1") value="$!setting.monthDuration" #end size="2" verify="numeric" msg="必须是数字"/>个月的第
+                       					<input type="text" class="ipt-text" id="day-duration" value="$!setting.day" size="2" verify="numeric" msg="必须是数字"/>天
+                       				</div>
+                       				<br/>
+                       				<div>
+                       					<input type="radio" name="period_type1" #if($!setting.periodType=="MONTH2") checked="checked" #end value="MONTH2" />每
+                       					<input type="text" class="ipt-text" id="month-duration-2" #if($!setting.periodType=="MONTH2")  value="$!setting.monthDuration" #end size="2" verify="numeric" msg="必须是数字"/>个月的
+                       					<select class="week-duration">
+                       						<option value="1" #if($!setting.weekDuration==1) selected="selected" #end>第一个</option>
+                       						<option value="2" #if($!setting.weekDuration==2) selected="selected" #end>第二个</option>
+                       						<option value="3" #if($!setting.weekDuration==3) selected="selected" #end>第三个</option>
+                       						<option value="4" #if($!setting.weekDuration==4) selected="selected" #end>第四个</option>
+                       						<option value="5" #if($!setting.weekDuration==5) selected="selected" #end>最后一个</option>
+                       					</select>
+                       					<select class="week">
+                       						<option value="2" #if($!setting.weeks==2) selected="selected" #end>星期一</option>
+                       						<option value="3" #if($!setting.weeks==3) selected="selected" #end>星期二</option>
+                       						<option value="4" #if($!setting.weeks==4) selected="selected" #end>星期三</option>
+                       						<option value="5" #if($!setting.weeks==5) selected="selected" #end>星期四</option>
+                       						<option value="6" #if($!setting.weeks==6) selected="selected" #end>星期五</option>
+                       						<option value="7" #if($!setting.weeks==7) selected="selected" #end>星期六</option>
+                       						<option value="1" #if($!setting.weeks==1) selected="selected" #end>星期天</option>
+                       					</select>
+                       				</div>
+                       			</div><!--period_tab2-->
+							</div>
+                   		</fieldset>
+                   		</div>
+                    </td>
+            	</tr>
+            	<tr>
+            		<td class="text-right"><label>附件内容：</label></td>
+                    <td>
+                    	<select id="report-mail-attachment">
+                		#foreach($ctype in $attachmentTypes)
+                    		<option value="$!ctype.code" #if($setting.attachment && $!ctype.code==$!setting.attachment) selected="selected" #end>$!ctype.name</option>
+                    	#end
+                        </select>
+                    </td>
+            	</tr>
+            	<tr>
+            		<td class="text-right"><label>发送时间：</label></td>
+                    <td colspan="2">
+                        <select id="report-mail-hour">
+                        	#foreach($hour in $hours)
+                        		<option #if($setting.hour && $!hour==$!setting.hour) selected="selected" #end>$!hour</option>
+                        	#end
+                        </select>时
+                        <select id="report-mail-minute">
+                        	#foreach($minute in $minutes)
+                        		<option #if($setting.minute && $!minute==$!setting.minute) selected="selected" #end>$!minute</option>
+                        	#end
+                        </select>分
+                    </td>
+            	</tr>
+            	<tr>
+            		<td class="text-right"><label>邮件内容：</label></td>
+                    <td colspan="2">
+                       <textarea id="report-mail-content" class="ipt-text" placeholder="邮件内容" must="1"
+                        	 rows="2" cols="80">$!setting.content</textarea>
+                    </td>
+            	</tr>
+            	
+            </table>
+        </form>
+        <p align='center' class="action">
+            <button type="button" class='btn btn-info' id="submitBtn">提交</button>
+            <button type="button" class='btn btn-info' id="exitBtn">取消</button>
+        </p>
+    </div>
+</div>
+<style type="text/css">
+#reportmailDialog table td{border:none;}
+.period_box{margin-left:30px; width:440px; padding:20px;}
+.period_left{width:80px;}
+.period_right{width:300px;}
+<style>

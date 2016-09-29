@@ -1,0 +1,156 @@
+<div class="breadcrumbs" id="breadcrumbs">
+    <script type="text/javascript">
+        try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+    </script>
+
+    <ul class="breadcrumb">
+        <li><i class="ace-icon fa fa-home home-icon"></i>发票管理</li>
+        <li>销项票管理</li>
+        <li class="active">待开票审核</li>
+    </ul>
+
+        #parse("layout/topbtn.vm")
+</div>
+
+<div class="page-content" id="content">
+    <form>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12">
+                <!--TAPBAR-->
+                #invoiceTopBar(3, 0)
+                #foreach($apply in $list)
+                    <div class="table-bar col-sm-12 invoice-apply">
+                        <div class="info-bar owner">
+                            <span class="none orgId">$!{apply.orgId}</span>
+                            <span class="none orgName">$!{apply.orgName}</span>
+                            <span class="none ownerId">$!{apply.ownerId}</span>
+                            <span class="bolder ownerName">$!{apply.ownerName}</span>
+                            <span>已申请开票金额总计（元）：<em class="bolder totalAmount">$NumberTool.toThousandth($!{apply.totalAmount})</em></span>
+                            <span>未开票金额总计（元）：<em class="bolder totalUnAmount">$NumberTool.toThousandth($!{apply.totalUnAmount})</em></span>
+                        </div>
+                        <table class="table table-bordered table-hover table-apply">
+                            <thead>
+                            <tr>
+                                <th>买家全称</th>
+                                <th>已申请开票金额（元）</th>
+                                <th>未开票金额（元）</th>
+                                <th>二次结算应收金额</th>
+                                <th>未开发票超期月数</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody class="table-apply-tbody">
+                				#set ($i=0)
+                                #foreach($detail in $apply.detailList)
+                                	#set ($i= $i+1)
+	                                #if($i >= 5)
+                                		<tr buyerid='$!{detail.buyerId}' isokid='$!{detail.isOkId}' isallotid='$!{detail.isAllotId}' style="display:none;">
+	                                #else
+	                                	<tr buyerid='$!{detail.buyerId}' isokid='$!{detail.isOkId}' isallotid='$!{detail.isAllotId}'>
+	                                #end 
+                                    <td><span class="buyerName">$!{detail.buyerName}</span></td>
+                                    <td class="text-right"><span class="amount">$NumberTool.toThousandth($!{detail.amount})</span></td>
+                                    <td class="text-right"><span class="unAmount">$NumberTool.toThousandth($!{detail.unAmount})</span></td>
+                                    <td class="text-right" >
+                                    	<span class="balanceSecondSettlement" style="display:none">
+                                    		$NumberTool.toThousandth($!{detail.balanceSecondSettlement})
+                                   		</span>
+                                    	#if($!{detail.balanceSecondSettlement}>0)
+                                    	<a href="$link.getContextPath()/order/secondapplyforpaymentorder.html?balanceSecondSettlement=0&id=$!{detail.departmentId}" aria-expanded="true">
+                                    	 	$NumberTool.toThousandth($!{detail.balanceSecondSettlement})
+                                    	</a>
+                                    	#else
+                                    		$NumberTool.toThousandth($!{detail.balanceSecondSettlement})
+                                    	#end
+                                    </td>
+                                    <td><span class="countMonth">$!{detail.countMonth}</span></td>
+                                    <td class="none">
+                                        <div class="itemsList">
+                                        <div class="info-bar" style="padding:10px;height:450px;overflow:auto;overflow-x:hidden;">
+                                            <div>
+                                                <label>
+                                                    交易单号：<input type="text" id="seachConsignOrderCode" class="d-text"/>
+                                                </label>
+                                                <label>
+                                                    开单时间：
+                                                    <input id="startTime" class="ipt-text" type="text" value="$!startTime"
+                                                           onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')}'})"/> -
+                                                    <input id="endTime" class="ipt-text" type="text"  value="$!endTime"
+                                                           onFocus="WdatePicker({minDate:'#F{$dp.$D(\'startTime\')}'})"/>
+                                                </label>
+                                                <button id="btnSearch" type="button" class="btn-sm btn btn-info">搜索</button>
+                                            </div>
+                                            #foreach($items in $!{detail.itemsList})
+                                            <div class="itemOrder">
+                                                <label class="none">交易单ID：<span class="orderId">$!{items.orderId}</span></label>
+                                                <label>交易单号：<span class="orderCode">$!{items.orderCode}</span></label>
+                                                <label>开单时间：<span class="created">$!{items.created}</span></label>
+                                                <label>实提总重量（吨）：<span class="totalActualWeight">$!{items.totalActualWeight}</span></label>
+                                                <label>合同总金额（元）：<span class="totalContractAmount">$NumberTool.toThousandth($!{items.totalContractAmount})</span></label>
+                                                <label>实提总金额（元）：<span class="totalActualAmount">$NumberTool.toThousandth($!{items.totalActualAmount})</span></label>
+                                                <table class="table table-bordered table-hover item-order-detail">
+                                                    <thead>
+                                                        <th>品名</th>
+                                                        <th>材质</th>
+                                                        <th>规格</th>
+                                                        <th>实提重量（吨）</th>
+                                                        <th>开票重量（吨）</th>
+                                                        <th>成交价（元/吨）</th>
+                                                        <th>合同金额（元）</th>
+                                                        <th>实提金额（元）</th>
+                                                        <th>开票金额（元）</th>
+                                                    </thead>
+                                                    <tbody class="itemsList-tbody" style="display:none">
+                                                    #foreach($detailItems in $!{items.detailList})
+                                                        <tr orderdetailid='$!{detailItems.orderDetailId}' invoiceinid='$!{detailItems.invoiceInId}' 
+                                                        invoiceindetailid='$!{detailItems.invoiceInDetailId}' invoiceorderitemid='$!{detailItems.invoiceOrderitemId}' 
+                                                        notaxamount='$!{detailItems.noTaxAmount}' taxamount='$!{detailItems.taxAmount}' >
+                                                            <td><span class="nsortName">$!{detailItems.nsortName}</span></td>
+                                                            <td><span class="material">$!{detailItems.material}</span></td>
+                                                            <td><span class="spec">$!{detailItems.spec}</span></td>
+                                                            <td><span class="actualWeight">$!{detailItems.actualWeight}</span></td>
+                                                            <td><span class="weight">$!{detailItems.weight}</span></td>
+                                                            <td><span class="dealPrice">$!{detailItems.dealPrice}</span></td>
+                                                            <td><span class="contractAmount">$!{detailItems.contractAmount}</span></td>
+                                                            <td><span class="actualAmount">$!{detailItems.actualAmount}</span></td>
+                                                            <td><span class="amount">$!{detailItems.amount}</span></td>
+                                                        </tr>
+                                                    #end
+                                                    </tbody>
+                                                    <tbody name="mergedData"></tbody>
+                                                </table>
+                                                    </div>
+                                            #end
+                                            <button type="button" class="btn btn-info btn-sm" id="items-btn">返回</button>
+                                        </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a name="view" style="color:blue;cursor:pointer">查看</a>
+
+                                    </td>
+                                </tr>
+                                #end
+                            </tbody>
+                            #if($apply.detailList.size() >= 5)
+                            	<tfoot>
+                            	<tr><td align="center" colSpan="7"><p name="slide" style="cursor:pointer">展开</p></td></tr>
+                            	</tfoot>
+                            #end
+                        </table>
+                    </div>
+                #end
+                <div class=" recordbar col-xs-12">
+                    <button type="button" class="btn btn-info btn-sm" id="approve-btn">审核通过</button>
+                    <button type="button" class="btn btn-info btn-sm" id="unapprove-btn">审核不通过</button>
+                    <a href="javascript:history.go(-1);" class="btn btn-default btn-sm">返回</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div id="itemDetail" style=" display: none;">
+</div>
+
+<input id="outApplyId" value="$!{outApplyId}" type="hidden">
+<script src="$link.getContextPath()/js/views/invoice/apply/auditdetail.js"></script>

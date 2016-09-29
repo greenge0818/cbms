@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/context 
+http://www.springframework.org/schema/context/spring-context-3.0.xsd
+http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+	<context:property-placeholder location="classpath:account.properties" />
+
+	<context:component-scan base-package="org.prcsteel.rest.proxy" />
+
+	<bean id="RestAppContextAware" class="org.prcsteel.rest.proxy.RestAppContextAware">
+		<property name="basePackages">
+			<list>
+				<value>com.prcsteel.platform.account.api</value>
+				<value>org.prcsteel.rest.sdk.activiti.service</value>
+				<value>com.prcsteel.platform.api</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="aclRestServer" class="org.prcsteel.rest.proxy.BasicAuthClientHttpRequestFactory">
+		<property name="baseUrl" value="${acl.domain}/api/"/>
+		<property name="username" value=""/>
+		<property name="password" value=""/>
+		<property name="header">
+			<map>
+				<entry key="Content-Type" value="application/json;charset=utf-8"/>
+			</map>
+		</property>
+	</bean>
+
+	<bean id="orderRestServer" class="org.prcsteel.rest.proxy.BasicAuthClientHttpRequestFactory">
+		<property name="baseUrl" value="${order.domain}/api/"/>
+		<property name="username" value=""/>
+		<property name="password" value=""/>
+		<property name="header">
+			<map>
+				<entry key="Content-Type" value="application/json;charset=utf-8"/>
+			</map>
+		</property>
+	</bean>
+	<bean id="activitiRestServer" class="org.prcsteel.rest.proxy.BasicAuthClientHttpRequestFactory">
+		<property name="baseUrl" value="http://localhost:8080/activiti-rest/service/"/>
+		<property name="username" value="kermit"/>
+		<property name="password" value="kermit"/>
+		<property name="header">
+			<map>
+				<entry key="Content-Type" value="application/json;charset=utf-8"/>
+			</map>
+		</property>
+	</bean>
+</beans>

@@ -1,0 +1,132 @@
+#set($layout="layout/blank.vm")
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <title>品牌店代运营系统</title>
+    <!-- meta S -->
+    #parse("layout/meta.vm")
+    <!-- meta E -->
+
+    <!-- context S -->
+    #parse("layout/context.vm")
+    <!-- context E -->
+</head>
+
+<body class="no-skin">
+<!-- Header S-->
+    #parse("layout/header.vm")
+<!-- Header E -->
+
+<div class="main-container" id="main-container">
+    <script type="text/javascript">
+        try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+    </script>
+
+    <!-- Sidebar S-->
+    #parse("layout/sidebar.vm")
+    <!-- Sidebar E -->
+
+    <div class="main-content">
+        <div class="main-content-inner">
+            <!-- content S -->
+            <div class="breadcrumbs" id="breadcrumbs">
+                <script type="text/javascript">
+                    try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+                </script>
+
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="ace-icon fa fa-home home-icon"></i>
+                        <a href="#">系统管理</a>
+                    </li>
+                    <li>
+                        #if(${user})
+                            <a href="#" class="control-label no-padding-right" for="form-field-6">${user.name} </a>
+                            <input type="hidden" name="userId" id="user"
+                                   rel="${user.id}_${user.roleId}"/>
+                        #else
+                            <a href="$link.getContextPath()/role/index.html">权限管理</a>
+                        #end
+                    </li>
+
+                    <li class="active">设置权限</li>
+                </ul><!-- /.breadcrumb -->
+
+                    #parse("layout/topbtn.vm")<!-- /.nav-search -->
+            </div>
+
+            <div class="page-content">
+
+                <div class="page-header">
+
+                    <!-- PAGE CONTENT BEGINS -->
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label class="control-label no-padding-right" for="form-field-6">角色</label>
+                            <input  placeholder="请选择角色" id="srole" type="text"  class="" readonly value="$!{role}" style="width:120px;" onclick="showMenu();"/>
+                            <input type="hidden" id="sroleHidden" value="0"/>
+                        </div>
+                    </div>
+                </div><!-- /.page-header -->
+                #foreach($perms in $permissions)
+                    <div class="checkbox-list-bar">
+                        <div class="checkbox bg-gray">
+                            <label>
+                                <input name="permsId" value="${perms.permission.id}" data-pid="${perms.permission.parentId}" type="checkbox" class="ace">
+                                <span class="lbl"><span class="bolder">${perms.permission.name}</span></span>
+                            </label>
+                        </div>
+                        #foreach($child in ${perms.child})
+                            <ul>
+                                <li class="checkbox dotted-border-bottom">
+                                    <label>
+                                        <input name="permsId" value="${child.permission.id}" data-pid="${child.permission.parentId}" type="checkbox" class="ace">
+                                        <span class="lbl"><span class="bolder">${child.permission.name}</span></span>
+                                    </label>
+
+                                    #foreach($ch in ${child.child})
+                                        <label>
+                                            <input name="permsId" value="${ch.permission.id}" data-pid="${ch.permission.parentId}" type="checkbox" class="ace">
+                                            <span class="lbl">${ch.permission.name}</span>
+                                        </label>
+
+                                        #showPermission($ch)
+                                    #end
+                                </li>
+                            </ul>
+                        #end
+                    </div>
+                #end
+
+                <div class="clearfix">
+                    <div class="pull-left">
+                        <button id="save-perm" class="btn btn-primary" title="保存">
+                            保存
+                        </button>
+                    </div>
+                    <div class="pull-right tableTools-container"></div>
+                </div>
+
+            </div><!-- /.page-content -->
+            <!-- content E -->
+        </div>
+    </div><!-- /.main-content -->
+
+    <!-- Footer S -->
+    #parse("layout/footer.vm")
+    <!-- Footer E -->
+
+    <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+        <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+    </a>
+</div><!-- /.main-container -->
+
+<!-- basic scripts S -->
+    #parse("layout/scripts.vm")
+<!-- basic scripts E -->
+<script src="$link.getContextPath()/js/views/user/permission.js"></script>
+<div id="menuContent" class="menuContent" style="display:none; position: absolute;">
+    <ul id="roleTree" class="ztree" style="margin-top:0;"></ul>
+</div>
+</body>
+</html>
